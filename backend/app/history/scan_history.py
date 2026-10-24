@@ -1,0 +1,394 @@
+from __future__ import annotations
+from contextlib import closing
+
+import json
+import sqlite3
+from dataclasses import dataclass
+from datetime import datetime
+from pathlib import Path
+from zoneinfo import ZoneInfo
+
+from ..analysis.scan_filter import (
+    FilteredScanResult,
+    ScanFilterCriteria,
+)
+
+
+class ScanHistoryError(Exception):
+    """Tarama geçmişi işlemlerinde oluşan özel hata."""
+
+
+@dataclass(frozen=True)
+class ScanHistorySaveResult:
+    """Veritabanına kaydedilen taramanın özetidir."""
+
+    tarama_id: int
+    kaydedilen_kayit_sayisi: int
+    veritabani_yolu: str
+
+
+@dataclass(frozen=True)
+class ScanRunSummary:
+    """Geçmişte yapılmış bir taramanın özetidir."""
+
+    tarama_id: int
+    olusturma_zamani: str
+    profil_adi: str
+    toplam_sayi: int
+    aday_sayisi: int
+    elenen_sayisi: int
+    hatali_sayisi: int
+
+
+class ScanHistoryRepository:
+    """Tarama sonuçlarını SQLite veritabanında saklar."""
+
+    def __init__(
+        self,
+        veritabani_yolu: str | Path,
+    ) -> None:
+        self._veritabani_yolu = Path(
+            veritabani_yolu
+        ).expanduser()
+
+        if (
+            self._veritabani_yolu.exists()
+            and self._veritabani_yolu.is_dir()
+        ):
+            raise ScanHistoryError(
+                "Veritabanı yolu bir klasör olamaz: "
+                f"{self._veritabani_yolu}"
+            )
+
+        try:
+            self._veritabani_yolu.parent.mkdir(
+                parents=True,
+                exist_ok=True,
+            )
+
+            self._sema_olustur()
+
+        except sqlite3.Error as hata:
+            raise ScanHistoryError(
+                f"Veritabanı hazırlanamadı: {hata}"
+            ) from hata
+
+    @property
+    def veritabani_yolu(self) -> str:
+        return str(
+            self._veritabani_yolu.resolve()
+        )
+
+    def taramayi_kaydet(
+        self,
+        sonuc: FilteredScanResult,
+        kriterler: ScanFilterCriteria,
+        profil_adi: str,
+        olusturma_zamani: str | None = None,
+    ) -> ScanHistorySaveResult:
+        """
+        Bir taramayı ve taramadaki bütün hisseleri kaydeder.
+        """
+        zaman = (
+            olusturma_zamani
+            if olusturma_zamani is not None
+            else datetime.now(
+                ZoneInfo("Europe/Istanbul")
+            ).isoformat(timespec="seconds")
+        )
+
+        izin_verilen_gorunumler = json.dumps(
+            kriterler.izin_verilen_gorunumler,
+            ensure_ascii=False,
+        )
+
+        try:
+            with closing(self._baglanti_ac()) as baglanti, baglanti:
+                imlec = baglanti.execute(
+                    """
+                    INSERT INTO scan_runs (
+                        created_at,
+                        profile_name,
+                        minimum_score,
+                        minimum_volume_ratio,
+                        risk_reward_required,
+                        allowed_views,
+                        total_count,
+                        candidate_count,
+                        rejected_count,
+                        error_count
+                    )
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        zaman,
+                        profil_adi,
+                        kriterler.minimum_skor,
+                        kriterler.minimum_hacim_orani,
+                        int(
+                            kriterler.risk_odul_filtresi_gerekli
+                        ),
+                        izin_verilen_gorunumler,
+                        sonuc.toplam_sayisi,
+                        sonuc.aday_sayisi,
+                        sonuc.elenen_sayisi,
+                        sonuc.hatali_sayisi,
+                    ),
+                )
+
+                tarama_id = int(
+                    imlec.lastrowid
+                )
+
+                kayit_sayisi = 0
+
+                for sira, hisse in enumerate(
+                    sonuc.adaylar,
+                    start=1,
+                ):
+                    self._hisse_kaydi_ekle(
+                        baglanti=baglanti,
+                        tarama_id=tarama_id,
+                        durum="Aday",
+                        sira=sira,
+                        hisse=hisse,
+                        aciklama="",
+                    )
+                    kayit_sayisi += 1
+
+                for elenen in sonuc.elenenler:
+                    aciklama = " | ".join(
+                        elenen.nedenler
+                    )
+
+                    self._hisse_kaydi_ekle(
+                        baglanti=baglanti,
+                        tarama_id=tarama_id,
+                        durum="Elendi",
+                        sira=None,
+                        hisse=elenen.sonuc,
+                        aciklama=aciklama,
+                        sembol=elenen.sembol,
+                    )
+                    kayit_sayisi += 1
+
+                for hata in sonuc.hatalar:
+                    self._hisse_kaydi_ekle(
+                        baglanti=baglanti,
+                        tarama_id=tarama_id,
+                        durum="Hata",
+                        sira=None,
+                        hisse=None,
+                        aciklama=hata.hata,
+                        sembol=hata.sembol,
+                    )
+                    kayit_sayisi += 1
+
+        except sqlite3.Error as hata:
+            raise ScanHistoryError(
+                f"Tarama geçmişe kaydedilemedi: {hata}"
+            ) from hata
+
+        return ScanHistorySaveResult(
+            tarama_id=tarama_id,
+            kaydedilen_kayit_sayisi=kayit_sayisi,
+            veritabani_yolu=self.veritabani_yolu,
+        )
+
+    def son_taramalari_getir(
+        self,
+        limit: int = 10,
+    ) -> tuple[ScanRunSummary, ...]:
+        """Son taramaları yeniden eskiye doğru getirir."""
+        if limit <= 0:
+            raise ValueError(
+                "Listeleme limiti pozitif olmalıdır."
+            )
+
+        try:
+            with closing(self._baglanti_ac()) as baglanti, baglanti:
+                satirlar = baglanti.execute(
+                    """
+                    SELECT
+                        id,
+                        created_at,
+                        profile_name,
+                        total_count,
+                        candidate_count,
+                        rejected_count,
+                        error_count
+                    FROM scan_runs
+                    ORDER BY id DESC
+                    LIMIT ?
+                    """,
+                    (limit,),
+                ).fetchall()
+
+        except sqlite3.Error as hata:
+            raise ScanHistoryError(
+                f"Tarama geçmişi okunamadı: {hata}"
+            ) from hata
+
+        return tuple(
+            ScanRunSummary(
+                tarama_id=int(satir["id"]),
+                olusturma_zamani=str(
+                    satir["created_at"]
+                ),
+                profil_adi=str(
+                    satir["profile_name"]
+                ),
+                toplam_sayi=int(
+                    satir["total_count"]
+                ),
+                aday_sayisi=int(
+                    satir["candidate_count"]
+                ),
+                elenen_sayisi=int(
+                    satir["rejected_count"]
+                ),
+                hatali_sayisi=int(
+                    satir["error_count"]
+                ),
+            )
+            for satir in satirlar
+        )
+
+    def _baglanti_ac(
+        self,
+    ) -> sqlite3.Connection:
+        baglanti = sqlite3.connect(
+            self._veritabani_yolu
+        )
+
+        baglanti.row_factory = sqlite3.Row
+        baglanti.execute(
+            "PRAGMA foreign_keys = ON"
+        )
+
+        return baglanti
+
+    def _sema_olustur(self) -> None:
+        with closing(self._baglanti_ac()) as baglanti, baglanti:
+            baglanti.executescript(
+                """
+                CREATE TABLE IF NOT EXISTS scan_runs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    created_at TEXT NOT NULL,
+                    profile_name TEXT NOT NULL,
+                    minimum_score INTEGER NOT NULL,
+                    minimum_volume_ratio REAL NOT NULL,
+                    risk_reward_required INTEGER NOT NULL,
+                    allowed_views TEXT NOT NULL,
+                    total_count INTEGER NOT NULL,
+                    candidate_count INTEGER NOT NULL,
+                    rejected_count INTEGER NOT NULL,
+                    error_count INTEGER NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS scan_items (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    scan_run_id INTEGER NOT NULL,
+                    status TEXT NOT NULL,
+                    rank_number INTEGER,
+                    symbol TEXT NOT NULL,
+                    analysis_date TEXT,
+                    score INTEGER,
+                    technical_view TEXT,
+                    closing_price REAL,
+                    rsi14 REAL,
+                    volume_ratio REAL,
+                    risk_reward_ratio REAL,
+                    target_price REAL,
+                    risk_filter_passed INTEGER,
+                    explanation TEXT NOT NULL,
+                    FOREIGN KEY (scan_run_id)
+                        REFERENCES scan_runs(id)
+                        ON DELETE CASCADE
+                );
+
+                CREATE INDEX IF NOT EXISTS
+                    idx_scan_items_run_id
+                ON scan_items(scan_run_id);
+
+                CREATE INDEX IF NOT EXISTS
+                    idx_scan_items_symbol
+                ON scan_items(symbol);
+                """
+            )
+
+    def _hisse_kaydi_ekle(
+        self,
+        baglanti: sqlite3.Connection,
+        tarama_id: int,
+        durum: str,
+        sira: int | None,
+        hisse: object | None,
+        aciklama: str,
+        sembol: str | None = None,
+    ) -> None:
+        if hisse is None:
+            hisse_sembolu = sembol or ""
+
+            degerler = (
+                tarama_id,
+                durum,
+                sira,
+                hisse_sembolu,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                None,
+                aciklama,
+            )
+
+        else:
+            risk_plani = hisse.risk_plani
+            sinyal = hisse.sinyal
+
+            degerler = (
+                tarama_id,
+                durum,
+                sira,
+                hisse.sembol,
+                hisse.analiz_tarihi,
+                sinyal.skor,
+                sinyal.karar,
+                hisse.kapanis,
+                hisse.rsi14,
+                hisse.hacim_orani,
+                risk_plani.risk_odul_orani,
+                risk_plani.hedef_fiyat,
+                int(
+                    risk_plani.filtreyi_gecti
+                ),
+                aciklama,
+            )
+
+        baglanti.execute(
+            """
+            INSERT INTO scan_items (
+                scan_run_id,
+                status,
+                rank_number,
+                symbol,
+                analysis_date,
+                score,
+                technical_view,
+                closing_price,
+                rsi14,
+                volume_ratio,
+                risk_reward_ratio,
+                target_price,
+                risk_filter_passed,
+                explanation
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            degerler,
+        )

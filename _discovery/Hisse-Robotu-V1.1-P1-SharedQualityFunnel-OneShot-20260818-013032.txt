@@ -1,0 +1,70 @@
+﻿=== P1 SHARED QUALITY FUNNEL ===
+MOMENTUM_NATIVE_FILES=4
+MOMENTUM_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py
+MOMENTUM_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py
+MOMENTUM_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py
+MOMENTUM_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\momentum_batch_history_integration.py
+PREBREAKOUT_NATIVE_FILES=57
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_monitor.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_operation.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py
+PREBREAKOUT_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py
+OPPORTUNITY_RADAR_NATIVE_FILES=2
+OPPORTUNITY_RADAR_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py
+OPPORTUNITY_RADAR_NATIVE_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py
+OUTPUT_FEATURES|MOMENTUM|{"distance": 2, "liquidity": 1, "momentum": 8, "regime": 2, "relative_strength": 1, "resistance": 7, "risk_reward": 1, "trend": 4, "volatility": 2, "volume": 3}
+OUTPUT_FEATURES|PREBREAKOUT|{"distance": 8, "momentum": 23, "regime": 11, "relative_strength": 2, "resistance": 39, "risk_reward": 30, "trend": 8, "volatility": 2, "volume": 4}
+OUTPUT_FEATURES|OPPORTUNITY_RADAR|{"momentum": 1, "risk_reward": 3, "trend": 1, "volatility": 1, "volume": 1}
+DIMENSION_ENGINE_MAP={"distance": ["MOMENTUM", "PREBREAKOUT"], "liquidity": ["MOMENTUM"], "momentum": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "regime": ["MOMENTUM", "PREBREAKOUT"], "relative_strength": ["MOMENTUM", "PREBREAKOUT"], "resistance": ["MOMENTUM", "PREBREAKOUT"], "risk_reward": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "trend": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "volatility": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "volume": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"]}
+FUNNEL_BUCKET|CONTEXT|AVAILABLE=regime,liquidity
+FUNNEL_BUCKET|STRUCTURE|AVAILABLE=trend,relative_strength,volatility
+FUNNEL_BUCKET|SETUP|AVAILABLE=momentum,volume,resistance,distance
+FUNNEL_BUCKET|ECONOMICS|AVAILABLE=risk_reward
+DUPLICATE_DIMENSIONS=distance,momentum,regime,relative_strength,resistance,risk_reward,trend,volatility,volume
+SINGLE_ENGINE_DIMENSIONS=liquidity
+MISSING_DIMENSIONS=
+EXISTING_CROSS_ENGINE_AGGREGATORS=20
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=40|NAME=PreBreakoutMomentumCalibrationRow|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=94|NAME=PreBreakoutThresholdRecommendation|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=107|NAME=PreBreakoutThresholdValidationRow|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=238|NAME=momentum_kalibrasyonunu_hesapla|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=280|NAME=momentum_kalibrasyonunu_tabloya_cevir|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=551|NAME=kalibrasyon_esik_onerilerini_hesapla|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=620|NAME=kalibrasyon_esik_onerilerini_tabloya_cevir|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=641|NAME=esik_onerilerini_tarihsel_dogrula|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=702|NAME=esik_dogrulamalarini_tabloya_cevir|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=726|NAME=dogrulanmis_esik_politikasi_olustur|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py|LINE=111|NAME=classify_early_radar|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_engine.py|LINE=43|NAME=on_yukselis_hazirligini_analiz_et|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_live_watch.py|LINE=21|NAME=PreBreakoutLiveSignal|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_live_watch.py|LINE=59|NAME=canli_sinyal_olustur|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_models.py|LINE=61|NAME=PreBreakoutScore|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_release_readiness.py|LINE=31|NAME=on_yukselis_surum_hazirligini_degerlendir|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_score.py|LINE=13|NAME=skoru_hesapla|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_stage.py|LINE=24|NAME=asamayi_belirle|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_threshold_policy.py|LINE=12|NAME=PreBreakoutThresholdPolicy|ENGINE_TERMS=2
+AGGREGATOR|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=210|NAME=on_yukselis_hazirlik_formu|ENGINE_TERMS=2
+RELEVANT_TEST_FILES=137
+P1_DECISION=EXISTING_AGGREGATOR_REVIEW_REQUIRED
+P1_FLAGS=DUPLICATE_CONFIRMATION_RISK
+NEXT=Design a read-only shared quality context that de-duplicates canonical dimensions; engines remain unchanged and no threshold is modified.
+PRODUCTION_MUTATION=YOK
+STATIC_EXIT_CODE=0
+
+=== TARGET TESTS ===
+........................................................................ [ 13%]
+........................................................................ [ 26%]
+........................................................................ [ 40%]
+........................................................................ [ 53%]
+........................................................................ [ 67%]
+........................................................................ [ 80%]
+........................................................................ [ 93%]
+.................................                                        [100%]
+537 passed, 2485 deselected in 11.94s
+PYTEST_EXIT_CODE=0

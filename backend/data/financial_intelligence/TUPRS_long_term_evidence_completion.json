@@ -1,0 +1,45 @@
+{
+  "financial_momentum": "100",
+  "valuation_score": "0",
+  "margin_of_safety_score": "0",
+  "governance_score": "45",
+  "market_context": {
+    "technical_trend": null,
+    "relative_strength": null,
+    "volume_liquidity": null,
+    "catalyst": null,
+    "entry_risk": null,
+    "earnings_surprise": null
+  },
+  "long_term_context": {
+    "business_quality": null,
+    "growth_durability": "70",
+    "governance": "45",
+    "sector_risk": null
+  },
+  "flags": [
+    "TECHNICAL_MARKET_CONTEXT_NOT_SYNTHESIZED",
+    "BUSINESS_QUALITY_NOT_SYNTHESIZED",
+    "SECTOR_RISK_NOT_SYNTHESIZED",
+    "CAPITAL_EFFICIENCY_NOT_SYNTHESIZED",
+    "GROWTH_METRICS_AVAILABLE_4",
+    "GROWTH_METRICS_POSITIVE_4",
+    "GROWTH_METRICS_NEGATIVE_0",
+    "SINGLE_PERIOD_GROWTH_EVIDENCE_CAPPED_AT_70",
+    "NOT_MULTI_YEAR_DURABILITY_PROOF",
+    "LONG_TERM_CANONICAL_COVERAGE_EXPECTED_0_68",
+    "LONG_TERM_STILL_BELOW_0_70_THRESHOLD",
+    "BUSINESS_QUALITY_REMAINS_UNWIRED",
+    "CAPITAL_EFFICIENCY_REMAINS_UNWIRED",
+    "SECTOR_RISK_REMAINS_UNWIRED"
+  ],
+  "engine_version": "fin-prod-008-v1",
+  "coverage_assessment": {
+    "before": "0.56",
+    "growth_durability_weight": "0.12",
+    "after_expected": "0.68",
+    "unlock_threshold": "0.70",
+    "expected_locked": true,
+    "reason": "Canonical single-period growth evidence adds 0.12, but no proven business-quality/capital-efficiency/sector-risk adapter is available yet."
+  }
+}

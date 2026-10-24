@@ -1,0 +1,299 @@
+﻿FIN_PROD_V6_EXACT_SERIES_POINT_CONTRACT
+====================================================================================================
+FILE=backend\app\analysis\financial_intelligence_acceptance.py
+
+===== run_financial_intelligence_acceptance [46:130] =====
+00046: def run_financial_intelligence_acceptance(
+00047:     xls_path: str | Path,
+00048:     *,
+00049:     as_of: datetime | None = None,
+00050:     price: Decimal | None = None,
+00051:     total_shares: Decimal | None = None,
+00052:     diluted_shares: Decimal | None = None,
+00053:     free_float_ratio: Decimal | None = None,
+00054:     effective_free_float_ratio: Decimal | None = None,
+00055:     major_shareholder_ratio: Decimal | None = None,
+00056: ) -> dict[str, Any]:
+00057:     path = Path(xls_path)
+00058:     report = import_kap_financial_xls_bytes(path.read_bytes(), source_name=path.name)
+00059:     series = build_historical_financial_series((report,))
+00060:     effective_as_of = as_of or report.identity.published_at
+00061: 
+00062:     health = calculate_financial_health(series, as_of=effective_as_of)
+00063:     cash_quality = calculate_earnings_cash_quality(series, as_of=effective_as_of)
+00064:     risk = calculate_financial_risk_flags(series, as_of=effective_as_of)
+00065: 
+00066:     ownership = None
+00067:     multiples = None
+00068:     valuation_status = "DATA_INSUFFICIENT"
+00069: 
+00070:     if total_shares is not None:
+00071:         ownership_snapshot = OwnershipSnapshot(
+00072:             symbol=report.identity.symbol,
+00073:             as_of_date=report.identity.report_date,
+00074:             published_at=effective_as_of,
+00075:             total_shares=total_shares,
+00076:             diluted_shares=diluted_shares,
+00077:             free_float_ratio=free_float_ratio,
+00078:             effective_free_float_ratio=effective_free_float_ratio,
+00079:             major_shareholder_ratio=major_shareholder_ratio,
+00080:             source="PRODUCTION_ACCEPTANCE_INPUT",
+00081:         )
+00082:         ownership = assess_ownership_float(ownership_snapshot, as_of=effective_as_of)
+00083: 
+00084:         if price is not None:
+00085:             market = MarketSnapshot(
+00086:                 symbol=report.identity.symbol,
+00087:                 price_date=report.identity.report_date,
+00088:                 price=price,
+00089:                 published_at=effective_as_of,
+00090:                 source="PRODUCTION_ACCEPTANCE_INPUT",
+00091:             )
+00092:             multiples = calculate_market_multiples(
+00093:                 series,
+00094:                 ownership_snapshot,
+00095:                 market,
+00096:                 as_of=effective_as_of,
+00097:             )
+00098:             valuation_status = "MULTIPLES_AVAILABLE"
+00099: 
+00100:     required = {
+00101:         "symbol_ok": report.identity.symbol == "TUPRS",
+00102:         "canonical_points_present": len(series.points) > 0,
+00103:         "health_unlocked": not health.locked and health.score is not None,
+00104:         "risk_unlocked": not risk.locked and risk.risk_score is not None,
+00105:         "cash_quality_unlocked": not cash_quality.locked and cash_quality.score is not None,
+00106:         "read_only": True,
+00107:     }
+00108:     status = "PASS" if all(required.values()) else "FAIL"
+00109: 
+00110:     return _serialize({
+00111:         "status": status,
+00112:         "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+00113:         "identity": report.identity,
+00114:         "canonical_fact_count": len(report.facts),
+00115:         "historical_point_count": len(series.points),
+00116:         "series_warnings": series.warnings,
+00117:         "financial_health": health,
+00118:         "earnings_cash_quality": cash_quality,
+00119:         "financial_risk": risk,
+00120:         "ownership": ownership,
+00121:         "market_multiples": multiples,
+00122:         "valuation_status": valuation_status,
+00123:         "acceptance_checks": required,
+00124:         "limitations": [
+00125:             "Fair value / DCF is not generated without explicit forecast assumptions.",
+00126:             "Short-term investability is not generated without market/technical context.",
+00127:             "Long-term investability is not generated without business-quality/governance/growth context.",
+00128:             "Missing inputs are fail-closed; no values are invented.",
+00129:         ],
+00130:     })
+====================================================================================================
+FILE=backend\app\data\historical_financial_series.py
+
+===== HistoricalFinancialPoint [29:58] =====
+00029: class HistoricalFinancialPoint:
+00030:     symbol: str
+00031:     metric_code: str
+00032:     statement: str
+00033:     source_label: str
+00034:     value: Decimal
+00035:     period_kind: str
+00036:     period_start: date | None
+00037:     period_end: date
+00038:     comparison_role: str
+00039:     published_at: datetime | None
+00040:     consolidation_scope: str
+00041:     currency: str
+00042:     currency_scale: Decimal
+00043:     disclosure_id: str | None
+00044:     source_sha256: str
+00045:     note_ref: str | None = None
+00046: 
+00047:     @property
+00048:     def canonical_key(self) -> tuple:
+00049:         return (
+00050:             self.symbol,
+00051:             self.metric_code,
+00052:             self.period_kind,
+00053:             self.period_start,
+00054:             self.period_end,
+00055:             self.consolidation_scope,
+00056:             self.currency,
+00057:             self.currency_scale,
+00058:         )
+
+===== HistoricalFinancialSeries [62:123] =====
+00062: class HistoricalFinancialSeries:
+00063:     symbol: str
+00064:     consolidation_scope: str
+00065:     currency: str
+00066:     currency_scale: Decimal
+00067:     points: tuple[HistoricalFinancialPoint, ...]
+00068:     warnings: tuple[str, ...] = ()
+00069:     series_version: str = "fin002-v1"
+00070: 
+00071:     def _resolved_points(self, as_of: datetime | None = None) -> tuple[HistoricalFinancialPoint, ...]:
+00072:         candidates = [
+00073:             p for p in self.points
+00074:             if as_of is None or p.published_at is None or p.published_at <= as_of
+00075:         ]
+00076:         by_key: dict[tuple, HistoricalFinancialPoint] = {}
+00077:         for point in candidates:
+00078:             existing = by_key.get(point.canonical_key)
+00079:             if existing is None:
+00080:                 by_key[point.canonical_key] = point
+00081:                 continue
+00082:             existing_pub = existing.published_at or datetime.min
+00083:             point_pub = point.published_at or datetime.min
+00084:             if point_pub >= existing_pub:
+00085:                 by_key[point.canonical_key] = point
+00086:         return tuple(by_key.values())
+00087: 
+00088:     def available_as_of(self, as_of: datetime) -> "HistoricalFinancialSeries":
+00089:         return HistoricalFinancialSeries(
+00090:             symbol=self.symbol,
+00091:             consolidation_scope=self.consolidation_scope,
+00092:             currency=self.currency,
+00093:             currency_scale=self.currency_scale,
+00094:             points=self._resolved_points(as_of),
+00095:             warnings=self.warnings,
+00096:             series_version=self.series_version,
+00097:         )
+00098: 
+00099:     def metric_series(
+00100:         self,
+00101:         metric_code: str,
+00102:         *,
+00103:         period_kind: str | None = None,
+00104:         as_of: datetime | None = None,
+00105:     ) -> tuple[HistoricalFinancialPoint, ...]:
+00106:         source = self._resolved_points(as_of)
+00107:         selected = [
+00108:             p for p in source
+00109:             if p.metric_code == metric_code
+00110:             and (period_kind is None or p.period_kind == period_kind)
+00111:         ]
+00112:         selected.sort(key=lambda p: (p.period_end, p.period_start or p.period_end, p.published_at or datetime.min))
+00113:         return tuple(selected)
+00114: 
+00115:     def latest_value(
+00116:         self,
+00117:         metric_code: str,
+00118:         *,
+00119:         period_kind: str | None = None,
+00120:         as_of: datetime | None = None,
+00121:     ) -> HistoricalFinancialPoint | None:
+00122:         series = self.metric_series(metric_code, period_kind=period_kind, as_of=as_of)
+00123:         return series[-1] if series else None
+
+===== build_historical_financial_series [196:276] =====
+00196: def build_historical_financial_series(
+00197:     imports: Iterable[KapFinancialImportResult],
+00198: ) -> HistoricalFinancialSeries:
+00199:     imported = tuple(imports)
+00200:     symbol, scope, currency, scale = _validate_import_group(imported)
+00201: 
+00202:     warnings: set[str] = set()
+00203:     points_all: list[HistoricalFinancialPoint] = []
+00204:     latest_by_key: dict[tuple, HistoricalFinancialPoint] = {}
+00205: 
+00206:     for report in imported:
+00207:         for fact in report.facts:
+00208:             if not fact.metric_code:
+00209:                 continue
+00210:             # FIN-001 label mapping is intentionally broad. FIN-002 must not
+00211:             # reinterpret OCI/equity-change labels as core P&L/balance/cash metrics.
+00212:             if fact.statement not in {"BALANCE_SHEET", "INCOME_STATEMENT", "CASH_FLOW"}:
+00213:                 continue
+00214:             try:
+00215:                 period = parse_period_label(fact.period_label)
+00216:             except HistoricalFinancialSeriesError:
+00217:                 warnings.add(f"UNPARSED_PERIOD_LABEL:{fact.period_label}")
+00218:                 continue
+00219: 
+00220:             point = HistoricalFinancialPoint(
+00221:                 symbol=symbol,
+00222:                 metric_code=fact.metric_code,
+00223:                 statement=fact.statement,
+00224:                 source_label=fact.source_label,
+00225:                 value=fact.value,
+00226:                 period_kind=period.kind,
+00227:                 period_start=period.start_date,
+00228:                 period_end=period.end_date,
+00229:                 comparison_role=period.comparison_role,
+00230:                 published_at=report.identity.published_at,
+00231:                 consolidation_scope=scope,
+00232:                 currency=currency,
+00233:                 currency_scale=scale,
+00234:                 disclosure_id=report.identity.disclosure_id,
+00235:                 source_sha256=report.source_sha256,
+00236:                 note_ref=fact.note_ref,
+00237:             )
+00238: 
+00239:             existing = latest_by_key.get(point.canonical_key)
+00240:             if existing is not None and existing.value != point.value:
+00241:                 warnings.add(
+00242:                     "REVISED_VALUE:"
+00243:                     f"{point.metric_code}:{point.period_end.isoformat()}:"
+00244:                     f"{existing.value}->{point.value}"
+00245:                 )
+00246:             existing_pub = existing.published_at if existing and existing.published_at else datetime.min
+00247:             point_pub = point.published_at or datetime.min
+00248:             if existing is None or point_pub >= existing_pub:
+00249:                 latest_by_key[point.canonical_key] = point
+00250: 
+00251:             points_all.append(point)
+00252: 
+00253:     # Preserve every disclosed version for point-in-time replay. Read methods
+00254:     # resolve the latest version that was actually available at the requested time.
+00255:     points = tuple(sorted(
+00256:         points_all,
+00257:         key=lambda p: (
+00258:             p.metric_code,
+00259:             p.period_end,
+00260:             p.period_start or p.period_end,
+00261:             p.published_at or datetime.min,
+00262:             p.disclosure_id or "",
+00263:         ),
+00264:     ))
+00265: 
+00266:     if not points:
+00267:         raise HistoricalFinancialSeriesError("No mapped canonical facts could be normalized into a historical series.")
+00268: 
+00269:     return HistoricalFinancialSeries(
+00270:         symbol=symbol,
+00271:         consolidation_scope=scope,
+00272:         currency=currency,
+00273:         currency_scale=scale,
+00274:         points=points,
+00275:         warnings=tuple(sorted(warnings)),
+00276:     )
+====================================================================================================
+FILE=backend\app\models\financial_intelligence_models.py
+
+===== CanonicalFinancialFact [24:30] =====
+00024: class CanonicalFinancialFact:
+00025:     statement: str
+00026:     metric_code: str | None
+00027:     source_label: str
+00028:     period_label: str
+00029:     value: Decimal
+00030:     note_ref: str | None = None
+
+===== KapFinancialImportResult [34:46] =====
+00034: class KapFinancialImportResult:
+00035:     identity: FinancialReportIdentity
+00036:     facts: tuple[CanonicalFinancialFact, ...]
+00037:     unmapped_labels: tuple[str, ...]
+00038:     source_sha256: str
+00039:     parser_version: str = "fin001-v1"
+00040: 
+00041:     def current_values(self) -> dict[str, Decimal]:
+00042:         result: dict[str, Decimal] = {}
+00043:         for fact in self.facts:
+00044:             if fact.metric_code and fact.period_label.startswith("Cari D├╢nem"):
+00045:                 result.setdefault(fact.metric_code, fact.value)
+00046:         return result
+
+FIN_PROD_V6_EXACT_SERIES_POINT_CONTRACT=PASS

@@ -1,0 +1,253 @@
+[
+  {
+    "isin": "LU2450391748",
+    "failure": {
+      "error": "INVALID_DATE:Deviza",
+      "error_type": "ValueError",
+      "isin": "LU2450391748"
+    },
+    "url": "https://www.erstemarket.hu/befektetesi_alapok/osszehasonlitas?funds=LU2450391748",
+    "html_length": 118217,
+    "token_count": 369,
+    "isin_occurrence_count": 1,
+    "contexts": [
+      [
+        {
+          "index": 275,
+          "value": "Max közös",
+          "is_isin": false
+        },
+        {
+          "index": 276,
+          "value": "Az árfolyamokat közös bázisra hoztuk az árfolyamalakulás összehasonlíthatósága érdekében.",
+          "is_isin": false
+        },
+        {
+          "index": 277,
+          "value": "A fenti grafikonon",
+          "is_isin": false
+        },
+        {
+          "index": 278,
+          "value": "az elmúlt 365 nap (~12 hónap) árfolyamalakulása",
+          "is_isin": false
+        },
+        {
+          "index": 279,
+          "value": "szerepel.",
+          "is_isin": false
+        },
+        {
+          "index": 280,
+          "value": "Oldal nyomtatása",
+          "is_isin": false
+        },
+        {
+          "index": 281,
+          "value": "Kiválasztott befektetési alapok",
+          "is_isin": false
+        },
+        {
+          "index": 282,
+          "value": "Grafikon",
+          "is_isin": false
+        },
+        {
+          "index": 283,
+          "value": "Megnevezés",
+          "is_isin": false
+        },
+        {
+          "index": 284,
+          "value": "CPR INVEST - HYDROGEN- A USD-ACC",
+          "is_isin": false
+        },
+        {
+          "index": 285,
+          "value": "Törlés",
+          "is_isin": false
+        },
+        {
+          "index": 286,
+          "value": "ISIN",
+          "is_isin": false
+        },
+        {
+          "index": 287,
+          "value": "LU2450391748",
+          "is_isin": true
+        },
+        {
+          "index": 288,
+          "value": "Alapkezelő",
+          "is_isin": false
+        },
+        {
+          "index": 289,
+          "value": "Amundi (Lux)",
+          "is_isin": false
+        },
+        {
+          "index": 290,
+          "value": "Indulás",
+          "is_isin": false
+        },
+        {
+          "index": 291,
+          "value": "Deviza",
+          "is_isin": false
+        },
+        {
+          "index": 292,
+          "value": "USD",
+          "is_isin": false
+        },
+        {
+          "index": 293,
+          "value": "Akt. évi hozam (%)",
+          "is_isin": false
+        },
+        {
+          "index": 294,
+          "value": "11.34%",
+          "is_isin": false
+        },
+        {
+          "index": 295,
+          "value": "1 éves hozam (%)",
+          "is_isin": false
+        },
+        {
+          "index": 296,
+          "value": "20.69%",
+          "is_isin": false
+        },
+        {
+          "index": 297,
+          "value": "5 éves hozam (%)",
+          "is_isin": false
+        },
+        {
+          "index": 298,
+          "value": "-",
+          "is_isin": false
+        },
+        {
+          "index": 299,
+          "value": "10 éves hozam (%)",
+          "is_isin": false
+        },
+        {
+          "index": 300,
+          "value": "-",
+          "is_isin": false
+        },
+        {
+          "index": 301,
+          "value": "1 éves volatilitás (%)",
+          "is_isin": false
+        },
+        {
+          "index": 302,
+          "value": "16.72%",
+          "is_isin": false
+        },
+        {
+          "index": 303,
+          "value": "3 éves volatilitás (%)",
+          "is_isin": false
+        },
+        {
+          "index": 304,
+          "value": "15.59%",
+          "is_isin": false
+        },
+        {
+          "index": 305,
+          "value": "5 éves volatilitás (%)",
+          "is_isin": false
+        },
+        {
+          "index": 306,
+          "value": "-",
+          "is_isin": false
+        },
+        {
+          "index": 307,
+          "value": "1 éves max drawdown (%)",
+          "is_isin": false
+        },
+        {
+          "index": 308,
+          "value": "-11.75%",
+          "is_isin": false
+        },
+        {
+          "index": 309,
+          "value": "5 éves max drawdown (%)",
+          "is_isin": false
+        },
+        {
+          "index": 310,
+          "value": "-",
+          "is_isin": false
+        },
+        {
+          "index": 311,
+          "value": "Árfolyam",
+          "is_isin": false
+        },
+        {
+          "index": 312,
+          "value": "154.78",
+          "is_isin": false
+        },
+        {
+          "index": 313,
+          "value": "2026.09.22.",
+          "is_isin": false
+        },
+        {
+          "index": 314,
+          "value": "Nettó eszközérték",
+          "is_isin": false
+        },
+        {
+          "index": 315,
+          "value": "1 764 555 USD",
+          "is_isin": false
+        },
+        {
+          "index": 316,
+          "value": "Kategória",
+          "is_isin": false
+        },
+        {
+          "index": 317,
+          "value": "Részvény",
+          "is_isin": false
+        },
+        {
+          "index": 318,
+          "value": "Kockázat",
+          "is_isin": false
+        },
+        {
+          "index": 319,
+          "value": "Magas",
+          "is_isin": false
+        },
+        {
+          "index": 320,
+          "value": "Dokumentumok",
+          "is_isin": false
+        },
+        {
+          "index": 321,
+          "value": "Díjjegyzékek",
+          "is_isin": false
+        }
+      ]
+    ]
+  }
+]

@@ -1,0 +1,22 @@
+{
+  "source_url": "https://www.erstemarket.hu/befektetesi_alapok/kereses",
+  "html_length": 126964,
+  "fund_count": 1,
+  "isins": [
+    "AT0000A07HF4"
+  ],
+  "detail_urls": [],
+  "script_urls": [
+    "https://cdn.tagcommander.com/6565/tc_ErsteBefektetYosiZrt_20.js",
+    "https://execution-ci360.prd.erste.hu/js/ot2.min.js",
+    "https://www.erstemarket.hu/\\/www.googletagmanager.com/gtag/js?id=G-0CZXZ1QRNJ",
+    "https://www.erstemarket.hu/js/vendor/tinymce/tinymce.min.js",
+    "https://www.erstemarket.hu/min-js?f=js/head.js&v=1.104",
+    "https://www.erstemarket.hu/min-js?f=js/modules/funds.js,js/modules/future.js,js/modules/future_em.js,js/modules/http.js,js/modules/performance.js,js/modules/pages.js,js/modules/certificate_search.js,js/modules/certificate_events.js,js/modules/screener.js,js/modules/custom_instruments.js,js/modules/savings_calculators.js,js/modules/tour.js,js/modules/contentsview.js,js/modules/traderview.js,js/modules/mediaplayer.js,js/modules/etf.js,js/modules/header.js,js/modules/insite.js,js/modules/faq.js,js/modules/commanders_act.js,js/modules/recaptcha.js,js/modules/edocs.js,js/modules/announcements.js,js/modules/swipers.js,js/modules/watchlist.js,js/modules/erste_future.js,js/modules/instrument_requests.js,js/modules/mifid.js,js/modules/layer_helper.js,js/modules/instruments.js,js/site.js,js/modules/basket.js&v=1.104",
+    "https://www.erstemarket.hu/min-js?f=js/modules/helper.js,js/modules/website.js,js/modules/layout.js,js/modules/storage.js,js/modules/contents.js,js/modules/forms.js,js/modules/prices.js,js/modules/profiles.js,js/modules/tab_widget.js,js/modules/charts.js&v=1.104",
+    "https://www.erstemarket.hu/min-js?f=js/vendor/jquery.mask.min.js,js/vendor/js.cookie.js,js/vendor/jquery.tablesorter.min.js,js/vendor/jquery.number.js,js/vendor/sortable.js,js/vendor/rangeslider.min.js,js/vendor/jquery.datetimepicker.full.min.js,js/vendor/masonry.pkgd.min.js,vendor/nouislider/nouislider.min.js,vendor/highstock/highstock-all.js&v=1.104",
+    "https://www.erstemarket.hu/min-js?f=vendor/highstock/modules/_accessibility.src.js,vendor/noty/packaged/jquery.noty.packaged.min.js,vendor/noty/themes/erste.js,js/vendor/intro.min.js,js/vendor/openplayer.min.js,js/vendor/openplayerjs-youtube.min.js,js/vendor/tweenmax.min.js,js/vendor/timelinemax.min.js,js/vendor/wnumb.min.js,js/vendor/lottie.min.js&v=1.104",
+    "https://www.erstemarket.hu/min-js?f=website/js/bootstrap-5.bundle.min.js,website/js/swiper-bundle.min.js,website/js/jquery-sortable-min.js,website/js/jquery.smartbanner.min.js&v=1.104",
+    "https://www.erstemarket.hu/min-js?f=website/js/jquery-3.5.1.min.js,js/vendor/jquery-ui.min.js,website/js/conflicts.js&v=1.104"
+  ]
+}

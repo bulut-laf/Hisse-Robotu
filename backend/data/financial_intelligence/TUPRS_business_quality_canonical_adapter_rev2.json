@@ -1,0 +1,97 @@
+{
+  "status": "BLOCKED",
+  "mode": "READ_ONLY_CANONICAL_BUSINESS_QUALITY_ADAPTER_V6_REV2",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "resolved_inputs": {
+    "revenue": {
+      "metric_code": "REVENUE",
+      "value": "386420235",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "gross_profit": {
+      "metric_code": "GROSS_PROFIT",
+      "value": "61036950",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "operating_profit": {
+      "metric_code": "OPERATING_PROFIT",
+      "value": "46833690",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "net_income": {
+      "metric_code": "NET_INCOME",
+      "value": "46189781",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "total_assets": {
+      "metric_code": "TOTAL_ASSETS",
+      "value": "859987516",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "total_equity": {
+      "metric_code": "TOTAL_EQUITY",
+      "value": "463306781",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "cash_and_equivalents": {
+      "metric_code": "CASH_EQUIVALENTS",
+      "value": "195840940",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "current_assets": {
+      "metric_code": "CURRENT_ASSETS",
+      "value": "439480874",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "current_liabilities": {
+      "metric_code": "CURRENT_LIABILITIES",
+      "value": "325369321",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "operating_cash_flow": {
+      "metric_code": "OPERATING_CASH_FLOW",
+      "value": "132366363",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "capital_expenditure": {
+      "metric_code": "CAPEX",
+      "value": "-11858044",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32"
+    },
+    "total_debt": {
+      "source_section": "financial_health",
+      "metric_code": "FINANCIAL_DEBT",
+      "value": "68200679",
+      "source_period_end": "2026-06-30",
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+      "semantic_guard": "existing FINANCIAL_DEBT output reused; no new debt formula"
+    }
+  },
+  "missing_requirements": [
+    "ebitda",
+    "shares_outstanding"
+  ],
+  "business_quality": null,
+  "blockers": [
+    "BUSINESS_QUALITY_CANONICAL_INPUTS_INCOMPLETE"
+  ],
+  "rules": [
+    "No missing value is converted to zero.",
+    "No EBITDA formula is introduced.",
+    "Debt reuses existing accepted FINANCIAL_DEBT output only.",
+    "Shares reuse existing ownership acceptance only.",
+    "Existing calculate_fundamental_quality remains the only quality scoring engine."
+  ]
+}

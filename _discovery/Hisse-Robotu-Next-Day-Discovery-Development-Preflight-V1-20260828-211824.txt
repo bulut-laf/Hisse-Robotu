@@ -1,0 +1,293 @@
+HISSE ROBOTU — NEXT-DAY TOP 5/10 DISCOVERY V1
+DEVELOPMENT PREFLIGHT V1
+==============================================================================
+
+=== COMPACT FACTS ===
+CANONICAL_CLOSE_FUNCTION_PRESENT=True
+CANONICAL_CLOSE_DELEGATES_LEGACY_EVENING=False
+SCHEDULED_SCAN_RESULT_ASSIGNMENT=True
+SCHEDULED_RUNTIME_EVREN_VALUES=['BIST 100']
+SCHEDULED_RUNTIME_MAX_ADAY_VALUES=[15]
+SCHEDULED_RUNTIME_FULL_BIST_UNIVERSE_PROVEN=False
+HEADLESS_FULL_BIST_RESULT_REUSE_PROVEN=False
+SELECTION_CONTEXT_FAMILY_COUNT=12
+SELECTION_CONTEXT_MINIMUM_PROVEN=True
+DUPLICATE_FACTOR_GUARD_SEAM_PROVEN=True
+T1_OUTCOME_SEAM_PROVEN=True
+BENCHMARK_SEAM_PROVEN=True
+PERSISTENCE_REUSE_SEAM_PROVEN=True
+
+BLOCKERS=CANONICAL_CLOSE_DELEGATION_NOT_PROVEN;CANONICAL_CLOSE_FULL_BIST_UNIVERSE_RESULT_NOT_PROVEN
+WARNINGS=SCHEDULED_RUNTIME_UNIVERSE=BIST 100
+DECISION=NO_MUTATION_RETURN_TO_DESIGN_STUDIO
+NEXT=DESIGN_MINIMAL_CANONICAL_BIST_TUM_RESULT_REUSE_SEAM
+
+=== CONTEXT HITS ===
+RESEARCH_SCORE=backend\app\analysis\daily_buy_decision_calibration.py;backend\app\analysis\daily_buy_decision_closeout.py;backend\app\analysis\daily_buy_decision_cycle.py;backend\app\analysis\daily_buy_decision_output_archive.py;backend\app\analysis\daily_buy_decision_review.py;backend\app\analysis\daily_operation_ai_context.py;backend\app\analysis\daily_operation_panel.py;backend\app\analysis\eod_final_action_board.py;backend\app\analysis\fast_mover_preclose_attachment.py;backend\app\analysis\fast_mover_watch.py;backend\app\analysis\fundamental_quality.py;backend\app\analysis\fundamental_score_history.py
+RANK=backend\app\analysis\daily_buy_decision_calibration.py;backend\app\analysis\daily_buy_decision_closeout.py;backend\app\analysis\daily_buy_decision_cycle.py;backend\app\analysis\daily_buy_decision_output_archive.py;backend\app\analysis\daily_early_trajectory.py;backend\app\analysis\early_visibility_report.py;backend\app\analysis\eod_morning_board_delta.py;backend\app\analysis\fast_mover_preclose_attachment.py;backend\app\analysis\fast_mover_watch.py;backend\app\analysis\historical_research_replay.py;backend\app\analysis\jump_candidate_priority_merge.py;backend\app\analysis\market_scanner.py
+EARLY_VISIBILITY=backend\app\analysis\daily_buy_decision_calibration.py;backend\app\analysis\daily_buy_decision_closeout.py;backend\app\analysis\daily_buy_decision_cycle.py;backend\app\analysis\daily_buy_decision_review.py;backend\app\analysis\early_visibility_report.py;backend\app\analysis\early_visibility_tracking_bridge.py;backend\app\analysis\fast_mover_preclose_attachment.py;backend\app\analysis\fast_mover_watch.py;backend\app\analysis\high_conviction_buy_gate.py;backend\app\analysis\morning_candidate_flow.py;backend\app\workflow\adaptive_research_final_lock.py;backend\app\workflow\adaptive_research_workflow.py
+FAST_MOVER=backend\app\analysis\fast_mover_preclose_attachment.py;backend\app\analysis\fast_mover_watch.py;backend\app\operations\preclose_partial_daily_preview.py;backend\tests\test_fast_mover_preclose_attachment.py;backend\tests\test_fast_mover_watch.py
+MOMENTUM=backend\app\analysis\automatic_signal_tracking.py;backend\app\analysis\indicator_contribution.py;backend\app\analysis\market_regime.py;backend\app\analysis\momentum_discovery.py;backend\app\analysis\momentum_walk_forward.py;backend\app\analysis\ranking_quality_context.py;backend\app\analysis\signal_engine.py;backend\app\analysis\signal_outcome_tracking.py;backend\app\analysis\success_comparison_report.py;backend\app\analysis\technical_confirmation.py;backend\app\analysis\technical_decision_matrix.py;backend\app\analysis\trend_scan_policy.py
+TREND=backend\app\analysis\divergence_analysis.py;backend\app\analysis\indicator_contribution.py;backend\app\analysis\market_regime.py;backend\app\analysis\momentum_discovery.py;backend\app\analysis\multi_timeframe_analysis.py;backend\app\analysis\position_monitor.py;backend\app\analysis\ranking_quality_context.py;backend\app\analysis\signal_engine.py;backend\app\analysis\technical_confirmation.py;backend\app\analysis\technical_decision_matrix.py;backend\app\analysis\trade_plan.py;backend\app\analysis\trend_scan_policy.py
+SETUP=backend\app\analysis\momentum_discovery.py;backend\app\analysis\ranking_quality_context.py;backend\tests\test_ranking_quality_context.py
+RELATIVE_STRENGTH=backend\app\analysis\market_scanner.py;backend\app\analysis\momentum_discovery.py;backend\app\analysis\ranking_quality_context.py;backend\app\analysis\technical_decision_matrix.py;backend\app\indicators\technical_indicators.py;backend\app\opportunity_radar.py;backend\app\prebreakout\prebreakout_backtest.py;backend\app\prebreakout\prebreakout_engine.py;backend\app\prebreakout\prebreakout_features.py;backend\app\prebreakout\prebreakout_score.py;backend\app\prebreakout\prebreakout_validation.py;backend\app\sector_analysis\sector_market_strength.py
+VOLUME=backend\app\analysis\bist_daily_market.py;backend\app\analysis\daily_buy_decision_calibration.py;backend\app\analysis\daily_buy_decision_closeout.py;backend\app\analysis\daily_buy_decision_cycle.py;backend\app\analysis\daily_buy_decision_review.py;backend\app\analysis\divergence_analysis.py;backend\app\analysis\eod_final_action_board.py;backend\app\analysis\high_conviction_buy_gate.py;backend\app\analysis\indicator_contribution.py;backend\app\analysis\jump_candidate_entry_readiness.py;backend\app\analysis\jump_candidate_quality.py;backend\app\analysis\market_regime.py
+VOLATILITY=backend\app\analysis\fast_mover_watch.py;backend\app\analysis\signal_engine.py;backend\app\analysis\technical_decision_matrix.py;backend\app\backtest\market_regime_analysis.py;backend\app\compliance\kap_vbts_client.py;backend\app\decision_support\risk_integration.py;backend\app\indicators\technical_indicators.py;backend\app\prebreakout\prebreakout_engine.py;backend\app\risk\risk_engine.py;backend\app\risk\structural_risk.py;backend\run_market_regime_analysis.py;backend\tests\test_ai_provider.py
+ENTRY_DISTANCE=backend\app\analysis\fast_mover_watch.py
+BREAKOUT=backend\app\analysis\market_regime.py;backend\app\analysis\momentum_discovery.py;backend\app\analysis\momentum_walk_forward.py;backend\app\analysis\position_monitor.py;backend\app\analysis\ranking_quality_context.py;backend\app\analysis\technical_confirmation.py;backend\app\analysis\technical_decision_matrix.py;backend\app\analysis\trade_plan.py;backend\app\analysis\trend_scan_policy.py;backend\app\diagnostics\system_check.py;backend\app\history\momentum_history.py;backend\app\opportunity_radar.py
+
+=== T1 OUTCOME / OHLC FILES ===
+OUTCOME_FILES=backend\app\analysis\automatic_signal_tracking.py;backend\app\analysis\daily_buy_decision_outcomes.py;backend\app\analysis\daily_buy_decision_review.py;backend\app\analysis\daily_operation_panel.py;backend\app\analysis\high_conviction_buy_gate.py;backend\app\analysis\indicator_contribution.py;backend\app\analysis\momentum_walk_forward.py;backend\app\analysis\morning_candidate_outcome.py;backend\app\analysis\morning_operation_summary.py;backend\app\analysis\ranking_validation.py;backend\app\analysis\shadow_portfolio.py;backend\app\analysis\signal_outcome_tracking.py;backend\app\analysis\stock_analyzer.py;backend\app\analysis\success_comparison_report.py;backend\app\analysis\v13_calibration_closeout.py;backend\app\analysis\walk_forward_calibration.py;backend\app\analysis\weekly_performance_report.py;backend\app\backtest\analysis_profile.py;backend\app\backtest\backtest_engine.py;backend\app\backtest\backtest_models.py;backend\app\backtest\backtest_service.py;backend\app\backtest\daily_equity_curve.py;backend\app\backtest\equity_curve.py;backend\app\backtest\historical_signal_generator.py;backend\app\backtest\market_regime_analysis.py;backend\app\backtest\parameter_sensitivity.py;backend\app\backtest\performance_breakdown.py;backend\app\backtest\portfolio_backtest.py;backend\app\backtest\portfolio_capacity_robustness.py;backend\app\backtest\portfolio_capacity_sensitivity.py
+OHLC_FILES=backend\app\analysis\bist_daily_market.py;backend\app\analysis\market_regime.py;backend\app\backtest\analysis_context.py;backend\app\backtest\backtest_engine.py;backend\app\backtest\historical_signal_generator.py;backend\app\data\bist_official_archive.py;backend\app\data\bist_official_batch_bridge.py;backend\app\data\bist_official_daily.py;backend\app\data\data_source_recovery.py;backend\app\data\delayed_data_pilot.py;backend\app\data\market_data.py;backend\app\diagnostics\system_check.py;backend\app\indicators\technical_indicators.py;backend\app\operations\preclose_partial_daily_preview.py;backend\app\opportunity_radar.py;backend\app\prebreakout\prebreakout_features.py;backend\app\ui\current_session_snapshot.py;backend\app\ui\prebreakout_dashboard.py;backend\app\ui\prebreakout_validation_dashboard.py;backend\dashboard.backup_before_navigation_fix.py;backend\dashboard.py;backend\tests\prebreakout_test_helpers.py;backend\tests\test_analysis_context.py;backend\tests\test_backtest_engine.py;backend\tests\test_backtest_service.py;backend\tests\test_backtest_service_aligned_benchmark.py;backend\tests\test_backtest_service_benchmark.py;backend\tests\test_backtest_service_breakdown.py;backend\tests\test_backtest_service_daily_equity.py;backend\tests\test_backtest_service_equity.py
+
+=== BENCHMARK FILES ===
+backend\app\analysis\bist_universe.py;backend\app\analysis\market_regime.py;backend\app\analysis\market_scanner.py;backend\app\analysis\momentum_walk_forward.py;backend\app\backtest\backtest_service.py;backend\app\backtest\benchmark_comparison.py;backend\app\diagnostics\system_check.py;backend\app\history\batch_historical_export.py;backend\app\history\replay_batch_adapter.py;backend\app\market_context\daily_market_briefing.py;backend\app\market_context\parser.py;backend\app\operations\daily_buy_decision_scheduled_runner.py;backend\app\opportunity_radar.py;backend\app\prebreakout\prebreakout_universe.py;backend\app\sector_analysis\sector_candidate_context.py;backend\app\sector_analysis\sector_market_strength.py;backend\app\sector_analysis\sector_member_strength.py;backend\app\ui\backtest_dashboard.py;backend\app\ui\batch_historical_export_ui.py;backend\app\ui\bist_daily_market_dashboard.py;backend\app\ui\market_regime_dashboard.py;backend\app\ui\momentum_batch_history_integration.py;backend\app\ui\sprint136_batch_history_ui.py;backend\dashboard.backup_before_navigation_fix.py;backend\dashboard.py;backend\run_backtest.py;backend\scripts\sector_member_strength_check.py;backend\tests\test_ai_daily_review_service.py;backend\tests\test_backtest_dashboard.py;backend\tests\test_backtest_service_aligned_benchmark.py
+
+=== HISTORY / PERSISTENCE FILES ===
+backend\app\analysis\daily_buy_decision_operational_closeout.py;backend\app\analysis\daily_buy_decision_output_archive.py;backend\app\analysis\fast_mover_preclose_attachment.py;backend\app\analysis\historical_research_replay.py;backend\app\analysis\momentum_walk_forward.py;backend\app\analysis\ranking_memory.py;backend\app\analysis\ranking_movement_visibility.py;backend\app\analysis\ranking_snapshot_adapter.py;backend\app\analysis\ranking_trajectory.py;backend\app\analysis\ranking_validation.py;backend\app\analysis\ranking_visibility_context.py;backend\app\analysis\ranking_visibility_service.py;backend\app\analysis\research_profile_memory.py;backend\app\analysis\walk_forward_calibration.py;backend\app\diagnostics\system_check.py;backend\app\operations\daily_buy_decision_scheduled_runner.py;backend\app\operations\scheduled_operation_phase_runner.py;backend\app\ui\momentum_batch_history_integration.py;backend\app\ui\sprint135_dashboard_patch.py;backend\dashboard.backup_before_navigation_fix.py;backend\dashboard.py;backend\tests\test_ai_history.py;backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py;backend\tests\test_daily_buy_decision_output_archive_v1.py;backend\tests\test_early_visibility_runtime_output.py;backend\tests\test_early_visibility_v2_end_to_end.py;backend\tests\test_fast_mover_preclose_attachment.py;backend\tests\test_historical_research_replay_v1.py;backend\tests\test_market_scanner_visibility_snapshot_integration.py;backend\tests\test_momentum_batch_history_integration.py
+
+=== EXISTING FULL BIST / TUM_SONUCLAR FILES ===
+TUM_SONUCLAR_FILES=backend\app\analysis\fast_mover_preclose_attachment.py;backend\app\analysis\market_scanner.py;backend\app\analysis\momentum_walk_forward.py;backend\app\analysis\research_profiles_daily.py;backend\app\operations\preclose_partial_daily_preview.py;backend\dashboard.py;backend\tests\test_research_profiles_sprint02_contract.py
+BIST_TUM_FILES=backend\app\analysis\bist_daily_market.py;backend\app\analysis\bist_universe.py;backend\app\analysis\market_regime.py;backend\app\analysis\market_scanner.py;backend\app\analysis\momentum_discovery.py;backend\app\analysis\research_profile_memory.py;backend\app\diagnostics\system_check.py;backend\app\history\replay_batch_adapter.py;backend\app\operations\preclose_partial_daily_preview.py;backend\app\opportunity_radar.py;backend\app\prebreakout\prebreakout_universe.py;backend\app\ui\batch_historical_export_ui.py;backend\app\ui\bist_daily_market_dashboard.py;backend\app\ui\momentum_batch_history_integration.py;backend\app\ui\opportunity_radar_dashboard.py;backend\app\ui\sprint136_batch_history_ui.py;backend\dashboard.backup_before_navigation_fix.py;backend\dashboard.py;backend\scripts\sector_member_strength_check.py;backend\tests\test_batch_historical_export.py;backend\tests\test_bist_daily_market_universe_selector.py;backend\tests\test_bist_toplu_tarama_role_clarity_v11.py;backend\tests\test_fast_mover_preclose_attachment.py;backend\tests\test_market_regime_live.py;backend\tests\test_momentum_batch_history_integration.py;backend\tests\test_prebreakout_universe.py;backend\tests\test_replay_batch_adapter.py;backend\tests\test_research_profile_memory_v1.py;backend\tests\test_sprint136_backward_compatibility.py;backend\tests\test_system_check.py
+SESSION_STATE_FILES=backend\dashboard.backup_before_navigation_fix.py;backend\dashboard.py;backend\tests\test_v1_operations_01c_dashboard_wiring.py
+HEADLESS_READ_FILES=
+
+=== CANONICAL CLOSE FUNCTION ===
+def canonical_close(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult: ...
+
+=== EXECUTE_SCHEDULED_RUN ===
+def execute_scheduled_run(
+    phase: str,
+    *,
+    now: datetime | None = None,
+    runtime: ScheduledRunRuntime | None = None,
+    store: ScheduledRunJsonStore | None = None,
+    force: bool = False,
+    audit_store: ScheduledRunAuditJsonStore | None = None,
+    run_kind: str = "SCHEDULED",
+) -> ScheduledRunRecord:
+    phase_value = _normalize_phase(phase)
+    timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    run_date = timestamp.date().isoformat()
+    state_store = store or ScheduledRunJsonStore()
+    history_store = audit_store or ScheduledRunAuditJsonStore()
+    key = f"{run_date}:{phase_value}"
+    existing = state_store.load().get(key)
+    if existing is not None and existing.status == "SUCCESS" and not force:
+        skipped = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=existing.started_at,
+            finished_at=existing.finished_at,
+            status="SKIPPED",
+            candidate_count=existing.candidate_count,
+            buy_symbols=existing.buy_symbols,
+            detail="Aynı gün/faz için başarılı otomatik koşu zaten mevcut.",
+            run_kind=run_kind,
+        )
+        history_store.append(skipped)
+        return skipped
+
+    started_at = timestamp.isoformat(timespec="seconds")
+    engine = runtime or _default_runtime()
+    try:
+        summary = engine.operation_summary()
+        scan_result = engine.scan()
+        visibility = engine.visibility_contexts()
+        candidate_snapshot = engine.candidate_snapshot(summary, scan_result, visibility)
+        cards = tuple(getattr(candidate_snapshot, "candidates", ()) or ())
+        decisions = engine.decisions(cards)
+        engine.persist_decision_snapshot(cards, decisions, phase_value, timestamp)
+        buy_symbols = tuple(
+            str(getattr(item, "symbol", "")).strip().upper()
+            for item in decisions
+            if str(getattr(item, "decision", "")).strip().upper() == "AL"
+        )
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="SUCCESS",
+            candidate_count=len(cards),
+            buy_symbols=buy_symbols,
+            detail="Seans sonu/sabah günlük karar koşusu tamamlandı.",
+            run_kind=run_kind,
+        )
+    except Exception as error:
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="FAILED",
+            candidate_count=0,
+            buy_symbols=(),
+            detail=f"{type(error).__name__}: {error}",
+            run_kind=run_kind,
+        )
+    state_store.save(record)
+    history_store.append(record)
+    return record
+
+=== DEFAULT RUNTIME ===
+def _default_runtime() -> ScheduledRunRuntime:
+    from backend.app.analysis.daily_buy_decision_closeout import build_daily_buy_decisions
+    from backend.app.analysis.daily_buy_decision_cycle import (
+        DailyBuyDecisionJsonStore,
+        build_daily_buy_decision_snapshot,
+    )
+    from backend.app.analysis.daily_operation_panel import build_daily_operation_summary
+    from backend.app.analysis.morning_operation_snapshot import build_morning_operation_snapshot
+    from backend.app.analysis.ranking_visibility_service import build_current_visibility_context
+    from backend.app.analysis.market_scanner import MarketScanRequest
+    from backend.app.compliance.dashboard_market_scanner_source_factory import build_dashboard_market_scanner
+    from backend.app.data.delayed_data_pilot import DelayedDataPilotStore
+    from backend.app.analysis.signal_outcome_tracking import SignalOutcomeJsonStore
+    from backend.app.history.trade_journal import TradeJournalStore, TradeJournalError
+    from backend.app.analysis.shadow_portfolio import ShadowPortfolioStore, ShadowPortfolioError
+
+    class Runtime:
+        def operation_summary(self) -> object:
+            pilot_store = DelayedDataPilotStore()
+            signal_store = SignalOutcomeJsonStore()
+            trade_store = TradeJournalStore()
+            shadow_store = ShadowPortfolioStore()
+            try:
+                trades = trade_store.list_records()
+            except TradeJournalError:
+                trades = ()
+            try:
+                shadow = shadow_store.list()
+            except ShadowPortfolioError:
+                shadow = ()
+            return build_daily_operation_summary(
+                pilot_records=pilot_store.list(),
+                signal_outcomes=signal_store.list(),
+                trade_records=trades,
+                shadow_positions=shadow,
+            )
+
+        def scan(self) -> object:
+            service = build_dashboard_market_scanner(vbts_hard_block=False)
+            request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi="dengeli",
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            return service.calistir(request)
+
+        def visibility_contexts(self) -> tuple[object, ...]:
+            try:
+                return tuple(build_current_visibility_context())
+            except Exception:
+                return ()
+
+        def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+            return build_morning_operation_snapshot(
+                operation_summary=operation_summary,
+                scan_result=scan_result,
+                visibility_contexts=visibility_contexts,
+                limit=5,
+            )
+
+        def decisions(self, cards: tuple[object, ...]) -> tuple[object, ...]:
+            return tuple(build_daily_buy_decisions(cards))
+
+        def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None:
+            snapshot = build_daily_buy_decision_snapshot(
+                cards,
+                phase=phase,
+                now=now,
+                decisions=decisions,
+            )
+            DailyBuyDecisionJsonStore().save(snapshot)
+            from backend.app.analysis.daily_buy_decision_output_archive import (
+                DecisionOutputArchiveJsonStore,
+            )
+            DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+
+    return Runtime()
+
+=== FULL BIST / TUM_SONUCLAR REFERENCES ===
+backend\app\analysis\bist_daily_market.py:92: evren_adi: str = "BIST Tüm",
+backend\app\analysis\bist_daily_market.py:104: "BIST Tüm",
+backend\app\analysis\bist_universe.py:21: "BIST Tüm": "XUTUM",
+backend\app\analysis\fast_mover_preclose_attachment.py:103: The order of existing ``tum_sonuclar`` is reused as the current Research
+backend\app\analysis\market_regime.py:29: "XUTUM": "BIST Tüm",
+backend\app\analysis\market_regime.py:39: "XUTUM": "XUTUM", "XUTUM.IS": "XUTUM", "BISTTUM": "XUTUM",
+backend\app\analysis\market_scanner.py:46: "BIST Tüm",
+backend\app\analysis\market_scanner.py:90: tum_sonuclar: tuple[StockAnalysisResult, ...] = ()
+backend\app\analysis\market_scanner.py:265: tum_sonuclar = tuple(tarama.basarili_sonuclar)
+backend\app\analysis\market_scanner.py:272: for sonuc in tum_sonuclar
+backend\app\analysis\market_scanner.py:287: tum_sonuclar=tuple(tarama.basarili_sonuclar),
+backend\app\analysis\momentum_discovery.py:73: evren: str = "BIST Tüm"
+backend\app\analysis\momentum_walk_forward.py:372: tum_sonuclar, motor_hatalari = self._motor.calistir(
+backend\app\analysis\momentum_walk_forward.py:387: for sonuc in tum_sonuclar
+backend\app\analysis\momentum_walk_forward.py:395: sonuc for sonuc in tum_sonuclar if sonuc.aday.sinif == SINIF_IZLEME_DISI
+backend\app\analysis\momentum_walk_forward.py:407: basarili_sayisi=len(tum_sonuclar),
+backend\app\analysis\research_profile_memory.py:14: CANONICAL_PROFILE_MEMORY_UNIVERSE = "BIST Tüm"
+backend\app\analysis\research_profiles_daily.py:446: for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ()):
+backend\app\diagnostics\system_check.py:671: "BIST Tüm": 500,
+backend\app\history\replay_batch_adapter.py:56: "bisttüm": "BIST Tüm",
+backend\app\history\replay_batch_adapter.py:57: "bisttum": "BIST Tüm",
+backend\app\operations\preclose_partial_daily_preview.py:285: "evren": "BIST Tüm",
+backend\app\operations\preclose_partial_daily_preview.py:300: for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ())
+backend\app\operations\preclose_partial_daily_preview.py:323: getattr(scan_result, "tum_sonuclar", ()) or ()
+backend\app\opportunity_radar.py:616: "BIST Tüm",
+backend\app\prebreakout\prebreakout_universe.py:16: "BIST Tüm",
+backend\app\ui\batch_historical_export_ui.py:91: universe_options: tuple[str, ...] = ("BIST100", "BIST Tüm"),
+backend\app\ui\bist_daily_market_dashboard.py:135: st.error(f"BIST Tüm sembol listesi yüklenemedi: {exc}")
+backend\app\ui\bist_daily_market_dashboard.py:194: "BIST Tüm, XU100, XU50, XU30 ve Özel Liste için son tamamlanmış günlük OHLCV verisini gösterir. "
+backend\app\ui\bist_daily_market_dashboard.py:200: "BIST Tüm": "BIST Tüm",
+backend\app\ui\momentum_batch_history_integration.py:71: universe_options=("BIST100", "BIST Tüm"),
+backend\app\ui\opportunity_radar_dashboard.py:21: "Aylık Erken Trend adaylarını aynı BIST Tüm veri hattından üretir. "
+backend\app\ui\opportunity_radar_dashboard.py:43: with st.spinner("BIST Tüm tek veri hattı üzerinden Fırsat Radarı çalışıyor..."):
+backend\app\ui\sprint136_batch_history_ui.py:113: options=["BIST100", "BIST Tüm"],
+backend\dashboard.backup_before_navigation_fix.py:3102: index=TARAMA_EVRENLERI.index("BIST Tüm"),
+backend\dashboard.backup_before_navigation_fix.py:3130: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.backup_before_navigation_fix.py:3982: RankObservationJsonlStore().append_snapshot(_rank_observations)
+backend\dashboard.backup_before_navigation_fix.py:4449: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.backup_before_navigation_fix.py:4484: onceki_tarama = st.session_state.get("bist_toplu_tarama_son_sonuc")
+backend\dashboard.backup_before_navigation_fix.py:4499: "BIST Tüm seçeneği yüzlerce hisse içerdiğinden diğer "
+backend\dashboard.backup_before_navigation_fix.py:4628: st.session_state["bist_toplu_tarama_son_sonuc"] = {
+backend\dashboard.backup_before_navigation_fix.py:7978: _morning_scan_state = st.session_state.get("bist_toplu_tarama_son_sonuc")
+backend\dashboard.py:3245: index=TARAMA_EVRENLERI.index("BIST Tüm"),
+backend\dashboard.py:3273: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.py:4144: RankObservationJsonlStore().append_snapshot(_rank_observations)
+backend\dashboard.py:4574: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.py:4610: onceki_tarama = st.session_state.get("bist_toplu_tarama_son_sonuc")
+backend\dashboard.py:4625: "BIST Tüm seçeneği yüzlerce hisse içerdiğinden diğer "
+backend\dashboard.py:4769: item.sembol for item in tuple(getattr(sonuc, "tum_sonuclar", ()) or ())
+backend\dashboard.py:4807: st.session_state["bist_toplu_tarama_son_sonuc"] = {
+backend\dashboard.py:8254: _morning_scan_state = st.session_state.get("bist_toplu_tarama_son_sonuc")
+backend\dashboard.py:8275: st.session_state["bist_toplu_tarama_son_sonuc"] = _morning_scan_state
+backend\scripts\sector_member_strength_check.py:23: choices=("BIST 30", "BIST 50", "BIST 100", "BIST 500", "BIST Tüm"),
+backend\tests\test_batch_historical_export.py:75: req = BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 1), "BISTTUM")
+backend\tests\test_batch_historical_export.py:78: assert calls == [(date(2026, 7, 1), "BISTTUM")]
+backend\tests\test_bist_daily_market_universe_selector.py:6: assert '"BIST Tüm": "BIST Tüm"' in text
+backend\tests\test_bist_toplu_tarama_role_clarity_v11.py:25: "BIST Tüm",
+backend\tests\test_fast_mover_preclose_attachment.py:37: source: str = "BIST Tüm",
+backend\tests\test_fast_mover_preclose_attachment.py:171: "append_snapshot(",
+backend\tests\test_market_regime_live.py:40: assert endeks_sembolunu_hazirla("bisttum") == "XUTUM"
+backend\tests\test_momentum_batch_history_integration.py:64: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_prebreakout_universe.py:29: "BIST Tüm",
+backend\tests\test_replay_batch_adapter.py:15: assert common_universe_mapper("BIST Tüm") == "BIST Tüm"
+backend\tests\test_research_profile_memory_v1.py:30: universe_name="BIST Tüm",
+backend\tests\test_research_profile_memory_v1.py:56: assert store.append_snapshot((rank,)) == 1
+backend\tests\test_research_profile_memory_v1.py:133: bundle(date(2026, 8, 25)), universe_name="BIST Tüm", store=store
+backend\tests\test_research_profile_memory_v1.py:142: bundle(AS_OF), universe_name="BIST Tüm", store=store
+backend\tests\test_research_profiles_sprint02_contract.py:10: assert "tum_sonuclar=tuple(tarama.basarili_sonuclar)" in text
+backend\tests\test_research_profiles_sprint02_contract.py:24: assert 'getattr(sonuc, "tum_sonuclar", ())' in text
+backend\tests\test_sprint136_backward_compatibility.py:34: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_system_check.py:179: assert "BIST Tüm" in item.aciklama
+backend\tests\test_v1_operations_01c_dashboard_wiring.py:10: assert 'st.session_state.get("bist_toplu_tarama_son_sonuc")' in dashboard

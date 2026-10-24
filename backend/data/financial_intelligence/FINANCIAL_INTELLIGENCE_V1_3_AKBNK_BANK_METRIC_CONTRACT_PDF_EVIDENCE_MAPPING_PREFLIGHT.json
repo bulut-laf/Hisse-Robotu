@@ -1,0 +1,354 @@
+{
+  "schema_version": "financial-intelligence-v1-3-akbnk-bank-metric-contract-pdf-evidence-mapping-preflight-v1",
+  "status": "PASS",
+  "model_files": [
+    "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_model_contract.py",
+    "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_scoring_engine.py",
+    "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_canonical_adapter.py"
+  ],
+  "missing_model_files": [],
+  "text_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.txt",
+  "contract_metric_candidates": [
+    "capital_adequacy_ratio",
+    "cost_to_income_ratio",
+    "deposit_growth",
+    "liquidity_ratio",
+    "loan_growth",
+    "loan_to_deposit_ratio",
+    "net_income_growth",
+    "net_interest_margin",
+    "npl_coverage_ratio",
+    "npl_ratio",
+    "roa",
+    "roe",
+    "tier1_capital_ratio"
+  ],
+  "metric_evidence": {
+    "capital_adequacy_ratio": {
+      "variants": [
+        "sermaye yeterlilik",
+        "sermaye yeterliliği",
+        "capital adequacy",
+        "capital_adequacy_ratio",
+        "capital adequacy ratio"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 1974,
+          "context": "GRUBUN MALİ BÜNYESİNE VE RİSK YÖNETİMİNE İLİŞKİN BİLGİLER | I. ÖZKAYNAK KALEMLERİNE İLİŞKİN AÇIKLAMALAR: | Özkaynak tutarı ve sermaye yeterliliği standart oranı “Bankala rın Özkaynaklarına İlişkin Yönetmelik” ile “Bankaların Sermaye | Yeterliliğinin Ölçülmesine ve Değerlendi rilmesine İlişkin Yönetmelik” çerçevesinde  hesaplanmıştır. Ayrıca, BDDK’nın 13 | Aralık 2025 tarih 11286 sayılı kurul kararı  uyarınca daha önce uygulanmakta olan ilave düzenlemeler yürürlükten"
+        },
+        {
+          "line_index": 1979,
+          "context": "kaldırılmıştır. | Grubun 30 Haziran 2026 tarihi itibarıyla, cari dönem özkaynak tu tarı  446.694 TL (31 Aralık 2025:  409.726), sermaye yeterliliği | standart oranı ise %16,38’dir (31 Aralık 2025: %19,03). Grubun se rmaye yeterliliği standart oran ı ilgili mevzuat ile belirlenen | asgari oranın üzerindedir."
+        },
+        {
+          "line_index": 2188,
+          "context": "Toplam Risk Ağırlıklı Tutarlar                      2.726.728  2.153.295 | SERMAYE YETERLİLİĞİ ORANLARI | Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% | Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% | Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03%"
+        },
+        {
+          "line_index": 2189,
+          "context": "SERMAYE YETERLİLİĞİ ORANLARI | Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% | Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% | Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% | TAMPONLAR"
+        },
+        {
+          "line_index": 2190,
+          "context": "Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% | Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% | Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% | TAMPONLAR | Toplam ilave çekirdek sermaye gereksinim oranı (a+b+c) 4,02% 4,01%"
+        },
+        {
+          "line_index": 2662,
+          "context": "varlığı halinde BDDK’nın bu yönde alacağı karara istinaden kayıtlardan | silinebilecektir. | Çekirdek sermaye yeterlilik oranının BDDK’nın belirlediği %5,125’in altına | düşmesi halinde değer azaltımına tabi tutulacaktır. | Değer azaltma özelliğine sahipse, tamamen ya da kısmen değer azaltımı özelliği  Kısmen veya tamamen"
+        },
+        {
+          "line_index": 2666,
+          "context": "Değer azaltma özelliğine sahipse, tamamen ya da kısmen değer azaltımı özelliği  Kısmen veya tamamen | Değer azaltma özelliğine sahipse, sürekli ya da geçici olma özelliği Geçici | Değeri geçici olarak azaltılabiliyorsa, değer artırım mekanizması Var ise tasfiye halinin ortadan kalkması ve çekirdek sermaye yeterliliğinin | %5,125’ten yüksek olması. | Tasfiye halinde alacak hakkı açısından hangi sırada olduğu (Bu aracın hemen"
+        },
+        {
+          "line_index": 2740,
+          "context": "varlığı halinde BDDK’nın bu yönde alacağı karara istinaden kayıtlardan | silinebilecektir. | Çekirdek sermaye yeterlilik oranının BDDK’nın belirlediği %5,125’in altına | düşmesi halinde değer azaltımına tabi tutulacaktır. | Değer azaltma özelliğine sahipse, tamamen ya da kısmen değer azaltımı özelliği  Kısmen veya tamamen"
+        }
+      ]
+    },
+    "cost_to_income_ratio": {
+      "variants": [
+        "gider gelir oran",
+        "faaliyet giderleri gelir",
+        "cost to income",
+        "cost_to_income_ratio",
+        "cost to income ratio"
+      ],
+      "evidence_present": false,
+      "contexts": []
+    },
+    "deposit_growth": {
+      "variants": [
+        "mevduat",
+        "deposit",
+        "deposit_growth",
+        "deposit growth"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 272,
+          "context": "İLE DAHİL OLDUĞU GRUBA İLİŞKİN AÇIKLAMA: | Banka’nın hisse senetleri 1990 yılından bu yana Borsa İstanbul ’da (“BİST”) işlem görmektedir.  Ayrıca Banka hisselerinin | %4,03’lük bölümü 1998 yılında American Depository Receipt (“ADR” ) ve adi hisse senedi olarak uluslararası piyasalara arz | edilerek satılmıştır. Banka’nın 30 Haziran 2026 tarihi itibarıyla ADR’lerle birlikte toplam halka açıklık oranı yaklaşık %52’di r | (31 Aralık 2025: %52)."
+        },
+        {
+          "line_index": 458,
+          "context": "Dipnot (30/06/2026) (31/12/2025) | TP YP Toplam TP YP Toplam | I. MEVDUAT  (II-a)         1.574.677             936.412         2.511.089         1.350.918             822.503         2.173.421 | II. | (II-c)                 3.474             202.771             206.245                 2.931             179.016             181.947"
+        },
+        {
+          "line_index": 735,
+          "context": "II. | (IV-b)                   280.187                   151.818                      270.157                      143.412 | 2.1 Mevduata Verilen Faizler (IV-b-4)                      228.695                      124.917                         214.073                         115.561 | 2.2 | (IV-b-1)                          5.558                          2.941                             4.306                             2.242"
+        },
+        {
+          "line_index": 1122,
+          "context": "hizmetlerini içeren bankacılık faaliyetlerini kapsamaktadır. Gr up, Ak Finansal Kiralama A.Ş. vasıtasıyla finansal kiralama | işlemleri de gerçekleştirmektedir. Grup, faaliyetlerinin doğası ge reği finansal araçları yoğun ol arak kullanmaktadır. Grup ana | fonlama kaynağı olarak çeşitli vade dilimler inde mevduat kabul etmekte ve bu yolla to pladığı kaynakları yüksek getirisi olan ve | kaliteli finansal aktiflerde değerlendirmek tedir. Mevduat dışında Grubun en önemli fon kaynakları özkaynaklar, ihraç edilen | menkul kıymetler, para piyasala rı borçlanmaları ve yurtdışı finansal kurumlardan sağlanan kredilerdir. Grup, kullandığı"
+        },
+        {
+          "line_index": 1123,
+          "context": "işlemleri de gerçekleştirmektedir. Grup, faaliyetlerinin doğası ge reği finansal araçları yoğun ol arak kullanmaktadır. Grup ana | fonlama kaynağı olarak çeşitli vade dilimler inde mevduat kabul etmekte ve bu yolla to pladığı kaynakları yüksek getirisi olan ve | kaliteli finansal aktiflerde değerlendirmek tedir. Mevduat dışında Grubun en önemli fon kaynakları özkaynaklar, ihraç edilen | menkul kıymetler, para piyasala rı borçlanmaları ve yurtdışı finansal kurumlardan sağlanan kredilerdir. Grup, kullandığı | kaynakların ve çeşitli finansal aktiflere ya pılan plasmanların risk ve getiri açısında n dengesini kurarak, riskleri azaltan ve"
+        },
+        {
+          "line_index": 1927,
+          "context": "XXVII. NAKİT VE NAKDE EŞDEĞER VARLIKLAR: | Nakit akış tablolarının hazırlanmasına esas olan “Nakit” kasa, efektif deposu, yoldaki paralar ve satın alınan banka çekleri il e | T.C. Merkez Bankası dahil bankalardaki vadesiz mevduat olarak, “N akde eşdeğer varlık” ise orijinal vadesi üç aydan kısa olan | bankalararası para piyasası plasmanları ve bankalardaki vadeli depolar ile hisse sene tleri dışındaki menkul kıymetlere yapılan | yatırımlar olarak tanımlanmaktadır."
+        },
+        {
+          "line_index": 2844,
+          "context": "Toplam Varlıklar 579.431 696.049 105.159 1.380.639 | Yükümlülükler | Bankalar Mevduatı (****) 14.572 60.057 5.639 80.268 | Döviz Tevdiat Hesabı (****) 271.790 243.032 341.322 856.144 | Para Piyasalarına Borçlar 31.057 135.493 - 166.550"
+        },
+        {
+          "line_index": 2929,
+          "context": "Toplam Varlıklar 1.366.280 366.877 850.969 554.811 219.553 653.989 4.012.479 | Yükümlülükler | Bankalar Mevduatı 80.985 14.465 10.976 - - 1.547 107.973 | Diğer Mevduat 1.198.393 241.990 162.533 13.910 1.915 784.375 2.403.116 | Para Piyasalarına Borçlar 172.563 86.011 74.718 5.646 - - 338.938"
+        }
+      ]
+    },
+    "liquidity_ratio": {
+      "variants": [
+        "likidite oran",
+        "liquidity ratio",
+        "liquidity_ratio"
+      ],
+      "evidence_present": false,
+      "contexts": []
+    },
+    "loan_growth": {
+      "variants": [
+        "krediler",
+        "loan",
+        "loan_growth",
+        "loan growth"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 301,
+          "context": "Yunus Emre ÖZBEN Kurumsal ve Yatırım Bankacılı ğı Yüksek Lisans | Gamze Şebnem MURATOĞLU Hazine ve Finansal Kurumlar Yüksek Lisans | Zeynep ÖZTÜRK ŞARSEL Kurumsal ve Ticari  Krediler Tahsis Yüksek Lisans | Gökhan GÖKÇAY Teknolo ji Yüksek Lisans | Çetin DÜZ Kredi İzleme ve Taki p Yüksek Lisans"
+        },
+        {
+          "line_index": 306,
+          "context": "Dalya KOHEN Özel Bankacılık ve  Yatırım Hizmetleri Lisans | Alper BEKTAŞ Kobi Bankacılı ğı Lisans | Burcu ÇALICIOĞLU Perakende Krediler Analitik ve | Bireysel/Mikro Krediler Tahsis | Yüksek Lisans"
+        },
+        {
+          "line_index": 307,
+          "context": "Alper BEKTAŞ Kobi Bankacılı ğı Lisans | Burcu ÇALICIOĞLU Perakende Krediler Analitik ve | Bireysel/Mikro Krediler Tahsis | Yüksek Lisans | Özlem ATİK KAPTANOĞLU Ti cari Bankacılık Lisans"
+        },
+        {
+          "line_index": 402,
+          "context": "II. | 1.755.326          695.951      2.451.277          1.500.963          625.664      2.126.627 | 2.1 Krediler (I-f)      1.580.945          651.932      2.232.877          1.338.323          582.635      1.920.958 | 2.2 | (I-k)              8.875            37.009            45.884                 7.570            31.259            38.829"
+        },
+        {
+          "line_index": 508,
+          "context": "XIV. | (II-j)                         -             118.535             118.535                         -               82.804               82.804 | 14.1 Krediler                           -                           -                           -                           -                           -                           - | 14.2 | -               118.535               118.535                           -                 82.804                 82.804"
+        },
+        {
+          "line_index": 561,
+          "context": "1.1.3 | 319.990            112.523            432.513 246.493 93.295 339.788 | 1.2 Banka Kredileri                       -                   933                   933 - 838 838 | 1.2.1 | -                   933                   933 - 838 838"
+        },
+        {
+          "line_index": 751,
+          "context": "4.1 | 86.242                        45.808                           63.246                           33.608 | 4.1.1 Gayri Nakdi Kredilerden                          2.098                          1.049                             1.548                                786 | 4.1.2 | 84.144                        44.759                           61.698                           32.822"
+        },
+        {
+          "line_index": 756,
+          "context": "4.2 | 17.144                          9.111                           12.027                             6.385 | 4.2.1 Gayri Nakdi Kredilere                               29                               18                                  13                                    9 | 4.2.2 | 17.115                          9.093                           12.014                             6.376"
+        }
+      ]
+    },
+    "loan_to_deposit_ratio": {
+      "variants": [
+        "kredi mevduat oran",
+        "kredilerin mevduata oranı",
+        "loan to deposit",
+        "loan_to_deposit_ratio",
+        "loan to deposit ratio"
+      ],
+      "evidence_present": false,
+      "contexts": []
+    },
+    "net_income_growth": {
+      "variants": [
+        "net dönem kâr",
+        "net dönem kar",
+        "net profit",
+        "net_income_growth",
+        "net income growth"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 1900,
+          "context": "Önceki Dönem | 30 Haziran 2025 | Grubun Net Dönem Kârı 34.350 24.857 | Çıkarılmış Adi Hisselerin Ağırlıklı Ortalama Adedi (Milyon) 520.000 520.000 | Hisse Başına Kâr (Tam TL tutarı ile gösterilmiştir) 0,06606 0,04780"
+        },
+        {
+          "line_index": 1995,
+          "context": "Türkiye Muhasebe Standartları (TMS) uyarınca özkaynaklara yansıtılan kazançlar 83.706  79.758 | Kâr                           34.361  57.433 | Net Dönem Kârı                           34.350  57.255 | Geçmiş Yıllar Kârı 11   178 | İştirakler, bağlı ortaklıklar ve birlikte kontrol edilen ortaklıklardan bedelsiz olarak edinilen ve dönem kârı içerisinde"
+        },
+        {
+          "line_index": 5675,
+          "context": "kazançlar 17 (27) - - (1) - - | Kâr/Zarar 1.004 13.808 6.947 13.858 (213) 638 60 | Net Dönem Kârı 1.004 2.082 2.286 1.823 (203) 239 26 | Geçmiş Yıllar Kârı/Zararı - 11.726 4.661 12.035 (10) 399 34 | Azınlık Payları - - - - - - -"
+        }
+      ]
+    },
+    "net_interest_margin": {
+      "variants": [
+        "net faiz marj",
+        "net interest margin",
+        "net_interest_margin"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 6924,
+          "context": "çerçeve sıkılaştırıldı. Enflasyon, dış açık ve bütçe açığı savaş öncesi baz senaryoya kıyasla daha yüksek olacak. Dolayısıyla, | makro göstergeler, bankacılık sektörü için sene başından öngörülenden daha zorlu bir faaliyet ortamına işaret ediyor. Jeopolitik | gelişmeler ise risklerin önemini koruduğunu  gösteriyor. Bu şartlar altında net faiz marjları ve kârlılık baskılanmaya devam | edecek görünüyor. Ancak bankacılık sektörü piyasa, likidite ve  kredi risklerine karşı yeterli sermaye tamponuna sahip olmayı | sürdürüyor."
+        },
+        {
+          "line_index": 7132,
+          "context": "YP Kredi Büyümesi (USD) Yüksek tek haneli seviye | Özsermaye Karlılığı %23 - 25 | Net Faiz Marjı (Swap düzeltilmiş)                                     %3,2 - 3,5 | Net Ücret ve Komisyon Artışı > %30 | O"
+        }
+      ]
+    },
+    "npl_coverage_ratio": {
+      "variants": [
+        "npl_coverage_ratio",
+        "npl coverage ratio"
+      ],
+      "evidence_present": false,
+      "contexts": []
+    },
+    "npl_ratio": {
+      "variants": [
+        "takipteki krediler",
+        "takipteki alacaklar",
+        "takipteki kredi oran",
+        "non-performing",
+        "npl",
+        "npl_ratio",
+        "npl ratio"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 5420,
+          "context": "Ayrılacak Karşılıklara İlişkin Usul ve Esaslar Hakkında Yönetm elik”te yapılan değişikliğe isti naden kayıttan düşme işlemi | bulunmamaktadır. (31 Aralık 2025: Bulunmamaktadır.) | (***) Banka, takipteki krediler portföyünün 7.506 milyon TL (tam TL tutardır) tutarındaki bö lümünü, 1.249 milyon TL (tam TL tutardır) | bedel karşılığında Birikim Varlık Yönetimi A.Ş., Gelecek Varlık Yönetim A.Ş.,  İstanbul Varlık Yöne tim A.Ş., Ortak Varlık Yönet im A.Ş., | Denge Varlık Yönetim A.Ş., Dünya Varlık Yönetim A.Ş. ,Emir Varlık Yönetim A.Ş., Sümer Varlık Yönetim A.Ş., Arsan Varlık Yönetim A.Ş. ,"
+        },
+        {
+          "line_index": 6424,
+          "context": "Kısa Vadeli Kredilerden 131.655 6.537 105.643 6.589 | Orta ve Uzun Vadeli Kredilerden 87.719 12.149 66.758 9.363 | Takipteki Alacaklardan Alınan Faizler 6.216 - 3.776 - | Kaynak Kul. Destekleme Fonundan Alınan Primler - - - - | Toplam 225.590 18.686 176.177 15.952"
+        },
+        {
+          "line_index": 7111,
+          "context": "Özsermaye Kârlılığı: (30.06.2025) 22,2 20,3 | Aktif Kârlılığı: (30.06.2025) 1,9 1,8 | Takipteki Kredi Oranı (*) 3,5 3,4 | Sermaye Yeterlilik Oranı 16,4 19,0 | Hisse Başına Kâr (TL) (30.06.2025) 0,06606 0,04780"
+        },
+        {
+          "line_index": 7122,
+          "context": "30 Haziran 2026 tarihi itibarıyla Akbank’ın konsolide aktif bü yüklüğü 4.012 milyar TL, kredileri 2.233 milyar TL, toplam | mevduatı ise 2.511 milyar TL olarak gerçekleşmiştir. | Akbank’ın takipteki krediler oranı 30 Haziran 2026 tarihi itibarıyla %3,5 seviyesinde gerçekleşmiştir. | 4. Banka’nın 2026 Yılına Dair Beklentileri:"
+        },
+        {
+          "line_index": 7137,
+          "context": "perasyonel Giderler Artışı  Düşük %30’lu seviye | Operasyonel Giderler / Gelirler (*) Yüksek %40’lı seviye | Takipteki Krediler Oranı ~ %3,5 | Net Kredi Maliyeti (kur etkisi hariç) ~ 200 baz puan | (*) Operasyonel Gider/Gelir hesaplamasında; 1&2 Grup kredi karşılıklarından kaynaklanan kambiyo kar/zarar etkisi hariçtir."
+        }
+      ]
+    },
+    "roa": {
+      "variants": [
+        "aktif kârlılık",
+        "aktif karlılık",
+        "return on assets",
+        "roa"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 6881,
+          "context": "altında ABD doları diğer para birimleri karşısında değer kazanırken, değerli metal fiyatlarında da belirgin düşüş gerçekleşti. | Jeopolitik gelişmeler Türkiye ekonomisi üzer inde de önemli bir risk unsuru olsa da yurt içi finansal piyasanın gelişmelere | tepkisi, ekonomi yönetiminin şoka karşı proaktif şekilde aldığı  önemlerin de etkisiyle geçmiş belirsizlik dönemlerine kıyasla | sınırlı oldu. Bu dönemde TCMB rezervlerind e azalma olsa da, bu azalış temel olarak yabancı sermaye çıkışından kaynaklandı. | Yurt içi yerleşikler genel olarak sakinliğin i korurken dolarizasyon eğilimi oluşmadı. Yurt içi siyasi gelişmeler mayıs ayı sonu nda"
+        },
+        {
+          "line_index": 6932,
+          "context": "İkinci çeyrekte jeopolitik gelişmelere bağl ı belirsizlikler küresel piyasa larda ve emtia fiyatlarında belirgin dalgalanmaya ned en | oldu. Bu dalgalanmaların yurt içinde enflasyon, dış denge ve  bütçe üzerinde etkileri gözlense de ekonomi yönetimimiz | tarafından proaktif bir şekilde alınan politika önlemleri, yurt  içi finansal piyasaların görece  daha sakin bir seyir izlemesini | sağladı. Bu süreçte Akbank ve Türk bankacılık sektörü, her zaman olduğu gibi, ülke ekonomisini güçlü bir biçimde desteklemeyi | sürdürdü."
+        }
+      ]
+    },
+    "roe": {
+      "variants": [
+        "özkaynak kârlılık",
+        "özkaynak karlılık",
+        "return on equity",
+        "roe"
+      ],
+      "evidence_present": true,
+      "contexts": [
+        {
+          "line_index": 1516,
+          "context": "satışlarından beklenen nakit akımlarının etkin faiz oranı ile bugünkü değerine indirgenmesi yle yapılmaktadır. Bireysel | değerlendirmeler kapsamında sektörel risklerin yanı sıra bölgesel gelişmeler de dikkate alınmaktadır. | Beklenen kredi zararı hesaplamasında makroekonomik göstergeler temerrüt oran ı bileşeninin belirlenmesinde dikkate | alınmaktadır. İleriye yönelik makroekono mik tahminlemeler birden faz la senaryo kullanılarak beklenen kredi zararına | yansıtılmaktadır."
+        },
+        {
+          "line_index": 1517,
+          "context": "değerlendirmeler kapsamında sektörel risklerin yanı sıra bölgesel gelişmeler de dikkate alınmaktadır. | Beklenen kredi zararı hesaplamasında makroekonomik göstergeler temerrüt oran ı bileşeninin belirlenmesinde dikkate | alınmaktadır. İleriye yönelik makroekono mik tahminlemeler birden faz la senaryo kullanılarak beklenen kredi zararına | yansıtılmaktadır. | TFRS 9 hesaplamalarında kullanılan risk  parametrelerine ileriye yönelik makroekonomik bilgiler dahil edilmektedir."
+        },
+        {
+          "line_index": 1519,
+          "context": "alınmaktadır. İleriye yönelik makroekono mik tahminlemeler birden faz la senaryo kullanılarak beklenen kredi zararına | yansıtılmaktadır. | TFRS 9 hesaplamalarında kullanılan risk  parametrelerine ileriye yönelik makroekonomik bilgiler dahil edilmektedir. | Makroekonomik bilgiler dahil edilirken mode l risk parametreleri ile makroekonomik de ğişkenler arasındaki ilişkileri yansıtan | modeller ve tahminlemeler dikkate  alınmaktadır. Bu tahmin modellerini oluştura n başlıca makroekonomik gösterge Gayri Safi"
+        },
+        {
+          "line_index": 1520,
+          "context": "yansıtılmaktadır. | TFRS 9 hesaplamalarında kullanılan risk  parametrelerine ileriye yönelik makroekonomik bilgiler dahil edilmektedir. | Makroekonomik bilgiler dahil edilirken mode l risk parametreleri ile makroekonomik de ğişkenler arasındaki ilişkileri yansıtan | modeller ve tahminlemeler dikkate  alınmaktadır. Bu tahmin modellerini oluştura n başlıca makroekonomik gösterge Gayri Safi | Yurtiçi Hasıla (GSYH) büyüme oranıdır. Ma kroekonomik tahmin modelleri birden fazla  senaryo içermekte olup, beklenen kredi"
+        },
+        {
+          "line_index": 1521,
+          "context": "TFRS 9 hesaplamalarında kullanılan risk  parametrelerine ileriye yönelik makroekonomik bilgiler dahil edilmektedir. | Makroekonomik bilgiler dahil edilirken mode l risk parametreleri ile makroekonomik de ğişkenler arasındaki ilişkileri yansıtan | modeller ve tahminlemeler dikkate  alınmaktadır. Bu tahmin modellerini oluştura n başlıca makroekonomik gösterge Gayri Safi | Yurtiçi Hasıla (GSYH) büyüme oranıdır. Ma kroekonomik tahmin modelleri birden fazla  senaryo içermekte olup, beklenen kredi | zararı hesaplamalarında ilgili senaryolar dikkate alınmaktadır."
+        },
+        {
+          "line_index": 1522,
+          "context": "Makroekonomik bilgiler dahil edilirken mode l risk parametreleri ile makroekonomik de ğişkenler arasındaki ilişkileri yansıtan | modeller ve tahminlemeler dikkate  alınmaktadır. Bu tahmin modellerini oluştura n başlıca makroekonomik gösterge Gayri Safi | Yurtiçi Hasıla (GSYH) büyüme oranıdır. Ma kroekonomik tahmin modelleri birden fazla  senaryo içermekte olup, beklenen kredi | zararı hesaplamalarında ilgili senaryolar dikkate alınmaktadır. | Beklenen kredi zararı hesaplamaları asgari olarak yılda bir kez gözden geçirilmekte olup raporlama dönemi içerisinde, süreçte"
+        },
+        {
+          "line_index": 1525,
+          "context": "zararı hesaplamalarında ilgili senaryolar dikkate alınmaktadır. | Beklenen kredi zararı hesaplamaları asgari olarak yılda bir kez gözden geçirilmekte olup raporlama dönemi içerisinde, süreçte | kullanılan makroekonomik model ve senaryo ağırlıklarında bir değişiklik yapılmamıştır. | - Beklenen kredi zararı hesaplaması iyi, kötü ve baz olmak üzere 3 farklı senaryo dikkate alınarak yapılmaktadır. | TFRS 9 kapsamında makroekonomik beklentiler, karşılıkları (B eklenen Kredi Zararı-BKZ) doğrud an etkilemektedir. Bu etki"
+        },
+        {
+          "line_index": 1527,
+          "context": "kullanılan makroekonomik model ve senaryo ağırlıklarında bir değişiklik yapılmamıştır. | - Beklenen kredi zararı hesaplaması iyi, kötü ve baz olmak üzere 3 farklı senaryo dikkate alınarak yapılmaktadır. | TFRS 9 kapsamında makroekonomik beklentiler, karşılıkları (B eklenen Kredi Zararı-BKZ) doğrud an etkilemektedir. Bu etki | bankanın takibe intikal oranının kredi bazlı ve her bir vade iç in hesaplanan temerrüt oranı değe rlerini yukarı veya aşağı yönlü | hareket ettirmesi ile gerçekle şmektedir. Takibe intikal oranı modelinin an a parametrelerini makr oekonomik değişkenler"
+        }
+      ]
+    },
+    "tier1_capital_ratio": {
+      "variants": [
+        "tier1_capital_ratio",
+        "tier1 capital ratio"
+      ],
+      "evidence_present": false,
+      "contexts": []
+    }
+  },
+  "metric_candidate_count": 13,
+  "metric_with_evidence_count": 8,
+  "metric_without_evidence_count": 5,
+  "mapping_preflight_ready": true,
+  "numeric_mapping_ready": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "blockers": [],
+  "production_mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

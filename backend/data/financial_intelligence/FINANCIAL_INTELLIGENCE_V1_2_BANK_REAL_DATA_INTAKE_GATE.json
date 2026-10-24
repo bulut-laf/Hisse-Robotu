@@ -1,0 +1,15 @@
+{
+  "schema_version": "financial-intelligence-v1-2-bank-real-data-intake-gate-v1",
+  "status": "PASS_FAIL_CLOSED",
+  "candidate_count": 0,
+  "accepted_count": 0,
+  "selected_symbol": null,
+  "selected_source": null,
+  "canonical_input_ready": false,
+  "scoring_ready": false,
+  "blockers": [
+    "NO_REAL_BANK_SOURCE"
+  ],
+  "rejected": [],
+  "production_evidence": false
+}

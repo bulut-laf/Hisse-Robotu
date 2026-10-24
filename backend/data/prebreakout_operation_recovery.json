@@ -1,0 +1,16 @@
+{
+  "diagnosis_status": "COMPLETED",
+  "primary_category": "YOK",
+  "run_date": "2026-08-01",
+  "safe_retry_allowed": false,
+  "steps": [
+    {
+      "action": "ISLEM_GEREKMIYOR",
+      "automatic": false,
+      "instruction": "Operasyon için kurtarma adımı gerektiren bir kök neden bulunmadı.",
+      "order": 1,
+      "title": "İşlem gerekmiyor"
+    }
+  ],
+  "summary": "Kurtarma işlemi gerekmiyor; operasyon teşhisinde hata bulunmadı."
+}

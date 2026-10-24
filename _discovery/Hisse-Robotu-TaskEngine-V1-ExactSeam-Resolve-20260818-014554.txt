@@ -1,0 +1,32 @@
+﻿=== TASK ENGINE V1 EXACT SEAM RESOLVE ===
+CANDIDATES=7
+SEAM|EXACT_SCORE=32|OLD_SCORE=4|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py|FUNCTION=render_news_center_dashboard|LINE=185|ST=262|STATE=4|NAV=2|PHASE=0|CALLERS=0|LINES=1682
+SEAM|EXACT_SCORE=30|OLD_SCORE=4|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py|FUNCTION=build_daily_operation_summary|LINE=68|ST=8|STATE=4|NAV=0|PHASE=1|CALLERS=0|LINES=152
+SEAM|EXACT_SCORE=30|OLD_SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=on_yukselis_hazirlik_formu|LINE=210|ST=80|STATE=4|NAV=1|PHASE=1|CALLERS=0|LINES=599
+SEAM|EXACT_SCORE=27|OLD_SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=_render_daily_operations_hub|LINE=812|ST=13|STATE=3|NAV=0|PHASE=0|CALLERS=1|LINES=48
+CALLER|TARGET=_render_daily_operations_hub|SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=448
+SEAM|EXACT_SCORE=21|OLD_SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py|FUNCTION=render_daily_news_operations_panel|LINE=28|ST=16|STATE=1|NAV=0|PHASE=0|CALLERS=1|LINES=129
+CALLER|TARGET=render_daily_news_operations_panel|SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py|LINE=266
+SEAM|EXACT_SCORE=21|OLD_SCORE=2|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=_render_operational_health|LINE=1011|ST=5|STATE=1|NAV=0|PHASE=1|CALLERS=1|LINES=36
+CALLER|TARGET=_render_operational_health|SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=576
+SEAM|EXACT_SCORE=19|OLD_SCORE=2|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=_render_operation_archive_history|LINE=865|ST=22|STATE=1|NAV=0|PHASE=0|CALLERS=1|LINES=72
+CALLER|TARGET=_render_operation_archive_history|SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=859
+DECISION=DAILY_OPS_SEAM_STILL_AMBIGUOUS
+TOP_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py
+TOP_FUNCTION=render_news_center_dashboard
+TOP_SCORE=32
+SECOND_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py
+SECOND_FUNCTION=build_daily_operation_summary
+SECOND_SCORE=30
+SELECTION_MARGIN=2
+NEXT=Do not mutate. Use exact caller context from the two remaining functions.
+PRODUCTION_MUTATION=YOK
+STATIC_EXIT_CODE=0
+
+=== TARGET TESTS ===
+........................................................................ [ 25%]
+........................................................................ [ 50%]
+........................................................................ [ 75%]
+........................................................................ [100%]
+288 passed, 2734 deselected in 32.77s
+PYTEST_EXIT_CODE=0

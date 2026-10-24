@@ -1,0 +1,27 @@
+{
+  "schema_version": "fin-prod-v9-historical-pit-closure-v1",
+  "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKER",
+  "producer_status": "NO_PRODUCTION_OBSERVATIONS",
+  "observation_count": 0,
+  "calibration_status": "INSUFFICIENT_SAMPLE",
+  "calibration_separation": null,
+  "closed_with_blocker": "OBSERVATION_DATE_MARKET_PRICE_MISSING:TUPRS",
+  "remaining_limitation": "HISTORICAL_PIT_OBSERVATION_PRODUCER_MARKET_HISTORY_GAP",
+  "checks": {
+    "producer_read_only": true,
+    "observation_count_zero": true,
+    "producer_status_correct": true,
+    "exact_market_blocker": true,
+    "synthetic_calibration_forbidden": true
+  },
+  "failed_checks": [],
+  "rules": [
+    "NO_SYNTHETIC_PRODUCTION_CALIBRATION",
+    "NO_FUZZY_MARKET_DATE_MAPPING",
+    "NO_FILE_MTIME_AS_MARKET_DATE",
+    "NO_OBSERVATION_DATE_SUBSTITUTION",
+    "NO_WEIGHT_OPTIMIZATION",
+    "NO_THRESHOLD_OPTIMIZATION",
+    "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION"
+  ]
+}

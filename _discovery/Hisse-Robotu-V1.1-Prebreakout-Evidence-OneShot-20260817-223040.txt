@@ -1,0 +1,411 @@
+﻿=== PATCH ===
+VALIDATION_RECORD_FUNCTION_COUNT=1
+VALIDATION_RECORD_FUNCTION=sembol_tarihsel_dogrulama|LINE=95
+RETURN_LINE=127
+DECISION=EVIDENCE_WIRING_APPLIED
+EVIDENCE_MODULE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_evidence.py
+PRODUCTION_MUTATION=YES
+
+=== TARGET TESTS ===
+........................................................................ [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 45%]
+........................................................................ [ 60%]
+........................................................................ [ 76%]
+........................................................................ [ 91%]
+...............................FFF....FFF                                [100%]
+================================== FAILURES ===================================
+________________ test_toplu_dogrulama_deterministik_siralidir _________________
+
+    def test_toplu_dogrulama_deterministik_siralidir() -> None:
+        data = {
+            "B.IS": veri(3.0),
+            "A.IS": veri(0.0),
+        }
+    
+>       first = toplu_tarihsel_dogrulama(data, config())
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_prebreakout_validation.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\prebreakout\prebreakout_validation.py:148: in toplu_tarihsel_dogrulama
+    sembol_tarihsel_dogrulama(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+symbol = 'A.IS'
+data =                   Open        High         Low       Close     Volume
+2026-01-02   99.800000  101.000000   99.000000  ...05  117.388203  2300000.0
+2026-07-16  117.255979  117.955979  116.955979  117.455979  2300000.0
+
+[140 rows x 5 columns]
+validation_config = PreBreakoutValidationConfig(start_date=datetime.date(2026, 4, 1), end_date=datetime.date(2026, 6, 30), cutoff_step=5, minimum_history_bars=60, minimum_score=0, horizons=(1, 3, 5, 10, 20))
+engine_config = None, relative_strength_score = 5
+
+    def sembol_tarihsel_dogrulama(
+        symbol: str,
+        data: pd.DataFrame,
+        validation_config: PreBreakoutValidationConfig,
+        *,
+        engine_config: PreBreakoutConfig | None = None,
+        relative_strength_score: int = 5,
+    ) -> tuple[PreBreakoutValidationRecord, ...]:
+        normalized = _normalize(data)
+        records: list[PreBreakoutValidationRecord] = []
+    
+        for cutoff in uygun_kesim_tarihleri(normalized, validation_config):
+            replay = tarihsel_yeniden_oynat(
+                symbol,
+                normalized,
+                cutoff,
+                config=engine_config,
+                relative_strength_score=relative_strength_score,
+                horizons=validation_config.horizons,
+            )
+            if replay.analysis.score < validation_config.minimum_score:
+                continue
+    
+            records.append(
+                PreBreakoutValidationRecord(
+                    symbol=symbol,
+                    cutoff_date=cutoff,
+                    replay=replay,
+                    performance_label=performans_etiketi_belirle(replay),
+                )
+            )
+    
+>       from .prebreakout_validation_evidence import persist_prebreakout_validation_evidence
+E       ImportError: cannot import name 'persist_prebreakout_validation_evidence' from 'backend.app.prebreakout.prebreakout_validation_evidence' (D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py)
+
+backend\app\prebreakout\prebreakout_validation.py:127: ImportError
+_________________ test_minimum_skor_kayit_sayisini_filtreler __________________
+
+    def test_minimum_skor_kayit_sayisini_filtreler() -> None:
+        data = {"TEST.IS": veri()}
+>       low = toplu_tarihsel_dogrulama(data, config())
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend\tests\test_prebreakout_validation.py:77: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\prebreakout\prebreakout_validation.py:148: in toplu_tarihsel_dogrulama
+    sembol_tarihsel_dogrulama(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+symbol = 'TEST.IS'
+data =                   Open        High         Low       Close     Volume
+2026-01-02   99.800000  101.000000   99.000000  ...05  117.388203  2300000.0
+2026-07-16  117.255979  117.955979  116.955979  117.455979  2300000.0
+
+[140 rows x 5 columns]
+validation_config = PreBreakoutValidationConfig(start_date=datetime.date(2026, 4, 1), end_date=datetime.date(2026, 6, 30), cutoff_step=5, minimum_history_bars=60, minimum_score=0, horizons=(1, 3, 5, 10, 20))
+engine_config = None, relative_strength_score = 5
+
+    def sembol_tarihsel_dogrulama(
+        symbol: str,
+        data: pd.DataFrame,
+        validation_config: PreBreakoutValidationConfig,
+        *,
+        engine_config: PreBreakoutConfig | None = None,
+        relative_strength_score: int = 5,
+    ) -> tuple[PreBreakoutValidationRecord, ...]:
+        normalized = _normalize(data)
+        records: list[PreBreakoutValidationRecord] = []
+    
+        for cutoff in uygun_kesim_tarihleri(normalized, validation_config):
+            replay = tarihsel_yeniden_oynat(
+                symbol,
+                normalized,
+                cutoff,
+                config=engine_config,
+                relative_strength_score=relative_strength_score,
+                horizons=validation_config.horizons,
+            )
+            if replay.analysis.score < validation_config.minimum_score:
+                continue
+    
+            records.append(
+                PreBreakoutValidationRecord(
+                    symbol=symbol,
+                    cutoff_date=cutoff,
+                    replay=replay,
+                    performance_label=performans_etiketi_belirle(replay),
+                )
+            )
+    
+>       from .prebreakout_validation_evidence import persist_prebreakout_validation_evidence
+E       ImportError: cannot import name 'persist_prebreakout_validation_evidence' from 'backend.app.prebreakout.prebreakout_validation_evidence' (D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py)
+
+backend\app\prebreakout\prebreakout_validation.py:127: ImportError
+__________________ test_dogrulama_ozeti_sayimlari_tutarlidir __________________
+
+    def test_dogrulama_ozeti_sayimlari_tutarlidir() -> None:
+>       records = toplu_tarihsel_dogrulama(
+            {"TEST.IS": veri()},
+            config(),
+        )
+
+backend\tests\test_prebreakout_validation.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\prebreakout\prebreakout_validation.py:148: in toplu_tarihsel_dogrulama
+    sembol_tarihsel_dogrulama(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+symbol = 'TEST.IS'
+data =                   Open        High         Low       Close     Volume
+2026-01-02   99.800000  101.000000   99.000000  ...05  117.388203  2300000.0
+2026-07-16  117.255979  117.955979  116.955979  117.455979  2300000.0
+
+[140 rows x 5 columns]
+validation_config = PreBreakoutValidationConfig(start_date=datetime.date(2026, 4, 1), end_date=datetime.date(2026, 6, 30), cutoff_step=5, minimum_history_bars=60, minimum_score=0, horizons=(1, 3, 5, 10, 20))
+engine_config = None, relative_strength_score = 5
+
+    def sembol_tarihsel_dogrulama(
+        symbol: str,
+        data: pd.DataFrame,
+        validation_config: PreBreakoutValidationConfig,
+        *,
+        engine_config: PreBreakoutConfig | None = None,
+        relative_strength_score: int = 5,
+    ) -> tuple[PreBreakoutValidationRecord, ...]:
+        normalized = _normalize(data)
+        records: list[PreBreakoutValidationRecord] = []
+    
+        for cutoff in uygun_kesim_tarihleri(normalized, validation_config):
+            replay = tarihsel_yeniden_oynat(
+                symbol,
+                normalized,
+                cutoff,
+                config=engine_config,
+                relative_strength_score=relative_strength_score,
+                horizons=validation_config.horizons,
+            )
+            if replay.analysis.score < validation_config.minimum_score:
+                continue
+    
+            records.append(
+                PreBreakoutValidationRecord(
+                    symbol=symbol,
+                    cutoff_date=cutoff,
+                    replay=replay,
+                    performance_label=performans_etiketi_belirle(replay),
+                )
+            )
+    
+>       from .prebreakout_validation_evidence import persist_prebreakout_validation_evidence
+E       ImportError: cannot import name 'persist_prebreakout_validation_evidence' from 'backend.app.prebreakout.prebreakout_validation_evidence' (D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py)
+
+backend\app\prebreakout\prebreakout_validation.py:127: ImportError
+________ test_gelecek_verisi_degisse_bile_kesim_gunu_analizi_degismez _________
+
+    def test_gelecek_verisi_degisse_bile_kesim_gunu_analizi_degismez() -> None:
+        original = veri()
+        changed = original.copy()
+    
+        cutoff = pd.Timestamp("2026-05-15")
+        future_mask = changed.index > cutoff
+        changed.loc[future_mask, ["Open", "High", "Low", "Close"]] *= 2.0
+    
+        config = PreBreakoutValidationConfig(
+            start_date=cutoff.date(),
+            end_date=cutoff.date(),
+            cutoff_step=1,
+            minimum_score=0,
+        )
+    
+>       first = toplu_tarihsel_dogrulama(
+            {"TEST.IS": original},
+            config,
+        )
+
+backend\tests\test_prebreakout_validation_no_lookahead.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\prebreakout\prebreakout_validation.py:148: in toplu_tarihsel_dogrulama
+    sembol_tarihsel_dogrulama(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+symbol = 'TEST.IS'
+data =                   Open        High         Low       Close     Volume
+2026-01-02   99.800000  100.800000   99.200000  ...81  113.899281  2000000.0
+2026-07-16  113.800000  114.800000  113.200000  114.000000  2000000.0
+
+[140 rows x 5 columns]
+validation_config = PreBreakoutValidationConfig(start_date=datetime.date(2026, 5, 15), end_date=datetime.date(2026, 5, 15), cutoff_step=1, minimum_history_bars=60, minimum_score=0, horizons=(1, 3, 5, 10, 20))
+engine_config = None, relative_strength_score = 5
+
+    def sembol_tarihsel_dogrulama(
+        symbol: str,
+        data: pd.DataFrame,
+        validation_config: PreBreakoutValidationConfig,
+        *,
+        engine_config: PreBreakoutConfig | None = None,
+        relative_strength_score: int = 5,
+    ) -> tuple[PreBreakoutValidationRecord, ...]:
+        normalized = _normalize(data)
+        records: list[PreBreakoutValidationRecord] = []
+    
+        for cutoff in uygun_kesim_tarihleri(normalized, validation_config):
+            replay = tarihsel_yeniden_oynat(
+                symbol,
+                normalized,
+                cutoff,
+                config=engine_config,
+                relative_strength_score=relative_strength_score,
+                horizons=validation_config.horizons,
+            )
+            if replay.analysis.score < validation_config.minimum_score:
+                continue
+    
+            records.append(
+                PreBreakoutValidationRecord(
+                    symbol=symbol,
+                    cutoff_date=cutoff,
+                    replay=replay,
+                    performance_label=performans_etiketi_belirle(replay),
+                )
+            )
+    
+>       from .prebreakout_validation_evidence import persist_prebreakout_validation_evidence
+E       ImportError: cannot import name 'persist_prebreakout_validation_evidence' from 'backend.app.prebreakout.prebreakout_validation_evidence' (D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py)
+
+backend\app\prebreakout\prebreakout_validation.py:127: ImportError
+___________ test_dogrulama_raporu_ileri_performans_sutunlari_icerir ___________
+
+    def test_dogrulama_raporu_ileri_performans_sutunlari_icerir() -> None:
+        config = PreBreakoutValidationConfig(
+            start_date=date(2026, 4, 1),
+            end_date=date(2026, 5, 30),
+            cutoff_step=10,
+            minimum_score=0,
+        )
+>       records = toplu_tarihsel_dogrulama(
+            {"TEST.IS": veri()},
+            config,
+        )
+
+backend\tests\test_prebreakout_validation_report.py:40: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\prebreakout\prebreakout_validation.py:148: in toplu_tarihsel_dogrulama
+    sembol_tarihsel_dogrulama(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+symbol = 'TEST.IS'
+data =                   Open        High         Low       Close     Volume
+2026-01-02   99.800000  100.800000   99.200000  ...04  117.870504  2000000.0
+2026-07-16  117.800000  118.800000  117.200000  118.000000  2000000.0
+
+[140 rows x 5 columns]
+validation_config = PreBreakoutValidationConfig(start_date=datetime.date(2026, 4, 1), end_date=datetime.date(2026, 5, 30), cutoff_step=10, minimum_history_bars=60, minimum_score=0, horizons=(1, 3, 5, 10, 20))
+engine_config = None, relative_strength_score = 5
+
+    def sembol_tarihsel_dogrulama(
+        symbol: str,
+        data: pd.DataFrame,
+        validation_config: PreBreakoutValidationConfig,
+        *,
+        engine_config: PreBreakoutConfig | None = None,
+        relative_strength_score: int = 5,
+    ) -> tuple[PreBreakoutValidationRecord, ...]:
+        normalized = _normalize(data)
+        records: list[PreBreakoutValidationRecord] = []
+    
+        for cutoff in uygun_kesim_tarihleri(normalized, validation_config):
+            replay = tarihsel_yeniden_oynat(
+                symbol,
+                normalized,
+                cutoff,
+                config=engine_config,
+                relative_strength_score=relative_strength_score,
+                horizons=validation_config.horizons,
+            )
+            if replay.analysis.score < validation_config.minimum_score:
+                continue
+    
+            records.append(
+                PreBreakoutValidationRecord(
+                    symbol=symbol,
+                    cutoff_date=cutoff,
+                    replay=replay,
+                    performance_label=performans_etiketi_belirle(replay),
+                )
+            )
+    
+>       from .prebreakout_validation_evidence import persist_prebreakout_validation_evidence
+E       ImportError: cannot import name 'persist_prebreakout_validation_evidence' from 'backend.app.prebreakout.prebreakout_validation_evidence' (D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py)
+
+backend\app\prebreakout\prebreakout_validation.py:127: ImportError
+____________________ test_ozet_ve_asama_tablolari_uretilir ____________________
+
+    def test_ozet_ve_asama_tablolari_uretilir() -> None:
+        config = PreBreakoutValidationConfig(
+            start_date=date(2026, 4, 1),
+            end_date=date(2026, 5, 30),
+            cutoff_step=10,
+            minimum_score=0,
+        )
+>       records = toplu_tarihsel_dogrulama(
+            {"TEST.IS": veri()},
+            config,
+        )
+
+backend\tests\test_prebreakout_validation_report.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+backend\app\prebreakout\prebreakout_validation.py:148: in toplu_tarihsel_dogrulama
+    sembol_tarihsel_dogrulama(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+symbol = 'TEST.IS'
+data =                   Open        High         Low       Close     Volume
+2026-01-02   99.800000  100.800000   99.200000  ...04  117.870504  2000000.0
+2026-07-16  117.800000  118.800000  117.200000  118.000000  2000000.0
+
+[140 rows x 5 columns]
+validation_config = PreBreakoutValidationConfig(start_date=datetime.date(2026, 4, 1), end_date=datetime.date(2026, 5, 30), cutoff_step=10, minimum_history_bars=60, minimum_score=0, horizons=(1, 3, 5, 10, 20))
+engine_config = None, relative_strength_score = 5
+
+    def sembol_tarihsel_dogrulama(
+        symbol: str,
+        data: pd.DataFrame,
+        validation_config: PreBreakoutValidationConfig,
+        *,
+        engine_config: PreBreakoutConfig | None = None,
+        relative_strength_score: int = 5,
+    ) -> tuple[PreBreakoutValidationRecord, ...]:
+        normalized = _normalize(data)
+        records: list[PreBreakoutValidationRecord] = []
+    
+        for cutoff in uygun_kesim_tarihleri(normalized, validation_config):
+            replay = tarihsel_yeniden_oynat(
+                symbol,
+                normalized,
+                cutoff,
+                config=engine_config,
+                relative_strength_score=relative_strength_score,
+                horizons=validation_config.horizons,
+            )
+            if replay.analysis.score < validation_config.minimum_score:
+                continue
+    
+            records.append(
+                PreBreakoutValidationRecord(
+                    symbol=symbol,
+                    cutoff_date=cutoff,
+                    replay=replay,
+                    performance_label=performans_etiketi_belirle(replay),
+                )
+            )
+    
+>       from .prebreakout_validation_evidence import persist_prebreakout_validation_evidence
+E       ImportError: cannot import name 'persist_prebreakout_validation_evidence' from 'backend.app.prebreakout.prebreakout_validation_evidence' (D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py)
+
+backend\app\prebreakout\prebreakout_validation.py:127: ImportError
+=========================== short test summary info ===========================
+FAILED backend/tests/test_prebreakout_validation.py::test_toplu_dogrulama_deterministik_siralidir
+FAILED backend/tests/test_prebreakout_validation.py::test_minimum_skor_kayit_sayisini_filtreler
+FAILED backend/tests/test_prebreakout_validation.py::test_dogrulama_ozeti_sayimlari_tutarlidir
+FAILED backend/tests/test_prebreakout_validation_no_lookahead.py::test_gelecek_verisi_degisse_bile_kesim_gunu_analizi_degismez
+FAILED backend/tests/test_prebreakout_validation_report.py::test_dogrulama_raporu_ileri_performans_sutunlari_icerir
+FAILED backend/tests/test_prebreakout_validation_report.py::test_ozet_ve_asama_tablolari_uretilir
+6 failed, 467 passed, 2547 deselected in 19.05s
+TARGET_EXIT_CODE=1
+
+=== FULL REGRESSION ===

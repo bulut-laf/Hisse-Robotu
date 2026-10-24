@@ -1,0 +1,162 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_CANONICAL_BUSINESS_QUALITY_ADAPTER_V6_REV4",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "period_selection": {
+    "duration_leg": "CURRENT_YTD",
+    "duration_start": "2026-01-01",
+    "period_end": "2026-06-30",
+    "balance_sheet": "PERIOD_END_SNAPSHOT"
+  },
+  "resolved_inputs": {
+    "revenue": {
+      "metric_code": "REVENUE",
+      "value": "662788010",
+      "period_kind": "DURATION",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_YTD",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "gross_profit": {
+      "metric_code": "GROSS_PROFIT",
+      "value": "84125684",
+      "period_kind": "DURATION",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_YTD",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "operating_profit": {
+      "metric_code": "OPERATING_PROFIT",
+      "value": "59025244",
+      "period_kind": "DURATION",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_YTD",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "net_income": {
+      "metric_code": "NET_INCOME",
+      "value": "50272473",
+      "period_kind": "DURATION",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_YTD",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "operating_cash_flow": {
+      "metric_code": "OPERATING_CASH_FLOW",
+      "value": "132366363",
+      "period_kind": "DURATION",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_YTD",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "capital_expenditure": {
+      "metric_code": "CAPEX",
+      "value": "-11858044",
+      "period_kind": "DURATION",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_YTD",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_assets": {
+      "metric_code": "TOTAL_ASSETS",
+      "value": "859987516",
+      "period_kind": "INSTANT",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_equity": {
+      "metric_code": "TOTAL_EQUITY",
+      "value": "463306781",
+      "period_kind": "INSTANT",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "cash_and_equivalents": {
+      "metric_code": "CASH_EQUIVALENTS",
+      "value": "195840940",
+      "period_kind": "INSTANT",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "current_assets": {
+      "metric_code": "CURRENT_ASSETS",
+      "value": "439480874",
+      "period_kind": "INSTANT",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "current_liabilities": {
+      "metric_code": "CURRENT_LIABILITIES",
+      "value": "325369321",
+      "period_kind": "INSTANT",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_debt": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+      "metric_code": "FINANCIAL_DEBT",
+      "value": "68200679",
+      "source_period_end": "2026-06-30",
+      "semantic_guard": "existing accepted FINANCIAL_DEBT reused"
+    },
+    "ebitda": {
+      "value": "67897556",
+      "derivation": "OPERATING_PROFIT + abs(DEPRECIATION_AMORTIZATION)",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "comparison_role": "CURRENT_YTD",
+      "components": {
+        "OPERATING_PROFIT": "59025244",
+        "DEPRECIATION_AMORTIZATION": "8872312"
+      },
+      "same_period_verified": true,
+      "point_in_time_verified": true,
+      "ttm_synthesis": false
+    },
+    "shares_outstanding": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_acceptance.json",
+      "field": "input_convention.legal_share_piece_count",
+      "value": "192679559800",
+      "issued_capital_try": "1926795598",
+      "legal_share_nominal_try": "0.01"
+    }
+  },
+  "missing_requirements": [],
+  "business_quality": "45",
+  "blockers": [],
+  "fundamental_quality": {
+    "total_score": 45,
+    "locked": false,
+    "grade": "Zayıf",
+    "period_key": "2026Q2",
+    "explanation": "Temel kalite skoru kârlılık, büyüme, borçluluk, likidite ve nakit akışı bileşenlerinden üretildi. Bu skor alım/satım sinyali değildir."
+  }
+}

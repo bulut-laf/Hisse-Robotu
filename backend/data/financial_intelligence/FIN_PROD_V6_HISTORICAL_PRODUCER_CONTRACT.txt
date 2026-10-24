@@ -1,0 +1,159 @@
+﻿FIN_PROD_V6_HISTORICAL_PRODUCER_CONTRACT
+
+===== EXACT_ASSIGNMENTS_AND_REFERENCES =====
+FILE=backend\app\analysis\financial_intelligence_acceptance.py
+00102:         "canonical_points_present": len(series.points) > 0,
+00103:         "health_unlocked": not health.locked and health.score is not None,
+00104:         "risk_unlocked": not risk.locked and risk.risk_score is not None,
+00105:         "cash_quality_unlocked": not cash_quality.locked and cash_quality.score is not None,
+00106:         "read_only": True,
+00107:     }
+00108:     status = "PASS" if all(required.values()) else "FAIL"
+00109: 
+00110:     return _serialize({
+00111:         "status": status,
+00112:         "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+00113:         "identity": report.identity,
+00114:         "canonical_fact_count": len(report.facts),
+00115:         "historical_point_count": len(series.points),
+00116:         "series_warnings": series.warnings,
+00117:         "financial_health": health,
+00118:         "earnings_cash_quality": cash_quality,
+00119:         "financial_risk": risk,
+00120:         "ownership": ownership,
+00121:         "market_multiples": multiples,
+00122:         "valuation_status": valuation_status,
+00123:         "acceptance_checks": required,
+00124:         "limitations": [
+00125:             "Fair value / DCF is not generated without explicit forecast assumptions.",
+00126:             "Short-term investability is not generated without market/technical context.",
+00127:             "Long-term investability is not generated without business-quality/governance/growth context.",
+00128:             "Missing inputs are fail-closed; no values are invented.",
+00129:         ],
+00130:     })
+---
+---
+===
+
+===== KAP/CANONICAL IMPORT ENTRYPOINTS =====
+FILE=backend\app\analysis\financial_health.py
+ENTRY|00019|FinancialHealthMetric
+ENTRY|00029|FinancialHealthComponent
+ENTRY|00040|FinancialHealthAssessment
+ENTRY|00141|_matching_prior_same_period
+ENTRY|00183|calculate_financial_health
+---
+FILE=backend\app\analysis\financial_intelligence_acceptance.py
+ENTRY|00046|run_financial_intelligence_acceptance
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+ENTRY|00056|_canonical_ok
+---
+FILE=backend\app\analysis\financial_intelligence_market_acceptance.py
+ENTRY|00034|run_market_ownership_acceptance
+---
+FILE=backend\app\analysis\financial_intelligence_ttm_acceptance.py
+ENTRY|00019|run_ttm_market_acceptance
+---
+FILE=backend\app\analysis\financial_risk_flags.py
+ENTRY|00015|FinancialRiskFlag
+ENTRY|00023|FinancialRiskMetric
+ENTRY|00030|FinancialRiskAssessment
+ENTRY|00140|calculate_financial_risk_flags
+---
+FILE=backend\app\analysis\fundamental_analysis.py
+ENTRY|00176|build_fundamental_snapshot
+---
+FILE=backend\app\analysis\kap_fundamental_service.py
+ENTRY|00023|KapFundamentalAnalysisResult
+ENTRY|00032|KapFundamentalService
+---
+FILE=backend\app\data\fundamental_data.py
+ENTRY|00043|FundamentalDataError
+ENTRY|00048|FundamentalFreshnessPolicy
+ENTRY|00064|FundamentalFreshnessResult
+ENTRY|00085|_period_from_mapping
+ENTRY|00145|periods_from_records
+ENTRY|00165|periods_from_csv_bytes
+ENTRY|00182|periods_from_json_bytes
+ENTRY|00202|load_fundamental_file
+ENTRY|00221|evaluate_fundamental_freshness
+---
+FILE=backend\app\data\historical_financial_series.py
+ENTRY|00012|HistoricalFinancialSeriesError
+ENTRY|00020|FinancialPeriod
+ENTRY|00029|HistoricalFinancialPoint
+ENTRY|00062|HistoricalFinancialSeries
+ENTRY|00130|parse_period_label
+ENTRY|00196|build_historical_financial_series
+ENTRY|00048|canonical_key
+ENTRY|00099|metric_series
+---
+FILE=backend\app\data\kap_financial_xls.py
+ENTRY|00018|KapFinancialXlsError
+ENTRY|00094|_FinancialHtmlParser
+ENTRY|00237|import_kap_financial_xls_bytes
+ENTRY|00307|import_kap_financial_xls
+---
+FILE=backend\app\funds\kap_free_float_auto_population.py
+ENTRY|00043|KapFreeFloatError
+ENTRY|00048|KapCompanyReference
+ENTRY|00054|KapFreeFloatPopulationFailure
+ENTRY|00061|KapFreeFloatPopulationSummary
+ENTRY|00122|_validate_kap_url
+ENTRY|00146|validate_kap_bist_companies_url
+ENTRY|00154|validate_kap_company_general_url
+ENTRY|00162|validate_kap_free_float_table_url
+ENTRY|00184|parse_kap_bist_company_directory
+ENTRY|00232|parse_kap_free_float_general_page
+ENTRY|00307|parse_kap_free_float_table
+ENTRY|00380|discover_kap_company_general_urls
+ENTRY|00412|populate_kap_free_float_for_symbols
+---
+FILE=backend\app\funds\kap_portfolio_auto_ingestion.py
+ENTRY|00028|KapPortfolioDiscoveryCandidate
+ENTRY|00035|KapPortfolioAutoIngestionFailure
+ENTRY|00042|KapPortfolioAutoIngestionSummary
+ENTRY|00140|parse_kap_disclosures_for_portfolio_reports
+ENTRY|00196|discover_kap_portfolio_reports
+ENTRY|00223|auto_ingest_kap_portfolio_reports
+---
+FILE=backend\app\funds\kap_portfolio_ingestion.py
+ENTRY|00040|KapFundPortfolioError
+ENTRY|00045|KapPortfolioReportReference
+ENTRY|00061|KapPortfolioIngestionResult
+ENTRY|00071|_KapDetailHtmlParser
+ENTRY|00113|_validate_https_kap_url
+ENTRY|00128|validate_kap_portfolio_detail_url
+ENTRY|00132|validate_kap_attachment_url
+ENTRY|00173|parse_kap_portfolio_report_reference
+ENTRY|00234|extract_kap_portfolio_pdf_payload
+ENTRY|00267|extract_kap_portfolio_pdf_text
+ENTRY|00290|_canonical_current_fund_id
+ENTRY|00308|parse_kap_portfolio_report_text
+ENTRY|00386|_same_canonical_snapshot
+ENTRY|00420|ingest_kap_portfolio_pdf_upload
+ENTRY|00514|ingest_kap_portfolio_report_url
+---
+FILE=backend\app\models\financial_intelligence_models.py
+ENTRY|00009|FinancialReportIdentity
+ENTRY|00024|CanonicalFinancialFact
+ENTRY|00034|KapFinancialImportResult
+---
+FILE=backend\app\news_center\kap_adapter.py
+ENTRY|00030|KapAdapterError
+ENTRY|00035|KapFetchResult
+ENTRY|00066|validate_kap_detail_url
+ENTRY|00179|parse_kap_detail_html
+ENTRY|00238|KapUrlAdapter
+---
+FILE=backend\app\news_center\kap_flow.py
+ENTRY|00016|KAPDisclosure
+ENTRY|00043|KAPFlowBrief
+ENTRY|00071|_is_verified_kap
+ENTRY|00078|kap_available_symbols
+ENTRY|00095|build_kap_flow
+ENTRY|00204|kap_flow_rows
+---
+
+FIN_PROD_V6_HISTORICAL_PRODUCER_CONTRACT=PASS

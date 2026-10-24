@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_operation_phase_runner.py", line 10, in <module>
+    from backend.app.analysis.eod_candidate_output import build_eod_candidate_output
+  File "D:\Projects\Hisse-Robotu\backend\app\analysis\eod_candidate_output.py", line 3, in <module>
+    from app.analysis.eod_decision_gate import EodDecisionState
+ModuleNotFoundError: No module named 'app'

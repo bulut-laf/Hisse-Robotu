@@ -1,0 +1,3072 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_SHORT_TERM_SOURCE_PREFLIGHT_V5",
+  "candidate_count": 394,
+  "likely_sources": [
+    {
+      "path": "backend\\app\\analysis\\technical_decision_matrix.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "market",
+        "momentum",
+        "regime",
+        "relative_strength",
+        "resistance",
+        "rsi",
+        "support",
+        "technical",
+        "trend",
+        "volatility",
+        "volume"
+      ],
+      "evidence_score": 39,
+      "functions": [
+        "_contribution",
+        "_direction_from_text",
+        "_divergence_label",
+        "_latest_divergence_direction",
+        "_risk_reward_direction",
+        "_risk_reward_label",
+        "_row",
+        "_volatility_direction",
+        "build_technical_decision_matrix",
+        "decision_matrix_rows"
+      ],
+      "classes": [
+        "DecisionClass",
+        "DecisionMatrixContext",
+        "DecisionMatrixRow",
+        "MatrixDirection",
+        "TechnicalDecisionMatrix"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_canonical_coverage_v4.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "momentum",
+        "price",
+        "relative_strength",
+        "rsi",
+        "support",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 36,
+      "functions": [
+        "_canonical_ok",
+        "_load_json",
+        "_long_term_canonical_ok",
+        "_status_pass",
+        "_symbol_ok",
+        "_v5_short_term_v7a_ok",
+        "_validate_long_term",
+        "_validate_short_term",
+        "enrich_v3_batch",
+        "inspect_symbol_coverage",
+        "save_json"
+      ],
+      "classes": [
+        "CoverageArtifact",
+        "SymbolCoverage"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\fin_prod_v5_short_term_context_adapter.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "momentum",
+        "price",
+        "relative_strength",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 35,
+      "functions": [
+        "_date_or_none",
+        "_decimal_or_none",
+        "_discover_symbol_jsons",
+        "_document_dates",
+        "_document_mentions_symbol",
+        "_exact_momentum_artifact",
+        "_extract_exact_metric",
+        "_frame_index_date",
+        "_jsonable",
+        "_load_json",
+        "_market_symbol",
+        "_price_reference",
+        "_walk",
+        "build_short_term_canonical_context",
+        "save_short_term_canonical_context"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\investability_production_closure.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "momentum",
+        "price",
+        "relative_strength",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 35,
+      "functions": [
+        "_D",
+        "_clamp",
+        "_coverage_long",
+        "_merge",
+        "_ser",
+        "_walk_exact",
+        "discover_exact_canonical_candidates",
+        "load_json",
+        "run_closure",
+        "save_json"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\investability_runtime_wiring.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "momentum",
+        "price",
+        "relative_strength",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 35,
+      "functions": [
+        "_d",
+        "_i",
+        "_ser",
+        "load_json",
+        "run_runtime_wiring"
+      ],
+      "classes": [
+        "InvestabilityRuntimeWiringError"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_investability_acceptance.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "momentum",
+        "price",
+        "relative_strength",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 34,
+      "functions": [
+        "_d",
+        "_i",
+        "_long",
+        "_market",
+        "_ser",
+        "run_investability_acceptance"
+      ],
+      "classes": [
+        "InvestabilityAcceptanceError"
+      ]
+    },
+    {
+      "path": "backend\\app\\operations\\preclose_partial_daily_preview.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "canonical_close",
+        "delayed_data",
+        "market",
+        "ohlcv",
+        "price",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 33,
+      "functions": [
+        "_date_index",
+        "_local_now",
+        "_preclose_guard",
+        "build_preclose_overlay_fetcher",
+        "fetch",
+        "overlay_partial_daily_bar",
+        "preclose_preview_rows",
+        "run_preclose_partial_preview"
+      ],
+      "classes": [
+        "PreclosePartialDailyPreviewError",
+        "PreclosePreviewResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_panel_read_model.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "price",
+        "relative_strength",
+        "rsi",
+        "support",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 32,
+      "functions": [
+        "_find_component",
+        "_find_metric",
+        "_first",
+        "_load",
+        "_pick",
+        "_status",
+        "_value",
+        "build_financial_intelligence_panel",
+        "save_financial_intelligence_panel"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\ui\\prebreakout_dashboard.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "market",
+        "momentum",
+        "price",
+        "regime",
+        "rsi",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 32,
+      "functions": [
+        "_download_single_symbol",
+        "_render_daily_operations_hub",
+        "_render_live_performance_comparison",
+        "_render_next_day_live20_panel",
+        "_render_operation_archive_history",
+        "_render_operational_health",
+        "_render_paper_portfolio",
+        "_render_real_result_evaluation",
+        "_render_result_detail",
+        "_render_weekly_opportunity_panel",
+        "guncel_sonuc_satiri",
+        "on_yukselis_hazirlik_formu",
+        "replay_sonuc_satiri",
+        "value"
+      ],
+      "classes": [
+        "_DailyView",
+        "_PortfolioSummary"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\momentum_discovery.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "market",
+        "momentum",
+        "ohlcv",
+        "rsi",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 31,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_adayi_olustur",
+        "_ham_momentum_olcutleri",
+        "_izleme_disi_nedeni",
+        "_sinif_onceligi",
+        "_yalin_sinif",
+        "analiz_et",
+        "calistir",
+        "durum_bildir",
+        "erken_kesif_sayisi",
+        "isleme_hazir_sayisi",
+        "kirilim_sayisi",
+        "momentum_aday_tablosu",
+        "sinif_sayisi"
+      ],
+      "classes": [
+        "MomentumCandidate",
+        "MomentumDiscoveryEngine",
+        "MomentumDiscoveryError",
+        "MomentumDiscoveryRequest",
+        "MomentumDiscoveryResult",
+        "MomentumDiscoveryService",
+        "MomentumFailure"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\stock_analyzer.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "market",
+        "ohlcv",
+        "resistance",
+        "rsi",
+        "support",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 31,
+      "functions": [
+        "_analiz_sonucunu_olustur",
+        "_sembolu_temizle",
+        "analiz_et",
+        "sozluge_donustur",
+        "veriden_analiz_et"
+      ],
+      "classes": [
+        "StockAnalysisResult",
+        "StockAnalyzer",
+        "StockAnalyzerError"
+      ]
+    },
+    {
+      "path": "backend\\app\\models\\investability_models.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "price",
+        "relative_strength",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 31,
+      "functions": [],
+      "classes": [
+        "CalibrationSummary",
+        "IntelligencePanelPayload",
+        "InvestabilityResult",
+        "LongTermContextInput",
+        "MarketContextInput",
+        "PointInTimeObservation",
+        "ScoreComponent"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\market_regime.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "market",
+        "momentum",
+        "regime",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 30,
+      "functions": [
+        "__post_init__",
+        "_gosterge_tablosu",
+        "_gunluk_veriyi_kurtararak_indir",
+        "_hacim_bileseni",
+        "_haftaliga_cevir",
+        "_indir",
+        "_kirilim_bileseni",
+        "_momentum_bileseni",
+        "_saatlik_yon",
+        "_trend_bileseni",
+        "_yon",
+        "endeks_sembolunu_hazirla",
+        "piyasa_rejimi_karsilastirmasi",
+        "piyasa_rejimini_analiz_et",
+        "primary_loader"
+      ],
+      "classes": [
+        "MarketRegimeDownloadResult",
+        "MarketRegimeError",
+        "MarketRegimeResult",
+        "MarketRegimeRetryPolicy",
+        "RegimeComponent"
+      ]
+    },
+    {
+      "path": "backend\\app\\opportunity_radar.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "momentum",
+        "ohlcv",
+        "rsi",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 30,
+      "functions": [
+        "_apply_monthly_validation",
+        "_bin_ranges",
+        "_in_bin",
+        "_load_monthly_validated_profiles",
+        "_load_validated_profiles",
+        "_monthly",
+        "_monthly_metrics",
+        "_monthly_profile_matches",
+        "_monthly_profile_snapshots",
+        "_monthly_profile_status",
+        "_monthly_rows",
+        "_monthly_validation_features",
+        "_monthly_validation_months",
+        "_normalize_ohlcv",
+        "_rsi",
+        "_weekly",
+        "_weekly_enrich",
+        "_weekly_row",
+        "run_opportunity_radar"
+      ],
+      "classes": [
+        "OpportunityRadarResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\short_term_investability.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "momentum",
+        "relative_strength",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 29,
+      "functions": [
+        "_clamp",
+        "_component",
+        "calculate_short_term_investability"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\signal_outcome_tracking.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "momentum",
+        "price",
+        "regime",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 27,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_normalize_price_frame",
+        "completed_horizons",
+        "evaluate_signal",
+        "list",
+        "outcome_rows",
+        "outcomes_to_csv",
+        "save",
+        "success_summary"
+      ],
+      "classes": [
+        "HorizonOutcome",
+        "SignalOutcome",
+        "SignalOutcomeError",
+        "SignalOutcomeJsonStore",
+        "SignalSnapshot"
+      ]
+    },
+    {
+      "path": "backend\\app\\diagnostics\\system_check.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "momentum",
+        "price",
+        "rsi",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 27,
+      "functions": [
+        "__post_init__",
+        "_bist_evreni_kontrolu",
+        "_canli_analiz_zinciri_kontrolu",
+        "_gecmis_kaydi_kontrolu",
+        "_gecmis_yazma_kontrolu",
+        "_hata_itemi",
+        "_kap_vbts_guvenlik_kontrolu",
+        "_kayip_analizi_guvenlik_zinciri_kontrolu",
+        "_kaynak_derleme_kontrolu",
+        "_modul_kontrolleri",
+        "_momentum_kesif_zinciri_kontrolu",
+        "_momentum_walk_forward_zinciri_kontrolu",
+        "_proje_yapisi_kontrolu",
+        "_python_kontrolu",
+        "_rapor_uretimi_kontrolu",
+        "_sentetik_backtest_calistir",
+        "_sentetik_coklu_zaman_paketi",
+        "_sentetik_gunluk_veri",
+        "_sure_ms",
+        "_tek_modul_kontrolu",
+        "_toplu_tarama_zinciri_kontrolu",
+        "_veri_tazeligi_kilidi_kontrolu",
+        "basarili_sayisi",
+        "basarisiz_sayisi",
+        "json_metni",
+        "kullanima_hazir",
+        "sistem_kontrolu_calistir",
+        "sozluk",
+        "uyari_sayisi",
+        "veri_getirici"
+      ],
+      "classes": [
+        "SystemCheckItem",
+        "SystemCheckReport"
+      ]
+    },
+    {
+      "path": "backend\\app\\sector_analysis\\sector_market_strength.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "market",
+        "momentum",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 27,
+      "functions": [
+        "_align_close",
+        "_load_frame",
+        "_momentum_metrics",
+        "_relative_score",
+        "_return_percent",
+        "_status",
+        "_trend_metrics",
+        "_volume_metrics",
+        "analyze_sector_index",
+        "build_sector_market_map",
+        "sector_market_rows"
+      ],
+      "classes": [
+        "SectorIndexDefinition",
+        "SectorMarketMap",
+        "SectorMarketStrengthError",
+        "SectorMarketStrengthResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\sector_analysis\\sector_member_strength.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "market",
+        "momentum",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 27,
+      "functions": [
+        "_aggregate_sector",
+        "_load_frame",
+        "_member_metrics",
+        "_relative_score",
+        "_return_percent",
+        "_status",
+        "build_sector_member_strength_map",
+        "sector_member_strength_rows"
+      ],
+      "classes": [
+        "SectorMemberDefinition",
+        "SectorMemberStrengthError",
+        "SectorMemberStrengthMap",
+        "SectorMemberStrengthResult",
+        "_MemberMetrics"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\automatic_signal_tracking.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "momentum",
+        "price",
+        "regime",
+        "volume"
+      ],
+      "evidence_score": 26,
+      "functions": [
+        "_completed_count",
+        "_normalize_price_frame",
+        "_record_key",
+        "automatic_record_from_values",
+        "fetch_signal_price_history",
+        "find_existing_outcome",
+        "normalize_symbol",
+        "save_or_update_signal",
+        "update_all_signal_outcomes"
+      ],
+      "classes": [
+        "AutomaticSignalSaveResult",
+        "AutomaticSignalTrackingError",
+        "AutomaticSignalUpdateSummary"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\indicator_contribution.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "momentum",
+        "regime",
+        "rsi",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 26,
+      "functions": [
+        "_average",
+        "_horizon_item",
+        "_positive_text",
+        "_rate",
+        "analyze_indicator_contributions",
+        "analyze_redundancy",
+        "contribution_rows",
+        "contribution_to_csv",
+        "default_indicator_definitions",
+        "redundancy_rows"
+      ],
+      "classes": [
+        "IndicatorContribution",
+        "IndicatorDefinition",
+        "RedundancyFinding"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\morning_candidate_flow.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "price",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 25,
+      "functions": [
+        "_candidate_selection",
+        "_normalize_symbol",
+        "_operational_status",
+        "_reference_price",
+        "_selection_reason",
+        "_visibility_by_symbol",
+        "build_morning_candidate_cards",
+        "morning_candidate_rows"
+      ],
+      "classes": [
+        "MorningCandidateCard"
+      ]
+    },
+    {
+      "path": "backend\\app\\ui\\financial_intelligence_dashboard.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "price",
+        "relative_strength",
+        "support",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 25,
+      "functions": [
+        "_build_bank_historical_rows",
+        "_fmt",
+        "_load_dashboard_panel",
+        "_load_panel",
+        "render_financial_intelligence_dashboard"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\operations\\scheduled_operation_phase_runner.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "canonical_close",
+        "market",
+        "momentum",
+        "price",
+        "rsi"
+      ],
+      "evidence_score": 24,
+      "functions": [
+        "_extract_symbols",
+        "_jsonable",
+        "_latest_evening_record",
+        "_local_now",
+        "_normalize_phase",
+        "_pct",
+        "_plain",
+        "_record_candidate_count",
+        "_schedule_guard",
+        "canonical_close",
+        "execute_operation_phase",
+        "main",
+        "operation_phase_rows",
+        "postopen_gap_entry",
+        "preclose_preview",
+        "preopen_context",
+        "walk"
+      ],
+      "classes": [
+        "ProductionScheduledOperationRuntime",
+        "ScheduledOperationPhaseError",
+        "ScheduledOperationPhaseResult",
+        "ScheduledOperationRuntime"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\technical_confirmation.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "momentum",
+        "resistance",
+        "rsi",
+        "support",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 23,
+      "functions": [
+        "_analiz_kimligi_uret",
+        "_gostergeleri_hazirla",
+        "_hacim_orani_hesapla",
+        "_hareketli_ortalama_teyidini_hesapla",
+        "_kesisim_durumu",
+        "_momentum_teyidini_hesapla",
+        "_ortak_aciklamalari_olustur",
+        "_ortak_teyit_durumunu_belirle",
+        "_pivotlari_bul",
+        "_trend_cizgisi_kirilimini_hesapla",
+        "_uygun_trend_cizgisini_bul",
+        "_yon_belirle",
+        "_zaman_dilimi_skorunu_hesapla",
+        "_zorunlu_zaman_dilimlerini_getir",
+        "deger",
+        "getir",
+        "teknik_teyit_analizi_yap",
+        "zaman_dilimi_teyidini_hesapla"
+      ],
+      "classes": [
+        "MomentumConfirmation",
+        "MovingAverageConfirmation",
+        "MultiTimeframeTechnicalConfirmation",
+        "TechnicalConfirmationError",
+        "TimeframeConfirmationResult",
+        "TrendlineBreakoutResult",
+        "_Pivot",
+        "_TrendLine"
+      ]
+    },
+    {
+      "path": "backend\\app\\backtest\\market_regime_analysis.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "regime",
+        "rsi",
+        "technical",
+        "trend"
+      ],
+      "evidence_score": 23,
+      "functions": [
+        "__post_init__",
+        "_fiyat_verisini_hazirla",
+        "_gun_dagilimini_olustur",
+        "_gunluk_rejimleri_hesapla",
+        "_performans_olustur",
+        "_sembolu_hazirla",
+        "analiz_et",
+        "birlesik_rejim",
+        "ilk_rejim_tarihi",
+        "siniflandirilan_gun_sayisi",
+        "siniflandirma_orani",
+        "son_rejim_tarihi"
+      ],
+      "classes": [
+        "MarketRegimeAnalysisError",
+        "MarketRegimeAnalyzer",
+        "MarketRegimeConfig",
+        "MarketRegimePoint",
+        "MarketRegimeReport",
+        "RegimeDayCount",
+        "RegimePerformance"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\canonical_investability_evidence.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "momentum",
+        "price",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 22,
+      "functions": [
+        "_D",
+        "_clamp100",
+        "build_canonical_evidence",
+        "financial_momentum_from_acceptance",
+        "governance_score_from_ownership",
+        "load_json",
+        "margin_of_safety_score_from_result",
+        "save_json",
+        "valuation_score_from_fair_value"
+      ],
+      "classes": [
+        "CanonicalInvestabilityEvidenceError"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\divergence_analysis.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "price",
+        "rsi",
+        "technical",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 22,
+      "functions": [
+        "_classify_pair",
+        "_confidence",
+        "_paired_pivots",
+        "_pivot_positions",
+        "_signals_for_oscillator",
+        "_validate_frame",
+        "_volume_confirmation",
+        "analyze_daily_weekly_divergences",
+        "analyze_divergences",
+        "divergence_rows"
+      ],
+      "classes": [
+        "DivergenceAnalysisError",
+        "DivergenceKind",
+        "DivergenceSignal",
+        "PivotPoint",
+        "TimeframeDivergenceResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\success_comparison_report.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "momentum",
+        "regime",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 22,
+      "functions": [
+        "_average",
+        "_build_row",
+        "_dimension_getters",
+        "_direction_alignment",
+        "_indicator_label",
+        "_quality_band",
+        "_rate",
+        "_volume_label",
+        "build_success_comparison_report",
+        "comparison_csv_bytes",
+        "comparison_pdf_bytes",
+        "comparison_rows"
+      ],
+      "classes": [
+        "ComparisonRow",
+        "SuccessComparisonError",
+        "SuccessComparisonReport"
+      ]
+    },
+    {
+      "path": "backend\\app\\funds\\pressure_read_model.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "ohlcv",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 22,
+      "functions": [
+        "_decimal",
+        "_latest_and_changes",
+        "_market_metrics",
+        "_market_symbol",
+        "build_fund_pressure_read_model",
+        "loader"
+      ],
+      "classes": [
+        "FundPressureReadModel"
+      ]
+    },
+    {
+      "path": "backend\\app\\market_context\\ai_stock_chat.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "ohlcv",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 20,
+      "functions": [
+        "_call_with_retry",
+        "_default_transport",
+        "_gemini_response",
+        "_history_for_prompt",
+        "_json_object",
+        "_openai_response",
+        "_safe_value",
+        "_validate_output",
+        "ask_stock_ai",
+        "build_stock_analysis_context",
+        "build_stock_chat_prompt",
+        "render_stock_ai_chat",
+        "store_stock_ai_context"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_score.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "momentum",
+        "relative_strength",
+        "resistance",
+        "rsi",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 20,
+      "functions": [
+        "_clamp",
+        "skoru_hesapla"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\weekly_opportunity.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "momentum",
+        "price",
+        "relative_strength",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 19,
+      "functions": [
+        "_blocked",
+        "_families",
+        "_invalidate",
+        "_next",
+        "_pilot",
+        "_sort_key",
+        "_stage",
+        "_why",
+        "available",
+        "classify_weekly_opportunities",
+        "w1",
+        "w2",
+        "w3",
+        "w4",
+        "weekly_evidence_from_next_day"
+      ],
+      "classes": [
+        "WeeklyOpportunityCandidate",
+        "WeeklyOpportunityEvidence",
+        "WeeklyOpportunityResult",
+        "WeeklyOpportunityStage",
+        "WeeklyOpportunityState",
+        "WeeklyPricePlan"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\data_source_recovery.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "ohlcv",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 19,
+      "functions": [
+        "_cache_paths",
+        "alpha_vantage_daily_loader",
+        "cache_read",
+        "cache_write",
+        "recover_daily_market_data"
+      ],
+      "classes": [
+        "DataSourceRecoveryError",
+        "RecoveredMarketData"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\market_data.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "ohlcv",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 19,
+      "functions": [
+        "_bugunun_satirini_cikar",
+        "_ohlc_araligini_duzelt",
+        "_sutunlari_duzelt",
+        "fiyat_verisi_getir",
+        "fiyat_verisini_duzelt",
+        "guvenli_fiyat_verisi_getir"
+      ],
+      "classes": [
+        "MarketDataError"
+      ]
+    },
+    {
+      "path": "backend\\app\\ui\\bist_daily_market_dashboard.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "ohlcv",
+        "price",
+        "rsi"
+      ],
+      "evidence_score": 19,
+      "functions": [
+        "_format_price",
+        "_render_custom_list",
+        "_render_result",
+        "_single_stock_card",
+        "render_bist_daily_market"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\data\\bist_official_daily.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "ohlcv",
+        "price",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 18,
+      "functions": [
+        "_archive_zip",
+        "_default_fetch",
+        "_normalize_header",
+        "_parse_bulletin_zip_internal",
+        "_read_csv_from_zip",
+        "_resolve_field",
+        "_resolve_required_fields",
+        "_to_decimal",
+        "_validate_ohlcv",
+        "bulletin_filename",
+        "bulletin_url",
+        "download_bulletin_zip",
+        "normalize_symbol",
+        "official_daily_data_get",
+        "parse_bulletin_zip",
+        "yahoo_style_symbol"
+      ],
+      "classes": [
+        "BistOfficialDailyError",
+        "OfficialDailyBatchResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_features.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "ohlcv",
+        "resistance",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 18,
+      "functions": [
+        "_atr",
+        "_average_or_zero",
+        "_ema",
+        "_rsi",
+        "_safe_pct",
+        "ozellikleri_hesapla"
+      ],
+      "classes": [
+        "PreBreakoutDataError"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\common_candidate_ai_review_v1.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 17,
+      "functions": [
+        "_evidence_payload",
+        "_text",
+        "_value",
+        "build_common_candidate_review_prompt",
+        "evaluate_common_candidate_ai_review",
+        "validate_common_candidate_review"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_acceptance.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price",
+        "technical"
+      ],
+      "evidence_score": 17,
+      "functions": [
+        "_d",
+        "_serialize",
+        "run_financial_intelligence_acceptance"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\walk_forward_calibration.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "momentum",
+        "rsi",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 17,
+      "functions": [
+        "_horizon_return",
+        "_matches",
+        "_maximum_drawdown",
+        "_metrics",
+        "_objective",
+        "_positive_text",
+        "aggregate_rows",
+        "calibration_to_csv",
+        "default_parameter_grid",
+        "run_walk_forward_calibration",
+        "window_rows"
+      ],
+      "classes": [
+        "CalibrationParameters",
+        "ParameterAggregate",
+        "WalkForwardCalibrationError",
+        "WalkForwardCalibrationResult",
+        "WalkForwardWindowResult",
+        "WindowMetrics"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\weekly_performance_report.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "price",
+        "regime"
+      ],
+      "evidence_score": 17,
+      "functions": [
+        "__init__",
+        "_average",
+        "_direction_label",
+        "_group_rows",
+        "_pdf_text",
+        "_quality_band",
+        "_rate",
+        "_register_font",
+        "_table",
+        "build_weekly_performance_report",
+        "group_rows_for_table",
+        "list",
+        "save",
+        "summary_rows",
+        "value_or_dash",
+        "weekly_report_csv_bytes",
+        "weekly_report_pdf_bytes"
+      ],
+      "classes": [
+        "WeeklyPerformanceArchive",
+        "WeeklyPerformanceReport",
+        "WeeklyPerformanceReportError"
+      ]
+    },
+    {
+      "path": "backend\\app\\history\\scan_history.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "rsi",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 17,
+      "functions": [
+        "__init__",
+        "_baglanti_ac",
+        "_hisse_kaydi_ekle",
+        "_sema_olustur",
+        "son_taramalari_getir",
+        "taramayi_kaydet",
+        "veritabani_yolu"
+      ],
+      "classes": [
+        "ScanHistoryError",
+        "ScanHistoryRepository",
+        "ScanHistorySaveResult",
+        "ScanRunSummary"
+      ]
+    },
+    {
+      "path": "backend\\app\\history\\scan_history_reader.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "rsi",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 17,
+      "functions": [
+        "__init__",
+        "_baglanti_ac",
+        "_gorunumleri_coz",
+        "_hisse_detayi_olustur",
+        "tarama_detayini_getir",
+        "veritabani_yolu"
+      ],
+      "classes": [
+        "ScanHistoryReader",
+        "ScanItemDetail",
+        "ScanRunDetail",
+        "ScanRunDetailSummary"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\common_final_candidate_adapters_v1.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 16,
+      "functions": [
+        "_enum_text",
+        "_first",
+        "_get",
+        "_join_text",
+        "_number",
+        "_records",
+        "_symbol",
+        "_text",
+        "adapt_morning_candidate_cards",
+        "adapt_opportunity_radar_result",
+        "adapt_weekly_opportunity_candidates",
+        "build_common_final_candidates"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\daily_buy_decision_outcomes.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 16,
+      "functions": [
+        "__init__",
+        "_decision_id",
+        "_normalize_symbol",
+        "_session_returns",
+        "_today",
+        "apply_session_prices",
+        "buy_decision_hit_summary",
+        "buy_decision_outcome_rows",
+        "load",
+        "register_buy_decisions",
+        "save"
+      ],
+      "classes": [
+        "BuyDecisionOutcomeJsonStore",
+        "BuyDecisionOutcomeRecord"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\jump_candidate_entry_readiness.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "resistance",
+        "rsi",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 16,
+      "functions": [
+        "_float_attr",
+        "_resistance_distance_pct",
+        "evaluate_jump_candidate_entry_readiness"
+      ],
+      "classes": [
+        "JumpCandidateEntryReadinessPolicy",
+        "JumpCandidateEntryReadinessResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\next_day_runtime_observer.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "momentum",
+        "relative_strength",
+        "rsi",
+        "trend",
+        "volume"
+      ],
+      "evidence_score": 16,
+      "functions": [
+        "_canonical_date",
+        "_contradictions",
+        "_extension",
+        "_f1_positive",
+        "_norm",
+        "_ordinal",
+        "_readiness_positive",
+        "_reason_families",
+        "_rebound",
+        "_sym",
+        "_tuple",
+        "_visibility_index",
+        "build_next_day_candidate_evidence",
+        "observe_canonical_next_day_selection"
+      ],
+      "classes": [
+        "NextDayRuntimeObserverError",
+        "NextDayRuntimeObserverResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\decision_engine\\entry_conditions.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "momentum",
+        "technical"
+      ],
+      "evidence_score": 16,
+      "functions": [
+        "evaluate_entry_conditions"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\decision_engine\\score_weights.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "momentum",
+        "technical"
+      ],
+      "evidence_score": 16,
+      "functions": [
+        "calculate_weighted_score"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\ui\\fund_analysis_center.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "market",
+        "price",
+        "rsi"
+      ],
+      "evidence_score": 15,
+      "functions": [
+        "__init__",
+        "_decimal_display",
+        "_fund_category_label",
+        "_fund_display_label",
+        "_fund_metadata_entry",
+        "_latest_series_by_fund",
+        "_percent_display",
+        "_profile_number",
+        "_profile_percent",
+        "_render_erste_hungary_evidence_surface",
+        "_render_fdo_pressure_production",
+        "_render_portfolio_tracking",
+        "_render_selected_fund_profile",
+        "_safe_float_display",
+        "build_fund_portfolio_tracking_read_model",
+        "current_portfolio_rows",
+        "fund_analysis_rows",
+        "fund_pressure_rows",
+        "list_snapshots",
+        "portfolio_change_rows",
+        "render_fund_analysis_center",
+        "stock_fund_activity_rows"
+      ],
+      "classes": [
+        "FundPortfolioTrackingReadModel",
+        "_EmptyPortfolioStore"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\jump_candidate_quality.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "_extension_atr",
+        "_float_attr",
+        "evaluate_jump_candidate_quality"
+      ],
+      "classes": [
+        "JumpCandidateQualityPolicy",
+        "JumpCandidateQualityResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\shadow_portfolio.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price",
+        "regime"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_normalize_history",
+        "_write",
+        "close_shadow_position",
+        "current_price",
+        "delete",
+        "find_open",
+        "from_dict",
+        "list",
+        "open_from_signal",
+        "open_shadow_position",
+        "position_amount",
+        "position_rows",
+        "positions_to_csv",
+        "realized_pnl",
+        "refresh_all_open_positions",
+        "refresh_position",
+        "return_percent",
+        "save",
+        "to_dict",
+        "unrealized_pnl"
+      ],
+      "classes": [
+        "ShadowPortfolioError",
+        "ShadowPortfolioStore",
+        "ShadowPosition"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\trade_plan.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "rsi",
+        "technical",
+        "trend"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "_beklenen_teyitleri_olustur",
+        "_bos_plan",
+        "_bos_plan_kimligi_uret",
+        "_gecersizlik_kosullarini_olustur",
+        "_gunluk_fiyat_ve_atr",
+        "_islem_engellerini_bul",
+        "_izleme_tetik_fiyati",
+        "_negatif_seviyeleri_sirala",
+        "_paket_ve_analizi_dogrula",
+        "_plan_girdilerini_dogrula",
+        "_plan_kimligi_uret",
+        "_plan_seviyelerini_hesapla",
+        "_plan_tipini_belirle",
+        "_pozisyon_girdilerini_dogrula",
+        "_pozitif_seviyeleri_sirala",
+        "islem_plani_olustur",
+        "pozisyon_boyutunu_hesapla"
+      ],
+      "classes": [
+        "PositionSizeResult",
+        "TradePlan",
+        "TradePlanError",
+        "_PlanLevels"
+      ]
+    },
+    {
+      "path": "backend\\app\\backtest\\regime_filter_impact.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "regime",
+        "rsi",
+        "trend"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "__init__",
+        "_kayan_pencereleri_karsilastir",
+        "_sembolu_hazirla",
+        "_takvim_gunu_sayisi",
+        "_varyanti_hesapla",
+        "_yilliklandirilmis_getiri",
+        "analiz_et",
+        "filtre_ustunluk_orani"
+      ],
+      "classes": [
+        "RegimeFilterImpactAnalyzer",
+        "RegimeFilterImpactError",
+        "RegimeFilterImpactReport",
+        "RollingImpactSummary",
+        "StrategyImpactMetrics"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\batch_market_data.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "ohlcv",
+        "rsi"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "_sembol_verisini_ayir",
+        "_sembolleri_hazirla",
+        "_sorgu_tarih_araligi",
+        "guvenli_referans_fiyat_verisi_getir",
+        "primary",
+        "referans_fiyat_verisi_getir",
+        "toplu_fiyat_verisi_getir"
+      ],
+      "classes": [
+        "BatchMarketDataError",
+        "BatchMarketDataFailure",
+        "BatchMarketDataResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\multi_timeframe_data.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "ohlcv",
+        "rsi"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "__post_init__",
+        "_bar_tamamlanma_zamani",
+        "_istanbul_zamani",
+        "_paket_kimligi",
+        "_tamamlanmamis_son_bari_cikar",
+        "_veri_kimligi",
+        "_zaman_dilimlerini_dogrula",
+        "_zaman_indeksini_hazirla",
+        "bar_sayisi",
+        "bist_sembolunu_hazirla",
+        "coklu_zaman_dilimi_verisi_getir",
+        "getir",
+        "ilk_zaman",
+        "ortak_referans_tarihi",
+        "son_zaman",
+        "zaman_bolgesi"
+      ],
+      "classes": [
+        "BistSessionConfig",
+        "MultiTimeframeDataBundle",
+        "MultiTimeframeDataError",
+        "TimeframeConfig",
+        "TimeframeSnapshot"
+      ]
+    },
+    {
+      "path": "backend\\app\\decision_engine\\exit_conditions.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "momentum",
+        "trend"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "evaluate_exit_conditions"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\funds\\international\\erste_hungary_adapter.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price",
+        "volatility"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "_date",
+        "_decimal",
+        "_pick",
+        "_text",
+        "normalize_erste_hungary_row"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\indicators\\technical_indicators.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "momentum",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "atr",
+        "ema",
+        "macd",
+        "rsi",
+        "teknik_gostergeleri_ekle"
+      ],
+      "classes": [
+        "IndicatorError"
+      ]
+    },
+    {
+      "path": "backend\\app\\ui\\market_regime_dashboard.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "momentum",
+        "regime",
+        "rsi"
+      ],
+      "evidence_score": 14,
+      "functions": [
+        "__init__",
+        "ana_rejim",
+        "as_dict",
+        "calistir",
+        "eksik_endeksler",
+        "piyasa_rejimi_baglami_olustur",
+        "veri_durumlari"
+      ],
+      "classes": [
+        "MarketRegimeContext",
+        "MarketRegimeDashboardError",
+        "MarketRegimeDashboardResult",
+        "MarketRegimeDashboardService"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\eod_candidate_performance.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "canonical_close",
+        "price"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "__init__",
+        "_as_date",
+        "_normalized_rows",
+        "_positive_number",
+        "calculate_eod_candidate_performance",
+        "load",
+        "save_record"
+      ],
+      "classes": [
+        "EodCandidatePerformanceJsonStore"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\high_conviction_buy_gate.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "rsi",
+        "support",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "_entry_pass",
+        "_positive_technical",
+        "_ratio_segment",
+        "_relevant_calibration_keys",
+        "_score_segment",
+        "_timing_pass",
+        "build_high_conviction_buy_gate",
+        "evaluate_historical_support",
+        "high_conviction_rows"
+      ],
+      "classes": [
+        "HighConvictionDecision",
+        "HistoricalSupport"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\historical_research_replay.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price",
+        "rsi",
+        "support"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "_analysis_date",
+        "build_cut_date_fetcher",
+        "fetch_at_cut_date",
+        "replay_canonical_research"
+      ],
+      "classes": [
+        "HistoricalResearchReplayResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\position_monitor.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "technical",
+        "trend"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "_ayarları_dogrula",
+        "_dinamik_stop_hesapla",
+        "_durumu_belirle",
+        "_gunluk_pozisyon_verisini_hazirla",
+        "_hedef_ilerlemesini_hesapla",
+        "_izleme_kimligi_uret",
+        "_paket_ve_analizi_dogrula",
+        "_pozisyonu_dogrula",
+        "acik_pozisyonu_izle"
+      ],
+      "classes": [
+        "OpenPosition",
+        "PositionMonitorError",
+        "PositionMonitoringResult",
+        "TargetProgress"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\bist_official_archive.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "ohlcv",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "_atomic_write_text",
+        "_canonical_csv_text",
+        "_canonical_rows",
+        "archive_official_daily_snapshot",
+        "load_canonical_daily_snapshot"
+      ],
+      "classes": [
+        "OfficialArchiveSnapshot"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\bist_official_batch_bridge.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "ohlcv",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "_candidate_dates",
+        "_canonical_path",
+        "load_latest_official_daily",
+        "merge_official_daily_bar"
+      ],
+      "classes": [
+        "OfficialLatestDailyResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\operations\\scheduled_session_data_adapter.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "delayed_data",
+        "price",
+        "rsi",
+        "scheduled_session",
+        "volume"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "_context_only",
+        "_local_now",
+        "_pct",
+        "_phase",
+        "_time_guard",
+        "build_scheduled_session_data_evidence"
+      ],
+      "classes": [
+        "ScheduledSessionDataAdapterError",
+        "ScheduledSessionDataEvidence"
+      ]
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_models.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "macd",
+        "momentum",
+        "rsi",
+        "trend"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "toplam"
+      ],
+      "classes": [
+        "PreBreakoutConfig",
+        "PreBreakoutFeatures",
+        "PreBreakoutResult",
+        "PreBreakoutScore",
+        "PreBreakoutStage"
+      ]
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_movement_age.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "momentum",
+        "price",
+        "rsi"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "__post_init__",
+        "_first_date",
+        "_rank_velocity",
+        "_velocity",
+        "analyze_movement_age",
+        "top5_forward_performance"
+      ],
+      "classes": [
+        "EarlyRadarState",
+        "MaturityWarning",
+        "MovementAgeReport",
+        "MovementPhase",
+        "RankingSnapshot"
+      ]
+    },
+    {
+      "path": "backend\\app\\workflow\\task_engine_v1.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "momentum",
+        "regime",
+        "technical"
+      ],
+      "evidence_score": 13,
+      "functions": [
+        "block_reason",
+        "build_tasks",
+        "quality_summary"
+      ],
+      "classes": [
+        "QualityState",
+        "Task",
+        "WorkflowPhase"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\active_shadow_trader.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_as_positive_float",
+        "_normalize_symbol",
+        "_optional_positive_float",
+        "_position_entry_date",
+        "append_observation",
+        "assess_shadow_position",
+        "assessment_rows",
+        "load",
+        "next_state",
+        "record_assessment",
+        "save_state",
+        "stable_position_key"
+      ],
+      "classes": [
+        "ActiveShadowTraderError",
+        "ActiveShadowTraderStore",
+        "TraderAssessment",
+        "TraderObservation",
+        "TraderPolicy",
+        "TraderState"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\daily_buy_decision_calibration.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "rsi",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "_band_rank",
+        "_band_ratio",
+        "_band_score",
+        "_segments",
+        "_status",
+        "build_buy_decision_calibration",
+        "buy_decision_calibration_rows"
+      ],
+      "classes": [
+        "CalibrationSlice"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\daily_buy_decision_review.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "support",
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "_evidence",
+        "_latest_result",
+        "build_daily_decision_reviews",
+        "daily_decision_review_rows",
+        "daily_decision_review_summary"
+      ],
+      "classes": [
+        "DailyDecisionReview"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\long_term_evidence_completion.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "momentum",
+        "rsi",
+        "support",
+        "technical"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "_D",
+        "_clamp100",
+        "_metric_map",
+        "complete_evidence",
+        "financial_momentum_score",
+        "growth_evidence_score",
+        "load_json",
+        "save_json"
+      ],
+      "classes": [
+        "LongTermEvidenceCompletionError"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\multi_timeframe_analysis.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "rsi",
+        "technical",
+        "trend"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "_analiz_kimligi_uret",
+        "_ortak_aciklamalari_olustur",
+        "_teyit_durumunu_belirle",
+        "_yon_belirle",
+        "_zaman_dilimini_analiz_et",
+        "_zorunlu_zaman_dilimlerini_getir",
+        "coklu_zaman_dilimi_teknik_analizi_yap",
+        "getir"
+      ],
+      "classes": [
+        "MultiTimeframeAnalysisError",
+        "MultiTimeframeTechnicalAnalysis",
+        "TimeframeTechnicalResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\market_ownership_canonical.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price",
+        "rsi"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "_d",
+        "_iso_date",
+        "_iso_dt",
+        "_ratio",
+        "canonical_valuation_units",
+        "effective_float_ratio",
+        "free_float_market_cap_try",
+        "free_float_valuation_units",
+        "from_dict",
+        "load_market_ownership_input",
+        "market_cap_try",
+        "s",
+        "save_market_ownership_input",
+        "validate"
+      ],
+      "classes": [
+        "CanonicalMarketOwnershipInput",
+        "MarketOwnershipCanonicalError"
+      ]
+    },
+    {
+      "path": "backend\\app\\decision_engine\\analysis_connector.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "technical"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "connect_analysis_to_decision"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\decision_support\\decision_engine.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "technical"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "evaluate_decision_context"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\funds\\f3_store_read_model.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "regime",
+        "rsi",
+        "volatility"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "_stored_price",
+        "analyze_tefas_rows_with_f3_store",
+        "enrich_evidence_maps_with_f3_store",
+        "f3_evidence_from_store",
+        "price_histories_from_store"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\funds\\international\\erste_hungary_f2_bridge.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "regime",
+        "rsi",
+        "volatility"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "build_f1_f2_f3_input",
+        "derive_f2_returns",
+        "observation_on_or_before",
+        "shift_months",
+        "trailing_return"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\market_context\\ai_evaluation_service.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "technical"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "create_evaluation_record",
+        "process_ai_evaluation_response"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\market_context\\v1_health_check.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price",
+        "support"
+      ],
+      "evidence_score": 12,
+      "functions": [
+        "validate_context_bundle"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\bist_daily_market.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_gunluk_satir",
+        "_sonuc_olustur",
+        "bist_gunluk_piyasa_olustur",
+        "bist_ozel_liste_olustur",
+        "bist_tum_sembollerini_yukle",
+        "bist_tum_sirket_adlarini_yukle",
+        "ozel_liste_girdilerini_ayir",
+        "sembol_eslesmeleri"
+      ],
+      "classes": [
+        "BistDailyMarketResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\common_final_candidate_selection_v1.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_clean",
+        "_number",
+        "_value",
+        "build_common_final_candidate_list"
+      ],
+      "classes": [
+        "CandidateEvidence",
+        "CommonFinalCandidate"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\daily_buy_decision_closeout.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_decision_for",
+        "_negative_technical",
+        "_positive_technical",
+        "build_daily_buy_decisions",
+        "daily_buy_decision_rows"
+      ],
+      "classes": [
+        "DailyBuyDecision"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\daily_buy_decision_cycle.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "__init__",
+        "_candidate_from_card",
+        "_decision_change_reasons",
+        "_fmt_number",
+        "_replacement_context",
+        "build_daily_buy_decision_snapshot",
+        "compare_evening_morning",
+        "compare_evening_morning_replacements",
+        "daily_buy_decision_change_rows",
+        "daily_buy_decision_replacement_rows",
+        "load",
+        "resolve_daily_buy_decision_phase",
+        "save"
+      ],
+      "classes": [
+        "DailyBuyDecisionCandidate",
+        "DailyBuyDecisionChange",
+        "DailyBuyDecisionJsonStore",
+        "DailyBuyDecisionReplacement",
+        "DailyBuyDecisionSnapshot"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\eod_candidate_performance_runtime.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_clean_symbol",
+        "_frame_rows",
+        "_settle_source_record",
+        "_source_symbols",
+        "settle_eod_candidate_performance_history",
+        "settle_latest_eod_candidate_performance"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\eod_final_action_board.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_action_label",
+        "build_eod_final_actions",
+        "eod_final_action_rows"
+      ],
+      "classes": [
+        "EodFinalAction"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\fast_mover_watch.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "rsi",
+        "support",
+        "technical",
+        "volatility"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "__post_init__",
+        "_delta",
+        "_normalize_families",
+        "_percentile_position",
+        "evaluate_fast_mover",
+        "movement_value",
+        "order_fast_movers"
+      ],
+      "classes": [
+        "FastMoverObservation",
+        "FastMoverReadModel",
+        "FastMoverState",
+        "FastMoverVisibilityPolicy",
+        "FastMoverWarning"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_market_acceptance.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_ser",
+        "run_market_ownership_acceptance"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_ttm_acceptance.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "run_ttm_market_acceptance"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\intraday_movement_evidence.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_movement_state",
+        "_movement_structure",
+        "_pct_change",
+        "_prepare_frame",
+        "_rebound_state",
+        "_volume_state",
+        "build_intraday_movement_evidence"
+      ],
+      "classes": [
+        "IntradayMovementEvidence"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\market_multiples.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_duration_values",
+        "_latest",
+        "_safe_div",
+        "_ttm",
+        "calculate_market_multiples"
+      ],
+      "classes": [
+        "MarketMultiplesError"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\morning_final_action_board.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "technical",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_action_label",
+        "build_morning_final_actions",
+        "morning_final_action_rows"
+      ],
+      "classes": [
+        "MorningFinalAction"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\sector_reference.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "__post_init__",
+        "_median_decimal",
+        "_position",
+        "_valuation_ratio",
+        "build_company_ratio_references",
+        "compare_company_to_sector",
+        "references_from_csv_bytes",
+        "sector_comparison_rows"
+      ],
+      "classes": [
+        "CompanyRatioReference",
+        "RatioMedianComparison",
+        "SectorComparison",
+        "SectorReference",
+        "SectorReferenceError"
+      ]
+    },
+    {
+      "path": "backend\\app\\data\\delayed_data_pilot.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "price",
+        "rsi",
+        "volume"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_missing_bar_count",
+        "_normalize_intraday_frame",
+        "_status_for",
+        "append",
+        "fetch_delayed_snapshot",
+        "list",
+        "normalize_symbol",
+        "pilot_rows",
+        "pilot_to_csv",
+        "price_change_percent",
+        "snapshot_to_record"
+      ],
+      "classes": [
+        "DelayedDataPilotConfig",
+        "DelayedDataPilotError",
+        "DelayedDataPilotStore",
+        "DelayedDataSnapshot",
+        "PilotLogRecord"
+      ]
+    },
+    {
+      "path": "backend\\app\\funds\\international\\erste_hungary_endpoint_discovery.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_clean_candidate",
+        "_is_candidate",
+        "discover_endpoint_candidates",
+        "discover_live_funds_endpoints",
+        "fetch_funds_bundle"
+      ],
+      "classes": [
+        "EndpointDiscovery"
+      ]
+    },
+    {
+      "path": "backend\\app\\market_context\\daily_market_briefing.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_clean_evidence",
+        "_first_symbol",
+        "_parse_decimal",
+        "_potential_from_line",
+        "_read_report_file",
+        "_safe_text",
+        "_target_from_line",
+        "_view_from_line",
+        "build_daily_market_briefing_snapshot",
+        "character_count",
+        "coverage_rows",
+        "extract_source_recommendations",
+        "load_processed_reports",
+        "normalize_review_date",
+        "processed_reports_directory",
+        "recommendation_count",
+        "recommendation_rows",
+        "report_count",
+        "source_names"
+      ],
+      "classes": [
+        "DailyMarketBriefingSnapshot",
+        "ProcessedMarketReport",
+        "SourceRecommendation"
+      ]
+    },
+    {
+      "path": "backend\\app\\market_context\\recommendation_archive.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "to_dict"
+      ],
+      "classes": [
+        "RecommendationArchiveData"
+      ]
+    },
+    {
+      "path": "backend\\app\\market_context\\report_type_ui_options.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "get_report_type_options"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\market_context\\report_types.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "is_valid_report_type"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\models\\valuation_foundation_models.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "price"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "canonical_share_count",
+        "free_float_shares"
+      ],
+      "classes": [
+        "MarketSnapshot",
+        "MultipleSnapshot",
+        "OwnershipSnapshot",
+        "RelativeValuationResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_historical_validation.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "momentum",
+        "price",
+        "resistance",
+        "rsi"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "__post_init__",
+        "_percent",
+        "_safe_mean",
+        "_safe_median",
+        "_stats",
+        "build_historical_validation_report",
+        "captured_move_ratio_pct",
+        "first_appearance_records",
+        "forward_return_pct",
+        "momentum_band_label",
+        "rank_band_label"
+      ],
+      "classes": [
+        "BandStatistics",
+        "FirstAppearanceRecord",
+        "HistoricalCandidateObservation",
+        "HistoricalValidationReport"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_insurance_model_contract.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "assert_insurance_model_input_ready",
+        "insurance_component_weight",
+        "validate_insurance_model_input"
+      ],
+      "classes": [
+        "InsuranceModelValidation"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\financial_intelligence_insurance_scoring_engine.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "liquidity",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "_clamp",
+        "_higher_better",
+        "_lower_better",
+        "_number",
+        "_range_best",
+        "score_insurance_model"
+      ],
+      "classes": [
+        "InsuranceScoreResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\market_scanner.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "atr",
+        "market",
+        "rsi"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_sektor_referans_evrenini_sec",
+        "aday_tablosu_kayitlari",
+        "calistir",
+        "gosterilen_aday_sayisi",
+        "ozel_sembol_metinini_ayristir",
+        "sembolleri_normalize_et",
+        "tarama_evreni_yukle"
+      ],
+      "classes": [
+        "BistMarketScannerService",
+        "MarketScanRequest",
+        "MarketScanResult",
+        "MarketScannerError"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\momentum_walk_forward.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "momentum"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_gecmisle_zenginlestir",
+        "_kisa_sinif",
+        "_sinif_onceligi",
+        "_sinyal_gecmisi_olustur",
+        "_yuvarla",
+        "_yuzde",
+        "calistir",
+        "getiri",
+        "guclu_hareket_sayisi",
+        "sinyal_gecmisi_tablosu",
+        "walk_forward_izleme_disi_tablosu",
+        "walk_forward_tablosu"
+      ],
+      "classes": [
+        "MomentumSignalSnapshot",
+        "MomentumWalkForwardEngine",
+        "MomentumWalkForwardError",
+        "MomentumWalkForwardOutcome",
+        "MomentumWalkForwardRequest",
+        "MomentumWalkForwardResult",
+        "MomentumWalkForwardService"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\ranking_quality_context.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "momentum",
+        "relative_strength",
+        "support",
+        "trend"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "_is_positive",
+        "_is_weak",
+        "_normalize",
+        "_quality_status",
+        "build_quality_context",
+        "deduplicate_canonical_evidence",
+        "evidence_from_mapping",
+        "next_review_module"
+      ],
+      "classes": [
+        "EarlyVisibilityQualityContext",
+        "QualityEvidence"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\research_profiles_daily.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "trend"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "_bool",
+        "_canonical_balance_ratios",
+        "_capex_from_record",
+        "_context_from_record",
+        "_date",
+        "_delta",
+        "_field",
+        "_first",
+        "_float",
+        "_group_periods",
+        "_margin",
+        "_pct_change",
+        "_period_date",
+        "_same_period_last_year",
+        "_symbol",
+        "_trend",
+        "build_daily_research_profiles",
+        "build_daily_research_profiles_from_snapshots",
+        "daily_research_profile_rows",
+        "daily_research_profile_summary",
+        "research_profile_as_of_from_scan",
+        "research_profile_contexts_from_bytes",
+        "results",
+        "snapshot_from_periods",
+        "state_count"
+      ],
+      "classes": [
+        "DailyResearchProfileBundle",
+        "DailyResearchProfileItem",
+        "ResearchProfileContext"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\signal_engine.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "macd",
+        "momentum",
+        "rsi",
+        "trend"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "_hacim_puani_hesapla",
+        "_karar_belirle",
+        "_momentum_puani_hesapla",
+        "_risk_puani_hesapla",
+        "_son_gunlerde_asagi_ema_kesisimi",
+        "_son_gunlerde_yukari_ema_kesisimi",
+        "_trend_puani_hesapla",
+        "sinyal_uret"
+      ],
+      "classes": [
+        "SignalEngineError",
+        "SignalResult"
+      ]
+    },
+    {
+      "path": "backend\\app\\funds\\international\\contract.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "rsi",
+        "volatility"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "canonical_isin_fund_id",
+        "normalize_currency",
+        "normalize_isin"
+      ],
+      "classes": [
+        "InternationalFundSnapshot"
+      ]
+    },
+    {
+      "path": "backend\\app\\funds\\international\\erste_hungary_rank_seed.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "rsi",
+        "volatility"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "_ascii_fold",
+        "_decimal",
+        "_score_record",
+        "build_rank_seed",
+        "load_jsonl",
+        "normalize_category"
+      ],
+      "classes": [
+        "RankSeedRow"
+      ]
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_performance_comparison.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "regime",
+        "rsi"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "_horizon_20",
+        "_round_or_none",
+        "_row",
+        "performans_karsilastirmasini_hesapla",
+        "performans_karsilastirmasini_tabloya_cevir"
+      ],
+      "classes": [
+        "PerformanceComparisonRow"
+      ]
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_closure.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "regime",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "_attr",
+        "_missed_count",
+        "_too_strict_count",
+        "fmt",
+        "gercek_kullanim_v2_kapanisini_degerlendir",
+        "v2_kapanis_raporunu_metne_cevir"
+      ],
+      "classes": [
+        "EvidenceLevel",
+        "RealUseV2ClosureReport",
+        "V2Decision"
+      ]
+    },
+    {
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_observation.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "regime",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 10,
+      "functions": [
+        "v2_gozlem_durumunu_degerlendir",
+        "v2_gozlem_durumunu_metne_cevir"
+      ],
+      "classes": [
+        "ObservationDecision",
+        "ObservationPolicy",
+        "V2ObservationStatus"
+      ]
+    },
+    {
+      "path": "backend\\app\\analysis\\__init__.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "regime"
+      ],
+      "evidence_score": 9,
+      "functions": [],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\funds\\international\\erste_hungary_comparison.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "volatility"
+      ],
+      "evidence_score": 9,
+      "functions": [
+        "__init__",
+        "_clean_value",
+        "_extract_nav_date_from_block",
+        "_find_after",
+        "_find_optional_value_after_label",
+        "_fund_block_for_isin",
+        "_normalize_risk_value",
+        "_parse_net_asset_value",
+        "comparison_to_snapshot",
+        "comparison_url_for_isin",
+        "fetch_single_fund_comparison",
+        "handle_data",
+        "html_text_tokens",
+        "normalized_text_lines",
+        "parse_single_fund_comparison_html"
+      ],
+      "classes": [
+        "ErsteComparisonFund",
+        "_LineCollector"
+      ]
+    },
+    {
+      "path": "backend\\app\\market_context\\ai_daily_review_service.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "resistance",
+        "rsi",
+        "support"
+      ],
+      "evidence_score": 9,
+      "functions": [
+        "__init__",
+        "_manifest_path",
+        "_record_path",
+        "_save_record",
+        "_utc_now_iso",
+        "build_daily_package",
+        "load_latest_review",
+        "run_daily_review"
+      ],
+      "classes": [
+        "DailyAIReviewError",
+        "DailyAIReviewService"
+      ]
+    },
+    {
+      "path": "backend\\app\\market_context\\service.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "market",
+        "resistance",
+        "rsi",
+        "support"
+      ],
+      "evidence_score": 9,
+      "functions": [
+        "__init__",
+        "_build_document",
+        "_new_document_id",
+        "_persist_extracted",
+        "_utc_now_iso",
+        "import_pdf",
+        "import_text",
+        "import_txt"
+      ],
+      "classes": [
+        "MarketContextDateMismatchError",
+        "MarketContextService"
+      ]
+    }
+  ],
+  "required_context_fields": [
+    "symbol",
+    "as_of_date",
+    "price_reference",
+    "trend_context",
+    "momentum_context",
+    "volume_liquidity_context",
+    "volatility_context",
+    "market_regime_context",
+    "data_quality",
+    "source_refs"
+  ],
+  "strict_rules": [
+    "No AL/SAT authority.",
+    "No scanner/ranking/watchlist mutation.",
+    "No portfolio mutation.",
+    "No missing metric becomes zero.",
+    "No current/live value may be backfilled into a historical as_of_date.",
+    "Only existing canonical or production data sources may be wired.",
+    "Adapter creation is blocked until exact source seams are identified."
+  ],
+  "schema_version": "fin-prod-v5-short-term-source-preflight-v1"
+}

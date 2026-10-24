@@ -1,0 +1,20 @@
+{
+  "category_version": "erste-hungary-category-normalization-v1",
+  "rank_seed_version": "erste-hungary-rank-seed-v1",
+  "record_count": 929,
+  "mapped_category_count": 929,
+  "unmapped_category_count": 0,
+  "ranked_count": 929,
+  "unranked_count": 0,
+  "category_counts": {
+    "ABSOLUTE_RETURN": 117,
+    "BOND": 217,
+    "COMMODITY": 6,
+    "DERIVATIVE": 3,
+    "EQUITY": 480,
+    "FUND_OF_FUNDS": 4,
+    "MIXED": 92,
+    "MONEY_MARKET": 6,
+    "REAL_ESTATE": 4
+  }
+}

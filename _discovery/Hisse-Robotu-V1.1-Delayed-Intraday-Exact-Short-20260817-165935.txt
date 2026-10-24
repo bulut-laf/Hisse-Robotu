@@ -1,0 +1,71 @@
+﻿TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py COUNT=4
+TERM=stale FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py COUNT=3
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\bist_daily_market.py COUNT=1
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py COUNT=2
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py COUNT=5
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py COUNT=17
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py COUNT=8
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py COUNT=7
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py COUNT=12
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py COUNT=12
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py COUNT=3
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_confirmation.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py COUNT=2
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py COUNT=1
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py COUNT=1
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\backtest_engine.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\portfolio_backtest.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\portfolio_capacity_robustness.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py COUNT=9
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\manual_vbts_csv.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_archive.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_daily.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py COUNT=4
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py COUNT=1
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py COUNT=7
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py COUNT=21
+TERM=intraday FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py COUNT=2
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py COUNT=7
+TERM=stale FILE=D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py COUNT=6
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_pagination.py COUNT=1
+TERM=quote FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\image_input.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\archive_view.py COUNT=2
+TERM=quote FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\borsa_istanbul_adapter.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_developments.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py COUNT=1
+TERM=quote FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\hmb_adapter.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\kap_flow.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\last_minute.py COUNT=2
+TERM=quote FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\resmi_gazete_adapter.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\sector_impact.py COUNT=1
+TERM=quote FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\spk_adapter.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\symbol_news.py COUNT=2
+TERM=quote FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\tcmb_adapter.py COUNT=2
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py COUNT=3
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py COUNT=3
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_market_strength.py COUNT=3
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_member_strength.py COUNT=3
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py COUNT=3
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py COUNT=4
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py COUNT=14
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py COUNT=28
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py COUNT=1
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py COUNT=2
+PILOT_VISIBLE=True
+HAS_DELAYED=True
+HAS_TIMESTAMP=True
+HAS_STALE_LOCK=True
+HAS_SHADOW=True
+DECISION=DELAYED_INTRADAY_CAPABILITY_PRESENT
+NEXT=Inspect exact provider/call chain and freshness semantics before any reuse decision.
+PRODUCTION_MUTATION=YOK

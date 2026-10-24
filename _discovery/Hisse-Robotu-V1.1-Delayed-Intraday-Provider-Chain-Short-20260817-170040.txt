@@ -1,0 +1,294 @@
+﻿TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py LINE=205 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py LINE=285 TEXT=last_daily = pd.Timestamp(d.index.max()).normalize()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py LINE=286 TEXT=current_end = last_daily.to_period("M").to_timestamp(how="end").normalize()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py LINE=461 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+TERM=stale FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py LINE=40 TEXT=stale_progress_r: float = 0.50
+TERM=stale FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py LINE=49 TEXT=self.stale_progress_r,
+TERM=stale FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py LINE=238 TEXT=and (r_multiple is None or r_multiple < policy.stale_progress_r)
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py LINE=8 TEXT=import yfinance as yf
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py LINE=92 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py LINE=198 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py LINE=237 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\bist_daily_market.py LINE=51 TEXT="Veri Tarihi": pd.Timestamp(x.index[-1]).date().isoformat(),
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=105 TEXT="Gecikmeli Veri Pilotu",
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=126 TEXT="Gecikmeli Veri Pilotu",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=8 TEXT=from ..data.delayed_data_pilot import PilotLogRecord
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=31 TEXT=delayed_data_status: str
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=32 TEXT=delayed_data_age_minutes: float | None
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=33 TEXT=delayed_data_locked: bool
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=89 TEXT=delayed_status = "Ölçüm yok"
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=90 TEXT=delayed_age = None
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=91 TEXT=delayed_locked = True
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=109 TEXT=delayed_status = latest.status
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=110 TEXT=delayed_age = float(latest.measured_delay_minutes)
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=111 TEXT=delayed_locked = bool(latest.locked)
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=208 TEXT=delayed_data_status=delayed_status,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=209 TEXT=delayed_data_age_minutes=delayed_age,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=210 TEXT=delayed_data_locked=delayed_locked,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=255 TEXT=age = "Ölçüm yok" if summary.delayed_data_age_minutes is None else f"{summary.delayed_data_age_minutes:.1f} dk"
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=256 TEXT=readiness = "BLOKE" if summary.delayed_data_locked or critical > 0 else "UYARI" if warning > 0 else "HAZIR"
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=259 TEXT={"Alan": "Veri durumu", "Değer": summary.delayed_data_status},
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=261 TEXT={"Alan": "Veri güvenlik kilidi", "Değer": "AKTİF" if summary.delayed_data_locked else "Kapalı"},
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=96 TEXT="Gecikmeli veri ölçümü yok",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=103 TEXT="Gecikmeli veriyi güncelle",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=105 TEXT="Gecikmeli Veri Pilotu",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=126 TEXT="Gecikmeli Veri Pilotu",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py LINE=135 TEXT="Gecikmeli veri kesin işlem sinyali değildir.",
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=26 TEXT=timestamp: pd.Timestamp
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=49 TEXT=latest_timestamp: pd.Timestamp
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=140 TEXT=timestamp=pd.Timestamp(frame.index[position]),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=331 TEXT=signal.second.timestamp,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=405 TEXT=signal.second.timestamp,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=432 TEXT=latest_timestamp=pd.Timestamp(usable.index[-1]),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=472 TEXT="İlk pivot": signal.first.timestamp,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py LINE=473 TEXT="İkinci pivot": signal.second.timestamp,
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py LINE=371 TEXT=import yfinance as yf
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py LINE=373 TEXT=raise MarketRegimeError("yfinance paketi bulunamadı.") from hata
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py LINE=374 TEXT=downloader = yf.download
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py LINE=63 TEXT=analiz_tarihi: pd.Timestamp
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py LINE=420 TEXT=analiz_tarihi=pd.Timestamp(gunluk_ham.index[-1]),son_kapanis=float(gunluk_ham['Close'].iloc[-1]),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py LINE=709 TEXT="analiz_tarihi": str(pd.Timestamp(veri.index[-1]).date()),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py LINE=131 TEXT=kesim = pd.Timestamp(kesim_tarihi)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py LINE=213 TEXT=maksimum_tarih = str(pd.Timestamp(yuksekler.idxmax()).date())
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py LINE=214 TEXT=minimum_tarih = str(pd.Timestamp(dusukler.idxmin()).date())
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py LINE=249 TEXT=pd.Timestamp(tarih)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py LINE=256 TEXT=secili_tarihler: list[pd.Timestamp] = []
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py LINE=308 TEXT=son_tarih = pd.Timestamp(hazirliklar[-1].tarih)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py LINE=309 TEXT=kalici = (pd.Timestamp(aday.analiz_tarihi) - son_tarih).days <= 10
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py LINE=48 TEXT=son_zaman: pd.Timestamp
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py LINE=248 TEXT=son_zaman=pd.Timestamp(gecerli.index[-1]),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=45 TEXT=giris_tarihi: pd.Timestamp | str
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=75 TEXT=son_tarih: pd.Timestamp
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=77 TEXT=giris_tarihi: pd.Timestamp
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=274 TEXT=def _pozisyonu_dogrula(pozisyon: OpenPosition) -> pd.Timestamp:
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=276 TEXT=giris_tarihi = pd.Timestamp(pozisyon.giris_tarihi).normalize()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=314 TEXT=giris_tarihi: pd.Timestamp,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=315 TEXT=) -> tuple[pd.DataFrame, pd.Timestamp, float, float, float, float]:
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=328 TEXT=son_tarih = pd.Timestamp(gecerli.index[-1]).normalize()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=352 TEXT=pd.Timestamp(pozisyon_donemi.index[-1]),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=509 TEXT=giris_tarihi: pd.Timestamp,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=510 TEXT=son_tarih: pd.Timestamp,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py LINE=527 TEXT=pd.Timestamp(son_tarih).isoformat(),
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=13 TEXT=import yfinance as yf
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=462 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=56 TEXT=updated_at: str = ""
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=105 TEXT=object.__setattr__(self, "updated_at", self.updated_at or now)
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=372 TEXT=updated_at=datetime.now(timezone.utc).isoformat(
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=452 TEXT=updated_at=datetime.now(timezone.utc).isoformat(
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=43 TEXT=last_price: float | None = None
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=44 TEXT=last_price_date: date | None = None
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=83 TEXT=("Son fiyat", self.last_price),
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=132 TEXT=return self.last_price or self.entry_price
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=160 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=168 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=317 TEXT=last_price=entry_price,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=318 TEXT=last_price_date=entry_date,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=368 TEXT=last_price=exit_price,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=369 TEXT=last_price_date=exit_date,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=436 TEXT=last_price=float(last["Close"]),
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py LINE=437 TEXT=last_price_date=last_date,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py LINE=7 TEXT=from backend.app.data.delayed_data_pilot import DelayedDataSnapshot, fetch_delayed_snapshot
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py LINE=27 TEXT=def suggestion_from_snapshot(snapshot: DelayedDataSnapshot) -> ShadowPriceSuggestion:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py LINE=44 TEXT=fetcher: Callable[[str], DelayedDataSnapshot] = fetch_delayed_snapshot,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py LINE=30 TEXT=price=None if snapshot.locked else float(snapshot.last_price),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py LINE=156 TEXT=signal_ts = pd.Timestamp(snapshot.signal_date)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py LINE=188 TEXT=end_date=pd.Timestamp(window.index[-1]).date(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_confirmation.py LINE=110 TEXT=son_zaman: pd.Timestamp
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_confirmation.py LINE=310 TEXT=son_zaman=pd.Timestamp(gecerli.index[-1]),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py LINE=112 TEXT=signal.second.timestamp,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py LINE=132 TEXT=signal.second.timestamp,
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py LINE=113 TEXT="Gecikmeli veri pilotu",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py LINE=10 TEXT=from ..data.delayed_data_pilot import PilotLogRecord
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py LINE=113 TEXT="Gecikmeli veri pilotu",
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\backtest_engine.py LINE=309 TEXT=sinyal_tarihi = pd.Timestamp(
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\portfolio_backtest.py LINE=733 TEXT=zaman = pd.Timestamp(tarih)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\portfolio_capacity_robustness.py LINE=356 TEXT=baslangic_ts = pd.Timestamp(baslangic)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\portfolio_capacity_robustness.py LINE=357 TEXT=bitis_ts = pd.Timestamp(bitis)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=420 TEXT=timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ")
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=422 TEXT=backup_path = backup_dir / f"{path.stem}_{timestamp}_{safe_action}{path.suffix}"
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=443 TEXT="timestamp_utc": _utc_now_text(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=539 TEXT=str(last_event.get("timestamp_utc"))
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=540 TEXT=if last_event and last_event.get("timestamp_utc") is not None
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=589 TEXT=modified = datetime.fromtimestamp(
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=711 TEXT="Zaman (UTC)": str(event.get("timestamp_utc") or "—"),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=913 TEXT="timestamp_utc",
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py LINE=923 TEXT="timestamp_utc": event.get("timestamp_utc") or "",
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\compliance\manual_vbts_csv.py LINE=65 TEXT=modified_at = datetime.fromtimestamp(
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py LINE=9 TEXT=import yfinance as yf
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py LINE=49 TEXT=indirici: Downloader = yf.download,
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py LINE=73 TEXT=indirici: Downloader = yf.download,
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py LINE=95 TEXT=resmi_veriyi_birlestir = indirici is yf.download
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py LINE=292 TEXT=birincil_indirici: Downloader = yf.download,
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_archive.py LINE=219 TEXT=timestamp = pd.Timestamp(str(row["Date"]))
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_archive.py LINE=229 TEXT=index=pd.DatetimeIndex([timestamp], name="Date"),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_daily.py LINE=322 TEXT=timestamp = pd.Timestamp(islem_tarihi)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_daily.py LINE=328 TEXT=index=pd.DatetimeIndex([timestamp], name="Date"),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py LINE=136 TEXT=son = pd.Timestamp(veri.index[-1]).date()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py LINE=50 TEXT="first_date": str(pd.Timestamp(normalized.index[0]).date()),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py LINE=51 TEXT="last_date": str(pd.Timestamp(normalized.index[-1]).date()),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py LINE=99 TEXT=required = {"timestamp", "open", "high", "low", "close", "volume"}
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py LINE=104 TEXT="timestamp": "Date", "open": "Open", "high": "High",
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=27 TEXT="""Gecikmeli veri pilotu ölçümü üretilemedi."""
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=26 TEXT=class DelayedDataPilotError(ValueError):
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=31 TEXT=class DelayedDataPilotConfig:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=43 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=47 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=51 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=55 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=61 TEXT=class DelayedDataSnapshot:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=114 TEXT=raise DelayedDataPilotError("Sembol boş olamaz.")
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=122 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=133 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=152 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=199 TEXT=config: DelayedDataPilotConfig,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=252 TEXT=def fetch_delayed_snapshot(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=255 TEXT=config: DelayedDataPilotConfig = DelayedDataPilotConfig(),
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=258 TEXT=) -> DelayedDataSnapshot:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=278 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=301 TEXT=snapshot = DelayedDataSnapshot(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=332 TEXT=raise DelayedDataPilotError(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=340 TEXT=snapshot: DelayedDataSnapshot,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=362 TEXT=class DelayedDataPilotStore:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=371 TEXT=def append(self, snapshot: DelayedDataSnapshot) -> Path:
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=19 TEXT=GECIKMELI_GUNCEL = "Gecikmeli — Güncel"
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=27 TEXT="""Gecikmeli veri pilotu ölçümü üretilemedi."""
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=123 TEXT="Gecikmeli gün içi veri bulunamadı."
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=247 TEXT=return GECIKMELI_GUNCEL, False, True, False
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=279 TEXT=f"{normalized_symbol} gecikmeli verisi alınamadı: {error}"
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=333 TEXT="Gecikmeli veri geçersiz sayısal değer içeriyor."
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=367 TEXT=else Path.home() / ".hisse_robotu" / "gecikmeli_veri_pilotu"
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=14 TEXT=import yfinance as yf
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=78 TEXT=source: str = "yfinance"
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=257 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=70 TEXT=last_price: float
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=86 TEXT=(self.last_price / self.day_open - 1.0) * 100.0,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=102 TEXT=last_price: float
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=310 TEXT=last_price=float(latest["Close"]),
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=324 TEXT=snapshot.last_price,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=352 TEXT=last_price=snapshot.last_price,
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py LINE=421 TEXT="Son fiyat": item.last_price,
+TERM=stale FILE=D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py LINE=38 TEXT=STALE = "Eski bilanço"
+TERM=stale FILE=D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py LINE=262 TEXT=status=STALE,
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py LINE=7 TEXT=import yfinance as yf
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py LINE=93 TEXT=Ham yfinance verisini Hisse Robotu'nun standart OHLCV biçimine dönüştürür.
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py LINE=149 TEXT=yfinance tarafından döndürülebilen çok seviyeli sütunları
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py LINE=55 TEXT=veri = yf.download(
+TERM=download( FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py LINE=55 TEXT=veri = yf.download(
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py LINE=132 TEXT=son_veri_tarihi = pd.Timestamp(
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=10 TEXT=import yfinance as yf
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=203 TEXT=indirici = veri_indirici or yf.download
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=134 TEXT=def ilk_zaman(self) -> pd.Timestamp:
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=135 TEXT=return pd.Timestamp(self.veri.index[0])
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=138 TEXT=def son_zaman(self) -> pd.Timestamp:
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=139 TEXT=return pd.Timestamp(self.veri.index[-1])
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=160 TEXT=def ortak_referans_tarihi(self) -> pd.Timestamp:
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\data\multi_timeframe_data.py LINE=337 TEXT=son_zaman = pd.Timestamp(veri.index[-1]).to_pydatetime()
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py LINE=138 TEXT=("yfinance", "BIST piyasa verisi"),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py LINE=788 TEXT=kesim_tarihi = str(pd.Timestamp(veri.index[kesim_indeksi]).date())
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py LINE=860 TEXT=giris_tarihi=str(pd.Timestamp(giris_satiri.name).date()),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_pagination.py LINE=149 TEXT=return datetime.fromisoformat(kayit.kaydedilme_zamani).timestamp()
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_daily_review_service.py LINE=162 TEXT=manifest.updated_at = self._utc_now_iso()
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\archive.py LINE=33 TEXT=updated_at: str | None = None
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\archive.py LINE=73 TEXT="updated_at": self.updated_at,
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\archive.py LINE=89 TEXT=updated_at=payload.get("updated_at"),
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\store.py LINE=62 TEXT=updated_at=now,
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\store.py LINE=131 TEXT=manifest.updated_at = self._utc_now_iso()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\archive_view.py LINE=264 TEXT=-row.published_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\archive_view.py LINE=265 TEXT=-row.archived_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_developments.py LINE=168 TEXT=-item.occurred_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py LINE=193 TEXT=-item.occurred_at.timestamp(),
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=137 TEXT=updated_at: datetime | None = None
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=172 TEXT=if self.updated_at is not None:
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=173 TEXT=object.__setattr__(self, "updated_at", _aware(self.updated_at, "Güncelleme zamanı"))
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=210 TEXT=updated_at=stamp,
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=245 TEXT=updated_at TEXT NOT NULL
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=258 TEXT=updated_at = entry.updated_at or created_at
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=267 TEXT=created_at, updated_at
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=285 TEXT=updated_at.isoformat(),
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=344 TEXT=updated_at: datetime | None = None,
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=347 TEXT=stamp = updated_at or datetime.now(ISTANBUL)
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=353 TEXT="updated_at = ?",
+TERM=updated_at FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\economic_calendar.py LINE=410 TEXT=updated_at=datetime.fromisoformat(row["updated_at"]),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\kap_flow.py LINE=183 TEXT=-item.published_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\last_minute.py LINE=220 TEXT=-row.published_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\last_minute.py LINE=221 TEXT=-row.archived_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\sector_impact.py LINE=157 TEXT=-item.occurred_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\symbol_news.py LINE=155 TEXT=key=lambda item: (item.published_at.timestamp(), item.news_id),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\symbol_news.py LINE=213 TEXT=-item.latest_published_at.timestamp(),
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py LINE=219 TEXT=cutoff_timestamp = pd.Timestamp(cutoff_date)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py LINE=221 TEXT=historical = normalized.loc[normalized.index <= cutoff_timestamp]
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py LINE=222 TEXT=future = normalized.loc[normalized.index > cutoff_timestamp]
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py LINE=560 TEXT=return (-item.created_at.timestamp(), item.symbol)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py LINE=562 TEXT=return (item.created_at.timestamp(), item.symbol)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py LINE=567 TEXT=return (-item.period_end.toordinal(), -item.created_at.timestamp(), item.symbol)
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_market_strength.py LINE=304 TEXT=benchmark_last = pd.Timestamp(benchmark_frame.index[-1]).date()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_market_strength.py LINE=305 TEXT=sector_last = pd.Timestamp(sector_frame.index[-1]).date()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_market_strength.py LINE=401 TEXT=benchmark_date = pd.Timestamp(
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_member_strength.py LINE=261 TEXT=benchmark_date = pd.Timestamp(benchmark_frame.index[-1]).date()
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_member_strength.py LINE=280 TEXT=if pd.Timestamp(cached.index[-1]).date() != benchmark_date:
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_member_strength.py LINE=484 TEXT=benchmark_date = pd.Timestamp(benchmark_frame.index[-1]).date()
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py LINE=67 TEXT=import yfinance as yf
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py LINE=70 TEXT="Güncel seans verisi için yfinance paketi bulunamadı."
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py LINE=72 TEXT=indirici = yf.download
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py LINE=161 TEXT=) -> list[pd.Timestamp]:
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py LINE=162 TEXT=zamanlar: list[pd.Timestamp] = []
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py LINE=164 TEXT=zaman = pd.Timestamp(deger)
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py LINE=8 TEXT=import yfinance as yf
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py LINE=120 TEXT=data = yf.download(
+TERM=download( FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py LINE=120 TEXT=data = yf.download(
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py LINE=7 TEXT=import yfinance as yf
+TERM=yf. FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py LINE=44 TEXT=data = yf.download(
+TERM=download( FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py LINE=44 TEXT=data = yf.download(
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=422 TEXT="Gecikmeli Veri Pilotu",
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7570 TEXT="Gecikmeli Veri Pilotu · yfinance gün içi verisi yalnızca veri kalitesi, "
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7830 TEXT="Veri sorunu → Gecikmeli Veri Pilotu · tarama ihtiyacı → BIST Toplu Tarama / "
+TERM=Gecikmeli Veri Pilotu FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=9168 TEXT=elif analiz_modu == "Gecikmeli Veri Pilotu":
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=123 TEXT=from backend.app.data.delayed_data_pilot import (
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=124 TEXT=DelayedDataPilotConfig,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=125 TEXT=DelayedDataPilotError,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=126 TEXT=DelayedDataPilotStore,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=127 TEXT=fetch_delayed_snapshot,
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7585 TEXT=key="delayed_pilot_symbol",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7593 TEXT=key="delayed_pilot_refresh",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7599 TEXT=key="delayed_pilot_auto",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7602 TEXT=config = DelayedDataPilotConfig(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7605 TEXT=store = DelayedDataPilotStore()
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7607 TEXT=def render_delayed_snapshot() -> None:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7609 TEXT=snapshot = fetch_delayed_snapshot(
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7614 TEXT=except DelayedDataPilotError as error:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7682 TEXT=def delayed_auto_fragment() -> None:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7683 TEXT=render_delayed_snapshot()
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7685 TEXT=delayed_auto_fragment()
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7689 TEXT=key="delayed_pilot_refresh_now",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7692 TEXT=render_delayed_snapshot()
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7710 TEXT=key="delayed_pilot_csv",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7733 TEXT=pilot_store = DelayedDataPilotStore()
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7772 TEXT=("Veri durumu", summary.delayed_data_status),
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7776 TEXT=if summary.delayed_data_age_minutes is None
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7777 TEXT=else f"{summary.delayed_data_age_minutes:.1f} dk",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7801 TEXT="Aktif" if summary.delayed_data_locked else "Kapalı",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=8195 TEXT=_price_meta_key = "_shadow_trader_delayed_price_meta"
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=8206 TEXT=key="shadow_trader_fetch_delayed_price",
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=8211 TEXT=except DelayedDataPilotError as error:
+TERM=delayed FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=8997 TEXT=pilot_store = DelayedDataPilotStore()
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=422 TEXT="Gecikmeli Veri Pilotu",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7567 TEXT=def gecikmeli_veri_pilotu_formu() -> None:
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7570 TEXT="Gecikmeli Veri Pilotu · yfinance gün içi verisi yalnızca veri kalitesi, "
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7572 TEXT="Gün içi gecikmeli veri kesin işlem sinyali değildir. "
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7670 TEXT="Gün içi ön izleme: Veri gecikmelidir ve kesin "
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7687 TEXT="Gecikmeli veriyi şimdi güncelle",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7708 TEXT=file_name="gecikmeli_veri_pilotu.csv",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7715 TEXT="~/.hisse_robotu/gecikmeli_veri_pilotu/"
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7830 TEXT="Veri sorunu → Gecikmeli Veri Pilotu · tarama ihtiyacı → BIST Toplu Tarama / "
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=8205 TEXT="Gecikmeli fiyatı getir",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=8227 TEXT=st.warning("Gecikmeli fiyat güvenlik kilidinde; manuel fiyat değiştirilmedi.")
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=9002 TEXT="Minimum gecikmeli veri ölçümü",
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=9168 TEXT=elif analiz_modu == "Gecikmeli Veri Pilotu":
+TERM=gecikmeli FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=9169 TEXT=gecikmeli_veri_pilotu_formu()
+TERM=yfinance FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7570 TEXT="Gecikmeli Veri Pilotu · yfinance gün içi verisi yalnızca veri kalitesi, "
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=3739 TEXT=modified_at = datetime.fromtimestamp(
+TERM=timestamp FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=8831 TEXT="Değiştirilme": datetime.fromtimestamp(
+TERM=last_price FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=7621 TEXT=("Son fiyat", f"{snapshot.last_price:.2f}"),
+DECISION=PROVIDER_AND_FRESHNESS_CHAIN_PRESENT
+NEXT=Inspect only top provider/freshness consumer context; if same delayed-data service is shared, reuse is safe without new feed.
+PRODUCTION_MUTATION=YOK

@@ -1,0 +1,240 @@
+from __future__ import annotations
+
+import argparse
+import json
+from dataclasses import asdict, dataclass, is_dataclass
+from datetime import datetime, time
+from typing import Any, Iterable, Protocol
+from zoneinfo import ZoneInfo
+
+from backend.app.analysis.eod_candidate_output import build_eod_candidate_output
+from backend.app.analysis.eod_candidate_output_archive import (
+    EodCandidateOutputJsonStore,
+    make_eod_output_record,
+)
+from backend.app.operations.scheduled_intraday_batch import run_scheduled_intraday_batch
+
+from backend.app.analysis.daily_buy_decision_output_archive import (
+    DecisionOutputArchiveJsonStore,
+)
+from backend.app.data.batch_market_data import toplu_fiyat_verisi_getir
+from backend.app.operations.daily_buy_decision_scheduled_runner import (
+    execute_scheduled_run,
+)
+from backend.app.operations.preclose_partial_daily_preview import (
+    preclose_preview_rows,
+    run_preclose_partial_preview,
+)
+from backend.app.operations.scheduled_intraday_batch import (
+    fetch_scheduled_intraday_batch,
+)
+
+ISTANBUL = ZoneInfo("Europe/Istanbul")
+
+PREOPEN = "PREOPEN"
+POSTOPEN = "POSTOPEN"
+PRECLOSE = "PRECLOSE"
+CANONICAL_CLOSE = "CANONICAL_CLOSE"
+
+VALID_PHASES = (
+    PREOPEN,
+    POSTOPEN,
+    PRECLOSE,
+    CANONICAL_CLOSE,
+)
+
+PHASE_SCHEDULE = {
+    PREOPEN: (8, 45),
+    POSTOPEN: (10, 20),
+    PRECLOSE: (17, 20),
+    CANONICAL_CLOSE: (18, 30),
+}
+
+# SCHEDULED_OPERATION_PHASE_RUNNER_INTEGRATION_V1
+# One scheduled-operation dispatcher. Not a second scheduler.
+# Preview phases are read-only and never call decision-output persistence.
+
+
+class ScheduledOperationPhaseError(ValueError):
+    """A scheduled operation phase cannot be executed safely."""
+
+
+@dataclass(frozen=True)
+class ScheduledOperationPhaseResult:
+    phase: str
+    run_date: str
+    observed_at: str
+    status: str
+    candidate_count: int
+    detail_rows: tuple[dict[str, object], ...]
+    delegated_legacy_phase: str | None = None
+    preview_only: bool = True
+    canonical: bool = False
+    ranking_write_allowed: bool = False
+    profile_write_allowed: bool = False
+    al_sat_decision_allowed: bool = False
+
+
+class ScheduledOperationRuntime(Protocol):
+    def preopen_context(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult: ...
+
+    def postopen_gap_entry(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult: ...
+
+    def preclose_preview(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult: ...
+
+    def canonical_close(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult:
+        # EOD_V8_CANONICAL_INTEGRATION
+        # nce mevcut kanonik karar zinciri ?al???r; sonucu de?i?tirilmez.
+        legacy = execute_scheduled_run("EVENING", now=now)
+        count = int(getattr(legacy, "candidate_count", 0) or 0)
+        status = str(getattr(legacy, "status", "SUCCESS") or "SUCCESS")
+
+        # 5 dakikal?k do?rulama ayr? ve hata yal?t?ml? bir ??kt?d?r.
+        try:
+            archive_record = DecisionOutputArchiveJsonStore().latest("EVENING")
+            symbols = _extract_symbols(archive_record) if archive_record is not None else ()
+            if symbols:
+                batch = run_scheduled_intraday_batch(symbols, now=now)
+                output = build_eod_candidate_output(symbols, batch.eod_decisions)
+                eod_record = make_eod_output_record(
+                    now=now,
+                    candidate_symbols=symbols,
+                    batch=batch,
+                    output=output,
+                )
+            else:
+                eod_record = make_eod_output_record(
+                    now=now,
+                    candidate_symbols=(),
+                )
+            EodCandidateOutputJsonStore().save_record(eod_record)
+        except Exception as error:
+            # Intraday katman? ba?ar?s?z olsa da mevcut legacy sonucu de?i?tirme.
+            try:
+                EodCandidateOutputJsonStore().save_record(
+                    make_eod_output_record(
+                        now=now,
+                        candidate_symbols=(),
+                        error=f"{type(error).__name__}: {error}",
+                    )
+                )
+            except Exception:
+                pass
+
+        return ScheduledOperationPhaseResult(
+            phase=CANONICAL_CLOSE,
+            run_date=now.date().isoformat(),
+            observed_at=now.isoformat(),
+            status=status,
+            candidate_count=count,
+            detail_rows=(),
+            delegated_legacy_phase="EVENING",
+            preview_only=False,
+            canonical=True,
+            ranking_write_allowed=True,
+            profile_write_allowed=True,
+            al_sat_decision_allowed=True,
+        )
+
+
+def execute_operation_phase(
+    phase: str,
+    *,
+    now: datetime | None = None,
+    runtime: ScheduledOperationRuntime | None = None,
+    enforce_schedule: bool = True,
+) -> ScheduledOperationPhaseResult:
+    normalized = _normalize_phase(phase)
+    observed_at = _local_now(now)
+
+    if enforce_schedule:
+        _schedule_guard(normalized, observed_at)
+
+    service = runtime or ProductionScheduledOperationRuntime()
+
+    if normalized == PREOPEN:
+        result = service.preopen_context(now=observed_at)
+    elif normalized == POSTOPEN:
+        result = service.postopen_gap_entry(now=observed_at)
+    elif normalized == PRECLOSE:
+        result = service.preclose_preview(now=observed_at)
+    else:
+        result = service.canonical_close(now=observed_at)
+
+    if result.phase != normalized:
+        raise ScheduledOperationPhaseError(
+            f"Runtime yanlış phase döndürdü: {result.phase!r}"
+        )
+
+    # Hard safety guard: only canonical close may expose write authority.
+    if normalized != CANONICAL_CLOSE and (
+        result.canonical
+        or result.ranking_write_allowed
+        or result.profile_write_allowed
+        or result.al_sat_decision_allowed
+    ):
+        raise ScheduledOperationPhaseError(
+            f"{normalized} preview phase yazma/karar yetkisi taşıyamaz."
+        )
+
+    return result
+
+
+def operation_phase_rows(
+    result: ScheduledOperationPhaseResult,
+) -> tuple[dict[str, object], ...]:
+    return result.detail_rows
+
+
+def _jsonable(result: ScheduledOperationPhaseResult) -> dict[str, object]:
+    return {
+        "phase": result.phase,
+        "run_date": result.run_date,
+        "observed_at": result.observed_at,
+        "status": result.status,
+        "candidate_count": result.candidate_count,
+        "detail_rows": list(result.detail_rows),
+        "delegated_legacy_phase": result.delegated_legacy_phase,
+        "preview_only": result.preview_only,
+        "canonical": result.canonical,
+        "ranking_write_allowed": result.ranking_write_allowed,
+        "profile_write_allowed": result.profile_write_allowed,
+        "al_sat_decision_allowed": result.al_sat_decision_allowed,
+    }
+
+
+def main(argv: Iterable[str] | None = None) -> int:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--phase", required=True, choices=VALID_PHASES)
+    args = parser.parse_args(list(argv) if argv is not None else None)
+
+    result = execute_operation_phase(args.phase)
+    print(
+        json.dumps(
+            _jsonable(result),
+            ensure_ascii=False,
+            indent=2,
+            default=str,
+        )
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

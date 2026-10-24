@@ -1,0 +1,464 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from hashlib import sha256
+from math import isfinite
+from time import perf_counter
+from typing import Callable
+
+import pandas as pd
+
+from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+from ..data.market_data import fiyat_verisini_duzelt
+from ..indicators.technical_indicators import ema, macd, rsi
+
+POZITIF = "Pozitif"
+SECICI = "Seçici"
+RISKLI = "Riskli"
+YUKSELIS = "Pozitif"
+NOTR = "Nötr"
+DUSUS = "Negatif"
+GUVEN_YUKSEK = "Yüksek"
+GUVEN_ORTA = "Orta"
+GUVEN_DUSUK = "Düşük"
+
+ENDESK_ADLARI = {
+    "XU100": "BIST 100",
+    "XU030": "BIST 30",
+    "XUTUM": "BIST Tüm",
+}
+ENDESK_YAHOO_KODLARI = {
+    "XU100": "XU100.IS",
+    "XU030": "XU030.IS",
+    "XUTUM": "XUTUM.IS",
+}
+ENDESK_ALIASES = {
+    "XU100": "XU100", "XU100.IS": "XU100", "BIST100": "XU100",
+    "XU30": "XU030", "XU30.IS": "XU030", "XU030": "XU030", "XU030.IS": "XU030", "BIST30": "XU030",
+    "XUTUM": "XUTUM", "XUTUM.IS": "XUTUM", "BISTTUM": "XUTUM",
+}
+
+
+class MarketRegimeError(Exception):
+    """Piyasa rejimi verisi veya analizi güvenle üretilemediğinde kullanılır."""
+
+
+@dataclass(frozen=True)
+class RegimeComponent:
+    ad: str
+    skor: int
+    maksimum_skor: int
+    durum: str
+    gerekceler: tuple[str, ...]
+    riskler: tuple[str, ...]
+    kullanilabilir: bool = True
+
+
+@dataclass(frozen=True)
+class MarketRegimeResult:
+    sembol: str
+    ad: str
+    yahoo_sembolu: str
+    analiz_tarihi: pd.Timestamp
+    son_kapanis: float
+    veri_tazeligi: DataFreshnessResult
+    haftalik_yon: str
+    gunluk_yon: str
+    saatlik_yon: str | None
+    saatlik_kullanilabilir: bool
+    trend: RegimeComponent
+    momentum: RegimeComponent
+    hacim: RegimeComponent
+    kirilim: RegimeComponent
+    genislik: RegimeComponent
+    toplam_skor: int
+    rejim: str
+    guven_duzeyi: str
+    pozitif_nedenler: tuple[str, ...]
+    riskler: tuple[str, ...]
+    veri_kimligi: str
+    veri_kaynagi: str = "birincil"
+    yeniden_deneme_sayisi: int = 0
+    toplam_indirme_suresi_saniye: float = 0.0
+    tazelik_kilit_asamasi: str = ""
+    sonraki_kontrol_zamani: str = ""
+
+
+
+@dataclass(frozen=True)
+class MarketRegimeRetryPolicy:
+    azami_yeniden_deneme: int = 2
+
+    def __post_init__(self) -> None:
+        if self.azami_yeniden_deneme < 0:
+            raise ValueError("Azami yeniden deneme sayısı negatif olamaz.")
+
+
+@dataclass(frozen=True)
+class MarketRegimeDownloadResult:
+    veri: pd.DataFrame
+    kaynak: str
+    yeniden_deneme_sayisi: int
+    toplam_sure_saniye: float
+
+
+DataDownloader = Callable[..., pd.DataFrame]
+
+
+def endeks_sembolunu_hazirla(sembol: str) -> str:
+    temiz = sembol.strip().upper().replace(" ", "")
+    if temiz not in ENDESK_ALIASES:
+        raise ValueError(
+            "Desteklenmeyen endeks sembolü. Geçerli değerler: XU100, XU030, XUTUM."
+        )
+    return ENDESK_ALIASES[temiz]
+
+
+def _indir(
+    ticker: str,
+    *,
+    period: str,
+    interval: str,
+    downloader: DataDownloader,
+) -> pd.DataFrame:
+    try:
+        veri = downloader(
+            tickers=ticker,
+            period=period,
+            interval=interval,
+            auto_adjust=True,
+            progress=False,
+            threads=False,
+            timeout=30,
+        )
+    except Exception as hata:
+        raise MarketRegimeError(f"{ticker} {interval} verisi indirilemedi: {hata}") from hata
+
+    if veri is None or veri.empty:
+        raise MarketRegimeError(f"{ticker} için {interval} veri bulunamadı.")
+
+    if interval == "1d":
+        try:
+            veri = fiyat_verisini_duzelt(
+                veri,
+                yalnizca_tamamlanmis_gunler=True,
+            )
+        except Exception as hata:
+            raise MarketRegimeError(
+                f"{ticker} günlük veri düzeltilemedi: {hata}"
+            ) from hata
+
+    temiz = veri.copy()
+
+    if isinstance(temiz.columns, pd.MultiIndex):
+        temiz.columns = temiz.columns.get_level_values(0)
+
+    gerekli = ("Open", "High", "Low", "Close", "Volume")
+    eksik = [sutun for sutun in gerekli if sutun not in temiz.columns]
+
+    if eksik:
+        raise MarketRegimeError("Eksik piyasa verisi sütunları: " + ", ".join(eksik))
+
+    temiz = temiz[list(gerekli)].copy()
+
+    for sutun in gerekli:
+        temiz[sutun] = pd.to_numeric(temiz[sutun], errors="coerce")
+
+    temiz = temiz.dropna(subset=list(gerekli))
+    temiz.index = pd.to_datetime(temiz.index)
+    temiz.index.name = "Date"
+
+    temiz["High"] = temiz[["Open", "High", "Close"]].max(axis=1)
+    temiz["Low"] = temiz[["Open", "Low", "Close"]].min(axis=1)
+
+    if interval == "1d" and not temiz.empty:
+        bugun = pd.Timestamp.now(tz="Europe/Istanbul").date()
+        if pd.Timestamp(temiz.index[-1]).date() == bugun:
+            temiz = temiz.iloc[:-1].copy()
+
+    return temiz
+
+
+
+def _gunluk_veriyi_kurtararak_indir(
+    ticker: str,
+    *,
+    downloader: DataDownloader,
+    ikincil_downloader: DataDownloader | None,
+    yeniden_deneme_politikasi: MarketRegimeRetryPolicy,
+) -> MarketRegimeDownloadResult:
+    """Günlük veriyi küçük ve kontrollü yeniden denemelerle doğrular."""
+
+    baslangic = perf_counter()
+    son_hata: Exception | None = None
+    toplam_yeniden_deneme = 0
+    kaynaklar = (("birincil", downloader),)
+    if ikincil_downloader is not None:
+        kaynaklar += (("ikincil", ikincil_downloader),)
+
+    for kaynak_adi, kaynak in kaynaklar:
+        for deneme in range(yeniden_deneme_politikasi.azami_yeniden_deneme + 1):
+            if deneme > 0:
+                toplam_yeniden_deneme += 1
+            try:
+                veri = _indir(
+                    ticker,
+                    period="5y",
+                    interval="1d",
+                    downloader=kaynak,
+                )
+                tazelik = gunluk_veri_tazeligini_degerlendir(veri)
+                if not tazelik.kilitli:
+                    return MarketRegimeDownloadResult(
+                        veri=veri,
+                        kaynak=kaynak_adi,
+                        yeniden_deneme_sayisi=toplam_yeniden_deneme,
+                        toplam_sure_saniye=round(
+                            perf_counter() - baslangic,
+                            3,
+                        ),
+                    )
+                son_hata = MarketRegimeError(tazelik.aciklama)
+            except MarketRegimeError as hata:
+                son_hata = hata
+
+    if son_hata is None:
+        son_hata = MarketRegimeError(
+            f"{ticker} günlük verisi doğrulanamadı."
+        )
+    raise MarketRegimeError(
+        f"{son_hata} Kontrollü yeniden denemeler tamamlandı; "
+        f"toplam yeniden deneme: {toplam_yeniden_deneme}."
+    ) from son_hata
+
+
+def _haftaliga_cevir(gunluk: pd.DataFrame) -> pd.DataFrame:
+    haftalik = gunluk.resample("W-FRI").agg(
+        {"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"}
+    ).dropna(subset=["Open", "High", "Low", "Close"])
+    return haftalik
+
+
+def _gosterge_tablosu(veri: pd.DataFrame) -> pd.DataFrame:
+    if len(veri) < 55:
+        raise MarketRegimeError(
+            f"Piyasa rejimi için en az 55 bar gerekir; bulunan: {len(veri)}."
+        )
+    sonuc = veri.copy()
+    sonuc["EMA9"] = ema(sonuc["Close"], 9)
+    sonuc["EMA21"] = ema(sonuc["Close"], 21)
+    sonuc["EMA55"] = ema(sonuc["Close"], 55)
+    sonuc["SMA50"] = sonuc["Close"].rolling(50, min_periods=50).mean()
+    sonuc["SMA200"] = sonuc["Close"].rolling(200, min_periods=200).mean()
+    sonuc["RSI14"] = rsi(sonuc["Close"], 14)
+    sonuc[["MACD", "MACD_Sinyal", "MACD_Histogram"]] = macd(sonuc["Close"])
+    sonuc["Hacim20"] = sonuc["Volume"].rolling(20, min_periods=20).mean()
+    sonuc["Onceki20Zirve"] = sonuc["High"].shift(1).rolling(20, min_periods=20).max()
+    sonuc["Onceki55Zirve"] = sonuc["High"].shift(1).rolling(55, min_periods=55).max()
+    return sonuc
+
+
+def _yon(son: pd.Series) -> str:
+    degerler = (son.get("Close"), son.get("EMA21"), son.get("EMA55"))
+    if not all(pd.notna(x) and isfinite(float(x)) for x in degerler):
+        return NOTR
+    close, e21, e55 = map(float, degerler)
+    if close > e21 > e55:
+        return YUKSELIS
+    if close < e21 < e55:
+        return DUSUS
+    return NOTR
+
+
+def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+    g = gunluk.iloc[-1]
+    h = haftalik.iloc[-1]
+    skor = 0; art=[]; risk=[]
+    kurallar = [
+        (g["Close"] > g["EMA21"], 7, "Günlük kapanış EMA21 üzerinde."),
+        (g["EMA9"] > g["EMA21"], 7, "Günlük EMA9, EMA21 üzerinde."),
+        (g["EMA21"] > g["EMA55"], 7, "Günlük EMA21, EMA55 üzerinde."),
+        (pd.notna(g["SMA200"]) and g["SMA50"] > g["SMA200"], 7, "Günlük SMA50, SMA200 üzerinde."),
+        (h["Close"] > h["EMA21"] and h["EMA9"] > h["EMA21"], 7, "Haftalık trend kısa ortalamalarla destekleniyor."),
+    ]
+    for ok, puan, metin in kurallar:
+        if bool(ok): skor += puan; art.append(metin)
+        else: risk.append(metin.replace("üzerinde", "üzerinde değil").replace("destekleniyor", "desteklenmiyor"))
+    durum = YUKSELIS if skor >= 25 else DUSUS if skor <= 10 else NOTR
+    return RegimeComponent("Trend", skor, 35, durum, tuple(art), tuple(risk))
+
+
+def _momentum_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+    g=gunluk.iloc[-1]; onceki=gunluk.iloc[-2]; h=haftalik.iloc[-1]
+    skor=0; art=[]; risk=[]
+    rsi_ok = pd.notna(g["RSI14"]) and 50 <= float(g["RSI14"]) <= 70
+    macd_ok = pd.notna(g["MACD_Sinyal"]) and g["MACD"] > g["MACD_Sinyal"]
+    hist_ok = pd.notna(g["MACD_Histogram"]) and g["MACD_Histogram"] > 0
+    hist_artis = hist_ok and pd.notna(onceki["MACD_Histogram"]) and g["MACD_Histogram"] > onceki["MACD_Histogram"]
+    haftalik_ok = pd.notna(h["MACD_Sinyal"]) and h["MACD"] > h["MACD_Sinyal"]
+    for ok, puan, metin in [
+        (rsi_ok,7,"RSI nötr-pozitif bölgede."), (macd_ok,7,"Günlük MACD sinyal çizgisinin üzerinde."),
+        (hist_ok,5,"Günlük MACD histogramı pozitif."), (hist_artis,3,"MACD histogramı güçleniyor."),
+        (haftalik_ok,3,"Haftalık MACD yönü destekliyor."),
+    ]:
+        if ok: skor+=puan; art.append(metin)
+        else: risk.append(metin.replace("üzerinde", "üzerinde değil").replace("pozitif", "pozitif değil").replace("güçleniyor", "güçlenmiyor").replace("destekliyor", "desteklemiyor"))
+    durum=YUKSELIS if skor>=18 else DUSUS if skor<=7 else NOTR
+    return RegimeComponent("Momentum",skor,25,durum,tuple(art),tuple(risk))
+
+
+def _hacim_bileseni(gunluk: pd.DataFrame) -> RegimeComponent:
+    g=gunluk.iloc[-1]
+    hacim=float(g["Volume"]) if pd.notna(g["Volume"]) else 0.0
+    ort=float(g["Hacim20"]) if pd.notna(g["Hacim20"]) else 0.0
+    if hacim <= 0 or ort <= 0:
+        return RegimeComponent("Hacim",0,15,"Veri yok",(),("Endeks hacim verisi kullanılamıyor.",),False)
+    oran=hacim/ort; skor=0; art=[]; risk=[]
+    if oran>=1.2: skor+=8; art.append(f"Hacim 20 günlük ortalamanın {oran:.2f} katı.")
+    elif oran>=1.0: skor+=5; art.append("Hacim 20 günlük ortalamanın üzerinde.")
+    else: risk.append(f"Hacim 20 günlük ortalamanın {oran:.2f} katında.")
+    son5=gunluk.tail(5)
+    yukselis_hacmi=son5.loc[son5["Close"].diff()>0,"Volume"].sum()
+    dusus_hacmi=son5.loc[son5["Close"].diff()<0,"Volume"].sum()
+    if yukselis_hacmi > dusus_hacmi:
+        skor+=4; art.append("Son beş barda yükseliş hacmi baskın.")
+    else: risk.append("Son beş barda yükseliş hacmi baskın değil.")
+    hacim_egimi=gunluk["Volume"].tail(5).diff().mean()
+    if pd.notna(hacim_egimi) and hacim_egimi>0:
+        skor+=3; art.append("Kısa dönem hacim eğilimi artıyor.")
+    else: risk.append("Kısa dönem hacim eğilimi artmıyor.")
+    durum=YUKSELIS if skor>=10 else DUSUS if skor<=3 else NOTR
+    return RegimeComponent("Hacim",skor,15,durum,tuple(art),tuple(risk),True)
+
+
+def _kirilim_bileseni(gunluk: pd.DataFrame) -> RegimeComponent:
+    g=gunluk.iloc[-1]; close=float(g["Close"]); skor=0; art=[]; risk=[]
+    z20=float(g["Onceki20Zirve"]) if pd.notna(g["Onceki20Zirve"]) else None
+    z55=float(g["Onceki55Zirve"]) if pd.notna(g["Onceki55Zirve"]) else None
+    if z20 and close>=z20: skor+=8; art.append("Kapanış önceki 20 bar zirvesi üzerinde.")
+    elif z20 and close>=z20*0.98: skor+=4; art.append("Kapanış 20 bar zirvesine yakın.")
+    else: risk.append("20 bar zirve kırılımı yok.")
+    if z55 and close>=z55: skor+=7; art.append("Kapanış önceki 55 bar zirvesi üzerinde.")
+    elif z55 and close>=z55*0.98: skor+=3; art.append("Kapanış 55 bar zirvesine yakın.")
+    else: risk.append("55 bar zirve kırılımı yok.")
+    durum=YUKSELIS if skor>=10 else DUSUS if skor==0 else NOTR
+    return RegimeComponent("Kırılım",skor,15,durum,tuple(art),tuple(risk))
+
+
+def _saatlik_yon(veri: pd.DataFrame | None) -> tuple[str | None,bool,tuple[str,...]]:
+    if veri is None or len(veri)<60:
+        return None,False,("Saatlik veri bulunamadı veya yeterli değil; analiz günlük ve haftalık veriyle sürdü.",)
+    try:
+        t=_gosterge_tablosu(veri)
+        son=t.iloc[-1]
+        return _yon(son),True,()
+    except Exception:
+        return None,False,("Saatlik göstergeler üretilemedi; analiz günlük ve haftalık veriyle sürdü.",)
+
+
+def piyasa_rejimini_analiz_et(
+    sembol: str,
+    *,
+    downloader: DataDownloader | None = None,
+    ikincil_downloader: DataDownloader | None = None,
+    saatlik_veri_dene: bool = True,
+    yeniden_deneme_politikasi: MarketRegimeRetryPolicy = MarketRegimeRetryPolicy(),
+) -> MarketRegimeResult:
+    if downloader is None:
+        try:
+            import yfinance as yf
+        except ImportError as hata:
+            raise MarketRegimeError("yfinance paketi bulunamadı.") from hata
+        downloader = yf.download
+    kod=endeks_sembolunu_hazirla(sembol)
+    yahoo=ENDESK_YAHOO_KODLARI[kod]
+    gunluk_indirme = _gunluk_veriyi_kurtararak_indir(
+        yahoo,
+        downloader=downloader,
+        ikincil_downloader=ikincil_downloader,
+        yeniden_deneme_politikasi=yeniden_deneme_politikasi,
+    )
+    gunluk_ham = gunluk_indirme.veri
+    if len(gunluk_ham)<220:
+        raise MarketRegimeError(f"{kod} için SMA200 dahil günlük analizde en az 220 bar gerekir; bulunan: {len(gunluk_ham)}.")
+    tazelik=gunluk_veri_tazeligini_degerlendir(gunluk_ham)
+    if tazelik.kilitli:
+        raise MarketRegimeError(tazelik.aciklama)
+    haftalik_ham=_haftaliga_cevir(gunluk_ham)
+    gunluk=_gosterge_tablosu(gunluk_ham)
+    haftalik=_gosterge_tablosu(haftalik_ham)
+    saatlik=None
+    saatlik_risk=()
+    if saatlik_veri_dene:
+        try:
+            saatlik=_indir(yahoo,period="60d",interval="1h",downloader=downloader)
+        except MarketRegimeError:
+            saatlik=None
+    saatlik_yon,saatlik_var,saatlik_risk=_saatlik_yon(saatlik)
+    trend=_trend_bileseni(gunluk,haftalik)
+    momentum=_momentum_bileseni(gunluk,haftalik)
+    hacim=_hacim_bileseni(gunluk)
+    kirilim=_kirilim_bileseni(gunluk)
+    genislik=RegimeComponent("Piyasa genişliği",5,10,"Nötr",("İlk sürümde genişlik skoru nötr tabanla kullanıldı.",),(),False)
+    toplam=trend.skor+momentum.skor+hacim.skor+kirilim.skor+genislik.skor
+    gy=_yon(gunluk.iloc[-1]); hy=_yon(haftalik.iloc[-1])
+    if toplam>=70 and gy==YUKSELIS and hy!=DUSUS:
+        rejim=POZITIF
+    elif toplam<45 or gy==DUSUS or hy==DUSUS:
+        rejim=RISKLI
+    else:
+        rejim=SECICI
+    eksik=sum(1 for x in (hacim,genislik) if not x.kullanilabilir)+(0 if saatlik_var else 1)
+    guven=GUVEN_YUKSEK if eksik==0 else GUVEN_ORTA if eksik<=2 else GUVEN_DUSUK
+    pozitif=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.gerekceler)
+    risk=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.riskler)+saatlik_risk
+    kimlik_ham=f"{kod}|{gunluk_ham.index[-1]}|{gunluk_ham['Close'].iloc[-1]}|{toplam}|{rejim}"
+    return MarketRegimeResult(
+        sembol=kod,ad=ENDESK_ADLARI[kod],yahoo_sembolu=yahoo,
+        analiz_tarihi=pd.Timestamp(gunluk_ham.index[-1]),son_kapanis=float(gunluk_ham['Close'].iloc[-1]),
+        veri_tazeligi=tazelik,haftalik_yon=hy,gunluk_yon=gy,saatlik_yon=saatlik_yon,
+        saatlik_kullanilabilir=saatlik_var,trend=trend,momentum=momentum,hacim=hacim,
+        kirilim=kirilim,genislik=genislik,toplam_skor=int(toplam),rejim=rejim,
+        guven_duzeyi=guven,pozitif_nedenler=pozitif,riskler=risk,
+        veri_kimligi=sha256(kimlik_ham.encode('utf-8')).hexdigest()[:12],
+        veri_kaynagi=gunluk_indirme.kaynak,
+        yeniden_deneme_sayisi=gunluk_indirme.yeniden_deneme_sayisi,
+        toplam_indirme_suresi_saniye=gunluk_indirme.toplam_sure_saniye,
+        tazelik_kilit_asamasi=str(
+            getattr(tazelik, "kilit_asamasi", "doğrulandı")
+        ),
+        sonraki_kontrol_zamani=(
+            getattr(tazelik, "sonraki_kontrol_zamani").isoformat()
+            if getattr(tazelik, "sonraki_kontrol_zamani", None)
+            is not None
+            else ""
+        ),
+    )
+
+
+def piyasa_rejimi_karsilastirmasi(
+    semboller: tuple[str,...] = ("XU100","XU030","XUTUM"),
+    *,
+    downloader: DataDownloader | None = None,
+    ikincil_downloader: DataDownloader | None = None,
+    yeniden_deneme_politikasi: MarketRegimeRetryPolicy = MarketRegimeRetryPolicy(),
+) -> tuple[MarketRegimeResult,...]:
+    sonuclar: list[MarketRegimeResult] = []
+    hatalar: list[str] = []
+    for sembol in semboller:
+        try:
+            sonuclar.append(
+                piyasa_rejimini_analiz_et(
+                    sembol,
+                    downloader=downloader,
+                    ikincil_downloader=ikincil_downloader,
+                    yeniden_deneme_politikasi=yeniden_deneme_politikasi,
+                )
+            )
+        except MarketRegimeError as hata:
+            if endeks_sembolunu_hazirla(sembol) == "XU100":
+                raise
+            hatalar.append(f"{sembol}: {hata}")
+    if not sonuclar:
+        raise MarketRegimeError("Hiçbir endeks için piyasa rejimi sonucu üretilemedi.")
+    return tuple(sonuclar)

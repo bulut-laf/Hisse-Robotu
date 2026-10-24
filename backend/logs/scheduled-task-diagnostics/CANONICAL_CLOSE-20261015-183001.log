@@ -1,0 +1,12 @@
+PHASE=CANONICAL_CLOSE
+STARTED_AT=2026-10-15T18:30:01.5631656+03:00
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+PYTHON=D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+COMMAND=-m backend.app.operations.scheduled_operation_phase_runner --phase CANONICAL_CLOSE
+USER=user-Bilgisayar\user
+MACHINE=USER-BILGISAYAR
+FINISHED_AT=2026-10-15T18:30:04.6568191+03:00
+DURATION_SECONDS=3.09
+EXIT_CODE=1
+STDOUT_FILE=D:\Projects\Hisse-Robotu\backend\logs\scheduled-task-diagnostics\CANONICAL_CLOSE-20261015-183001.stdout.txt
+STDERR_FILE=D:\Projects\Hisse-Robotu\backend\logs\scheduled-task-diagnostics\CANONICAL_CLOSE-20261015-183001.stderr.txt

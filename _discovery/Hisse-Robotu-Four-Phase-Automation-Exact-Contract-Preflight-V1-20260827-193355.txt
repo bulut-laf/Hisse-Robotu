@@ -1,0 +1,429 @@
+=== HISSE ROBOTU — FOUR-PHASE AUTOMATION EXACT CONTRACT PREFLIGHT V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+WINDOWS_TASK_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+PURPOSE=CAPTURE_ALL_EXISTING_AUTOMATION_CONTRACTS_BEFORE_ONE_CONSOLIDATED_PATCH
+
+=== 1. REQUIRED FILES / HASHES ===
+FILE=runner|PATH=backend\app\operations\daily_buy_decision_scheduled_runner.py|SHA256=e6a2cd8f117125f22532a446028d48df8919b0f0b7f2c01e646853bd1b103ccc|SIZE=18542
+FILE=closeout|PATH=backend\app\analysis\daily_buy_decision_operational_closeout.py|SHA256=29b6dfd2138a9b2d7168aaaa7083894a9139dff720e2a764a0b4e12eb7df56e7|SIZE=7089
+FILE=delta|PATH=backend\app\analysis\eod_morning_board_delta.py|SHA256=6cd4f6630776ee6e90daecfcc8c0b33d582f75bf73ecf1bd89a73f55a5a8025d|SIZE=6938
+FILE=archive|PATH=backend\app\analysis\daily_buy_decision_output_archive.py|SHA256=82c97a662203ac0efb4eb130d01098b902be01a9c8139254910d121a409ccd47|SIZE=10696
+FILE=phase_runner|PATH=backend\app\operations\scheduled_operation_phase_runner.py|SHA256=7cfa17a8017529dd82cdbb692e11ada052986a6721fd404b8661049c65035a19|SIZE=14107
+FILE=dashboard|PATH=backend\dashboard.py|SHA256=f9e2b11d57e705dbfe974c7f9101c07b508f339c555e4298b701ef6910f10232|SIZE=394509
+FILE=installer|PATH=scripts\install_daily_buy_decision_tasks.ps1|SHA256=aba5a911636fdae49edbd00fe8142ef2a26f9503b4a0cc2981bc10d0904c4a22|SIZE=1551
+
+=== 2. PYTHON DEFINITIONS ===
+--- backend\app\operations\daily_buy_decision_scheduled_runner.py ---
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:19|ClassDef|ScheduledRunRecord
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:31|ClassDef|ScheduledRunRuntime
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:32|FunctionDef|operation_summary
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:33|FunctionDef|scan
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:34|FunctionDef|visibility_contexts
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:35|FunctionDef|candidate_snapshot
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:36|FunctionDef|decisions
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:37|FunctionDef|persist_decision_snapshot
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:40|ClassDef|ScheduledRunJsonStore
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:41|FunctionDef|__init__
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:44|FunctionDef|load
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:61|FunctionDef|save
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:72|FunctionDef|latest
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:82|FunctionDef|latest_success
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:92|ClassDef|ScheduledRunAuditJsonStore
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:95|FunctionDef|__init__
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:98|FunctionDef|load
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:116|FunctionDef|append
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:125|FunctionDef|latest
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:136|FunctionDef|_normalize_phase
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:143|FunctionDef|_default_runtime
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:159|ClassDef|Runtime
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:160|FunctionDef|operation_summary
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:180|FunctionDef|scan
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:192|FunctionDef|visibility_contexts
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:198|FunctionDef|candidate_snapshot
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:206|FunctionDef|decisions
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:209|FunctionDef|persist_decision_snapshot
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:225|FunctionDef|execute_scheduled_run
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:302|FunctionDef|scheduler_status_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:318|FunctionDef|_phase_due
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:323|FunctionDef|scheduler_health_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:363|FunctionDef|retry_failed_or_missing_run
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:402|FunctionDef|scheduler_audit_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:426|FunctionDef|scheduler_daily_chain_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:457|FunctionDef|main
+--- backend\app\analysis\daily_buy_decision_operational_closeout.py ---
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:14|ClassDef|OperationalCloseoutCheck
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:21|ClassDef|OperationalCloseoutResult
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:29|FunctionDef|_phase_due
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:34|FunctionDef|_state_records
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:42|FunctionDef|_audit_records
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:50|FunctionDef|_archive_records
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:58|FunctionDef|build_operational_closeout
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:187|FunctionDef|operational_closeout_rows
+--- backend\app\analysis\eod_morning_board_delta.py ---
+DEF=backend\app\analysis\eod_morning_board_delta.py:8|ClassDef|EodMorningBoardDeltaItem
+DEF=backend\app\analysis\eod_morning_board_delta.py:19|ClassDef|EodMorningBoardDeltaSummary
+DEF=backend\app\analysis\eod_morning_board_delta.py:40|FunctionDef|_decision
+DEF=backend\app\analysis\eod_morning_board_delta.py:45|FunctionDef|_reason
+DEF=backend\app\analysis\eod_morning_board_delta.py:81|FunctionDef|build_eod_morning_board_delta
+DEF=backend\app\analysis\eod_morning_board_delta.py:180|FunctionDef|eod_morning_board_delta_rows
+--- backend\app\analysis\daily_buy_decision_output_archive.py ---
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:22|ClassDef|DecisionOutputArchiveRecord
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:30|ClassDef|DailyDecisionArchiveDelta
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:42|ClassDef|DecisionOutputArchiveJsonStore
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:49|FunctionDef|__init__
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:52|FunctionDef|load
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:82|FunctionDef|save
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:110|FunctionDef|save_snapshot
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:124|FunctionDef|latest
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:133|FunctionDef|by_date
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:138|FunctionDef|_symbols
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:142|FunctionDef|_buy_symbols
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:150|FunctionDef|compare_decision_archive_days
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:187|FunctionDef|latest_daily_compare
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:203|FunctionDef|decision_output_archive_rows
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:234|FunctionDef|decision_output_board_rows
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:252|FunctionDef|daily_decision_archive_delta_rows
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:270|FunctionDef|decision_output_audit_rows
+--- backend\app\operations\scheduled_operation_phase_runner.py ---
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:51|ClassDef|ScheduledOperationPhaseError
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:56|ClassDef|ScheduledOperationPhaseResult
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:71|ClassDef|ScheduledOperationRuntime
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:72|FunctionDef|preopen_context
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:78|FunctionDef|postopen_gap_entry
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:84|FunctionDef|preclose_preview
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:90|FunctionDef|canonical_close
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:97|FunctionDef|_local_now
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:104|FunctionDef|_normalize_phase
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:113|FunctionDef|_schedule_guard
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:143|FunctionDef|_plain
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:153|FunctionDef|_extract_symbols
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:159|FunctionDef|walk
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:192|FunctionDef|_record_candidate_count
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:205|FunctionDef|_pct
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:211|ClassDef|ProductionScheduledOperationRuntime
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:214|FunctionDef|_latest_evening_record
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:217|FunctionDef|preopen_context
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:252|FunctionDef|postopen_gap_entry
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:337|FunctionDef|preclose_preview
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:354|FunctionDef|canonical_close
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:383|FunctionDef|execute_operation_phase
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:426|FunctionDef|operation_phase_rows
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:432|FunctionDef|_jsonable
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:449|FunctionDef|main
+
+
+=== 3. EXACT PHASE / SCHEDULE / PERSISTENCE REFERENCES ===
+--- backend\app\operations\daily_buy_decision_scheduled_runner.py | MATCHES=34 ---
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:14|VALID_PHASES = ("EVENING", "MORNING")
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:15|PHASE_SCHEDULE = {"MORNING": (9, 0), "EVENING": (18, 20)}
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:35|    def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object: ...
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:37|    def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None: ...
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:138|    if value not in VALID_PHASES:
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:139|        raise ValueError("phase EVENING veya MORNING olmalıdır.")
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:198|        def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:209|        def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None:
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:218|                DecisionOutputArchiveJsonStore,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:220|            DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:225|def execute_scheduled_run(
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:263|        candidate_snapshot = engine.candidate_snapshot(summary, scan_result, visibility)
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:264|        cards = tuple(getattr(candidate_snapshot, "candidates", ()) or ())
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:266|        engine.persist_decision_snapshot(cards, decisions, phase_value, timestamp)
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:302|def scheduler_status_rows(store: ScheduledRunJsonStore | None = None) -> tuple[dict[str, object], ...]:
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:305|    for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:319|    hour, minute = PHASE_SCHEDULE[_normalize_phase(phase)]
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:323|def scheduler_health_rows(
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:332|    for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:363|def retry_failed_or_missing_run(
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:391|    return execute_scheduled_run(
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:402|def scheduler_audit_rows(
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:408|    phase_label = {"EVENING": "Seans sonu", "MORNING": "09:00"}
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:426|def scheduler_daily_chain_rows(
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:436|        evening = records.get(f"{run_date}:EVENING")
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:437|        morning = records.get(f"{run_date}:MORNING")
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:438|        evening_ok = evening is not None and evening.status == "SUCCESS"
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:439|        morning_ok = morning is not None and morning.status == "SUCCESS"
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:448|            "EOD": evening.status if evening else "YOK",
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:449|            "EOD aday": evening.candidate_count if evening else 0,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:450|            "09:00": morning.status if morning else "YOK",
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:451|            "09:00 aday": morning.candidate_count if morning else 0,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:459|    parser.add_argument("--phase", required=True, choices=VALID_PHASES)
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:462|    record = execute_scheduled_run(args.phase, force=args.force)
+--- backend\app\analysis\daily_buy_decision_operational_closeout.py | MATCHES=8 ---
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:9|PHASE_SCHEDULE = {"MORNING": (9, 0), "EVENING": (18, 20)}
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:10|PHASE_LABELS = {"MORNING": "09:00 Sabah", "EVENING": "18:20 Seans Sonu"}
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:30|    hour, minute = PHASE_SCHEDULE[phase]
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:78|        from backend.app.analysis.daily_buy_decision_output_archive import DecisionOutputArchiveJsonStore
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:79|        archive_store = DecisionOutputArchiveJsonStore()
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:89|    for phase in ("MORNING", "EVENING"):
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:90|        label = PHASE_LABELS[phase]
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:176|        headline = "EOD → 09:00 karar zinciri, audit ve karar arşivi birlikte doğrulandı."
+--- backend\app\analysis\eod_morning_board_delta.py | MATCHES=8 ---
+REF=backend\app\analysis\eod_morning_board_delta.py:82|    evening: object | None,
+REF=backend\app\analysis\eod_morning_board_delta.py:83|    morning: object | None,
+REF=backend\app\analysis\eod_morning_board_delta.py:86|    if evening is None or morning is None:
+REF=backend\app\analysis\eod_morning_board_delta.py:89|    evening_candidates = tuple(getattr(evening, "candidates", ()) or ())
+REF=backend\app\analysis\eod_morning_board_delta.py:90|    morning_candidates = tuple(getattr(morning, "candidates", ()) or ())
+REF=backend\app\analysis\eod_morning_board_delta.py:158|        headline = "Akşam Top-5 ile 09:00 nihai liste aynı karar yapısını korudu."
+REF=backend\app\analysis\eod_morning_board_delta.py:161|            f"09:00 sonucu: {morning_buy} AL · {upgrades} güçlenen · "
+REF=backend\app\analysis\eod_morning_board_delta.py:192|            "09:00": item.morning_decision,
+--- backend\app\analysis\daily_buy_decision_output_archive.py | MATCHES=3 ---
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:42|class DecisionOutputArchiveJsonStore:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:43|    """Daily EOD/Morning decision-board archive.
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:190|    phase: str = "MORNING",
+--- backend\app\operations\scheduled_operation_phase_runner.py | MATCHES=46 ---
+REF=backend\app\operations\scheduled_operation_phase_runner.py:11|    DecisionOutputArchiveJsonStore,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:15|    execute_scheduled_run,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:27|PREOPEN = "PREOPEN"
+REF=backend\app\operations\scheduled_operation_phase_runner.py:28|POSTOPEN = "POSTOPEN"
+REF=backend\app\operations\scheduled_operation_phase_runner.py:29|PRECLOSE = "PRECLOSE"
+REF=backend\app\operations\scheduled_operation_phase_runner.py:30|CANONICAL_CLOSE = "CANONICAL_CLOSE"
+REF=backend\app\operations\scheduled_operation_phase_runner.py:32|VALID_PHASES = (
+REF=backend\app\operations\scheduled_operation_phase_runner.py:33|    PREOPEN,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:34|    POSTOPEN,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:35|    PRECLOSE,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:36|    CANONICAL_CLOSE,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:39|PHASE_SCHEDULE = {
+REF=backend\app\operations\scheduled_operation_phase_runner.py:40|    PREOPEN: (8, 45),
+REF=backend\app\operations\scheduled_operation_phase_runner.py:41|    POSTOPEN: (10, 20),
+REF=backend\app\operations\scheduled_operation_phase_runner.py:42|    PRECLOSE: (17, 20),
+REF=backend\app\operations\scheduled_operation_phase_runner.py:43|    CANONICAL_CLOSE: (18, 30),
+REF=backend\app\operations\scheduled_operation_phase_runner.py:90|    def canonical_close(
+REF=backend\app\operations\scheduled_operation_phase_runner.py:106|    if phase not in VALID_PHASES:
+REF=backend\app\operations\scheduled_operation_phase_runner.py:116|    if phase == PREOPEN:
+REF=backend\app\operations\scheduled_operation_phase_runner.py:119|                "PREOPEN yalnız 08:45–09:59 aralığında çalışır."
+REF=backend\app\operations\scheduled_operation_phase_runner.py:123|    if phase == POSTOPEN:
+REF=backend\app\operations\scheduled_operation_phase_runner.py:126|                "POSTOPEN yalnız 10:20–17:19 aralığında çalışır."
+REF=backend\app\operations\scheduled_operation_phase_runner.py:130|    if phase == PRECLOSE:
+REF=backend\app\operations\scheduled_operation_phase_runner.py:133|                "PRECLOSE yalnız 17:20–18:29 aralığında çalışır."
+REF=backend\app\operations\scheduled_operation_phase_runner.py:137|    if phase == CANONICAL_CLOSE and clock < time(18, 30):
+REF=backend\app\operations\scheduled_operation_phase_runner.py:139|            "CANONICAL_CLOSE 18:30 öncesinde çalıştırılamaz."
+REF=backend\app\operations\scheduled_operation_phase_runner.py:215|        return DecisionOutputArchiveJsonStore().latest("EVENING")
+REF=backend\app\operations\scheduled_operation_phase_runner.py:225|                phase=PREOPEN,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:238|                "Durum": "PREOPEN CONTEXT ONLY",
+REF=backend\app\operations\scheduled_operation_phase_runner.py:244|            phase=PREOPEN,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:260|                phase=POSTOPEN,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:271|                phase=POSTOPEN,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:318|                    "Durum": "POSTOPEN GAP / ENTRY EVIDENCE · NOT AL/SAT",
+REF=backend\app\operations\scheduled_operation_phase_runner.py:329|            phase=POSTOPEN,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:346|            phase=PRECLOSE,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:354|    def canonical_close(
+REF=backend\app\operations\scheduled_operation_phase_runner.py:359|        legacy = execute_scheduled_run(
+REF=backend\app\operations\scheduled_operation_phase_runner.py:360|            "EVENING",
+REF=backend\app\operations\scheduled_operation_phase_runner.py:368|            phase=CANONICAL_CLOSE,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:374|            delegated_legacy_phase="EVENING",
+REF=backend\app\operations\scheduled_operation_phase_runner.py:398|    if normalized == PREOPEN:
+REF=backend\app\operations\scheduled_operation_phase_runner.py:400|    elif normalized == POSTOPEN:
+REF=backend\app\operations\scheduled_operation_phase_runner.py:402|    elif normalized == PRECLOSE:
+REF=backend\app\operations\scheduled_operation_phase_runner.py:405|        result = service.canonical_close(now=observed_at)
+REF=backend\app\operations\scheduled_operation_phase_runner.py:413|    if normalized != CANONICAL_CLOSE and (
+REF=backend\app\operations\scheduled_operation_phase_runner.py:451|    parser.add_argument("--phase", required=True, choices=VALID_PHASES)
+--- backend\dashboard.py | MATCHES=38 ---
+REF=backend\dashboard.py:192|    DecisionOutputArchiveJsonStore,
+REF=backend\dashboard.py:207|    retry_failed_or_missing_run,
+REF=backend\dashboard.py:208|    scheduler_audit_rows,
+REF=backend\dashboard.py:209|    scheduler_daily_chain_rows,
+REF=backend\dashboard.py:210|    scheduler_health_rows,
+REF=backend\dashboard.py:211|    scheduler_status_rows,
+REF=backend\dashboard.py:8154|        "Windows görevleri kurulduğunda sistem hafta içi 18:20'de seans sonu, "
+REF=backend\dashboard.py:8155|        "09:00'da sabah yeniden değerlendirme koşusunu panel açık olmasa da çalıştırır."
+REF=backend\dashboard.py:8160|            pd.DataFrame(scheduler_health_rows(_scheduler_store)),
+REF=backend\dashboard.py:8166|            if st.button("18:20 koşusunu yeniden çalıştır", key="retry_evening_daily_buy_decision"):
+REF=backend\dashboard.py:8168|                    _retry_evening = retry_failed_or_missing_run("EVENING", store=_scheduler_store)
+REF=backend\dashboard.py:8175|            if st.button("09:00 koşusunu yeniden çalıştır", key="retry_morning_daily_buy_decision"):
+REF=backend\dashboard.py:8177|                    _retry_morning = retry_failed_or_missing_run("MORNING", store=_scheduler_store)
+REF=backend\dashboard.py:8190|            _audit_rows = scheduler_audit_rows(_audit_store, limit=50)
+REF=backend\dashboard.py:8200|            st.markdown("**EOD → 09:00 günlük zincir denetimi**")
+REF=backend\dashboard.py:8201|            _chain_rows = scheduler_daily_chain_rows(_scheduler_store, limit_days=14)
+REF=backend\dashboard.py:8209|                st.caption("Henüz günlük EOD / 09:00 zincir kaydı yok.")
+REF=backend\dashboard.py:8216|        "18:20 EOD ve 09:00 Morning koşularını scheduler durumu, audit kaydı ve "
+REF=backend\dashboard.py:8609|                    DecisionOutputArchiveJsonStore().save_snapshot(_decision_snapshot)
+REF=backend\dashboard.py:8621|            _evening_snapshot = _decision_snapshots.get("EVENING")
+REF=backend\dashboard.py:8622|            _morning_decision_snapshot = _decision_snapshots.get("MORNING")
+REF=backend\dashboard.py:8658|                st.markdown("##### Akşam → 09:00 Aksiyon Farkı — Tek Bakış")
+REF=backend\dashboard.py:8660|                    "Seans sonu ön aksiyon listesi ile 09:00 nihai karar yapısını read-only "
+REF=backend\dashboard.py:8666|                        ("09:00 AL", str(_board_delta_summary.morning_buy)),
+REF=backend\dashboard.py:8682|                    st.caption("Akşam ve 09:00 arasında karar veya Top-5 üyeliği değişmedi.")
+REF=backend\dashboard.py:8687|                _decision_archive_store = DecisionOutputArchiveJsonStore()
+REF=backend\dashboard.py:8691|                        "EOD ve 09:00 Top-5 karar board'ları günlük olarak saklanır. "
+REF=backend\dashboard.py:8727|                        st.markdown("**Son iki 09:00 günü karşılaştırması**")
+REF=backend\dashboard.py:8729|                            _decision_archive_records, phase="MORNING"
+REF=backend\dashboard.py:8741|                                "Günler arası 09:00 karşılaştırması için en az iki günlük arşiv gerekir."
+REF=backend\dashboard.py:8769|            if _decision_phase == "EVENING":
+REF=backend\dashboard.py:8778|                    "giriş hazırlığı ve kalite kanıtları değiştirilmez. Sabah 09:00 "
+REF=backend\dashboard.py:8797|            if _decision_phase == "MORNING":
+REF=backend\dashboard.py:8802|                st.markdown("##### 09:00 Nihai Aksiyon Listesi")
+REF=backend\dashboard.py:8818|                    st.success("09:00 AL adayları: " + ", ".join(_morning_buy_actions))
+REF=backend\dashboard.py:8820|                    st.info("09:00 listesinde AL koşullarını tamamlayan aday yok.")
+REF=backend\dashboard.py:8846|                if _decision_phase == "MORNING":
+REF=backend\dashboard.py:8850|                        phase="MORNING",
+--- scripts\install_daily_buy_decision_tasks.ps1 | MATCHES=9 ---
+REF=scripts\install_daily_buy_decision_tasks.ps1:23|    -Argument "-m $module --phase EVENING" `
+REF=scripts\install_daily_buy_decision_tasks.ps1:28|    -At 18:20
+REF=scripts\install_daily_buy_decision_tasks.ps1:32|    -Argument "-m $module --phase MORNING" `
+REF=scripts\install_daily_buy_decision_tasks.ps1:37|    -At 09:00
+REF=scripts\install_daily_buy_decision_tasks.ps1:39|Register-ScheduledTask `
+REF=scripts\install_daily_buy_decision_tasks.ps1:46|Register-ScheduledTask `
+REF=scripts\install_daily_buy_decision_tasks.ps1:50|    -Description "Hisse Robotu 09:00 sabah yeniden değerlendirme" `
+REF=scripts\install_daily_buy_decision_tasks.ps1:53|Write-Host "Kuruldu: HisseRobotu-EOD-DailyDecision (18:20 hafta içi)"
+REF=scripts\install_daily_buy_decision_tasks.ps1:54|Write-Host "Kuruldu: HisseRobotu-0900-DailyDecision (09:00 hafta içi)"
+
+
+=== 4. AUTOMATION-RELATED TEST FILES ===
+TEST_FILES_FOUND=26
+TEST_FILE=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py|SHA256=4c848f310eb6d992d3b0638959d3131c8949da1346ff34d442cc84895b2c3bbc
+TEST_FILE=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py|SHA256=e5b2ff3dc0513dea21273e3ee7f12bc7942d68b0302465cfb6909261a50712b8
+TEST_FILE=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py|SHA256=b48cced124826fe0421b622e8fdfa05bfb07cd00f013f333b21a2899ecfed984
+TEST_FILE=backend\tests\test_daily_buy_decision_calibration.py|SHA256=f8b6d0e3d6ee65f64c468e88c0ca92b947c6c2c5b7bcea52bc02382c5916e16d
+TEST_FILE=backend\tests\test_daily_buy_decision_closeout.py|SHA256=cd461d4f4b5d174e5b3a4f4b54e9126873779c1cf1818327c5bdd85bfa37790d
+TEST_FILE=backend\tests\test_daily_buy_decision_cycle.py|SHA256=b041bfc70e106f63c0ee0c5bab2e6fca1084476f412408e325d17efc3975a638
+TEST_FILE=backend\tests\test_daily_buy_decision_operational_closeout_v1.py|SHA256=a76dddda9776248a7c4f1ebe97d812adb4be2c938ee7ba41fead45dd516744c9
+TEST_FILE=backend\tests\test_daily_buy_decision_outcomes.py|SHA256=18c0cb4692a001d71f7d9a2ddf1fe8340d8b7cef823527490373daecce09aa63
+TEST_FILE=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py|SHA256=04e5870edae87a6cc19d30af8a909fe1f2522aa351fda48d20120a7322e6190f
+TEST_FILE=backend\tests\test_daily_buy_decision_output_archive_v1.py|SHA256=e154af013a920972e7ddd9bae7a986498beccbc15fc72c1f8652bf4397664a66
+TEST_FILE=backend\tests\test_daily_buy_decision_recommendation_governance.py|SHA256=14f5c5c7920179e8f27dab9b7f43c8d7e00150fae6422ef0a4d1cda2585d4a25
+TEST_FILE=backend\tests\test_daily_buy_decision_review.py|SHA256=8f01e747f6d013eb6111a1837a301969586d3b60064e68a988d26356b9d0f938
+TEST_FILE=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py|SHA256=b15d1f83bb41e1fa86fa70c0b4ef93fa5e583fb4317a9d7041ddb5652424a451
+TEST_FILE=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py|SHA256=c9f131f1ef947760290aebf0416999fbc52636614a277398f2665ae697df3c5a
+TEST_FILE=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py|SHA256=7c1d1f6080e083f6ac29e3d63d73b967949d9c36b3c32c3c33e633ad77584920
+TEST_FILE=backend\tests\test_daily_buy_decision_threshold_recommendation.py|SHA256=7f8b27cf06261ddb5b5d2a63771bb905c8ff49f5a75a9b06c530d1a3de0bf820
+TEST_FILE=backend\tests\test_daily_early_trajectory_v1.py|SHA256=6397430a941cfaec74bab228e0ce01cfa8da47561aa84790e8b3a8c71fec1862
+TEST_FILE=backend\tests\test_eod_morning_board_delta_v1.py|SHA256=a04f547396a8c5d37c6a3505e8336ef6d23a01605040d7f63528f2b9ab56ef62
+TEST_FILE=backend\tests\test_morning_revalidation_candidate_replacement_v1.py|SHA256=ae96b01270cadaa52689de20dfc302048259b63a5798854b6cdf0253d8d304dd
+TEST_FILE=backend\tests\test_morning_revalidation_decision_change_reason_v1.py|SHA256=1dbf98ddbabc75b84b3b15550970a9ea95505aac9d8ab5dab6dff58398f37733
+TEST_FILE=backend\tests\test_preclose_partial_daily_preview_v1.py|SHA256=4566c8d077cde711b1ff4b96fdbebc475c5ff10f112d9958492bbd1062350ecb
+TEST_FILE=backend\tests\test_research_profile_memory_v1.py|SHA256=8b567fd18501d8490019f9eeecaa45ad55d43a6cf47dfbc3f05628ae6492d694
+TEST_FILE=backend\tests\test_scheduled_intraday_batch_v1.py|SHA256=5bcb0a43829acea8ff201f5242b470441387c6de6161e13187a761215d9dc9ad
+TEST_FILE=backend\tests\test_scheduled_operation_phase_runner_v1.py|SHA256=ef4cd18be74c2f783c826de38295e6eb3b0be07f5b66dd54dbe89179084b372b
+TEST_FILE=backend\tests\test_scheduled_session_data_adapter_v1.py|SHA256=54b6da1e06491623c14db64ff9755a61869662059f6e49e405cbb62e4a242847
+TEST_FILE=backend\tests\test_v1_operations_01c_dashboard_wiring.py|SHA256=4d1ce60e20c511060069a8b08d783b24bde895623fea6a66b4ac2a929e3136b6
+
+=== 5. EXACT TEST EXPECTATIONS ===
+--- backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py | ASSERT_MATCHES=8 ---
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:7|    assert "Otomatik Karar Koşusu" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:8|    assert "scheduler_status_rows" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:9|    assert "18:20" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:10|    assert "09:00" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:15|    assert "--phase EVENING" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:16|    assert "--phase MORNING" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:17|    assert "18:20" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:18|    assert "09:00" in source
+--- backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py | ASSERT_MATCHES=3 ---
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:6|    assert "scheduler_health_rows" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:8|    assert "18:20 koşusunu yeniden çalıştır" in source
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:9|    assert "09:00 koşusunu yeniden çalıştır" in source
+--- backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py | ASSERT_MATCHES=9 ---
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:49|    assert by_name["Seans sonu"]["Sağlık"] == "EKSİK KOŞU"
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:50|    assert by_name["09:00"]["Sağlık"] == "EKSİK KOŞU"
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:51|    assert by_name["Seans sonu"]["Kurtarma"] == "YENİDEN ÇALIŞTIR"
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:67|    assert morning["Sağlık"] == "SAĞLIKLI"
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:68|    assert morning["Aday"] == 1
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:69|    assert morning["AL"] == "AAA"
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:105|    assert morning["Sağlık"] == "BAŞARISIZ"
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:106|    assert "2026-08-23" in morning["Son başarılı"]
+TEST_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:107|    assert "network unavailable" in morning["Son hata/detay"]
+--- backend\tests\test_daily_buy_decision_cycle.py | ASSERT_MATCHES=2 ---
+TEST_REF=backend\tests\test_daily_buy_decision_cycle.py:45|    assert set(loaded) == {"EVENING", "MORNING"}
+TEST_REF=backend\tests\test_daily_buy_decision_cycle.py:46|    assert loaded["EVENING"].candidates[0].symbol == "AAA"
+--- backend\tests\test_daily_buy_decision_operational_closeout_v1.py | ASSERT_MATCHES=1 ---
+TEST_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:88|    assert any("18:20 Seans Sonu" in item for item in result.missing_links)
+--- backend\tests\test_daily_buy_decision_output_archive_v1.py | ASSERT_MATCHES=1 ---
+TEST_REF=backend\tests\test_daily_buy_decision_output_archive_v1.py:76|    assert latest_daily_compare(store.load(), phase="MORNING") is None
+--- backend\tests\test_daily_buy_decision_review.py | ASSERT_MATCHES=1 ---
+TEST_REF=backend\tests\test_daily_buy_decision_review.py:53|    assert "Teknik skor 80+" in review.supporting_evidence
+--- backend\tests\test_daily_buy_decision_scheduled_runner_v1.py | ASSERT_MATCHES=4 ---
+TEST_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:58|    assert runtime.persisted == [("EVENING", 2, ("AL", "BEKLE"))]
+TEST_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:59|    assert store.latest("EVENING").status == "SUCCESS"
+TEST_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:83|    assert [row["Koşu"] for row in rows] == ["Seans sonu", "09:00"]
+TEST_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:102|    assert store.latest("MORNING").status == "FAILED"
+--- backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py | ASSERT_MATCHES=4 ---
+TEST_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:6|    assert "Otomasyon Koşu Geçmişi / Audit" in source
+TEST_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:7|    assert "scheduler_audit_rows" in source
+TEST_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:8|    assert "EOD → 09:00 günlük zincir denetimi" in source
+TEST_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:9|    assert "scheduler_daily_chain_rows" in source
+--- backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py | ASSERT_MATCHES=1 ---
+TEST_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:90|    assert rows[0]["Koşu"] == "09:00"
+--- backend\tests\test_daily_buy_decision_threshold_recommendation.py | ASSERT_MATCHES=3 ---
+TEST_REF=backend\tests\test_daily_buy_decision_threshold_recommendation.py:35|    assert rec.recommendation == "MEVCUT EŞİĞİ KORU"
+TEST_REF=backend\tests\test_daily_buy_decision_threshold_recommendation.py:64|    assert rows[0]["Boyut"] == "Teknik skor"
+TEST_REF=backend\tests\test_daily_buy_decision_threshold_recommendation.py:65|    assert rows[0]["Öneri"] == "MEVCUT EŞİĞİ KORU"
+--- backend\tests\test_daily_early_trajectory_v1.py | ASSERT_MATCHES=1 ---
+TEST_REF=backend\tests\test_daily_early_trajectory_v1.py:93|    assert "yeni teknik skor, işlem sinyali veya AL/SAT kararı üretmez" in source
+--- backend\tests\test_eod_morning_board_delta_v1.py | ASSERT_MATCHES=8 ---
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:37|    assert summary.evening_buy == 1
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:38|    assert summary.morning_buy == 1
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:64|    assert build_eod_morning_board_delta(None, _snapshot()) is None
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:65|    assert build_eod_morning_board_delta(_snapshot(), None) is None
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:70|    assert "Akşam → 09:00 Aksiyon Farkı — Tek Bakış" in text
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:71|    assert "build_eod_morning_board_delta" in text
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:72|    assert "eod_morning_board_delta_rows" in text
+TEST_REF=backend\tests\test_eod_morning_board_delta_v1.py:73|    assert "yeni skor, sinyal veya karar üretmez" in text
+--- backend\tests\test_morning_revalidation_decision_change_reason_v1.py | ASSERT_MATCHES=4 ---
+TEST_REF=backend\tests\test_morning_revalidation_decision_change_reason_v1.py:55|    assert change.evening_decision == "AL"
+TEST_REF=backend\tests\test_morning_revalidation_decision_change_reason_v1.py:56|    assert change.morning_decision == "BEKLE"
+TEST_REF=backend\tests\test_morning_revalidation_decision_change_reason_v1.py:68|    assert change.evening_decision == "BEKLE"
+TEST_REF=backend\tests\test_morning_revalidation_decision_change_reason_v1.py:69|    assert change.morning_decision == "AL"
+--- backend\tests\test_preclose_partial_daily_preview_v1.py | ASSERT_MATCHES=1 ---
+TEST_REF=backend\tests\test_preclose_partial_daily_preview_v1.py:181|    assert "PRECLOSE_INTRADAY_MISSING" in out.hatalar[0].hata
+--- backend\tests\test_scheduled_operation_phase_runner_v1.py | ASSERT_MATCHES=5 ---
+TEST_REF=backend\tests\test_scheduled_operation_phase_runner_v1.py:121|            assert phase == "EVENING"
+TEST_REF=backend\tests\test_scheduled_operation_phase_runner_v1.py:140|    assert result.status == "PREOPEN_CONTEXT_READY"
+TEST_REF=backend\tests\test_scheduled_operation_phase_runner_v1.py:200|    assert result.status == "POSTOPEN_GAP_ENTRY_EVIDENCE_READY"
+TEST_REF=backend\tests\test_scheduled_operation_phase_runner_v1.py:250|    assert calls == [("EVENING", 18, 30)]
+TEST_REF=backend\tests\test_scheduled_operation_phase_runner_v1.py:251|    assert result.delegated_legacy_phase == "EVENING"
+--- backend\tests\test_scheduled_session_data_adapter_v1.py | ASSERT_MATCHES=7 ---
+TEST_REF=backend\tests\test_scheduled_session_data_adapter_v1.py:62|    assert result.phase == "PREOPEN"
+TEST_REF=backend\tests\test_scheduled_session_data_adapter_v1.py:63|    assert result.source_status == "PREOPEN_CONTEXT_ONLY"
+TEST_REF=backend\tests\test_scheduled_session_data_adapter_v1.py:84|    assert result.source_status == "POSTOPEN_TOO_EARLY"
+TEST_REF=backend\tests\test_scheduled_session_data_adapter_v1.py:107|    assert result.reason == "POSTOPEN_GAP_ENTRY_EVIDENCE_READY"
+TEST_REF=backend\tests\test_scheduled_session_data_adapter_v1.py:130|    assert result.reason == "POSTOPEN_EVIDENCE_READY_PRIOR_CLOSE_REQUIRED_FOR_GAP"
+TEST_REF=backend\tests\test_scheduled_session_data_adapter_v1.py:148|    assert result.reason == "PRECLOSE_READ_ONLY_PREVIEW"
+TEST_REF=backend\tests\test_scheduled_session_data_adapter_v1.py:167|    assert result.source_status == "PRECLOSE_WINDOW_CLOSED"
+--- backend\tests\test_v1_operations_01c_dashboard_wiring.py | ASSERT_MATCHES=5 ---
+TEST_REF=backend\tests\test_v1_operations_01c_dashboard_wiring.py:7|    assert "build_morning_operation_snapshot" in dashboard
+TEST_REF=backend\tests\test_v1_operations_01c_dashboard_wiring.py:8|    assert "morning_candidate_rows" in dashboard
+TEST_REF=backend\tests\test_v1_operations_01c_dashboard_wiring.py:13|    assert "V1_OPERATIONS_01C_MORNING_CANDIDATE_UI" in dashboard
+TEST_REF=backend\tests\test_v1_operations_01c_dashboard_wiring.py:22|    assert "build_morning_operation_snapshot" in block
+TEST_REF=backend\tests\test_v1_operations_01c_dashboard_wiring.py:23|    assert "morning_candidate_rows" in block
+
+
+=== 6. CONTRACT FACTS ===
+LEGACY_RUNNER_TWO_PHASE_PRESENT=YES
+NEW_OPERATION_PHASE_RUNNER_FOUR_PHASE_PRESENT=YES
+LEGACY_INSTALLER_TWO_PHASE_PRESENT=YES
+INSTALLER_FOUR_PHASE_PRESENT=NO
+DASHBOARD_LEGACY_18_20_OR_09_00_REFERENCES=YES
+OPERATIONAL_CLOSEOUT_LEGACY_MORNING_EVENING=YES
+EOD_MORNING_DELTA_LEGACY_09_00_SEMANTICS=YES
+LEGACY_TEST_FILES_WITH_18_20_09_00_OR_TWO_PHASE_BINDINGS=9
+LEGACY_TEST_FILE=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py
+LEGACY_TEST_FILE=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py
+LEGACY_TEST_FILE=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py
+LEGACY_TEST_FILE=backend\tests\test_daily_buy_decision_operational_closeout_v1.py
+LEGACY_TEST_FILE=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py
+LEGACY_TEST_FILE=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py
+LEGACY_TEST_FILE=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py
+LEGACY_TEST_FILE=backend\tests\test_eod_morning_board_delta_v1.py
+LEGACY_TEST_FILE=backend\tests\test_research_profile_memory_v1.py
+
+=== 7. DECISION ===
+DECISION=READY_FOR_ONE_CONSOLIDATED_AUTOMATION_CONTRACT_PATCH
+NEXT_SCOPE=INSTALLER_PLUS_LEGACY_ORCHESTRATION_LABELS_DASHBOARD_COPY_AND_ONLY_DIRECTLY_COUPLED_TESTS
+LEGACY_DECISION_ENGINE_REWRITE=NO
+NEW_SCHEDULER=NO
+NEW_STORE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+WINDOWS_TASK_ACTIVATION_IN_NEXT_PATCH=NO
+FULL_REGRESSION_REQUIRED_BEFORE_TASK_ACTIVATION=YES
+
+=== 8. SAFETY ===
+READ_ONLY=YES
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+WINDOWS_TASK_MUTATION=NO
+NETWORK_CALL=NO

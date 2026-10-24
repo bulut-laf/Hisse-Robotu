@@ -1,0 +1,76 @@
+﻿=== STATIC + NUMERIC RCA ===
+EXACT_CONTRACTS=33
+RELEVANT_FUNCTIONS=24
+SUCCESS_FORMULA_FOUND=YES
+FALSE_POSITIVE_FORMULA_FOUND=YES
+RELEVANT_TEST_FILES=48
+EXACT_ASSERTIONS=35
+LEAKAGE_BOUNDARY_EVIDENCE=6
+OBSERVED_SUCCESS_RECALC=41.5430
+OBSERVED_FALSE_POSITIVE_RECALC=21.1672
+OBSERVED_RATE_RECONCILIATION=PASS
+PERFORMANCE_LABEL_SUM=1300
+EVALUATED_COUNT=1011
+LABEL_EXCLUSIVITY_ARITHMETIC=OVERLAP_OR_DIFFERENT_DENOMINATOR
+THRESHOLD_CONTRACT_EVIDENCE=20
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=24|successful_count: int
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=26|false_positive_count: int
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=27|success_rate_pct: float
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=45|successful_count: int
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=46|success_rate_pct: float
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=58|best_stage_success_rate_pct: float
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=67|successful_count: int
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=68|success_rate_pct: float
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=112|baseline_success_rate_pct: float
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=114|candidate_success_rate_pct: float
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=115|success_rate_delta_pct: float
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=205|return pd.DataFrame( [ { "Aşama": row.stage, "Aday": row.candidate_count, "Ölçülen": row.measured_count, "Başarılı": row.successful_count, "Sınırlı hareket": row.limited_count, "Yanlış pozitif": row.false_positive_count, "Başarı oranı %": row.success_rate_pct, "5G kapanış ort. %": row.average_close_return_5d_pct, "10G kapanış ort. %": row.average_close_return_10d_pct, "20G kapanış ort. %": row.average_close_return_20d_pct, "5G en yüksek ort. %": row.average_max_return_5d_pct, "10G en yüksek ort. %": row.average_max_return_10d_pct, "20G en yüksek ort. %": row.average_max_return_20d_pct, "5G en düşük ort. %": row.average_min_return_5d_pct, "10G en düşük ort. %": row.average_min_return_10d_pct, "20G en düşük ort. %": row.average_min_return_20d_pct, } for row in rows ] )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=283|return pd.DataFrame( [ { "Aşama": row.stage, "Momentum bandı": row.momentum_band, "Aday": row.candidate_count, "Ölçülen": row.measured_count, "Başarılı": row.successful_count, "Başarı oranı %": row.success_rate_pct, "MACD histogram eğimi ort.": row.average_macd_histogram_slope, "RSI eğimi ort.": row.average_rsi_slope, } for row in rows ] )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=321|best = max( reliable, key=lambda row: (row.success_rate_pct, row.measured_count, row.stage), default=None, )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=332|return PreBreakoutCalibrationSummary( candidate_count=candidate_count, measured_count=measured_count, measurement_coverage_pct=coverage, reliable_stage_count=len(reliable), best_stage=None if best is None else best.stage, best_stage_success_rate_pct=( 0.0 if best is None else best.success_rate_pct ), sufficient_sample=bool(reliable), note=note, )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=391|reliable = sorted( (item for item in values if item.sample_sufficient), key=lambda item: ( -item.confidence_low_pct, -item.success_rate_pct, -item.measured_count, item.stage, ), )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=417|return pd.DataFrame( [ { "Aşama": row.stage, "Ölçülen": row.measured_count, "Başarılı": row.successful_count, "Başarı oranı %": row.success_rate_pct, "%95 alt sınır": row.confidence_low_pct, "%95 üst sınır": row.confidence_high_pct, "Örneklem yeterli": "Evet" if row.sample_sufficient else "Hayır", "Temkinli sıra": row.conservative_rank, } for row in rows ] )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=705|return pd.DataFrame( [ { "Aşama": row.stage, "Mevcut minimum momentum": row.current_minimum_momentum_score, "Önerilen minimum momentum": row.proposed_minimum_momentum_score, "Mevcut ölçülen": row.baseline_measured_count, "Mevcut başarı %": row.baseline_success_rate_pct, "Öneri ölçülen": row.candidate_measured_count, "Öneri başarı %": row.candidate_success_rate_pct, "Başarı farkı %": row.success_rate_delta_pct, "Öneri %95 alt sınır": row.candidate_confidence_low_pct, "Örneklem korunma %": row.sample_retention_pct, "Karar": row.verdict, "Otomatik uygulanır": "Evet" if row.auto_apply else "Hayır", } for row in rows ] )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=736|return PreBreakoutThresholdPolicy( enabled=bool(enabled and accepted), stage_minimum_momentum_scores=accepted if enabled else {}, source="Tarihsel kalibrasyon doğrulaması", )
+CONTRACT|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=378|low, high = _wilson_interval(row.successful_count, row.measured_count)
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_backtest.py|LINE=46|assert result.cutoff_date == cutoff
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration.py|LINE=42|assert result["threshold"].tolist() == [40, 45, 50, 55]
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration.py|LINE=44|assert result.loc[result["threshold"] == 50, "sample_count"].iloc[0] == 6
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration.py|LINE=58|assert report.recommendation.recommended_threshold in (50, 55)
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration.py|LINE=72|assert report.recommendation.recommended_threshold == 45
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_confidence.py|LINE=59|assert summary.best_stage_success_rate_pct == 60.0
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_threshold_validation.py|LINE=36|assert item.candidate_success_rate_pct > item.baseline_success_rate_pct
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py|LINE=83|assert result.false_positive_count == 1
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py|LINE=84|assert result.false_positive_rate_pct == 50.0
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py|LINE=85|assert result.success_rate_pct == 50.0
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py|LINE=97|assert rows["E2"].success_rate_pct == 100.0
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py|LINE=98|assert rows["E3"].false_positive_rate_pct == 100.0
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_engine_threshold_policy.py|LINE=6|assert "threshold_policy: PreBreakoutThresholdPolicy | None = None" in source
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_engine_threshold_policy.py|LINE=7|assert "threshold_policy=threshold_policy" in source
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_engine_threshold_policy.py|LINE=12|assert "threshold_policy or mevcut_esik_politikasi()" in source
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_historical_validation.py|LINE=109|assert first[0].best_future_upside_pct == pytest.approx(18.0)
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_watch_session_state.py|LINE=33|assert "cutoff_date.isoformat()" in source
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_performance_comparison.py|LINE=17|assert e2.success_rate_pct == 50.0
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_performance_comparison.py|LINE=18|assert e2.false_positive_rate_pct == 50.0
+ASSERT|D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_performance_comparison.py|LINE=24|assert rows[0].success_rate_pct is None
+LEAK|LINE=91|candidate_positions[:: config.cutoff_step]
+LEAK|LINE=155|tuple( sorted( records, key=lambda record: ( record.cutoff_date, record.symbol, ), ) )
+LEAK|LINE=107|tarihsel_yeniden_oynat( symbol, normalized, cutoff, config=engine_config, relative_strength_score=relative_strength_score, horizons=validation_config.horizons, )
+LEAK|LINE=118|records.append( PreBreakoutValidationRecord( symbol=symbol, cutoff_date=cutoff, replay=replay, performance_label=performans_etiketi_belirle(replay), ) )
+LEAK|LINE=156|sorted( records, key=lambda record: ( record.cutoff_date, record.symbol, ), )
+LEAK|LINE=119|PreBreakoutValidationRecord( symbol=symbol, cutoff_date=cutoff, replay=replay, performance_label=performans_etiketi_belirle(replay), )
+RCA_DECISION=DISPLAYED_RATES_RECONCILE_STATIC_BOUNDARY_PRESENT
+RCA_FLAGS=NONE
+PRODUCTION_MUTATION=YOK
+STATIC_EXIT_CODE=0
+
+=== TARGET TESTS ===
+........................................................................ [ 15%]
+........................................................................ [ 30%]
+........................................................................ [ 45%]
+........................................................................ [ 60%]
+........................................................................ [ 76%]
+........................................................................ [ 91%]
+.........................................                                [100%]
+473 passed, 2547 deselected in 37.47s
+PYTEST_EXIT_CODE=0

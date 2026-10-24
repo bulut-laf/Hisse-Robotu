@@ -1,0 +1,2809 @@
+{
+  "schema_version": "financial-intelligence-v1-3-bank-real-source-discovery-v1",
+  "status": "PASS",
+  "evidence_file_count": 132,
+  "bank_record_candidate_count": 243,
+  "canonical_candidate_count": 1,
+  "canonical_candidates": [
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\AKBNK_2026Q2_OFFICIAL_EVIDENCE_BUNDLE.json",
+      "symbol": "AKBNK",
+      "sector_model": "BANK",
+      "has_as_of": true,
+      "has_publication_date": true,
+      "has_canonical_facts": true,
+      "record_keys": [
+        "as_of",
+        "bundle_version",
+        "canonical_facts",
+        "guidance_rejections",
+        "industrial_threshold_reuse",
+        "metric_provenance",
+        "missing_to_zero",
+        "period_end",
+        "publication_date",
+        "sector_model",
+        "sources",
+        "symbol"
+      ]
+    }
+  ],
+  "bank_record_candidates": [
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "YKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "HALKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "HALKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "TSKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "symbol": "HALKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "data_blocked",
+        "decision",
+        "decision_cautions",
+        "decision_reasons",
+        "entry_readiness",
+        "jump_quality",
+        "operational_status",
+        "rank",
+        "rank_change",
+        "research_priority",
+        "risk_reward",
+        "selection_source",
+        "symbol",
+        "technical_score",
+        "technical_view",
+        "visibility_state",
+        "volume_ratio"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\AKBNK_2026Q2_OFFICIAL_EVIDENCE_BUNDLE.json",
+      "symbol": "AKBNK",
+      "sector_model": "BANK",
+      "has_as_of": true,
+      "has_publication_date": true,
+      "has_canonical_facts": true,
+      "record_keys": [
+        "as_of",
+        "bundle_version",
+        "canonical_facts",
+        "guidance_rejections",
+        "industrial_threshold_reuse",
+        "metric_provenance",
+        "missing_to_zero",
+        "period_end",
+        "publication_date",
+        "sector_model",
+        "sources",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_1_NEXT_REAL_SYMBOL_SELECTION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "acceptance_file_count",
+        "acceptance_files",
+        "canonical_file_count",
+        "canonical_files",
+        "evidence_score",
+        "json_symbol_file_count",
+        "json_symbol_files",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_1_NEXT_REAL_SYMBOL_SELECTION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "acceptance_file_count",
+        "acceptance_files",
+        "canonical_file_count",
+        "canonical_files",
+        "evidence_score",
+        "json_symbol_file_count",
+        "json_symbol_files",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_1_NEXT_REAL_SYMBOL_SELECTION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "acceptance_file_count",
+        "acceptance_files",
+        "canonical_file_count",
+        "canonical_files",
+        "evidence_score",
+        "json_symbol_file_count",
+        "json_symbol_files",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_EXACT_NESTED_BANK_CANONICAL_MAPPING_GATE.json",
+      "symbol": "AKBNK",
+      "sector_model": "BANK",
+      "has_as_of": true,
+      "has_publication_date": true,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "activation_ready",
+        "al_sat_mutation",
+        "as_of",
+        "blockers",
+        "canonical_adapter_blocker",
+        "canonical_adapter_status",
+        "canonical_payload_ready",
+        "evidence_hash",
+        "industrial_threshold_reuse",
+        "mapped_metric_count",
+        "mapped_metric_paths",
+        "missing_to_zero",
+        "nested_canonical_facts",
+        "production_evidence",
+        "production_mutation",
+        "publication_date",
+        "schema_version",
+        "scoring_ready",
+        "sector_model",
+        "source_type",
+        "source_uri",
+        "status",
+        "store_mutation",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_EXACT_NUMERIC_BANK_METRIC_EXTRACTION_CANONICAL_GATE.json",
+      "symbol": "AKBNK",
+      "sector_model": "BANK",
+      "has_as_of": true,
+      "has_publication_date": true,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "activation_ready",
+        "al_sat_mutation",
+        "as_of",
+        "blockers",
+        "canonical_adapter_blocker",
+        "canonical_adapter_status",
+        "canonical_payload_ready",
+        "evidence_hash",
+        "extracted_metric_count",
+        "future_publication_allowed",
+        "guidance_rejections",
+        "hash_verified",
+        "metric_evidence",
+        "metrics",
+        "missing_metric_count",
+        "missing_to_zero",
+        "production_evidence",
+        "production_mutation",
+        "publication_date",
+        "schema_version",
+        "scoring_ready",
+        "sector_model",
+        "source_attachment_uri",
+        "source_type",
+        "source_uri",
+        "status",
+        "store_mutation",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_KAP_FINANCIAL_ATTACHMENT_CANONICAL_PARSE.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "activation_ready",
+        "al_sat_mutation",
+        "attachment_bytes",
+        "bank_metric_mapping_ready",
+        "blockers",
+        "canonical_fact_count",
+        "canonical_import_ready",
+        "content_disposition",
+        "content_type",
+        "evidence_hash",
+        "final_url",
+        "identity",
+        "network_fetch",
+        "notification_id",
+        "parser_error",
+        "parser_status",
+        "production_evidence",
+        "raw_attachment_path",
+        "raw_attachment_persisted",
+        "schema_version",
+        "scoring_ready",
+        "source_name",
+        "source_type",
+        "source_uri",
+        "status",
+        "store_mutation",
+        "symbol",
+        "unmapped_count"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_NPL_RATIO_SELECTION_AND_CANONICAL_GATE.json",
+      "symbol": "AKBNK",
+      "sector_model": "BANK",
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": true,
+      "record_keys": [
+        "activation_ready",
+        "al_sat_mutation",
+        "blockers",
+        "canonical_adapter_blocker",
+        "canonical_adapter_status",
+        "canonical_facts",
+        "canonical_payload_ready",
+        "industrial_threshold_reuse",
+        "mapped_metric_count",
+        "mapped_metric_paths",
+        "missing_to_zero",
+        "portfolio_mutation",
+        "production_evidence",
+        "production_mutation",
+        "ranking_mutation",
+        "scanner_mutation",
+        "schema_version",
+        "scoring_ready",
+        "sector_model",
+        "selected_metric",
+        "selected_value",
+        "selection_semantics",
+        "status",
+        "store_mutation",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_OFFICIAL_KAP_LIVE_FINANCIAL_EVIDENCE_ACQUISITION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "activation_ready",
+        "al_sat_mutation",
+        "attachment_links",
+        "blockers",
+        "canonical_fact_count",
+        "canonical_input_ready",
+        "content_type",
+        "detail_bytes",
+        "detail_url",
+        "evidence_hash",
+        "final_url",
+        "identity",
+        "network_fetch",
+        "notification_id",
+        "parser_error",
+        "parser_status",
+        "production_evidence",
+        "schema_version",
+        "scoring_ready",
+        "source_type",
+        "source_uri",
+        "status",
+        "store_mutation",
+        "symbol",
+        "unmapped_count",
+        "xls_like_links"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_TIER1_CAPITAL_RATIO_EXACT_EVIDENCE_PROBE.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "activation_ready",
+        "al_sat_mutation",
+        "blockers",
+        "candidate_context_count",
+        "candidate_contexts",
+        "canonical_production_ready",
+        "metric_value_selected",
+        "missing_to_zero",
+        "notification_id",
+        "production_evidence",
+        "production_mutation",
+        "scoring_ready",
+        "selection_ready",
+        "source_text",
+        "status",
+        "store_mutation",
+        "symbol",
+        "target_metric"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_TIER1_SELECTION_AND_CANONICAL_GATE.json",
+      "symbol": "AKBNK",
+      "sector_model": "BANK",
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": true,
+      "record_keys": [
+        "activation_ready",
+        "al_sat_mutation",
+        "blockers",
+        "canonical_adapter_blocker",
+        "canonical_adapter_status",
+        "canonical_facts",
+        "canonical_payload_ready",
+        "evidence_hit_count",
+        "industrial_threshold_reuse",
+        "mapped_metric_count",
+        "mapped_metric_paths",
+        "missing_to_zero",
+        "portfolio_mutation",
+        "production_evidence",
+        "production_mutation",
+        "ranking_mutation",
+        "scanner_mutation",
+        "schema_version",
+        "scoring_ready",
+        "sector_model",
+        "selected_metric",
+        "selected_value",
+        "selection_semantics",
+        "status",
+        "store_mutation",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "TSKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "YKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "YKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "HALKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "HALKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "TSKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "YKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "TSKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "YKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "symbol": "AKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "date_fields",
+        "id_fields",
+        "keys",
+        "nested_shapes",
+        "record_index",
+        "score",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "GARAN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "VAKBN",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "YKBNK",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "HALKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "HALKB",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    },
+    {
+      "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "symbol": "ISCTR",
+      "sector_model": null,
+      "has_as_of": false,
+      "has_publication_date": false,
+      "has_canonical_facts": false,
+      "record_keys": [
+        "has_as_of",
+        "has_canonical_facts",
+        "has_publication_date",
+        "record_keys",
+        "sector_model",
+        "source_path",
+        "symbol"
+      ]
+    }
+  ],
+  "evidence_files": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\daily_buy_decision_output_archive.json",
+      "suffix": ".json",
+      "bytes": 142092,
+      "sha256": "cce5c947e17237a26dd30ac58f02f05351fd27d60b1c66423b1da442181dca54"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\AKBNK_2026Q2_OFFICIAL_EVIDENCE_BUNDLE.json",
+      "suffix": ".json",
+      "bytes": 2347,
+      "sha256": "c6f59da0f19a89f63f6db41bbd140ddb07474bdb78fc1f9087e9ee02f6fb5543"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\AKBNK_2Q2026_EARNINGS_PRESENTATION.pdf",
+      "suffix": ".pdf",
+      "bytes": 9138517,
+      "sha256": "84a82d287b0509cdaad02cc6cfa2e144d8987709e61ce486de8363d85d435884"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\AKBNK_ACTIVATION_SEARCH.txt",
+      "suffix": ".txt",
+      "bytes": 39264,
+      "sha256": "abbf176d5bf24fa58f9d301bb5eb4cfc981766406b481288edd1384d0be6e3b8"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\AKBNK_NIM_SEMANTICS_SEARCH.txt",
+      "suffix": ".txt",
+      "bytes": 863424,
+      "sha256": "bf59566c23582fa7ba94f980bea6dcd7e193f556bb89024dd854c0c9e0d78e7b"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_1_NEXT_REAL_SYMBOL_SELECTION.json",
+      "suffix": ".json",
+      "bytes": 13292,
+      "sha256": "167f5a4b159c1941a6e96a07b1f8fc5897f4062affb2343f548ca4f4b0e55fc6"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_EXACT_DOTTED_KEY_BANK_CANONICAL_GATE.json",
+      "suffix": ".json",
+      "bytes": 824,
+      "sha256": "8bb35303895fbf5d2b82a357392737c301c1c3850f9cf590c90f5897192cf293"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_EXACT_NESTED_BANK_CANONICAL_MAPPING_GATE.json",
+      "suffix": ".json",
+      "bytes": 1482,
+      "sha256": "fef71fbd16cb2e28e9fc4cdaf430716f9918a0544b7c20bd4314e81f7051cffa"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_EXACT_NUMERIC_BANK_METRIC_EXTRACTION_CANONICAL_GATE.json",
+      "suffix": ".json",
+      "bytes": 2883,
+      "sha256": "e79b3ca189d77a775b6c77397d7af9a228d990e308fba48fd0a6563431644120"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_KAP_FINANCIAL_ATTACHMENT_CANONICAL_PARSE.json",
+      "suffix": ".json",
+      "bytes": 1425,
+      "sha256": "951db7a855146d3fa74ffb3ed22aaed0efc70e40fc668ae43fc77cd42cd212c4"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_KAP_PDF_EVIDENCE_NORMALIZATION_TEXT_EXTRACTION.json",
+      "suffix": ".json",
+      "bytes": 1273,
+      "sha256": "bacb639b5a42ddd079cb1b9a49b250701fc9711cdc765caeb0347ef4138acddd"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_KAP_PDF_SIGNATURE_OFFSET_REPAIR.json",
+      "suffix": ".json",
+      "bytes": 1610,
+      "sha256": "39490e5c76da156c46ea6cd49e3b2de51f9e8f50c9aab9bc8f9079f53392aa3f"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_NPL_RATIO_EXACT_EVIDENCE_PROBE.json",
+      "suffix": ".json",
+      "bytes": 40286,
+      "sha256": "9db899eba20c77e22233f14f659f49a57cddb0b5f38f24747163213a466162a9"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_NPL_RATIO_SELECTION_AND_CANONICAL_GATE.json",
+      "suffix": ".json",
+      "bytes": 1532,
+      "sha256": "ea514841032c8d3b475e58fafc8e7bf334a69f2ca1f49db97553ffde7e373eab"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_OFFICIAL_KAP_LIVE_FINANCIAL_EVIDENCE_ACQUISITION.json",
+      "suffix": ".json",
+      "bytes": 1210,
+      "sha256": "18fc90da9757f5c9b9a623e29e00fde8e001d6acef47e0af6a7a83f51f09da71"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_TIER1_CAPITAL_RATIO_EXACT_EVIDENCE_PROBE.json",
+      "suffix": ".json",
+      "bytes": 24474,
+      "sha256": "b9048785daf130dacbae275a75c6b3d70d1ac44876b81a9e89c5dfae59763224"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_AKBNK_TIER1_SELECTION_AND_CANONICAL_GATE.json",
+      "suffix": ".json",
+      "bytes": 1511,
+      "sha256": "85f13d15ee213e23bb3648afeb6fc57dcdbb73ba8e4cbd50221b106e5e6128d5"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_CANONICAL_EXACT_SHAPE_DIAGNOSTIC.json",
+      "suffix": ".json",
+      "bytes": 6383,
+      "sha256": "ff4914bf5cba9f902c32678c22544b1ba8169a050dfba17ddf68a79564434a18"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_FINANCIAL_SOURCE_DISAMBIGUATION_V2.json",
+      "suffix": ".json",
+      "bytes": 16476,
+      "sha256": "bc008a16b9f0c0552b0cd725a44127d58d794b87193c76dfa9a4ba2d05a0eb0b"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_KAP_XLS_SEMANTIC_EVIDENCE_PROBE.json",
+      "suffix": ".json",
+      "bytes": 573,
+      "sha256": "4294eb02ecf37a8899f121fd37c4f52b8ceaa90d8be3870283855529debbef92"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_OFFICIAL_KAP_FINANCIAL_ACQUISITION_PREFLIGHT.json",
+      "suffix": ".json",
+      "bytes": 86820,
+      "sha256": "7438eb8e89fcb8a3d4cf7a06bd0d63719ea0bcddf7ef7a48337adfce38081a6e"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_RAW_SOURCE_SCHEMA_CHARACTERIZATION.json",
+      "suffix": ".json",
+      "bytes": 31089,
+      "sha256": "9e1b3061eb596589df95423ce7a6837087e2076637b6c17ae0b6bff65f1a2494"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_REAL_SOURCE_DISCOVERY.json",
+      "suffix": ".json",
+      "bytes": 59655,
+      "sha256": "c86a8d9ffa48aebb50fc55529eac648d6e005a3c3d13f5a57032640670a37543"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V8_FIN016_HISTORICAL_PIT_BRIDGE_PREFLIGHT.txt",
+      "suffix": ".txt",
+      "bytes": 49944,
+      "sha256": "b7aed897a83af07f867f89c69cd280b160ed4e5e0b815daafcd5b609308226a6"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V8_FIN016_PREFLIGHT.txt",
+      "suffix": ".txt",
+      "bytes": 716145,
+      "sha256": "f9264da4b0ad361465b6b9b52400276d515db008d043da2c4627f8c9c6d9b27e"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\funds\\free_float_snapshots.json",
+      "suffix": ".json",
+      "bytes": 120036,
+      "sha256": "5695d538420cbcb12eb6b65cf7a2a8a00d607622af41e5f38020a931f02ac89e"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\funds\\portfolio_snapshots.json",
+      "suffix": ".json",
+      "bytes": 430513,
+      "sha256": "da285474c09fed08fe8c915dd5223d27edad46feec4907e6feabc7d8f4c4cdac"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-03\\7e4f2df12b304f0bbb405283e5b57507.txt",
+      "suffix": ".txt",
+      "bytes": 3563,
+      "sha256": "c199d7001048f81055d2551ca8a4e83721375d66825e548f6560ec9e6c1d6cc9"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-03\\ace61da9eae14ff8b40fc9ab5dfeec39.txt",
+      "suffix": ".txt",
+      "bytes": 4452,
+      "sha256": "5ef1d03fb7cd82e8f3705f3939ae7c5a411d583f2e00d2cc0ab1d64fc065fe98"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-03\\b1a2a2f4843f4e6091ad967a395861fb.txt",
+      "suffix": ".txt",
+      "bytes": 10671,
+      "sha256": "d4a8b494b284ef3adbf6b1ceedf6c1a655cd607bc9ed909ae3931f80e13b216c"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-03\\bcb3789224b6448cab4c88a8cc6594e0.txt",
+      "suffix": ".txt",
+      "bytes": 15230,
+      "sha256": "482e104eba0e20983d4d22a54f7d1f05fb1a0610ed09d3c32cb0c02a1cd3d74a"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-04\\2a9aaa29ab92468ebe0f85c942a992c6.txt",
+      "suffix": ".txt",
+      "bytes": 6030,
+      "sha256": "e19f42a2cc694135e213e3744a3bcca5e4e9c86c8732fe1e948a749f754932b0"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-04\\75ad14a6171c4be3aa2ec266c365efbb.txt",
+      "suffix": ".txt",
+      "bytes": 3563,
+      "sha256": "c199d7001048f81055d2551ca8a4e83721375d66825e548f6560ec9e6c1d6cc9"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-04\\7fbe7528058146fbb8c2be9a89a03210.txt",
+      "suffix": ".txt",
+      "bytes": 9680,
+      "sha256": "39ad372ab9221a2b82203b241d6d28d3e312e90f23c77df474dbcd8fd240f0ee"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-04\\ccace5632b534ea6b7db7ba680086fa4.txt",
+      "suffix": ".txt",
+      "bytes": 15102,
+      "sha256": "989480b89ecdbcbd8f7efac7e64826dae5465388ab75d8da9b006fe4ad959542"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-04\\f0312cb9848f473fa08a191e7f6eab09.txt",
+      "suffix": ".txt",
+      "bytes": 7887,
+      "sha256": "2d3c1803044c3bf45487bedb4491db6d7746d8f1ac148e15d279637077ab1071"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-05\\e5f58041191d447196eb7c2006a94521.txt",
+      "suffix": ".txt",
+      "bytes": 502,
+      "sha256": "0ce03c4d6fecf89741f67a793d6c6793ef3142428e9d9cdfcf32df52cdc306b4"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-06\\38fe732d45b74055aa565faf1b0ceea4.txt",
+      "suffix": ".txt",
+      "bytes": 13159,
+      "sha256": "2907ace53073271f9965ecd8e37cb46b37e3f214f2b766202245a190efdc9275"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-06\\49c0c20e97a44652b693eb50ba9d6256.txt",
+      "suffix": ".txt",
+      "bytes": 6944,
+      "sha256": "8fe83fabec2410dbedda2db23aa896df5030cdacfb1a990e6f17b314d6f9a627"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-06\\7d9d94a69d7e4ad786ed1029e20f2922.txt",
+      "suffix": ".txt",
+      "bytes": 9348,
+      "sha256": "b7a69639f6885c3f15097d0ebcc23e68188ce14743b4142a08a680a56caf71eb"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-06\\e6bd63738c7e462380e2b5a245a629d5.txt",
+      "suffix": ".txt",
+      "bytes": 15634,
+      "sha256": "8c99d674c931b2547fc4cd2418fab4124042ac7df7386ce8c185b9ccdf6442d1"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-06\\e760cd6f30fb468da6bfc45b209123b5.txt",
+      "suffix": ".txt",
+      "bytes": 13035,
+      "sha256": "196e7ec9b7cae631c91ce505220737a0a7ba8f2e85eabbfa7e32c5c986ec6b24"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-07\\120f5181cda140f4b42a1453cbdc2c9a.txt",
+      "suffix": ".txt",
+      "bytes": 5629,
+      "sha256": "1df95dbdba4e09c91b57befba62782db78268ad6690e16e80ab7f123332f8e65"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-07\\206b90f25a6c4c06a6ba77b8e4d33286.txt",
+      "suffix": ".txt",
+      "bytes": 2157,
+      "sha256": "ce8832f38bffcf2e87e350f6bc294f6f37ef060ec9250ca6042be3e7fa4de7e3"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-10\\050b41728b8e4b9ab191cf65f288ae9e.txt",
+      "suffix": ".txt",
+      "bytes": 15294,
+      "sha256": "d2def6f7d30c7454f4fbade43e9af3cc03eb71657bd0677edce83b198cf5ea0f"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-10\\349ff429d3374fd2be45cfb869d859f0.txt",
+      "suffix": ".txt",
+      "bytes": 8146,
+      "sha256": "f8955578afd29e2fb172d06779423daf28785c176f3fdfe55f4bb35656faced8"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-10\\95a37f9f1c644947a86997c0a3c84fdf.txt",
+      "suffix": ".txt",
+      "bytes": 13549,
+      "sha256": "8b94224143ee37e905b52ac6976b8915f6cb82da2bca7c89a92a5147d71ed96e"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-10\\b18d25ecb5c944749122c38b4f9bf73a.txt",
+      "suffix": ".txt",
+      "bytes": 17310,
+      "sha256": "faff22b0b4ccac0d6a865e4ed50997e2bf54e0cc082e49979816e29f1079a1f7"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-25\\197d6dc690ff4e71b62fd6c8c39af1a3.txt",
+      "suffix": ".txt",
+      "bytes": 14690,
+      "sha256": "67fdb2107ef9f7218f735195067772e3d026bc547b38929650b623c93ff3fd44"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-25\\8be84fd590f84efeb921077ff773b097.txt",
+      "suffix": ".txt",
+      "bytes": 14657,
+      "sha256": "843a299a9f2ed1c21c0d441d7ceb81d20ae59c36fc46300548695ec76ce1d960"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-25\\cb3c3d00dc1c437ea3861a1909255a83.txt",
+      "suffix": ".txt",
+      "bytes": 6368,
+      "sha256": "f7ca5fde0299916112dfcab6d7b56cf9a8f27b4e488f8a78dc6516ae949efc93"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-27\\20dfd07ef59246f4aa5defdd8cd9cc25.txt",
+      "suffix": ".txt",
+      "bytes": 15152,
+      "sha256": "32d2655e726674441a55fd65baa43c5a1d5c50e0ba9073931b20bebf9097f3f2"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-27\\3b8e6d3e74e4492f851e2cc3cae2b8ed.txt",
+      "suffix": ".txt",
+      "bytes": 13982,
+      "sha256": "da5ad974425f3f5a31b5664d29be1245de4f5e905b354d0f9703ef1f780026e4"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-27\\53efc82cc1e14e40bcb13825539842da.txt",
+      "suffix": ".txt",
+      "bytes": 6642,
+      "sha256": "efde1e6decccecb66d454456b5500fabce1f9dee06bce0f046eb4c0207f644de"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-31\\36413500cd3b480d885896e23ec8c631.txt",
+      "suffix": ".txt",
+      "bytes": 9377,
+      "sha256": "c1de054c97a126067f5b66e02646253194d00d11ecf76d801a822d3a568ba826"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_raw\\2026-08-31\\6573471eaf2e4004b63db82a811cdfc6.txt",
+      "suffix": ".txt",
+      "bytes": 13605,
+      "sha256": "cd162871b6d90030dd50b28fa69afbe06cca14846d2a96bbbce50f432b182d00"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-03\\7e4f2df12b304f0bbb405283e5b57507.json",
+      "suffix": ".json",
+      "bytes": 4206,
+      "sha256": "75977195f771e43b3647ed65fdc68f1ead518736aff94bbf8e5f5de56ecdcc7e"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-03\\ace61da9eae14ff8b40fc9ab5dfeec39.json",
+      "suffix": ".json",
+      "bytes": 5558,
+      "sha256": "422a3678f44302a22fd6bb88738d04dd952f2c2f39e4f40fe27c0e02f5244f33"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-03\\b1a2a2f4843f4e6091ad967a395861fb.json",
+      "suffix": ".json",
+      "bytes": 13264,
+      "sha256": "2f4c2328bb44d7e898110a4789b716a4c2784fafe9e1674573719a3940963319"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-03\\bcb3789224b6448cab4c88a8cc6594e0.json",
+      "suffix": ".json",
+      "bytes": 16240,
+      "sha256": "d208cf6ef9e7676ccac310825180fcdb773d6261a7036c1e571e08132780ddec"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-04\\2a9aaa29ab92468ebe0f85c942a992c6.json",
+      "suffix": ".json",
+      "bytes": 6961,
+      "sha256": "0c1d8b2161b07e3cbbb3ec2938a656d39dc021820f706aaee822280584d19369"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-04\\75ad14a6171c4be3aa2ec266c365efbb.json",
+      "suffix": ".json",
+      "bytes": 4206,
+      "sha256": "d0dd26bc660223dd04103f94e310b3404762ac498cb66478bdca2f2ea477ca96"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-04\\7fbe7528058146fbb8c2be9a89a03210.json",
+      "suffix": ".json",
+      "bytes": 11392,
+      "sha256": "c548b1488e4ff4af8decc49769f641ecca31fee11a95d89da401675a5a549679"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-04\\ccace5632b534ea6b7db7ba680086fa4.json",
+      "suffix": ".json",
+      "bytes": 16887,
+      "sha256": "d79f0c3703ae6e168a4f80825cde576075739bdb3af12601fb93d3c59f520a87"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-04\\f0312cb9848f473fa08a191e7f6eab09.json",
+      "suffix": ".json",
+      "bytes": 9247,
+      "sha256": "3349a9597dbd9508c818b41bbeceea1e24d015c917e3a73b90da1e55168db96d"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-05\\e5f58041191d447196eb7c2006a94521.json",
+      "suffix": ".json",
+      "bytes": 1131,
+      "sha256": "7b0a62ab352fc79ec2e5c780611924b8900fc754df2b6afd92624d8ee8df4f6c"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-06\\38fe732d45b74055aa565faf1b0ceea4.json",
+      "suffix": ".json",
+      "bytes": 14802,
+      "sha256": "3f9ef1c191b1cc30d702a1c1e6a04e8b48aed9b3292717918e810ff015f6dd17"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-06\\49c0c20e97a44652b693eb50ba9d6256.json",
+      "suffix": ".json",
+      "bytes": 7720,
+      "sha256": "3cd9ef0c68bb500f9a14e4b8f37077f5698ded702f23e727ba9378cb34dec3be"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-06\\7d9d94a69d7e4ad786ed1029e20f2922.json",
+      "suffix": ".json",
+      "bytes": 10139,
+      "sha256": "8acbf1130447e724b9cf0f2b10c15baa7c7239fcf94cd423a52cf95da0ca5e70"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-06\\e6bd63738c7e462380e2b5a245a629d5.json",
+      "suffix": ".json",
+      "bytes": 16916,
+      "sha256": "42264c6bb4a193d2531198ded8c39102702a01e546cc580c2cb2b5707f94fd4b"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-06\\e760cd6f30fb468da6bfc45b209123b5.json",
+      "suffix": ".json",
+      "bytes": 14503,
+      "sha256": "14d932898cef1679445d420d9772bb72266177447e7b4d96416d277e701e5c7c"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-07\\120f5181cda140f4b42a1453cbdc2c9a.json",
+      "suffix": ".json",
+      "bytes": 6391,
+      "sha256": "afa7af3bbaecc5c27b5a47cde2bd8afda3309efba5b8b39143c2ea94c10a0e25"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-07\\206b90f25a6c4c06a6ba77b8e4d33286.json",
+      "suffix": ".json",
+      "bytes": 2918,
+      "sha256": "63be34fbe1b4be1072b05d18d42c4f7bb32da021b3267310ac4055f8dfde4af1"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-10\\050b41728b8e4b9ab191cf65f288ae9e.json",
+      "suffix": ".json",
+      "bytes": 17052,
+      "sha256": "61d4e87cdfa5e3b694bdf761a6e21eefc39331abd3fe4e0d8be5c2bb916626ad"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-10\\349ff429d3374fd2be45cfb869d859f0.json",
+      "suffix": ".json",
+      "bytes": 10553,
+      "sha256": "6cad14f37944f7f30bc4d9f8ddf55203c97dbc0f2c9652bb4a98cd83961682e3"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-10\\95a37f9f1c644947a86997c0a3c84fdf.json",
+      "suffix": ".json",
+      "bytes": 14970,
+      "sha256": "f740c125ceba7ae163789157dd9c604723a4c00f4a82d9e213082d0f1ace9379"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-10\\b18d25ecb5c944749122c38b4f9bf73a.json",
+      "suffix": ".json",
+      "bytes": 20328,
+      "sha256": "cf2df1cbee44157903b3f25d42784847faa82322d030dd6d4cbfa728704c74ae"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-25\\197d6dc690ff4e71b62fd6c8c39af1a3.json",
+      "suffix": ".json",
+      "bytes": 17271,
+      "sha256": "6fa39441e8f7d6464525c07c90afdb971c2290cb0d262bd6143e02f55fadbfd3"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-25\\8be84fd590f84efeb921077ff773b097.json",
+      "suffix": ".json",
+      "bytes": 16952,
+      "sha256": "33238ee5d3ad36822b231adf0455a6c25d5f3da5f1a3f599a608e7f551ee3330"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-25\\cb3c3d00dc1c437ea3861a1909255a83.json",
+      "suffix": ".json",
+      "bytes": 7521,
+      "sha256": "7c6ca5750c6c5a1bbad510028da3aca401f45b96c649ed67498a727f303d6af1"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-27\\20dfd07ef59246f4aa5defdd8cd9cc25.json",
+      "suffix": ".json",
+      "bytes": 17573,
+      "sha256": "fd2e3ae4ecab172f6e58df81f0f3c95b8190c812e32bf54594a4204c59e0e429"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-27\\3b8e6d3e74e4492f851e2cc3cae2b8ed.json",
+      "suffix": ".json",
+      "bytes": 16320,
+      "sha256": "6f7844f6ff6a5b23be5fddea2b800febacb6d36eba4a1661c58b61735c906bd0"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-27\\53efc82cc1e14e40bcb13825539842da.json",
+      "suffix": ".json",
+      "bytes": 7928,
+      "sha256": "1d889d0fae16c9a5b55c54789d09cc11448fb59e758705e997bf59327100cd45"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-31\\36413500cd3b480d885896e23ec8c631.json",
+      "suffix": ".json",
+      "bytes": 10934,
+      "sha256": "4724d38abcce2c158b1e3fad5dcdadef8dd046092219f204c237f8bcc73ae18d"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-31\\6573471eaf2e4004b63db82a811cdfc6.json",
+      "suffix": ".json",
+      "bytes": 15840,
+      "sha256": "0bc1329457503505537446374fb3cad31f1fd0cc63e7255551f1041f627b9374"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_ai_evaluations\\2026-08-04\\2f8d23b8b63a4afdb7388006ce39e526.json",
+      "suffix": ".json",
+      "bytes": 3100,
+      "sha256": "78735d1c1a5563c411436857a6b72286f72914ebd91925bc6d764a37fcabf9d2"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_ai_evaluations\\2026-08-05\\af134b157cda4c439beeaf0d1a72cb13.json",
+      "suffix": ".json",
+      "bytes": 1707,
+      "sha256": "c5d375751b0c2fb25210b220f427c9d91c3a36b9dc4b07330eb9ca9aef41ecf9"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_ai_evaluations\\2026-08-10\\5ec1de618aea428ba1c3f9918e5f8785.json",
+      "suffix": ".json",
+      "bytes": 4586,
+      "sha256": "f3ff5a6c83391ec8b36e33343b60630a0d96b0e81ed7dfd9defa7d6711201860"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_ai_evaluations\\2026-08-10\\b19230c02f684313b63f4c85822656c2.json",
+      "suffix": ".json",
+      "bytes": 3724,
+      "sha256": "dc8fa948061087bcc67c06de56a42cd4e32e066eea95bd1bb6e1bd2ba88e4583"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_ai_evaluations\\2026-08-10\\ca009817f9674f43ad6bdeea1755cf8f.json",
+      "suffix": ".json",
+      "bytes": 3754,
+      "sha256": "df4ea46657c3375613929da50499afba084556526be89a8694693a433d6a71ae"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_ai_evaluations\\2026-08-27\\6ad83ce5eb3442218df0b359be060f23.json",
+      "suffix": ".json",
+      "bytes": 3147,
+      "sha256": "31e3881286f46a8e80cd6292d3a7e82a7e74f2fa1f304fcf80dde1836c2c4068"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_ai_evaluations\\2026-08-31\\900df28b4ca6424f92fc0f5657bd23f5.json",
+      "suffix": ".json",
+      "bytes": 3190,
+      "sha256": "9b7c07dbf8bed413cf3083ceab9c7709760c819f435d29dd55256c65e2c941c0"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.pdf",
+      "suffix": ".pdf",
+      "bytes": 2138243,
+      "sha256": "48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.txt",
+      "suffix": ".txt",
+      "bytes": 407874,
+      "sha256": "174c0f71131b7a0bdb1aa076070d46d5d7eda0084c03fd3d03c1fe3ee2f3feac"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.xls",
+      "suffix": ".xls",
+      "bytes": 2138243,
+      "sha256": "48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-27.csv",
+      "suffix": ".csv",
+      "bytes": 30661,
+      "sha256": "13fc409db8a875d3c68ba9d2f408b331b2bb397fec5c8d2bd9477d352d7bb379"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\ranking_memory\\rank_observations.jsonl",
+      "suffix": ".jsonl",
+      "bytes": 5652287,
+      "sha256": "f72b2da9bbd3664e5ac42f6a3738182de98d98595b1b93683ddec77a1b0e7457"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\07\\2026-07-31.csv",
+      "suffix": ".csv",
+      "bytes": 30316,
+      "sha256": "c8d838d60038126c73838176785fba4a57b9bfa9a921f55c881c1fe1075386c2"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-03.csv",
+      "suffix": ".csv",
+      "bytes": 30352,
+      "sha256": "c9af14440da8c344d4ae81efe0f128bb5c1f6106ae42e719e7ec895c9e7f0d04"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-04.csv",
+      "suffix": ".csv",
+      "bytes": 30449,
+      "sha256": "0985f81effdc34ead9cf07333b980d5939b301bff7280e0ca38fbcfde4742085"
+    }
+  ],
+  "selected_source": {
+    "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\AKBNK_2026Q2_OFFICIAL_EVIDENCE_BUNDLE.json",
+    "symbol": "AKBNK",
+    "sector_model": "BANK",
+    "has_as_of": true,
+    "has_publication_date": true,
+    "has_canonical_facts": true,
+    "record_keys": [
+      "as_of",
+      "bundle_version",
+      "canonical_facts",
+      "guidance_rejections",
+      "industrial_threshold_reuse",
+      "metric_provenance",
+      "missing_to_zero",
+      "period_end",
+      "publication_date",
+      "sector_model",
+      "sources",
+      "symbol"
+    ]
+  },
+  "production_evidence": true,
+  "activation_ready": false,
+  "blockers": [],
+  "mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

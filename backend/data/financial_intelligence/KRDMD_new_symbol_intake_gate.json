@@ -1,0 +1,26 @@
+{
+  "schema_version": "financial-intelligence-v1.1-new-symbol-intake-gate-v1",
+  "status": "READY_FOR_CANONICAL_ACCEPTANCE_IMPORT",
+  "mode": "READ_ONLY_INTAKE_GATE",
+  "symbol": "KRDMD",
+  "sector_model": "INDUSTRIAL",
+  "period": "2026_2",
+  "source_file": "C:\\Users\\user\\AppData\\Local\\Temp\\pytest-of-user\\pytest-421\\test_intake_gate_allows_real_i0\\KRDMD_2026_2.xls",
+  "source_exists": true,
+  "source_extension": ".xls",
+  "dedicated_model_ready": true,
+  "existing_acceptance_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_KRDMD_2026_2.json",
+  "existing_acceptance_found": false,
+  "blockers": [],
+  "next_stage": "FIN001_CANONICAL_ACCEPTANCE_IMPORT",
+  "rules": [
+    "REAL_SOURCE_FILE_REQUIRED",
+    "EXPLICIT_SYMBOL_REQUIRED",
+    "EXPLICIT_PERIOD_REQUIRED",
+    "EXPLICIT_SECTOR_MODEL_REQUIRED",
+    "NON_INDUSTRIAL_MUST_NOT_USE_INDUSTRIAL_THRESHOLDS",
+    "NO_SYNTHETIC_ACCEPTANCE",
+    "NO_NEW_SCORE",
+    "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION"
+  ]
+}

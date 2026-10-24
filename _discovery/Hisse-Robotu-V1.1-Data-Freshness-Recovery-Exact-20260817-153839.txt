@@ -1,0 +1,1512 @@
+﻿2026-08-17 — HISSE ROBOTU V1.1 — DATA FRESHNESS / RECOVERY EXACT DISCOVERY
+MODE=READ_ONLY
+PRODUCTION_MUTATION=YOK
+HEURISTIC_GAP_DECISION=DISABLED
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+
+====================================================================================================
+1. DATA FRESHNESS CONTRACT
+====================================================================================================
+PATTERN=class DataFreshnessPolicy COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:19 class DataFreshnessPolicy:
+PATTERN=class DataFreshnessResult COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:36 class DataFreshnessResult:
+PATTERN=class BatchDataFreshnessResult COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:52 class BatchDataFreshnessResult:
+PATTERN=def gunluk_veri_tazeligini_degerlendir COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:111 def gunluk_veri_tazeligini_degerlendir(
+PATTERN=def toplu_veri_tazeligini_degerlendir COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:234 def toplu_veri_tazeligini_degerlendir(
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:99-181 ---
+    99 | INDENT= 8 |         return bugun_esigi
+   100 | INDENT= 0 | 
+   101 | INDENT= 4 |     aday = bugun + timedelta(days=1)
+   102 | INDENT= 4 |     while not _is_gunu_mu(aday, politika):
+   103 | INDENT= 8 |         aday += timedelta(days=1)
+   104 | INDENT= 4 |     return datetime.combine(
+   105 | INDENT= 8 |         aday,
+   106 | INDENT= 8 |         politika.seans_kapanisi,
+   107 | INDENT= 8 |         tzinfo=politika.zaman_bolgesi,
+   108 | INDENT= 4 |     ) + timedelta(minutes=politika.saglayici_bekleme_dakikasi)
+   109 | INDENT= 0 | 
+   110 | INDENT= 0 | 
+   111 | INDENT= 0 | def gunluk_veri_tazeligini_degerlendir(
+   112 | INDENT= 4 |     veri: pd.DataFrame,
+   113 | INDENT= 4 |     *,
+   114 | INDENT= 4 |     simdi: datetime | None = None,
+   115 | INDENT= 4 |     politika: DataFreshnessPolicy = DataFreshnessPolicy(),
+   116 | INDENT= 0 | ) -> DataFreshnessResult:
+   117 | INDENT= 4 |     an = _yerel_zaman(simdi, politika)
+   118 | INDENT= 4 |     bugun = an.date()
+   119 | INDENT= 4 |     beklenen = beklenen_son_tamamlanmis_islem_gunu(an, politika)
+   120 | INDENT= 0 | 
+   121 | INDENT= 4 |     if veri is None or veri.empty:
+   122 | INDENT= 8 |         return DataFreshnessResult(
+   123 | INDENT=12 |             durum=VERI_YOK,
+   124 | INDENT=12 |             son_veri_tarihi=None,
+   125 | INDENT=12 |             beklenen_tarih=beklenen,
+   126 | INDENT=12 |             is_gunu_gecikmesi=0,
+   127 | INDENT=12 |             kilitli=True,
+   128 | INDENT=12 |             aciklama="GГјnlГјk fiyat verisi bulunamadД±; analiz gГјvenlik nedeniyle durduruldu.",
+   129 | INDENT=12 |             kilit_asamasi="gГјnlГјk veri indirme",
+   130 | INDENT=12 |             sonraki_kontrol_zamani=sonraki_tazelik_kontrol_zamani(
+   131 | INDENT=16 |                 simdi=an,
+   132 | INDENT=16 |                 politika=politika,
+   133 | INDENT=12 |             ),
+   134 | INDENT= 8 |         )
+   135 | INDENT= 0 | 
+   136 | INDENT= 4 |     son = pd.Timestamp(veri.index[-1]).date()
+   137 | INDENT= 0 | 
+   138 | INDENT= 4 |     # Seans iГ§inde saДџlayД±cД± bugГјne ait kД±smi gГјnlГјk bar yayД±mlayabilir.
+   139 | INDENT= 4 |     # Bu bar beklenen son TAMAMLANMIЕћ iЕџlem gГјnГјnden daha yeni olsa da
+   140 | INDENT= 4 |     # artД±k veri akД±ЕџД±nda bilinГ§li olarak kullanД±lД±r; "gelecek tarihli"
+   141 | INDENT= 4 |     # sayД±lД±p kilitlenmez. KapanД±Еџ eЕџiДџinden sonra beklenen tarih zaten
+   142 | INDENT= 4 |     # bugГјne dГ¶neceДџi iГ§in aynД± bar normal GГњNCEL statГјsГјne geГ§er.
+   143 | INDENT= 4 |     if son > beklenen:
+   144 | INDENT= 8 |         kapanis_esigi = datetime.combine(
+   145 | INDENT=12 |             bugun,
+   146 | INDENT=12 |             politika.seans_kapanisi,
+   147 | INDENT=12 |             tzinfo=politika.zaman_bolgesi,
+   148 | INDENT= 8 |         ) + timedelta(minutes=politika.saglayici_bekleme_dakikasi)
+   149 | INDENT= 0 | 
+   150 | INDENT= 8 |         if (
+   151 | INDENT=12 |             son == bugun
+   152 | INDENT=12 |             and _is_gunu_mu(bugun, politika)
+   153 | INDENT=12 |             and an < kapanis_esigi
+   154 | INDENT= 8 |         ):
+   155 | INDENT=12 |             return DataFreshnessResult(
+   156 | INDENT=16 |                 durum=BEKLEMEDE,
+   157 | INDENT=16 |                 son_veri_tarihi=son,
+   158 | INDENT=16 |                 beklenen_tarih=beklenen,
+   159 | INDENT=16 |                 is_gunu_gecikmesi=0,
+   160 | INDENT=16 |                 kilitli=False,
+   161 | INDENT=16 |                 aciklama=(
+   162 | INDENT=20 |                     f"Son gГјnlГјk bar {son} gГјn iГ§i/kД±smi veridir ve analize "
+   163 | INDENT=20 |                     f"yansД±tД±lmaktadД±r. Son tamamlanmД±Еџ iЕџlem gГјnГј beklentisi "
+   164 | INDENT=20 |                     f"{beklenen}; kapanД±Еџ verisi bekleniyor."
+   165 | INDENT=16 |                 ),
+   166 | INDENT=16 |                 kilit_asamasi="gГјn iГ§i veri doДџrulandД±",
+   167 | INDENT=16 |                 sonraki_kontrol_zamani=sonraki_tazelik_kontrol_zamani(
+   168 | INDENT=20 |                     simdi=an,
+   169 | INDENT=20 |                     politika=politika,
+   170 | INDENT=16 |                 ),
+   171 | INDENT=12 |             )
+   172 | INDENT= 0 | 
+   173 | INDENT= 8 |         return DataFreshnessResult(
+   174 | INDENT=12 |             durum=GELECEK,
+   175 | INDENT=12 |             son_veri_tarihi=son,
+   176 | INDENT=12 |             beklenen_tarih=beklenen,
+   177 | INDENT=12 |             is_gunu_gecikmesi=0,
+   178 | INDENT=12 |             kilitli=True,
+   179 | INDENT=12 |             aciklama=(
+   180 | INDENT=16 |                 f"Son gГјnlГјk bar {son}; beklenen tamamlanmД±Еџ iЕџlem gГјnГј {beklenen}. "
+   181 | INDENT=16 |                 "BugГјnГјn gГјn iГ§i barД± dД±ЕџД±nda gelecekte tarihli/uyumsuz veri "
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:222-304 ---
+   222 | INDENT= 4 |     return DataFreshnessResult(
+   223 | INDENT= 8 |         durum=durum,
+   224 | INDENT= 8 |         son_veri_tarihi=son,
+   225 | INDENT= 8 |         beklenen_tarih=beklenen,
+   226 | INDENT= 8 |         is_gunu_gecikmesi=0,
+   227 | INDENT= 8 |         kilitli=False,
+   228 | INDENT= 8 |         aciklama=aciklama,
+   229 | INDENT= 8 |         kilit_asamasi="doДџrulandД±",
+   230 | INDENT= 8 |         sonraki_kontrol_zamani=None,
+   231 | INDENT= 4 |     )
+   232 | INDENT= 0 | 
+   233 | INDENT= 0 | 
+   234 | INDENT= 0 | def toplu_veri_tazeligini_degerlendir(
+   235 | INDENT= 4 |     veriler: Mapping[str, pd.DataFrame],
+   236 | INDENT= 4 |     *,
+   237 | INDENT= 4 |     simdi: datetime | None = None,
+   238 | INDENT= 4 |     politika: DataFreshnessPolicy = DataFreshnessPolicy(),
+   239 | INDENT= 0 | ) -> BatchDataFreshnessResult:
+   240 | INDENT= 4 |     beklenen = beklenen_son_tamamlanmis_islem_gunu(simdi, politika)
+   241 | INDENT= 4 |     tarihler: list[date] = []
+   242 | INDENT= 4 |     guncel = 0
+   243 | INDENT= 4 |     eski = 0
+   244 | INDENT= 4 |     veri_yok = 0
+   245 | INDENT= 4 |     kapanis_bekleyen = 0
+   246 | INDENT= 4 |     gunici_bar_kullanilan = 0
+   247 | INDENT= 0 | 
+   248 | INDENT= 4 |     for veri in veriler.values():
+   249 | INDENT= 8 |         sonuc = gunluk_veri_tazeligini_degerlendir(
+   250 | INDENT=12 |             veri,
+   251 | INDENT=12 |             simdi=simdi,
+   252 | INDENT=12 |             politika=politika,
+   253 | INDENT= 8 |         )
+   254 | INDENT= 8 |         if sonuc.son_veri_tarihi is not None:
+   255 | INDENT=12 |             tarihler.append(sonuc.son_veri_tarihi)
+   256 | INDENT= 8 |         if sonuc.durum == VERI_YOK:
+   257 | INDENT=12 |             veri_yok += 1
+   258 | INDENT= 8 |         elif sonuc.kilitli:
+   259 | INDENT=12 |             eski += 1
+   260 | INDENT= 8 |         else:
+   261 | INDENT=12 |             guncel += 1
+   262 | INDENT=12 |             if sonuc.durum == BEKLEMEDE:
+   263 | INDENT=16 |                 kapanis_bekleyen += 1
+   264 | INDENT=16 |                 if (
+   265 | INDENT=20 |                     sonuc.son_veri_tarihi is not None
+   266 | INDENT=20 |                     and sonuc.beklenen_tarih is not None
+   267 | INDENT=20 |                     and sonuc.son_veri_tarihi > sonuc.beklenen_tarih
+   268 | INDENT=16 |                 ):
+   269 | INDENT=20 |                     gunici_bar_kullanilan += 1
+   270 | INDENT= 0 | 
+   271 | INDENT= 4 |     toplam = len(veriler)
+   272 | INDENT= 4 |     kullanilabilir = guncel
+   273 | INDENT= 4 |     kilitli = toplam == 0 or kullanilabilir == 0
+   274 | INDENT= 0 | 
+   275 | INDENT= 4 |     if toplam == 0:
+   276 | INDENT= 8 |         durum = VERI_YOK
+   277 | INDENT= 8 |         aciklama = "Toplu taramada doДџrulanabilir gГјnlГјk veri yok."
+   278 | INDENT= 4 |     elif kilitli:
+   279 | INDENT= 8 |         durum = ESKI
+   280 | INDENT= 8 |         aciklama = (
+   281 | INDENT=12 |             f"{toplam} sembolГјn tamamД± eski/uyumsuz veya boЕџ. "
+   282 | INDENT=12 |             "Tarama gГјvenlik nedeniyle durdurulmalД±dД±r."
+   283 | INDENT= 8 |         )
+   284 | INDENT= 4 |     elif eski > 0 or veri_yok > 0:
+   285 | INDENT= 8 |         durum = GUNCEL
+   286 | INDENT= 8 |         aciklama = (
+   287 | INDENT=12 |             f"{toplam} sembolГјn {guncel} tanesi kullanД±labilir. "
+   288 | INDENT=12 |             f"{eski} eski/uyumsuz ve {veri_yok} boЕџ sembol analiz dД±ЕџД± bД±rakД±lmalД±dД±r."
+   289 | INDENT= 8 |         )
+   290 | INDENT= 4 |     elif kapanis_bekleyen > 0:
+   291 | INDENT= 8 |         durum = BEKLEMEDE
+   292 | INDENT= 8 |         if gunici_bar_kullanilan > 0:
+   293 | INDENT=12 |             aciklama = (
+   294 | INDENT=16 |                 f"{toplam} sembolГјn tamamД± kullanД±labilir. "
+   295 | INDENT=16 |                 f"{gunici_bar_kullanilan} sembolde bugГјnkГј gГјn iГ§i/kД±smi bar "
+   296 | INDENT=16 |                 "analize yansД±tД±lД±yor; tamamlanmД±Еџ kapanД±Еџ verisi henГјz bekleniyor."
+   297 | INDENT=12 |             )
+   298 | INDENT= 8 |         else:
+   299 | INDENT=12 |             aciklama = (
+   300 | INDENT=16 |                 f"{toplam} sembolГјn tamamД± gГјncel ve kullanД±labilir. "
+   301 | INDENT=16 |                 f"Son tamamlanmД±Еџ iЕџlem gГјnГј {beklenen}; bugГјnkГј seans sГјrГјyor. "
+   302 | INDENT=16 |                 "BugГјnkГј gГјn iГ§i/kД±smi bar teknik analize dahil edilmiyor."
+   303 | INDENT=12 |             )
+   304 | INDENT= 4 |     else:
+
+
+====================================================================================================
+2. EXISTING DATA SOURCE RECOVERY CONTRACT
+====================================================================================================
+PATTERN=class DataSourceRecoveryError COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:20 class DataSourceRecoveryError(Exception):
+PATTERN=def  COUNT=5
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:36 def _cache_paths(cache_root: Path, symbol: str) -> tuple[Path, Path]:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:41 def cache_write(cache_root: Path, symbol: str, frame: pd.DataFrame) -> None:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:58 def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:76 def alpha_vantage_daily_loader(symbol: str) -> pd.DataFrame:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:114 def recover_daily_market_data(
+PATTERN=freshness COUNT=13
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:16 from .data_freshness import gunluk_veri_tazeligini_degerlendir
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:33 FreshnessEvaluator = Callable[[pd.DataFrame], object]
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:70 freshness = gunluk_veri_tazeligini_degerlendir(frame)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:71 if freshness.kilitli:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:72 raise DataSourceRecoveryError("Yerel önbellek güncel değil: " + freshness.aciklama)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:120 freshness_evaluator: FreshnessEvaluator | None = None,
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:123 evaluator = freshness_evaluator or gunluk_veri_tazeligini_degerlendir
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:130 freshness = evaluator(frame)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:131 if freshness.kilitli:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:132 raise DataSourceRecoveryError(freshness.aciklama)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:141 freshness = evaluator(frame)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:142 if freshness.kilitli:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:143 raise DataSourceRecoveryError(freshness.aciklama)
+PATTERN=fallback COUNT=0
+PATTERN=cache COUNT=12
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:36 def _cache_paths(cache_root: Path, symbol: str) -> tuple[Path, Path]:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:38 return cache_root / f"{safe}.csv", cache_root / f"{safe}.json"
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:41 def cache_write(cache_root: Path, symbol: str, frame: pd.DataFrame) -> None:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:42 cache_root.mkdir(parents=True, exist_ok=True)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:43 csv_path, meta_path = _cache_paths(cache_root, symbol)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:58 def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:59 csv_path, meta_path = _cache_paths(cache_root, symbol)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:119 cache_root: Path | None = None,
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:122 cache_root = cache_root or Path("backend/cache/market_data")
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:133 cache_write(cache_root, symbol, frame)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:144 cache_write(cache_root, symbol, frame)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:151 frame = cache_read(cache_root, symbol)
+PATTERN=raise DataSourceRecoveryError COUNT=11
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:61 raise DataSourceRecoveryError("Yerel önbellek kaydı bulunamadı.")
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:65 raise DataSourceRecoveryError("Yerel önbellek bütünlük doğrulamasını geçemedi.")
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:69 raise DataSourceRecoveryError("Yerel önbellek satır sayısı doğrulanamadı.")
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:72 raise DataSourceRecoveryError("Yerel önbellek güncel değil: " + freshness.aciklama)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:79 raise DataSourceRecoveryError("Alpha Vantage API anahtarı tanımlı değil.")
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:84 raise DataSourceRecoveryError("Alpha Vantage sembol eşleme JSON'u geçersiz.") from exc
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:97 raise DataSourceRecoveryError(f"Alpha Vantage bağlantı hatası: {exc}") from exc
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:102 raise DataSourceRecoveryError("Alpha Vantage beklenen OHLCV yanıtını üretmedi: " + message)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:132 raise DataSourceRecoveryError(freshness.aciklama)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:143 raise DataSourceRecoveryError(freshness.aciklama)
+MATCH=D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:156 raise DataSourceRecoveryError("Tüm veri kaynakları başarısız. " + " | ".join(failures))
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:4-58 ---
+     4 | INDENT= 0 | import io
+     5 | INDENT= 0 | import json
+     6 | INDENT= 0 | import os
+     7 | INDENT= 0 | from dataclasses import dataclass
+     8 | INDENT= 0 | from datetime import datetime, timezone
+     9 | INDENT= 0 | from pathlib import Path
+    10 | INDENT= 0 | from typing import Callable
+    11 | INDENT= 0 | from urllib.parse import urlencode
+    12 | INDENT= 0 | from urllib.request import urlopen
+    13 | INDENT= 0 | 
+    14 | INDENT= 0 | import pandas as pd
+    15 | INDENT= 0 | 
+    16 | INDENT= 0 | from .data_freshness import gunluk_veri_tazeligini_degerlendir
+    17 | INDENT= 0 | from .market_data import fiyat_verisini_duzelt
+    18 | INDENT= 0 | 
+    19 | INDENT= 0 | 
+    20 | INDENT= 0 | class DataSourceRecoveryError(Exception):
+    21 | INDENT= 4 |     """Birincil, ikincil ve Г¶nbellek kaynaklarД±nД±n tamamД± baЕџarД±sД±z olduДџunda kullanД±lД±r."""
+    22 | INDENT= 0 | 
+    23 | INDENT= 0 | 
+    24 | INDENT= 0 | @dataclass(frozen=True)
+    25 | INDENT= 0 | class RecoveredMarketData:
+    26 | INDENT= 4 |     veri: pd.DataFrame
+    27 | INDENT= 4 |     kaynak: str
+    28 | INDENT= 4 |     kaynak_sirasi: tuple[str, ...]
+    29 | INDENT= 4 |     kaynak_hatalari: tuple[str, ...]
+    30 | INDENT= 0 | 
+    31 | INDENT= 0 | 
+    32 | INDENT= 0 | SecondaryLoader = Callable[[str], pd.DataFrame]
+    33 | INDENT= 0 | FreshnessEvaluator = Callable[[pd.DataFrame], object]
+    34 | INDENT= 0 | 
+    35 | INDENT= 0 | 
+    36 | INDENT= 0 | def _cache_paths(cache_root: Path, symbol: str) -> tuple[Path, Path]:
+    37 | INDENT= 4 |     safe = symbol.replace("^", "_").replace(".", "_").replace("/", "_")
+    38 | INDENT= 4 |     return cache_root / f"{safe}.csv", cache_root / f"{safe}.json"
+    39 | INDENT= 0 | 
+    40 | INDENT= 0 | 
+    41 | INDENT= 0 | def cache_write(cache_root: Path, symbol: str, frame: pd.DataFrame) -> None:
+    42 | INDENT= 4 |     cache_root.mkdir(parents=True, exist_ok=True)
+    43 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    44 | INDENT= 4 |     normalized = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    45 | INDENT= 4 |     csv_text = normalized.to_csv(index=True, lineterminator="\n")
+    46 | INDENT= 4 |     csv_path.write_text(csv_text, encoding="utf-8")
+    47 | INDENT= 4 |     meta = {
+    48 | INDENT= 8 |         "symbol": symbol,
+    49 | INDENT= 8 |         "rows": len(normalized),
+    50 | INDENT= 8 |         "first_date": str(pd.Timestamp(normalized.index[0]).date()),
+    51 | INDENT= 8 |         "last_date": str(pd.Timestamp(normalized.index[-1]).date()),
+    52 | INDENT= 8 |         "sha256": hashlib.sha256(csv_text.encode("utf-8")).hexdigest(),
+    53 | INDENT= 8 |         "written_at": datetime.now(timezone.utc).isoformat(),
+    54 | INDENT= 4 |     }
+    55 | INDENT= 4 |     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    56 | INDENT= 0 | 
+    57 | INDENT= 0 | 
+    58 | INDENT= 0 | def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:8-62 ---
+     8 | INDENT= 0 | from datetime import datetime, timezone
+     9 | INDENT= 0 | from pathlib import Path
+    10 | INDENT= 0 | from typing import Callable
+    11 | INDENT= 0 | from urllib.parse import urlencode
+    12 | INDENT= 0 | from urllib.request import urlopen
+    13 | INDENT= 0 | 
+    14 | INDENT= 0 | import pandas as pd
+    15 | INDENT= 0 | 
+    16 | INDENT= 0 | from .data_freshness import gunluk_veri_tazeligini_degerlendir
+    17 | INDENT= 0 | from .market_data import fiyat_verisini_duzelt
+    18 | INDENT= 0 | 
+    19 | INDENT= 0 | 
+    20 | INDENT= 0 | class DataSourceRecoveryError(Exception):
+    21 | INDENT= 4 |     """Birincil, ikincil ve Г¶nbellek kaynaklarД±nД±n tamamД± baЕџarД±sД±z olduДџunda kullanД±lД±r."""
+    22 | INDENT= 0 | 
+    23 | INDENT= 0 | 
+    24 | INDENT= 0 | @dataclass(frozen=True)
+    25 | INDENT= 0 | class RecoveredMarketData:
+    26 | INDENT= 4 |     veri: pd.DataFrame
+    27 | INDENT= 4 |     kaynak: str
+    28 | INDENT= 4 |     kaynak_sirasi: tuple[str, ...]
+    29 | INDENT= 4 |     kaynak_hatalari: tuple[str, ...]
+    30 | INDENT= 0 | 
+    31 | INDENT= 0 | 
+    32 | INDENT= 0 | SecondaryLoader = Callable[[str], pd.DataFrame]
+    33 | INDENT= 0 | FreshnessEvaluator = Callable[[pd.DataFrame], object]
+    34 | INDENT= 0 | 
+    35 | INDENT= 0 | 
+    36 | INDENT= 0 | def _cache_paths(cache_root: Path, symbol: str) -> tuple[Path, Path]:
+    37 | INDENT= 4 |     safe = symbol.replace("^", "_").replace(".", "_").replace("/", "_")
+    38 | INDENT= 4 |     return cache_root / f"{safe}.csv", cache_root / f"{safe}.json"
+    39 | INDENT= 0 | 
+    40 | INDENT= 0 | 
+    41 | INDENT= 0 | def cache_write(cache_root: Path, symbol: str, frame: pd.DataFrame) -> None:
+    42 | INDENT= 4 |     cache_root.mkdir(parents=True, exist_ok=True)
+    43 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    44 | INDENT= 4 |     normalized = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    45 | INDENT= 4 |     csv_text = normalized.to_csv(index=True, lineterminator="\n")
+    46 | INDENT= 4 |     csv_path.write_text(csv_text, encoding="utf-8")
+    47 | INDENT= 4 |     meta = {
+    48 | INDENT= 8 |         "symbol": symbol,
+    49 | INDENT= 8 |         "rows": len(normalized),
+    50 | INDENT= 8 |         "first_date": str(pd.Timestamp(normalized.index[0]).date()),
+    51 | INDENT= 8 |         "last_date": str(pd.Timestamp(normalized.index[-1]).date()),
+    52 | INDENT= 8 |         "sha256": hashlib.sha256(csv_text.encode("utf-8")).hexdigest(),
+    53 | INDENT= 8 |         "written_at": datetime.now(timezone.utc).isoformat(),
+    54 | INDENT= 4 |     }
+    55 | INDENT= 4 |     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    56 | INDENT= 0 | 
+    57 | INDENT= 0 | 
+    58 | INDENT= 0 | def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+    59 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    60 | INDENT= 4 |     if not csv_path.exists() or not meta_path.exists():
+    61 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek kaydД± bulunamadД±.")
+    62 | INDENT= 4 |     csv_text = csv_path.read_text(encoding="utf-8")
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:21-75 ---
+    21 | INDENT= 4 |     """Birincil, ikincil ve Г¶nbellek kaynaklarД±nД±n tamamД± baЕџarД±sД±z olduДџunda kullanД±lД±r."""
+    22 | INDENT= 0 | 
+    23 | INDENT= 0 | 
+    24 | INDENT= 0 | @dataclass(frozen=True)
+    25 | INDENT= 0 | class RecoveredMarketData:
+    26 | INDENT= 4 |     veri: pd.DataFrame
+    27 | INDENT= 4 |     kaynak: str
+    28 | INDENT= 4 |     kaynak_sirasi: tuple[str, ...]
+    29 | INDENT= 4 |     kaynak_hatalari: tuple[str, ...]
+    30 | INDENT= 0 | 
+    31 | INDENT= 0 | 
+    32 | INDENT= 0 | SecondaryLoader = Callable[[str], pd.DataFrame]
+    33 | INDENT= 0 | FreshnessEvaluator = Callable[[pd.DataFrame], object]
+    34 | INDENT= 0 | 
+    35 | INDENT= 0 | 
+    36 | INDENT= 0 | def _cache_paths(cache_root: Path, symbol: str) -> tuple[Path, Path]:
+    37 | INDENT= 4 |     safe = symbol.replace("^", "_").replace(".", "_").replace("/", "_")
+    38 | INDENT= 4 |     return cache_root / f"{safe}.csv", cache_root / f"{safe}.json"
+    39 | INDENT= 0 | 
+    40 | INDENT= 0 | 
+    41 | INDENT= 0 | def cache_write(cache_root: Path, symbol: str, frame: pd.DataFrame) -> None:
+    42 | INDENT= 4 |     cache_root.mkdir(parents=True, exist_ok=True)
+    43 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    44 | INDENT= 4 |     normalized = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    45 | INDENT= 4 |     csv_text = normalized.to_csv(index=True, lineterminator="\n")
+    46 | INDENT= 4 |     csv_path.write_text(csv_text, encoding="utf-8")
+    47 | INDENT= 4 |     meta = {
+    48 | INDENT= 8 |         "symbol": symbol,
+    49 | INDENT= 8 |         "rows": len(normalized),
+    50 | INDENT= 8 |         "first_date": str(pd.Timestamp(normalized.index[0]).date()),
+    51 | INDENT= 8 |         "last_date": str(pd.Timestamp(normalized.index[-1]).date()),
+    52 | INDENT= 8 |         "sha256": hashlib.sha256(csv_text.encode("utf-8")).hexdigest(),
+    53 | INDENT= 8 |         "written_at": datetime.now(timezone.utc).isoformat(),
+    54 | INDENT= 4 |     }
+    55 | INDENT= 4 |     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    56 | INDENT= 0 | 
+    57 | INDENT= 0 | 
+    58 | INDENT= 0 | def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+    59 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    60 | INDENT= 4 |     if not csv_path.exists() or not meta_path.exists():
+    61 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek kaydД± bulunamadД±.")
+    62 | INDENT= 4 |     csv_text = csv_path.read_text(encoding="utf-8")
+    63 | INDENT= 4 |     meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    64 | INDENT= 4 |     if hashlib.sha256(csv_text.encode("utf-8")).hexdigest() != meta.get("sha256"):
+    65 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek bГјtГјnlГјk doДџrulamasД±nД± geГ§emedi.")
+    66 | INDENT= 4 |     frame = pd.read_csv(io.StringIO(csv_text), index_col=0, parse_dates=True)
+    67 | INDENT= 4 |     frame = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    68 | INDENT= 4 |     if len(frame) != int(meta.get("rows", -1)):
+    69 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek satД±r sayД±sД± doДџrulanamadД±.")
+    70 | INDENT= 4 |     freshness = gunluk_veri_tazeligini_degerlendir(frame)
+    71 | INDENT= 4 |     if freshness.kilitli:
+    72 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek gГјncel deДџil: " + freshness.aciklama)
+    73 | INDENT= 4 |     return frame
+    74 | INDENT= 0 | 
+    75 | INDENT= 0 | 
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:49-103 ---
+    49 | INDENT= 8 |         "rows": len(normalized),
+    50 | INDENT= 8 |         "first_date": str(pd.Timestamp(normalized.index[0]).date()),
+    51 | INDENT= 8 |         "last_date": str(pd.Timestamp(normalized.index[-1]).date()),
+    52 | INDENT= 8 |         "sha256": hashlib.sha256(csv_text.encode("utf-8")).hexdigest(),
+    53 | INDENT= 8 |         "written_at": datetime.now(timezone.utc).isoformat(),
+    54 | INDENT= 4 |     }
+    55 | INDENT= 4 |     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    56 | INDENT= 0 | 
+    57 | INDENT= 0 | 
+    58 | INDENT= 0 | def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+    59 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    60 | INDENT= 4 |     if not csv_path.exists() or not meta_path.exists():
+    61 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek kaydД± bulunamadД±.")
+    62 | INDENT= 4 |     csv_text = csv_path.read_text(encoding="utf-8")
+    63 | INDENT= 4 |     meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    64 | INDENT= 4 |     if hashlib.sha256(csv_text.encode("utf-8")).hexdigest() != meta.get("sha256"):
+    65 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek bГјtГјnlГјk doДџrulamasД±nД± geГ§emedi.")
+    66 | INDENT= 4 |     frame = pd.read_csv(io.StringIO(csv_text), index_col=0, parse_dates=True)
+    67 | INDENT= 4 |     frame = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    68 | INDENT= 4 |     if len(frame) != int(meta.get("rows", -1)):
+    69 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek satД±r sayД±sД± doДџrulanamadД±.")
+    70 | INDENT= 4 |     freshness = gunluk_veri_tazeligini_degerlendir(frame)
+    71 | INDENT= 4 |     if freshness.kilitli:
+    72 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek gГјncel deДџil: " + freshness.aciklama)
+    73 | INDENT= 4 |     return frame
+    74 | INDENT= 0 | 
+    75 | INDENT= 0 | 
+    76 | INDENT= 0 | def alpha_vantage_daily_loader(symbol: str) -> pd.DataFrame:
+    77 | INDENT= 4 |     api_key = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_API_KEY", "").strip()
+    78 | INDENT= 4 |     if not api_key:
+    79 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage API anahtarД± tanД±mlД± deДџil.")
+    80 | INDENT= 4 |     raw_map = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_SYMBOL_MAP", "{}")
+    81 | INDENT= 4 |     try:
+    82 | INDENT= 8 |         symbol_map = json.loads(raw_map)
+    83 | INDENT= 4 |     except json.JSONDecodeError as exc:
+    84 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage sembol eЕџleme JSON'u geГ§ersiz.") from exc
+    85 | INDENT= 4 |     provider_symbol = str(symbol_map.get(symbol, symbol))
+    86 | INDENT= 4 |     query = urlencode({
+    87 | INDENT= 8 |         "function": "TIME_SERIES_DAILY",
+    88 | INDENT= 8 |         "symbol": provider_symbol,
+    89 | INDENT= 8 |         "outputsize": "full",
+    90 | INDENT= 8 |         "datatype": "csv",
+    91 | INDENT= 8 |         "apikey": api_key,
+    92 | INDENT= 4 |     })
+    93 | INDENT= 4 |     try:
+    94 | INDENT= 8 |         with urlopen("https://www.alphavantage.co/query?" + query, timeout=30) as response:
+    95 | INDENT=12 |             payload = response.read()
+    96 | INDENT= 4 |     except Exception as exc:
+    97 | INDENT= 8 |         raise DataSourceRecoveryError(f"Alpha Vantage baДџlantД± hatasД±: {exc}") from exc
+    98 | INDENT= 4 |     frame = pd.read_csv(io.BytesIO(payload))
+    99 | INDENT= 4 |     required = {"timestamp", "open", "high", "low", "close", "volume"}
+   100 | INDENT= 4 |     if not required.issubset(frame.columns):
+   101 | INDENT= 8 |         message = payload.decode("utf-8", errors="replace")[:300]
+   102 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage beklenen OHLCV yanД±tД±nД± Гјretmedi: " + message)
+   103 | INDENT= 4 |     frame = frame.rename(columns={
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:53-107 ---
+    53 | INDENT= 8 |         "written_at": datetime.now(timezone.utc).isoformat(),
+    54 | INDENT= 4 |     }
+    55 | INDENT= 4 |     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    56 | INDENT= 0 | 
+    57 | INDENT= 0 | 
+    58 | INDENT= 0 | def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+    59 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    60 | INDENT= 4 |     if not csv_path.exists() or not meta_path.exists():
+    61 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek kaydД± bulunamadД±.")
+    62 | INDENT= 4 |     csv_text = csv_path.read_text(encoding="utf-8")
+    63 | INDENT= 4 |     meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    64 | INDENT= 4 |     if hashlib.sha256(csv_text.encode("utf-8")).hexdigest() != meta.get("sha256"):
+    65 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek bГјtГјnlГјk doДџrulamasД±nД± geГ§emedi.")
+    66 | INDENT= 4 |     frame = pd.read_csv(io.StringIO(csv_text), index_col=0, parse_dates=True)
+    67 | INDENT= 4 |     frame = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    68 | INDENT= 4 |     if len(frame) != int(meta.get("rows", -1)):
+    69 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek satД±r sayД±sД± doДџrulanamadД±.")
+    70 | INDENT= 4 |     freshness = gunluk_veri_tazeligini_degerlendir(frame)
+    71 | INDENT= 4 |     if freshness.kilitli:
+    72 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek gГјncel deДџil: " + freshness.aciklama)
+    73 | INDENT= 4 |     return frame
+    74 | INDENT= 0 | 
+    75 | INDENT= 0 | 
+    76 | INDENT= 0 | def alpha_vantage_daily_loader(symbol: str) -> pd.DataFrame:
+    77 | INDENT= 4 |     api_key = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_API_KEY", "").strip()
+    78 | INDENT= 4 |     if not api_key:
+    79 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage API anahtarД± tanД±mlД± deДџil.")
+    80 | INDENT= 4 |     raw_map = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_SYMBOL_MAP", "{}")
+    81 | INDENT= 4 |     try:
+    82 | INDENT= 8 |         symbol_map = json.loads(raw_map)
+    83 | INDENT= 4 |     except json.JSONDecodeError as exc:
+    84 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage sembol eЕџleme JSON'u geГ§ersiz.") from exc
+    85 | INDENT= 4 |     provider_symbol = str(symbol_map.get(symbol, symbol))
+    86 | INDENT= 4 |     query = urlencode({
+    87 | INDENT= 8 |         "function": "TIME_SERIES_DAILY",
+    88 | INDENT= 8 |         "symbol": provider_symbol,
+    89 | INDENT= 8 |         "outputsize": "full",
+    90 | INDENT= 8 |         "datatype": "csv",
+    91 | INDENT= 8 |         "apikey": api_key,
+    92 | INDENT= 4 |     })
+    93 | INDENT= 4 |     try:
+    94 | INDENT= 8 |         with urlopen("https://www.alphavantage.co/query?" + query, timeout=30) as response:
+    95 | INDENT=12 |             payload = response.read()
+    96 | INDENT= 4 |     except Exception as exc:
+    97 | INDENT= 8 |         raise DataSourceRecoveryError(f"Alpha Vantage baДџlantД± hatasД±: {exc}") from exc
+    98 | INDENT= 4 |     frame = pd.read_csv(io.BytesIO(payload))
+    99 | INDENT= 4 |     required = {"timestamp", "open", "high", "low", "close", "volume"}
+   100 | INDENT= 4 |     if not required.issubset(frame.columns):
+   101 | INDENT= 8 |         message = payload.decode("utf-8", errors="replace")[:300]
+   102 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage beklenen OHLCV yanД±tД±nД± Гјretmedi: " + message)
+   103 | INDENT= 4 |     frame = frame.rename(columns={
+   104 | INDENT= 8 |         "timestamp": "Date", "open": "Open", "high": "High",
+   105 | INDENT= 8 |         "low": "Low", "close": "Close", "volume": "Volume",
+   106 | INDENT= 4 |     })
+   107 | INDENT= 4 |     frame["Date"] = pd.to_datetime(frame["Date"])
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:57-111 ---
+    57 | INDENT= 0 | 
+    58 | INDENT= 0 | def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+    59 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    60 | INDENT= 4 |     if not csv_path.exists() or not meta_path.exists():
+    61 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek kaydД± bulunamadД±.")
+    62 | INDENT= 4 |     csv_text = csv_path.read_text(encoding="utf-8")
+    63 | INDENT= 4 |     meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    64 | INDENT= 4 |     if hashlib.sha256(csv_text.encode("utf-8")).hexdigest() != meta.get("sha256"):
+    65 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek bГјtГјnlГјk doДџrulamasД±nД± geГ§emedi.")
+    66 | INDENT= 4 |     frame = pd.read_csv(io.StringIO(csv_text), index_col=0, parse_dates=True)
+    67 | INDENT= 4 |     frame = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    68 | INDENT= 4 |     if len(frame) != int(meta.get("rows", -1)):
+    69 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek satД±r sayД±sД± doДџrulanamadД±.")
+    70 | INDENT= 4 |     freshness = gunluk_veri_tazeligini_degerlendir(frame)
+    71 | INDENT= 4 |     if freshness.kilitli:
+    72 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek gГјncel deДџil: " + freshness.aciklama)
+    73 | INDENT= 4 |     return frame
+    74 | INDENT= 0 | 
+    75 | INDENT= 0 | 
+    76 | INDENT= 0 | def alpha_vantage_daily_loader(symbol: str) -> pd.DataFrame:
+    77 | INDENT= 4 |     api_key = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_API_KEY", "").strip()
+    78 | INDENT= 4 |     if not api_key:
+    79 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage API anahtarД± tanД±mlД± deДџil.")
+    80 | INDENT= 4 |     raw_map = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_SYMBOL_MAP", "{}")
+    81 | INDENT= 4 |     try:
+    82 | INDENT= 8 |         symbol_map = json.loads(raw_map)
+    83 | INDENT= 4 |     except json.JSONDecodeError as exc:
+    84 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage sembol eЕџleme JSON'u geГ§ersiz.") from exc
+    85 | INDENT= 4 |     provider_symbol = str(symbol_map.get(symbol, symbol))
+    86 | INDENT= 4 |     query = urlencode({
+    87 | INDENT= 8 |         "function": "TIME_SERIES_DAILY",
+    88 | INDENT= 8 |         "symbol": provider_symbol,
+    89 | INDENT= 8 |         "outputsize": "full",
+    90 | INDENT= 8 |         "datatype": "csv",
+    91 | INDENT= 8 |         "apikey": api_key,
+    92 | INDENT= 4 |     })
+    93 | INDENT= 4 |     try:
+    94 | INDENT= 8 |         with urlopen("https://www.alphavantage.co/query?" + query, timeout=30) as response:
+    95 | INDENT=12 |             payload = response.read()
+    96 | INDENT= 4 |     except Exception as exc:
+    97 | INDENT= 8 |         raise DataSourceRecoveryError(f"Alpha Vantage baДџlantД± hatasД±: {exc}") from exc
+    98 | INDENT= 4 |     frame = pd.read_csv(io.BytesIO(payload))
+    99 | INDENT= 4 |     required = {"timestamp", "open", "high", "low", "close", "volume"}
+   100 | INDENT= 4 |     if not required.issubset(frame.columns):
+   101 | INDENT= 8 |         message = payload.decode("utf-8", errors="replace")[:300]
+   102 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage beklenen OHLCV yanД±tД±nД± Гјretmedi: " + message)
+   103 | INDENT= 4 |     frame = frame.rename(columns={
+   104 | INDENT= 8 |         "timestamp": "Date", "open": "Open", "high": "High",
+   105 | INDENT= 8 |         "low": "Low", "close": "Close", "volume": "Volume",
+   106 | INDENT= 4 |     })
+   107 | INDENT= 4 |     frame["Date"] = pd.to_datetime(frame["Date"])
+   108 | INDENT= 4 |     return fiyat_verisini_duzelt(
+   109 | INDENT= 8 |         frame.set_index("Date").sort_index(),
+   110 | INDENT= 8 |         yalnizca_tamamlanmis_gunler=True,
+   111 | INDENT= 4 |     )
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:58-112 ---
+    58 | INDENT= 0 | def cache_read(cache_root: Path, symbol: str) -> pd.DataFrame:
+    59 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    60 | INDENT= 4 |     if not csv_path.exists() or not meta_path.exists():
+    61 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek kaydД± bulunamadД±.")
+    62 | INDENT= 4 |     csv_text = csv_path.read_text(encoding="utf-8")
+    63 | INDENT= 4 |     meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    64 | INDENT= 4 |     if hashlib.sha256(csv_text.encode("utf-8")).hexdigest() != meta.get("sha256"):
+    65 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek bГјtГјnlГјk doДџrulamasД±nД± geГ§emedi.")
+    66 | INDENT= 4 |     frame = pd.read_csv(io.StringIO(csv_text), index_col=0, parse_dates=True)
+    67 | INDENT= 4 |     frame = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    68 | INDENT= 4 |     if len(frame) != int(meta.get("rows", -1)):
+    69 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek satД±r sayД±sД± doДџrulanamadД±.")
+    70 | INDENT= 4 |     freshness = gunluk_veri_tazeligini_degerlendir(frame)
+    71 | INDENT= 4 |     if freshness.kilitli:
+    72 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek gГјncel deДџil: " + freshness.aciklama)
+    73 | INDENT= 4 |     return frame
+    74 | INDENT= 0 | 
+    75 | INDENT= 0 | 
+    76 | INDENT= 0 | def alpha_vantage_daily_loader(symbol: str) -> pd.DataFrame:
+    77 | INDENT= 4 |     api_key = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_API_KEY", "").strip()
+    78 | INDENT= 4 |     if not api_key:
+    79 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage API anahtarД± tanД±mlД± deДџil.")
+    80 | INDENT= 4 |     raw_map = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_SYMBOL_MAP", "{}")
+    81 | INDENT= 4 |     try:
+    82 | INDENT= 8 |         symbol_map = json.loads(raw_map)
+    83 | INDENT= 4 |     except json.JSONDecodeError as exc:
+    84 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage sembol eЕџleme JSON'u geГ§ersiz.") from exc
+    85 | INDENT= 4 |     provider_symbol = str(symbol_map.get(symbol, symbol))
+    86 | INDENT= 4 |     query = urlencode({
+    87 | INDENT= 8 |         "function": "TIME_SERIES_DAILY",
+    88 | INDENT= 8 |         "symbol": provider_symbol,
+    89 | INDENT= 8 |         "outputsize": "full",
+    90 | INDENT= 8 |         "datatype": "csv",
+    91 | INDENT= 8 |         "apikey": api_key,
+    92 | INDENT= 4 |     })
+    93 | INDENT= 4 |     try:
+    94 | INDENT= 8 |         with urlopen("https://www.alphavantage.co/query?" + query, timeout=30) as response:
+    95 | INDENT=12 |             payload = response.read()
+    96 | INDENT= 4 |     except Exception as exc:
+    97 | INDENT= 8 |         raise DataSourceRecoveryError(f"Alpha Vantage baДџlantД± hatasД±: {exc}") from exc
+    98 | INDENT= 4 |     frame = pd.read_csv(io.BytesIO(payload))
+    99 | INDENT= 4 |     required = {"timestamp", "open", "high", "low", "close", "volume"}
+   100 | INDENT= 4 |     if not required.issubset(frame.columns):
+   101 | INDENT= 8 |         message = payload.decode("utf-8", errors="replace")[:300]
+   102 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage beklenen OHLCV yanД±tД±nД± Гјretmedi: " + message)
+   103 | INDENT= 4 |     frame = frame.rename(columns={
+   104 | INDENT= 8 |         "timestamp": "Date", "open": "Open", "high": "High",
+   105 | INDENT= 8 |         "low": "Low", "close": "Close", "volume": "Volume",
+   106 | INDENT= 4 |     })
+   107 | INDENT= 4 |     frame["Date"] = pd.to_datetime(frame["Date"])
+   108 | INDENT= 4 |     return fiyat_verisini_duzelt(
+   109 | INDENT= 8 |         frame.set_index("Date").sort_index(),
+   110 | INDENT= 8 |         yalnizca_tamamlanmis_gunler=True,
+   111 | INDENT= 4 |     )
+   112 | INDENT= 0 | 
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:59-113 ---
+    59 | INDENT= 4 |     csv_path, meta_path = _cache_paths(cache_root, symbol)
+    60 | INDENT= 4 |     if not csv_path.exists() or not meta_path.exists():
+    61 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek kaydД± bulunamadД±.")
+    62 | INDENT= 4 |     csv_text = csv_path.read_text(encoding="utf-8")
+    63 | INDENT= 4 |     meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    64 | INDENT= 4 |     if hashlib.sha256(csv_text.encode("utf-8")).hexdigest() != meta.get("sha256"):
+    65 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek bГјtГјnlГјk doДџrulamasД±nД± geГ§emedi.")
+    66 | INDENT= 4 |     frame = pd.read_csv(io.StringIO(csv_text), index_col=0, parse_dates=True)
+    67 | INDENT= 4 |     frame = fiyat_verisini_duzelt(frame, yalnizca_tamamlanmis_gunler=True)
+    68 | INDENT= 4 |     if len(frame) != int(meta.get("rows", -1)):
+    69 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek satД±r sayД±sД± doДџrulanamadД±.")
+    70 | INDENT= 4 |     freshness = gunluk_veri_tazeligini_degerlendir(frame)
+    71 | INDENT= 4 |     if freshness.kilitli:
+    72 | INDENT= 8 |         raise DataSourceRecoveryError("Yerel Г¶nbellek gГјncel deДџil: " + freshness.aciklama)
+    73 | INDENT= 4 |     return frame
+    74 | INDENT= 0 | 
+    75 | INDENT= 0 | 
+    76 | INDENT= 0 | def alpha_vantage_daily_loader(symbol: str) -> pd.DataFrame:
+    77 | INDENT= 4 |     api_key = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_API_KEY", "").strip()
+    78 | INDENT= 4 |     if not api_key:
+    79 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage API anahtarД± tanД±mlД± deДџil.")
+    80 | INDENT= 4 |     raw_map = os.getenv("HISSE_ROBOTU_ALPHA_VANTAGE_SYMBOL_MAP", "{}")
+    81 | INDENT= 4 |     try:
+    82 | INDENT= 8 |         symbol_map = json.loads(raw_map)
+    83 | INDENT= 4 |     except json.JSONDecodeError as exc:
+    84 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage sembol eЕџleme JSON'u geГ§ersiz.") from exc
+    85 | INDENT= 4 |     provider_symbol = str(symbol_map.get(symbol, symbol))
+    86 | INDENT= 4 |     query = urlencode({
+    87 | INDENT= 8 |         "function": "TIME_SERIES_DAILY",
+    88 | INDENT= 8 |         "symbol": provider_symbol,
+    89 | INDENT= 8 |         "outputsize": "full",
+    90 | INDENT= 8 |         "datatype": "csv",
+    91 | INDENT= 8 |         "apikey": api_key,
+    92 | INDENT= 4 |     })
+    93 | INDENT= 4 |     try:
+    94 | INDENT= 8 |         with urlopen("https://www.alphavantage.co/query?" + query, timeout=30) as response:
+    95 | INDENT=12 |             payload = response.read()
+    96 | INDENT= 4 |     except Exception as exc:
+    97 | INDENT= 8 |         raise DataSourceRecoveryError(f"Alpha Vantage baДџlantД± hatasД±: {exc}") from exc
+    98 | INDENT= 4 |     frame = pd.read_csv(io.BytesIO(payload))
+    99 | INDENT= 4 |     required = {"timestamp", "open", "high", "low", "close", "volume"}
+   100 | INDENT= 4 |     if not required.issubset(frame.columns):
+   101 | INDENT= 8 |         message = payload.decode("utf-8", errors="replace")[:300]
+   102 | INDENT= 8 |         raise DataSourceRecoveryError("Alpha Vantage beklenen OHLCV yanД±tД±nД± Гјretmedi: " + message)
+   103 | INDENT= 4 |     frame = frame.rename(columns={
+   104 | INDENT= 8 |         "timestamp": "Date", "open": "Open", "high": "High",
+   105 | INDENT= 8 |         "low": "Low", "close": "Close", "volume": "Volume",
+   106 | INDENT= 4 |     })
+   107 | INDENT= 4 |     frame["Date"] = pd.to_datetime(frame["Date"])
+   108 | INDENT= 4 |     return fiyat_verisini_duzelt(
+   109 | INDENT= 8 |         frame.set_index("Date").sort_index(),
+   110 | INDENT= 8 |         yalnizca_tamamlanmis_gunler=True,
+   111 | INDENT= 4 |     )
+   112 | INDENT= 0 | 
+   113 | INDENT= 0 | 
+
+
+====================================================================================================
+3. DASHBOARD FRESHNESS LOCK / RECOVERY WIRING
+====================================================================================================
+PATTERN=veri_tazeligi_kilidi_goster COUNT=4
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1928 def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2319 if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2534 if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3884 if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+PATTERN=DataSourceRecoveryError COUNT=0
+PATTERN=data_source_recovery COUNT=0
+PATTERN=freshness COUNT=9
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:204 evaluate_fundamental_freshness,
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:289 from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1928 def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1934 if isinstance(sonuc, BatchDataFreshnessResult):
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:4334 evaluate_fundamental_freshness(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:5836 tazelik = evaluate_fundamental_freshness(sirket_donemleri)
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:6524 freshness_status=tazelik.status,
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:6687 item.report.freshness_status
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:6737 freshness_statuses=tuple(
+PATTERN=st.error COUNT=62
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:764 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:860 st.error(f"Seçili geçmiş kayıtları silinemedi: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:903 st.error(f"Analiz geçmişi yedeği oluşturulamadı: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:938 st.error(f"Analiz geçmişi yedeği doğrulanamadı: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:978 st.error(f"Analiz geçmişi yedeği geri yüklenemedi: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1234 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1287 st.error(f"Analiz geçmişi filtrelenemedi: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1310 st.error(f"Analiz geçmişi sayfalanamadı: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1896 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1952 st.error("VERİ TAZELİĞİ KİLİDİ: " + sonuc.aciklama)
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2316 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3260 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3303 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3427 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3478 st.error(f"Seçilen VBTS yedeği doğrulanamadı: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3598 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3640 st.error(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3657 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3701 st.error(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:4095 st.error(str(exc))
+PATTERN=st.warning COUNT=69
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:604 st.warning(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:641 st.warning(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:670 st.warning(f"Analiz geçmişine kaydedilemedi: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:776 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:819 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1001 st.warning(f"Analiz geçmişi özeti hazırlanamadı: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1428 st.warning(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1931 st.warning("Veri tazeliği doğrulanamadı. Son fiyat tarihini aracı kurumdan kontrol edin.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1959 st.warning("Momentum sıralaması, teknik teyit, stop, hedef ve lot değerleri kullanılmamalıdır.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2129 st.warning(gunluk_uyumsuzluk.disclaimer)
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2174 st.warning(karar_matrisi.disclaimer)
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2348 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2558 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2600 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2805 st.warning(str(hata))
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2810 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2857 st.warning("Kesim tarihinde seçilen koşulları karşılayan aday bulunamadı.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3183 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3335 st.warning(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3350 st.warning(
+PATTERN=st.info COUNT=83
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:539 st.info("Karşılaştırılacak ölçüt bulunamadı.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:769 st.info("Aynı veri ve aynı ayarlarla üretilmiş iki kayıt karşılaştırılıyor.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:915 st.info("ZIP yedeği için en az bir kayıt seçin.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:950 st.info("Yedekteki kayıtların tamamı analiz geçmişinde zaten mevcut.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1069 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1330 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1338 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1494 st.info("Seçilen ayarlarda tamamlanan işlem bulunamadı.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1667 st.info("Hisse bazlı katkı kaydı bulunamadı.")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:1859 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2105 st.info(f"Uyumsuzluk analizi üretilemedi: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2133 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2146 st.info(f"Karar matrisi üretilemedi: {hata}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2268 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2299 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2346 st.info(f"Kırılım hazırlığı: {aday.hazirlik_durumu}")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2568 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2591 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2734 st.info(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3188 st.info(
+PATTERN=st.button COUNT=27
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:847 silme_istendi = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:957 geri_yukle = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:2794 if st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3140 calistirildi = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3416 cleanup_requested = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3518 restore_requested = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3584 prune_requested = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:3685 delete_requested = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:4068 if st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:4921 if st.button("Seçilen kaydı sil", type="secondary", width="stretch"):
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:5045 if yuklenen is not None and st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:5304 baslat = st.button("Piyasa rejimini analiz et", type="primary")
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:5685 ayarlari_kaydet = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:5691 varsayilana_don = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:7027 save_clicked = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:7034 update_clicked = st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:7236 if st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:7495 if st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:7686 elif st.button(
+MATCH=D:\Projects\Hisse-Robotu\backend\dashboard.py:7835 if st.button(
+DASHBOARD_EXACT_FRESHNESS_RECOVERY_ANCHOR_COUNT=4
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:1906-1993 ---
+  1906 | INDENT= 4 |     ayni_veri_sonucu_goster(sonuc)
+  1907 | INDENT= 0 | 
+  1908 | INDENT= 0 | 
+  1909 | INDENT= 0 | def opsiyonel_fiyat_yaz(deger: float | None) -> str:
+  1910 | INDENT= 4 |     return "вЂ”" if deger is None else para_yaz(deger)
+  1911 | INDENT= 0 | 
+  1912 | INDENT= 0 | 
+  1913 | INDENT= 0 | def aciklama_listesi_goster(
+  1914 | INDENT= 4 |     baslik: str,
+  1915 | INDENT= 4 |     maddeler: tuple[str, ...],
+  1916 | INDENT= 4 |     bos_mesaj: str,
+  1917 | INDENT= 0 | ) -> None:
+  1918 | INDENT= 4 |     st.markdown(f"**{baslik}**")
+  1919 | INDENT= 4 |     if maddeler:
+  1920 | INDENT= 8 |         for madde in maddeler:
+  1921 | INDENT=12 |             st.write(f"вЂў {madde}")
+  1922 | INDENT= 4 |     else:
+  1923 | INDENT= 8 |         st.caption(bos_mesaj)
+  1924 | INDENT= 0 | 
+  1925 | INDENT= 0 | 
+  1926 | INDENT= 0 | 
+  1927 | INDENT= 0 | 
+  1928 | INDENT= 0 | def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+  1929 | INDENT= 4 |     """Veri tazeliДџini gГ¶rГјnГјr kД±lar; eski veride analiz sonucunu kilitler."""
+  1930 | INDENT= 4 |     if sonuc is None:
+  1931 | INDENT= 8 |         st.warning("Veri tazeliДџi doДџrulanamadД±. Son fiyat tarihini aracД± kurumdan kontrol edin.")
+  1932 | INDENT= 8 |         return False
+  1933 | INDENT= 0 | 
+  1934 | INDENT= 4 |     if isinstance(sonuc, BatchDataFreshnessResult):
+  1935 | INDENT= 8 |         metrik_izgarasi_goster((
+  1936 | INDENT=12 |             ("Fiyat verisi durumu", sonuc.durum),
+  1937 | INDENT=12 |             ("Beklenen son iЕџlem gГјnГј", str(sonuc.beklenen_tarih)),
+  1938 | INDENT=12 |             ("En eski fiyat tarihi", str(sonuc.en_eski_tarih or "вЂ”")),
+  1939 | INDENT=12 |             ("En yeni fiyat tarihi", str(sonuc.en_yeni_tarih or "вЂ”")),
+  1940 | INDENT=12 |             ("GГјncel sembol", str(sonuc.guncel_sembol)),
+  1941 | INDENT=12 |             ("Eski/uyumsuz sembol", str(sonuc.eski_sembol + sonuc.veri_yok_sembol)),
+  1942 | INDENT= 8 |         ))
+  1943 | INDENT= 4 |     else:
+  1944 | INDENT= 8 |         metrik_izgarasi_goster((
+  1945 | INDENT=12 |             ("Fiyat verisi durumu", sonuc.durum),
+  1946 | INDENT=12 |             ("Son fiyat veri tarihi", str(sonuc.son_veri_tarihi or "вЂ”")),
+  1947 | INDENT=12 |             ("Beklenen son iЕџlem gГјnГј", str(sonuc.beklenen_tarih)),
+  1948 | INDENT=12 |             ("Д°Еџ gГјnГј gecikmesi", str(sonuc.is_gunu_gecikmesi)),
+  1949 | INDENT= 8 |         ))
+  1950 | INDENT= 0 | 
+  1951 | INDENT= 4 |     if sonuc.kilitli:
+  1952 | INDENT= 8 |         st.error("VERД° TAZELД°ДћД° KД°LД°DД°: " + sonuc.aciklama)
+  1953 | INDENT= 8 |         st.caption(f"Kilit aЕџamasД±: {sonuc.kilit_asamasi}")
+  1954 | INDENT= 8 |         if sonuc.sonraki_kontrol_zamani is not None:
+  1955 | INDENT=12 |             st.caption(
+  1956 | INDENT=16 |                 "Г–nerilen sonraki kontrol: "
+  1957 | INDENT=16 |                 + tarih_saat_yaz(sonuc.sonraki_kontrol_zamani)
+  1958 | INDENT=12 |             )
+  1959 | INDENT= 8 |         st.warning("Momentum sД±ralamasД±, teknik teyit, stop, hedef ve lot deДџerleri kullanД±lmamalД±dД±r.")
+  1960 | INDENT= 8 |         return False
+  1961 | INDENT= 0 | 
+  1962 | INDENT= 4 |     st.success(sonuc.aciklama)
+  1963 | INDENT= 4 |     return True
+  1964 | INDENT= 0 | 
+  1965 | INDENT= 0 | def guncel_analiz_sonucu_goster(sonuc: LiveAnalysisResult) -> None:
+  1966 | INDENT= 4 |     teknik = sonuc.teknik_teyit
+  1967 | INDENT= 4 |     plan = sonuc.islem_plani
+  1968 | INDENT= 0 | 
+  1969 | INDENT= 4 |     store_stock_ai_context(st, sonuc)
+  1970 | INDENT= 0 | 
+  1971 | INDENT= 4 |     st.subheader(f"{teknik.sembol} gГјncel teknik analiz")
+  1972 | INDENT= 4 |     st.caption(
+  1973 | INDENT= 8 |         "Г–zet: haftalД±k ana trend В· gГјnlГјk yГ¶n teyidi В· saatlik giriЕџ zamanlamasД± В· "        "RSI/MACD uyumsuzluk В· karar matrisi В· iЕџlem planД±"
+  1974 | INDENT= 4 |     )
+  1975 | INDENT= 4 |     metrik_izgarasi_goster(
+  1976 | INDENT= 8 |         (
+  1977 | INDENT=12 |             ("Teknik teyit skoru", f"{teknik.teyit_skoru}/100"),
+  1978 | INDENT=12 |             ("Teyit durumu", teknik.teyit_durumu),
+  1979 | INDENT=12 |             ("Д°Еџlem kararД±", plan.karar),
+  1980 | INDENT=12 |             ("Plan tipi", plan.plan_tipi),
+  1981 | INDENT=12 |             ("Son kapanД±Еџ", para_yaz(plan.son_kapanis)),
+  1982 | INDENT=12 |             ("ATR14", f"{para_yaz(plan.atr14)} В· %{plan.atr_yuzde:.2f}"),
+  1983 | INDENT= 8 |         )
+  1984 | INDENT= 4 |     )
+  1985 | INDENT= 0 | 
+  1986 | INDENT= 4 |     (
+  1987 | INDENT= 8 |         zaman_tab,
+  1988 | INDENT= 8 |         teyit_tab,
+  1989 | INDENT= 8 |         uyumsuzluk_tab,
+  1990 | INDENT= 8 |         karar_matrisi_tab,
+  1991 | INDENT= 8 |         plan_tab,
+  1992 | INDENT= 4 |     ) = st.tabs(
+  1993 | INDENT= 8 |         (
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:2297-2384 ---
+  2297 | INDENT= 0 | 
+  2298 | INDENT= 4 |     if not calistirildi:
+  2299 | INDENT= 8 |         st.info(
+  2300 | INDENT=12 |             "Sembol ve risk ayarlarД±nД± seГ§ip sol menГјdeki "
+  2301 | INDENT=12 |             "вЂGГјncel analizi Г§alД±ЕџtД±rвЂ™ dГјДџmesine basД±n."
+  2302 | INDENT= 8 |         )
+  2303 | INDENT= 8 |         return
+  2304 | INDENT= 0 | 
+  2305 | INDENT= 4 |     try:
+  2306 | INDENT= 8 |         istek = LiveAnalysisRequest(
+  2307 | INDENT=12 |             sembol=sembol,
+  2308 | INDENT=12 |             sermaye=float(sermaye),
+  2309 | INDENT=12 |             azami_risk_orani=float(risk_yuzde) / 100.0,
+  2310 | INDENT= 8 |         )
+  2311 | INDENT= 8 |         with st.spinner(
+  2312 | INDENT=12 |             f"{istek.sembol} iГ§in saatlik, gГјnlГјk ve haftalД±k veri hazД±rlanД±yor..."
+  2313 | INDENT= 8 |         ):
+  2314 | INDENT=12 |             sonuc = LiveAnalysisDashboardService().calistir(istek)
+  2315 | INDENT= 4 |     except (ValueError, TypeError, LiveAnalysisDashboardError) as hata:
+  2316 | INDENT= 8 |         st.error(str(hata))
+  2317 | INDENT= 8 |         return
+  2318 | INDENT= 0 | 
+  2319 | INDENT= 4 |     if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+  2320 | INDENT= 8 |         return
+  2321 | INDENT= 4 |     guncel_analiz_sonucu_goster(sonuc)
+  2322 | INDENT= 4 |     kayit = gecmise_kaydet(sonuc)
+  2323 | INDENT= 4 |     if kayit is not None:
+  2324 | INDENT= 8 |         st.caption("GГјncel teknik analiz, Analiz GeГ§miЕџi'ne kaydedildi.")
+  2325 | INDENT= 0 | 
+  2326 | INDENT= 0 | 
+  2327 | INDENT= 0 | def momentum_aday_ayrintisi_goster(aday: MomentumCandidate) -> None:
+  2328 | INDENT= 4 |     st.subheader(
+  2329 | INDENT= 8 |         f"{aday.sembol.removesuffix('.IS')} В· "
+  2330 | INDENT= 8 |         f"{aday.momentum_skoru}/100 В· {aday.sinif}"
+  2331 | INDENT= 4 |     )
+  2332 | INDENT= 4 |     metrik_izgarasi_goster(
+  2333 | INDENT= 8 |         (
+  2334 | INDENT=12 |             ("Momentum potansiyeli", f"{aday.momentum_skoru}/100"),
+  2335 | INDENT=12 |             ("Mevcut teknik skor", f"{aday.teknik_skor}/100"),
+  2336 | INDENT=12 |             ("Hacim oranД±", f"{aday.hacim_orani:.2f}x"),
+  2337 | INDENT=12 |             ("Hacim eДџimi", f"{aday.hacim_egimi:.2f}x"),
+  2338 | INDENT=12 |             ("YakД±n direnГ§", f"{aday.yakin_direnc:.2f}"),
+  2339 | INDENT=12 |             ("KД±rД±lД±m tetiДџi", f"{aday.kirilim_tetik_seviyesi:.2f}"),
+  2340 | INDENT=12 |             ("Dirence uzaklД±k", yuzde_yaz(aday.yirmi_gunluk_zirve_uzakligi * 100)),
+  2341 | INDENT=12 |             ("Risk/Getiri", f"1:{aday.risk_odul_orani:.2f}"),
+  2342 | INDENT=12 |             ("Listede gГјn", str(aday.listedeki_gun)),
+  2343 | INDENT=12 |             ("Д°lk gГ¶rГјlmeden", yuzde_yaz(aday.ilk_gorulmeden_getiri * 100)),
+  2344 | INDENT= 8 |         )
+  2345 | INDENT= 4 |     )
+  2346 | INDENT= 4 |     st.info(f"KД±rД±lД±m hazД±rlД±ДџД±: {aday.hazirlik_durumu}")
+  2347 | INDENT= 4 |     if aday.kalici_hazirlik:
+  2348 | INDENT= 8 |         st.warning(
+  2349 | INDENT=12 |             "Bu hisse gГјnlГјk sД±nД±fД± zayД±flasa da yakД±n geГ§miЕџteki tekrarlayan "
+  2350 | INDENT=12 |             "E0-E3 sinyalleri nedeniyle KalД±cД± HazД±rlД±k AdayД± olarak izleniyor."
+  2351 | INDENT= 8 |         )
+  2352 | INDENT= 4 |     if aday.sinyal_gecmisi:
+  2353 | INDENT= 8 |         st.caption("Sinyal zinciri: " + " в†’ ".join(aday.sinyal_gecmisi))
+  2354 | INDENT= 4 |     if aday.son_guclu_sinyal_tarihi:
+  2355 | INDENT= 8 |         st.caption(f"Son gГјГ§lГј sinyal tarihi: {aday.son_guclu_sinyal_tarihi}")
+  2356 | INDENT= 4 |     st.caption(
+  2357 | INDENT= 8 |         "Puan bileЕџenleri: "
+  2358 | INDENT= 8 |         f"GГ¶receli gГјГ§ {aday.goreceli_guc_puani}/20 В· "
+  2359 | INDENT= 8 |         f"Fiyat ivmesi {aday.fiyat_ivmesi_puani}/15 В· "
+  2360 | INDENT= 8 |         f"Hacim {aday.hacim_birikimi_puani}/15 В· "
+  2361 | INDENT= 8 |         f"KД±rД±lД±m hazД±rlД±ДџД± {aday.kirilim_hazirligi_puani}/15 В· "
+  2362 | INDENT= 8 |         f"Trend {aday.trend_puani}/15 В· "
+  2363 | INDENT= 8 |         f"Likidite {aday.likidite_puani}/10 В· "
+  2364 | INDENT= 8 |         f"Risk kalitesi {aday.risk_kalitesi_puani}/10"
+  2365 | INDENT= 4 |     )
+  2366 | INDENT= 4 |     sol, sag = st.columns(2)
+  2367 | INDENT= 4 |     with sol:
+  2368 | INDENT= 8 |         aciklama_listesi_goster(
+  2369 | INDENT=12 |             "Olumlu gerekГ§eler",
+  2370 | INDENT=12 |             aday.pozitif_nedenler,
+  2371 | INDENT=12 |             "Belirgin olumlu gerekГ§e yok.",
+  2372 | INDENT= 8 |         )
+  2373 | INDENT= 4 |     with sag:
+  2374 | INDENT= 8 |         aciklama_listesi_goster(
+  2375 | INDENT=12 |             "Riskler",
+  2376 | INDENT=12 |             aday.riskler,
+  2377 | INDENT=12 |             "Belirgin risk yok.",
+  2378 | INDENT= 8 |         )
+  2379 | INDENT= 0 | 
+  2380 | INDENT= 0 | 
+  2381 | INDENT= 0 | 
+  2382 | INDENT= 0 | def _csv_baytlari(kayitlar: tuple[dict[str, object], ...]) -> bytes:
+  2383 | INDENT= 4 |     """Tablo kayД±tlarД±nД± Excel uyumlu UTF-8 BOM iГ§eren CSV'ye dГ¶nГјЕџtГјrГјr."""
+  2384 | INDENT= 0 | 
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:2512-2599 ---
+  2512 | INDENT=12 |             ),
+  2513 | INDENT=12 |             (
+  2514 | INDENT=16 |                 "Yeniden deneme",
+  2515 | INDENT=16 |                 str(sonuc.yeniden_deneme_sayisi),
+  2516 | INDENT=12 |             ),
+  2517 | INDENT=12 |             (
+  2518 | INDENT=16 |                 "Veri kaynaДџД±",
+  2519 | INDENT=16 |                 sonuc.veri_kaynagi,
+  2520 | INDENT=12 |             ),
+  2521 | INDENT=12 |             (
+  2522 | INDENT=16 |                 "Kilit aЕџamasД±",
+  2523 | INDENT=16 |                 sonuc.tazelik_kilit_asamasi or "вЂ”",
+  2524 | INDENT=12 |             ),
+  2525 | INDENT=12 |             (
+  2526 | INDENT=16 |                 "Sonraki kontrol",
+  2527 | INDENT=16 |                 tarih_saat_yaz(sonuc.sonraki_kontrol_zamani)
+  2528 | INDENT=16 |                 if sonuc.sonraki_kontrol_zamani
+  2529 | INDENT=16 |                 else "вЂ”",
+  2530 | INDENT=12 |             ),
+  2531 | INDENT= 8 |         )
+  2532 | INDENT= 4 |     )
+  2533 | INDENT= 0 | 
+  2534 | INDENT= 4 |     if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+  2535 | INDENT= 8 |         momentum_disari_aktarim_goster(sonuc)
+  2536 | INDENT= 8 |         return
+  2537 | INDENT= 0 | 
+  2538 | INDENT= 4 |     if sonuc.piyasa_rejimi is not None:
+  2539 | INDENT= 8 |         politika = rejime_gore_trend_politikasi(sonuc.piyasa_rejimi)
+  2540 | INDENT= 8 |         st.markdown("### Rejim bazlД± trend filtresi")
+  2541 | INDENT= 8 |         metrik_izgarasi_goster(
+  2542 | INDENT=12 |             (
+  2543 | INDENT=16 |                 ("Aktif piyasa rejimi", sonuc.piyasa_rejimi),
+  2544 | INDENT=16 |                 ("Minimum momentum", f"{politika.minimum_momentum_skoru}/100"),
+  2545 | INDENT=16 |                 ("Minimum trend", f"{politika.minimum_trend_puani}/15"),
+  2546 | INDENT=16 |                 (
+  2547 | INDENT=20 |                     "Azami direnГ§ uzaklД±ДџД±",
+  2548 | INDENT=20 |                     yuzde_yaz(politika.azami_direnc_uzakligi * 100),
+  2549 | INDENT=16 |                 ),
+  2550 | INDENT=16 |                 ("Filtreyi geГ§en aday", str(len(sonuc.adaylar))),
+  2551 | INDENT=16 |                 (
+  2552 | INDENT=20 |                     "Rejim nedeniyle elenen",
+  2553 | INDENT=20 |                     str(len(sonuc.trend_politikasi_elenenler)),
+  2554 | INDENT=16 |                 ),
+  2555 | INDENT=12 |             )
+  2556 | INDENT= 8 |         )
+  2557 | INDENT= 8 |         if politika.kirilim_veya_yuksek_hazirlik_zorunlu:
+  2558 | INDENT=12 |             st.warning(
+  2559 | INDENT=16 |                 "Riskli rejimde yalnД±zca kД±rД±lД±m veya E3/C/B dГјzeyinde "
+  2560 | INDENT=16 |                 "yГјksek hazД±rlД±k gГ¶steren adaylar korunur."
+  2561 | INDENT=12 |             )
+  2562 | INDENT= 8 |         else:
+  2563 | INDENT=12 |             st.caption(
+  2564 | INDENT=16 |                 "Momentum, trend ve dirence uzaklД±k eЕџikleri aktif piyasa "
+  2565 | INDENT=16 |                 "rejimine gГ¶re uygulanmД±ЕџtД±r."
+  2566 | INDENT=12 |             )
+  2567 | INDENT= 4 |     else:
+  2568 | INDENT= 8 |         st.info(
+  2569 | INDENT=12 |             "Rejim bazlД± trend filtresi kapalД±. Adaylar yalnД±zca momentum "
+  2570 | INDENT=12 |             "keЕџif koЕџullarД±yla sД±ralandД±."
+  2571 | INDENT= 8 |         )
+  2572 | INDENT= 0 | 
+  2573 | INDENT= 4 |     metrik_izgarasi_goster(
+  2574 | INDENT= 8 |         (
+  2575 | INDENT=12 |             ("Tarama evreni", str(sonuc.evren_sembol_sayisi)),
+  2576 | INDENT=12 |             ("BaЕџarД±lД± analiz", str(sonuc.basarili_sayisi)),
+  2577 | INDENT=12 |             ("C вЂ” Д°Еџleme hazД±r", str(sonuc.isleme_hazir_sayisi)),
+  2578 | INDENT=12 |             ("B вЂ” KД±rД±lД±m", str(sonuc.kirilim_sayisi)),
+  2579 | INDENT=12 |             ("E3 вЂ” Erken uyarД±", str(sonuc.sinif_sayisi(SINIF_ERKEN_UYARI))),
+  2580 | INDENT=12 |             ("E2 вЂ” Dirence yakД±n", str(sonuc.sinif_sayisi(SINIF_DIRENCE_YAKLASIYOR))),
+  2581 | INDENT=12 |             ("E1 вЂ” Hacim birikimi", str(sonuc.sinif_sayisi(SINIF_HACIM_BIRIKIMI))),
+  2582 | INDENT=12 |             ("E0 вЂ” SД±kД±Еџma", str(sonuc.sinif_sayisi(SINIF_SIKISMA))),
+  2583 | INDENT=12 |             ("K вЂ” KalД±cД± hazД±rlД±k", str(sonuc.sinif_sayisi(SINIF_KALICI_HAZIRLIK))),
+  2584 | INDENT=12 |             ("D вЂ” AЕџД±rД± yГјkselmiЕџ", str(len(sonuc.asiri_yukselmisler))),
+  2585 | INDENT= 8 |         )
+  2586 | INDENT= 4 |     )
+  2587 | INDENT= 4 |     st.caption(
+  2588 | INDENT= 8 |         f"Evren kaynaДџД±: {sonuc.evren_kaynagi} В· "
+  2589 | INDENT= 8 |         f"BileЕџen tarihi: {sonuc.evren_tarihi}"
+  2590 | INDENT= 4 |     )
+  2591 | INDENT= 4 |     st.info(
+  2592 | INDENT= 8 |         "Momentum skoru bir erken keЕџif Г¶lГ§ГјsГјdГјr; doДџrudan alД±m kararД± "
+  2593 | INDENT= 8 |         "deДџildir. C sД±nД±fД± adaylar bile ayrД±ntД±lД± GГјncel Teknik Analiz "
+  2594 | INDENT= 8 |         "ekranД±nda yeniden doДџrulanmalД±dД±r. KAP/haber katalizГ¶rГј bu sГјrГјmde "
+  2595 | INDENT= 8 |         "otomatik puanlanmaz ve ayrД±ca kontrol edilmelidir."
+  2596 | INDENT= 4 |     )
+  2597 | INDENT= 0 | 
+  2598 | INDENT= 4 |     kayitlar = momentum_aday_tablosu(sonuc)
+  2599 | INDENT= 4 |     if not kayitlar:
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3862-3949 ---
+  3862 | INDENT= 8 |         "http://127.0.0.1:8765/api/external-candidate",
+  3863 | INDENT= 8 |         data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+  3864 | INDENT= 8 |         headers={"Content-Type": "application/json; charset=utf-8"},
+  3865 | INDENT= 8 |         method="POST",
+  3866 | INDENT= 4 |     )
+  3867 | INDENT= 4 |     try:
+  3868 | INDENT= 8 |         with urllib.request.urlopen(request, timeout=5) as response:
+  3869 | INDENT=12 |             return json.loads(response.read().decode("utf-8"))
+  3870 | INDENT= 4 |     except urllib.error.HTTPError as exc:
+  3871 | INDENT= 8 |         detail = exc.read().decode("utf-8", errors="replace")
+  3872 | INDENT= 8 |         raise RuntimeError(f"AL-SAT aday aktarimi reddedildi: {detail}") from exc
+  3873 | INDENT= 4 |     except Exception as exc:
+  3874 | INDENT= 8 |         raise RuntimeError(f"AL-SAT aday aktarimi basarisiz: {exc}") from exc
+  3875 | INDENT= 0 | 
+  3876 | INDENT= 0 | 
+  3877 | INDENT= 0 | def bist_toplu_tarama_sonucu_goster(
+  3878 | INDENT= 4 |     sonuc: MarketScanResult,
+  3879 | INDENT= 4 |     *,
+  3880 | INDENT= 4 |     temel_skorlar: dict | None = None,
+  3881 | INDENT= 4 |     temel_filtre_aktif: bool = False,
+  3882 | INDENT= 4 |     minimum_temel_skor: int = 60,
+  3883 | INDENT= 0 | ) -> None:
+  3884 | INDENT= 4 |     if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+  3885 | INDENT= 8 |         return
+  3886 | INDENT= 4 |     st.subheader(f"{sonuc.evren_adi} gГјncel aday taramasД±")
+  3887 | INDENT= 4 |     st.caption("Genel teknik sД±ralama В· seГ§ili tarama profili В· veri tazeliДџi В· VBTS uyarД±larД± В· isteДџe baДџlД± temel kalite filtresi")
+  3888 | INDENT= 4 |     metrik_izgarasi_goster(
+  3889 | INDENT= 8 |         (
+  3890 | INDENT=12 |             ("Tarama evreni", str(sonuc.evren_sembol_sayisi)),
+  3891 | INDENT=12 |             ("BaЕџarД±lД± analiz", str(sonuc.filtrelenmis.aday_sayisi + sonuc.filtrelenmis.elenen_sayisi)),
+  3892 | INDENT=12 |             ("Filtreyi geГ§en", str(sonuc.filtrelenmis.aday_sayisi)),
+  3893 | INDENT=12 |             ("GГ¶sterilen aday", str(sonuc.gosterilen_aday_sayisi)),
+  3894 | INDENT=12 |             ("Elenen", str(sonuc.filtrelenmis.elenen_sayisi)),
+  3895 | INDENT=12 |             ("Veri hatasД±", str(sonuc.filtrelenmis.hatali_sayisi)),
+  3896 | INDENT= 8 |         )
+  3897 | INDENT= 4 |     )
+  3898 | INDENT= 4 |     st.caption(
+  3899 | INDENT= 8 |         f"Evren kaynaДџД±: {sonuc.evren_kaynagi} В· "
+  3900 | INDENT= 8 |         f"BileЕџen tarihi: {sonuc.evren_tarihi} В· "
+  3901 | INDENT= 8 |         f"Profil: {sonuc.profil.ad}"
+  3902 | INDENT= 4 |     )
+  3903 | INDENT= 4 |     st.info(
+  3904 | INDENT= 8 |         "SonuГ§lar kesin alД±m tavsiyesi deДџildir. Tablo, ayrД±ntД±lД± gГјncel "
+  3905 | INDENT= 8 |         "teknik analizde doДџrulanacak araЕџtД±rma adaylarД±nД± sД±ralar."
+  3906 | INDENT= 4 |     )
+  3907 | INDENT= 0 | 
+  3908 | INDENT= 4 |     if sonuc.vbts_dogrulama_uyarisi:
+  3909 | INDENT= 8 |         st.warning(sonuc.vbts_dogrulama_uyarisi)
+  3910 | INDENT= 0 | 
+  3911 | INDENT= 4 |     if sonuc.sektor_baglamlari:
+  3912 | INDENT= 8 |         st.caption(
+  3913 | INDENT=12 |             "SektГ¶r baДџlamД±: "
+  3914 | INDENT=12 |             f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansД± В· "
+  3915 | INDENT=12 |             "sektГ¶r skoru teknik hisse skorunu ve aday filtresini deДџiЕџtirmez."
+  3916 | INDENT= 8 |         )
+  3917 | INDENT= 4 |     if sonuc.sektor_baglami_uyarisi:
+  3918 | INDENT= 8 |         st.caption(sonuc.sektor_baglami_uyarisi)
+  3919 | INDENT= 0 | 
+  3920 | INDENT= 4 |     vbts_nedenleri = sonuc.vbts_engelleme_nedenleri or {}
+  3921 | INDENT= 4 |     if vbts_nedenleri:
+  3922 | INDENT= 8 |         st.warning(
+  3923 | INDENT=12 |             f"{len(vbts_nedenleri)} hissede aktif VBTS tedbiri bulundu. "
+  3924 | INDENT=12 |             "Bu tedbirler teknik skoru veya sД±ralamayД± deДџiЕџtirmez."
+  3925 | INDENT= 8 |         )
+  3926 | INDENT= 8 |         with st.expander("VBTS tedbir uyarД±larД±", expanded=False):
+  3927 | INDENT=12 |             st.dataframe(
+  3928 | INDENT=16 |                 pd.DataFrame(
+  3929 | INDENT=20 |                     {
+  3930 | INDENT=24 |                         "Hisse": sembol.removesuffix(".IS"),
+  3931 | INDENT=24 |                         "VBTS tedbiri": " | ".join(nedenler),
+  3932 | INDENT=20 |                     }
+  3933 | INDENT=20 |                     for sembol, nedenler in sorted(vbts_nedenleri.items())
+  3934 | INDENT=16 |                 ),
+  3935 | INDENT=16 |                 width="stretch",
+  3936 | INDENT=16 |                 hide_index=True,
+  3937 | INDENT=12 |             )
+  3938 | INDENT= 0 | 
+  3939 | INDENT= 4 |     adaylar = sonuc.adaylar
+  3940 | INDENT= 4 |     temel_filtre_sonucu = apply_optional_fundamental_filter(
+  3941 | INDENT= 8 |         adaylar,
+  3942 | INDENT= 8 |         symbol_getter=lambda aday: aday.sembol,
+  3943 | INDENT= 8 |         scores=temel_skorlar or {},
+  3944 | INDENT= 8 |         enabled=temel_filtre_aktif,
+  3945 | INDENT= 8 |         minimum_score=minimum_temel_skor,
+  3946 | INDENT= 4 |     )
+  3947 | INDENT= 4 |     gorunen_semboller = {
+  3948 | INDENT= 8 |         aday.sembol for aday in temel_filtre_sonucu.accepted
+  3949 | INDENT= 4 |     }
+
+
+====================================================================================================
+4. LIVE ANALYSIS UI SUPPORT
+====================================================================================================
+PATTERN=DataFreshnessResult COUNT=2
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:24 from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:60 veri_tazeligi: DataFreshnessResult | None = None
+PATTERN=freshness COUNT=2
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:24 from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:60 veri_tazeligi: DataFreshnessResult | None = None
+PATTERN=veri_tazeligi COUNT=5
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:24 from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:60 veri_tazeligi: DataFreshnessResult | None = None
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:127 veri_tazeligi = None
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:129 veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+MATCH=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:150 veri_tazeligi=veri_tazeligi,
+PATTERN=locked COUNT=0
+PATTERN=kilit COUNT=0
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:12-62 ---
+    12 | INDENT= 4 |     acik_pozisyonu_izle,
+    13 | INDENT= 0 | )
+    14 | INDENT= 0 | from ..analysis.technical_confirmation import (
+    15 | INDENT= 4 |     MultiTimeframeTechnicalConfirmation,
+    16 | INDENT= 4 |     TechnicalConfirmationError,
+    17 | INDENT= 4 |     teknik_teyit_analizi_yap,
+    18 | INDENT= 0 | )
+    19 | INDENT= 0 | from ..analysis.trade_plan import (
+    20 | INDENT= 4 |     TradePlan,
+    21 | INDENT= 4 |     TradePlanError,
+    22 | INDENT= 4 |     islem_plani_olustur,
+    23 | INDENT= 0 | )
+    24 | INDENT= 0 | from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+    25 | INDENT= 0 | from ..data.multi_timeframe_data import (
+    26 | INDENT= 4 |     MultiTimeframeDataBundle,
+    27 | INDENT= 4 |     MultiTimeframeDataError,
+    28 | INDENT= 4 |     bist_sembolunu_hazirla,
+    29 | INDENT= 4 |     coklu_zaman_dilimi_verisi_getir,
+    30 | INDENT= 0 | )
+    31 | INDENT= 0 | 
+    32 | INDENT= 0 | 
+    33 | INDENT= 0 | class LiveAnalysisDashboardError(Exception):
+    34 | INDENT= 4 |     """GГјncel analiz ekranД± sonucu hazД±rlanamadД±ДџД±nda kullanД±lД±r."""
+    35 | INDENT= 0 | 
+    36 | INDENT= 0 | 
+    37 | INDENT= 0 | @dataclass(frozen=True)
+    38 | INDENT= 0 | class LiveAnalysisRequest:
+    39 | INDENT= 4 |     """GГјncel teknik analiz ve iЕџlem planД± iГ§in kullanД±cД± girdileri."""
+    40 | INDENT= 0 | 
+    41 | INDENT= 4 |     sembol: str
+    42 | INDENT= 4 |     sermaye: float = 100_000.0
+    43 | INDENT= 4 |     azami_risk_orani: float = 0.01
+    44 | INDENT= 0 | 
+    45 | INDENT= 4 |     def __post_init__(self) -> None:
+    46 | INDENT= 8 |         object.__setattr__(self, "sembol", bist_sembolunu_hazirla(self.sembol))
+    47 | INDENT= 8 |         if self.sermaye <= 0:
+    48 | INDENT=12 |             raise ValueError("Sermaye pozitif olmalД±dД±r.")
+    49 | INDENT= 8 |         if not 0 < self.azami_risk_orani <= 1:
+    50 | INDENT=12 |             raise ValueError("Azami risk oranД± 0 ile 1 arasД±nda olmalД±dД±r.")
+    51 | INDENT= 0 | 
+    52 | INDENT= 0 | 
+    53 | INDENT= 0 | @dataclass(frozen=True)
+    54 | INDENT= 0 | class LiveAnalysisResult:
+    55 | INDENT= 4 |     """AynД± veri paketiyle ГјretilmiЕџ teknik teyit ve iЕџlem planД±."""
+    56 | INDENT= 0 | 
+    57 | INDENT= 4 |     paket: MultiTimeframeDataBundle
+    58 | INDENT= 4 |     teknik_teyit: MultiTimeframeTechnicalConfirmation
+    59 | INDENT= 4 |     islem_plani: TradePlan
+    60 | INDENT= 4 |     veri_tazeligi: DataFreshnessResult | None = None
+    61 | INDENT= 4 |     istek: LiveAnalysisRequest | None = None
+    62 | INDENT= 0 | 
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:48-98 ---
+    48 | INDENT=12 |             raise ValueError("Sermaye pozitif olmalД±dД±r.")
+    49 | INDENT= 8 |         if not 0 < self.azami_risk_orani <= 1:
+    50 | INDENT=12 |             raise ValueError("Azami risk oranД± 0 ile 1 arasД±nda olmalД±dД±r.")
+    51 | INDENT= 0 | 
+    52 | INDENT= 0 | 
+    53 | INDENT= 0 | @dataclass(frozen=True)
+    54 | INDENT= 0 | class LiveAnalysisResult:
+    55 | INDENT= 4 |     """AynД± veri paketiyle ГјretilmiЕџ teknik teyit ve iЕџlem planД±."""
+    56 | INDENT= 0 | 
+    57 | INDENT= 4 |     paket: MultiTimeframeDataBundle
+    58 | INDENT= 4 |     teknik_teyit: MultiTimeframeTechnicalConfirmation
+    59 | INDENT= 4 |     islem_plani: TradePlan
+    60 | INDENT= 4 |     veri_tazeligi: DataFreshnessResult | None = None
+    61 | INDENT= 4 |     istek: LiveAnalysisRequest | None = None
+    62 | INDENT= 0 | 
+    63 | INDENT= 0 | 
+    64 | INDENT= 0 | @dataclass(frozen=True)
+    65 | INDENT= 0 | class OpenPositionDashboardRequest:
+    66 | INDENT= 4 |     """AГ§Д±k pozisyon izleme ekranД±nД±n kullanД±cД± girdileri."""
+    67 | INDENT= 0 | 
+    68 | INDENT= 4 |     sembol: str
+    69 | INDENT= 4 |     giris_tarihi: object
+    70 | INDENT= 4 |     giris_fiyati: float
+    71 | INDENT= 4 |     lot_sayisi: int
+    72 | INDENT= 4 |     ilk_stop: float
+    73 | INDENT= 4 |     hedef_1: float
+    74 | INDENT= 4 |     hedef_2: float
+    75 | INDENT= 4 |     mevcut_stop: float | None = None
+    76 | INDENT= 4 |     hedef_1_gerceklesti: bool = False
+    77 | INDENT= 0 | 
+    78 | INDENT= 4 |     def __post_init__(self) -> None:
+    79 | INDENT= 8 |         object.__setattr__(self, "sembol", bist_sembolunu_hazirla(self.sembol))
+    80 | INDENT= 0 | 
+    81 | INDENT= 4 |     def pozisyon_olustur(self) -> OpenPosition:
+    82 | INDENT= 8 |         return OpenPosition(
+    83 | INDENT=12 |             giris_tarihi=self.giris_tarihi,
+    84 | INDENT=12 |             giris_fiyati=float(self.giris_fiyati),
+    85 | INDENT=12 |             lot_sayisi=int(self.lot_sayisi),
+    86 | INDENT=12 |             ilk_stop=float(self.ilk_stop),
+    87 | INDENT=12 |             hedef_1=float(self.hedef_1),
+    88 | INDENT=12 |             hedef_2=float(self.hedef_2),
+    89 | INDENT=12 |             mevcut_stop=(
+    90 | INDENT=16 |                 None if self.mevcut_stop is None else float(self.mevcut_stop)
+    91 | INDENT=12 |             ),
+    92 | INDENT=12 |             hedef_1_gerceklesti=bool(self.hedef_1_gerceklesti),
+    93 | INDENT= 8 |         )
+    94 | INDENT= 0 | 
+    95 | INDENT= 0 | 
+    96 | INDENT= 0 | DataLoader = Callable[[str], MultiTimeframeDataBundle]
+    97 | INDENT= 0 | TechnicalEngine = Callable[
+    98 | INDENT= 4 |     [MultiTimeframeDataBundle],
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:115-165 ---
+   115 | INDENT= 8 |         self._teknik_motoru = teknik_motoru
+   116 | INDENT= 8 |         self._plan_motoru = plan_motoru
+   117 | INDENT= 0 | 
+   118 | INDENT= 4 |     def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+   119 | INDENT= 8 |         try:
+   120 | INDENT=12 |             paket = self._veri_getirici(istek.sembol)
+   121 | INDENT=12 |             if self._veri_getirici is coklu_zaman_dilimi_verisi_getir:
+   122 | INDENT=16 |                 paket = resmi_gunluk_paketi_guncelle(
+   123 | INDENT=20 |                     paket,
+   124 | INDENT=20 |                     istek.sembol,
+   125 | INDENT=16 |                 )
+   126 | INDENT=12 |             teknik_teyit = self._teknik_motoru(paket)
+   127 | INDENT=12 |             veri_tazeligi = None
+   128 | INDENT=12 |             if hasattr(paket, "getir"):
+   129 | INDENT=16 |                 veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+   130 | INDENT=20 |                     paket.getir("GГјnlГјk").veri
+   131 | INDENT=16 |                 )
+   132 | INDENT=12 |             islem_plani = self._plan_motoru(
+   133 | INDENT=16 |                 paket=paket,
+   134 | INDENT=16 |                 teknik_teyit=teknik_teyit,
+   135 | INDENT=16 |                 sermaye=istek.sermaye,
+   136 | INDENT=16 |                 azami_risk_orani=istek.azami_risk_orani,
+   137 | INDENT=12 |             )
+   138 | INDENT= 8 |         except (
+   139 | INDENT=12 |             MultiTimeframeDataError,
+   140 | INDENT=12 |             TechnicalConfirmationError,
+   141 | INDENT=12 |             TradePlanError,
+   142 | INDENT=12 |             ValueError,
+   143 | INDENT= 8 |         ) as hata:
+   144 | INDENT=12 |             raise LiveAnalysisDashboardError(str(hata)) from hata
+   145 | INDENT= 0 | 
+   146 | INDENT= 8 |         return LiveAnalysisResult(
+   147 | INDENT=12 |             paket=paket,
+   148 | INDENT=12 |             teknik_teyit=teknik_teyit,
+   149 | INDENT=12 |             islem_plani=islem_plani,
+   150 | INDENT=12 |             veri_tazeligi=veri_tazeligi,
+   151 | INDENT=12 |             istek=istek,
+   152 | INDENT= 8 |         )
+   153 | INDENT= 0 | 
+   154 | INDENT= 0 | 
+   155 | INDENT= 0 | class OpenPositionDashboardService:
+   156 | INDENT= 4 |     """AynД± veri ve teknik teyitle aГ§Д±k pozisyon izleme sonucu Гјretir."""
+   157 | INDENT= 0 | 
+   158 | INDENT= 4 |     def __init__(
+   159 | INDENT= 8 |         self,
+   160 | INDENT= 8 |         veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+   161 | INDENT= 8 |         teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+   162 | INDENT= 8 |         izleme_motoru: PositionMonitorEngine = acik_pozisyonu_izle,
+   163 | INDENT= 4 |     ) -> None:
+   164 | INDENT= 8 |         self._veri_getirici = veri_getirici
+   165 | INDENT= 8 |         self._teknik_motoru = teknik_motoru
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:117-167 ---
+   117 | INDENT= 0 | 
+   118 | INDENT= 4 |     def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+   119 | INDENT= 8 |         try:
+   120 | INDENT=12 |             paket = self._veri_getirici(istek.sembol)
+   121 | INDENT=12 |             if self._veri_getirici is coklu_zaman_dilimi_verisi_getir:
+   122 | INDENT=16 |                 paket = resmi_gunluk_paketi_guncelle(
+   123 | INDENT=20 |                     paket,
+   124 | INDENT=20 |                     istek.sembol,
+   125 | INDENT=16 |                 )
+   126 | INDENT=12 |             teknik_teyit = self._teknik_motoru(paket)
+   127 | INDENT=12 |             veri_tazeligi = None
+   128 | INDENT=12 |             if hasattr(paket, "getir"):
+   129 | INDENT=16 |                 veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+   130 | INDENT=20 |                     paket.getir("GГјnlГјk").veri
+   131 | INDENT=16 |                 )
+   132 | INDENT=12 |             islem_plani = self._plan_motoru(
+   133 | INDENT=16 |                 paket=paket,
+   134 | INDENT=16 |                 teknik_teyit=teknik_teyit,
+   135 | INDENT=16 |                 sermaye=istek.sermaye,
+   136 | INDENT=16 |                 azami_risk_orani=istek.azami_risk_orani,
+   137 | INDENT=12 |             )
+   138 | INDENT= 8 |         except (
+   139 | INDENT=12 |             MultiTimeframeDataError,
+   140 | INDENT=12 |             TechnicalConfirmationError,
+   141 | INDENT=12 |             TradePlanError,
+   142 | INDENT=12 |             ValueError,
+   143 | INDENT= 8 |         ) as hata:
+   144 | INDENT=12 |             raise LiveAnalysisDashboardError(str(hata)) from hata
+   145 | INDENT= 0 | 
+   146 | INDENT= 8 |         return LiveAnalysisResult(
+   147 | INDENT=12 |             paket=paket,
+   148 | INDENT=12 |             teknik_teyit=teknik_teyit,
+   149 | INDENT=12 |             islem_plani=islem_plani,
+   150 | INDENT=12 |             veri_tazeligi=veri_tazeligi,
+   151 | INDENT=12 |             istek=istek,
+   152 | INDENT= 8 |         )
+   153 | INDENT= 0 | 
+   154 | INDENT= 0 | 
+   155 | INDENT= 0 | class OpenPositionDashboardService:
+   156 | INDENT= 4 |     """AynД± veri ve teknik teyitle aГ§Д±k pozisyon izleme sonucu Гјretir."""
+   157 | INDENT= 0 | 
+   158 | INDENT= 4 |     def __init__(
+   159 | INDENT= 8 |         self,
+   160 | INDENT= 8 |         veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+   161 | INDENT= 8 |         teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+   162 | INDENT= 8 |         izleme_motoru: PositionMonitorEngine = acik_pozisyonu_izle,
+   163 | INDENT= 4 |     ) -> None:
+   164 | INDENT= 8 |         self._veri_getirici = veri_getirici
+   165 | INDENT= 8 |         self._teknik_motoru = teknik_motoru
+   166 | INDENT= 8 |         self._izleme_motoru = izleme_motoru
+   167 | INDENT= 0 | 
+
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:138-188 ---
+   138 | INDENT= 8 |         except (
+   139 | INDENT=12 |             MultiTimeframeDataError,
+   140 | INDENT=12 |             TechnicalConfirmationError,
+   141 | INDENT=12 |             TradePlanError,
+   142 | INDENT=12 |             ValueError,
+   143 | INDENT= 8 |         ) as hata:
+   144 | INDENT=12 |             raise LiveAnalysisDashboardError(str(hata)) from hata
+   145 | INDENT= 0 | 
+   146 | INDENT= 8 |         return LiveAnalysisResult(
+   147 | INDENT=12 |             paket=paket,
+   148 | INDENT=12 |             teknik_teyit=teknik_teyit,
+   149 | INDENT=12 |             islem_plani=islem_plani,
+   150 | INDENT=12 |             veri_tazeligi=veri_tazeligi,
+   151 | INDENT=12 |             istek=istek,
+   152 | INDENT= 8 |         )
+   153 | INDENT= 0 | 
+   154 | INDENT= 0 | 
+   155 | INDENT= 0 | class OpenPositionDashboardService:
+   156 | INDENT= 4 |     """AynД± veri ve teknik teyitle aГ§Д±k pozisyon izleme sonucu Гјretir."""
+   157 | INDENT= 0 | 
+   158 | INDENT= 4 |     def __init__(
+   159 | INDENT= 8 |         self,
+   160 | INDENT= 8 |         veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+   161 | INDENT= 8 |         teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+   162 | INDENT= 8 |         izleme_motoru: PositionMonitorEngine = acik_pozisyonu_izle,
+   163 | INDENT= 4 |     ) -> None:
+   164 | INDENT= 8 |         self._veri_getirici = veri_getirici
+   165 | INDENT= 8 |         self._teknik_motoru = teknik_motoru
+   166 | INDENT= 8 |         self._izleme_motoru = izleme_motoru
+   167 | INDENT= 0 | 
+   168 | INDENT= 4 |     def calistir(
+   169 | INDENT= 8 |         self,
+   170 | INDENT= 8 |         istek: OpenPositionDashboardRequest,
+   171 | INDENT= 4 |     ) -> PositionMonitoringResult:
+   172 | INDENT= 8 |         try:
+   173 | INDENT=12 |             paket = self._veri_getirici(istek.sembol)
+   174 | INDENT=12 |             if self._veri_getirici is coklu_zaman_dilimi_verisi_getir:
+   175 | INDENT=16 |                 paket = resmi_gunluk_paketi_guncelle(
+   176 | INDENT=20 |                     paket,
+   177 | INDENT=20 |                     istek.sembol,
+   178 | INDENT=16 |                 )
+   179 | INDENT=12 |             teknik_teyit = self._teknik_motoru(paket)
+   180 | INDENT=12 |             return self._izleme_motoru(
+   181 | INDENT=16 |                 paket=paket,
+   182 | INDENT=16 |                 teknik_teyit=teknik_teyit,
+   183 | INDENT=16 |                 pozisyon=istek.pozisyon_olustur(),
+   184 | INDENT=12 |             )
+   185 | INDENT= 8 |         except (
+   186 | INDENT=12 |             MultiTimeframeDataError,
+   187 | INDENT=12 |             TechnicalConfirmationError,
+   188 | INDENT=12 |             PositionMonitorError,
+
+
+====================================================================================================
+5. TEST CONTRACTS
+====================================================================================================
+TEST_FILE=YES D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py
+PATTERN=stale COUNT=0
+PATTERN=freshness COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:5 from backend.app.data.data_freshness import (
+PATTERN=locked COUNT=0
+PATTERN=kilit COUNT=8
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:22 assert not sonuc.kilitli
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:29 assert sonuc.kilitli
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:37 assert not sonuc.kilitli
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:44 assert not sonuc.kilitli
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:53 assert not sonuc.kilitli
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:56 assert sonuc.kilit_asamasi == "kısmi sembol izolasyonu"
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:67 assert sonuc.kilit_asamasi == "sağlayıcı günlük bar tazeliği"
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:79 assert sonuc.kilit_asamasi == "doğrulandı"
+PATTERN=current_day COUNT=0
+PATTERN=not_current_day COUNT=0
+TEST_FILE=YES D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness_message_semantics.py
+PATTERN=stale COUNT=0
+PATTERN=freshness COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness_message_semantics.py:7 from backend.app.data.data_freshness import (
+PATTERN=locked COUNT=0
+PATTERN=kilit COUNT=0
+PATTERN=current_day COUNT=0
+PATTERN=not_current_day COUNT=0
+TEST_FILE=YES D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py
+PATTERN=stale COUNT=0
+PATTERN=freshness COUNT=3
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:12 freshness = kaynak.index(
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:15 lock = kaynak.index("self._veri_tazeligi_kilidi_aktif", freshness)
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:19 assert freshness < lock < locked_flag < engine
+PATTERN=locked COUNT=3
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:16 locked_flag = kaynak.index("and veri_tazeligi.kilitli", lock)
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:17 engine = kaynak.index("self._motor.analiz_et(", locked_flag)
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:19 assert freshness < lock < locked_flag < engine
+PATTERN=kilit COUNT=3
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:16 locked_flag = kaynak.index("and veri_tazeligi.kilitli", lock)
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:25 def test_ozel_veri_getiricide_kilit_varsayilan_olarak_kapanir() -> None:
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:41 "and sonuc.veri_tazeligi.kilitli:"
+PATTERN=current_day COUNT=0
+PATTERN=not_current_day COUNT=0
+TEST_FILE=YES D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py
+PATTERN=stale COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py:70 def test_stale_review_is_marked_as_not_current_day():
+PATTERN=freshness COUNT=0
+PATTERN=locked COUNT=0
+PATTERN=kilit COUNT=0
+PATTERN=current_day COUNT=3
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py:42 assert context.current_day
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py:70 def test_stale_review_is_marked_as_not_current_day():
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py:76 assert not context.current_day
+PATTERN=not_current_day COUNT=1
+MATCH=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py:70 def test_stale_review_is_marked_as_not_current_day():
+
+====================================================================================================
+6. EXACT DECISION INPUT
+====================================================================================================
+DECISION_RULE_1=Do not infer a gap from missing literal alone.
+DECISION_RULE_2=Inspect dashboard context for existing user-facing stale/locked message and recovery action.
+DECISION_RULE_3=Inspect whether recovery service is actually invoked from the affected runtime path.
+DECISION_RULE_4=If message + recovery path already exist, closure-only.
+DECISION_RULE_5=If stale/locked state is visible but no existing recovery path is reachable, only then consider smallest wiring/action gap.
+PRODUCTION_MUTATION=YOK

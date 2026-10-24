@@ -1,0 +1,29 @@
+{
+  "schema_version": "financial-intelligence-v1-3-akbnk-kap-pdf-evidence-normalization-text-extraction-v1",
+  "status": "PASS_FAIL_CLOSED",
+  "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.xls",
+  "normalized_pdf_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.pdf",
+  "text_output_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.txt",
+  "expected_sha256": "48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5",
+  "actual_sha256": "48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5",
+  "pdf_magic": false,
+  "hash_match": true,
+  "normalized_copy_written": false,
+  "extraction_engine": null,
+  "page_count": 0,
+  "text_char_count": 0,
+  "term_evidence": {},
+  "metric_family_present_count": 0,
+  "financial_text_ready": false,
+  "bank_metric_mapping_ready": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "extraction_errors": [],
+  "evidence_snippets": [],
+  "blockers": [
+    "AKBNK_ATTACHMENT_NOT_PDF"
+  ],
+  "source_bytes_mutated": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

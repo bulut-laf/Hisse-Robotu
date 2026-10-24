@@ -1,0 +1,52 @@
+{
+  "schema_version": "financial-intelligence-v1-1-release-closure-v1",
+  "status": "READY_FOR_V1_1_RELEASE_WITH_KNOWN_LIMITATIONS",
+  "reference_symbol": "TUPRS",
+  "symbol_count": 1,
+  "release_ready_symbols": [
+    "TUPRS"
+  ],
+  "selector_default_symbol": "TUPRS",
+  "checks": {
+    "registry_pass": true,
+    "registry_has_tuprs": true,
+    "selector_pass": true,
+    "selector_default_tuprs": true,
+    "renderer_payload_pass": true,
+    "financial_health_94": true,
+    "cash_quality_100": true,
+    "capital_efficiency_15": true,
+    "risk_low": true,
+    "current_price_385": true,
+    "attractive_entry_price": true,
+    "valuation_very_expensive": true,
+    "presentation_pass": true,
+    "ui_boundary_pass": true,
+    "ui_health": true,
+    "ui_cash_quality": true,
+    "ui_capital_efficiency": true,
+    "ui_current_price": true,
+    "ui_entry_price": true,
+    "no_synthetic_second_symbol": true
+  },
+  "failed_checks": [],
+  "known_limitations": [
+    "NO_ADDITIONAL_ACCEPTED_SYMBOLS_FOUND",
+    "NEW_SYMBOL_INTAKE_ARTIFACT_MISSING"
+  ],
+  "release_blockers": [],
+  "intake_status": "PASS_NO_INTAKE_ARTIFACT",
+  "intake_blockers": [
+    "NEW_SYMBOL_INTAKE_ARTIFACT_MISSING"
+  ],
+  "rules": [
+    "READ_ONLY_MULTI_SYMBOL_INFRASTRUCTURE",
+    "NO_SYNTHETIC_SYMBOLS",
+    "NO_AL_SAT_MUTATION",
+    "NO_SCANNER_MUTATION",
+    "NO_RANKING_MUTATION",
+    "NO_PORTFOLIO_MUTATION",
+    "NO_DASHBOARD_ROUTE_MUTATION",
+    "NO_SCORE_SYNTHESIS"
+  ]
+}

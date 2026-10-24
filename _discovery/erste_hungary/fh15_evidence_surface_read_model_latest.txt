@@ -1,0 +1,28 @@
+FH15 - Erste Hungary Evidence Surface Read Model
+DATE=2026-10-07 20:16:49
+MODE=READ_ONLY_SURFACE_ADAPTER
+PRODUCTION_MUTATION=NO
+F5_ACTIVATION=NO
+SEMANTIC_PROXY=NO
+FORCED_FILL=NO
+TRADE_AUTHORITY=NONE
+
+[A] ARTIFACT
+FOUND=D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json
+RESULT_COUNT=929
+
+[B] READ_MODEL
+MODULE=D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py
+TEST=D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_evidence_read_model_v1.py
+REQUIRED_FIELDS=canonical_fund_id,category_id,classification,f1_state,f2_state,f3_state,f4_state,f4_latest_date,f4_previous_date,automatic_trade_authority,forced_fill
+F5_SURFACE=SAFE_UNAVAILABLE
+
+[C] TESTS
+TARGET_RESULT=PASS
+TARGET_EXIT=0
+FULL_RESULT=NOT_RUN
+FULL_EXIT=0
+
+[D] STATUS
+STATUS=FH15_READ_MODEL_READY
+FH15_READ_MODEL_COMPLETE=YES

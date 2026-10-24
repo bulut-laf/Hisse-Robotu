@@ -1,0 +1,752 @@
+﻿2026-08-17 — HISSE ROBOTU V1.1 — ARCHIVE/REVIEW DISCOVERABILITY EXACT DISCOVERY
+MODE=READ_ONLY
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+PRODUCTION_MUTATION=YOK
+PREVIOUS_CLOSED_FACT=DAILY_OPS_WIRING_OK
+
+====================================================================================================
+1. CANONICAL ARCHIVE / WEEKLY REVIEW SURFACES
+====================================================================================================
+[ARCHIVE_REVIEW_HITS]
+COUNT=240
+D:\Projects\Hisse-Robotu\backend\dashboard.py:86 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8673 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:516 [WeeklyPerformanceArchive] class WeeklyPerformanceArchive:
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:12 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:122 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7748 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:516 [WeeklyPerformanceArchive] class WeeklyPerformanceArchive:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:12 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:122 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7756 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7756 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7765 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7765 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:56 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:7800 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:56 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:7912 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:56 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:7912 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:56 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8003 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:56 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8007 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8010 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8054 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8055 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:91 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8694 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:312 [weekly_report_csv_bytes] def weekly_report_csv_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:14 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:110 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:126 [weekly_report_csv_bytes] csv_bytes=weekly_report_csv_bytes(report),
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:56 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7769 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:312 [weekly_report_csv_bytes] def weekly_report_csv_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:14 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:110 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:126 [weekly_report_csv_bytes] csv_bytes=weekly_report_csv_bytes(report),
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:56 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7777 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:56 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7777 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:56 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7786 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:56 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7786 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:61 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:7821 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:61 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:7933 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:61 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:7933 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:61 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8024 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:61 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8028 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:62 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8031 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:62 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8075 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:62 [weekly_report_csv_bytes] weekly_report_csv_bytes,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8076 [weekly_report_csv_bytes] csv_bytes = weekly_report_csv_bytes(report)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:92 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8695 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:396 [weekly_report_pdf_bytes] def weekly_report_pdf_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:15 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:111 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:127 [weekly_report_pdf_bytes] pdf_bytes=weekly_report_pdf_bytes(report),
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:57 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7770 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:396 [weekly_report_pdf_bytes] def weekly_report_pdf_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:15 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:111 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:127 [weekly_report_pdf_bytes] pdf_bytes=weekly_report_pdf_bytes(report),
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:57 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7778 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:57 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7778 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:57 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7787 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:57 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7787 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:62 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:7822 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:62 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:7934 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:62 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:7934 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:62 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8025 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:62 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8029 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:63 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8032 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:63 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8076 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:63 [weekly_report_pdf_bytes] weekly_report_pdf_bytes,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8077 [weekly_report_pdf_bytes] pdf_bytes = weekly_report_pdf_bytes(report)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:55 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7299 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:360 [success_summary] def success_summary(
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:16 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:113 [success_summary] summary = success_summary(outcomes, horizon=10)
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking_dashboard.py:24 [success_summary] assert "success_summary" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking_dashboard.py:64 [success_summary] assert "success_summary" in text
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:6628 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\app\analysis\signal_outcome_tracking.py:344 [success_summary] def success_summary(
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:16 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:113 [success_summary] summary = success_summary(outcomes, horizon=10)
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking_dashboard.py:24 [success_summary] assert "success_summary" in text
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:6628 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:6675 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\app\analysis\signal_outcome_tracking.py:360 [success_summary] def success_summary(
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:6688 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6697 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6703 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6889 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6902 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6912 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6920 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6920 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6929 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:31 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6929 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:36 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:6964 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:36 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:6967 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:36 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:6967 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:36 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6976 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:36 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6976 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:37 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6979 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:37 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7023 [success_summary] success_summary(outcomes, horizon=horizon)
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:37 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:7024 [success_summary] success_summary(outcomes, horizon=horizon)
+
+====================================================================================================
+2. DASHBOARD NAVIGATION / ACTION SURFACES
+====================================================================================================
+[NAVIGATION_ACTION_HITS]
+COUNT=240
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:1624 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:3675 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:1629 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:3802 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:1632 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:3880 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:1114 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:1992 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:5277 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6918 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8085 [st.tabs] portfolio_tab, trader_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8725 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:242 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\dashboard.py:895 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\dashboard.py:1762 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\dashboard.py:4497 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint55_Rev1_temel_analiz_arayuzu\backend\dashboard.py:906 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint55_Rev1_temel_analiz_arayuzu\backend\dashboard.py:1773 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint55_Rev1_temel_analiz_arayuzu\backend\dashboard.py:4508 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint55_Rev2_streamlit_genislik_uyumlulugu\backend\dashboard.py:906 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint55_Rev2_streamlit_genislik_uyumlulugu\backend\dashboard.py:1773 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint55_Rev2_streamlit_genislik_uyumlulugu\backend\dashboard.py:4508 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint57A_Rev1_kap_api_yapilandirma\backend\dashboard.py:910 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint57A_Rev1_kap_api_yapilandirma\backend\dashboard.py:1777 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint57A_Rev1_kap_api_yapilandirma\backend\dashboard.py:4512 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint58_Rev1_temel_kalite_skoru\backend\dashboard.py:914 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint58_Rev1_temel_kalite_skoru\backend\dashboard.py:1781 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint58_Rev1_temel_kalite_skoru\backend\dashboard.py:4644 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint59_Rev1_temel_skor_deposu\backend\dashboard.py:918 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint59_Rev1_temel_skor_deposu\backend\dashboard.py:1785 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint59_Rev1_temel_skor_deposu\backend\dashboard.py:4689 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint60_Rev1_temel_skor_gecmisi\backend\dashboard.py:923 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint60_Rev1_temel_skor_gecmisi\backend\dashboard.py:1790 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint60_Rev1_temel_skor_gecmisi\backend\dashboard.py:4694 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint61_Rev1_finansal_oran_sektor_referansi\backend\dashboard.py:930 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint61_Rev1_finansal_oran_sektor_referansi\backend\dashboard.py:1797 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint61_Rev1_finansal_oran_sektor_referansi\backend\dashboard.py:4701 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint62_Rev1_sektor_bazli_temel_skor_siralamasi\backend\dashboard.py:935 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint62_Rev1_sektor_bazli_temel_skor_siralamasi\backend\dashboard.py:1802 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint62_Rev1_sektor_bazli_temel_skor_siralamasi\backend\dashboard.py:4706 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint63_Rev1_sektor_guc_haritasi\backend\dashboard.py:940 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint63_Rev1_sektor_guc_haritasi\backend\dashboard.py:1807 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint63_Rev1_sektor_guc_haritasi\backend\dashboard.py:4711 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint64_Rev1_temel_analiz_raporu\backend\dashboard.py:947 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint64_Rev1_temel_analiz_raporu\backend\dashboard.py:1814 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint64_Rev1_temel_analiz_raporu\backend\dashboard.py:4718 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint65_Rev1_temel_rapor_arsivi\backend\dashboard.py:954 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint65_Rev1_temel_rapor_arsivi\backend\dashboard.py:1821 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint65_Rev1_temel_rapor_arsivi\backend\dashboard.py:4725 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\dashboard.py:958 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\dashboard.py:1825 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\dashboard.py:4729 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint67_Rev1_temel_analiz_ayarlari\backend\dashboard.py:963 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint67_Rev1_temel_analiz_ayarlari\backend\dashboard.py:1830 [st.tabs] zaman_tab, teyit_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint67_Rev1_temel_analiz_ayarlari\backend\dashboard.py:4734 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint69_Rev1_rsi_macd_uyumsuzluk_motoru\backend\dashboard.py:968 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint69_Rev1_rsi_macd_uyumsuzluk_motoru\backend\dashboard.py:1914 [st.tabs] zaman_tab, teyit_tab, uyumsuzluk_tab, plan_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint69_Rev1_rsi_macd_uyumsuzluk_motoru\backend\dashboard.py:4823 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint70_Rev1_gunluk_haftalik_teknik_karar_matrisi\backend\dashboard.py:973 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint70_Rev1_gunluk_haftalik_teknik_karar_matrisi\backend\dashboard.py:1846 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint70_Rev1_gunluk_haftalik_teknik_karar_matrisi\backend\dashboard.py:4844 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:984 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:1857 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:4855 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:6471 [st.tabs] input_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:984 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:1857 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:4855 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:6471 [st.tabs] input_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:991 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:1864 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:4862 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:6478 [st.tabs] input_tab, archive_tab, contribution_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:998 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:1871 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:4869 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:6490 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:1007 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:1880 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:4878 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6499 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:1013 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:1886 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:4884 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6505 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:1018 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:1891 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:4889 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6511 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:1031 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:1904 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:4902 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6524 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:7452 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:1041 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:1914 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:4912 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6534 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7462 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7799 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:1049 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:1922 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:4920 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6542 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7470 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7807 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:1049 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:1922 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:4920 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6542 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7470 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7807 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:1058 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:1931 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:4929 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6551 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7479 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7816 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:1058 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:1931 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:4929 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6551 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7479 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7816 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:1068 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:1941 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:4964 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:6586 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:7514 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:7851 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:1071 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:1944 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:4967 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:6589 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:7626 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:7963 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:1071 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:1944 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:4967 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:6589 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:7626 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:7963 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:1080 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:1953 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:4976 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6598 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7717 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8054 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:1080 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:1953 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:4976 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6598 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:7721 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8058 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:1081 [st.tabs] teyit_tab, plan_tab, kimlik_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:1956 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:4979 [st.tabs] ozet_tab, ekle_tab, csv_tab, kontrol_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6601 [st.tabs] ) = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:7724 [st.tabs] portfolio_tab, signal_tab, manual_tab, close_tab = st.tabs(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8061 [st.tabs] summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+
+====================================================================================================
+3. EXACT CONTEXT AROUND PRODUCTION DASHBOARD ARCHIVE REFERENCES
+====================================================================================================
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:76-108 ---
+    76:     ACTION_STOP_EXIT,
+    77:     NEWS_OPTIONS,
+    78:     TECH_OPTIONS,
+    79:     ActiveShadowTraderError,
+    80:     ActiveShadowTraderStore,
+    81:     TraderPolicy,
+    82:     assess_shadow_position,
+    83:     stable_position_key,
+    84: )
+    85: from backend.app.analysis.weekly_performance_report import (
+    86:     WeeklyPerformanceArchive,
+    87:     WeeklyPerformanceReportError,
+    88:     build_weekly_performance_report,
+    89:     group_rows_for_table,
+    90:     summary_rows as weekly_summary_rows,
+    91:     weekly_report_csv_bytes,
+    92:     weekly_report_pdf_bytes,
+    93: )
+    94: from backend.app.analysis.success_comparison_report import (
+    95:     SuccessComparisonError,
+    96:     build_success_comparison_report,
+    97:     comparison_csv_bytes,
+    98:     comparison_pdf_bytes,
+    99:     comparison_rows,
+   100: )
+   101: from backend.app.analysis.v13_calibration_closeout import (
+   102:     DEVAM,
+   103:     KALIBRASYON_GEREKLI,
+   104:     TEMKINLI_DEVAM,
+   105:     build_v13_calibration_decision,
+   106:     criterion_rows,
+   107:     decision_summary_rows,
+   108: )
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:8663-8695 ---
+  8663:         "Bu rapor yeni sinyal, teknik skor veya AL/SAT kararД± Гјretmez. "
+  8664:         "Sinyal SonuГ§larД± 5/10/20 gГјnlГјk ileri sinyal performansД±nД± Г¶lГ§erken, "
+  8665:         "HaftalД±k Performans Raporu GГ¶lge PortfГ¶y pozisyonlarД±nД±n dГ¶nemsel iЕџlem performansД±nД± Г¶zetler."
+  8666:     )
+  8667:     st.caption(
+  8668:         "Not: Mevcut haftalД±k rapor kontratД±nda R-multiple metriДџi bulunmaz; "
+  8669:         "performans yГјzdesel getiri, MFE/MAE, hedef/stop ve gerГ§ekleЕџen/gerГ§ekleЕџmemiЕџ K/Z ile izlenir."
+  8670:     )
+  8671: 
+  8672:     store = ShadowPortfolioStore()
+  8673:     archive = WeeklyPerformanceArchive()
+  8674: 
+  8675:     period_end = st.date_input(
+  8676:         "Rapor bitiЕџ tarihi",
+  8677:         value=date.today(),
+  8678:         key="weekly_report_end",
+  8679:     )
+  8680:     days = st.selectbox(
+  8681:         "Rapor dГ¶nemi",
+  8682:         options=(7, 14, 21, 28),
+  8683:         index=0,
+  8684:         format_func=lambda value: f"Son {value} gГјn",
+  8685:         key="weekly_report_days",
+  8686:     )
+  8687: 
+  8688:     try:
+  8689:         report = build_weekly_performance_report(
+  8690:             store.list(),
+  8691:             period_end=period_end,
+  8692:             days=int(days),
+  8693:         )
+  8694:         csv_bytes = weekly_report_csv_bytes(report)
+  8695:         pdf_bytes = weekly_report_pdf_bytes(report)
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:81-113 ---
+    81:     TraderPolicy,
+    82:     assess_shadow_position,
+    83:     stable_position_key,
+    84: )
+    85: from backend.app.analysis.weekly_performance_report import (
+    86:     WeeklyPerformanceArchive,
+    87:     WeeklyPerformanceReportError,
+    88:     build_weekly_performance_report,
+    89:     group_rows_for_table,
+    90:     summary_rows as weekly_summary_rows,
+    91:     weekly_report_csv_bytes,
+    92:     weekly_report_pdf_bytes,
+    93: )
+    94: from backend.app.analysis.success_comparison_report import (
+    95:     SuccessComparisonError,
+    96:     build_success_comparison_report,
+    97:     comparison_csv_bytes,
+    98:     comparison_pdf_bytes,
+    99:     comparison_rows,
+   100: )
+   101: from backend.app.analysis.v13_calibration_closeout import (
+   102:     DEVAM,
+   103:     KALIBRASYON_GEREKLI,
+   104:     TEMKINLI_DEVAM,
+   105:     build_v13_calibration_decision,
+   106:     criterion_rows,
+   107:     decision_summary_rows,
+   108: )
+   109: from backend.app.analysis.indicator_contribution import (
+   110:     analyze_indicator_contributions,
+   111:     analyze_redundancy,
+   112:     contribution_rows,
+   113:     contribution_to_csv,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:8684-8716 ---
+  8684:         format_func=lambda value: f"Son {value} gГјn",
+  8685:         key="weekly_report_days",
+  8686:     )
+  8687: 
+  8688:     try:
+  8689:         report = build_weekly_performance_report(
+  8690:             store.list(),
+  8691:             period_end=period_end,
+  8692:             days=int(days),
+  8693:         )
+  8694:         csv_bytes = weekly_report_csv_bytes(report)
+  8695:         pdf_bytes = weekly_report_pdf_bytes(report)
+  8696:     except (
+  8697:         ShadowPortfolioError,
+  8698:         WeeklyPerformanceReportError,
+  8699:         OSError,
+  8700:         ValueError,
+  8701:         TypeError,
+  8702:     ) as error:
+  8703:         st.error(str(error))
+  8704:         return
+  8705: 
+  8706:     st.markdown("#### DГ¶nem performans Г¶zeti")
+  8707:     metrik_izgarasi_goster(
+  8708:         (
+  8709:             ("AГ§Д±lan", str(report.opened_count)),
+  8710:             ("Kapanan", str(report.closed_count)),
+  8711:             ("AГ§Д±k", str(report.open_count)),
+  8712:             ("Kazanan", str(report.winning_count)),
+  8713:             ("Kaybeden", str(report.losing_count)),
+  8714:             ("GerГ§ekleЕџen K/Z", para_yaz(report.realized_pnl)),
+  8715:             ("GerГ§ekleЕџmemiЕџ K/Z", para_yaz(report.unrealized_pnl)),
+  8716:             (
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:82-114 ---
+    82:     assess_shadow_position,
+    83:     stable_position_key,
+    84: )
+    85: from backend.app.analysis.weekly_performance_report import (
+    86:     WeeklyPerformanceArchive,
+    87:     WeeklyPerformanceReportError,
+    88:     build_weekly_performance_report,
+    89:     group_rows_for_table,
+    90:     summary_rows as weekly_summary_rows,
+    91:     weekly_report_csv_bytes,
+    92:     weekly_report_pdf_bytes,
+    93: )
+    94: from backend.app.analysis.success_comparison_report import (
+    95:     SuccessComparisonError,
+    96:     build_success_comparison_report,
+    97:     comparison_csv_bytes,
+    98:     comparison_pdf_bytes,
+    99:     comparison_rows,
+   100: )
+   101: from backend.app.analysis.v13_calibration_closeout import (
+   102:     DEVAM,
+   103:     KALIBRASYON_GEREKLI,
+   104:     TEMKINLI_DEVAM,
+   105:     build_v13_calibration_decision,
+   106:     criterion_rows,
+   107:     decision_summary_rows,
+   108: )
+   109: from backend.app.analysis.indicator_contribution import (
+   110:     analyze_indicator_contributions,
+   111:     analyze_redundancy,
+   112:     contribution_rows,
+   113:     contribution_to_csv,
+   114:     redundancy_rows,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:8685-8717 ---
+  8685:         key="weekly_report_days",
+  8686:     )
+  8687: 
+  8688:     try:
+  8689:         report = build_weekly_performance_report(
+  8690:             store.list(),
+  8691:             period_end=period_end,
+  8692:             days=int(days),
+  8693:         )
+  8694:         csv_bytes = weekly_report_csv_bytes(report)
+  8695:         pdf_bytes = weekly_report_pdf_bytes(report)
+  8696:     except (
+  8697:         ShadowPortfolioError,
+  8698:         WeeklyPerformanceReportError,
+  8699:         OSError,
+  8700:         ValueError,
+  8701:         TypeError,
+  8702:     ) as error:
+  8703:         st.error(str(error))
+  8704:         return
+  8705: 
+  8706:     st.markdown("#### DГ¶nem performans Г¶zeti")
+  8707:     metrik_izgarasi_goster(
+  8708:         (
+  8709:             ("AГ§Д±lan", str(report.opened_count)),
+  8710:             ("Kapanan", str(report.closed_count)),
+  8711:             ("AГ§Д±k", str(report.open_count)),
+  8712:             ("Kazanan", str(report.winning_count)),
+  8713:             ("Kaybeden", str(report.losing_count)),
+  8714:             ("GerГ§ekleЕџen K/Z", para_yaz(report.realized_pnl)),
+  8715:             ("GerГ§ekleЕџmemiЕџ K/Z", para_yaz(report.unrealized_pnl)),
+  8716:             (
+  8717:                 "Ortalama getiri",
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:45-77 ---
+    45:     decision_matrix_rows,
+    46: )
+    47: from backend.app.analysis.signal_outcome_tracking import (
+    48:     HORIZONS,
+    49:     SignalOutcomeError,
+    50:     SignalOutcomeJsonStore,
+    51:     SignalSnapshot,
+    52:     evaluate_signal,
+    53:     outcome_rows,
+    54:     outcomes_to_csv,
+    55:     success_summary,
+    56: )
+    57: from backend.app.analysis.automatic_signal_tracking import (
+    58:     AutomaticSignalTrackingError,
+    59:     automatic_record_from_values,
+    60:     update_all_signal_outcomes,
+    61: )
+    62: from backend.app.analysis.shadow_portfolio import (
+    63:     CLOSED_STATUS,
+    64:     OPEN_STATUS,
+    65:     ShadowPortfolioError,
+    66:     ShadowPortfolioStore,
+    67:     close_shadow_position,
+    68:     open_from_signal,
+    69:     open_shadow_position,
+    70:     position_rows,
+    71:     positions_to_csv,
+    72:     refresh_all_open_positions,
+    73: )
+    74: from backend.app.analysis.active_shadow_trader import (
+    75:     ACTION_EXIT_REVIEW,
+    76:     ACTION_STOP_EXIT,
+    77:     NEWS_OPTIONS,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:7289-7321 ---
+  7289:                         hide_index=True,
+  7290:                     )
+  7291: 
+  7292:     with archive_tab:
+  7293:         st.markdown("#### 5/10/20 iЕџlem gГјnГј sonuГ§ arЕџivi")
+  7294:         outcomes = store.list()
+  7295:         if not outcomes:
+  7296:             st.info("HenГјz kaydedilmiЕџ sinyal sonucu yok.")
+  7297:         else:
+  7298:             summary_rows = [
+  7299:                 success_summary(outcomes, horizon=horizon)
+  7300:                 for horizon in HORIZONS
+  7301:             ]
+  7302:             st.dataframe(
+  7303:                 pd.DataFrame(summary_rows),
+  7304:                 width="stretch",
+  7305:                 hide_index=True,
+  7306:             )
+  7307: 
+  7308:             rows = outcome_rows(outcomes)
+  7309:             st.dataframe(
+  7310:                 pd.DataFrame(rows),
+  7311:                 width="stretch",
+  7312:                 hide_index=True,
+  7313:             )
+  7314:             st.download_button(
+  7315:                 "SonuГ§larД± CSV indir",
+  7316:                 data=outcomes_to_csv(outcomes),
+  7317:                 file_name="sinyal_sonuclari.csv",
+  7318:                 mime="text/csv",
+  7319:                 key="signal_outcome_download",
+  7320:                 width="stretch",
+  7321:             )
+
+====================================================================================================
+4. HEALTH / FRESHNESS SUPPORTING VISIBILITY
+====================================================================================================
+[HEALTH_SUPPORT_HITS]
+COUNT=240
+D:\Projects\Hisse-Robotu\backend\dashboard.py:60 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7089 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:234 [update_all_signal_outcomes] def update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:11 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:110 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:156 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking_dashboard.py:31 [update_all_signal_outcomes] assert "update_all_signal_outcomes" in text
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6680 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:234 [update_all_signal_outcomes] def update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:11 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:110 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:156 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking_dashboard.py:31 [update_all_signal_outcomes] assert "update_all_signal_outcomes" in text
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6693 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6703 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6711 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6711 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6720 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6720 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:6755 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:6758 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:6758 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6767 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6767 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:42 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6770 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:42 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6814 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:42 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:6815 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:59 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7042 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:178 [automatic_record_from_values] def automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:9 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:125 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking_dashboard.py:18 [automatic_record_from_values] assert "automatic_record_from_values" in text
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6633 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:178 [automatic_record_from_values] def automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:9 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:125 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking_dashboard.py:18 [automatic_record_from_values] assert "automatic_record_from_values" in text
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6646 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6656 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6664 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6664 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6673 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6673 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:6708 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:6711 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:6711 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6720 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6720 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:41 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6723 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:41 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6767 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:41 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:6768 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:43 [last_success] last_success_at: datetime | None
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:238 [last_success] last_success_at=max(
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:330 [last_success] item.last_success_at.astimezone(timezone).strftime("%H:%M:%S")
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:331 [last_success] if item.last_success_at is not None
+D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:60 [last_success] last_success_at: datetime | None = None
+D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:356 [last_success] last_success_at=success.occurred_at if success else None,
+D:\Projects\Hisse-Robotu\backend\app\ui\official_source_operations_panel.py:112 [last_success] summary.last_success_at,
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:171 [last_success] assert kap.last_success_at == T0
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:174 [last_success] assert brief.official_sources[2].last_success_at is None
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:171 [last_success] assert summary.last_success_at == base + timedelta(minutes=1)
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:195 [last_success] assert summary.last_success_at == base
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:213 [last_success] assert summary.last_success_at is None
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:89 [freshness] from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:1577 [freshness] def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:1583 [freshness] if isinstance(sonuc, BatchDataFreshnessResult):
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:89 [freshness] from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:1582 [freshness] def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:1588 [freshness] if isinstance(sonuc, BatchDataFreshnessResult):
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:89 [freshness] from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:1585 [freshness] def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:1591 [freshness] if isinstance(sonuc, BatchDataFreshnessResult):
+D:\Projects\Hisse-Robotu\backend\dashboard.py:204 [freshness] evaluate_fundamental_freshness,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:289 [freshness] from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+D:\Projects\Hisse-Robotu\backend\dashboard.py:1928 [freshness] def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+D:\Projects\Hisse-Robotu\backend\dashboard.py:1934 [freshness] if isinstance(sonuc, BatchDataFreshnessResult):
+D:\Projects\Hisse-Robotu\backend\dashboard.py:4334 [freshness] evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:5836 [freshness] tazelik = evaluate_fundamental_freshness(sirket_donemleri)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6524 [freshness] freshness_status=tazelik.status,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6687 [freshness] item.report.freshness_status
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6737 [freshness] freshness_statuses=tuple(
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:7 [freshness] from ..data.fundamental_data import FundamentalFreshnessResult
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:73 [freshness] freshness: FundamentalFreshnessResult,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:80 [freshness] if freshness.locked:
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:7 [freshness] FundamentalFreshnessResult,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:8 [freshness] evaluate_fundamental_freshness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:25 [freshness] freshness: FundamentalFreshnessResult
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:58 [freshness] freshness = evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:63 [freshness] if package.status.locked or freshness.locked:
+
+====================================================================================================
+5. EVIDENCE DECISION
+====================================================================================================
+ARCHIVE_PRODUCTION_FILES=33
+NAV_PRODUCTION_FILES=45
+SHARED_FILES=25
+DASHBOARD_ARCHIVE_REFERENCE=YES
+DASHBOARD_ACTION_SURFACE=YES
+DISCOVERY_DECISION=LIKELY_EXISTING_OR_PARTIAL
+REASON=Archive and action surfaces both exist in production dashboard; exact user-facing relationship must be judged from captured context before mutation.
+NEXT_RULE=If existing user-facing route is proven, closure-only. If missing, smallest wiring/visibility patch only.
+PRODUCTION_MUTATION=YOK

@@ -1,0 +1,39 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818122202
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-TaskEngine-V1-FinalLiveQualityBinding.ps1
+Process ID: 5852
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+=== TASK ENGINE V1 FINAL LIVE QUALITY BINDING ===
+MODE=FAIL_CLOSED
+TRADE_READ=default_trade_journal_file + records_from_csv_bytes
+SHADOW_POSITIONS=EXISTING_DEFAULT_EMPTY
+RULE=NO_NEW_STORE_ENGINE_SCORE_SIGNAL
+RULE=TARGET_TEST_PLUS_ONE_FULL_REGRESSION
+
+=== EXACT BINDING IMPLEMENT ===
+
+
+=== FAILURE ===
+ERROR=FINAL_BINDING_GUARD_OR_MUTATION_FAIL
+ROLLBACK=NOT_NEEDED_NO_MUTATION
+PRODUCTION_STATUS=UNCHANGED
+NEXT=EXACT_RCA_ONLY
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-TaskEngine-V1-FinalBinding-20260818-122202.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818122203
+**********************

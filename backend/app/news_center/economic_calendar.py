@@ -1,0 +1,468 @@
+from __future__ import annotations
+
+from dataclasses import dataclass, replace
+from datetime import date, datetime, timedelta
+from enum import StrEnum
+import hashlib
+from pathlib import Path
+import re
+import sqlite3
+from contextlib import closing
+from typing import Iterable
+from uuid import uuid4
+from zoneinfo import ZoneInfo
+
+from .archive import default_archive_path
+
+
+ISTANBUL = ZoneInfo("Europe/Istanbul")
+
+
+class EconomicCalendarError(RuntimeError):
+    """Ekonomik takvim kaydı okunamadığında veya yazılamadığında oluşur."""
+
+
+class EconomicCalendarValidationError(ValueError):
+    """Ekonomik takvim veri doğrulaması başarısız olduğunda oluşur."""
+
+
+class DuplicateCalendarEntryError(EconomicCalendarError):
+    """Aynı takvim olayı ikinci kez kaydedilmeye çalışıldığında oluşur."""
+
+
+class CalendarEntryNotFoundError(EconomicCalendarError):
+    """İstenen ekonomik takvim kaydı bulunamadığında oluşur."""
+
+
+class CalendarImportance(StrEnum):
+    CRITICAL = "CRITICAL"
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
+
+
+class CalendarCategory(StrEnum):
+    CENTRAL_BANK = "CENTRAL_BANK"
+    INFLATION = "INFLATION"
+    GROWTH = "GROWTH"
+    EMPLOYMENT = "EMPLOYMENT"
+    PMI = "PMI"
+    CONFIDENCE = "CONFIDENCE"
+    TRADE = "TRADE"
+    FISCAL = "FISCAL"
+    AUCTION = "AUCTION"
+    OTHER = "OTHER"
+
+
+IMPORTANCE_RANK = {
+    CalendarImportance.CRITICAL: 4,
+    CalendarImportance.HIGH: 3,
+    CalendarImportance.MEDIUM: 2,
+    CalendarImportance.LOW: 1,
+}
+
+IMPORTANCE_LABELS = {
+    CalendarImportance.CRITICAL: "Kritik",
+    CalendarImportance.HIGH: "Yüksek",
+    CalendarImportance.MEDIUM: "Orta",
+    CalendarImportance.LOW: "Düşük",
+}
+
+CATEGORY_LABELS = {
+    CalendarCategory.CENTRAL_BANK: "Merkez bankası / faiz",
+    CalendarCategory.INFLATION: "Enflasyon",
+    CalendarCategory.GROWTH: "Büyüme",
+    CalendarCategory.EMPLOYMENT: "İstihdam",
+    CalendarCategory.PMI: "PMI / aktivite",
+    CalendarCategory.CONFIDENCE: "Güven / beklenti",
+    CalendarCategory.TRADE: "Dış ticaret / cari denge",
+    CalendarCategory.FISCAL: "Maliye / bütçe",
+    CalendarCategory.AUCTION: "İhale / borçlanma",
+    CalendarCategory.OTHER: "Diğer",
+}
+
+
+def _normalize_text(value: str, field_name: str) -> str:
+    normalized = re.sub(r"\s+", " ", str(value or "")).strip()
+    if not normalized:
+        raise EconomicCalendarValidationError(f"{field_name} boş olamaz.")
+    return normalized
+
+
+def _normalize_optional(value: str) -> str:
+    return re.sub(r"\s+", " ", str(value or "")).strip()
+
+
+def _aware(value: datetime, field_name: str) -> datetime:
+    if not isinstance(value, datetime):
+        raise EconomicCalendarValidationError(f"{field_name} datetime olmalıdır.")
+    if value.tzinfo is None or value.utcoffset() is None:
+        raise EconomicCalendarValidationError(f"{field_name} saat dilimi içermelidir.")
+    return value
+
+
+def _identity_hash(
+    *,
+    title: str,
+    country: str,
+    category: CalendarCategory,
+    scheduled_at: datetime,
+) -> str:
+    key = "|".join(
+        (
+            title.casefold(),
+            country.casefold(),
+            category.value,
+            scheduled_at.astimezone(ISTANBUL).isoformat(timespec="minutes"),
+        )
+    )
+    return hashlib.sha256(key.encode("utf-8")).hexdigest()
+
+
+@dataclass(frozen=True, slots=True)
+class EconomicCalendarEntry:
+    entry_id: str
+    title: str
+    country: str
+    category: CalendarCategory
+    scheduled_at: datetime
+    importance: CalendarImportance
+    previous_value: str = ""
+    expected_value: str = ""
+    actual_value: str = ""
+    source_name: str = ""
+    source_reference: str = ""
+    notes: str = ""
+    identity_hash: str = ""
+    created_at: datetime | None = None
+    updated_at: datetime | None = None
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "entry_id", _normalize_text(self.entry_id, "entry_id"))
+        object.__setattr__(self, "title", _normalize_text(self.title, "Takvim olayı"))
+        object.__setattr__(self, "country", _normalize_text(self.country, "Ülke/Bölge"))
+        if not isinstance(self.category, CalendarCategory):
+            object.__setattr__(self, "category", CalendarCategory(self.category))
+        if not isinstance(self.importance, CalendarImportance):
+            object.__setattr__(self, "importance", CalendarImportance(self.importance))
+        object.__setattr__(self, "scheduled_at", _aware(self.scheduled_at, "Açıklama zamanı"))
+        for field_name in (
+            "previous_value",
+            "expected_value",
+            "actual_value",
+            "source_name",
+            "source_reference",
+            "notes",
+        ):
+            object.__setattr__(self, field_name, _normalize_optional(getattr(self, field_name)))
+
+        expected_hash = _identity_hash(
+            title=self.title,
+            country=self.country,
+            category=self.category,
+            scheduled_at=self.scheduled_at,
+        )
+        if self.identity_hash:
+            supplied = str(self.identity_hash).strip().lower()
+            if supplied != expected_hash:
+                raise EconomicCalendarValidationError("Takvim identity_hash değeri içerikle eşleşmiyor.")
+        object.__setattr__(self, "identity_hash", expected_hash)
+
+        if self.created_at is not None:
+            object.__setattr__(self, "created_at", _aware(self.created_at, "Oluşturma zamanı"))
+        if self.updated_at is not None:
+            object.__setattr__(self, "updated_at", _aware(self.updated_at, "Güncelleme zamanı"))
+
+    @property
+    def publication_status(self) -> str:
+        return "Açıklandı" if self.actual_value else "Açıklanmadı"
+
+
+def create_calendar_entry(
+    *,
+    title: str,
+    country: str,
+    category: CalendarCategory,
+    scheduled_at: datetime,
+    importance: CalendarImportance,
+    previous_value: str = "",
+    expected_value: str = "",
+    actual_value: str = "",
+    source_name: str = "",
+    source_reference: str = "",
+    notes: str = "",
+    now: datetime | None = None,
+) -> EconomicCalendarEntry:
+    stamp = now or datetime.now(ISTANBUL)
+    return EconomicCalendarEntry(
+        entry_id=f"CAL-{uuid4().hex}",
+        title=title,
+        country=country,
+        category=category,
+        scheduled_at=scheduled_at,
+        importance=importance,
+        previous_value=previous_value,
+        expected_value=expected_value,
+        actual_value=actual_value,
+        source_name=source_name,
+        source_reference=source_reference,
+        notes=notes,
+        created_at=stamp,
+        updated_at=stamp,
+    )
+
+
+class EconomicCalendarStore:
+    def __init__(self, path: str | Path | None = None) -> None:
+        self.path = Path(path) if path is not None else default_archive_path()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._initialize()
+
+    def _connect(self) -> sqlite3.Connection:
+        connection = sqlite3.connect(self.path)
+        connection.row_factory = sqlite3.Row
+        return connection
+
+    def _initialize(self) -> None:
+        try:
+            with closing(self._connect()) as connection, connection:
+                connection.executescript(
+                    """
+                    CREATE TABLE IF NOT EXISTS economic_calendar (
+                        entry_id TEXT PRIMARY KEY,
+                        title TEXT NOT NULL,
+                        country TEXT NOT NULL,
+                        category TEXT NOT NULL,
+                        scheduled_at TEXT NOT NULL,
+                        importance TEXT NOT NULL,
+                        previous_value TEXT NOT NULL,
+                        expected_value TEXT NOT NULL,
+                        actual_value TEXT NOT NULL,
+                        source_name TEXT NOT NULL,
+                        source_reference TEXT NOT NULL,
+                        notes TEXT NOT NULL,
+                        identity_hash TEXT NOT NULL UNIQUE,
+                        created_at TEXT NOT NULL,
+                        updated_at TEXT NOT NULL
+                    );
+                    CREATE INDEX IF NOT EXISTS idx_economic_calendar_scheduled_at
+                        ON economic_calendar(scheduled_at ASC);
+                    CREATE INDEX IF NOT EXISTS idx_economic_calendar_importance
+                        ON economic_calendar(importance);
+                    """
+                )
+        except sqlite3.Error as exc:
+            raise EconomicCalendarError(f"Ekonomik takvim başlatılamadı: {exc}") from exc
+
+    def add(self, entry: EconomicCalendarEntry) -> None:
+        created_at = entry.created_at or datetime.now(ISTANBUL)
+        updated_at = entry.updated_at or created_at
+        try:
+            with closing(self._connect()) as connection, connection:
+                connection.execute(
+                    """
+                    INSERT INTO economic_calendar (
+                        entry_id, title, country, category, scheduled_at,
+                        importance, previous_value, expected_value, actual_value,
+                        source_name, source_reference, notes, identity_hash,
+                        created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        entry.entry_id,
+                        entry.title,
+                        entry.country,
+                        entry.category.value,
+                        entry.scheduled_at.isoformat(),
+                        entry.importance.value,
+                        entry.previous_value,
+                        entry.expected_value,
+                        entry.actual_value,
+                        entry.source_name,
+                        entry.source_reference,
+                        entry.notes,
+                        entry.identity_hash,
+                        created_at.isoformat(),
+                        updated_at.isoformat(),
+                    ),
+                )
+        except sqlite3.IntegrityError as exc:
+            if "identity_hash" in str(exc).lower() or "unique" in str(exc).lower():
+                raise DuplicateCalendarEntryError("Aynı ekonomik takvim olayı zaten kayıtlı.") from exc
+            raise EconomicCalendarError(f"Ekonomik takvim kaydı eklenemedi: {exc}") from exc
+        except sqlite3.Error as exc:
+            raise EconomicCalendarError(f"Ekonomik takvim kaydı eklenemedi: {exc}") from exc
+
+    def list_entries(
+        self,
+        *,
+        start_at: datetime | None = None,
+        end_at: datetime | None = None,
+        limit: int = 1000,
+    ) -> tuple[EconomicCalendarEntry, ...]:
+        if not 1 <= int(limit) <= 5000:
+            raise ValueError("Ekonomik takvim liste limiti 1-5000 aralığında olmalıdır.")
+        clauses: list[str] = []
+        params: list[object] = []
+        if start_at is not None:
+            _aware(start_at, "Başlangıç zamanı")
+            clauses.append("scheduled_at >= ?")
+            params.append(start_at.isoformat())
+        if end_at is not None:
+            _aware(end_at, "Bitiş zamanı")
+            clauses.append("scheduled_at < ?")
+            params.append(end_at.isoformat())
+        where = f"WHERE {' AND '.join(clauses)}" if clauses else ""
+        params.append(int(limit))
+        try:
+            with closing(self._connect()) as connection, connection:
+                rows = connection.execute(
+                    f"""
+                    SELECT * FROM economic_calendar
+                    {where}
+                    ORDER BY scheduled_at ASC, created_at ASC
+                    LIMIT ?
+                    """,
+                    tuple(params),
+                ).fetchall()
+        except sqlite3.Error as exc:
+            raise EconomicCalendarError(f"Ekonomik takvim okunamadı: {exc}") from exc
+        return tuple(self._from_row(row) for row in rows)
+
+    def list_day(self, selected_date: date) -> tuple[EconomicCalendarEntry, ...]:
+        start = datetime.combine(selected_date, datetime.min.time(), tzinfo=ISTANBUL)
+        end = start + timedelta(days=1)
+        return self.list_entries(start_at=start, end_at=end)
+
+    def update_values(
+        self,
+        entry_id: str,
+        *,
+        previous_value: str,
+        expected_value: str,
+        actual_value: str,
+        notes: str | None = None,
+        updated_at: datetime | None = None,
+    ) -> EconomicCalendarEntry:
+        entry_id = _normalize_text(entry_id, "entry_id")
+        stamp = updated_at or datetime.now(ISTANBUL)
+        _aware(stamp, "Güncelleme zamanı")
+        assignments = [
+            "previous_value = ?",
+            "expected_value = ?",
+            "actual_value = ?",
+            "updated_at = ?",
+        ]
+        params: list[object] = [
+            _normalize_optional(previous_value),
+            _normalize_optional(expected_value),
+            _normalize_optional(actual_value),
+            stamp.isoformat(),
+        ]
+        if notes is not None:
+            assignments.insert(3, "notes = ?")
+            params.insert(3, _normalize_optional(notes))
+        params.append(entry_id)
+        try:
+            with closing(self._connect()) as connection, connection:
+                cursor = connection.execute(
+                    f"UPDATE economic_calendar SET {', '.join(assignments)} WHERE entry_id = ?",
+                    tuple(params),
+                )
+                if cursor.rowcount != 1:
+                    raise CalendarEntryNotFoundError(f"Ekonomik takvim kaydı bulunamadı: {entry_id}")
+        except CalendarEntryNotFoundError:
+            raise
+        except sqlite3.Error as exc:
+            raise EconomicCalendarError(f"Ekonomik takvim kaydı güncellenemedi: {exc}") from exc
+        return self.get(entry_id)
+
+    def get(self, entry_id: str) -> EconomicCalendarEntry:
+        entry_id = _normalize_text(entry_id, "entry_id")
+        try:
+            with closing(self._connect()) as connection, connection:
+                row = connection.execute(
+                    "SELECT * FROM economic_calendar WHERE entry_id = ?",
+                    (entry_id,),
+                ).fetchone()
+        except sqlite3.Error as exc:
+            raise EconomicCalendarError(f"Ekonomik takvim kaydı okunamadı: {exc}") from exc
+        if row is None:
+            raise CalendarEntryNotFoundError(f"Ekonomik takvim kaydı bulunamadı: {entry_id}")
+        return self._from_row(row)
+
+    @staticmethod
+    def _from_row(row: sqlite3.Row) -> EconomicCalendarEntry:
+        return EconomicCalendarEntry(
+            entry_id=row["entry_id"],
+            title=row["title"],
+            country=row["country"],
+            category=CalendarCategory(row["category"]),
+            scheduled_at=datetime.fromisoformat(row["scheduled_at"]),
+            importance=CalendarImportance(row["importance"]),
+            previous_value=row["previous_value"],
+            expected_value=row["expected_value"],
+            actual_value=row["actual_value"],
+            source_name=row["source_name"],
+            source_reference=row["source_reference"],
+            notes=row["notes"],
+            identity_hash=row["identity_hash"],
+            created_at=datetime.fromisoformat(row["created_at"]),
+            updated_at=datetime.fromisoformat(row["updated_at"]),
+        )
+
+
+def select_calendar_entries(
+    entries: Iterable[EconomicCalendarEntry],
+    *,
+    selected_date: date,
+    minimum_importance: CalendarImportance = CalendarImportance.LOW,
+) -> tuple[EconomicCalendarEntry, ...]:
+    minimum_rank = IMPORTANCE_RANK[minimum_importance]
+    result = [
+        item
+        for item in entries
+        if item.scheduled_at.astimezone(ISTANBUL).date() == selected_date
+        and IMPORTANCE_RANK[item.importance] >= minimum_rank
+    ]
+    result.sort(
+        key=lambda item: (
+            item.scheduled_at.astimezone(ISTANBUL),
+            -IMPORTANCE_RANK[item.importance],
+            item.title.casefold(),
+        )
+    )
+    return tuple(result)
+
+
+def calendar_rows(
+    entries: Iterable[EconomicCalendarEntry],
+    *,
+    now: datetime | None = None,
+) -> list[dict[str, object]]:
+    current = now or datetime.now(ISTANBUL)
+    _aware(current, "Şimdiki zaman")
+    rows: list[dict[str, object]] = []
+    for item in entries:
+        local_time = item.scheduled_at.astimezone(ISTANBUL)
+        if item.actual_value:
+            status = "Açıklandı"
+        elif local_time <= current.astimezone(ISTANBUL):
+            status = "Sonuç bekleniyor"
+        else:
+            status = "Planlandı"
+        rows.append(
+            {
+                "Saat": local_time.strftime("%H:%M"),
+                "Ülke/Bölge": item.country,
+                "Olay": item.title,
+                "Kategori": CATEGORY_LABELS[item.category],
+                "Önem": IMPORTANCE_LABELS[item.importance],
+                "Önceki": item.previous_value or "—",
+                "Beklenti": item.expected_value or "—",
+                "Açıklanan": item.actual_value or "—",
+                "Durum": status,
+                "Kaynak": item.source_name or "—",
+            }
+        )
+    return rows

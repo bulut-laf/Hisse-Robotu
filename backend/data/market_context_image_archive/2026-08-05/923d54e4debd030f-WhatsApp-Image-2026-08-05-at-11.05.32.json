@@ -1,0 +1,14 @@
+{
+  "archived_at": "2026-08-05T14:17:06.640240+00:00",
+  "mime_type": "image/jpeg",
+  "original_name": "WhatsApp Image 2026-08-05 at 11.05.32.jpeg",
+  "review": {
+    "approved": true,
+    "approved_at": "2026-08-05T14:20:07.059259+00:00",
+    "approved_text_sha256": "88f89e8b498a3c37046cdcbfa4f428be7190021e4463d596b6180f575e15f693"
+  },
+  "schema_version": 1,
+  "sha256": "923d54e4debd030f6dcf57c6e5805b58f80b006d6956f2fbea2071d55f0ee0be",
+  "size_bytes": 186817,
+  "stored_name": "923d54e4debd030f-WhatsApp-Image-2026-08-05-at-11.05.32.jpg"
+}

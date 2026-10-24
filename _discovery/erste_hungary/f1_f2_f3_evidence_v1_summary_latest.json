@@ -1,0 +1,35 @@
+{
+  "version": "erste-hungary-f2-evidence-bridge-v1",
+  "result_count": 929,
+  "fetch_success": 929,
+  "fetch_failure": 0,
+  "f2_available": 905,
+  "f2_unavailable": 24,
+  "f2_state_counts": {
+    "CAUTION": 347,
+    "POSITIVE": 227,
+    "NEUTRAL": 331,
+    "UNAVAILABLE": 24
+  },
+  "f3_state_counts": {
+    "CAUTION": 205,
+    "POSITIVE": 347,
+    "NEUTRAL": 345,
+    "UNAVAILABLE": 32
+  },
+  "class_counts": {
+    "D": 306,
+    "C": 446,
+    "B": 142,
+    "X": 35
+  },
+  "eligibility_counts": {
+    "MULTI_FAMILY_WEAKENING": 306,
+    "OBSERVATION_REQUIRED": 446,
+    "DEVELOPING_MULTI_FAMILY_SUPPORT": 142,
+    "INSUFFICIENT_INDEPENDENT_EVIDENCE": 35
+  },
+  "trade_authority_counts": {
+    "NONE": 929
+  }
+}

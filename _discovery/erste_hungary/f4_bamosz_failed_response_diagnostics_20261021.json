@@ -1,0 +1,144 @@
+{
+  "count": 15,
+  "status_counts": {
+    "FETCHED": 15
+  },
+  "results": [
+    {
+      "isin": "LU0509951272",
+      "name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP HUF",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 764,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Energia Részvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2009/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0509951199",
+      "name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP HUF",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 759,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING IT Részvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0509951355",
+      "name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP HUF",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 786,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Globális Magas Osztalékhozamú Részvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0509951603",
+      "name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - X CAP HUF",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 771,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Latin-Amerikai Részvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0509951439",
+      "name": "GOLDMAN SACHS GLOBAL EQUITY IMPACT OPPORTUNITIES - X CAP HUF",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 777,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Globális Lehetőségek Részvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0509951512",
+      "name": "GOLDMAN SACHS GREATER CHINA EQUITY - X CAP HUF",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 762,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Kínai Részvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546915215",
+      "name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP EUR (HEDGED I)",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 791,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Fejlődő Piaci Kötvény (keménydeviza)\"\n\"Befektetési sorozat megjelölése:\";\"X Hedged\"\n\"Befektetési jegy devizaneme:\";\"EUR\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546914242",
+      "name": "GOLDMAN SACHS ASIAN DEBT (HARD CURRENCY) - X CAP USD",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 762,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Ázsiai Kötvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"USD\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546915488",
+      "name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP HUF",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 784,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Fejlődő Piaci Kötvény (keménydeviza)\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546916882",
+      "name": "GOLDMAN SACHS EUROMIX BOND - X CAP EUR",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 763,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Euromix Kötvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"EUR\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546918151",
+      "name": "GOLDMAN SACHS EURO BOND - X CAP EUR",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 760,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Euro Kötvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"EUR\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546918409",
+      "name": "GOLDMAN SACHS EURO CREDIT - X CAP EUR",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 770,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Euro Vállalati Kötvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"EUR\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546920561",
+      "name": "GOLDMAN SACHS US DOLLAR CREDIT - X CAP USD",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 769,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING USD Vállalati Kötvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"USD\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0548664886",
+      "name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP EUR (HEDGED III) (Former NN)",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 783,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Globális Magashozamú Kötvény\"\n\"Befektetési sorozat megjelölése:\";\"X Hedged\"\n\"Befektetési jegy devizaneme:\";\"EUR\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    },
+    {
+      "isin": "LU0546919555",
+      "name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP HUF (Former NN)",
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 776,
+      "body_preview": "\"Letöltés időpontja\";\"2026.10.21. 22:17\"\n\"Alap neve:\";\"ING Globális Magashozamú Kötvény\"\n\"Befektetési sorozat megjelölése:\";\"X\"\n\"Befektetési jegy devizaneme:\";\"HUF\"\n\"Kategória:\";\"Származtatott\"\n\"Földrajzi kitettség:\";\"\"\n\"Devizális kitettség:\";\"\"\n\"Egyéb jellemző kitettség:\";\"\"\n\"Hozam/kockázat mutató:\";\"0\"\n\"Bef. politika rövid leírása:\";\"\"\n\"Forgalmazás módja:\";\"Nyilvános nyíltvégű\"\n\"Jogszabályi típus:\";\"UCITS (európai) alap\"\n\"Alap indulási dátuma:\";\"2010/02/25\"\n\"Alapkezelő:\";\"ING Befektetési Alapkezelő Zrt.\"\n\"Letétkezelő:\";\"BBH\"\n\"1 éves szórás:\";\"\"\n\"5 éves szórás:\";\"\"\n\"Dátum\";\"Árfolyam\";\"NEÉ\";\"Kifizetett hozam\";\"Napi befjegy. forgalom\";\"Napi befjegy. forgalom változás(%)\";\"3 hónapos hozam\";\"6 hónapos hozam\";\"1 éves hozam\";\"3 éves hozam\";\"5 éves hozam\";\"10 éves hozam\"\n",
+      "status": "FETCHED"
+    }
+  ],
+  "production_mutation": false
+}

@@ -1,0 +1,656 @@
+{
+  "version": "FH9-F4-PARSER-V19",
+  "fund_count": 7,
+  "parsed_count": 0,
+  "f4_positive_or_caution_count": 0,
+  "production_mutation": false,
+  "trade_authority": "NONE",
+  "forced_fill": false,
+  "semantic_proxy": false,
+  "results": [
+    {
+      "isin": "AT0000627476",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000627476",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": [],
+      "table_count": 8,
+      "header_samples": [
+        [
+          "Alap neve:",
+          "ESPA Stock America Alap (HUF)"
+        ],
+        [
+          "Befektetési sorozat megjelölése:",
+          ""
+        ],
+        [
+          "ISIN:",
+          "AT0000627476"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          "2016.06.15.",
+          "Státusz",
+          "active",
+          "inactive"
+        ],
+        [
+          "2016.06.15.",
+          "Alapkezelő",
+          "Erste Alapkezelő Zrt.",
+          "ERSTE Sparinvest KAG"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          ""
+        ],
+        [
+          "",
+          "3 havi",
+          "6 havi",
+          "1 éves",
+          "3 éves",
+          "5 éves",
+          "10 éves",
+          "Év eleje",
+          "Indulástól"
+        ],
+        [
+          "Hozam",
+          "16,4%",
+          "16,3%",
+          "26,9%",
+          "17,4%",
+          "16,9%",
+          "N/A",
+          "2,2%",
+          "6,8%"
+        ],
+        [
+          "Szórás",
+          "",
+          "",
+          "10,5%",
+          "",
+          "11,4%",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Grafikon intervallum",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_startDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:startDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2025.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=FC18EF5E0DE505D8C1F4DF8612025432?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "-",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_endDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:endDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2026.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=FC18EF5E0DE505D8C1F4DF8612025432?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "Frissít/*<![CDATA[*/widget_A3225_j_idt8_j_idt219=new PrimeFaces.widget.CommandButton(\"A3225:j_idt8:j_idt219\",{});/*]]>*/"
+        ]
+      ]
+    },
+    {
+      "isin": "AT0000A00G88",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00G88",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": [],
+      "table_count": 8,
+      "header_samples": [
+        [
+          "Alap neve:",
+          "ESPA STOCK EUROPE-EMERGING (VT) HUF"
+        ],
+        [
+          "Befektetési sorozat megjelölése:",
+          ""
+        ],
+        [
+          "ISIN:",
+          "AT0000A00G88"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          "2016.06.15.",
+          "Státusz",
+          "active",
+          "inactive"
+        ],
+        [
+          "2016.06.15.",
+          "Alapkezelő",
+          "Erste Alapkezelő Zrt.",
+          "ERSTE Sparinvest KAG"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          ""
+        ],
+        [
+          "",
+          "3 havi",
+          "6 havi",
+          "1 éves",
+          "3 éves",
+          "5 éves",
+          "10 éves",
+          "Év eleje",
+          "Indulástól"
+        ],
+        [
+          "Hozam",
+          "-4,4%",
+          "-12,4%",
+          "-15%",
+          "-5,7%",
+          "-1,6%",
+          "N/A",
+          "5,5%",
+          "-6,5%"
+        ],
+        [
+          "Szórás",
+          "",
+          "",
+          "14,7%",
+          "",
+          "14,6%",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Grafikon intervallum",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_startDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:startDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2025.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=C1F71E2FB0C5805F5A58C91CAD35A082?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "-",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_endDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:endDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2026.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=C1F71E2FB0C5805F5A58C91CAD35A082?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "Frissít/*<![CDATA[*/widget_A3225_j_idt8_j_idt219=new PrimeFaces.widget.CommandButton(\"A3225:j_idt8:j_idt219\",{});/*]]>*/"
+        ]
+      ]
+    },
+    {
+      "isin": "AT0000A00GA2",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GA2",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": [],
+      "table_count": 8,
+      "header_samples": [
+        [
+          "Alap neve:",
+          "ESPA BOND INTERNATIONAL (VT) HUF"
+        ],
+        [
+          "Befektetési sorozat megjelölése:",
+          ""
+        ],
+        [
+          "ISIN:",
+          "AT0000A00GA2"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          "2016.06.15.",
+          "Státusz",
+          "active",
+          "inactive"
+        ],
+        [
+          "2016.06.15.",
+          "Alapkezelő",
+          "Erste Alapkezelő Zrt.",
+          "ERSTE Sparinvest KAG"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          ""
+        ],
+        [
+          "",
+          "3 havi",
+          "6 havi",
+          "1 éves",
+          "3 éves",
+          "5 éves",
+          "10 éves",
+          "Év eleje",
+          "Indulástól"
+        ],
+        [
+          "Hozam",
+          "12,1%",
+          "17,1%",
+          "23,7%",
+          "3,3%",
+          "7,8%",
+          "N/A",
+          "6,9%",
+          "6,7%"
+        ],
+        [
+          "Szórás",
+          "",
+          "",
+          "6,9%",
+          "",
+          "10,5%",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Grafikon intervallum",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_startDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:startDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2025.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=E0FB0FC7C9EAB6034BAACB87FFAA3A0C?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "-",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_endDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:endDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2026.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=E0FB0FC7C9EAB6034BAACB87FFAA3A0C?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "Frissít/*<![CDATA[*/widget_A3225_j_idt8_j_idt219=new PrimeFaces.widget.CommandButton(\"A3225:j_idt8:j_idt219\",{});/*]]>*/"
+        ]
+      ]
+    },
+    {
+      "isin": "AT0000A00G96",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00G96",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": [],
+      "table_count": 8,
+      "header_samples": [
+        [
+          "Alap neve:",
+          "ESPA CASH CORPORATE-PLUS (VT) HUF"
+        ],
+        [
+          "Befektetési sorozat megjelölése:",
+          ""
+        ],
+        [
+          "ISIN:",
+          "AT0000A00G96"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          "2016.06.15.",
+          "Státusz",
+          "active",
+          "inactive"
+        ],
+        [
+          "2016.06.15.",
+          "Alapkezelő",
+          "Erste Alapkezelő Zrt.",
+          "ERSTE Sparinvest KAG"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          ""
+        ],
+        [
+          "",
+          "3 havi",
+          "6 havi",
+          "1 éves",
+          "3 éves",
+          "5 éves",
+          "10 éves",
+          "Év eleje",
+          "Indulástól"
+        ],
+        [
+          "Hozam",
+          "2,9%",
+          "2,2%",
+          "5,8%",
+          "5,3%",
+          "5,8%",
+          "N/A",
+          "0%",
+          "4,6%"
+        ],
+        [
+          "Szórás",
+          "",
+          "",
+          "5,3%",
+          "",
+          "6,6%",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Grafikon intervallum",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_startDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:startDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2025.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=3D2FFE8B0988AA79D444FB16115356AF?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "-",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_endDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:endDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2026.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=3D2FFE8B0988AA79D444FB16115356AF?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "Frissít/*<![CDATA[*/widget_A3225_j_idt8_j_idt219=new PrimeFaces.widget.CommandButton(\"A3225:j_idt8:j_idt219\",{});/*]]>*/"
+        ]
+      ]
+    },
+    {
+      "isin": "AT0000A00GC8",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GC8",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": [],
+      "table_count": 8,
+      "header_samples": [
+        [
+          "Alap neve:",
+          "ESPA BOND EMERGING-MARKETS (VT) HUF"
+        ],
+        [
+          "Befektetési sorozat megjelölése:",
+          ""
+        ],
+        [
+          "ISIN:",
+          "AT0000A00GC8"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          "2016.06.15.",
+          "Státusz",
+          "active",
+          "inactive"
+        ],
+        [
+          "2016.06.15.",
+          "Alapkezelő",
+          "Erste Alapkezelő Zrt.",
+          "ERSTE Sparinvest KAG"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          ""
+        ],
+        [
+          "",
+          "3 havi",
+          "6 havi",
+          "1 éves",
+          "3 éves",
+          "5 éves",
+          "10 éves",
+          "Év eleje",
+          "Indulástól"
+        ],
+        [
+          "Hozam",
+          "0,9%",
+          "-0,3%",
+          "9%",
+          "5,9%",
+          "9,4%",
+          "N/A",
+          "-0,3%",
+          "7,1%"
+        ],
+        [
+          "Szórás",
+          "",
+          "",
+          "5,2%",
+          "",
+          "6,5%",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Grafikon intervallum",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_startDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:startDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2025.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=7257DBB0E69C1322D62F79DDF1B4EA80?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "-",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_endDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:endDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2026.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=7257DBB0E69C1322D62F79DDF1B4EA80?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "Frissít/*<![CDATA[*/widget_A3225_j_idt8_j_idt219=new PrimeFaces.widget.CommandButton(\"A3225:j_idt8:j_idt219\",{});/*]]>*/"
+        ]
+      ]
+    },
+    {
+      "isin": "AT0000A00GE4",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GE4",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": [],
+      "table_count": 8,
+      "header_samples": [
+        [
+          "Alap neve:",
+          "ESPA STOCK GLOBAL-EMERGING MARKETS(VT) HUF"
+        ],
+        [
+          "Befektetési sorozat megjelölése:",
+          ""
+        ],
+        [
+          "ISIN:",
+          "AT0000A00GE4"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          "2016.06.15.",
+          "Státusz",
+          "active",
+          "inactive"
+        ],
+        [
+          "2016.06.15.",
+          "Alapkezelő",
+          "Erste Alapkezelő Zrt.",
+          "ERSTE Sparinvest KAG"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          ""
+        ],
+        [
+          "",
+          "3 havi",
+          "6 havi",
+          "1 éves",
+          "3 éves",
+          "5 éves",
+          "10 éves",
+          "Év eleje",
+          "Indulástól"
+        ],
+        [
+          "Hozam",
+          "9,9%",
+          "6,1%",
+          "21,2%",
+          "5,2%",
+          "5,5%",
+          "N/A",
+          "6,7%",
+          "4,6%"
+        ],
+        [
+          "Szórás",
+          "",
+          "",
+          "9,9%",
+          "",
+          "11,6%",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Grafikon intervallum",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_startDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:startDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2025.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=62FD5DF48FC71DC6534C0F9DCB6C5101?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "-",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_endDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:endDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2026.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=62FD5DF48FC71DC6534C0F9DCB6C5101?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "Frissít/*<![CDATA[*/widget_A3225_j_idt8_j_idt219=new PrimeFaces.widget.CommandButton(\"A3225:j_idt8:j_idt219\",{});/*]]>*/"
+        ]
+      ]
+    },
+    {
+      "isin": "AT0000A00GF1",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GF1",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": [],
+      "table_count": 8,
+      "header_samples": [
+        [
+          "Alap neve:",
+          "ESPA STOCK JAPAN (VT) HUF"
+        ],
+        [
+          "Befektetési sorozat megjelölése:",
+          ""
+        ],
+        [
+          "ISIN:",
+          "AT0000A00GF1"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          "2016.06.15.",
+          "Státusz",
+          "active",
+          "inactive"
+        ],
+        [
+          "2016.06.15.",
+          "Alapkezelő",
+          "Erste Alapkezelő Zrt.",
+          "ERSTE Sparinvest KAG"
+        ],
+        [
+          "Módosítás időpontja",
+          "Módosított jellemző",
+          "Régi adat",
+          "Új adat"
+        ],
+        [
+          ""
+        ],
+        [
+          "",
+          "3 havi",
+          "6 havi",
+          "1 éves",
+          "3 éves",
+          "5 éves",
+          "10 éves",
+          "Év eleje",
+          "Indulástól"
+        ],
+        [
+          "Hozam",
+          "17,3%",
+          "12,3%",
+          "15,2%",
+          "11,2%",
+          "9,4%",
+          "N/A",
+          "4,2%",
+          "-1,2%"
+        ],
+        [
+          "Szórás",
+          "",
+          "",
+          "14%",
+          "",
+          "13,9%",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Grafikon intervallum",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_startDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:startDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2025.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=13CF645DBCAD497B7B380586AB2E8971?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "-",
+          "/*<![CDATA[*/jQuery(function(){widget_A3225_j_idt8_endDate=new PrimeFaces.widget.Calendar(\"A3225:j_idt8:endDate\",{popup:true,locale:\"hu_HU\",defaultDate:\"2026.10.24\",pattern:\"yy.mm.dd\",changeMonth:true,changeYear:true,showOn:\"button\",buttonImage:\"https://www.bamosz.hu/web/guest/alapoldal;jsessionid=13CF645DBCAD497B7B380586AB2E8971?_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_javax.faces.resource=calendar%2Fcalendar_icon.png&_bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk_ln=primefaces&p_p_cacheability=cacheLevelPage&p_p_col_count=2&p_p_col_id=column-1&p_p_col_pos=1&p_p_id=bamoszpublicalapoldal_WAR_bamoszpublicalapoldalportlet_INSTANCE_N4Uk&p_p_lifecycle=2&p_p_mode=view&p_p_state=normal&amp;v=3.0.M1\",buttonImageOnly:false})});/*]]>*/",
+          "Frissít/*<![CDATA[*/widget_A3225_j_idt8_j_idt219=new PrimeFaces.widget.CommandButton(\"A3225:j_idt8:j_idt219\",{});/*]]>*/"
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+HISSE ROBOTU - SPRINT 39 KAP/VBTS DURUM KARTI DUZELTILMIS PAKET
+
+1. ZIP'i doğrudan buraya ayıklayın:
+   D:\Projects\Hisse-Robotu
+
+2. Düzeltilmiş yamayı çalıştırın:
+   python .\apply_sprint39_kap_status_card_v2.py
+
+3. Hedef test:
+   python -m pytest .\backend\tests\test_dashboard_kap_status_card.py -q
+
+Beklenen:
+3 passed
+
+4. Tam regresyon:
+   python -m pytest -q
+
+Beklenen toplam:
+663 passed

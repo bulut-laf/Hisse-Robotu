@@ -1,0 +1,33 @@
+{
+  "schema_version": "financial-intelligence-v1-2-sector-expansion-closure-v1",
+  "status": "PASS",
+  "supported_sector_models": [
+    "INDUSTRIAL",
+    "BANK",
+    "INSURANCE",
+    "REIT",
+    "HOLDING"
+  ],
+  "production_ready_models": [
+    "INDUSTRIAL"
+  ],
+  "blocked_production_models": {
+    "BANK": "NO_REAL_BANK_SOURCE",
+    "INSURANCE": "NO_REAL_INSURANCE_SOURCE",
+    "REIT": "NO_REAL_REIT_SOURCE",
+    "HOLDING": "NO_REAL_HOLDING_SOURCE"
+  },
+  "production_evidence": {
+    "BANK": false,
+    "INSURANCE": false,
+    "REIT": false,
+    "HOLDING": false
+  },
+  "industrial_threshold_reuse": false,
+  "missing_to_zero": false,
+  "future_publication_allowed": false,
+  "al_sat_authority": "NONE",
+  "scanner_mutation": false,
+  "ranking_mutation": false,
+  "portfolio_mutation": false
+}

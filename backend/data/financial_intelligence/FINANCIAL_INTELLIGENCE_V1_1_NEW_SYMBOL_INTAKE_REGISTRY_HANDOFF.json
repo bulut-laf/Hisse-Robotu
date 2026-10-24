@@ -1,0 +1,10 @@
+{
+  "schema_version": "financial-intelligence-v1-1-new-symbol-intake-registry-handoff-v1",
+  "status": "PASS_NO_INTAKE_ARTIFACT",
+  "symbol": null,
+  "registry_updated": false,
+  "blockers": [
+    "NEW_SYMBOL_INTAKE_ARTIFACT_MISSING"
+  ],
+  "registry_artifact": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_1_MULTI_SYMBOL_REGISTRY.json"
+}

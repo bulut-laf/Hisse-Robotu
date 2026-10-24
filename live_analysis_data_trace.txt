@@ -1,0 +1,44 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:14: referans_fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:15: toplu_fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:280: veri_getirici: DataFetcher = toplu_fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:292: veri_getirici is toplu_fiyat_verisi_getir
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:298: on_tazelik_getirici or referans_fiyat_verisi_getir
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:10: from ..data.batch_market_data import BatchMarketDataResult, toplu_fiyat_verisi_getir
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:337: veri_getirici: DataFetcher = toplu_fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_analyzer.py:10: fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_analyzer.py:107: fiyat_verisi = fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_scanner.py:8: toplu_fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_scanner.py:169: toplu_fiyat_verisi_getir
+D:\Projects\Hisse-Robotu\backend\app\backtest\backtest_service.py:14: fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\backtest\backtest_service.py:201: veri_getirici: VeriGetirici = fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:8: from ..data.market_data import MarketDataError, fiyat_verisi_getir
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:76: veri_getirici: VeriGetirici = fiyat_verisi_getir,
+D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py:44: def referans_fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py:55: return toplu_fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py:68: def toplu_fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py:287: def guvenli_referans_fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py:301: result = referans_fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\data\market_data.py:17: def fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\data\market_data.py:252: def guvenli_fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\data\market_data.py:265: primary_loader=lambda: fiyat_verisi_getir(
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:16: from ..ui.live_analysis_dashboard import LiveAnalysisResult
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:362: sonuc: LiveAnalysisResult,
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:364: """Güncel teknik analiz sonucunu yeniden açılabilir biçimde saklar."""
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:366: if not isinstance(sonuc, LiveAnalysisResult):
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:368: "Güncel analiz geçmiş sonucu LiveAnalysisResult olmalıdır."
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:384: else "Güncel teknik analiz"
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:481: baslik=f"{teknik.sembol} · Güncel Teknik Analiz",
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py:75: "Güncel teknik analiz kayıtları performans karşılaştırmasına uygun değildir."
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:31: class LiveAnalysisDashboardError(Exception):
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:36: class LiveAnalysisRequest:
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:37: """Güncel teknik analiz ve işlem planı için kullanıcı girdileri."""
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:52: class LiveAnalysisResult:
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:59: istek: LiveAnalysisRequest | None = None
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:103: class LiveAnalysisDashboardService:
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:104: """Veriyi bir kez indirip güncel teknik analiz ve planı birlikte üretir."""
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:116: def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:137: raise LiveAnalysisDashboardError(str(hata)) from hata
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:139: return LiveAnalysisResult(
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:179: raise LiveAnalysisDashboardError(str(hata)) from hata
+D:\Projects\Hisse-Robotu\backend\app\ui\portfolio_dashboard.py:40: from ..data.market_data import MarketDataError, fiyat_verisi_getir
+D:\Projects\Hisse-Robotu\backend\app\ui\portfolio_dashboard.py:405: fiyat_verisi = fiyat_verisi_getir(

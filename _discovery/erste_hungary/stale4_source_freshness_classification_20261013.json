@@ -1,0 +1,65 @@
+{
+  "artifact_type": "ERSTE_HUNGARY_SOURCE_FRESHNESS_CLASSIFICATION",
+  "created_at_utc": "2026-10-13T10:01:11.611082+00:00",
+  "source_artifact": "_discovery\\erste_hungary\\stale4_comparison_recheck_20261013.json",
+  "freshness_cutoff": "2026-10-01",
+  "classification_scope": "DISCOVERY_ONLY",
+  "results": [
+    {
+      "isin": "LU0011850392",
+      "name": "BGF EMERGING EUROPE A2 EUR",
+      "nav_date": "2022-02-28",
+      "nav": "53.6",
+      "source_check_success": true,
+      "source_error": null,
+      "freshness_status": "STALE_SOURCE_DATA",
+      "ranking_eligible_from_freshness_check": false,
+      "note": "Eski kaynak tarihi; güncel performans sıralamasında kullanma."
+    },
+    {
+      "isin": "LU0113311731",
+      "name": "GOLDMAN SACHS EMERGING EUROPE EQUITY X CAP EUR",
+      "nav_date": "2022-07-01",
+      "nav": "30.776451",
+      "source_check_success": true,
+      "source_error": null,
+      "freshness_status": "STALE_SOURCE_DATA",
+      "ranking_eligible_from_freshness_check": false,
+      "note": "Eski kaynak tarihi; güncel performans sıralamasında kullanma."
+    },
+    {
+      "isin": "LU0117895796",
+      "name": "JPM EMERGING EUROPE EQUITY D (ACC) - EUR",
+      "nav_date": "2025-03-24",
+      "nav": "0.1307",
+      "source_check_success": true,
+      "source_error": null,
+      "freshness_status": "STALE_SOURCE_DATA",
+      "ranking_eligible_from_freshness_check": false,
+      "note": "Eski kaynak tarihi; güncel performans sıralamasında kullanma."
+    },
+    {
+      "isin": "LU0823403356",
+      "name": "BNP PARIBAS FUNDS EUROPE EMERGING EQUITY EUR",
+      "nav_date": "2023-07-03",
+      "nav": "55.33",
+      "source_check_success": true,
+      "source_error": null,
+      "freshness_status": "STALE_SOURCE_DATA",
+      "ranking_eligible_from_freshness_check": false,
+      "note": "Eski kaynak tarihi; güncel performans sıralamasında kullanma."
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "stale_source_data": 4,
+    "recent_source_data": 0,
+    "source_check_error": 0,
+    "nav_date_unavailable": 0
+  },
+  "rank_history_write": false,
+  "production_decisions_modified": false,
+  "catalog_modified": false,
+  "trade_authority": "NONE",
+  "forced_fill": false
+}

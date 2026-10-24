@@ -1,0 +1,167 @@
+diff --git a/backend/app/funds/ui_live_refresh.py b/backend/app/funds/ui_live_refresh.py
+new file mode 100644
+index 0000000..4ab8e90
+--- /dev/null
++++ b/backend/app/funds/ui_live_refresh.py
+@@ -0,0 +1,44 @@
++from __future__ import annotations
++
++from collections.abc import Callable, Iterable
++from dataclasses import dataclass
++
++from .analysis_engine import FundAnalysisResult
++
++
++FundAnalysisLoader = Callable[[], Iterable[FundAnalysisResult]]
++
++
++@dataclass(frozen=True, slots=True)
++class FundLiveRefreshOutcome:
++    results: tuple[FundAnalysisResult, ...]
++    refreshed: bool
++    error_message: str | None = None
++
++
++def refresh_fund_analysis_if_requested(
++    *,
++    requested: bool,
++    current_results: Iterable[FundAnalysisResult] = (),
++    loader: FundAnalysisLoader | None = None,
++) -> FundLiveRefreshOutcome:
++    """Run TEFAS live analysis only after an explicit UI action."""
++    current = tuple(current_results)
++    if not requested:
++        return FundLiveRefreshOutcome(results=current, refreshed=False)
++
++    if loader is None:
++        from .live_pipeline import run_live_fund_analysis
++
++        loader = run_live_fund_analysis
++
++    try:
++        refreshed = tuple(loader())
++    except Exception as exc:  # UI boundary: preserve last good state on refresh failure.
++        return FundLiveRefreshOutcome(
++            results=current,
++            refreshed=False,
++            error_message=str(exc) or exc.__class__.__name__,
++        )
++
++    return FundLiveRefreshOutcome(results=refreshed, refreshed=True)
+diff --git a/backend/dashboard.py b/backend/dashboard.py
+index f9d06e2..0960e6e 100644
+--- a/backend/dashboard.py
++++ b/backend/dashboard.py
+@@ -10380,13 +10380,47 @@ def main() -> None:
+     if analiz_modu == "Tek Hisse":
+         tek_hisse_formu()
+     elif analiz_modu == "Fon Analiz Merkezi":
+-        from backend.app.funds.live_pipeline import run_live_fund_analysis
+         from backend.app.funds.portfolio_tracking import fund_portfolio_snapshot_store
++        from backend.app.funds.ui_live_refresh import refresh_fund_analysis_if_requested
+         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+ 
++        live_results_key = "fund_analysis_live_results"
++        current_live_results = tuple(st.session_state.get(live_results_key, ()))
++
++        st.caption(
++            "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. "
++            "TEFAS canlı verisi yalnız aşağıdaki düğmeyle açıkça güncellenir."
++        )
++        refresh_requested = st.button(
++            "TEFAS Verisini Güncelle",
++            key="fund_analysis_live_refresh_button",
++        )
++
++        refresh_outcome = refresh_fund_analysis_if_requested(
++            requested=False,
++            current_results=current_live_results,
++        )
++        if refresh_requested:
++            with st.spinner("TEFAS canlı fon verisi güncelleniyor..."):
++                refresh_outcome = refresh_fund_analysis_if_requested(
++                    requested=True,
++                    current_results=current_live_results,
++                )
++            if refresh_outcome.error_message:
++                st.error(
++                    "TEFAS canlı fon verisi güncellenemedi; "
++                    f"mevcut ekran korunuyor. {refresh_outcome.error_message}"
++                )
++            elif refresh_outcome.refreshed:
++                st.session_state[live_results_key] = refresh_outcome.results
++                st.success(
++                    f"TEFAS canlı fon analizi güncellendi: "
++                    f"{len(refresh_outcome.results)} fon."
++                )
++
+         render_fund_analysis_center(
+             st,
+-            run_live_fund_analysis(),
++            refresh_outcome.results,
+             portfolio_store=fund_portfolio_snapshot_store(),
+         )
+     elif analiz_modu == "Seans Öncesi Bağlam":
+diff --git a/backend/tests/test_fund_analysis_non_blocking_entry_v1.py b/backend/tests/test_fund_analysis_non_blocking_entry_v1.py
+new file mode 100644
+index 0000000..7e4fa7d
+--- /dev/null
++++ b/backend/tests/test_fund_analysis_non_blocking_entry_v1.py
+@@ -0,0 +1,57 @@
++from backend.app.funds.ui_live_refresh import refresh_fund_analysis_if_requested
++
++
++def test_initial_entry_does_not_call_live_provider():
++    calls = []
++
++    def forbidden_loader():
++        calls.append("called")
++        raise AssertionError("LIVE_PROVIDER_CALLED_ON_ENTRY")
++
++    outcome = refresh_fund_analysis_if_requested(
++        requested=False,
++        current_results=(),
++        loader=forbidden_loader,
++    )
++
++    assert calls == []
++    assert outcome.results == ()
++    assert outcome.refreshed is False
++    assert outcome.error_message is None
++
++
++def test_explicit_refresh_calls_provider_once_and_replaces_results():
++    expected = object()
++    calls = []
++
++    def loader():
++        calls.append("called")
++        return (expected,)
++
++    outcome = refresh_fund_analysis_if_requested(
++        requested=True,
++        current_results=(),
++        loader=loader,
++    )
++
++    assert calls == ["called"]
++    assert outcome.results == (expected,)
++    assert outcome.refreshed is True
++    assert outcome.error_message is None
++
++
++def test_failed_refresh_preserves_last_good_results():
++    previous = object()
++
++    def failing_loader():
++        raise RuntimeError("TEFAS_DOWN")
++
++    outcome = refresh_fund_analysis_if_requested(
++        requested=True,
++        current_results=(previous,),
++        loader=failing_loader,
++    )
++
++    assert outcome.results == (previous,)
++    assert outcome.refreshed is False
++    assert outcome.error_message == "TEFAS_DOWN"

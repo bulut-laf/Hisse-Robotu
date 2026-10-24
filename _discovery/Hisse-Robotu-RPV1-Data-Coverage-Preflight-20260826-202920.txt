@@ -1,0 +1,192 @@
+=== HISSE ROBOTU тАФ RPV1 DATA COVERAGE PREFLIGHT ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+MEMORY_MUTATION=NO
+GOAL=REUSE_EXISTING_CANONICAL_FUNDAMENTAL_DATA_ONLY
+NEW_PROVIDER=NO
+NEW_STORE=NO
+NEW_SCORE=NO
+
+RESEARCH_PROFILES_PATH=D:\Projects\Hisse-Robotu\backend\app\analysis\research_profiles.py
+RESEARCH_PROFILES_EXISTS=YES
+RESEARCH_PROFILES_DAILY_PATH=D:\Projects\Hisse-Robotu\backend\app\analysis\research_profiles_daily.py
+RESEARCH_PROFILES_DAILY_EXISTS=YES
+FUNDAMENTAL_ANALYSIS_PATH=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py
+FUNDAMENTAL_ANALYSIS_EXISTS=YES
+FUNDAMENTAL_QUALITY_PATH=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py
+FUNDAMENTAL_QUALITY_EXISTS=YES
+DASHBOARD_PATH=D:\Projects\Hisse-Robotu\backend\dashboard.py
+DASHBOARD_EXISTS=YES
+
+=== 1. REQUIRED RPV1 FIELDS ===
+RPV1_REQUIRES_MARKET_CAP_TRY=YES
+RPV1_REQUIRES_FREE_FLOAT_SHARES=YES
+RPV1_REQUIRES_TTM_CFO=YES
+RPV1_REQUIRES_TTM_OPERATING_PROFIT=YES
+RPV1_REQUIRES_NET_CASH=YES
+RPV1_REQUIRES_NET_DEBT_EBITDA=YES
+RPV1_REQUIRES_DEBT_EQUITY=YES
+RPV1_REQUIRES_REVENUE_YOY_PCT=YES
+RPV1_REQUIRES_GROSS_MARGIN_DELTA_PP=YES
+RPV1_REQUIRES_EBITDA_MARGIN_DELTA_PP=YES
+RPV1_REQUIRES_OPERATING_PROFIT_YOY_PCT=YES
+RPV1_REQUIRES_CAPEX=YES
+
+=== 2. CURRENT FUNDAMENTAL MODULE SYMBOLS ===
+--- backend\app\analysis\fundamental_analysis.py ---
+SYMBOL=_safe_ratio LINE=16
+SYMBOL=calculate_ratios LINE=41
+SYMBOL=_quality_flags LINE=146
+SYMBOL=build_fundamental_snapshot LINE=176
+--- backend\app\analysis\fundamental_quality.py ---
+SYMBOL=FundamentalQualityComponent LINE=12
+SYMBOL=FundamentalQualityScore LINE=21
+SYMBOL=calculate_fundamental_quality LINE=71
+SYMBOL=OptionalFundamentalFilterResult LINE=297
+SYMBOL=apply_optional_fundamental_filter LINE=303
+
+=== 3. REPO FIELD EVIDENCE ===
+MARKET_CAP_FILE_HITS=9
+MARKET_CAP_HIT=backend\dashboard.backup_before_navigation_fix.py|market_cap,piyasa de─Яeri
+MARKET_CAP_HIT=backend\dashboard.py|market_cap,piyasa de─Яeri
+MARKET_CAP_HIT=backend\tests\test_research_profiles_daily_v1.py|market_cap
+MARKET_CAP_HIT=backend\tests\test_research_profiles_v1.py|market_cap
+MARKET_CAP_HIT=backend\tests\test_sector_reference.py|market_cap
+MARKET_CAP_HIT=backend\tests\test_sector_reference_dashboard.py|market_cap,piyasa_degeri,piyasa de─Яeri
+MARKET_CAP_HIT=backend\app\analysis\research_profiles.py|market_cap
+MARKET_CAP_HIT=backend\app\analysis\research_profiles_daily.py|market_cap,piyasa_degeri,piyasa de─Яeri
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py|market_cap,piyasa de─Яeri
+FREE_FLOAT_SHARES_FILE_HITS=4
+FREE_FLOAT_SHARES_HIT=backend\tests\test_research_profiles_daily_v1.py|free_float_shares,free_float
+FREE_FLOAT_SHARES_HIT=backend\tests\test_research_profiles_v1.py|free_float_shares,free_float
+FREE_FLOAT_SHARES_HIT=backend\app\analysis\research_profiles.py|free_float_shares,free_float
+FREE_FLOAT_SHARES_HIT=backend\app\analysis\research_profiles_daily.py|free_float_shares,free_float,fiili_dolasim,fiili dola┼Я─▒m
+CFO_FILE_HITS=31
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py|operating_cash_flow,nakit ak─▒┼Я
+CFO_HIT=backend\dashboard.py|operating_cash_flow,nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_analysis.py|operating_cash_flow,nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_dashboard.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_data.py|operating_cash_flow
+CFO_HIT=backend\tests\test_fundamental_models.py|operating_cash_flow
+CFO_HIT=backend\tests\test_fundamental_quality.py|operating_cash_flow
+CFO_HIT=backend\tests\test_fundamental_quality_dashboard.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_report.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_report_archive.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_role_clarity_v11.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_score_history.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_score_history_dashboard.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_score_history_store.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_score_store.py|operating_cash_flow
+CFO_HIT=backend\tests\test_fundamental_settings_integration.py|nakit ak─▒┼Я
+CFO_HIT=backend\tests\test_fundamental_store.py|operating_cash_flow
+CFO_HIT=backend\tests\test_kap_fundamental_service.py|operating_cash_flow
+CFO_HIT=backend\tests\test_research_profiles_daily_v1.py|operating_cash_flow
+CFO_HIT=backend\tests\test_sector_reference.py|operating_cash_flow
+OPERATING_PROFIT_FILE_HITS=17
+OPERATING_PROFIT_HIT=backend\tests\test_fundamental_analysis.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_fundamental_data.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_fundamental_models.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_fundamental_quality.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_fundamental_score_store.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_fundamental_store.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_kap_fundamental_service.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_research_profiles_daily_v1.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_research_profiles_v1.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_research_profile_memory_v1.py|operating_profit
+OPERATING_PROFIT_HIT=backend\tests\test_sector_reference.py|operating_profit
+OPERATING_PROFIT_HIT=backend\app\analysis\fundamental_analysis.py|operating_profit
+OPERATING_PROFIT_HIT=backend\app\analysis\research_profiles.py|operating_profit
+OPERATING_PROFIT_HIT=backend\app\analysis\research_profiles_daily.py|operating_profit,operating_income,esas_faaliyet
+OPERATING_PROFIT_HIT=backend\app\data\fundamental_data.py|operating_profit
+OPERATING_PROFIT_HIT=backend\app\data\kap_fundamental_source.py|operating_profit
+OPERATING_PROFIT_HIT=backend\app\models\fundamental_models.py|operating_profit
+EBITDA_FILE_HITS=23
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py|ebitda,fav├╢k
+EBITDA_HIT=backend\dashboard.py|ebitda,fav├╢k
+EBITDA_HIT=backend\tests\test_fundamental_analysis.py|ebitda
+EBITDA_HIT=backend\tests\test_fundamental_dashboard.py|fav├╢k
+EBITDA_HIT=backend\tests\test_fundamental_data.py|ebitda
+EBITDA_HIT=backend\tests\test_fundamental_models.py|ebitda
+EBITDA_HIT=backend\tests\test_fundamental_quality.py|ebitda
+EBITDA_HIT=backend\tests\test_fundamental_role_clarity_v11.py|fav├╢k
+EBITDA_HIT=backend\tests\test_fundamental_score_store.py|ebitda
+EBITDA_HIT=backend\tests\test_fundamental_store.py|ebitda
+EBITDA_HIT=backend\tests\test_kap_fundamental_service.py|ebitda
+EBITDA_HIT=backend\tests\test_kap_fundamental_source.py|ebitda
+EBITDA_HIT=backend\tests\test_research_profiles_daily_v1.py|ebitda
+EBITDA_HIT=backend\tests\test_research_profiles_v1.py|ebitda
+EBITDA_HIT=backend\tests\test_research_profile_memory_v1.py|ebitda
+EBITDA_HIT=backend\tests\test_sector_reference.py|ebitda
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py|ebitda
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py|ebitda,fav├╢k
+EBITDA_HIT=backend\app\analysis\research_profiles.py|ebitda
+EBITDA_HIT=backend\app\analysis\research_profiles_daily.py|ebitda,favok,fav├╢k
+NET_CASH_DEBT_FILE_HITS=11
+NET_CASH_DEBT_HIT=backend\dashboard.backup_before_navigation_fix.py|net_debt,net bor├з
+NET_CASH_DEBT_HIT=backend\dashboard.py|net_debt,net bor├з
+NET_CASH_DEBT_HIT=backend\tests\test_fundamental_analysis.py|net_debt
+NET_CASH_DEBT_HIT=backend\tests\test_research_profiles_daily_v1.py|net_cash
+NET_CASH_DEBT_HIT=backend\tests\test_research_profiles_v1.py|net_cash,net_debt
+NET_CASH_DEBT_HIT=backend\tests\test_research_profile_memory_v1.py|net_cash
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_analysis.py|net_debt
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_quality.py|net_debt,net bor├з
+NET_CASH_DEBT_HIT=backend\app\analysis\research_profiles.py|net_cash,net_debt
+NET_CASH_DEBT_HIT=backend\app\analysis\research_profiles_daily.py|net_cash,net_debt,net_nakit,net_borc
+NET_CASH_DEBT_HIT=backend\app\models\fundamental_models.py|net_debt
+DEBT_EQUITY_FILE_HITS=3
+DEBT_EQUITY_HIT=backend\tests\test_research_profiles_v1.py|debt_equity
+DEBT_EQUITY_HIT=backend\app\analysis\research_profiles.py|debt_equity
+DEBT_EQUITY_HIT=backend\app\analysis\research_profiles_daily.py|debt_equity,borc_ozkaynak
+CAPEX_FILE_HITS=49
+CAPEX_HIT=backend\dashboard.backup_before_navigation_fix.py|yat─▒r─▒m
+CAPEX_HIT=backend\dashboard.py|yat─▒r─▒m
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py|capacity,kapasite
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py|capacity,kapasite
+CAPEX_HIT=backend\run_position_monitor.py|yat─▒r─▒m
+CAPEX_HIT=backend\run_rolling_window_analysis.py|yat─▒r─▒m
+CAPEX_HIT=backend\run_trade_plan.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_fundamental_report.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_fundamental_report_dashboard.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_fundamental_v1_closeout.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_kap_fundamental_source.py|capex
+CAPEX_HIT=backend\tests\test_manual_vbts_setup_assets.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_market_context_report_type_integration.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_news_center_archive_view.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_news_center_source_registry.py|yatirim,yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_news_center_symbol_news.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_news_center_v1_release.py|yat─▒r─▒m
+CAPEX_HIT=backend\tests\test_portfolio_backtest.py|kapasite
+CAPEX_HIT=backend\tests\test_portfolio_capacity_robustness.py|capacity,kapasite
+CAPEX_HIT=backend\tests\test_portfolio_capacity_sensitivity.py|capacity,kapasite
+
+=== 4. DATA FILE INVENTORY ===
+DATA_CANDIDATE_FILES=1
+DATA_FILE=backend\data\fundamental_sample.csv|BYTES=582
+
+=== 5. FUNDAMENTAL SAMPLE / SCHEMA ===
+SAMPLE=backend\data\fundamental_sample.csv EXISTS=YES
+SAMPLE_HEADER=symbol|period_end|fiscal_year|fiscal_quarter|currency|revenue|gross_profit|operating_profit|ebitda|net_income|total_assets|total_equity|total_debt|cash_and_equivalents|current_assets|current_liabilities|operating_cash_flow|capital_expenditure|shares_outstanding|source|published_at
+SAMPLE_ROW=THYAO|2026-06-30|2026|2|TRY|1000|300|180|220|120|2500|1000|700|200|900|600|160|40|100|KAP|2026-07-20
+SAMPLE_ROW=THYAO|2026-03-31|2026|1|TRY|900|260|150|190|95|2350|920|720|180|850|610|130|35|100|KAP|2026-05-10
+SAMPLE_ROW=THYAO|2025-06-30|2025|2|TRY|800|220|120|160|80|2100|800|650|150|760|580|110|30|100|KAP|2025-08-10
+SAMPLE=backend\data\fundamental_sample.json EXISTS=NO
+
+=== 6. DASHBOARD CURRENT FUNDAMENTAL WIRING ===
+DASH_BUILD_FUNDAMENTAL_SNAPSHOT_LINES=49,4693,6266
+DASH_PERIODS_FROM_CSV_BYTES_LINES=309,4645,4669,6203
+DASH_PERIODS_FROM_JSON_BYTES_LINES=310,4647,4673,6205
+DASH_FUNDAMENTALSCOREJSONSTORE_LINES=263,3953,3954
+DASH_TEMEL_FILTRE_DOSYASI_LINES=4592,4596,4640,4642,4643,4662,4664,4666
+DASH_RESEARCH_PROFILE_PERIODS_LINES=4638,4644,4655,4773
+DASH_RESEARCH_PROFILE_CONTEXTS_LINES=23,4639,4649,4656,4774
+
+=== 7. EXACT ADAPTER GAP DECISION ===
+EVIDENCE_FUNDAMENTAL_PERIOD_PIPELINE=YES
+EVIDENCE_MARKET_CAP=YES
+EVIDENCE_FREE_FLOAT=YES
+EVIDENCE_CAPEX=YES
+DECISION=EXACT_REUSE_SEAMS_PRESENT_FOR_FULL_RPV1_COVERAGE
+
+=== PREFLIGHT COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO

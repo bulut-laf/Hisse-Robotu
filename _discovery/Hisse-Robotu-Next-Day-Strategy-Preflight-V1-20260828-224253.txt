@@ -1,0 +1,1223 @@
+HISSE ROBOTU — NEXT-DAY SELECTION STRATEGY PREFLIGHT V1
+========================================================================================
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+SCHEDULER_MUTATION=NO
+SCANNER_INVOCATION=NO
+NETWORK_CALL=NO
+PRODUCTION_FILES_SCANNED=485
+
+=== 1. CANONICAL FULL RESULT ===
+MARKETSCANRESULT_FILES=backend\app\analysis\market_scanner.py
+MARKETSCANRESULT_FIELDS=adaylar;evren_adi;evren_kaynagi;evren_sembol_sayisi;evren_tarihi;filtrelenmis;profil;sektor_baglami_uyarisi;sektor_baglamlari;sektor_referans_evreni;tum_sonuclar;vbts_dogrulama_uyarisi;vbts_engelleme_nedenleri;vbts_engellenen_semboller;veri_tazeligi
+HAS_TUM_SONUCLAR=True
+HAS_ADAYLAR=True
+BIST_TUM_REFS=21
+TUM_SONUCLAR_REFS=13
+CANONICAL_FULL_RESULT=PROVEN
+BIST_TUM=backend\dashboard.py:3245|index=TARAMA_EVRENLERI.index("BIST Tüm"),
+BIST_TUM=backend\dashboard.py:3273|evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+BIST_TUM=backend\dashboard.py:4574|disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+BIST_TUM=backend\app\opportunity_radar.py:616|"BIST Tüm",
+BIST_TUM=backend\scripts\sector_member_strength_check.py:23|choices=("BIST 30", "BIST 50", "BIST 100", "BIST 500", "BIST Tüm"),
+BIST_TUM=backend\app\analysis\bist_daily_market.py:92|evren_adi: str = "BIST Tüm",
+BIST_TUM=backend\app\analysis\bist_daily_market.py:104|"BIST Tüm",
+BIST_TUM=backend\app\analysis\bist_universe.py:21|"BIST Tüm": "XUTUM",
+BIST_TUM=backend\app\analysis\market_regime.py:29|"XUTUM": "BIST Tüm",
+BIST_TUM=backend\app\analysis\market_scanner.py:46|"BIST Tüm",
+BIST_TUM=backend\app\analysis\momentum_discovery.py:73|evren: str = "BIST Tüm"
+BIST_TUM=backend\app\analysis\research_profile_memory.py:14|CANONICAL_PROFILE_MEMORY_UNIVERSE = "BIST Tüm"
+BIST_TUM=backend\app\diagnostics\system_check.py:671|"BIST Tüm": 500,
+BIST_TUM=backend\app\history\replay_batch_adapter.py:56|"bisttüm": "BIST Tüm",
+BIST_TUM=backend\app\history\replay_batch_adapter.py:57|"bisttum": "BIST Tüm",
+BIST_TUM=backend\app\operations\preclose_partial_daily_preview.py:285|"evren": "BIST Tüm",
+BIST_TUM=backend\app\prebreakout\prebreakout_universe.py:16|"BIST Tüm",
+BIST_TUM=backend\app\ui\batch_historical_export_ui.py:91|universe_options: tuple[str, ...] = ("BIST100", "BIST Tüm"),
+BIST_TUM=backend\app\ui\bist_daily_market_dashboard.py:200|"BIST Tüm": "BIST Tüm",
+BIST_TUM=backend\app\ui\momentum_batch_history_integration.py:71|universe_options=("BIST100", "BIST Tüm"),
+TUM_RESULT=backend\dashboard.py:4769|item.sembol for item in tuple(getattr(sonuc, "tum_sonuclar", ()) or ())
+TUM_RESULT=backend\app\analysis\fast_mover_preclose_attachment.py:103|The order of existing ``tum_sonuclar`` is reused as the current Research
+TUM_RESULT=backend\app\analysis\market_scanner.py:90|tum_sonuclar: tuple[StockAnalysisResult, ...] = ()
+TUM_RESULT=backend\app\analysis\market_scanner.py:265|tum_sonuclar = tuple(tarama.basarili_sonuclar)
+TUM_RESULT=backend\app\analysis\market_scanner.py:272|for sonuc in tum_sonuclar
+TUM_RESULT=backend\app\analysis\market_scanner.py:287|tum_sonuclar=tuple(tarama.basarili_sonuclar),
+TUM_RESULT=backend\app\analysis\momentum_walk_forward.py:372|tum_sonuclar, motor_hatalari = self._motor.calistir(
+TUM_RESULT=backend\app\analysis\momentum_walk_forward.py:387|for sonuc in tum_sonuclar
+TUM_RESULT=backend\app\analysis\momentum_walk_forward.py:395|sonuc for sonuc in tum_sonuclar if sonuc.aday.sinif == SINIF_IZLEME_DISI
+TUM_RESULT=backend\app\analysis\momentum_walk_forward.py:407|basarili_sayisi=len(tum_sonuclar),
+TUM_RESULT=backend\app\analysis\research_profiles_daily.py:446|for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ()):
+TUM_RESULT=backend\app\operations\preclose_partial_daily_preview.py:300|for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ())
+TUM_RESULT=backend\app\operations\preclose_partial_daily_preview.py:323|getattr(scan_result, "tum_sonuclar", ()) or ()
+
+=== 2. CANONICAL CANDIDATE ROW CLASSES ===
+CANDIDATE_CLASS=backend\app\analysis\stock_analyzer.py:47|StockAnalysisResult
+FIELDS=analiz_tarihi;atr14;atr_yuzde;destek_direnc;ema21;ema9;hacim;hacim_durumu;hacim_orani;hedef_kaynagi;kapanis;macd;macd_histogram;macd_sinyal;risk_plani;rsi14;sembol;sinyal
+class StockAnalysisResult:
+    """Tek bir hisse için üretilen bütünleşik analiz sonucu."""
+
+    sembol: str
+    analiz_tarihi: str
+
+    kapanis: float
+    hacim: int
+
+    ema9: float
+    ema21: float
+    rsi14: float
+
+    macd: float
+    macd_sinyal: float
+    macd_histogram: float
+
+    atr14: float
+    atr_yuzde: float
+
+    hacim_orani: float
+    hacim_durumu: str
+
+    destek_direnc: SupportResistanceResult
+    hedef_kaynagi: str
+
+    risk_plani: RiskPlan
+    sinyal: SignalResult
+
+    def sozluge_donustur(self) -> dict[str, Any]:
+        """
+        Sonucu API ve tablo katmanında kullanılabilecek
+        sözlük biçimine dönüştürür.
+        """
+        return asdict(self)
+CANDIDATE_CLASS=backend\app\analysis\market_regime.py:59|MarketRegimeResult
+FIELDS=ad;analiz_tarihi;genislik;gunluk_yon;guven_duzeyi;hacim;haftalik_yon;kaynak_hatalari;kaynak_sirasi;kirilim;momentum;pozitif_nedenler;rejim;riskler;saatlik_kullanilabilir;saatlik_yon;sembol;son_kapanis;sonraki_kontrol_zamani;tazelik_kilit_asamasi;toplam_indirme_suresi_saniye;toplam_skor;trend;veri_kaynagi;veri_kimligi;veri_tazeligi;yahoo_sembolu;yeniden_deneme_sayisi
+class MarketRegimeResult:
+    sembol: str
+    ad: str
+    yahoo_sembolu: str
+    analiz_tarihi: pd.Timestamp
+    son_kapanis: float
+    veri_tazeligi: DataFreshnessResult
+    haftalik_yon: str
+    gunluk_yon: str
+    saatlik_yon: str | None
+    saatlik_kullanilabilir: bool
+    trend: RegimeComponent
+    momentum: RegimeComponent
+    hacim: RegimeComponent
+    kirilim: RegimeComponent
+    genislik: RegimeComponent
+    toplam_skor: int
+    rejim: str
+    guven_duzeyi: str
+    pozitif_nedenler: tuple[str, ...]
+    riskler: tuple[str, ...]
+    veri_kimligi: str
+    veri_kaynagi: str = "birincil"
+    yeniden_deneme_sayisi: int = 0
+    toplam_indirme_suresi_saniye: float = 0.0
+    tazelik_kilit_asamasi: str = ""
+    sonraki_kontrol_zamani: str = ""
+    kaynak_sirasi: tuple[str, ...] = ("birincil",)
+    kaynak_hatalari: tuple[str, ...] = ()
+CANDIDATE_CLASS=backend\app\analysis\momentum_discovery.py:99|MomentumCandidate
+FIELDS=analiz_tarihi;asiri_uzamis;atr_yuzde;fiyat_ivmesi_puani;getiri_20g;getiri_5g;getiri_60g;goreceli_guc_egimi;goreceli_guc_puani;hacim_birikimi_puani;hacim_egimi;hacim_orani;hazirlik_durumu;ilk_gorulme_fiyati;ilk_gorulme_tarihi;ilk_gorulmeden_getiri;izleme_disi_nedeni;kalici_hazirlik;kapanis;kirilim;kirilim_hazirligi_puani;kirilim_tetik_seviyesi;likidite_puani;listedeki_gun;macd_histogram_egimi;momentum_skoru;ortalama_tl_hacim;pozitif_nedenler;risk_kalitesi_puani;risk_odul_orani;risk_odul_uygun;riskler;rsi14;rsi_egimi;sembol;sikisma;sinif;sinyal_gecmisi;son_guclu_sinyal_tarihi;son_hazirlik_sinyali_tarihi;teknik_gorunum;teknik_skor;trend_puani;yakin_direnc;yirmi_gunluk_zirve_uzakligi
+class MomentumCandidate:
+    sembol: str
+    analiz_tarihi: str
+    kapanis: float
+    momentum_skoru: int
+    sinif: str
+    goreceli_guc_puani: int
+    fiyat_ivmesi_puani: int
+    hacim_birikimi_puani: int
+    kirilim_hazirligi_puani: int
+    trend_puani: int
+    likidite_puani: int
+    risk_kalitesi_puani: int
+    getiri_5g: float
+    getiri_20g: float
+    getiri_60g: float
+    hacim_orani: float
+    yirmi_gunluk_zirve_uzakligi: float
+    ortalama_tl_hacim: float
+    rsi14: float
+    atr_yuzde: float
+    teknik_skor: int
+    teknik_gorunum: str
+    risk_odul_orani: float
+    risk_odul_uygun: bool
+    kirilim: bool
+    sikisma: bool
+    asiri_uzamis: bool
+    pozitif_nedenler: tuple[str, ...]
+    riskler: tuple[str, ...]
+    yakin_direnc: float = 0.0
+    goreceli_guc_egimi: float = 0.0
+    hacim_egimi: float = 0.0
+    rsi_egimi: float = 0.0
+    macd_histogram_egimi: float = 0.0
+    hazirlik_durumu: str = ""
+    listedeki_gun: int = 1
+    ilk_gorulme_tarihi: str = ""
+    ilk_gorulme_fiyati: float = 0.0
+    ilk_gorulmeden_getiri: float = 0.0
+    kirilim_tetik_seviyesi: float = 0.0
+    sinyal_gecmisi: tuple[str, ...] = ()
+    kalici_hazirlik: bool = False
+    son_hazirlik_sinyali_tarihi: str = ""
+    son_guclu_sinyal_tarihi: str = ""
+    izleme_disi_nedeni: str = ""
+CANDIDATE_CLASS=backend\app\history\scan_history_reader.py:29|ScanItemDetail
+FIELDS=aciklama;analiz_tarihi;durum;hacim_orani;hedef_fiyat;kapanis;risk_filtresi_gecti;risk_odul_orani;rsi14;sembol;sira;skor;teknik_gorunum
+class ScanItemDetail:
+    """Bir taramada bulunan tek bir hisse kaydını temsil eder."""
+
+    durum: str
+    sira: int | None
+    sembol: str
+    analiz_tarihi: str | None
+    skor: int | None
+    teknik_gorunum: str | None
+    kapanis: float | None
+    rsi14: float | None
+    hacim_orani: float | None
+    risk_odul_orani: float | None
+    hedef_fiyat: float | None
+    risk_filtresi_gecti: bool | None
+    aciklama: str
+CANDIDATE_CLASS=backend\app\history\momentum_history.py:37|CandidateLike
+FIELDS=analiz_tarihi;kapanis;sembol;sinif
+class CandidateLike(Protocol):
+    sembol: str
+    analiz_tarihi: str
+    kapanis: float
+    sinif: str
+CANDIDATE_CLASS=backend\app\analysis\momentum_discovery.py:148|MomentumFailure
+FIELDS=hata;sembol
+class MomentumFailure:
+    sembol: str
+    hata: str
+CANDIDATE_CLASS=backend\app\analysis\multi_timeframe_analysis.py:63|MultiTimeframeTechnicalAnalysis
+FIELDS=analiz_kimligi;gunluk;haftalik;pozitif_nedenler;riskler;saatlik;sembol;teyit_durumu;uyum_skoru;veri_kimligi
+class MultiTimeframeTechnicalAnalysis:
+    """Haftalık trend, günlük teyit ve saatlik zamanlama özeti."""
+
+    sembol: str
+    veri_kimligi: str
+    analiz_kimligi: str
+    haftalik: TimeframeTechnicalResult
+    gunluk: TimeframeTechnicalResult
+    saatlik: TimeframeTechnicalResult
+    uyum_skoru: int
+    teyit_durumu: str
+    pozitif_nedenler: tuple[str, ...]
+    riskler: tuple[str, ...]
+
+    def getir(self, ad: str) -> TimeframeTechnicalResult:
+        aranan = ad.strip().casefold()
+        sonuclar = (self.haftalik, self.gunluk, self.saatlik)
+
+        for sonuc in sonuclar:
+            if sonuc.ad.casefold() == aranan:
+                return sonuc
+
+        raise KeyError(f"Zaman dilimi analiz sonucu bulunamadı: {ad}")
+CANDIDATE_CLASS=backend\app\analysis\position_monitor.py:66|PositionMonitoringResult
+FIELDS=acik_kar_zarar;acik_kar_zarar_yuzde;atr14;dinamik_stop;durum;en_yuksek_fiyat;en_yuksek_kapanis;eylem;giris_fiyati;giris_tarihi;hedef_1;hedef_2;ilk_stop;izleme_kimligi;kismi_kar_onerisi;lot_sayisi;notlar;onceki_stop;onerilen_kismi_kar_lotu;pozitif_nedenler;r_katsayisi;riskler;sembol;son_kapanis;son_tarih;stop_kaynagi;stop_mesafesi;stop_mesafesi_yuzde;teknik_analiz_kimligi;veri_kimligi
+class PositionMonitoringResult:
+    """Açık pozisyonun fiyat, risk ve teknik yapı açısından güncel özeti."""
+
+    sembol: str
+    veri_kimligi: str
+    teknik_analiz_kimligi: str
+    izleme_kimligi: str
+    durum: str
+    eylem: str
+    son_tarih: pd.Timestamp
+    son_kapanis: float
+    giris_tarihi: pd.Timestamp
+    giris_fiyati: float
+    lot_sayisi: int
+    acik_kar_zarar: float
+    acik_kar_zarar_yuzde: float
+    r_katsayisi: float
+    ilk_stop: float
+    onceki_stop: float
+    dinamik_stop: float
+    stop_kaynagi: str
+    stop_mesafesi: float
+    stop_mesafesi_yuzde: float
+    en_yuksek_kapanis: float
+    en_yuksek_fiyat: float
+    atr14: float
+    hedef_1: TargetProgress
+    hedef_2: TargetProgress
+    kismi_kar_onerisi: bool
+    onerilen_kismi_kar_lotu: int
+    pozitif_nedenler: tuple[str, ...]
+    riskler: tuple[str, ...]
+    notlar: tuple[str, ...]
+CANDIDATE_CLASS=backend\app\analysis\scan_filter.py:62|ScanRejection
+FIELDS=nedenler;sembol;sonuc
+class ScanRejection:
+    """Filtre tarafından elenen hisse ve eleme nedenleri."""
+
+    sembol: str
+    nedenler: tuple[str, ...]
+    sonuc: StockAnalysisResult | None = None
+CANDIDATE_CLASS=backend\app\analysis\stock_scanner.py:18|ScanFailure
+FIELDS=hata;sembol
+class ScanFailure:
+    """Analiz edilemeyen bir hisseyi temsil eder."""
+
+    sembol: str
+    hata: str
+CANDIDATE_CLASS=backend\app\analysis\technical_confirmation.py:126|MultiTimeframeTechnicalConfirmation
+FIELDS=analiz_kimligi;gunluk;haftalik;pozitif_nedenler;riskler;saatlik;sembol;teyit_durumu;teyit_skoru;veri_kimligi
+class MultiTimeframeTechnicalConfirmation:
+    """Haftalık, günlük ve saatlik teknik teyitlerin ortak sonucu."""
+
+    sembol: str
+    veri_kimligi: str
+    analiz_kimligi: str
+    haftalik: TimeframeConfirmationResult
+    gunluk: TimeframeConfirmationResult
+    saatlik: TimeframeConfirmationResult
+    teyit_skoru: int
+    teyit_durumu: str
+    pozitif_nedenler: tuple[str, ...]
+    riskler: tuple[str, ...]
+
+    def getir(self, ad: str) -> TimeframeConfirmationResult:
+        aranan = ad.strip().casefold()
+        for sonuc in (self.haftalik, self.gunluk, self.saatlik):
+            if sonuc.ad.casefold() == aranan:
+                return sonuc
+        raise KeyError(f"Zaman dilimi teknik teyidi bulunamadı: {ad}")
+CANDIDATE_CLASS=backend\app\analysis\trade_plan.py:55|TradePlan
+FIELDS=atr14;atr_yuzde;beklenen_teyitler;gecersizlik_kosullari;giris_alt;giris_kaynagi;giris_ust;hedef_1;hedef_1_kaynagi;hedef_2;hedef_2_kaynagi;izleme_tetik_fiyati;karar;notlar;plan_kimligi;plan_tipi;pozisyon;referans_giris;risk_odul_1;risk_odul_2;sembol;son_kapanis;stop_kaynagi;stop_loss;teknik_analiz_kimligi;teyit_skoru;veri_kimligi
+class TradePlan:
+    """Çoklu zaman dilimi teyidinden üretilen güncel uzun işlem planı."""
+
+    sembol: str
+    veri_kimligi: str
+    teknik_analiz_kimligi: str
+    plan_kimligi: str
+    karar: str
+    plan_tipi: str
+    teyit_skoru: int
+    son_kapanis: float
+    atr14: float
+    atr_yuzde: float
+    izleme_tetik_fiyati: float | None
+    giris_alt: float | None
+    giris_ust: float | None
+    referans_giris: float | None
+    stop_loss: float | None
+    hedef_1: float | None
+    hedef_2: float | None
+    risk_odul_1: float | None
+    risk_odul_2: float | None
+    pozisyon: PositionSizeResult | None
+    giris_kaynagi: str | None
+    stop_kaynagi: str | None
+    hedef_1_kaynagi: str | None
+    hedef_2_kaynagi: str | None
+    beklenen_teyitler: tuple[str, ...]
+    gecersizlik_kosullari: tuple[str, ...]
+    notlar: tuple[str, ...]
+CANDIDATE_CLASS=backend\app\backtest\backtest_models.py:88|BacktestSignal
+FIELDS=sembol;sinyal_tarihi;skor;teknik_gorunum
+class BacktestSignal:
+    """Geçmiş bir tarihte üretilmiş teknik analiz sinyalidir."""
+
+    sembol: str
+    sinyal_tarihi: date
+    skor: int
+    teknik_gorunum: str
+
+    def __post_init__(self) -> None:
+        temiz_sembol = self.sembol.strip().upper()
+
+        if not temiz_sembol:
+            raise ValueError(
+                "Sinyal sembolü boş olamaz."
+            )
+
+        if not 0 <= self.skor <= 100:
+            raise ValueError(
+                "Sinyal skoru 0 ile 100 arasında olmalıdır."
+            )
+
+        if not self.teknik_gorunum.strip():
+            raise ValueError(
+                "Teknik görünüm boş olamaz."
+            )
+
+        object.__setattr__(
+            self,
+            "sembol",
+            temiz_sembol,
+        )
+CANDIDATE_CLASS=backend\app\backtest\backtest_models.py:122|BacktestTrade
+FIELDS=brut_getiri_orani;cikis_fiyati;cikis_nedeni;cikis_tarihi;elde_tutulan_bar;giris_fiyati;giris_tarihi;net_getiri_orani;sembol;sinyal_tarihi;skor;teknik_gorunum
+class BacktestTrade:
+    """Backtest sırasında tamamlanmış tek bir işlemdir."""
+
+    sembol: str
+    sinyal_tarihi: date
+    giris_tarihi: date
+    cikis_tarihi: date
+    giris_fiyati: float
+    cikis_fiyati: float
+    skor: int
+    teknik_gorunum: str
+    brut_getiri_orani: float
+    net_getiri_orani: float
+    elde_tutulan_bar: int
+    cikis_nedeni: str
+
+    def __post_init__(self) -> None:
+        temiz_sembol = self.sembol.strip().upper()
+
+        if not temiz_sembol:
+            raise ValueError(
+                "İşlem sembolü boş olamaz."
+            )
+
+        if self.giris_tarihi <= self.sinyal_tarihi:
+            raise ValueError(
+                "Giriş tarihi sinyal tarihinden sonra olmalıdır."
+            )
+
+        if self.cikis_tarihi < self.giris_tarihi:
+            raise ValueError(
+                "Çıkış tarihi giriş tarihinden önce olamaz."
+            )
+
+        if self.giris_fiyati <= 0:
+            raise ValueError(
+                "Giriş fiyatı pozitif olmalıdır."
+            )
+
+        if self.cikis_fiyati <= 0:
+            raise ValueError(
+                "Çıkış fiyatı pozitif olmalıdır."
+            )
+
+        if not 0 <= self.skor <= 100:
+            raise ValueError(
+                "İşlem skoru 0 ile 100 arasında olmalıdır."
+            )
+
+        if self.elde_tutulan_bar <= 0:
+            raise ValueError(
+                "Elde tutulan bar sayısı pozitif olmalıdır."
+            )
+
+        if self.cikis_nedeni not in GECERLI_CIKIS_NEDENLERI:
+            raise ValueError(
+                f"Geçersiz çıkış nedeni: {self.cikis_nedeni}"
+            )
+
+        object.__setattr__(
+            self,
+            "sembol",
+            temiz_sembol,
+        )
+
+    @classmethod
+    def olustur(
+        cls,
+        sembol: str,
+        sinyal_tarihi: date,
+        giris_tarihi: date,
+        cikis_tarihi: date,
+        giris_fiyati: float,
+        cikis_fiyati: float,
+        skor: int,
+        teknik_gorunum: str,
+        elde_tutulan_bar: int,
+        cikis_nedeni: str,
+        islem_maliyeti_orani: float = 0.0,
+    ) -> BacktestTrade:
+        """
+        Fiyatlardan brüt ve net getiriyi hesaplayarak işlem oluşturur.
+
+        İşlem maliyeti alışta ve satışta ayrı ayrı uygulanır.
+        """
+        if not 0 <= islem_maliyeti_orani < 0.10:
+            raise ValueError(
+                "İşlem maliyeti oranı 0 ile 0.10 "
+                "arasında olmalıdır."
+            )
+
+        if giris_fiyati <= 0:
+            raise ValueError(
+                "Giriş fiyatı pozitif olmalıdır."
+            )
+
+        if cikis_fiyati <= 0:
+            raise ValueError(
+                "Çıkış fiyatı pozitif olmalıdır."
+            )
+
+        brut_getiri = (
+            cikis_fiyati / giris_fiyati
+        ) - 1
+
+        maliyetli_giris = giris_fiyati * (
+            1 + islem_maliyeti_orani
+        )
+
+        maliyetli_cikis = cikis_fiyati * (
+            1 - islem_maliyeti_orani
+        )
+
+        net_getiri = (
+            maliyetli_cikis / maliyetli_giris
+        ) - 1
+
+        return cls(
+            sembol=sembol,
+            sinyal_tarihi=sinyal_tarihi,
+            giris_tarihi=giris_tarihi,
+            cikis_tarihi=cikis_tarihi,
+            giris_fiyati=giris_fiyati,
+            cikis_fiyati=cikis_fiyati,
+            skor=skor,
+            teknik_gorunum=teknik_gorunum,
+            brut_getiri_orani=brut_getiri,
+            net_getiri_orani=net_getiri,
+            elde_tutulan_bar=elde_tutulan_bar,
+            cikis_nedeni=cikis_nedeni,
+        )
+CANDIDATE_CLASS=backend\app\backtest\backtest_service.py:139|StockBacktestReport
+FIELDS=analiz_baglami;backtest_sonucu;benchmark_karsilastirmasi;fiyat_bar_sayisi;gunluk_ozsermaye_raporu;hizalanmis_benchmark_karsilastirmasi;ilk_fiyat_tarihi;ozsermaye_raporu;performans_dagilimi;sembol;sinyal_uretimi;son_fiyat_tarihi
+class StockBacktestReport:
+    """Tek hisse için uçtan uca backtest raporu."""
+
+    sembol: str
+    fiyat_bar_sayisi: int
+    ilk_fiyat_tarihi: str
+    son_fiyat_tarihi: str
+    sinyal_uretimi: HistoricalSignalGenerationResult
+    backtest_sonucu: BacktestResult
+    performans_dagilimi: PerformanceBreakdownReport
+    ozsermaye_raporu: EquityCurveReport
+    benchmark_karsilastirmasi: BenchmarkComparisonReport
+    hizalanmis_benchmark_karsilastirmasi: (
+        BenchmarkComparisonReport | None
+    ) = None
+    gunluk_ozsermaye_raporu: (
+        DailyEquityCurveReport | None
+    ) = None
+    analiz_baglami: AnalysisContext | None = None
+
+    @property
+    def uretilen_sinyal_sayisi(self) -> int:
+        return self.sinyal_uretimi.sinyal_sayisi
+
+    @property
+    def analizde_atlanan_gun_sayisi(self) -> int:
+        return self.sinyal_uretimi.atlanan_gun_sayisi
+
+    @property
+    def tamamlanan_islem_sayisi(self) -> int:
+        return (
+            self.backtest_sonucu
+            .tamamlanan_islem_sayisi
+        )
+
+    @property
+    def cakisma_nedeniyle_atlanan_sinyal_sayisi(
+        self,
+    ) -> int:
+        return sum(
+            1
+            for atlanan
+            in self.backtest_sonucu.atlanan_sinyaller
+            if CAKISMA_NEDENI in atlanan.neden
+        )
+CANDIDATE_CLASS=backend\app\backtest\equity_curve.py:16|EquityPoint
+FIELDS=dusus_orani;islem_sirasi;net_getiri_orani;onceki_sermaye;sembol;sonraki_sermaye;tarih;uygulanan_getiri_orani;zirve_sermayesi
+class EquityPoint:
+    """Tamamlanan bir işlem sonrasındaki sermaye noktası."""
+
+    islem_sirasi: int
+    tarih: date
+    sembol: str
+    onceki_sermaye: float
+    sonraki_sermaye: float
+    net_getiri_orani: float
+    uygulanan_getiri_orani: float
+    zirve_sermayesi: float
+    dusus_orani: float
+CANDIDATE_CLASS=backend\app\backtest\historical_signal_generator.py:78|SkippedHistoricalSignal
+FIELDS=neden;sembol;tarih
+class SkippedHistoricalSignal:
+    """Sinyal üretilemeyen tarih ve nedenidir."""
+
+    sembol: str
+    tarih: date
+    neden: str
+CANDIDATE_CLASS=backend\app\backtest\market_regime_analysis.py:148|MarketRegimeReport
+FIELDS=birlesik_performanslar;en_iyi_birlesik_rejim;en_zayif_birlesik_rejim;gunluk_noktalar;sembol;siniflandirilamayan_islem_sayisi;siniflandirilan_islem_sayisi;toplam_islem_sayisi;trend_gun_dagilimi;trend_performanslari;volatilite_gun_dagilimi;volatilite_performanslari;yapilandirma
+class MarketRegimeReport:
+    """Günlük rejim sınıflandırması ve rejim bazlı işlem sonuçları."""
+
+    sembol: str
+    yapilandirma: MarketRegimeConfig
+    gunluk_noktalar: tuple[MarketRegimePoint, ...]
+    trend_gun_dagilimi: tuple[RegimeDayCount, ...]
+    volatilite_gun_dagilimi: tuple[RegimeDayCount, ...]
+    trend_performanslari: tuple[RegimePerformance, ...]
+    volatilite_performanslari: tuple[RegimePerformance, ...]
+    birlesik_performanslar: tuple[RegimePerformance, ...]
+    toplam_islem_sayisi: int
+    siniflandirilan_islem_sayisi: int
+    siniflandirilamayan_islem_sayisi: int
+    en_iyi_birlesik_rejim: RegimePerformance | None
+    en_zayif_birlesik_rejim: RegimePerformance | None
+
+    @property
+    def siniflandirma_orani(self) -> float:
+        if self.toplam_islem_sayisi == 0:
+            return 0.0
+
+        return (
+            self.siniflandirilan_islem_sayisi
+            / self.toplam_islem_sayisi
+        )
+
+    @property
+    def siniflandirilan_gun_sayisi(self) -> int:
+        return len(self.gunluk_noktalar)
+
+    @property
+    def ilk_rejim_tarihi(self) -> date | None:
+        if not self.gunluk_noktalar:
+            return None
+
+        return self.gunluk_noktalar[0].tarih
+
+    @property
+    def son_rejim_tarihi(self) -> date | None:
+        if not self.gunluk_noktalar:
+            return None
+
+        return self.gunluk_noktalar[-1].tarih
+CANDIDATE_CLASS=backend\app\backtest\parameter_sensitivity.py:73|ParameterSensitivityReport
+FIELDS=baz_senaryo_adi;maksimum_getiri_orani;maksimum_maksimum_dusus_orani;medyan_getiri_orani;minimum_getiri_orani;minimum_maksimum_dusus_orani;olumlu_senaryo_sayisi;sembol;sonuclar
+class ParameterSensitivityReport:
+    """Tek değişkenli parametre duyarlılığı raporu."""
+
+    sembol: str
+    baz_senaryo_adi: str
+    sonuclar: tuple[ParameterScenarioResult, ...]
+    olumlu_senaryo_sayisi: int
+    medyan_getiri_orani: float
+    minimum_getiri_orani: float
+    maksimum_getiri_orani: float
+    minimum_maksimum_dusus_orani: float
+    maksimum_maksimum_dusus_orani: float
+
+    @property
+    def senaryo_sayisi(self) -> int:
+        return len(self.sonuclar)
+
+    @property
+    def olumlu_senaryo_orani(self) -> float:
+        if not self.sonuclar:
+            return 0.0
+
+        return self.olumlu_senaryo_sayisi / len(self.sonuclar)
+
+    @property
+    def baz_sonuc(self) -> ParameterScenarioResult:
+        for sonuc in self.sonuclar:
+            if sonuc.senaryo.ad == self.baz_senaryo_adi:
+                return sonuc
+
+        raise ParameterSensitivityError(
+            "Baz senaryo sonucu raporda bulunamadı."
+        )
+
+    def sonucu_bul(
+        self,
+        senaryo_adi: str,
+    ) -> ParameterScenarioResult:
+        temiz_ad = senaryo_adi.strip()
+
+        for sonuc in self.sonuclar:
+            if sonuc.senaryo.ad == temiz_ad:
+                return sonuc
+
+        raise KeyError(
+            f"Senaryo sonucu bulunamadı: {temiz_ad}"
+        )
+CANDIDATE_CLASS=backend\app\backtest\portfolio_backtest.py:180|PortfolioSymbolContribution
+FIELDS=baslangic_sermayesine_katki_orani;islem_sayisi;kaybeden_islem_sayisi;kazanan_islem_sayisi;net_kar;sembol;toplam_ayrilan_sermaye
+class PortfolioSymbolContribution:
+    """Bir hissenin portföy sonucuna yaptığı gerçekleşmiş katkı."""
+
+    sembol: str
+    islem_sayisi: int
+    kazanan_islem_sayisi: int
+    kaybeden_islem_sayisi: int
+    toplam_ayrilan_sermaye: float
+    net_kar: float
+    baslangic_sermayesine_katki_orani: float
+
+    @property
+    def kazanma_orani(self) -> float:
+        if self.islem_sayisi == 0:
+            return 0.0
+
+        return self.kazanan_islem_sayisi / self.islem_sayisi
+
+=== 3. F1-F5 FAMILY SEAMS ===
+F1_LABEL=Research Migration / Improvement
+F1_STATE=PROVEN
+F1_STRONG_HITS=120
+F1_WEAK_HITS=120
+F1_STRONG_FILES=15
+F1_STRONG=backend\app\analysis\early_visibility_report.py:15|"rank_change": item.rank_change,
+F1_STRONG=backend\app\analysis\historical_research_replay.py:13|- Ranking Memory is never written here;
+F1_STRONG=backend\app\analysis\historical_research_replay.py:25|from .ranking_memory import RankObservation, observations_from_research_rows
+F1_STRONG=backend\app\analysis\historical_research_replay.py:51|observations: tuple[RankObservation, ...]
+F1_STRONG=backend\app\analysis\ranking_memory.py:9|class RankObservation:
+F1_STRONG=backend\app\analysis\ranking_memory.py:58|RankObservation(
+F1_STRONG=backend\app\analysis\ranking_memory.py:97|path = project_root / "data" / "ranking_memory" / "rank_observations.jsonl"
+F1_STRONG=backend\app\analysis\ranking_memory.py:123|RankObservation(
+F1_STRONG=backend\app\analysis\daily_buy_decision_calibration.py:64|("Sıra değişimi", _band_rank(getattr(record, "rank_change", None))),
+F1_STRONG=backend\app\analysis\daily_buy_decision_calibration.py:86|horizon_attrs = (("1S", "return_1s"), ("3S", "return_3s"), ("5S", "return_5s"))
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:14|rank_change: int | None
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:38|rank_change = getattr(card, "rank_change", None)
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:59|if rank_change is not None and int(rank_change) > 0:
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:60|reasons.append(f"Sıralama iyileşiyor (+{int(rank_change)})")
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:70|if rank_change is not None and int(rank_change) < 0:
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:71|cautions.append(f"Sıralama geriliyor ({int(rank_change)})")
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:110|rank_change=(
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:111|int(getattr(card, "rank_change"))
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:112|if getattr(card, "rank_change", None) is not None
+F1_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:138|"Sıra değişimi": item.rank_change if item.rank_change is not None else "-",
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:22|rank_change: int | None
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:47|rank_delta: int | None
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:91|rank_change=(
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:92|int(getattr(card, "rank_change"))
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:93|if getattr(card, "rank_change", None) is not None
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:276|if old.rank_change != new.rank_change:
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:285|rank_delta=(old.rank - new.rank) if old and new else None,
+F1_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:304|"Sıra farkı": item.rank_delta if item.rank_delta is not None else "-",
+F1_STRONG=backend\app\analysis\daily_buy_decision_outcomes.py:27|rank_change: int | None = None
+F1_STRONG=backend\app\analysis\daily_buy_decision_outcomes.py:99|rank_change=(
+
+F2_LABEL=Trend / Structural Quality
+F2_STATE=PROVEN
+F2_STRONG_HITS=120
+F2_WEAK_HITS=120
+F2_STRONG_FILES=25
+F2_STRONG=backend\app\analysis\technical_confirmation.py:35|TREND_CIZGISI_YOK = "Yeterli Trend Çizgisi Yok"
+F2_STRONG=backend\app\analysis\technical_confirmation.py:57|"""Trend, kırılım ve teknik teyit analizi üretilemediğinde kullanılır."""
+F2_STRONG=backend\app\analysis\technical_confirmation.py:62|"""Son tamamlanmış mumdaki trend çizgisi kırılımını açıklar."""
+F2_STRONG=backend\app\analysis\technical_confirmation.py:188|Bu katman trend çizgisi kırılımını, hacim teyidini, EMA kesişimlerini,
+F2_STRONG=backend\app\analysis\technical_confirmation.py:241|"""Tek zaman dilimi için trend, kırılım ve gösterge teyidi hesaplar."""
+F2_STRONG=backend\app\analysis\technical_confirmation.py:478|"Trend çizgisi analizi için eksik sütunlar: "
+F2_STRONG=backend\app\analysis\technical_confirmation.py:486|f"Trend çizgisi analizi için en az {minimum} satır gereklidir."
+F2_STRONG=backend\app\analysis\technical_confirmation.py:729|pozitif.append("Alçalan trend çizgisi kapanışla yukarı kırıldı.")
+F2_STRONG=backend\app\analysis\technical_confirmation.py:745|riskler.append("Kırılım değerlendirmesi için yeterli trend çizgisi yok.")
+F2_STRONG=backend\app\analysis\technical_confirmation.py:747|riskler.append("Son tamamlanmış mumda yeni trend çizgisi kırılımı yok.")
+F2_STRONG=backend\app\analysis\technical_confirmation.py:818|pozitif.append("Günlük trend çizgisi kırılımı kapanışla teyitli.")
+F2_STRONG=backend\app\analysis\technical_confirmation.py:820|riskler.append("Günlük trend çizgisi aşağı kırıldı.")
+F2_STRONG=backend\app\analysis\technical_decision_matrix.py:212|trend_direction = _direction_from_text(
+F2_STRONG=backend\app\analysis\technical_decision_matrix.py:266|"Trend yapısı",
+F2_STRONG=backend\app\analysis\technical_decision_matrix.py:269|trend_direction,
+F2_STRONG=backend\app\analysis\technical_decision_matrix.py:271|"Haftalık ana trend ile günlük yön birlikte değerlendirilir.",
+F2_STRONG=backend\app\analysis\trend_scan_policy.py:34|raise ValueError("Minimum trend puanı 0 ile 15 arasında olmalıdır.")
+F2_STRONG=backend\app\analysis\trend_scan_policy.py:86|f"Trend puanı {aday.trend_puani}/15; "
+F2_STRONG=backend\app\analysis\divergence_analysis.py:56|"trend, hacim, destek/direnç ve risk koşullarıyla birlikte değerlendirilir."
+F2_STRONG=backend\app\analysis\fast_mover_watch.py:137|support = _normalize_families(observation.support_families)
+F2_STRONG=backend\app\analysis\fast_mover_watch.py:200|support_families=support,
+F2_STRONG=backend\app\analysis\fast_mover_watch.py:237|support_families=support,
+F2_STRONG=backend\app\analysis\fast_mover_watch.py:244|enough_support = len(support) >= policy.min_support_families
+F2_STRONG=backend\app\analysis\fast_mover_watch.py:271|support_families=support,
+F2_STRONG=backend\app\analysis\fast_mover_watch.py:280|elif "technical_strength" in support:
+F2_STRONG=backend\app\analysis\fast_mover_watch.py:303|support_families=support,
+F2_STRONG=backend\app\analysis\high_conviction_buy_gate.py:84|High-confidence history support requires at least two supportive core
+F2_STRONG=backend\app\analysis\historical_research_replay.py:69|"'bugun' upper-date support."
+F2_STRONG=backend\app\analysis\indicator_contribution.py:57|"Günlük trend pozitif",
+F2_STRONG=backend\app\analysis\indicator_contribution.py:63|"Haftalık trend pozitif",
+
+F3_LABEL=Momentum / Relative Strength
+F3_STATE=PROVEN
+F3_STRONG_HITS=120
+F3_WEAK_HITS=120
+F3_STRONG_FILES=24
+F3_STRONG=backend\app\analysis\fast_mover_preclose_attachment.py:1|"""Fast Mover Watch V1 pre-close raw-observation attachment.
+F3_STRONG=backend\app\analysis\fast_mover_preclose_attachment.py:4|Fast Mover thresholds. It only attaches current partial Research rank versus
+F3_STRONG=backend\app\analysis\fast_mover_watch.py:1|"""Fast Mover Watch V1 — pure read-only visibility policy.
+F3_STRONG=backend\app\analysis\momentum_discovery.py:68|"""Momentum keşif taraması hazırlanamadığında kullanılır."""
+F3_STRONG=backend\app\analysis\momentum_discovery.py:86|raise ValueError("Minimum momentum skoru 0 ile 100 arasında olmalıdır.")
+F3_STRONG=backend\app\analysis\momentum_discovery.py:202|"""OHLCV verilerinden kesitsel momentum ve erken kırılım skoru üretir."""
+F3_STRONG=backend\app\analysis\momentum_discovery.py:275|"""Evren, toplu veri, momentum analizi ve geçmiş kaydını birleştirir."""
+F3_STRONG=backend\app\analysis\momentum_discovery.py:465|durum_bildir("Momentum motoru çalışıyor...")
+F3_STRONG=backend\app\analysis\momentum_discovery.py:593|"Momentum": aday.momentum_skoru,
+F3_STRONG=backend\app\analysis\momentum_discovery.py:625|raise ValueError("Momentum analizi için en az 80 işlem günü gereklidir.")
+F3_STRONG=backend\app\analysis\momentum_discovery.py:870|hazirlik = "Yüksek: direnç, hacim, momentum ve göreceli güç birlikte hazırlanıyor."
+F3_STRONG=backend\app\analysis\momentum_discovery.py:872|hazirlik = "Orta-yüksek: fiyat yakın dirence yaklaşıyor; hacim ve momentum teyidi izlenmeli."
+F3_STRONG=backend\app\analysis\momentum_discovery.py:954|nedenler.append(f"Momentum skoru {toplam}; görünür hazırlık sınıfı için en az 45 gerekli.")
+F3_STRONG=backend\app\analysis\momentum_walk_forward.py:27|"""Tarihsel momentum yeniden oynatması hazırlanamadığında kullanılır."""
+F3_STRONG=backend\app\analysis\momentum_walk_forward.py:52|raise ValueError("Minimum momentum skoru 0 ile 100 arasında olmalıdır.")
+F3_STRONG=backend\app\analysis\momentum_walk_forward.py:116|"""Gelecek barları gizleyerek tarihsel momentum adaylarını yeniden üretir."""
+F3_STRONG=backend\app\analysis\momentum_walk_forward.py:426|"Momentum": aday.momentum_skoru,
+F3_STRONG=backend\app\analysis\momentum_walk_forward.py:456|"Momentum": item.aday.momentum_skoru,
+F3_STRONG=backend\app\analysis\momentum_walk_forward.py:476|"Momentum": kayit.momentum_skoru,
+F3_STRONG=backend\app\analysis\automatic_signal_tracking.py:191|momentum_state: str = "",
+F3_STRONG=backend\app\analysis\automatic_signal_tracking.py:212|momentum_state=momentum_state,
+F3_STRONG=backend\app\analysis\indicator_contribution.py:69|"Momentum pozitif",
+F3_STRONG=backend\app\analysis\indicator_contribution.py:71|outcome.snapshot.momentum_state
+F3_STRONG=backend\app\analysis\market_regime.py:71|momentum: RegimeComponent
+F3_STRONG=backend\app\analysis\market_regime.py:309|return RegimeComponent("Momentum",skor,25,durum,tuple(art),tuple(risk))
+F3_STRONG=backend\app\analysis\market_regime.py:401|momentum=_momentum_bileseni(gunluk,haftalik)
+F3_STRONG=backend\app\analysis\market_regime.py:405|toplam=trend.skor+momentum.skor+hacim.skor+kirilim.skor+genislik.skor
+F3_STRONG=backend\app\analysis\market_regime.py:415|pozitif=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.gerekceler)
+F3_STRONG=backend\app\analysis\market_regime.py:416|risk=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.riskler)+saatlik_risk
+F3_STRONG=backend\app\analysis\market_regime.py:422|saatlik_kullanilabilir=saatlik_var,trend=trend,momentum=momentum,hacim=hacim,
+
+F4_LABEL=Setup / Next-Session Readiness
+F4_STATE=PROVEN
+F4_STRONG_HITS=120
+F4_WEAK_HITS=104
+F4_STRONG_FILES=36
+F4_STRONG=backend\app\prebreakout\prebreakout_alarm_journal.py:9|from backend.app.prebreakout.prebreakout_operation_alerts import OperationTrendAlarm
+F4_STRONG=backend\app\prebreakout\prebreakout_backtest.py:9|from backend.app.prebreakout.prebreakout_engine import (
+F4_STRONG=backend\app\prebreakout\prebreakout_backtest.py:12|from backend.app.prebreakout.prebreakout_models import (
+F4_STRONG=backend\app\prebreakout\prebreakout_calibration.py:9|from backend.app.prebreakout.prebreakout_backtest import (
+F4_STRONG=backend\app\prebreakout\prebreakout_calibration.py:14|from backend.app.prebreakout.prebreakout_threshold_policy import (
+F4_STRONG=backend\app\prebreakout\prebreakout_calibration.py:744|from backend.app.prebreakout.prebreakout_score_threshold_calibration import (  # noqa: E402
+F4_STRONG=backend\app\prebreakout\prebreakout_candidate_lifecycle.py:10|from backend.app.prebreakout.prebreakout_live_watch import PreBreakoutLiveSignal
+F4_STRONG=backend\app\prebreakout\prebreakout_candidate_quality.py:8|from backend.app.prebreakout.prebreakout_candidate_lifecycle import (
+F4_STRONG=backend\app\prebreakout\prebreakout_candidate_quality.py:12|from backend.app.prebreakout.prebreakout_live_performance import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_monitor.py:9|from backend.app.prebreakout.prebreakout_candidate_lifecycle import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_monitor.py:16|from backend.app.prebreakout.prebreakout_live_performance import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_monitor.py:21|from backend.app.prebreakout.prebreakout_live_watch import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_monitor.py:27|from backend.app.prebreakout.prebreakout_models import PreBreakoutResult
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_monitor.py:28|from backend.app.prebreakout.prebreakout_paper_portfolio import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_monitor.py:35|from backend.app.prebreakout.prebreakout_threshold_policy import PreBreakoutThresholdPolicy
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:10|from backend.app.prebreakout.prebreakout_candidate_lifecycle import CandidatePriceObservation
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:11|from backend.app.prebreakout.prebreakout_daily_monitor import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:17|from backend.app.prebreakout.prebreakout_live_watch import DEFAULT_LIVE_WATCH_PATH
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:18|from backend.app.prebreakout.prebreakout_models import PreBreakoutResult
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:19|from backend.app.prebreakout.prebreakout_operational_health import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:23|from backend.app.prebreakout.prebreakout_operation_archive import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:28|from backend.app.prebreakout.prebreakout_operation_followup import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:31|from backend.app.prebreakout.prebreakout_alarm_journal import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:35|from backend.app.prebreakout.prebreakout_threshold_policy import PreBreakoutThresholdPolicy
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:36|from backend.app.prebreakout.prebreakout_operation_diagnosis import (
+F4_STRONG=backend\app\prebreakout\prebreakout_daily_operation.py:41|from backend.app.prebreakout.prebreakout_operation_recovery import (
+F4_STRONG=backend\app\prebreakout\prebreakout_early_radar.py:133|reasons.append(f"Aday erken PreBreakout aşamasında ({stage}).")
+F4_STRONG=backend\app\prebreakout\prebreakout_engine.py:5|from backend.app.prebreakout.prebreakout_features import (
+F4_STRONG=backend\app\prebreakout\prebreakout_engine.py:9|from backend.app.prebreakout.prebreakout_filters import (
+F4_STRONG=backend\app\prebreakout\prebreakout_engine.py:13|from backend.app.prebreakout.prebreakout_models import (
+
+F5_LABEL=Participation / Volume Quality
+F5_STATE=PROVEN
+F5_STRONG_HITS=120
+F5_WEAK_HITS=120
+F5_STRONG_FILES=21
+F5_STRONG=backend\check_volume_analysis.py:15|print(f"\n{sembol} hacim analizi hazırlanıyor...\n")
+F5_STRONG=backend\check_volume_analysis.py:43|print(f"Güncel hacim        : {ozet['hacim']:,}")
+F5_STRONG=backend\check_volume_analysis.py:48|print(f"Hacim oranı         : {ozet['hacim_orani']:.2f}x")
+F5_STRONG=backend\check_volume_analysis.py:54|f"Hacim patlaması     : "
+F5_STRONG=backend\check_volume_analysis.py:57|print(f"Fiyat-hacim durumu  : {ozet['durum']}")
+F5_STRONG=backend\check_volume_analysis.py:63|"Volume",
+F5_STRONG=backend\check_volume_analysis.py:65|"Hacim_Orani",
+F5_STRONG=backend\app\analysis\automatic_signal_tracking.py:192|volume_confirmation: bool | None = None,
+F5_STRONG=backend\app\analysis\automatic_signal_tracking.py:213|volume_confirmation=volume_confirmation,
+F5_STRONG=backend\app\analysis\bist_daily_market.py:50|"Hacim": float(son["Volume"]),
+F5_STRONG=backend\app\analysis\daily_buy_decision_calibration.py:57|"Hacim",
+F5_STRONG=backend\app\analysis\daily_buy_decision_calibration.py:58|_band_ratio(float(getattr(record, "volume_ratio", 0.0)), high=1.3, mid=1.0),
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:17|volume_ratio: float
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:39|volume = float(getattr(card, "volume_ratio", 0.0))
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:53|if volume >= 1.0:
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:54|reasons.append(f"Hacim teyidi mevcut ({volume:.2f})")
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:66|if volume < 1.0:
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:67|cautions.append(f"Hacim teyidi zayıf ({volume:.2f})")
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:89|and volume >= 1.0
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:121|volume_ratio=float(getattr(card, "volume_ratio", 0.0)),
+F5_STRONG=backend\app\analysis\daily_buy_decision_closeout.py:139|"Hacim": round(item.volume_ratio, 2),
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:26|volume_ratio: float | None = None
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:103|volume_ratio=(
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:104|float(getattr(card, "volume_ratio"))
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:105|if getattr(card, "volume_ratio", None) is not None
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:209|if old.volume_ratio != new.volume_ratio:
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:210|old_ok = old.volume_ratio is not None and old.volume_ratio >= 1.0
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:211|new_ok = new.volume_ratio is not None and new.volume_ratio >= 1.0
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:213|label = "Hacim teyidi geldi" if new_ok else "Hacim teyidi kayboldu"
+F5_STRONG=backend\app\analysis\daily_buy_decision_cycle.py:214|reasons.append(f"{label} ({_fmt_number(old.volume_ratio)}→{_fmt_number(new.volume_ratio)})")
+
+=== 4. READ CONTEXT SEAMS ===
+READ_SEAMS=200
+READ_SEAM=backend\check_signal_engine.py:92|print(f"Momentum            : {sinyal.momentum_puani}/30")
+READ_SEAM=backend\check_stock_analyzer.py:69|f"Momentum            : "
+READ_SEAM=backend\dashboard.py:242|build_current_visibility_context,
+READ_SEAM=backend\dashboard.py:532|"Momentum Keşif",
+READ_SEAM=backend\dashboard.py:564|"Momentum Keşif",
+READ_SEAM=backend\dashboard.py:2111|st.warning("Momentum sıralaması, teknik teyit, stop, hedef ve lot değerleri kullanılmamalıdır.")
+READ_SEAM=backend\dashboard.py:2176|"RSI14": round(zaman.momentum.rsi14, 2),
+READ_SEAM=backend\dashboard.py:2209|("Momentum", zaman.momentum.durum),
+READ_SEAM=backend\dashboard.py:2486|("Momentum potansiyeli", f"{aday.momentum_skoru}/100"),
+READ_SEAM=backend\dashboard.py:2546|"""Momentum sonucunun aday, eleme ve hata tablolarını CSV olarak sunar."""
+READ_SEAM=backend\dashboard.py:2571|"Momentum": aday.momentum_skoru,
+READ_SEAM=backend\dashboard.py:2595|"Momentum": aday.momentum_skoru,
+READ_SEAM=backend\dashboard.py:2625|st.markdown("### Momentum sonucunu dışa aktar")
+READ_SEAM=backend\dashboard.py:2630|st.subheader(f"{sonuc.evren_adi} momentum keşif taraması")
+READ_SEAM=backend\dashboard.py:2696|("Minimum momentum", f"{politika.minimum_momentum_skoru}/100"),
+READ_SEAM=backend\dashboard.py:2716|"Momentum, trend ve dirence uzaklık eşikleri aktif piyasa "
+READ_SEAM=backend\dashboard.py:2721|"Rejim bazlı trend filtresi kapalı. Adaylar yalnızca momentum "
+READ_SEAM=backend\dashboard.py:2744|"Momentum skoru bir erken keşif ölçüsüdür; doğrudan alım kararı "
+READ_SEAM=backend\dashboard.py:2766|"Momentum": st.column_config.NumberColumn(width="small"),
+READ_SEAM=backend\dashboard.py:2782|"Momentum aday ayrıntısı",
+READ_SEAM=backend\dashboard.py:2798|"Momentum": aday.momentum_skoru,
+READ_SEAM=backend\dashboard.py:2819|"Momentum": aday.momentum_skoru,
+READ_SEAM=backend\dashboard.py:2839|"Momentum": aday.momentum_skoru,
+READ_SEAM=backend\dashboard.py:2868|st.caption(f"Momentum tarama geçmişi kaydedildi: {sonuc.kayit_yolu}")
+READ_SEAM=backend\dashboard.py:3174|"""Momentum sonucunu yalnızca aynı ayarlarla yeniden gösterir."""
+READ_SEAM=backend\dashboard.py:3189|st.header("Momentum keşif")
+READ_SEAM=backend\dashboard.py:3258|"Minimum momentum skoru",
+READ_SEAM=backend\dashboard.py:3293|"Tarihsel testi başlat" if yeniden_oynat else "Momentum keşfini başlat",
+READ_SEAM=backend\dashboard.py:3382|"Momentum ayarları değiştiği için önceki sonuç geçersiz "
+READ_SEAM=backend\dashboard.py:3421|ilerleme = st.progress(0, text="Momentum keşfi hazırlanıyor...")
+READ_SEAM=backend\dashboard.py:3428|text=f"[{sira}/{toplam}] {sembol} momentum analizi...",
+READ_SEAM=backend\dashboard.py:3446|with st.spinner(f"{istek.evren} momentum potansiyeli taranıyor..."):
+READ_SEAM=backend\dashboard.py:3464|ilerleme.progress(1.0, text="Momentum keşfi tamamlandı.")
+READ_SEAM=backend\dashboard.py:4120|RankObservationJsonlStore,
+READ_SEAM=backend\dashboard.py:4144|RankObservationJsonlStore().append_snapshot(_rank_observations)
+READ_SEAM=backend\dashboard.py:4225|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+READ_SEAM=backend\dashboard.py:4232|_ranking_history = RankObservationJsonlStore().list()
+READ_SEAM=backend\dashboard.py:5757|"Bu rejim bağlamı Momentum Keşif ekranına güvenli biçimde "
+READ_SEAM=backend\dashboard.py:5762|"Bu rejim Momentum Keşif'e aktarılmadı: "
+READ_SEAM=backend\dashboard.py:5818|item.momentum,
+READ_SEAM=backend\dashboard.py:7387|"Otomatik kayıt momentum",
+READ_SEAM=backend\dashboard.py:7569|"Momentum",
+READ_SEAM=backend\dashboard.py:8293|_morning_visibility_contexts = build_current_visibility_context()
+READ_SEAM=backend\dashboard.py:8338|RankObservationJsonlStore,
+READ_SEAM=backend\dashboard.py:8344|_daily10_rank_history = RankObservationJsonlStore().list()
+READ_SEAM=backend\dashboard.py:8528|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+READ_SEAM=backend\dashboard.py:8534|_daily_rank_history = RankObservationJsonlStore().list()
+READ_SEAM=backend\dashboard.py:10413|elif analiz_modu == "Momentum Keşif":
+READ_SEAM=backend\run_stock_analysis.py:74|print(f"Momentum              : {sinyal.momentum_puani}/30")
+READ_SEAM=backend\run_technical_confirmation.py:114|momentum = sonuc.momentum
+READ_SEAM=backend\run_technical_confirmation.py:117|f"{rol:<17} RSI14: {momentum.rsi14:>6.2f}  "
+READ_SEAM=backend\run_technical_confirmation.py:118|f"MACD teyidi: {momentum.durum:<8}  "
+READ_SEAM=backend\app\opportunity_radar.py:12|from backend.app.prebreakout.prebreakout_universe import on_yukselis_evrenini_yukle
+READ_SEAM=backend\app\opportunity_radar.py:15|PROFILE_DIR = Path(__file__).resolve().parents[1] / "data" / "opportunity_radar"
+READ_SEAM=backend\app\opportunity_radar.py:109|momentum = (z["RSI14"] >= 50).astype(int) * 8 + (z["RSI14"] <= 72).astype(int) * 4 + (z["RSIDelta3"] > 0).astype(int) * 8
+READ_SEAM=backend\app\opportunity_radar.py:126|z["WeeklyScore"] = ((trend + momentum + compression + proximity + volume) / 90 * 100).round(2)
+READ_SEAM=backend\app\opportunity_radar.py:539|strong_reasons.append("Aylık momentum güçlü fakat aşırı değil.")
+READ_SEAM=backend\scripts\sector_member_strength_check.py:67|"Momentum + (%)",
+READ_SEAM=backend\app\analysis\early_visibility_tracking_bridge.py:11|source: str = "EARLY_VISIBILITY"
+READ_SEAM=backend\app\analysis\fast_mover_preclose_attachment.py:24|RankObservationJsonlStore,
+READ_SEAM=backend\app\analysis\fast_mover_preclose_attachment.py:53|return tuple(RankObservationJsonlStore().list())
+READ_SEAM=backend\app\analysis\indicator_contribution.py:69|"Momentum pozitif",
+READ_SEAM=backend\app\analysis\market_regime.py:71|momentum: RegimeComponent
+READ_SEAM=backend\app\analysis\market_regime.py:309|return RegimeComponent("Momentum",skor,25,durum,tuple(art),tuple(risk))
+READ_SEAM=backend\app\analysis\market_regime.py:401|momentum=_momentum_bileseni(gunluk,haftalik)
+READ_SEAM=backend\app\analysis\market_regime.py:405|toplam=trend.skor+momentum.skor+hacim.skor+kirilim.skor+genislik.skor
+READ_SEAM=backend\app\analysis\market_regime.py:415|pozitif=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.gerekceler)
+READ_SEAM=backend\app\analysis\market_regime.py:416|risk=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.riskler)+saatlik_risk
+READ_SEAM=backend\app\analysis\market_regime.py:422|saatlik_kullanilabilir=saatlik_var,trend=trend,momentum=momentum,hacim=hacim,
+READ_SEAM=backend\app\analysis\momentum_discovery.py:68|"""Momentum keşif taraması hazırlanamadığında kullanılır."""
+READ_SEAM=backend\app\analysis\momentum_discovery.py:86|raise ValueError("Minimum momentum skoru 0 ile 100 arasında olmalıdır.")
+READ_SEAM=backend\app\analysis\momentum_discovery.py:202|"""OHLCV verilerinden kesitsel momentum ve erken kırılım skoru üretir."""
+READ_SEAM=backend\app\analysis\momentum_discovery.py:275|"""Evren, toplu veri, momentum analizi ve geçmiş kaydını birleştirir."""
+READ_SEAM=backend\app\analysis\momentum_discovery.py:465|durum_bildir("Momentum motoru çalışıyor...")
+READ_SEAM=backend\app\analysis\momentum_discovery.py:593|"Momentum": aday.momentum_skoru,
+READ_SEAM=backend\app\analysis\momentum_discovery.py:625|raise ValueError("Momentum analizi için en az 80 işlem günü gereklidir.")
+READ_SEAM=backend\app\analysis\momentum_discovery.py:870|hazirlik = "Yüksek: direnç, hacim, momentum ve göreceli güç birlikte hazırlanıyor."
+READ_SEAM=backend\app\analysis\momentum_discovery.py:872|hazirlik = "Orta-yüksek: fiyat yakın dirence yaklaşıyor; hacim ve momentum teyidi izlenmeli."
+READ_SEAM=backend\app\analysis\momentum_discovery.py:954|nedenler.append(f"Momentum skoru {toplam}; görünür hazırlık sınıfı için en az 45 gerekli.")
+READ_SEAM=backend\app\analysis\momentum_walk_forward.py:27|"""Tarihsel momentum yeniden oynatması hazırlanamadığında kullanılır."""
+
+=== 5. DUPLICATE FACTOR PROTECTION FEASIBILITY ===
+DUPLICATE_FACTOR_PROTECTION_FEASIBLE=True
+MODULE_IDENTITY=backend\check_signal_engine.py:92|print(f"Momentum            : {sinyal.momentum_puani}/30")
+MODULE_IDENTITY=backend\check_stock_analyzer.py:69|f"Momentum            : "
+MODULE_IDENTITY=backend\dashboard.py:532|"Momentum Keşif",
+MODULE_IDENTITY=backend\dashboard.py:564|"Momentum Keşif",
+MODULE_IDENTITY=backend\dashboard.py:2111|st.warning("Momentum sıralaması, teknik teyit, stop, hedef ve lot değerleri kullanılmamalıdır.")
+MODULE_IDENTITY=backend\dashboard.py:2176|"RSI14": round(zaman.momentum.rsi14, 2),
+MODULE_IDENTITY=backend\dashboard.py:2209|("Momentum", zaman.momentum.durum),
+MODULE_IDENTITY=backend\dashboard.py:2486|("Momentum potansiyeli", f"{aday.momentum_skoru}/100"),
+MODULE_IDENTITY=backend\dashboard.py:2546|"""Momentum sonucunun aday, eleme ve hata tablolarını CSV olarak sunar."""
+MODULE_IDENTITY=backend\dashboard.py:2571|"Momentum": aday.momentum_skoru,
+MODULE_IDENTITY=backend\dashboard.py:2595|"Momentum": aday.momentum_skoru,
+MODULE_IDENTITY=backend\dashboard.py:2625|st.markdown("### Momentum sonucunu dışa aktar")
+MODULE_IDENTITY=backend\dashboard.py:2630|st.subheader(f"{sonuc.evren_adi} momentum keşif taraması")
+MODULE_IDENTITY=backend\dashboard.py:2696|("Minimum momentum", f"{politika.minimum_momentum_skoru}/100"),
+MODULE_IDENTITY=backend\dashboard.py:2716|"Momentum, trend ve dirence uzaklık eşikleri aktif piyasa "
+MODULE_IDENTITY=backend\dashboard.py:2721|"Rejim bazlı trend filtresi kapalı. Adaylar yalnızca momentum "
+MODULE_IDENTITY=backend\dashboard.py:2744|"Momentum skoru bir erken keşif ölçüsüdür; doğrudan alım kararı "
+MODULE_IDENTITY=backend\dashboard.py:2766|"Momentum": st.column_config.NumberColumn(width="small"),
+MODULE_IDENTITY=backend\dashboard.py:2782|"Momentum aday ayrıntısı",
+MODULE_IDENTITY=backend\dashboard.py:2798|"Momentum": aday.momentum_skoru,
+MODULE_IDENTITY=backend\dashboard.py:2819|"Momentum": aday.momentum_skoru,
+MODULE_IDENTITY=backend\dashboard.py:2839|"Momentum": aday.momentum_skoru,
+MODULE_IDENTITY=backend\dashboard.py:2868|st.caption(f"Momentum tarama geçmişi kaydedildi: {sonuc.kayit_yolu}")
+MODULE_IDENTITY=backend\dashboard.py:3174|"""Momentum sonucunu yalnızca aynı ayarlarla yeniden gösterir."""
+MODULE_IDENTITY=backend\dashboard.py:3189|st.header("Momentum keşif")
+MODULE_IDENTITY=backend\dashboard.py:3258|"Minimum momentum skoru",
+MODULE_IDENTITY=backend\dashboard.py:3293|"Tarihsel testi başlat" if yeniden_oynat else "Momentum keşfini başlat",
+MODULE_IDENTITY=backend\dashboard.py:3382|"Momentum ayarları değiştiği için önceki sonuç geçersiz "
+MODULE_IDENTITY=backend\dashboard.py:3421|ilerleme = st.progress(0, text="Momentum keşfi hazırlanıyor...")
+MODULE_IDENTITY=backend\dashboard.py:3428|text=f"[{sira}/{toplam}] {sembol} momentum analizi...",
+MODULE_IDENTITY=backend\dashboard.py:3446|with st.spinner(f"{istek.evren} momentum potansiyeli taranıyor..."):
+MODULE_IDENTITY=backend\dashboard.py:3464|ilerleme.progress(1.0, text="Momentum keşfi tamamlandı.")
+MODULE_IDENTITY=backend\dashboard.py:5757|"Bu rejim bağlamı Momentum Keşif ekranına güvenli biçimde "
+MODULE_IDENTITY=backend\dashboard.py:5762|"Bu rejim Momentum Keşif'e aktarılmadı: "
+MODULE_IDENTITY=backend\dashboard.py:5818|item.momentum,
+MODULE_IDENTITY=backend\dashboard.py:7387|"Otomatik kayıt momentum",
+MODULE_IDENTITY=backend\dashboard.py:7569|"Momentum",
+MODULE_IDENTITY=backend\dashboard.py:10413|elif analiz_modu == "Momentum Keşif":
+MODULE_IDENTITY=backend\run_stock_analysis.py:74|print(f"Momentum              : {sinyal.momentum_puani}/30")
+MODULE_IDENTITY=backend\run_technical_confirmation.py:114|momentum = sonuc.momentum
+MODULE_IDENTITY=backend\run_technical_confirmation.py:117|f"{rol:<17} RSI14: {momentum.rsi14:>6.2f}  "
+MODULE_IDENTITY=backend\run_technical_confirmation.py:118|f"MACD teyidi: {momentum.durum:<8}  "
+MODULE_IDENTITY=backend\app\opportunity_radar.py:12|from backend.app.prebreakout.prebreakout_universe import on_yukselis_evrenini_yukle
+MODULE_IDENTITY=backend\app\opportunity_radar.py:15|PROFILE_DIR = Path(__file__).resolve().parents[1] / "data" / "opportunity_radar"
+MODULE_IDENTITY=backend\app\opportunity_radar.py:109|momentum = (z["RSI14"] >= 50).astype(int) * 8 + (z["RSI14"] <= 72).astype(int) * 4 + (z["RSIDelta3"] > 0).astype(int) * 8
+MODULE_IDENTITY=backend\app\opportunity_radar.py:126|z["WeeklyScore"] = ((trend + momentum + compression + proximity + volume) / 90 * 100).round(2)
+MODULE_IDENTITY=backend\app\opportunity_radar.py:539|strong_reasons.append("Aylık momentum güçlü fakat aşırı değil.")
+MODULE_IDENTITY=backend\scripts\sector_member_strength_check.py:67|"Momentum + (%)",
+MODULE_IDENTITY=backend\app\analysis\early_visibility_tracking_bridge.py:11|source: str = "EARLY_VISIBILITY"
+MODULE_IDENTITY=backend\app\analysis\indicator_contribution.py:69|"Momentum pozitif",
+MODULE_IDENTITY=backend\app\analysis\market_regime.py:71|momentum: RegimeComponent
+MODULE_IDENTITY=backend\app\analysis\market_regime.py:309|return RegimeComponent("Momentum",skor,25,durum,tuple(art),tuple(risk))
+MODULE_IDENTITY=backend\app\analysis\market_regime.py:401|momentum=_momentum_bileseni(gunluk,haftalik)
+MODULE_IDENTITY=backend\app\analysis\market_regime.py:405|toplam=trend.skor+momentum.skor+hacim.skor+kirilim.skor+genislik.skor
+MODULE_IDENTITY=backend\app\analysis\market_regime.py:415|pozitif=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.gerekceler)
+MODULE_IDENTITY=backend\app\analysis\market_regime.py:416|risk=tuple(m for c in (trend,momentum,hacim,kirilim,genislik) for m in c.riskler)+saatlik_risk
+MODULE_IDENTITY=backend\app\analysis\market_regime.py:422|saatlik_kullanilabilir=saatlik_var,trend=trend,momentum=momentum,hacim=hacim,
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:68|"""Momentum keşif taraması hazırlanamadığında kullanılır."""
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:86|raise ValueError("Minimum momentum skoru 0 ile 100 arasında olmalıdır.")
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:202|"""OHLCV verilerinden kesitsel momentum ve erken kırılım skoru üretir."""
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:275|"""Evren, toplu veri, momentum analizi ve geçmiş kaydını birleştirir."""
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:465|durum_bildir("Momentum motoru çalışıyor...")
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:593|"Momentum": aday.momentum_skoru,
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:625|raise ValueError("Momentum analizi için en az 80 işlem günü gereklidir.")
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:870|hazirlik = "Yüksek: direnç, hacim, momentum ve göreceli güç birlikte hazırlanıyor."
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:872|hazirlik = "Orta-yüksek: fiyat yakın dirence yaklaşıyor; hacim ve momentum teyidi izlenmeli."
+MODULE_IDENTITY=backend\app\analysis\momentum_discovery.py:954|nedenler.append(f"Momentum skoru {toplam}; görünür hazırlık sınıfı için en az 45 gerekli.")
+MODULE_IDENTITY=backend\app\analysis\momentum_walk_forward.py:27|"""Tarihsel momentum yeniden oynatması hazırlanamadığında kullanılır."""
+MODULE_IDENTITY=backend\app\analysis\momentum_walk_forward.py:52|raise ValueError("Minimum momentum skoru 0 ile 100 arasında olmalıdır.")
+MODULE_IDENTITY=backend\app\analysis\momentum_walk_forward.py:116|"""Gelecek barları gizleyerek tarihsel momentum adaylarını yeniden üretir."""
+MODULE_IDENTITY=backend\app\analysis\momentum_walk_forward.py:426|"Momentum": aday.momentum_skoru,
+MODULE_IDENTITY=backend\app\analysis\momentum_walk_forward.py:456|"Momentum": item.aday.momentum_skoru,
+MODULE_IDENTITY=backend\app\analysis\momentum_walk_forward.py:476|"Momentum": kayit.momentum_skoru,
+MODULE_IDENTITY=backend\app\analysis\ranking_quality_context.py:10|"momentum",
+MODULE_IDENTITY=backend\app\analysis\ranking_quality_context.py:138|momentum = by_family.get("momentum")
+MODULE_IDENTITY=backend\app\analysis\ranking_quality_context.py:144|if momentum is not None:
+MODULE_IDENTITY=backend\app\analysis\ranking_quality_context.py:145|return "Momentum Keşif"
+MODULE_IDENTITY=backend\app\analysis\signal_engine.py:212|"RSI sağlıklı pozitif momentum bölgesinde."
+MODULE_IDENTITY=backend\app\analysis\signal_engine.py:224|"RSI zayıf momentum bölgesinde."
+MODULE_IDENTITY=backend\app\analysis\signal_outcome_tracking.py:312|"Momentum": outcome.snapshot.momentum_state or "—",
+
+=== 6. CONTRADICTION / EXTENSION / REBOUND INPUTS ===
+CONTRADICTION_INPUT_HITS=180
+EXTENSION_INPUT_HITS=53
+REBOUND_INPUTS_FEASIBLE=True
+CONTRADICTION_INPUT=backend\dashboard.py:756|st.warning(str(hata))
+CONTRADICTION_INPUT=backend\dashboard.py:793|st.warning(str(hata))
+CONTRADICTION_INPUT=backend\dashboard.py:822|st.warning(f"Analiz geçmişine kaydedilemedi: {hata}")
+CONTRADICTION_INPUT=backend\dashboard.py:928|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:933|for uyari in karsilastirma.uyarilar:
+CONTRADICTION_INPUT=backend\dashboard.py:934|st.caption(f"• {uyari}")
+CONTRADICTION_INPUT=backend\dashboard.py:971|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:1153|st.warning(f"Analiz geçmişi özeti hazırlanamadı: {hata}")
+CONTRADICTION_INPUT=backend\dashboard.py:1580|st.warning(str(hata))
+CONTRADICTION_INPUT=backend\dashboard.py:2083|st.warning("Veri tazeliği doğrulanamadı. Son fiyat tarihini aracı kurumdan kontrol edin.")
+CONTRADICTION_INPUT=backend\dashboard.py:2111|st.warning("Momentum sıralaması, teknik teyit, stop, hedef ve lot değerleri kullanılmamalıdır.")
+CONTRADICTION_INPUT=backend\dashboard.py:2281|st.warning(gunluk_uyumsuzluk.disclaimer)
+CONTRADICTION_INPUT=backend\dashboard.py:2326|st.warning(karar_matrisi.disclaimer)
+CONTRADICTION_INPUT=backend\dashboard.py:2500|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:2710|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:2731|("E3 — Erken uyarı", str(sonuc.sinif_sayisi(SINIF_ERKEN_UYARI))),
+CONTRADICTION_INPUT=backend\dashboard.py:2752|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:2957|st.warning(str(hata))
+CONTRADICTION_INPUT=backend\dashboard.py:2962|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3009|st.warning("Kesim tarihinde seçilen koşulları karşılayan aday bulunamadı.")
+CONTRADICTION_INPUT=backend\dashboard.py:3335|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3389|"Tarihsel yeniden oynatma, gelecek veriyi gizleyerek erken uyarı "
+CONTRADICTION_INPUT=backend\dashboard.py:3487|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3489|"Toplu tarama VBTS uyarı modunda devam edebilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3502|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3504|"Toplu tarama VBTS uyarı modunda devam edebilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3513|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3515|"Toplu tarama VBTS uyarı modunda devam edebilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3559|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3600|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3602|"Toplu tarama VBTS uyarı modunda devam edebilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3685|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3687|"Toplu tarama VBTS uyarı modunda devam edebilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3883|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3885|"Toplu tarama VBTS uyarı modunda devam edebilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3909|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3915|"uyarı katmanı olarak gösterilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3923|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3932|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3939|st.success("Manuel VBTS uyarı katmanı aktif.")
+CONTRADICTION_INPUT=backend\dashboard.py:3942|"uyarı olarak gösterilir."
+CONTRADICTION_INPUT=backend\dashboard.py:3946|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:3963|st.warning(f"Kayıtlı temel skorlar okunamadı: {hata}")
+CONTRADICTION_INPUT=backend\dashboard.py:4070|st.warning(sonuc.vbts_dogrulama_uyarisi)
+CONTRADICTION_INPUT=backend\dashboard.py:4083|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:4278|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:4289|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:4295|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:4432|st.warning("VBTS: " + " | ".join(secili_vbts))
+CONTRADICTION_INPUT=backend\dashboard.py:4526|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:4654|st.warning(f"Research Profiles temel verisi okunamadı: {hata}")
+CONTRADICTION_INPUT=backend\dashboard.py:4795|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:5490|karar.warnings,
+CONTRADICTION_INPUT=backend\dashboard.py:5491|"Ek uyarı yok.",
+CONTRADICTION_INPUT=backend\dashboard.py:5501|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:5675|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:5732|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:5772|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:5969|st.warning(
+CONTRADICTION_INPUT=backend\dashboard.py:6162|st.warning(kap_api_durumu.explanation)
+EXTENSION_INPUT=backend\run_market_regime_analysis.py:94|parser.add_argument("--volatilite-bakisi", type=int, default=42)
+EXTENSION_INPUT=backend\run_market_regime_analysis.py:96|"--yuksek-volatilite-carpani",
+EXTENSION_INPUT=backend\run_market_regime_analysis.py:230|"Volatilite                    : "
+EXTENSION_INPUT=backend\run_market_regime_analysis.py:235|"Yüksek volatilite eşiği       : "
+EXTENSION_INPUT=backend\run_market_regime_analysis.py:248|"VOLATİLİTE REJİMİ GÜN DAĞILIMI",
+EXTENSION_INPUT=backend\run_market_regime_analysis.py:256|"VOLATİLİTE REJİMİ BAZLI PERFORMANS",
+EXTENSION_INPUT=backend\app\analysis\fast_mover_watch.py:30|ENTRY_DISTANCE = "ENTRY_DISTANCE"
+EXTENSION_INPUT=backend\app\analysis\signal_engine.py:346|"Volatilite düşük seviyede."
+EXTENSION_INPUT=backend\app\analysis\signal_engine.py:352|"Volatilite orta seviyede."
+EXTENSION_INPUT=backend\app\analysis\signal_engine.py:358|"Volatilite yüksek seviyede."
+EXTENSION_INPUT=backend\app\analysis\technical_decision_matrix.py:318|"Volatilite/ATR riski",
+EXTENSION_INPUT=backend\app\analysis\technical_decision_matrix.py:323|"Aşırı düşük veya aşırı yüksek volatilite kaliteyi azaltır.",
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:23|VOLATILITE_NORMAL = "Normal Volatilite"
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:24|VOLATILITE_YUKSEK = "Yüksek Volatilite"
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:44|"""Açıklanabilir trend ve volatilite sınıflandırma ayarları."""
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:87|"Volatilite bakışı en az 2 olmalıdır."
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:95|"Yüksek volatilite çarpanı pozitif ve sonlu "
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:196|Günleri trend ve volatilite rejimlerine ayırır; tamamlanan
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:201|Volatilite kuralı, ATR oranını yalnızca geçmiş ve güncel verilerden
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:252|f"{trend} / {volatilite}": []
+EXTENSION_INPUT=backend\app\backtest\market_regime_analysis.py:254|for volatilite in VOLATILITE_SIRASI
+EXTENSION_INPUT=backend\app\compliance\kap_vbts_client.py:190|"volatilite bazlı tedbir sistemi" in normalized
+EXTENSION_INPUT=backend\app\data\delayed_data_pilot.py:185|for gap in gaps:
+EXTENSION_INPUT=backend\app\data\delayed_data_pilot.py:186|if gap > expected:
+EXTENSION_INPUT=backend\app\data\delayed_data_pilot.py:189|int(gap.total_seconds() // expected.total_seconds()) - 1,
+EXTENSION_INPUT=backend\app\decision_support\risk_integration.py:9|volatility: float,
+EXTENSION_INPUT=backend\app\decision_support\risk_integration.py:22|if volatility <= 3:
+EXTENSION_INPUT=backend\app\news_center\grouping.py:151|gap = _time_gap_minutes(occurred_at, event.occurred_at)
+EXTENSION_INPUT=backend\app\news_center\grouping.py:179|time_gap_minutes=gap,
+EXTENSION_INPUT=backend\app\news_center\grouping.py:185|if gap <= 240 and similarity >= 0.55:
+EXTENSION_INPUT=backend\app\news_center\grouping.py:197|time_gap_minutes=gap,
+EXTENSION_INPUT=backend\app\news_center\grouping.py:199|if same_date and gap <= 1440 and similarity >= 0.30:
+EXTENSION_INPUT=backend\app\news_center\grouping.py:210|time_gap_minutes=gap,
+EXTENSION_INPUT=backend\app\news_center\grouping.py:217|if gap <= 480 and similarity >= 0.45:
+EXTENSION_INPUT=backend\app\news_center\grouping.py:228|time_gap_minutes=gap,
+EXTENSION_INPUT=backend\app\news_center\grouping.py:230|if gap <= 1440 and similarity >= 0.30:
+EXTENSION_INPUT=backend\app\news_center\grouping.py:241|time_gap_minutes=gap,
+EXTENSION_INPUT=backend\app\news_center\grouping.py:246|if same_date and gap <= 360 and similarity >= 0.60:
+EXTENSION_INPUT=backend\app\news_center\grouping.py:257|time_gap_minutes=gap,
+EXTENSION_INPUT=backend\app\news_center\grouping.py:270|time_gap_minutes=gap,
+EXTENSION_INPUT=backend\app\operations\scheduled_operation_phase_runner.py:303|gap = _pct(float(snapshot.day_open), prior_close)
+EXTENSION_INPUT=backend\app\operations\scheduled_operation_phase_runner.py:315|"Gap %": gap,
+EXTENSION_INPUT=backend\app\operations\scheduled_operation_phase_runner.py:318|"Durum": "POSTOPEN GAP / ENTRY EVIDENCE · NOT AL/SAT",
+EXTENSION_INPUT=backend\app\operations\scheduled_session_data_adapter.py:146|PREOPEN never invents an opening gap and does not call the intraday provider.
+EXTENSION_INPUT=backend\app\operations\scheduled_session_data_adapter.py:148|day-open gap when a valid prior close is supplied.
+EXTENSION_INPUT=backend\app\operations\scheduled_session_data_adapter.py:163|reason="08:45 yalnız seans öncesi bağlamdır; gerçek açılış gap'i henüz oluşmamıştır.",
+EXTENSION_INPUT=backend\app\prebreakout\prebreakout_engine.py:29|reasons.append("Volatilite ve fiyat aralığı daralıyor.")
+EXTENSION_INPUT=backend\app\prebreakout\prebreakout_score.py:64|resistance = 0
+EXTENSION_INPUT=backend\app\prebreakout\prebreakout_score.py:66|resistance = 10
+EXTENSION_INPUT=backend\app\prebreakout\prebreakout_score.py:68|resistance = 7
+EXTENSION_INPUT=backend\app\prebreakout\prebreakout_score.py:70|resistance = 4
+EXTENSION_INPUT=backend\app\prebreakout\prebreakout_score.py:83|direnc=_clamp(resistance, 10),
+EXTENSION_INPUT=backend\app\risk\risk_engine.py:129|ATR'nin giriş fiyatına oranına göre volatilite sınıfı üretir.
+
+=== 7. OUTCOME SEAM ===
+T1_OUTCOME_SEAM=True
+OUTCOME=backend\dashboard.py:2941|"Bu karttaki gün içi veri, tarihsel aday üretimine ve walk-forward "
+OUTCOME=backend\dashboard.py:3277|"Tarihsel yeniden oynatma (walk-forward)",
+OUTCOME=backend\dashboard.py:7317|"Walk-forward doğrulama",
+OUTCOME=backend\dashboard.py:7475|pd.DataFrame(outcome_rows((result.outcome,))),
+OUTCOME=backend\dashboard.py:7666|outcome = evaluate_signal(snapshot, price_frame)
+OUTCOME=backend\dashboard.py:7667|path = store.save(outcome)
+OUTCOME=backend\dashboard.py:7680|pd.DataFrame(outcome_rows((outcome,))),
+OUTCOME=backend\dashboard.py:7716|"Başarı oranı tek başına yeterli değildir. Getiri, MFE, "
+OUTCOME=backend\dashboard.py:7717|"MAE, hedef/stop davranışı ve örnek sayısı birlikte "
+OUTCOME=backend\dashboard.py:7828|st.markdown("#### Zamansal doğrulama — walk-forward")
+OUTCOME=backend\dashboard.py:7835|st.info("Walk-forward doğrulama için kayıtlı sinyal sonucu yok.")
+OUTCOME=backend\dashboard.py:7840|"Walk-forward ölçüm ufku",
+OUTCOME=backend\dashboard.py:7889|"Walk-forward doğrulamayı çalıştır",
+OUTCOME=backend\dashboard.py:7932|st.markdown("#### Walk-forward pencereleri")
+OUTCOME=backend\dashboard.py:8474|"Yalnız mevcut teknik, hacim, risk/getiri, zamanlama, giriş, veri ve outcome kanıtlarının "
+OUTCOME=backend\dashboard.py:8475|"tamamını zorunlu kapılar halinde değerlendirir. Geçmiş outcome kanıtı yeterli değilse "
+OUTCOME=backend\dashboard.py:8882|with st.expander("Karar kalibrasyonu / outcome feedback", expanded=False):
+OUTCOME=backend\dashboard.py:8920|"Bu görünüm yalnız outcome kanıtından eşik inceleme önerisi üretir. "
+OUTCOME=backend\dashboard.py:9914|"açılan/kapanan pozisyonlar, K/Z, getiri, MFE/MAE, hedef/stop oranları ve grup bazlı başarı karşılaştırmalarını gösterir."
+OUTCOME=backend\dashboard.py:9923|"performans yüzdesel getiri, MFE/MAE, hedef/stop ve gerçekleşen/gerçekleşmemiş K/Z ile izlenir."
+OUTCOME=backend\dashboard.py:10064|"MFE (%)", "MAE (%)", "Sinyal sınıfı", "Kalite",
+OUTCOME=backend\run_backtest.py:862|benchmark: object,
+OUTCOME=backend\run_backtest.py:864|al_tut = benchmark.al_tut
+OUTCOME=backend\run_backtest.py:971|benchmark: object,
+OUTCOME=backend\run_backtest.py:973|karsilastirma = benchmark.karsilastirma
+OUTCOME=backend\run_backtest.py:1055|benchmark=tam_donem,
+OUTCOME=backend\run_backtest.py:1074|benchmark=hizalanmis,
+OUTCOME=backend\app\opportunity_radar.py:465|def _monthly_metrics(daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> dict[str, object] | None:
+OUTCOME=backend\app\opportunity_radar.py:484|if benchmark is not None:
+OUTCOME=backend\app\opportunity_radar.py:485|bm = _monthly(benchmark)
+OUTCOME=backend\app\opportunity_radar.py:521|def _monthly_rows(symbol: str, daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> tuple[dict[str, object] | None, dict[str, object] | None]:
+OUTCOME=backend\app\opportunity_radar.py:522|x = _monthly_metrics(daily, benchmark)
+OUTCOME=backend\app\opportunity_radar.py:629|benchmark: pd.DataFrame | None
+OUTCOME=backend\app\opportunity_radar.py:631|benchmark = fiyat_verisi_getir(
+OUTCOME=backend\app\opportunity_radar.py:638|benchmark = None
+OUTCOME=backend\app\opportunity_radar.py:653|strong, early = _monthly_rows(symbol, daily, benchmark)
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:25|outcome: SignalOutcome
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:126|for outcome in outcomes:
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:127|if _record_key(outcome.snapshot) == key:
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:128|return outcome
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:132|def _completed_count(outcome: SignalOutcome) -> int:
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:133|return sum(item.available for item in outcome.horizons)
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:149|outcome=evaluated,
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:163|outcome=current,
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:171|outcome=refreshed,
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:246|for outcome in records:
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:249|outcome.snapshot.symbol,
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:250|start_date=outcome.snapshot.signal_date,
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:254|refreshed = evaluate_signal(outcome.snapshot, frame)
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:255|if _completed_count(refreshed) > _completed_count(outcome):
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:269|f"{outcome.snapshot.symbol} · "
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:270|f"{outcome.snapshot.signal_date}: {error}"
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:276|for outcome in final_records
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:277|for horizon in outcome.horizons
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:281|for outcome in final_records
+OUTCOME=backend\app\analysis\automatic_signal_tracking.py:282|for horizon in outcome.horizons
+OUTCOME=backend\app\analysis\daily_buy_decision_review.py:16|outcome: str
+OUTCOME=backend\app\analysis\daily_buy_decision_review.py:76|outcome = "BEKLIYOR" if value is None else ("POZITIF" if value > 0 else "NEGATIF")
+OUTCOME=backend\app\analysis\daily_buy_decision_review.py:86|outcome=outcome,
+OUTCOME=backend\app\analysis\daily_buy_decision_review.py:103|"Sonuç": item.outcome,
+
+=== 8. DECISION ===
+MISSING_FAMILIES=NONE
+PARTIAL_FAMILIES=NONE
+BLOCKERS=NONE
+WARNINGS=NONE
+DECISION=READY_FOR_PHASE2_MANUAL_REPLAY_VALIDATION
+NEXT=BUILD_READ_ONLY_F1_F5_REPLAY_MAPPER
+
+STRICT_PRESERVATION:
+SCHEDULER_CHANGE=NO
+SECOND_SCANNER=NO
+SECOND_UNIVERSE_TRAVERSAL=NO
+NEW_STORE=NO
+NEW_WEIGHTED_SCORE=NO
+AL_SAT_AUTHORITY_CHANGE=NO
+MAIN_RANKING_MUTATION=NO
+EARLY_VISIBILITY_MUTATION=NO
+FAST_MOVER_MUTATION=NO

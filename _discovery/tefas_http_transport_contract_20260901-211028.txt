@@ -1,0 +1,181 @@
+﻿TEFAS_HTTP_TRANSPORT_CONTRACT
+HTTP_FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_http.py
+
+===== OFFICIAL_SOURCE_HTTP_BEGIN =====
+001: from __future__ import annotations
+002: 
+003: from dataclasses import dataclass
+004: from urllib.error import HTTPError, URLError
+005: from urllib.request import Request, urlopen
+006: 
+007: 
+008: OFFICIAL_SOURCE_MAX_RESPONSE_BYTES = 2_000_000
+009: OFFICIAL_SOURCE_DEFAULT_TIMEOUT_SECONDS = 10
+010: OFFICIAL_SOURCE_MIN_TIMEOUT_SECONDS = 1
+011: OFFICIAL_SOURCE_MAX_TIMEOUT_SECONDS = 30
+012: 
+013: 
+014: @dataclass(frozen=True, slots=True)
+015: class OfficialSourceHttpResponse:
+016:     body: bytes
+017:     final_url: str
+018:     content_type: str
+019: 
+020: 
+021: def validate_official_source_timeout(timeout_seconds: int) -> int:
+022:     if (
+023:         not isinstance(timeout_seconds, int)
+024:         or not OFFICIAL_SOURCE_MIN_TIMEOUT_SECONDS
+025:         <= timeout_seconds
+026:         <= OFFICIAL_SOURCE_MAX_TIMEOUT_SECONDS
+027:     ):
+028:         raise ValueError("timeout_seconds 1-30 aralığında tam sayı olmalıdır.")
+029:     return timeout_seconds
+030: 
+031: 
+032: def fetch_official_source_bytes(
+033:     url: str,
+034:     timeout_seconds: int,
+035:     *,
+036:     user_agent: str,
+037:     error_type: type[RuntimeError],
+038:     source_label: str,
+039:     max_response_bytes: int = OFFICIAL_SOURCE_MAX_RESPONSE_BYTES,
+040: ) -> OfficialSourceHttpResponse:
+041:     validate_official_source_timeout(timeout_seconds)
+042:     request = Request(
+043:         url,
+044:         headers={"User-Agent": user_agent},
+045:         method="GET",
+046:     )
+047:     try:
+048:         with urlopen(request, timeout=timeout_seconds) as response:
+049:             final_url = response.geturl()
+050:             content_type = response.headers.get("Content-Type", "")
+051:             body = response.read(max_response_bytes + 1)
+052:     except HTTPError as exc:
+053:         raise error_type(f"{source_label} HTTP hatası: {exc.code}") from exc
+054:     except URLError as exc:
+055:         raise error_type(
+056:             f"{source_label} bağlantı hatası: {exc.reason}"
+057:         ) from exc
+058:     except TimeoutError as exc:
+059:         raise error_type(
+060:             f"{source_label} bağlantısı zaman aşımına uğradı."
+061:         ) from exc
+062: 
+063:     if len(body) > max_response_bytes:
+064:         raise error_type(
+065:             f"{source_label} yanıtı güvenlik boyutu sınırını aşıyor."
+066:         )
+067: 
+068:     return OfficialSourceHttpResponse(
+069:         body=body,
+070:         final_url=final_url,
+071:         content_type=content_type,
+072:     )
+073: 
+074: 
+075: def validate_official_source_html_payload(
+076:     body: bytes,
+077:     content_type: str,
+078:     *,
+079:     error_type: type[RuntimeError],
+080:     source_label: str,
+081:     max_response_bytes: int = OFFICIAL_SOURCE_MAX_RESPONSE_BYTES,
+082: ) -> None:
+083:     if "text/html" not in str(content_type or "").lower():
+084:         raise error_type(f"{source_label} yanıtı HTML değil.")
+085:     if len(body) > max_response_bytes:
+086:         raise error_type(
+087:             f"{source_label} yanıtı güvenlik boyutu sınırını aşıyor."
+088:         )
+089: 
+090: 
+091: def decode_official_source_html(
+092:     body: bytes,
+093:     *,
+094:     error_type: type[RuntimeError],
+095:     source_label: str,
+096: ) -> str:
+097:     try:
+098:         return body.decode("utf-8")
+099:     except UnicodeDecodeError:
+100:         try:
+101:             return body.decode("iso-8859-9")
+102:         except UnicodeDecodeError as exc:
+103:             raise error_type(
+104:                 f"{source_label} HTML karakter kodlaması çözülemedi."
+105:             ) from exc
+===== OFFICIAL_SOURCE_HTTP_END =====
+
+===== RELATED_TESTS_BEGIN =====
+
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_health.py
+test_news_center_official_source_health.py:L012: from backend.app.news_center.official_source_http import (
+test_news_center_official_source_health.py:L013: OFFICIAL_SOURCE_DEFAULT_TIMEOUT_SECONDS,
+test_news_center_official_source_health.py:L067: def test_her_adapter_ortak_timeout_kullanir(spec):
+test_news_center_official_source_health.py:L071: assert adapter.timeout_seconds == OFFICIAL_SOURCE_DEFAULT_TIMEOUT_SECONDS
+test_news_center_official_source_health.py:L078: def forbidden_fetcher(url, timeout):
+test_news_center_official_source_health.py:L079: calls.append((url, timeout))
+
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_http.py
+test_news_center_official_source_http.py:L002: from urllib.error import HTTPError, URLError
+test_news_center_official_source_http.py:L006: import backend.app.news_center.official_source_http as http
+test_news_center_official_source_http.py:L024: def __init__(self, body=b"ok", *, url="https://example.test/x", content_type="text/html"):
+test_news_center_official_source_http.py:L043: assert http.OFFICIAL_SOURCE_DEFAULT_TIMEOUT_SECONDS == 10
+test_news_center_official_source_http.py:L044: assert http.OFFICIAL_SOURCE_MAX_RESPONSE_BYTES == 2_000_000
+test_news_center_official_source_http.py:L045: assert http.OFFICIAL_SOURCE_MIN_TIMEOUT_SECONDS == 1
+test_news_center_official_source_http.py:L046: assert http.OFFICIAL_SOURCE_MAX_TIMEOUT_SECONDS == 30
+test_news_center_official_source_http.py:L050: def test_timeout_gecerli(value):
+test_news_center_official_source_http.py:L051: assert http.validate_official_source_timeout(value) == value
+test_news_center_official_source_http.py:L055: def test_timeout_gecersiz(value):
+test_news_center_official_source_http.py:L057: http.validate_official_source_timeout(value)
+test_news_center_official_source_http.py:L060: def test_http_get_sonucu_standardize_edilir(monkeypatch):
+test_news_center_official_source_http.py:L062: http,
+test_news_center_official_source_http.py:L063: "urlopen",
+test_news_center_official_source_http.py:L064: lambda request, timeout: _Response(
+test_news_center_official_source_http.py:L066: url="https://example.test/final",
+test_news_center_official_source_http.py:L070: result = http.fetch_official_source_bytes(
+test_news_center_official_source_http.py:L071: "https://example.test/start",
+test_news_center_official_source_http.py:L078: assert result.final_url == "https://example.test/final"
+test_news_center_official_source_http.py:L082: def test_http_error_kaynak_etiketiyle_eslenir(monkeypatch):
+test_news_center_official_source_http.py:L083: def fail(request, timeout):
+test_news_center_official_source_http.py:L084: raise HTTPError(request.full_url, 503, "busy", {}, None)
+test_news_center_official_source_http.py:L085: monkeypatch.setattr(http, "urlopen", fail)
+test_news_center_official_source_http.py:L086: with pytest.raises(DemoError, match="TEST HTTP hatası: 503"):
+test_news_center_official_source_http.py:L087: http.fetch_official_source_bytes(
+test_news_center_official_source_http.py:L088: "https://example.test/x", 10,
+test_news_center_official_source_http.py:L094: def fail(request, timeout):
+test_news_center_official_source_http.py:L096: monkeypatch.setattr(http, "urlopen", fail)
+test_news_center_official_source_http.py:L098: http.fetch_official_source_bytes(
+test_news_center_official_source_http.py:L099: "https://example.test/x", 10,
+test_news_center_official_source_http.py:L104: def test_timeout_error_kaynak_etiketiyle_eslenir(monkeypatch):
+test_news_center_official_source_http.py:L105: def fail(request, timeout):
+test_news_center_official_source_http.py:L106: raise TimeoutError("late")
+test_news_center_official_source_http.py:L107: monkeypatch.setattr(http, "urlopen", fail)
+test_news_center_official_source_http.py:L109: http.fetch_official_source_bytes(
+test_news_center_official_source_http.py:L110: "https://example.test/x", 10,
+test_news_center_official_source_http.py:L117: http,
+test_news_center_official_source_http.py:L118: "urlopen",
+test_news_center_official_source_http.py:L119: lambda request, timeout: _Response(b"x" * 11),
+test_news_center_official_source_http.py:L122: http.fetch_official_source_bytes(
+test_news_center_official_source_http.py:L123: "https://example.test/x", 10,
+test_news_center_official_source_http.py:L131: http.validate_official_source_html_payload(
+test_news_center_official_source_http.py:L139: http.validate_official_source_html_payload(
+test_news_center_official_source_http.py:L146: assert http.decode_official_source_html(
+test_news_center_official_source_http.py:L154: assert http.decode_official_source_html(
+
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_sprint173_official_source_consolidation.py
+test_sprint173_official_source_consolidation.py:L020: def test_yedi_adapter_ortak_http_cekrdegini_kullanir():
+test_sprint173_official_source_consolidation.py:L023: assert "from .official_source_http import (" in text, name
+test_sprint173_official_source_consolidation.py:L024: assert "fetch_official_source_bytes" in text, name
+test_sprint173_official_source_consolidation.py:L027: assert "validate_official_source_timeout" in text, name
+test_sprint173_official_source_consolidation.py:L033: assert "from urllib.request import Request, urlopen" not in text, name
+test_sprint173_official_source_consolidation.py:L034: assert "from urllib.error import HTTPError, URLError" not in text, name
+test_sprint173_official_source_consolidation.py:L035: assert "urlopen(" not in text, name
+test_sprint173_official_source_consolidation.py:L038: def test_adapterlerde_iki_mb_ve_timeout_sabitleri_ortaktan_gelir():
+test_sprint173_official_source_consolidation.py:L042: assert "DEFAULT_TIMEOUT_SECONDS = OFFICIAL_SOURCE_DEFAULT_TIMEOUT_SECONDS" in text, name
+test_sprint173_official_source_consolidation.py:L044: assert "DEFAULT_TIMEOUT_SECONDS = 10" not in text, name
+test_sprint173_official_source_consolidation.py:L050: assert "def _default_fetch(url: str, timeout_seconds: int) -> tuple[bytes, str, str]:" in text, name
+===== RELATED_TESTS_END =====

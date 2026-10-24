@@ -1,0 +1,56 @@
+{
+  "records": [
+    {
+      "phase": "CANONICAL_CLOSE",
+      "run_date": "2026-10-20",
+      "created_at": "2026-10-20T18:30:08.456473+03:00",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "decisions": {},
+      "buy_candidate_symbols": [],
+      "buy_candidate_count": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "phase": "CANONICAL_CLOSE",
+      "run_date": "2026-10-21",
+      "created_at": "2026-10-21T18:34:28.117435+03:00",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "decisions": {},
+      "buy_candidate_symbols": [],
+      "buy_candidate_count": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "phase": "CANONICAL_CLOSE",
+      "run_date": "2026-10-23",
+      "created_at": "2026-10-23T18:31:50.587618+03:00",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "decisions": {},
+      "buy_candidate_symbols": [],
+      "buy_candidate_count": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "phase": "CANONICAL_CLOSE",
+      "run_date": "2026-08-28",
+      "created_at": "2026-08-28T18:30:00+03:00",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "decisions": {},
+      "buy_candidate_symbols": [],
+      "buy_candidate_count": 0,
+      "failures": [],
+      "error": null
+    }
+  ]
+}

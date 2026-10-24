@@ -1,0 +1,18 @@
+{
+  "natural_date": "2026-09-25",
+  "target_count": 929,
+  "success_count": 929,
+  "failure_count": 0,
+  "ranked_count": 929,
+  "unmapped_category_count": 0,
+  "history_inserted_count": 929,
+  "history_skipped_existing_count": 0,
+  "history_row_count": 1858,
+  "unique_date_count": 2,
+  "unique_isin_count": 929,
+  "two_date_fund_count": 929,
+  "rank_date_counts": {
+    "2026-09-24": 929,
+    "2026-09-25": 929
+  }
+}

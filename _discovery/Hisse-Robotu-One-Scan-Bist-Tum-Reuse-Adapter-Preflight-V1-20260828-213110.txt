@@ -1,0 +1,4702 @@
+HISSE ROBOTU — ONE-SCAN BIST TUM REUSE ADAPTER PREFLIGHT V1
+==================================================================================
+
+=== 1. CANONICAL CLOSE ===
+CONCRETE_CANONICAL_CLOSE=YES
+PATH=backend\app\operations\scheduled_operation_phase_runner.py
+def canonical_close(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult:
+        legacy = execute_scheduled_run(
+            "EVENING",
+            now=now,
+        )
+
+        count = int(getattr(legacy, "candidate_count", 0) or 0)
+        status = str(getattr(legacy, "status", "SUCCESS") or "SUCCESS")
+
+        return ScheduledOperationPhaseResult(
+            phase=CANONICAL_CLOSE,
+            run_date=now.date().isoformat(),
+            observed_at=now.isoformat(),
+            status=status,
+            candidate_count=count,
+            detail_rows=(),
+            delegated_legacy_phase="EVENING",
+            preview_only=False,
+            canonical=True,
+            ranking_write_allowed=True,
+            profile_write_allowed=True,
+            al_sat_decision_allowed=True,
+        )
+
+=== 2. EXECUTE_SCHEDULED_RUN ===
+PATH=backend\app\operations\daily_buy_decision_scheduled_runner.py
+ARGS=phase;now;runtime;store;force;audit_store;run_kind
+SCAN_CALL_COUNT=1
+SCAN_ASSIGNMENT=scan_result
+CANDIDATE_SNAPSHOT_RECEIVES_SCAN=YES
+def execute_scheduled_run(
+    phase: str,
+    *,
+    now: datetime | None = None,
+    runtime: ScheduledRunRuntime | None = None,
+    store: ScheduledRunJsonStore | None = None,
+    force: bool = False,
+    audit_store: ScheduledRunAuditJsonStore | None = None,
+    run_kind: str = "SCHEDULED",
+) -> ScheduledRunRecord:
+    phase_value = _normalize_phase(phase)
+    timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    run_date = timestamp.date().isoformat()
+    state_store = store or ScheduledRunJsonStore()
+    history_store = audit_store or ScheduledRunAuditJsonStore()
+    key = f"{run_date}:{phase_value}"
+    existing = state_store.load().get(key)
+    if existing is not None and existing.status == "SUCCESS" and not force:
+        skipped = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=existing.started_at,
+            finished_at=existing.finished_at,
+            status="SKIPPED",
+            candidate_count=existing.candidate_count,
+            buy_symbols=existing.buy_symbols,
+            detail="Aynı gün/faz için başarılı otomatik koşu zaten mevcut.",
+            run_kind=run_kind,
+        )
+        history_store.append(skipped)
+        return skipped
+
+    started_at = timestamp.isoformat(timespec="seconds")
+    engine = runtime or _default_runtime()
+    try:
+        summary = engine.operation_summary()
+        scan_result = engine.scan()
+        visibility = engine.visibility_contexts()
+        candidate_snapshot = engine.candidate_snapshot(summary, scan_result, visibility)
+        cards = tuple(getattr(candidate_snapshot, "candidates", ()) or ())
+        decisions = engine.decisions(cards)
+        engine.persist_decision_snapshot(cards, decisions, phase_value, timestamp)
+        buy_symbols = tuple(
+            str(getattr(item, "symbol", "")).strip().upper()
+            for item in decisions
+            if str(getattr(item, "decision", "")).strip().upper() == "AL"
+        )
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="SUCCESS",
+            candidate_count=len(cards),
+            buy_symbols=buy_symbols,
+            detail="Seans sonu/sabah günlük karar koşusu tamamlandı.",
+            run_kind=run_kind,
+        )
+    except Exception as error:
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="FAILED",
+            candidate_count=0,
+            buy_symbols=(),
+            detail=f"{type(error).__name__}: {error}",
+            run_kind=run_kind,
+        )
+    state_store.save(record)
+    history_store.append(record)
+    return record
+
+=== 3. DEFAULT RUNTIME FACTORY ===
+PATH=backend\app\operations\daily_buy_decision_scheduled_runner.py
+ARGS=
+UNIVERSE=BIST 100
+MAXIMUM_ADAY=15
+RETURN_CTOR=tuple
+RETURN_KWARGS=
+def _default_runtime() -> ScheduledRunRuntime:
+    from backend.app.analysis.daily_buy_decision_closeout import build_daily_buy_decisions
+    from backend.app.analysis.daily_buy_decision_cycle import (
+        DailyBuyDecisionJsonStore,
+        build_daily_buy_decision_snapshot,
+    )
+    from backend.app.analysis.daily_operation_panel import build_daily_operation_summary
+    from backend.app.analysis.morning_operation_snapshot import build_morning_operation_snapshot
+    from backend.app.analysis.ranking_visibility_service import build_current_visibility_context
+    from backend.app.analysis.market_scanner import MarketScanRequest
+    from backend.app.compliance.dashboard_market_scanner_source_factory import build_dashboard_market_scanner
+    from backend.app.data.delayed_data_pilot import DelayedDataPilotStore
+    from backend.app.analysis.signal_outcome_tracking import SignalOutcomeJsonStore
+    from backend.app.history.trade_journal import TradeJournalStore, TradeJournalError
+    from backend.app.analysis.shadow_portfolio import ShadowPortfolioStore, ShadowPortfolioError
+
+    class Runtime:
+        def operation_summary(self) -> object:
+            pilot_store = DelayedDataPilotStore()
+            signal_store = SignalOutcomeJsonStore()
+            trade_store = TradeJournalStore()
+            shadow_store = ShadowPortfolioStore()
+            try:
+                trades = trade_store.list_records()
+            except TradeJournalError:
+                trades = ()
+            try:
+                shadow = shadow_store.list()
+            except ShadowPortfolioError:
+                shadow = ()
+            return build_daily_operation_summary(
+                pilot_records=pilot_store.list(),
+                signal_outcomes=signal_store.list(),
+                trade_records=trades,
+                shadow_positions=shadow,
+            )
+
+        def scan(self) -> object:
+            service = build_dashboard_market_scanner(vbts_hard_block=False)
+            request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi="dengeli",
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            return service.calistir(request)
+
+        def visibility_contexts(self) -> tuple[object, ...]:
+            try:
+                return tuple(build_current_visibility_context())
+            except Exception:
+                return ()
+
+        def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+            return build_morning_operation_snapshot(
+                operation_summary=operation_summary,
+                scan_result=scan_result,
+                visibility_contexts=visibility_contexts,
+                limit=5,
+            )
+
+        def decisions(self, cards: tuple[object, ...]) -> tuple[object, ...]:
+            return tuple(build_daily_buy_decisions(cards))
+
+        def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None:
+            snapshot = build_daily_buy_decision_snapshot(
+                cards,
+                phase=phase,
+                now=now,
+                decisions=decisions,
+            )
+            DailyBuyDecisionJsonStore().save(snapshot)
+            from backend.app.analysis.daily_buy_decision_output_archive import (
+                DecisionOutputArchiveJsonStore,
+            )
+            DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+
+    return Runtime()
+
+=== 4. MARKETSCANRESULT ===
+PATH=backend\app\analysis\market_scanner.py
+IS_DATACLASS=YES
+FIELDS=evren_adi;evren_kaynagi;evren_tarihi;evren_sembol_sayisi;profil;filtrelenmis;adaylar;tum_sonuclar;veri_tazeligi;vbts_engellenen_semboller;vbts_engelleme_nedenleri;vbts_dogrulama_uyarisi;sektor_baglamlari;sektor_baglami_uyarisi;sektor_referans_evreni
+HAS_TUM_SONUCLAR=YES
+HAS_ADAYLAR=YES
+HAS_FILTRELENMIS=YES
+class MarketScanResult:
+    """Kullanıcıya gösterilecek toplu tarama sonucu."""
+
+    evren_adi: str
+    evren_kaynagi: str
+    evren_tarihi: str
+    evren_sembol_sayisi: int
+    profil: ScanProfile
+    filtrelenmis: FilteredScanResult
+    adaylar: tuple[StockAnalysisResult, ...]
+    # RPV1_SPRINT02_SUCCESSFUL_RESULTS — same canonical scan, read-only exposure.
+    tum_sonuclar: tuple[StockAnalysisResult, ...] = ()
+    veri_tazeligi: BatchDataFreshnessResult | None = None
+    vbts_engellenen_semboller: tuple[str, ...] = ()
+    vbts_engelleme_nedenleri: dict[str, tuple[str, ...]] | None = None
+    vbts_dogrulama_uyarisi: str | None = None
+    sektor_baglamlari: dict[str, CandidateSectorContext] | None = None
+    sektor_baglami_uyarisi: str | None = None
+    sektor_referans_evreni: str | None = None
+
+    @property
+    def gosterilen_aday_sayisi(self) -> int:
+        return len(self.adaylar)
+
+=== 5. RESULT ADAPTER CANDIDATES ===
+ADAPTER=NONE
+
+=== 6. BIST100 MEMBERSHIP CANDIDATES ===
+MEMBERSHIP=backend\dashboard.backup_before_navigation_fix.py:3044|momentum_kesif_formu|ARGS=
+def momentum_kesif_formu() -> None:
+    with st.sidebar:
+        st.header("Momentum keşif")
+        st.caption(
+            "BIST evrenini göreceli güç, fiyat ivmesi, hacim birikimi, "
+            "sıkışma ve kırılım hazırlığıyla tarar."
+        )
+        # Geriye dönük kaynak-test uyumluluğu için eski anahtar okunur;
+        # güvenlik kararında kullanılmaz. Geçerli kaynak yalnızca tarihli
+        # PIYASA_REJIMI_BAGLAMI_KEY bağlamıdır.
+        _eski_rejim_uyumluluk = st.session_state.get("aktif_piyasa_rejimi")
+        rejim_baglami, rejim_baglami_hatasi = (
+            piyasa_rejimi_baglami_dogrula(
+                st.session_state.get(PIYASA_REJIMI_BAGLAMI_KEY)
+            )
+        )
+        kayitli_rejim = (
+            str(rejim_baglami["rejim"])
+            if rejim_baglami is not None
+            else None
+        )
+        rejim_secenekleri = (
+            "Kapalı",
+            REJIM_POZITIF,
+            REJIM_SECICI,
+            REJIM_RISKLI,
+        )
+        varsayilan_rejim = (
+            kayitli_rejim
+            if kayitli_rejim in rejim_secenekleri
+            else "Kapalı"
+        )
+        piyasa_rejimi_secimi = st.selectbox(
+            "Piyasa rejimi filtresi",
+            options=rejim_secenekleri,
+            index=rejim_secenekleri.index(varsayilan_rejim),
+            disabled=rejim_baglami is None,
+            help=(
+                "Yalnızca bugün üretilmiş, güncel ve doğrulanmış piyasa "
+                "rejimi otomatik kullanılabilir."
+            ),
+            key="momentum_piyasa_rejimi",
+        )
+        if rejim_baglami is not None:
+            st.caption(
+                "Rejim bağlamı: "
+                f"{rejim_baglami['kaynak']} · "
+                f"{tarih_saat_yaz(rejim_baglami['analiz_tarihi'])} · "
+                f"Güven: {rejim_baglami['guven_duzeyi']}"
+            )
+        elif rejim_baglami_hatasi:
+            st.caption("Rejim filtresi kapalı: " + rejim_baglami_hatasi)
+        # Bu kontroller form dışında tutulur. Streamlit formundaki widget değişiklikleri
+        # gönderimden önce yeniden çalıştırılmadığı için, tarih alanı işaretli kutuya
+        # rağmen pasif kalabiliyordu. Form dışındaki kontroller anında tepki verir.
+        evren = st.selectbox(
+            "Keşif evreni",
+            options=TARAMA_EVRENLERI,
+            index=TARAMA_EVRENLERI.index("BIST Tüm"),
+            key="momentum_evreni",
+        )
+        ozel_liste = st.text_area(
+            "Özel keşif listesi",
+            value="THYAO, ASELS, TUPRS, SAHOL, KCHOL",
+            height=90,
+            help=(
+                "Bu alan yalnızca Özel Liste evreninde kullanılır. "
+                "Virgül, boşluk veya yeni satırla ayırabilirsiniz."
+            ),
+        )
+        minimum_skor = st.slider(
+            "Minimum momentum skoru",
+            min_value=40,
+            max_value=85,
+            value=55,
+        )
+        maksimum_aday = st.slider(
+            "Gösterilecek aday sayısı",
+            min_value=5,
+            max_value=50,
+            value=25,
+        )
+        internetten_guncelle = st.checkbox(
+            "BIST evrenini resmi kaynaktan güncelle",
+            value=True,
+            disabled=(
+                evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+            ),
+        )
+        yeniden_oynat = st.checkbox(
+            "Tarihsel yeniden oynatma (walk-forward)",
+            value=False,
+            help=(
+                "Kesim tarihinden sonraki fiyatları aday üretiminden gizler ve "
+                "adayların sonraki 5/10/20 günlük performansını ölçer."
+            ),
+            key="momentum_yeniden_oynat",
+        )
+        kesim_tarihi = st.date_input(
+            "Kesim tarihi",
+            value=date.today() - timedelta(days=45),
+            max_value=date.today() - timedelta(days=1),
+            disabled=not yeniden_oynat,
+            key="momentum_kesim_tarihi",
+        )
+        calistirildi = st.button(
+            "Tarihsel testi başlat" if yeniden_oynat else "Momentum keşfini başlat",
+            type="primary",
+            width="stretch",
+            key="momentum_kesif_calistir",
+        )
+
+    semboller = ozel_sembol_metinini_ayristir(ozel_liste)
+    momentum_toplu_tarihsel_export_goster(
+        semboller=tuple(semboller),
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+    )
+    aktif_rejim = (
+        None
+        if (
+            rejim_baglami is None
+            or piyasa_rejimi_secimi == "Kapalı"
+        )
+        else piyasa_rejimi_secimi
+    )
+    discovery_imzasi = momentum_kesif_oturum_imzasi(
+        evren=evren,
+        semboller=semboller,
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+        piyasa_rejimi=aktif_rejim,
+        rejim_baglami_imzasi=piyasa_rejimi_baglami_imzasi(
+            rejim_baglami
+        ),
+    )
+    replay_imzasi = momentum_walk_forward_oturum_imzasi(
+        evren=evren,
+        semboller=semboller,
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+        kesim_tarihi=kesim_tarihi,
+    )
+
+    if rejim_baglami is None:
+        st.warning(
+            "Piyasa rejimi filtresi otomatik olarak Kapalı tutuluyor. "
+            + str(rejim_baglami_hatasi)
+        )
+    else:
+        st.info(
+            "Doğrulanmış piyasa rejimi bağlamı: "
+            f"{rejim_baglami['rejim']} · "
+            f"Kaynak {rejim_baglami['kaynak']} · "
+            f"Veri {tarih_saat_yaz(rejim_baglami['analiz_tarihi'])} · "
+            f"Güven {rejim_baglami['guven_duzeyi']}"
+        )
+
+    if not calistirildi:
+        kayitli_replay = st.session_state.get(MOMENTUM_REPLAY_RESULT_KEY)
+        kayitli_imza = st.session_state.get(MOMENTUM_REPLAY_SIGNATURE_KEY)
+        if (
+            yeniden_oynat
+            and kayitli_imza == replay_imzasi
+            and isinstance(kayitli_replay, MomentumWalkForwardResult)
+        ):
+            # Güncel seans düğmesi Streamlit yeniden çalışması başlatır.
+            # Tarihsel sonuç oturumda saklanmazsa bu yeniden çalışmada sonuç
+            # ekranı kaybolur ve düğme olayı işlenemez.
+            momentum_walk_forward_sonucu_goster(kayitli_replay)
+            return
+        kayitli_sonuc = st.session_state.get(
+            MOMENTUM_DISCOVERY_RESULT_KEY
+        )
+        kayitli_discovery_imzasi = st.session_state.get(
+            MOMENTUM_DISCOVERY_SIGNATURE_KEY
+        )
+        if (
+            not yeniden_oynat
+            and kayitli_discovery_imzasi == discovery_imzasi
+            and isinstance(kayitli_sonuc, MomentumDiscoveryResult)
+        ):
+            momentum_kesif_sonucu_goster(kayitli_sonuc)
+            return
+
+        if (
+            kayitli_discovery_imzasi is not None
+            and kayitli_discovery_imzasi != discovery_imzasi
+        ):
+            st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+            st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+            st.info(
+                "Momentum ayarları değiştiği için önceki sonuç geçersiz "
+                "kılındı. Yeni ayarlarla taramayı başlatın."
+            )
+            return
+
+        st.info(
+            "Keşif evrenini seçip sol menüdeki başlat düğmesine basın. "
+            "Tarihsel yeniden oynatma, gelecek veriyi gizleyerek erken uyarı "
+            "başarısını ölçer."
+        )
+        return
+
+    if yeniden_oynat:
+        st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+        st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+        try:
+            istek_replay = MomentumWalkForwardRequest(
+                evren=evren,
+                kesim_tarihi=kesim_tarihi.isoformat(),
+                maksimum_aday=int(maksimum_aday),
+                minimum_skor=int(minimum_skor),
+                ozel_semboller=semboller,
+                internetten_evren_guncelle=bool(internetten_guncelle),
+            )
+            with st.spinner(
+                f"{istek_replay.evren} {istek_replay.kesim_tarihi} "
+                "tarihinde yeniden oynatılıyor..."
+            ):
+                replay_sonucu = MomentumWalkForwardService().calistir(istek_replay)
+        except (ValueError, TypeError, MomentumWalkForwardError) as hata:
+            st.error(str(hata))
+            return
+        st.session_state[MOMENTUM_REPLAY_RESULT_KEY] = replay_sonucu
+        st.session_state[MOMENTUM_REPLAY_SIGNATURE_KEY] = replay_imzasi
+        momentum_walk_forward_sonucu_goster(replay_sonucu)
+        return
+
+    st.session_state.pop(MOMENTUM_REPLAY_RESULT_KEY, None)
+    st.session_state.pop(MOMENTUM_REPLAY_SIGNATURE_KEY, None)
+    ilerleme = st.progress(0, text="Momentum keşfi hazırlanıyor...")
+    durum = st.empty()
+
+    def ilerleme_bildir(sira: int, toplam: int, sembol: str) -> None:
+        oran = min(max(sira / toplam, 0.0), 1.0)
+        ilerleme.progress(
+            oran,
+            text=f"[{sira}/{toplam}] {sembol} momentum analizi...",
+        )
+        durum.caption(f"Son işlenen hisse: {sembol}")
+
+    def durum_bildir(mesaj: str) -> None:
+        durum.info(mesaj)
+
+    try:
+        istek = MomentumDiscoveryRequest(
+            evren=evren,
+            maksimum_aday=int(maksimum_aday),
+            minimum_skor=int(minimum_skor),
+            ozel_semboller=semboller,
+            internetten_evren_guncelle=bool(internetten_guncelle),
+            piyasa_rejimi=(
+                aktif_rejim
+            ),
+        )
+        with st.spinner(f"{istek.evren} momentum potansiyeli taranıyor..."):
+            sonuc = MomentumDiscoveryService().calistir(
+                istek,
+                ilerleme_bildirimi=ilerleme_bildir,
+                durum_bildirimi=durum_bildir,
+            )
+    except (ValueError, TypeError, MomentumDiscoveryError) as hata:
+        ilerleme.empty()
+        durum.empty()
+        st.error(str(hata))
+        return
+
+    if sonuc.veri_tazeligi is not None and sonuc.veri_tazeligi.kilitli:
+        ilerleme.progress(
+            1.0,
+            text="Veri tazeliği kilidi nedeniyle tarama durduruldu.",
+        )
+    else:
+        ilerleme.progress(1.0, text="Momentum keşfi tamamlandı.")
+    durum.empty()
+    st.session_state[MOMENTUM_DISCOVERY_RESULT_KEY] = sonuc
+    st.session_state[MOMENTUM_DISCOVERY_SIGNATURE_KEY] = discovery_imzasi
+    momentum_kesif_sonucu_goster(sonuc)
+MEMBERSHIP=backend\dashboard.backup_before_navigation_fix.py:3894|bist_toplu_tarama_sonucu_goster|ARGS=sonuc;temel_skorlar;temel_filtre_aktif;minimum_temel_skor
+def bist_toplu_tarama_sonucu_goster(
+    sonuc: MarketScanResult,
+    *,
+    temel_skorlar: dict | None = None,
+    temel_filtre_aktif: bool = False,
+    minimum_temel_skor: int = 60,
+) -> None:
+    if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+        return
+    st.subheader(f"{sonuc.evren_adi} güncel aday taraması")
+    st.caption("Genel teknik sıralama · seçili tarama profili · veri tazeliği · VBTS uyarıları · isteğe bağlı temel kalite filtresi")
+    metrik_izgarasi_goster(
+        (
+            ("Tarama evreni", str(sonuc.evren_sembol_sayisi)),
+            ("Başarılı analiz", str(sonuc.filtrelenmis.aday_sayisi + sonuc.filtrelenmis.elenen_sayisi)),
+            ("Filtreyi geçen", str(sonuc.filtrelenmis.aday_sayisi)),
+            ("Gösterilen aday", str(sonuc.gosterilen_aday_sayisi)),
+            ("Elenen", str(sonuc.filtrelenmis.elenen_sayisi)),
+            ("Veri hatası", str(sonuc.filtrelenmis.hatali_sayisi)),
+        )
+    )
+    st.caption(
+        f"Evren kaynağı: {sonuc.evren_kaynagi} · "
+        f"Bileşen tarihi: {sonuc.evren_tarihi} · "
+        f"Profil: {sonuc.profil.ad}"
+    )
+    st.info(
+        "Sonuçlar kesin alım tavsiyesi değildir. Tablo, ayrıntılı güncel "
+        "teknik analizde doğrulanacak araştırma adaylarını sıralar."
+    )
+
+    if sonuc.vbts_dogrulama_uyarisi:
+        st.warning(sonuc.vbts_dogrulama_uyarisi)
+
+    if sonuc.sektor_baglamlari:
+        st.caption(
+            "Sektör bağlamı: "
+            f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansı · "
+            "sektör skoru teknik hisse skorunu ve aday filtresini değiştirmez."
+        )
+    if sonuc.sektor_baglami_uyarisi:
+        st.caption(sonuc.sektor_baglami_uyarisi)
+
+    vbts_nedenleri = sonuc.vbts_engelleme_nedenleri or {}
+    if vbts_nedenleri:
+        st.warning(
+            f"{len(vbts_nedenleri)} hissede aktif VBTS tedbiri bulundu. "
+            "Bu tedbirler teknik skoru veya sıralamayı değiştirmez."
+        )
+        with st.expander("VBTS tedbir uyarıları", expanded=False):
+            st.dataframe(
+                pd.DataFrame(
+                    {
+                        "Hisse": sembol.removesuffix(".IS"),
+                        "VBTS tedbiri": " | ".join(nedenler),
+                    }
+                    for sembol, nedenler in sorted(vbts_nedenleri.items())
+                ),
+                width="stretch",
+                hide_index=True,
+            )
+
+    adaylar = sonuc.adaylar
+    temel_filtre_sonucu = apply_optional_fundamental_filter(
+        adaylar,
+        symbol_getter=lambda aday: aday.sembol,
+        scores=temel_skorlar or {},
+        enabled=temel_filtre_aktif,
+        minimum_score=minimum_temel_skor,
+    )
+    gorunen_semboller = {
+        aday.sembol for aday in temel_filtre_sonucu.accepted
+    }
+    _three_all_rows = aday_tablosu_kayitlari(sonuc)
+
+    # RANKING_JUMP_V1_BLOCK1 — observation only; no rank/score/decision mutation.
+    try:
+        from backend.app.analysis.ranking_memory import (
+            RankObservationJsonlStore,
+            observations_from_research_rows,
+        )
+
+        _rank_observations = observations_from_research_rows(
+            rows=_three_all_rows,
+            as_of=sonuc.evren_tarihi,
+            universe_source=sonuc.evren_kaynagi,
+            profile_name=sonuc.profil.ad,
+        )
+        RankObservationJsonlStore().append_snapshot(_rank_observations)
+    except Exception as _rank_history_exc:
+        try:
+            _rank_history_log = Path(
+                r"D:\Projects\Hisse-Robotu\_discovery\ranking_memory_write_error.log"
+            )
+            _rank_history_log.parent.mkdir(parents=True, exist_ok=True)
+            with _rank_history_log.open("a", encoding="utf-8") as _rank_history_f:
+                _rank_history_f.write(
+                    f"{datetime.now().isoformat()} | "
+                    f"{type(_rank_history_exc).__name__}: {_rank_history_exc}\n"
+                )
+        except Exception:
+            pass
+
+    # THREE_SYSTEM_ACTIVE_HISSE_PUBLISH_V4
+    for _three_row in _three_all_rows:
+        try:
+            write_scan_row_opinion(
+                _three_row,
+                as_of=str(sonuc.evren_tarihi),
+            )
+        except Exception as _three_exc:
+            try:
+                _three_log = Path(
+                    r"D:\Projects-Sistem-Ortak-Degerlendirme\hisse_publish_error.log"
+                )
+                _three_log.parent.mkdir(parents=True, exist_ok=True)
+                with _three_log.open("a", encoding="utf-8") as _three_f:
+                    _three_f.write(
+                        f"{datetime.now().isoformat()} | "
+                        f"{type(_three_exc).__name__}: {_three_exc} | "
+                        f"row={_three_row!r}\n"
+                    )
+            except Exception:
+                pass
+
+    kayitlar = [
+        kayit
+        for aday, kayit in zip(
+            sonuc.adaylar,
+            _three_all_rows,
+        )
+        if aday.sembol in gorunen_semboller
+    ]
+
+    for aday, kayit in zip(
+        (
+            aday
+            for aday in sonuc.adaylar
+            if aday.sembol in gorunen_semboller
+        ),
+        kayitlar,
+    ):
+        sembol = aday.sembol.removesuffix(".IS").upper()
+        temel_skor = (temel_skorlar or {}).get(sembol)
+        kayit["Temel skor"] = (
+            temel_skor.total_score
+            if temel_skor is not None
+            and not temel_skor.locked
+            else None
+        )
+
+    if temel_filtre_aktif:
+        st.info(
+            f"İsteğe bağlı temel analiz filtresi aktif: "
+            f"minimum {minimum_temel_skor}/100 · "
+            f"geçen {len(temel_filtre_sonucu.accepted)} · "
+            f"elenen {len(temel_filtre_sonucu.rejected)} · "
+            f"verisi eksik {len(temel_filtre_sonucu.missing)}."
+        )
+
+    # RANKING_JUMP_V1_UI
+    st.markdown("### Sıralama Hareketi / Erken Görünürlük")
+    st.caption(
+        "3S Erken Sıçrayanlar · Mevcut Research sırasının zaman içindeki hareketini gösterir. "
+        "Bu görünüm AL/SAT kararı üretmez ve ana Research sırasını değiştirmez."
+    )
+
+    try:
+        from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+        from backend.app.analysis.ranking_trajectory import build_rank_trajectories
+        from backend.app.analysis.ranking_quality_context import build_quality_context
+
+        _ranking_history = RankObservationJsonlStore().list()
+        _ranking_trajectories = build_rank_trajectories(_ranking_history)
+
+        _jump_rows = []
+        for _traj in _ranking_trajectories:
+            if _traj.gain_3s is None:
+                continue
+
+            _quality = build_quality_context(
+                symbol=_traj.symbol,
+                evidence=(),
+                data_blocked=not _traj.comparable,
+            )
+
+            _jump_rows.append(
+                {
+                    "Hisse": _traj.symbol,
+                    "Bugün": _traj.current_rank,
+                    "3S önce": _traj.rank_3s,
+                    "3S Δ": _traj.gain_3s,
+                    "Evren konumu": (
+                        f"%{_traj.normalized_3s * 100:.1f} → "
+                        f"%{_traj.normalized_current * 100:.1f}"
+                        if _traj.normalized_3s is not None
+                        else "—"
+                    ),
+                    "Hareket": _traj.lifecycle,
+                    "Kalite": _quality.status,
+                    "Yeni bölge": ", ".join(_traj.zone_events) if _traj.zone_events else "—",
+                    "Karşılaştırma": "Uygun" if _traj.comparable else "Bloklu",
+                    "Sonraki": _quality.next_review_module,
+                }
+            )
+
+        if not _jump_rows:
+            st.info(
+                "3S Erken Sıçrayanlar için henüz yeterli ranking history yok. "
+                "Ranking Memory yeni seans gözlemleri biriktirdikçe bu alan otomatik dolacaktır."
+            )
+        else:
+            _jump_df = pd.DataFrame(_jump_rows)
+
+            _jump_filter = st.radio(
+                "Sıralama hareketi görünümü",
+                options=(
+                    "3S Erken Sıçrayanlar",
+                    "Yeni Top 100",
+                    "Yeni Top 50",
+                    "İvme Kaybediyor",
+                ),
+                horizontal=True,
+                key="ranking_jump_v1_filter",
+            )
+
+            if _jump_filter == "Yeni Top 100":
+                _jump_df = _jump_df[
+                    _jump_df["Yeni bölge"].astype(str).str.contains("TOP100", na=False)
+                ]
+            elif _jump_filter == "Yeni Top 50":
+                _jump_df = _jump_df[
+                    _jump_df["Yeni bölge"].astype(str).str.contains("TOP50", na=False)
+                ]
+            elif _jump_filter == "İvme Kaybediyor":
+                _jump_df = _jump_df[
+                    _jump_df["Hareket"].astype(str).str.contains(
+                        "IVME_KAYBEDIYOR",
+                        na=False,
+                    )
+                ]
+
+            _jump_df = _jump_df.sort_values(
+                by=["3S Δ", "Bugün"],
+                ascending=[False, True],
+            )
+
+            st.dataframe(
+                _jump_df,
+                width="stretch",
+                hide_index=True,
+                column_config={
+                    "Bugün": st.column_config.NumberColumn(format="#%d"),
+                    "3S önce": st.column_config.NumberColumn(format="#%d"),
+                    "3S Δ": st.column_config.NumberColumn(format="+%d"),
+                },
+            )
+
+            if any(_jump_df["Karşılaştırma"].eq("Bloklu")):
+                st.warning(
+                    "Karşılaştırma kullanılamıyor — veri yeterli değil veya "
+                    "Research kontratı değişmiş. Bloklu satırlar erken aday "
+                    "olarak yorumlanmamalıdır."
+                )
+
+            st.caption(
+                "Kalite sütunu yalnız mevcut canonical bağlam bağlandığında güçlenecektir. "
+                "Bağ yoksa TEYITSIZ görünür; aynı faktör birden fazla modülde tekrar sayılmaz."
+            )
+    except Exception as _ranking_jump_ui_exc:
+        st.warning(
+            "Sıralama Hareketi görünümü şu anda hazırlanamadı. "
+            f"Ana Research sıralaması etkilenmedi: {_ranking_jump_ui_exc}"
+        )
+    # RANKING_JUMP_V1_UI_END
+    if not kayitlar:
+        st.warning(
+            "Seçili profil koşullarını karşılayan aday bulunamadı. "
+            "Daha geniş bir evren veya daha gevşek profil denenebilir."
+        )
+    else:
+        st.dataframe(
+            pd.DataFrame(kayitlar),
+            width="stretch",
+            hide_index=True,
+            column_config={
+                "Sıra": st.column_config.NumberColumn(width="small"),
+                "Hisse": st.column_config.TextColumn(width="small"),
+                "Skor": st.column_config.NumberColumn(width="small"),
+                "Temel skor": st.column_config.NumberColumn(
+                    width="small",
+                    format="%d",
+                ),
+                "Sektör": st.column_config.TextColumn(width="medium"),
+                "Sektör skoru": st.column_config.NumberColumn(
+                    width="small",
+                    format="%d",
+                ),
+                "Sektör görünümü": st.column_config.TextColumn(
+                    width="small",
+                ),
+                "Sektör güveni": st.column_config.TextColumn(
+                    width="small",
+                ),
+                "Sektör bağlamı": st.column_config.TextColumn(
+                    width="medium",
+                ),
+                "Sektör RS": st.column_config.NumberColumn(
+                    width="small",
+                    format="%.2f",
+                ),
+                "Durum": st.column_config.TextColumn(width="medium"),
+                "VBTS": st.column_config.TextColumn(width="large"),
+                "Son kapanış": st.column_config.NumberColumn(format="%.2f"),
+                "Giriş": st.column_config.NumberColumn(format="%.2f"),
+                "Stop": st.column_config.NumberColumn(format="%.2f"),
+                "Hedef": st.column_config.NumberColumn(format="%.2f"),
+                "Risk/Getiri": st.column_config.NumberColumn(format="1:%.2f"),
+                "Hacim oranı": st.column_config.NumberColumn(format="%.2fx"),
+                "RSI14": st.column_config.NumberColumn(format="%.2f"),
+                "ATR (%)": st.column_config.NumberColumn(format="%.2f%%"),
+            },
+        )
+
+        secili = st.selectbox(
+            "Aday ayrıntısı",
+            options=temel_filtre_sonucu.accepted,
+            format_func=lambda aday: (
+                f"{aday.sembol.removesuffix('.IS')} · "
+                f"{aday.sinyal.skor}/100 · {aday.sinyal.karar}"
+            ),
+            key="bist_toplu_tarama_aday_ayrintisi",
+        )
+        secili_sembol = secili.sembol.removesuffix(".IS").upper()
+        toplu_secimler = st.multiselect(
+            "AL-SAT'a gönderilecek adaylar",
+            options=tuple(
+                aday.sembol.removesuffix(".IS").upper()
+                for aday in temel_filtre_sonucu.accepted
+            ),
+            default=(),
+            key="alsata_toplu_secimler",
+            help="Seçilen adaylar AL-SAT'a aktarılır.",
+        )
+
+        if st.button(
+            "Seçilenleri AL-SAT'a Gönder",
+            type="secondary",
+            width="stretch",
+            key="alsata_toplu_gonder",
+            disabled=not toplu_secimler,
+        ):
+            try:
+                payloadlar = []
+                for sembol in toplu_secimler:
+                    aday = next(
+                        a for a in temel_filtre_sonucu.accepted
+                        if a.sembol.removesuffix(".IS").upper() == sembol
+                    )
+                    satir = next(
+                        (row for row in kayitlar if str(row.get("Hisse", "")).upper() == sembol),
+                        {},
+                    )
+                    payloadlar.append(
+                        {
+                            "symbol": sembol,
+                            "source": "HISSE_ROBOTU",
+                            "as_of": str(sonuc.evren_tarihi),
+                            "robot_score": aday.sinyal.skor,
+                            "robot_decision": satir.get("Durum"),
+                            "technical_outlook": aday.sinyal.karar,
+                            "rank": satir.get("Sıra"),
+                        }
+                    )
+                _alsata_adaylari_toplu_gonder(payloadlar)
+                st.success(f"{len(payloadlar)} seçili aday AL-SAT'a aktarıldı.")
+            except Exception as exc:
+                st.error(str(exc))
+
+        if st.button(
+            "AL-SAT'a Gönder",
+            type="primary",
+            key=f"alsata_gonder_{secili_sembol}",
+        ):
+            try:
+                secili_satir = next(
+                    (row for row in kayitlar if str(row.get("Hisse", "")).upper() == secili_sembol),
+                    {},
+                )
+                aktarim = _alsata_aday_gonder({
+                    "symbol": secili_sembol,
+                    "source": "HISSE_ROBOTU",
+                    "as_of": str(sonuc.evren_tarihi),
+                    "robot_score": secili.sinyal.skor,
+                    "robot_decision": secili_satir.get("Durum"),
+                    "technical_outlook": secili.sinyal.karar,
+                    "rank": secili_satir.get("Sıra"),
+                })
+                st.success(
+                    f"{secili_sembol} AL-SAT'a aktarıldı. AL-SAT açılıyor."
+                )
+                webbrowser.open(
+                    f"http://127.0.0.1:8765/?symbol={secili_sembol}",
+                    new=2,
+                )
+            except Exception as exc:
+                st.error(str(exc))
+
+        secili_vbts = vbts_nedenleri.get(
+            secili.sembol,
+            vbts_nedenleri.get(secili.sembol.removesuffix(".IS"), ()),
+        )
+        if secili_vbts:
+            st.warning("VBTS: " + " | ".join(secili_vbts))
+
+        secili_sektor = (sonuc.sektor_baglamlari or {}).get(
+            secili.sembol
+        )
+        if secili_sektor is not None:
+            st.info(
+                "Sektör bağlamı: "
+                f"{secili_sektor.sector_name} · "
+                f"{secili_sektor.sector_score}/100 "
+                f"{secili_sektor.sector_status} · "
+                f"Güven: {secili_sektor.sector_confidence} · "
+                f"{secili_sektor.label}. "
+                "Bu bilgi teknik skoru değiştirmez."
+            )
+
+        sol, sag = st.columns(2)
+        with sol:
+            aciklama_listesi_goster(
+                "Olumlu gerekçeler",
+                secili.sinyal.pozitif_nedenler,
+                "Belirgin olumlu gerekçe yok.",
+            )
+        with sag:
+            aciklama_listesi_goster(
+                "Riskler",
+                secili.sinyal.riskler,
+                "Belirgin risk yok.",
+            )
+
+    if sonuc.filtrelenmis.elenenler:
+        with st.expander("Elenen hisseler ve nedenleri", expanded=False):
+            elenen_kayitlari = []
+            for elenen in sonuc.filtrelenmis.elenenler:
+                elenen_kayitlari.append(
+                    {
+                        "Hisse": elenen.sembol.removesuffix(".IS"),
+                        "Neden": " | ".join(elenen.nedenler),
+                    }
+                )
+            st.dataframe(
+                pd.DataFrame(elenen_kayitlari),
+                width="stretch",
+                hide_index=True,
+            )
+
+    if sonuc.filtrelenmis.hatalar:
+        with st.expander("Verisi alınamayan hisseler", expanded=False):
+            st.dataframe(
+                pd.DataFrame(
+                    {
+                        "Hisse": hata.sembol.removesuffix(".IS"),
+                        "Hata": hata.hata,
+                    }
+                    for hata in sonuc.filtrelenmis.hatalar
+                ),
+                width="stretch",
+                hide_index=True,
+            )
+MEMBERSHIP=backend\dashboard.backup_before_navigation_fix.py:4368|bist_toplu_tarama_formu|ARGS=
+def bist_toplu_tarama_formu() -> None:
+    # BIST_TOPLU_TARAMA_V11_ROLE_CLARITY
+    st.header("BIST Toplu Tarama — Genel Teknik Aday Havuzu")
+    st.caption(
+        "Seçilen evrendeki hisseleri günlük teknik skor, hacim, risk/getiri, VBTS ve isteğe bağlı temel kalite filtresiyle sıralar."
+    )
+    st.info(
+        "Fırsat Radarı doğrulanmış haftalık/aylık profil eşleşmelerini öne çıkarır; "
+        "BIST Toplu Tarama ise daha geniş, profil-seçilebilir genel teknik aday havuzu üretir. "
+        "Bu ekran kesin alım tavsiyesi vermez; seçilen aday Güncel Teknik Analiz veya AL-SAT ile derinleştirilir."
+    )
+    bildirim = st.session_state.pop("vbts_yonetim_bildirimi", None)
+    if bildirim:
+        st.success(bildirim)
+
+    vbts_operasyonel_hazir = vbts_yonetim_paneli_goster()
+    vbts_kaynak_hazir = kap_vbts_durum_karti_goster()
+    manuel_vbts_durum_paneli_goster()
+
+    vbts_hazirlik_hatasi: str | None = None
+    hazir_tarama_servisi: BistMarketScannerService | None = None
+    try:
+        hazir_tarama_servisi = build_dashboard_market_scanner(
+            vbts_hard_block=False,
+        )
+    except DashboardMarketScannerSourceError as hata:
+        vbts_hazirlik_hatasi = str(hata)
+
+    if (
+        not vbts_operasyonel_hazir
+        or not vbts_kaynak_hazir
+        or vbts_hazirlik_hatasi
+    ):
+        st.warning(
+            "VBTS tam doğrulanamadı. Toplu tarama kilitlenmez; "
+            "teknik sonuçlar üretilir ancak VBTS tedbir bilgileri "
+            "eksik veya eski olabilir."
+        )
+        if vbts_hazirlik_hatasi:
+            st.caption(vbts_hazirlik_hatasi)
+
+    with st.sidebar:
+        st.header("BIST toplu tarama")
+        st.caption(
+            "Seçilen evrendeki hisseleri günlük teknik skor, hacim ve "
+            "risk/getiri koşullarıyla topluca sıralar."
+        )
+        with st.form("bist_toplu_tarama_formu"):
+            evren = st.selectbox(
+                "Tarama evreni",
+                options=TARAMA_EVRENLERI,
+                index=0,
+            )
+            ozel_liste = st.text_area(
+                "Özel hisse listesi",
+                value="THYAO, ASELS, TUPRS, SAHOL, KCHOL",
+                height=90,
+                help=(
+                    "Virgül, boşluk veya yeni satırla ayırabilirsiniz. "
+                    "Bu alan yalnızca Özel Liste evreninde kullanılır."
+                ),
+            )
+            profil_etiketi = st.selectbox(
+                "Tarama profili",
+                options=tuple(TARAMA_PROFILLERI),
+                index=1,
+                help=(
+                    "Dengeli profil skor, hacim ve pozitif/nötr "
+                    "teknik görünümü uygular. Risk/getiri işlem hazırlığı "
+                    "aşamasında ayrıca değerlendirilir."
+                ),
+            )
+            maksimum_aday = st.slider(
+                "Gösterilecek aday sayısı",
+                min_value=1,
+                max_value=50,
+                value=15,
+            )
+            internetten_guncelle = st.checkbox(
+                "BIST evrenini resmi kaynaktan güncelle",
+                value=True,
+                disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+            )
+            temel_filtre_aktif = st.checkbox(
+                "Temel kalite filtresini kullan",
+                value=False,
+                help=(
+                    "Varsayılan olarak kapalıdır. Açıldığında önce "
+                    "kayıtlı ve güncel temel kalite skorları kullanılır."
+                ),
+            )
+            minimum_temel_skor = st.slider(
+                "Minimum temel kalite skoru",
+                min_value=0,
+                max_value=100,
+                value=60,
+                disabled=not temel_filtre_aktif,
+            )
+            temel_filtre_dosyasi = st.file_uploader(
+                "Temel skorları güncellemek için bilanço dosyası",
+                type=("csv", "json"),
+                disabled=not temel_filtre_aktif,
+                key="bist_temel_filtre_dosyasi",
+                help=(
+                    "İsteğe bağlıdır. Dosya yüklenmezse yerel depodaki "
+                    "güncel temel kalite skorları kullanılır."
+                ),
+            )
+            calistirildi = st.form_submit_button(
+                "Toplu taramayı başlat",
+                type="primary",
+                width="stretch",
+                disabled=hazir_tarama_servisi is None,
+            )
+
+    if not calistirildi:
+        onceki_tarama = st.session_state.get("bist_toplu_tarama_son_sonuc")
+        if onceki_tarama is not None:
+            bist_toplu_tarama_sonucu_goster(
+                onceki_tarama["sonuc"],
+                temel_skorlar=onceki_tarama.get("temel_skorlar", {}),
+                temel_filtre_aktif=bool(onceki_tarama.get("temel_filtre_aktif", False)),
+                minimum_temel_skor=int(onceki_tarama.get("minimum_temel_skor", 60)),
+            )
+            st.caption("Son toplu tarama sonucu korunuyor. Yeni tarama başlatılana kadar aday listesi sıfırlanmaz.")
+            return
+        st.info(
+            "Tarama evrenini ve profili seçip sol menüdeki "
+            "‘Toplu taramayı başlat’ düğmesine basın."
+        )
+        st.caption(
+            "BIST Tüm seçeneği yüzlerce hisse içerdiğinden diğer "
+            "evrenlere göre daha uzun sürebilir."
+        )
+        return
+
+    if hazir_tarama_servisi is None:
+        st.error(
+            "Toplu tarama servisi hazırlanamadı. "
+            "Bu durum VBTS kilidi değildir; servis kurulumu kontrol edilmelidir."
+        )
+        return
+
+    temel_skorlar: dict = {}
+    if temel_filtre_aktif:
+        temel_skorlar = kayitli_temel_skorlari_yukle()
+
+        if temel_filtre_dosyasi is not None:
+            try:
+                temel_icerik = temel_filtre_dosyasi.getvalue()
+                if (
+                    Path(temel_filtre_dosyasi.name).suffix.lower()
+                    == ".csv"
+                ):
+                    temel_donemler = periods_from_csv_bytes(
+                        temel_icerik
+                    )
+                else:
+                    temel_donemler = periods_from_json_bytes(
+                        temel_icerik
+                    )
+
+                for temel_sembol in sorted(
+                    {item.symbol for item in temel_donemler}
+                ):
+                    sembol_donemleri = [
+                        item
+                        for item in temel_donemler
+                        if item.symbol == temel_sembol
+                    ]
+                    sembol_tazeligi = (
+                        evaluate_fundamental_freshness(
+                            sembol_donemleri
+                        )
+                    )
+                    if sembol_tazeligi.locked:
+                        continue
+
+                    sembol_snapshot = build_fundamental_snapshot(
+                        sembol_donemleri
+                    )
+                    skor = calculate_fundamental_quality(
+                        sembol_snapshot,
+                        sembol_tazeligi,
+                    )
+                    if skor.locked or skor.total_score is None:
+                        continue
+
+                    temel_skor_deposu().save(
+                        periods=sembol_donemleri,
+                        score=skor,
+                    )
+                    temel_skorlar[temel_sembol] = skor
+            except (
+                FundamentalDataError,
+                FundamentalScoreStoreError,
+                ValueError,
+                TypeError,
+                UnicodeError,
+            ) as hata:
+                st.error(
+                    f"Temel filtre dosyası doğrulanamadı: {hata}"
+                )
+                return
+
+        if not temel_skorlar:
+            st.error(
+                "Temel kalite filtresi için güncel kayıtlı skor "
+                "bulunamadı. Temel Analiz ekranında bilanço dosyası "
+                "yükleyerek skorları kaydedin."
+            )
+            return
+
+    ilerleme = st.progress(0, text="Tarama hazırlanıyor...")
+    durum = st.empty()
+
+    def ilerleme_bildir(sira: int, toplam: int, sembol: str) -> None:
+        oran = min(max(sira / toplam, 0.0), 1.0)
+        ilerleme.progress(
+            oran,
+            text=f"[{sira}/{toplam}] {sembol} analiz ediliyor...",
+        )
+        durum.caption(f"Son işlenen hisse: {sembol}")
+
+    try:
+        istek = MarketScanRequest(
+            evren=evren,
+            profil_adi=TARAMA_PROFILLERI[profil_etiketi],
+            maksimum_aday=int(maksimum_aday),
+            ozel_semboller=ozel_sembol_metinini_ayristir(ozel_liste),
+            internetten_evren_guncelle=bool(internetten_guncelle),
+            sektor_baglami_aktif=True,
+        )
+        with st.spinner(f"{istek.evren} güncel verilerle taranıyor..."):
+            tarama_servisi = hazir_tarama_servisi
+            sonuc = tarama_servisi.calistir(
+                istek,
+                ilerleme_bildirimi=ilerleme_bildir,
+            )
+    except (
+        ValueError,
+        TypeError,
+        MarketScannerError,
+        DashboardMarketScannerSourceError,
+    ) as hata:
+        ilerleme.empty()
+        durum.empty()
+        st.error(str(hata))
+        return
+
+    ilerleme.progress(1.0, text="Toplu tarama tamamlandı.")
+    durum.empty()
+
+    if st.button(
+        "Günlük Operasyon Paneline Git",
+        key="bist_toplu_tarama_gunluk_operasyon_gecis",
+    ):
+        st.session_state["analiz_modu"] = "Günlük Operasyon Paneli"
+        st.rerun()
+
+    st.session_state["bist_toplu_tarama_son_sonuc"] = {
+        "sonuc": sonuc,
+        "temel_skorlar": temel_skorlar,
+        "temel_filtre_aktif": bool(temel_filtre_aktif),
+        "minimum_temel_skor": int(minimum_temel_skor),
+    }
+    bist_toplu_tarama_sonucu_goster(
+        sonuc,
+        temel_skorlar=temel_skorlar,
+        temel_filtre_aktif=bool(temel_filtre_aktif),
+        minimum_temel_skor=int(minimum_temel_skor),
+    )
+MEMBERSHIP=backend\dashboard.backup_before_navigation_fix.py:5509|piyasa_rejimi_formu|ARGS=
+def piyasa_rejimi_formu() -> None:
+    """XU100, XU030 ve XUTUM için günlük/haftalık piyasa rejimini gösterir."""
+    with st.sidebar:
+        st.subheader("Piyasa rejimi")
+        st.caption(
+            "Endeksler için günlük ve haftalık veri zorunludur. "
+            "Saatlik veri bulunamazsa analiz durmaz."
+        )
+        baslat = st.button("Piyasa rejimini analiz et", type="primary")
+
+    st.header("Piyasa Rejimi ve Endeks Analizi")
+    st.info(
+        "Bu panel kısa vadeli hisse taramasından önce piyasa ortamını "
+        "Pozitif, Seçici veya Riskli olarak sınıflandırır. Endeks için "
+        "lot, giriş, stop veya hedef üretmez."
+    )
+    if not baslat:
+        st.caption(
+            "XU100, XU030 ve XUTUM analizini başlatmak için "
+            "sol menüdeki düğmeye basın."
+        )
+        return
+
+    with st.spinner("Endeks verileri ve piyasa rejimi hesaplanıyor..."):
+        try:
+            sonuc = MarketRegimeDashboardService().calistir()
+        except MarketRegimeDashboardError as hata:
+            st.error(str(hata))
+            return
+
+    ana = sonuc.ana_rejim
+    rejim_baglami = piyasa_rejimi_baglami_olustur(sonuc)
+    st.session_state[PIYASA_REJIMI_BAGLAMI_KEY] = (
+        rejim_baglami.as_dict()
+    )
+    if rejim_baglami.gecerli:
+        st.session_state["aktif_piyasa_rejimi"] = ana.rejim
+    else:
+        st.session_state.pop("aktif_piyasa_rejimi", None)
+        st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+        st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+
+    if sonuc.eksik_endeksler:
+        st.warning(
+            "Yardımcı endeks verisi alınamadı: "
+            + ", ".join(sonuc.eksik_endeksler)
+            + ". BIST 100 ana rejimi kullanılabilir; güven düzeyi "
+            "eksik veriyi yansıtır."
+        )
+
+    metrik_izgarasi_goster(
+        (
+            ("BIST 100 rejimi", ana.rejim),
+            ("Toplam skor", f"{ana.toplam_skor}/100"),
+            ("Güven düzeyi", ana.guven_duzeyi),
+            ("Son veri tarihi", tarih_saat_yaz(ana.analiz_tarihi)),
+            ("Veri kaynağı", ana.veri_kaynagi),
+            ("Kaynak zinciri", " → ".join(ana.kaynak_sirasi)),
+            ("Yeniden deneme", str(ana.yeniden_deneme_sayisi)),
+            (
+                "İndirme süresi",
+                f"{ana.toplam_indirme_suresi_saniye:.2f} sn",
+            ),
+        )
+    )
+
+    if rejim_baglami.gecerli:
+        st.success(
+            "Bu rejim bağlamı Momentum Keşif ekranına güvenli biçimde "
+            "aktarılabilir."
+        )
+    else:
+        st.error(
+            "Bu rejim Momentum Keşif'e aktarılmadı: "
+            + rejim_baglami.gecersizlik_nedeni
+        )
+
+    if ana.rejim == REJIM_POZITIF:
+        st.success(
+            "Kısa vadeli işlem ortamı pozitif; yine de yalnızca detay "
+            "teyit alan hisseler değerlendirilmelidir."
+        )
+    elif ana.rejim == REJIM_SECICI:
+        st.warning(
+            "Kısa vadeli işlem ortamı seçici; güçlü trend, hacim ve "
+            "kırılım teyidi olmayan hisseler elenmelidir."
+        )
+    else:
+        st.error(
+            "Kısa vadeli işlem ortamı riskli; yeni pozisyonlar için "
+            "korumacı yaklaşım gerekir."
+        )
+
+    tablo = [
+        {
+            "Endeks": f"{item.sembol} · {item.ad}",
+            "Kaynak": item.yahoo_sembolu,
+            "Veri durumu": (
+                "Güncel" if not item.veri_tazeligi.kilitli else "Kilitli"
+            ),
+            "Skor": item.toplam_skor,
+            "Rejim": item.rejim,
+            "Güven": item.guven_duzeyi,
+            "Günlük": item.gunluk_yon,
+            "Haftalık": item.haftalik_yon,
+            "Saatlik": (
+                item.saatlik_yon
+                if item.saatlik_kullanilabilir
+                else "Veri yok — analiz sürdü"
+            ),
+            "Veri tarihi": tarih_saat_yaz(item.analiz_tarihi),
+        }
+        for item in sonuc.sonuclar
+    ]
+    st.dataframe(pd.DataFrame(tablo), width="stretch", hide_index=True)
+
+    secili = st.selectbox(
+        "Endeks ayrıntısı",
+        options=[item.sembol for item in sonuc.sonuclar],
+        format_func=lambda kod: next(
+            f"{x.sembol} · {x.ad}"
+            for x in sonuc.sonuclar
+            if x.sembol == kod
+        ),
+    )
+    item = next(x for x in sonuc.sonuclar if x.sembol == secili)
+
+    bilesenler = (
+        item.trend,
+        item.momentum,
+        item.hacim,
+        item.kirilim,
+        item.genislik,
+    )
+    for baslangic in range(0, len(bilesenler), 2):
+        sutunlar = st.columns(2)
+        for sutun, bilesen in zip(
+            sutunlar,
+            bilesenler[baslangic : baslangic + 2],
+        ):
+            sutun.metric(
+                bilesen.ad,
+                f"{bilesen.skor}/{bilesen.maksimum_skor}",
+                bilesen.durum,
+            )
+
+    veri_durumu = (
+        "Güncel" if not item.veri_tazeligi.kilitli else "Kilitli"
+    )
+    st.markdown("### Veri güvenliği")
+    st.caption(
+        f"Kaynak: {item.yahoo_sembolu} · "
+        f"Son veri: {tarih_saat_yaz(item.analiz_tarihi)} · "
+        f"Durum: {veri_durumu} · "
+        f"Güven: {item.guven_duzeyi}"
+    )
+    if item.veri_tazeligi.kilitli:
+        st.error(item.veri_tazeligi.aciklama)
+    else:
+        st.success(item.veri_tazeligi.aciklama)
+
+    with st.expander("Olumlu gerekçeler", expanded=True):
+        if item.pozitif_nedenler:
+            for metin in item.pozitif_nedenler:
+                st.markdown(f"- {metin}")
+        else:
+            st.write("Belirgin olumlu gerekçe yok.")
+
+    with st.expander("Riskler ve eksik teyitler", expanded=True):
+        if item.riskler:
+            for metin in item.riskler:
+                st.markdown(f"- {metin}")
+        else:
+            st.write("Belirgin risk kaydı yok.")
+MEMBERSHIP=backend\dashboard.py:3187|momentum_kesif_formu|ARGS=
+def momentum_kesif_formu() -> None:
+    with st.sidebar:
+        st.header("Momentum keşif")
+        st.caption(
+            "BIST evrenini göreceli güç, fiyat ivmesi, hacim birikimi, "
+            "sıkışma ve kırılım hazırlığıyla tarar."
+        )
+        # Geriye dönük kaynak-test uyumluluğu için eski anahtar okunur;
+        # güvenlik kararında kullanılmaz. Geçerli kaynak yalnızca tarihli
+        # PIYASA_REJIMI_BAGLAMI_KEY bağlamıdır.
+        _eski_rejim_uyumluluk = st.session_state.get("aktif_piyasa_rejimi")
+        rejim_baglami, rejim_baglami_hatasi = (
+            piyasa_rejimi_baglami_dogrula(
+                st.session_state.get(PIYASA_REJIMI_BAGLAMI_KEY)
+            )
+        )
+        kayitli_rejim = (
+            str(rejim_baglami["rejim"])
+            if rejim_baglami is not None
+            else None
+        )
+        rejim_secenekleri = (
+            "Kapalı",
+            REJIM_POZITIF,
+            REJIM_SECICI,
+            REJIM_RISKLI,
+        )
+        varsayilan_rejim = (
+            kayitli_rejim
+            if kayitli_rejim in rejim_secenekleri
+            else "Kapalı"
+        )
+        piyasa_rejimi_secimi = st.selectbox(
+            "Piyasa rejimi filtresi",
+            options=rejim_secenekleri,
+            index=rejim_secenekleri.index(varsayilan_rejim),
+            disabled=rejim_baglami is None,
+            help=(
+                "Yalnızca bugün üretilmiş, güncel ve doğrulanmış piyasa "
+                "rejimi otomatik kullanılabilir."
+            ),
+            key="momentum_piyasa_rejimi",
+        )
+        if rejim_baglami is not None:
+            st.caption(
+                "Rejim bağlamı: "
+                f"{rejim_baglami['kaynak']} · "
+                f"{tarih_saat_yaz(rejim_baglami['analiz_tarihi'])} · "
+                f"Güven: {rejim_baglami['guven_duzeyi']}"
+            )
+        elif rejim_baglami_hatasi:
+            st.caption("Rejim filtresi kapalı: " + rejim_baglami_hatasi)
+        # Bu kontroller form dışında tutulur. Streamlit formundaki widget değişiklikleri
+        # gönderimden önce yeniden çalıştırılmadığı için, tarih alanı işaretli kutuya
+        # rağmen pasif kalabiliyordu. Form dışındaki kontroller anında tepki verir.
+        evren = st.selectbox(
+            "Keşif evreni",
+            options=TARAMA_EVRENLERI,
+            index=TARAMA_EVRENLERI.index("BIST Tüm"),
+            key="momentum_evreni",
+        )
+        ozel_liste = st.text_area(
+            "Özel keşif listesi",
+            value="THYAO, ASELS, TUPRS, SAHOL, KCHOL",
+            height=90,
+            help=(
+                "Bu alan yalnızca Özel Liste evreninde kullanılır. "
+                "Virgül, boşluk veya yeni satırla ayırabilirsiniz."
+            ),
+        )
+        minimum_skor = st.slider(
+            "Minimum momentum skoru",
+            min_value=40,
+            max_value=85,
+            value=55,
+        )
+        maksimum_aday = st.slider(
+            "Gösterilecek aday sayısı",
+            min_value=5,
+            max_value=50,
+            value=25,
+        )
+        internetten_guncelle = st.checkbox(
+            "BIST evrenini resmi kaynaktan güncelle",
+            value=True,
+            disabled=(
+                evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+            ),
+        )
+        yeniden_oynat = st.checkbox(
+            "Tarihsel yeniden oynatma (walk-forward)",
+            value=False,
+            help=(
+                "Kesim tarihinden sonraki fiyatları aday üretiminden gizler ve "
+                "adayların sonraki 5/10/20 günlük performansını ölçer."
+            ),
+            key="momentum_yeniden_oynat",
+        )
+        kesim_tarihi = st.date_input(
+            "Kesim tarihi",
+            value=date.today() - timedelta(days=45),
+            max_value=date.today() - timedelta(days=1),
+            disabled=not yeniden_oynat,
+            key="momentum_kesim_tarihi",
+        )
+        calistirildi = st.button(
+            "Tarihsel testi başlat" if yeniden_oynat else "Momentum keşfini başlat",
+            type="primary",
+            width="stretch",
+            key="momentum_kesif_calistir",
+        )
+
+    semboller = ozel_sembol_metinini_ayristir(ozel_liste)
+    momentum_toplu_tarihsel_export_goster(
+        semboller=tuple(semboller),
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+    )
+    aktif_rejim = (
+        None
+        if (
+            rejim_baglami is None
+            or piyasa_rejimi_secimi == "Kapalı"
+        )
+        else piyasa_rejimi_secimi
+    )
+    discovery_imzasi = momentum_kesif_oturum_imzasi(
+        evren=evren,
+        semboller=semboller,
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+        piyasa_rejimi=aktif_rejim,
+        rejim_baglami_imzasi=piyasa_rejimi_baglami_imzasi(
+            rejim_baglami
+        ),
+    )
+    replay_imzasi = momentum_walk_forward_oturum_imzasi(
+        evren=evren,
+        semboller=semboller,
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+        kesim_tarihi=kesim_tarihi,
+    )
+
+    if rejim_baglami is None:
+        st.warning(
+            "Piyasa rejimi filtresi otomatik olarak Kapalı tutuluyor. "
+            + str(rejim_baglami_hatasi)
+        )
+    else:
+        st.info(
+            "Doğrulanmış piyasa rejimi bağlamı: "
+            f"{rejim_baglami['rejim']} · "
+            f"Kaynak {rejim_baglami['kaynak']} · "
+            f"Veri {tarih_saat_yaz(rejim_baglami['analiz_tarihi'])} · "
+            f"Güven {rejim_baglami['guven_duzeyi']}"
+        )
+
+    if not calistirildi:
+        kayitli_replay = st.session_state.get(MOMENTUM_REPLAY_RESULT_KEY)
+        kayitli_imza = st.session_state.get(MOMENTUM_REPLAY_SIGNATURE_KEY)
+        if (
+            yeniden_oynat
+            and kayitli_imza == replay_imzasi
+            and isinstance(kayitli_replay, MomentumWalkForwardResult)
+        ):
+            # Güncel seans düğmesi Streamlit yeniden çalışması başlatır.
+            # Tarihsel sonuç oturumda saklanmazsa bu yeniden çalışmada sonuç
+            # ekranı kaybolur ve düğme olayı işlenemez.
+            momentum_walk_forward_sonucu_goster(kayitli_replay)
+            return
+        kayitli_sonuc = st.session_state.get(
+            MOMENTUM_DISCOVERY_RESULT_KEY
+        )
+        kayitli_discovery_imzasi = st.session_state.get(
+            MOMENTUM_DISCOVERY_SIGNATURE_KEY
+        )
+        if (
+            not yeniden_oynat
+            and kayitli_discovery_imzasi == discovery_imzasi
+            and isinstance(kayitli_sonuc, MomentumDiscoveryResult)
+        ):
+            momentum_kesif_sonucu_goster(kayitli_sonuc)
+            return
+
+        if (
+            kayitli_discovery_imzasi is not None
+            and kayitli_discovery_imzasi != discovery_imzasi
+        ):
+            st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+            st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+            st.info(
+                "Momentum ayarları değiştiği için önceki sonuç geçersiz "
+                "kılındı. Yeni ayarlarla taramayı başlatın."
+            )
+            return
+
+        st.info(
+            "Keşif evrenini seçip sol menüdeki başlat düğmesine basın. "
+            "Tarihsel yeniden oynatma, gelecek veriyi gizleyerek erken uyarı "
+            "başarısını ölçer."
+        )
+        return
+
+    if yeniden_oynat:
+        st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+        st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+        try:
+            istek_replay = MomentumWalkForwardRequest(
+                evren=evren,
+                kesim_tarihi=kesim_tarihi.isoformat(),
+                maksimum_aday=int(maksimum_aday),
+                minimum_skor=int(minimum_skor),
+                ozel_semboller=semboller,
+                internetten_evren_guncelle=bool(internetten_guncelle),
+            )
+            with st.spinner(
+                f"{istek_replay.evren} {istek_replay.kesim_tarihi} "
+                "tarihinde yeniden oynatılıyor..."
+            ):
+                replay_sonucu = MomentumWalkForwardService().calistir(istek_replay)
+        except (ValueError, TypeError, MomentumWalkForwardError) as hata:
+            st.error(str(hata))
+            return
+        st.session_state[MOMENTUM_REPLAY_RESULT_KEY] = replay_sonucu
+        st.session_state[MOMENTUM_REPLAY_SIGNATURE_KEY] = replay_imzasi
+        momentum_walk_forward_sonucu_goster(replay_sonucu)
+        return
+
+    st.session_state.pop(MOMENTUM_REPLAY_RESULT_KEY, None)
+    st.session_state.pop(MOMENTUM_REPLAY_SIGNATURE_KEY, None)
+    ilerleme = st.progress(0, text="Momentum keşfi hazırlanıyor...")
+    durum = st.empty()
+
+    def ilerleme_bildir(sira: int, toplam: int, sembol: str) -> None:
+        oran = min(max(sira / toplam, 0.0), 1.0)
+        ilerleme.progress(
+            oran,
+            text=f"[{sira}/{toplam}] {sembol} momentum analizi...",
+        )
+        durum.caption(f"Son işlenen hisse: {sembol}")
+
+    def durum_bildir(mesaj: str) -> None:
+        durum.info(mesaj)
+
+    try:
+        istek = MomentumDiscoveryRequest(
+            evren=evren,
+            maksimum_aday=int(maksimum_aday),
+            minimum_skor=int(minimum_skor),
+            ozel_semboller=semboller,
+            internetten_evren_guncelle=bool(internetten_guncelle),
+            piyasa_rejimi=(
+                aktif_rejim
+            ),
+        )
+        with st.spinner(f"{istek.evren} momentum potansiyeli taranıyor..."):
+            sonuc = MomentumDiscoveryService().calistir(
+                istek,
+                ilerleme_bildirimi=ilerleme_bildir,
+                durum_bildirimi=durum_bildir,
+            )
+    except (ValueError, TypeError, MomentumDiscoveryError) as hata:
+        ilerleme.empty()
+        durum.empty()
+        st.error(str(hata))
+        return
+
+    if sonuc.veri_tazeligi is not None and sonuc.veri_tazeligi.kilitli:
+        ilerleme.progress(
+            1.0,
+            text="Veri tazeliği kilidi nedeniyle tarama durduruldu.",
+        )
+    else:
+        ilerleme.progress(1.0, text="Momentum keşfi tamamlandı.")
+    durum.empty()
+    st.session_state[MOMENTUM_DISCOVERY_RESULT_KEY] = sonuc
+    st.session_state[MOMENTUM_DISCOVERY_SIGNATURE_KEY] = discovery_imzasi
+    momentum_kesif_sonucu_goster(sonuc)
+MEMBERSHIP=backend\dashboard.py:4037|bist_toplu_tarama_sonucu_goster|ARGS=sonuc;temel_skorlar;temel_filtre_aktif;minimum_temel_skor;research_profiles_bundle
+def bist_toplu_tarama_sonucu_goster(
+    sonuc: MarketScanResult,
+    *,
+    temel_skorlar: dict | None = None,
+    temel_filtre_aktif: bool = False,
+    minimum_temel_skor: int = 60,
+    research_profiles_bundle=None,
+) -> None:
+    if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+        return
+    st.subheader(f"{sonuc.evren_adi} güncel aday taraması")
+    st.caption("Genel teknik sıralama · seçili tarama profili · veri tazeliği · VBTS uyarıları · isteğe bağlı temel kalite filtresi")
+    metrik_izgarasi_goster(
+        (
+            ("Tarama evreni", str(sonuc.evren_sembol_sayisi)),
+            ("Başarılı analiz", str(sonuc.filtrelenmis.aday_sayisi + sonuc.filtrelenmis.elenen_sayisi)),
+            ("Filtreyi geçen", str(sonuc.filtrelenmis.aday_sayisi)),
+            ("Gösterilen aday", str(sonuc.gosterilen_aday_sayisi)),
+            ("Elenen", str(sonuc.filtrelenmis.elenen_sayisi)),
+            ("Veri hatası", str(sonuc.filtrelenmis.hatali_sayisi)),
+        )
+    )
+    st.caption(
+        f"Evren kaynağı: {sonuc.evren_kaynagi} · "
+        f"Bileşen tarihi: {sonuc.evren_tarihi} · "
+        f"Profil: {sonuc.profil.ad}"
+    )
+    st.info(
+        "Sonuçlar kesin alım tavsiyesi değildir. Tablo, ayrıntılı güncel "
+        "teknik analizde doğrulanacak araştırma adaylarını sıralar."
+    )
+
+    if sonuc.vbts_dogrulama_uyarisi:
+        st.warning(sonuc.vbts_dogrulama_uyarisi)
+
+    if sonuc.sektor_baglamlari:
+        st.caption(
+            "Sektör bağlamı: "
+            f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansı · "
+            "sektör skoru teknik hisse skorunu ve aday filtresini değiştirmez."
+        )
+    if sonuc.sektor_baglami_uyarisi:
+        st.caption(sonuc.sektor_baglami_uyarisi)
+
+    vbts_nedenleri = sonuc.vbts_engelleme_nedenleri or {}
+    if vbts_nedenleri:
+        st.warning(
+            f"{len(vbts_nedenleri)} hissede aktif VBTS tedbiri bulundu. "
+            "Bu tedbirler teknik skoru veya sıralamayı değiştirmez."
+        )
+        with st.expander("VBTS tedbir uyarıları", expanded=False):
+            st.dataframe(
+                pd.DataFrame(
+                    {
+                        "Hisse": sembol.removesuffix(".IS"),
+                        "VBTS tedbiri": " | ".join(nedenler),
+                    }
+                    for sembol, nedenler in sorted(vbts_nedenleri.items())
+                ),
+                width="stretch",
+                hide_index=True,
+            )
+
+    # RPV1_SPRINT02_RENDER_PANEL
+    if research_profiles_bundle is not None:
+        render_research_profiles_panel(st, research_profiles_bundle)
+
+    adaylar = sonuc.adaylar
+    temel_filtre_sonucu = apply_optional_fundamental_filter(
+        adaylar,
+        symbol_getter=lambda aday: aday.sembol,
+        scores=temel_skorlar or {},
+        enabled=temel_filtre_aktif,
+        minimum_score=minimum_temel_skor,
+    )
+    gorunen_semboller = {
+        aday.sembol for aday in temel_filtre_sonucu.accepted
+    }
+    _three_all_rows = aday_tablosu_kayitlari(sonuc)
+
+    # RANKING_JUMP_V1_BLOCK1 — observation only; no rank/score/decision mutation.
+    try:
+        from backend.app.analysis.ranking_memory import (
+            RankObservationJsonlStore,
+            observations_from_research_rows,
+        )
+
+        _ranking_as_of = str(sonuc.evren_tarihi or "").strip()
+        if _ranking_as_of == "Kişisel liste":
+            _ranking_as_of = datetime.now().date().isoformat()
+
+        _ranking_memory_rows = tuple(
+            {
+                "Sıra": _rank,
+                "Hisse": _candidate.sembol.removesuffix(".IS"),
+            }
+            for _rank, _candidate in enumerate(
+                sonuc.filtrelenmis.adaylar,
+                start=1,
+            )
+        )
+        _rank_observations = observations_from_research_rows(
+            rows=_ranking_memory_rows,
+            as_of=_ranking_as_of,
+            universe_source=sonuc.evren_kaynagi,
+            profile_name=sonuc.profil.ad,
+        )
+        RankObservationJsonlStore().append_snapshot(_rank_observations)
+    except Exception as _rank_history_exc:
+        try:
+            _rank_history_log = Path(
+                r"D:\Projects\Hisse-Robotu\_discovery\ranking_memory_write_error.log"
+            )
+            _rank_history_log.parent.mkdir(parents=True, exist_ok=True)
+            with _rank_history_log.open("a", encoding="utf-8") as _rank_history_f:
+                _rank_history_f.write(
+                    f"{datetime.now().isoformat()} | "
+                    f"{type(_rank_history_exc).__name__}: {_rank_history_exc}\n"
+                )
+        except Exception:
+            pass
+
+    # THREE_SYSTEM_ACTIVE_HISSE_PUBLISH_V4
+    for _three_row in _three_all_rows:
+        try:
+            write_scan_row_opinion(
+                _three_row,
+                as_of=str(sonuc.evren_tarihi),
+            )
+        except Exception as _three_exc:
+            try:
+                _three_log = Path(
+                    r"D:\Projects-Sistem-Ortak-Degerlendirme\hisse_publish_error.log"
+                )
+                _three_log.parent.mkdir(parents=True, exist_ok=True)
+                with _three_log.open("a", encoding="utf-8") as _three_f:
+                    _three_f.write(
+                        f"{datetime.now().isoformat()} | "
+                        f"{type(_three_exc).__name__}: {_three_exc} | "
+                        f"row={_three_row!r}\n"
+                    )
+            except Exception:
+                pass
+
+    kayitlar = [
+        kayit
+        for aday, kayit in zip(
+            sonuc.adaylar,
+            _three_all_rows,
+        )
+        if aday.sembol in gorunen_semboller
+    ]
+
+    for aday, kayit in zip(
+        (
+            aday
+            for aday in sonuc.adaylar
+            if aday.sembol in gorunen_semboller
+        ),
+        kayitlar,
+    ):
+        sembol = aday.sembol.removesuffix(".IS").upper()
+        temel_skor = (temel_skorlar or {}).get(sembol)
+        kayit["Temel skor"] = (
+            temel_skor.total_score
+            if temel_skor is not None
+            and not temel_skor.locked
+            else None
+        )
+
+    if temel_filtre_aktif:
+        st.info(
+            f"İsteğe bağlı temel analiz filtresi aktif: "
+            f"minimum {minimum_temel_skor}/100 · "
+            f"geçen {len(temel_filtre_sonucu.accepted)} · "
+            f"elenen {len(temel_filtre_sonucu.rejected)} · "
+            f"verisi eksik {len(temel_filtre_sonucu.missing)}."
+        )
+
+    # RANKING_JUMP_V1_UI
+    st.markdown("### Sıralama Hareketi / Erken Görünürlük")
+    st.caption(
+        "Tüm Research sıralamasında 1S / 3S / 5S hareketi, sıçrama ivmesi ve "
+        "kalıcılığı gösterir. Bu görünüm AL/SAT kararı üretmez ve ana Research "
+        "sırasını değiştirmez."
+    )
+
+    try:
+        from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+        from backend.app.analysis.ranking_movement_visibility import (
+            build_ranking_movement_rows,
+            ranking_movement_table_rows,
+        )
+        # V1 compatibility: build_rank_trajectories remains the underlying trajectory contract.
+
+        _ranking_history = RankObservationJsonlStore().list()
+        _movement_rows = build_ranking_movement_rows(_ranking_history)
+
+        if not _movement_rows:
+            st.info(
+                "Sıralama hareketi için henüz yeterli tarihli ranking history yok. "
+                "Yeni seans snapshot'ları biriktikçe bu alan otomatik dolacaktır."
+            )
+        else:
+            _movement_df = pd.DataFrame(ranking_movement_table_rows(_movement_rows))
+            _jump_filter = st.radio(
+                "Sıralama hareketi görünümü",
+                options=(
+                    "Tüm sıralama",
+                    "3S Erken Sıçrayanlar",
+                    "Kalıcı yükseliş",
+                    "Yeni Top-5'e Yaklaşanlar",
+                    "İvme Kaybediyor",
+                ),
+                horizontal=True,
+                key="ranking_jump_v1_filter",
+            )
+
+            if _jump_filter == "3S Erken Sıçrayanlar":
+                _movement_df = _movement_df[pd.to_numeric(_movement_df["3S Δ"], errors="coerce") > 0]
+            elif _jump_filter == "Kalıcı yükseliş":
+                _movement_df = _movement_df[_movement_df["Kalıcılık"].isin(("KALICI", "DESTEKLI"))]
+            elif _jump_filter == "Yeni Top-5'e Yaklaşanlar":
+                _movement_df = _movement_df[pd.to_numeric(_movement_df["Top-5 uzaklık"], errors="coerce") <= 20]
+            elif _jump_filter == "İvme Kaybediyor":
+                _movement_df = _movement_df[_movement_df["Hareket"].astype(str).str.contains("IVME_KAYBEDIYOR", na=False)]
+
+            st.dataframe(
+                _movement_df,
+                width="stretch",
+                hide_index=True,
+                column_config={
+                    "Bugün": st.column_config.NumberColumn(format="#%d"),
+                    "1S Δ": st.column_config.NumberColumn(format="%d"),
+                    "3S Δ": st.column_config.NumberColumn(format="%d"),
+                    "5S Δ": st.column_config.NumberColumn(format="%d"),
+                    "Sıçrama ivmesi": st.column_config.NumberColumn(format="%.1f"),
+                },
+            )
+
+            if any(_movement_df["Karşılaştırma"].eq("Bloklu")):
+                st.warning(
+                    "Bazı satırlarda Research source/profile kontratı değiştiği için "
+                    "karşılaştırma yalnız bilgilendirme amaçlıdır."
+                )
+
+            st.caption(
+                "Sıçrama ivmesi yeni bir skor değildir; son 1 seanslık sıra kazancının "
+                "önceki iki seans ortalamasına göre hızlanmasını gösterir. 1S/3S/5S "
+                "değerleri ham sıra hareketidir."
+            )
+    except Exception as _ranking_jump_ui_exc:
+        st.warning(
+            "Sıralama Hareketi görünümü şu anda hazırlanamadı. "
+            f"Ana Research sıralaması etkilenmedi: {_ranking_jump_ui_exc}"
+        )
+    # RANKING_JUMP_V1_UI_END
+    if not kayitlar:
+        st.warning(
+            "Seçili profil koşullarını karşılayan aday bulunamadı. "
+            "Daha geniş bir evren veya daha gevşek profil denenebilir."
+        )
+    else:
+        st.dataframe(
+            pd.DataFrame(kayitlar),
+            width="stretch",
+            hide_index=True,
+            column_config={
+                "Sıra": st.column_config.NumberColumn(width="small"),
+                "Hisse": st.column_config.TextColumn(width="small"),
+                "Skor": st.column_config.NumberColumn(width="small"),
+                "Temel skor": st.column_config.NumberColumn(
+                    width="small",
+                    format="%d",
+                ),
+                "Sektör": st.column_config.TextColumn(width="medium"),
+                "Sektör skoru": st.column_config.NumberColumn(
+                    width="small",
+                    format="%d",
+                ),
+                "Sektör görünümü": st.column_config.TextColumn(
+                    width="small",
+                ),
+                "Sektör güveni": st.column_config.TextColumn(
+                    width="small",
+                ),
+                "Sektör bağlamı": st.column_config.TextColumn(
+                    width="medium",
+                ),
+                "Sektör RS": st.column_config.NumberColumn(
+                    width="small",
+                    format="%.2f",
+                ),
+                "Durum": st.column_config.TextColumn(width="medium"),
+                "VBTS": st.column_config.TextColumn(width="large"),
+                "Son kapanış": st.column_config.NumberColumn(format="%.2f"),
+                "Giriş": st.column_config.NumberColumn(format="%.2f"),
+                "Stop": st.column_config.NumberColumn(format="%.2f"),
+                "Hedef": st.column_config.NumberColumn(format="%.2f"),
+                "Risk/Getiri": st.column_config.NumberColumn(format="1:%.2f"),
+                "Hacim oranı": st.column_config.NumberColumn(format="%.2fx"),
+                "RSI14": st.column_config.NumberColumn(format="%.2f"),
+                "ATR (%)": st.column_config.NumberColumn(format="%.2f%%"),
+            },
+        )
+
+        secili = st.selectbox(
+            "Aday ayrıntısı",
+            options=temel_filtre_sonucu.accepted,
+            format_func=lambda aday: (
+                f"{aday.sembol.removesuffix('.IS')} · "
+                f"{aday.sinyal.skor}/100 · {aday.sinyal.karar}"
+            ),
+            key="bist_toplu_tarama_aday_ayrintisi",
+        )
+        secili_sembol = secili.sembol.removesuffix(".IS").upper()
+        toplu_secimler = st.multiselect(
+            "AL-SAT'a gönderilecek adaylar",
+            options=tuple(
+                aday.sembol.removesuffix(".IS").upper()
+                for aday in temel_filtre_sonucu.accepted
+            ),
+            default=(),
+            key="alsata_toplu_secimler",
+            help="Seçilen adaylar AL-SAT'a aktarılır.",
+        )
+
+        if st.button(
+            "Seçilenleri AL-SAT'a Gönder",
+            type="secondary",
+            width="stretch",
+            key="alsata_toplu_gonder",
+            disabled=not toplu_secimler,
+        ):
+            try:
+                payloadlar = []
+                for sembol in toplu_secimler:
+                    aday = next(
+                        a for a in temel_filtre_sonucu.accepted
+                        if a.sembol.removesuffix(".IS").upper() == sembol
+                    )
+                    satir = next(
+                        (row for row in kayitlar if str(row.get("Hisse", "")).upper() == sembol),
+                        {},
+                    )
+                    payloadlar.append(
+                        {
+                            "symbol": sembol,
+                            "source": "HISSE_ROBOTU",
+                            "as_of": str(sonuc.evren_tarihi),
+                            "robot_score": aday.sinyal.skor,
+                            "robot_decision": satir.get("Durum"),
+                            "technical_outlook": aday.sinyal.karar,
+                            "rank": satir.get("Sıra"),
+                        }
+                    )
+                _alsata_adaylari_toplu_gonder(payloadlar)
+                st.success(f"{len(payloadlar)} seçili aday AL-SAT'a aktarıldı.")
+            except Exception as exc:
+                st.error(str(exc))
+
+        if st.button(
+            "AL-SAT'a Gönder",
+            type="primary",
+            key=f"alsata_gonder_{secili_sembol}",
+        ):
+            try:
+                secili_satir = next(
+                    (row for row in kayitlar if str(row.get("Hisse", "")).upper() == secili_sembol),
+                    {},
+                )
+                aktarim = _alsata_aday_gonder({
+                    "symbol": secili_sembol,
+                    "source": "HISSE_ROBOTU",
+                    "as_of": str(sonuc.evren_tarihi),
+                    "robot_score": secili.sinyal.skor,
+                    "robot_decision": secili_satir.get("Durum"),
+                    "technical_outlook": secili.sinyal.karar,
+                    "rank": secili_satir.get("Sıra"),
+                })
+                st.success(
+                    f"{secili_sembol} AL-SAT'a aktarıldı. AL-SAT açılıyor."
+                )
+                webbrowser.open(
+                    f"http://127.0.0.1:8765/?symbol={secili_sembol}",
+                    new=2,
+                )
+            except Exception as exc:
+                st.error(str(exc))
+
+        secili_vbts = vbts_nedenleri.get(
+            secili.sembol,
+            vbts_nedenleri.get(secili.sembol.removesuffix(".IS"), ()),
+        )
+        if secili_vbts:
+            st.warning("VBTS: " + " | ".join(secili_vbts))
+
+        secili_sektor = (sonuc.sektor_baglamlari or {}).get(
+            secili.sembol
+        )
+        if secili_sektor is not None:
+            st.info(
+                "Sektör bağlamı: "
+                f"{secili_sektor.sector_name} · "
+                f"{secili_sektor.sector_score}/100 "
+                f"{secili_sektor.sector_status} · "
+                f"Güven: {secili_sektor.sector_confidence} · "
+                f"{secili_sektor.label}. "
+                "Bu bilgi teknik skoru değiştirmez."
+            )
+
+        sol, sag = st.columns(2)
+        with sol:
+            aciklama_listesi_goster(
+                "Olumlu gerekçeler",
+                secili.sinyal.pozitif_nedenler,
+                "Belirgin olumlu gerekçe yok.",
+            )
+        with sag:
+            aciklama_listesi_goster(
+                "Riskler",
+                secili.sinyal.riskler,
+                "Belirgin risk yok.",
+            )
+
+    if sonuc.filtrelenmis.elenenler:
+        with st.expander("Elenen hisseler ve nedenleri", expanded=False):
+            elenen_kayitlari = []
+            for elenen in sonuc.filtrelenmis.elenenler:
+                elenen_kayitlari.append(
+                    {
+                        "Hisse": elenen.sembol.removesuffix(".IS"),
+                        "Neden": " | ".join(elenen.nedenler),
+                    }
+                )
+            st.dataframe(
+                pd.DataFrame(elenen_kayitlari),
+                width="stretch",
+                hide_index=True,
+            )
+
+    if sonuc.filtrelenmis.hatalar:
+        with st.expander("Verisi alınamayan hisseler", expanded=False):
+            st.dataframe(
+                pd.DataFrame(
+                    {
+                        "Hisse": hata.sembol.removesuffix(".IS"),
+                        "Hata": hata.hata,
+                    }
+                    for hata in sonuc.filtrelenmis.hatalar
+                ),
+                width="stretch",
+                hide_index=True,
+            )
+MEMBERSHIP=backend\dashboard.py:4493|bist_toplu_tarama_formu|ARGS=
+def bist_toplu_tarama_formu() -> None:
+    # BIST_TOPLU_TARAMA_V11_ROLE_CLARITY
+    st.header("BIST Toplu Tarama — Genel Teknik Aday Havuzu")
+    st.caption(
+        "Seçilen evrendeki hisseleri günlük teknik skor, hacim, risk/getiri, VBTS ve isteğe bağlı temel kalite filtresiyle sıralar."
+    )
+    st.info(
+        "Fırsat Radarı doğrulanmış haftalık/aylık profil eşleşmelerini öne çıkarır; "
+        "BIST Toplu Tarama ise daha geniş, profil-seçilebilir genel teknik aday havuzu üretir. "
+        "Bu ekran kesin alım tavsiyesi vermez; seçilen aday Güncel Teknik Analiz veya AL-SAT ile derinleştirilir."
+    )
+    bildirim = st.session_state.pop("vbts_yonetim_bildirimi", None)
+    if bildirim:
+        st.success(bildirim)
+
+    vbts_operasyonel_hazir = vbts_yonetim_paneli_goster()
+    vbts_kaynak_hazir = kap_vbts_durum_karti_goster()
+    manuel_vbts_durum_paneli_goster()
+
+    vbts_hazirlik_hatasi: str | None = None
+    hazir_tarama_servisi: BistMarketScannerService | None = None
+    try:
+        hazir_tarama_servisi = build_dashboard_market_scanner(
+            vbts_hard_block=False,
+        )
+    except DashboardMarketScannerSourceError as hata:
+        vbts_hazirlik_hatasi = str(hata)
+
+    if (
+        not vbts_operasyonel_hazir
+        or not vbts_kaynak_hazir
+        or vbts_hazirlik_hatasi
+    ):
+        st.warning(
+            "VBTS tam doğrulanamadı. Toplu tarama kilitlenmez; "
+            "teknik sonuçlar üretilir ancak VBTS tedbir bilgileri "
+            "eksik veya eski olabilir."
+        )
+        if vbts_hazirlik_hatasi:
+            st.caption(vbts_hazirlik_hatasi)
+
+    with st.sidebar:
+        st.header("BIST toplu tarama")
+        st.caption(
+            "Seçilen evrendeki hisseleri günlük teknik skor, hacim ve "
+            "risk/getiri koşullarıyla topluca sıralar."
+        )
+        with st.form("bist_toplu_tarama_formu"):
+            evren = st.selectbox(
+                "Tarama evreni",
+                options=TARAMA_EVRENLERI,
+                index=0,
+            )
+            ozel_liste = st.text_area(
+                "Özel hisse listesi",
+                value="THYAO, ASELS, TUPRS, SAHOL, KCHOL",
+                height=90,
+                help=(
+                    "Virgül, boşluk veya yeni satırla ayırabilirsiniz. "
+                    "Bu alan yalnızca Özel Liste evreninde kullanılır."
+                ),
+            )
+            profil_etiketi = st.selectbox(
+                "Tarama profili",
+                options=tuple(TARAMA_PROFILLERI),
+                index=1,
+                help=(
+                    "Dengeli profil skor, hacim ve pozitif/nötr "
+                    "teknik görünümü uygular. Risk/getiri işlem hazırlığı "
+                    "aşamasında ayrıca değerlendirilir."
+                ),
+            )
+            maksimum_aday = st.slider(
+                "Gösterilecek aday sayısı",
+                min_value=1,
+                max_value=50,
+                value=15,
+            )
+            internetten_guncelle = st.checkbox(
+                "BIST evrenini resmi kaynaktan güncelle",
+                value=True,
+                disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+            )
+            temel_filtre_aktif = st.checkbox(
+                "Temel kalite filtresini kullan",
+                value=False,
+                help=(
+                    "Varsayılan olarak kapalıdır. Açıldığında önce "
+                    "kayıtlı ve güncel temel kalite skorları kullanılır."
+                ),
+            )
+            minimum_temel_skor = st.slider(
+                "Minimum temel kalite skoru",
+                min_value=0,
+                max_value=100,
+                value=60,
+                # RPV1_SPRINT02_UPLOADER_ALWAYS_AVAILABLE
+                disabled=False,
+            )
+            temel_filtre_dosyasi = st.file_uploader(
+                "Temel skorları güncellemek için bilanço dosyası",
+                type=("csv", "json"),
+                disabled=not temel_filtre_aktif,
+                key="bist_temel_filtre_dosyasi",
+                help=(
+                    "İsteğe bağlıdır. Dosya yüklenmezse yerel depodaki "
+                    "güncel temel kalite skorları kullanılır."
+                ),
+            )
+            calistirildi = st.form_submit_button(
+                "Toplu taramayı başlat",
+                type="primary",
+                width="stretch",
+                disabled=hazir_tarama_servisi is None,
+            )
+
+    if not calistirildi:
+        onceki_tarama = st.session_state.get("bist_toplu_tarama_son_sonuc")
+        if onceki_tarama is not None:
+            bist_toplu_tarama_sonucu_goster(
+                onceki_tarama["sonuc"],
+                temel_skorlar=onceki_tarama.get("temel_skorlar", {}),
+                temel_filtre_aktif=bool(onceki_tarama.get("temel_filtre_aktif", False)),
+                minimum_temel_skor=int(onceki_tarama.get("minimum_temel_skor", 60)),
+            )
+            st.caption("Son toplu tarama sonucu korunuyor. Yeni tarama başlatılana kadar aday listesi sıfırlanmaz.")
+            return
+        st.info(
+            "Tarama evrenini ve profili seçip sol menüdeki "
+            "‘Toplu taramayı başlat’ düğmesine basın."
+        )
+        st.caption(
+            "BIST Tüm seçeneği yüzlerce hisse içerdiğinden diğer "
+            "evrenlere göre daha uzun sürebilir."
+        )
+        return
+
+    if hazir_tarama_servisi is None:
+        st.error(
+            "Toplu tarama servisi hazırlanamadı. "
+            "Bu durum VBTS kilidi değildir; servis kurulumu kontrol edilmelidir."
+        )
+        return
+
+    # RPV1_SPRINT02_INPUT_CONTEXT
+    research_profile_periods = ()
+    research_profile_contexts = {}
+    if temel_filtre_dosyasi is not None:
+        try:
+            _rp_bytes = temel_filtre_dosyasi.getvalue()
+            _rp_suffix = Path(temel_filtre_dosyasi.name).suffix.lower()
+            research_profile_periods = (
+                periods_from_csv_bytes(_rp_bytes)
+                if _rp_suffix == ".csv"
+                else periods_from_json_bytes(_rp_bytes)
+            )
+            research_profile_contexts = research_profile_contexts_from_bytes(
+                _rp_bytes,
+                suffix=_rp_suffix,
+            )
+        except (FundamentalDataError, ValueError, TypeError, UnicodeError) as hata:
+            st.warning(f"Research Profiles temel verisi okunamadı: {hata}")
+            research_profile_periods = ()
+            research_profile_contexts = {}
+
+    temel_skorlar: dict = {}
+    if temel_filtre_aktif:
+        temel_skorlar = kayitli_temel_skorlari_yukle()
+
+        if temel_filtre_dosyasi is not None:
+            try:
+                temel_icerik = temel_filtre_dosyasi.getvalue()
+                if (
+                    Path(temel_filtre_dosyasi.name).suffix.lower()
+                    == ".csv"
+                ):
+                    temel_donemler = periods_from_csv_bytes(
+                        temel_icerik
+                    )
+                else:
+                    temel_donemler = periods_from_json_bytes(
+                        temel_icerik
+                    )
+
+                for temel_sembol in sorted(
+                    {item.symbol for item in temel_donemler}
+                ):
+                    sembol_donemleri = [
+                        item
+                        for item in temel_donemler
+                        if item.symbol == temel_sembol
+                    ]
+                    sembol_tazeligi = (
+                        evaluate_fundamental_freshness(
+                            sembol_donemleri
+                        )
+                    )
+                    if sembol_tazeligi.locked:
+                        continue
+
+                    sembol_snapshot = build_fundamental_snapshot(
+                        sembol_donemleri
+                    )
+                    skor = calculate_fundamental_quality(
+                        sembol_snapshot,
+                        sembol_tazeligi,
+                    )
+                    if skor.locked or skor.total_score is None:
+                        continue
+
+                    temel_skor_deposu().save(
+                        periods=sembol_donemleri,
+                        score=skor,
+                    )
+                    temel_skorlar[temel_sembol] = skor
+            except (
+                FundamentalDataError,
+                FundamentalScoreStoreError,
+                ValueError,
+                TypeError,
+                UnicodeError,
+            ) as hata:
+                st.error(
+                    f"Temel filtre dosyası doğrulanamadı: {hata}"
+                )
+                return
+
+        if not temel_skorlar:
+            st.error(
+                "Temel kalite filtresi için güncel kayıtlı skor "
+                "bulunamadı. Temel Analiz ekranında bilanço dosyası "
+                "yükleyerek skorları kaydedin."
+            )
+            return
+
+    ilerleme = st.progress(0, text="Tarama hazırlanıyor...")
+    durum = st.empty()
+
+    def ilerleme_bildir(sira: int, toplam: int, sembol: str) -> None:
+        oran = min(max(sira / toplam, 0.0), 1.0)
+        ilerleme.progress(
+            oran,
+            text=f"[{sira}/{toplam}] {sembol} analiz ediliyor...",
+        )
+        durum.caption(f"Son işlenen hisse: {sembol}")
+
+    try:
+        istek = MarketScanRequest(
+            evren=evren,
+            profil_adi=TARAMA_PROFILLERI[profil_etiketi],
+            maksimum_aday=int(maksimum_aday),
+            ozel_semboller=ozel_sembol_metinini_ayristir(ozel_liste),
+            internetten_evren_guncelle=bool(internetten_guncelle),
+            sektor_baglami_aktif=True,
+        )
+        with st.spinner(f"{istek.evren} güncel verilerle taranıyor..."):
+            tarama_servisi = hazir_tarama_servisi
+            sonuc = tarama_servisi.calistir(
+                istek,
+                ilerleme_bildirimi=ilerleme_bildir,
+            )
+    except (
+        ValueError,
+        TypeError,
+        MarketScannerError,
+        DashboardMarketScannerSourceError,
+    ) as hata:
+        ilerleme.empty()
+        durum.empty()
+        st.error(str(hata))
+        return
+
+    ilerleme.progress(1.0, text="Toplu tarama tamamlandı.")
+    durum.empty()
+    # RPV1_SPRINT02_BUILD_BUNDLE — uses same successful scan results; no rescan.
+    _rp_successful_symbols = tuple(
+        item.sembol for item in tuple(getattr(sonuc, "tum_sonuclar", ()) or ())
+    )
+    research_profiles_bundle = build_daily_research_profiles(
+        successful_symbols=_rp_successful_symbols,
+        periods=research_profile_periods,
+        contexts=research_profile_contexts,
+        as_of=research_profile_as_of_from_scan(sonuc, fallback=date.today()),
+    )
+
+    # RPV1_SPRINT03_PROFILE_MEMORY_WRITE
+    try:
+        _rp_memory_write = persist_research_profile_bundle(
+            research_profiles_bundle,
+            universe_name=sonuc.evren_adi,
+        )
+        if _rp_memory_write.status == "WARMING_UP":
+            st.caption(
+                "Research Profile Memory: WARMING UP · "
+                "forward-only ilk geçerli seans bekleniyor."
+            )
+        elif _rp_memory_write.status == "WRITTEN":
+            st.caption(
+                f"Research Profile Memory: {_rp_memory_write.appended} "
+                "forward observation eklendi."
+            )
+    except (ValueError, TypeError, OSError) as hata:
+        st.warning(
+            "Research Profile Memory yazılamadı; tarama ve AL/SAT sonucu "
+            f"değiştirilmedi: {hata}"
+        )
+
+    if st.button(
+        "Günlük Operasyon Paneline Git",
+        key="bist_toplu_tarama_gunluk_operasyon_gecis",
+    ):
+        st.session_state["analiz_modu"] = "Günlük Operasyon Paneli"
+        st.rerun()
+
+    st.session_state["bist_toplu_tarama_son_sonuc"] = {
+        "sonuc": sonuc,
+        "temel_skorlar": temel_skorlar,
+        "temel_filtre_aktif": bool(temel_filtre_aktif),
+        "minimum_temel_skor": int(minimum_temel_skor),
+    }
+    bist_toplu_tarama_sonucu_goster(
+        sonuc,
+        temel_skorlar=temel_skorlar,
+        temel_filtre_aktif=bool(temel_filtre_aktif),
+        minimum_temel_skor=int(minimum_temel_skor),
+        research_profiles_bundle=research_profiles_bundle,
+    )
+MEMBERSHIP=backend\dashboard.py:5689|piyasa_rejimi_formu|ARGS=
+def piyasa_rejimi_formu() -> None:
+    """XU100, XU030 ve XUTUM için günlük/haftalık piyasa rejimini gösterir."""
+    with st.sidebar:
+        st.subheader("Piyasa rejimi")
+        st.caption(
+            "Endeksler için günlük ve haftalık veri zorunludur. "
+            "Saatlik veri bulunamazsa analiz durmaz."
+        )
+        baslat = st.button("Piyasa rejimini analiz et", type="primary")
+
+    st.header("Piyasa Rejimi ve Endeks Analizi")
+    st.info(
+        "Bu panel kısa vadeli hisse taramasından önce piyasa ortamını "
+        "Pozitif, Seçici veya Riskli olarak sınıflandırır. Endeks için "
+        "lot, giriş, stop veya hedef üretmez."
+    )
+    if not baslat:
+        st.caption(
+            "XU100, XU030 ve XUTUM analizini başlatmak için "
+            "sol menüdeki düğmeye basın."
+        )
+        return
+
+    with st.spinner("Endeks verileri ve piyasa rejimi hesaplanıyor..."):
+        try:
+            sonuc = MarketRegimeDashboardService().calistir()
+        except MarketRegimeDashboardError as hata:
+            st.error(str(hata))
+            return
+
+    ana = sonuc.ana_rejim
+    rejim_baglami = piyasa_rejimi_baglami_olustur(sonuc)
+    st.session_state[PIYASA_REJIMI_BAGLAMI_KEY] = (
+        rejim_baglami.as_dict()
+    )
+    if rejim_baglami.gecerli:
+        st.session_state["aktif_piyasa_rejimi"] = ana.rejim
+    else:
+        st.session_state.pop("aktif_piyasa_rejimi", None)
+        st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+        st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+
+    if sonuc.eksik_endeksler:
+        st.warning(
+            "Yardımcı endeks verisi alınamadı: "
+            + ", ".join(sonuc.eksik_endeksler)
+            + ". BIST 100 ana rejimi kullanılabilir; güven düzeyi "
+            "eksik veriyi yansıtır."
+        )
+
+    metrik_izgarasi_goster(
+        (
+            ("BIST 100 rejimi", ana.rejim),
+            ("Toplam skor", f"{ana.toplam_skor}/100"),
+            ("Güven düzeyi", ana.guven_duzeyi),
+            ("Son veri tarihi", tarih_saat_yaz(ana.analiz_tarihi)),
+            ("Veri kaynağı", ana.veri_kaynagi),
+            ("Kaynak zinciri", " → ".join(ana.kaynak_sirasi)),
+            ("Yeniden deneme", str(ana.yeniden_deneme_sayisi)),
+            (
+                "İndirme süresi",
+                f"{ana.toplam_indirme_suresi_saniye:.2f} sn",
+            ),
+        )
+    )
+
+    if rejim_baglami.gecerli:
+        st.success(
+            "Bu rejim bağlamı Momentum Keşif ekranına güvenli biçimde "
+            "aktarılabilir."
+        )
+    else:
+        st.error(
+            "Bu rejim Momentum Keşif'e aktarılmadı: "
+            + rejim_baglami.gecersizlik_nedeni
+        )
+
+    if ana.rejim == REJIM_POZITIF:
+        st.success(
+            "Kısa vadeli işlem ortamı pozitif; yine de yalnızca detay "
+            "teyit alan hisseler değerlendirilmelidir."
+        )
+    elif ana.rejim == REJIM_SECICI:
+        st.warning(
+            "Kısa vadeli işlem ortamı seçici; güçlü trend, hacim ve "
+            "kırılım teyidi olmayan hisseler elenmelidir."
+        )
+    else:
+        st.error(
+            "Kısa vadeli işlem ortamı riskli; yeni pozisyonlar için "
+            "korumacı yaklaşım gerekir."
+        )
+
+    tablo = [
+        {
+            "Endeks": f"{item.sembol} · {item.ad}",
+            "Kaynak": item.yahoo_sembolu,
+            "Veri durumu": (
+                "Güncel" if not item.veri_tazeligi.kilitli else "Kilitli"
+            ),
+            "Skor": item.toplam_skor,
+            "Rejim": item.rejim,
+            "Güven": item.guven_duzeyi,
+            "Günlük": item.gunluk_yon,
+            "Haftalık": item.haftalik_yon,
+            "Saatlik": (
+                item.saatlik_yon
+                if item.saatlik_kullanilabilir
+                else "Veri yok — analiz sürdü"
+            ),
+            "Veri tarihi": tarih_saat_yaz(item.analiz_tarihi),
+        }
+        for item in sonuc.sonuclar
+    ]
+    st.dataframe(pd.DataFrame(tablo), width="stretch", hide_index=True)
+
+    secili = st.selectbox(
+        "Endeks ayrıntısı",
+        options=[item.sembol for item in sonuc.sonuclar],
+        format_func=lambda kod: next(
+            f"{x.sembol} · {x.ad}"
+            for x in sonuc.sonuclar
+            if x.sembol == kod
+        ),
+    )
+    item = next(x for x in sonuc.sonuclar if x.sembol == secili)
+
+    bilesenler = (
+        item.trend,
+        item.momentum,
+        item.hacim,
+        item.kirilim,
+        item.genislik,
+    )
+    for baslangic in range(0, len(bilesenler), 2):
+        sutunlar = st.columns(2)
+        for sutun, bilesen in zip(
+            sutunlar,
+            bilesenler[baslangic : baslangic + 2],
+        ):
+            sutun.metric(
+                bilesen.ad,
+                f"{bilesen.skor}/{bilesen.maksimum_skor}",
+                bilesen.durum,
+            )
+
+    veri_durumu = (
+        "Güncel" if not item.veri_tazeligi.kilitli else "Kilitli"
+    )
+    st.markdown("### Veri güvenliği")
+    st.caption(
+        f"Kaynak: {item.yahoo_sembolu} · "
+        f"Son veri: {tarih_saat_yaz(item.analiz_tarihi)} · "
+        f"Durum: {veri_durumu} · "
+        f"Güven: {item.guven_duzeyi}"
+    )
+    if item.veri_tazeligi.kilitli:
+        st.error(item.veri_tazeligi.aciklama)
+    else:
+        st.success(item.veri_tazeligi.aciklama)
+
+    with st.expander("Olumlu gerekçeler", expanded=True):
+        if item.pozitif_nedenler:
+            for metin in item.pozitif_nedenler:
+                st.markdown(f"- {metin}")
+        else:
+            st.write("Belirgin olumlu gerekçe yok.")
+
+    with st.expander("Riskler ve eksik teyitler", expanded=True):
+        if item.riskler:
+            for metin in item.riskler:
+                st.markdown(f"- {metin}")
+        else:
+            st.write("Belirgin risk kaydı yok.")
+MEMBERSHIP=backend\dashboard.py:8115|gunluk_operasyon_paneli_formu|ARGS=
+def gunluk_operasyon_paneli_formu() -> None:
+    st.subheader("Günlük Operasyon Paneli — Sistem ve Görev Özeti")
+    st.caption(
+        "Gün içi veri kalitesi, bekleyen/tamamlanan sinyal sonuçları, "
+        "gölge/gerçek işlem kayıtları ve günlük görevler tek ekranda özetlenir."
+    )
+    st.info(
+        "Bu panel yeni teknik skor, işlem sinyali veya AL/SAT kararı üretmez. "
+        "Mevcut tarama, Early Visibility, teknik teyit ve risk kanıtlarından üretilmiş "
+        "günlük Top-5 ile AL / BEKLE / İŞLEM YOK closeout sonucunu tek ekranda gösterir."
+    )
+
+    pilot_store = DelayedDataPilotStore()
+    signal_store = SignalOutcomeJsonStore()
+    trade_store = TradeJournalStore()
+
+    try:
+        trade_records = trade_store.list_records()
+    except TradeJournalError as error:
+        trade_records = ()
+        st.warning(f"İşlem günlüğü okunamadı: {error}")
+
+    shadow_store = ShadowPortfolioStore()
+    try:
+        shadow_positions = shadow_store.list()
+    except ShadowPortfolioError as error:
+        shadow_positions = ()
+        st.warning(f"Gölge portföy okunamadı: {error}")
+
+    summary = build_daily_operation_summary(
+        pilot_records=pilot_store.list(),
+        signal_outcomes=signal_store.list(),
+        trade_records=trade_records,
+        shadow_positions=shadow_positions,
+    )
+
+    # DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1
+    st.markdown("#### Otomatik Karar Koşusu")
+    st.caption(
+        "Windows görevleri kurulduğunda sistem hafta içi 18:20'de seans sonu, "
+        "09:00'da sabah yeniden değerlendirme koşusunu panel açık olmasa da çalıştırır."
+    )
+    try:
+        _scheduler_store = ScheduledRunJsonStore()
+        st.dataframe(
+            pd.DataFrame(scheduler_health_rows(_scheduler_store)),
+            width="stretch",
+            hide_index=True,
+        )
+        _recovery_cols = st.columns(2)
+        with _recovery_cols[0]:
+            if st.button("18:20 koşusunu yeniden çalıştır", key="retry_evening_daily_buy_decision"):
+                with st.spinner("Seans sonu karar koşusu yeniden çalıştırılıyor..."):
+                    _retry_evening = retry_failed_or_missing_run("EVENING", store=_scheduler_store)
+                if _retry_evening.status in {"SUCCESS", "SKIPPED"}:
+                    st.success(_retry_evening.detail)
+                else:
+                    st.error(_retry_evening.detail)
+                st.rerun()
+        with _recovery_cols[1]:
+            if st.button("09:00 koşusunu yeniden çalıştır", key="retry_morning_daily_buy_decision"):
+                with st.spinner("Sabah karar koşusu yeniden çalıştırılıyor..."):
+                    _retry_morning = retry_failed_or_missing_run("MORNING", store=_scheduler_store)
+                if _retry_morning.status in {"SUCCESS", "SKIPPED"}:
+                    st.success(_retry_morning.detail)
+                else:
+                    st.error(_retry_morning.detail)
+                st.rerun()
+        st.caption(
+            "Yeniden çalıştırma yalnız başarısız/eksik koşuyu kurtarır; aynı gün başarılı faz varsa duplicate üretmez."
+        )
+
+        # SCHEDULED_RUN_AUDIT_HISTORY_V1
+        with st.expander("Otomasyon Koşu Geçmişi / Audit", expanded=False):
+            _audit_store = ScheduledRunAuditJsonStore()
+            _audit_rows = scheduler_audit_rows(_audit_store, limit=50)
+            if _audit_rows:
+                st.dataframe(
+                    pd.DataFrame(_audit_rows),
+                    width="stretch",
+                    hide_index=True,
+                )
+            else:
+                st.caption("Henüz arşivlenmiş otomasyon koşusu yok.")
+
+            st.markdown("**EOD → 09:00 günlük zincir denetimi**")
+            _chain_rows = scheduler_daily_chain_rows(_scheduler_store, limit_days=14)
+            if _chain_rows:
+                st.dataframe(
+                    pd.DataFrame(_chain_rows),
+                    width="stretch",
+                    hide_index=True,
+                )
+            else:
+                st.caption("Henüz günlük EOD / 09:00 zincir kaydı yok.")
+    except (OSError, ValueError, TypeError) as _scheduler_status_error:
+        st.caption(f"Otomatik koşu durumu okunamadı: {_scheduler_status_error}")
+
+    # OPERATIONAL_CLOSEOUT_V1
+    st.markdown("#### Operasyonel Kapanış — Günlük Karar Zinciri")
+    st.caption(
+        "18:20 EOD ve 09:00 Morning koşularını scheduler durumu, audit kaydı ve "
+        "karar çıktı arşivi üzerinden birlikte doğrular. Yeni skor veya karar üretmez."
+    )
+    try:
+        _operational_closeout = build_operational_closeout()
+        if _operational_closeout.status == "COMPLETE":
+            st.success(_operational_closeout.headline)
+        elif _operational_closeout.status == "WAITING":
+            st.info(_operational_closeout.headline)
+        else:
+            st.warning(_operational_closeout.headline)
+        st.dataframe(
+            pd.DataFrame(operational_closeout_rows(_operational_closeout)),
+            width="stretch",
+            hide_index=True,
+        )
+        if _operational_closeout.missing_links:
+            st.caption("Eksik halkalar: " + " · ".join(_operational_closeout.missing_links))
+    except (OSError, ValueError, TypeError) as _operational_closeout_error:
+        st.caption(f"Operasyonel kapanış doğrulanamadı: {_operational_closeout_error}")
+    # OPERATIONAL_CLOSEOUT_V1_END
+
+    # V1_OPERATIONS_01C_MORNING_CANDIDATE_UI
+    # DAILY_10_TRAJECTORY_V1
+    st.markdown("#### Bugünün 10 Araştırma Adayı")
+    st.caption(
+        "İlk 5 mevcut operasyon/karar adayını aynen korur. Ek 5 araştırma adayı, "
+        "22–80 Research bandında 5S → 3S → 1S → bugün sırası sürekli iyileşen "
+        "sağlıklı sıra göçlerinden seçilir. Erken 5 yeni teknik skor, işlem sinyali "
+        "veya AL/SAT kararı üretmez."
+    )
+    # Legacy V1 Operations wiring contract intentionally preserved.
+    st.markdown("#### Bugünün 5 Adayı")
+    st.caption(
+        "Seans sonu ve sabah karar koşusu, mevcut BIST tarama sırasını Early Visibility "
+        "ve operasyon bağlamıyla birleştirir. Veri eskiliği listeyi bloke etmez."
+    )
+
+    _morning_scan_state = st.session_state.get("bist_toplu_tarama_son_sonuc")
+    _auto_scan_error = None
+    if _morning_scan_state is None and resolve_daily_buy_decision_phase() is not None:
+        try:
+            _auto_scan_service = build_dashboard_market_scanner(vbts_hard_block=False)
+            _auto_scan_request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi=TARAMA_PROFILLERI["Dengeli"],
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            with st.spinner("Günlük karar listesi için BIST 100 otomatik taranıyor..."):
+                _auto_scan_result = _auto_scan_service.calistir(_auto_scan_request)
+            _morning_scan_state = {
+                "sonuc": _auto_scan_result,
+                "temel_skorlar": {},
+                "temel_filtre_aktif": False,
+                "minimum_temel_skor": 60,
+            }
+            st.session_state["bist_toplu_tarama_son_sonuc"] = _morning_scan_state
+        except (
+            ValueError,
+            TypeError,
+            MarketScannerError,
+            DashboardMarketScannerSourceError,
+        ) as _auto_scan_exception:
+            _auto_scan_error = str(_auto_scan_exception)
+
+    if _morning_scan_state is None:
+        st.warning(
+            "Otomatik günlük tarama henüz sonuç üretmedi. Son kayıtlı akşam/sabah "
+            "snapshot'ı varsa aşağıdaki karar geçmişinde korunur; manuel tarama zorunlu değildir."
+        )
+        if _auto_scan_error:
+            st.caption(f"Otomatik tarama detayı: {_auto_scan_error}")
+    else:
+        try:
+            _morning_visibility_contexts = build_current_visibility_context()
+        except Exception as _morning_visibility_error:
+            _morning_visibility_contexts = ()
+            st.caption(
+                "Early Visibility geçmişi şu anda okunamadı; adaylar mevcut "
+                "tarama sırasıyla gösterilecek. "
+                f"Detay: {_morning_visibility_error}"
+            )
+
+        _morning_snapshot = build_morning_operation_snapshot(
+            operation_summary=summary,
+            scan_result=_morning_scan_state["sonuc"],
+            visibility_contexts=_morning_visibility_contexts,
+            limit=5,
+        )
+
+        if not _morning_snapshot.candidates:
+            st.info(
+                "Güncel taramada sabah aday kartına taşınacak hisse bulunamadı."
+            )
+        else:
+            st.success(
+                f"{_morning_snapshot.candidate_count} ana operasyon adayı hazır."
+            )
+            st.markdown("##### Ana 5 — mevcut operasyon adayları")
+            st.dataframe(
+                pd.DataFrame(
+                    morning_candidate_rows(_morning_snapshot.candidates)
+                ),
+                width="stretch",
+                hide_index=True,
+            )
+
+            # DAILY_10_TRAJECTORY_V1_EARLY_FIVE
+            st.markdown("##### Erken 5 — sağlıklı sıra göçü")
+            st.caption(
+                "Sıralama: önce 3S sıra kazancı, sonra 5S kalıcılık, sonra 1S devam "
+                "ve son olarak bugünkü Research sırası. Composite skor yoktur."
+            )
+            try:
+                from backend.app.analysis.daily_early_trajectory import (
+                    build_daily_early_trajectory_candidates,
+                    daily_early_trajectory_rows,
+                )
+                from backend.app.analysis.ranking_memory import (
+                    RankObservationJsonlStore,
+                )
+                from backend.app.analysis.ranking_trajectory import (
+                    build_rank_trajectories,
+                )
+
+                _daily10_rank_history = RankObservationJsonlStore().list()
+                _daily10_trajectories = build_rank_trajectories(
+                    _daily10_rank_history
+                )
+                _daily10_primary_symbols = tuple(
+                    item.symbol for item in _morning_snapshot.candidates
+                )
+                _daily10_early_candidates = (
+                    build_daily_early_trajectory_candidates(
+                        _daily10_trajectories,
+                        primary_symbols=_daily10_primary_symbols,
+                        limit=5,
+                        rank_min=22,
+                        rank_max=80,
+                    )
+                )
+                if _daily10_early_candidates:
+                    st.dataframe(
+                        pd.DataFrame(
+                            daily_early_trajectory_rows(
+                                _daily10_early_candidates,
+                                start_priority=6,
+                            )
+                        ),
+                        width="stretch",
+                        hide_index=True,
+                    )
+                else:
+                    st.info(
+                        "Bugün 5S → 3S → 1S → bugün boyunca sürekli iyileşen, "
+                        "22–80 bandında ve karşılaştırılabilir ek erken aday yok. "
+                        "Liste düşük kaliteli adayla zorla 10'a tamamlanmadı."
+                    )
+            except (OSError, ValueError, TypeError) as _daily10_trajectory_error:
+                st.warning(
+                    "Erken 5 sıra yolu hazırlanamadı; Ana 5 ve mevcut AL/SAT "
+                    "karar zinciri değişmeden çalışmaya devam ediyor. "
+                    f"Detay: {_daily10_trajectory_error}"
+                )
+            # DAILY_10_TRAJECTORY_V1_EARLY_FIVE_END
+            # V1_OPERATIONS_01D_DECISION_CARDS
+            st.markdown("##### Aday karar kartları")
+            for _candidate_card in _morning_snapshot.candidates:
+                _candidate_title = (
+                    f"#{_candidate_card.rank} {_candidate_card.symbol} — "
+                    f"{_candidate_card.operational_status}"
+                )
+                with st.expander(_candidate_title, expanded=False):
+                    _c1, _c2, _c3, _c4 = st.columns(4)
+                    _c1.metric("Teknik skor", _candidate_card.technical_score)
+                    _c2.metric(
+                        "Araştırma önceliği",
+                        _candidate_card.research_priority,
+                    )
+                    _c3.metric(
+                        "Hacim oranı",
+                        f"{_candidate_card.volume_ratio:.2f}",
+                    )
+                    _c4.metric(
+                        "Risk/Getiri",
+                        f"{_candidate_card.risk_reward:.2f}",
+                    )
+
+                    st.write(
+                        f"**Teknik görünüm:** "
+                        f"{_candidate_card.technical_view}"
+                    )
+                    st.write(
+                        f"**Erken görünürlük:** "
+                        f"{_candidate_card.visibility_state or '-'}"
+                    )
+                    st.write(
+                        f"**Aday kaynağı:** {_candidate_card.selection_source} · "
+                        f"{_candidate_card.selection_reason}"
+                    )
+                    st.write(
+                        f"**Sıçrama kalite kapısı:** {_candidate_card.jump_quality} · "
+                        f"{_candidate_card.jump_quality_reason}"
+                    )
+                    st.write(
+                        f"**Giriş hazırlığı:** {_candidate_card.entry_readiness} · "
+                        f"{_candidate_card.entry_readiness_reason}"
+                    )
+                    st.write(
+                        f"**Sıra değişimi:** "
+                        f"{_candidate_card.rank_change if _candidate_card.rank_change is not None else '-'}"
+                    )
+
+                    st.markdown("**Neden burada?**")
+                    if _candidate_card.positive_reasons:
+                        for _reason in _candidate_card.positive_reasons:
+                            st.write(f"• {_reason}")
+                    else:
+                        st.write("• Ek pozitif neden yok.")
+
+                    st.markdown("**Riskler**")
+                    if _candidate_card.risks:
+                        for _risk in _candidate_card.risks:
+                            st.write(f"• {_risk}")
+                    else:
+                        st.write("• Kayıtlı ek risk yok.")
+
+                    if _candidate_card.data_blocked:
+                        st.warning(
+                            "Bu adayın veri bağlamı doğrulama gerektiriyor."
+                        )
+
+            # DAILY_BUY_DECISION_CLOSEOUT_V1
+            _final_buy_decisions = build_daily_buy_decisions(
+                _morning_snapshot.candidates
+            )
+            st.markdown("##### Nihai günlük karar")
+            st.dataframe(
+                pd.DataFrame(daily_buy_decision_rows(_final_buy_decisions)),
+                width="stretch",
+                hide_index=True,
+            )
+            _buy_symbols = [
+                item.symbol for item in _final_buy_decisions
+                if item.decision == "AL"
+            ]
+            if _buy_symbols:
+                st.success("AL: " + ", ".join(_buy_symbols))
+            else:
+                st.info("Bugünkü Top-5 içinde AL koşullarını tamamlayan aday yok.")
+
+            # HIGH_CONVICTION_BUY_GATE_V1
+            st.markdown("##### High-Conviction Buy Gate")
+            st.caption(
+                "Mevcut AL / BEKLE / İŞLEM YOK kararını değiştirmez ve yeni birleşik güven skoru üretmez. "
+                "Yalnız mevcut teknik, hacim, risk/getiri, zamanlama, giriş, veri ve outcome kanıtlarının "
+                "tamamını zorunlu kapılar halinde değerlendirir. Geçmiş outcome kanıtı yeterli değilse "
+                "bir AL adayı Yüksek Güvenli AL olarak etiketlenmez."
+            )
+            try:
+                _high_conviction_outcomes = BuyDecisionOutcomeJsonStore().load()
+                _high_conviction_calibration = build_buy_decision_calibration(
+                    _high_conviction_outcomes
+                )
+            except (OSError, ValueError, TypeError, json.JSONDecodeError):
+                _high_conviction_calibration = ()
+
+            _high_conviction_decisions = build_high_conviction_buy_gate(
+                _morning_snapshot.candidates,
+                _final_buy_decisions,
+                calibration_slices=_high_conviction_calibration,
+            )
+            st.dataframe(
+                pd.DataFrame(high_conviction_rows(_high_conviction_decisions)),
+                width="stretch",
+                hide_index=True,
+            )
+            _high_conviction_symbols = [
+                item.symbol
+                for item in _high_conviction_decisions
+                if item.conviction == HIGH_CONVICTION_BUY
+            ]
+            _normal_conviction_symbols = [
+                item.symbol
+                for item in _high_conviction_decisions
+                if item.conviction == NORMAL_CONVICTION_BUY
+            ]
+            if _high_conviction_symbols:
+                st.success(
+                    "Yüksek Güvenli AL: " + ", ".join(_high_conviction_symbols)
+                )
+            elif _normal_conviction_symbols:
+                st.info(
+                    "Bugün Yüksek Güvenli AL yok. Normal güvenli AL: "
+                    + ", ".join(_normal_conviction_symbols)
+                )
+            else:
+                st.info("Bugün yüksek güvenli veya normal güvenli AL adayı yok.")
+            # HIGH_CONVICTION_BUY_GATE_V1_END
+
+            # RANKING_MOVEMENT_WIDE_DAILY_PANEL_V1
+            with st.expander("Sıralama Hareketi — Geniş Evren", expanded=False):
+                st.caption(
+                    "Toplu taramaya giren tüm tarihli hisselerin 1S / 3S / 5S sıra "
+                    "hareketini gösterir. 'Sıçrama görünürlüğü' ayrı bir AL/SAT skoru "
+                    "değildir; hangi hissenin neden erken araştırma havuzunda görünür "
+                    "olduğunu açıklar."
+                )
+                try:
+                    from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+                    from backend.app.analysis.ranking_movement_visibility import (
+                        build_ranking_movement_rows,
+                        ranking_movement_table_rows,
+                    )
+
+                    _daily_rank_history = RankObservationJsonlStore().list()
+                    _daily_movement_rows = build_ranking_movement_rows(_daily_rank_history)
+                    if not _daily_movement_rows:
+                        st.info(
+                            "Geniş evren sıra hareketi için henüz yeterli tarihli "
+                            "ranking snapshot'ı yok."
+                        )
+                    else:
+                        _daily_movement_df = pd.DataFrame(
+                            ranking_movement_table_rows(_daily_movement_rows)
+                        )
+                        _daily_movement_filter = st.radio(
+                            "Geniş evren filtresi",
+                            options=(
+                                "Tümü",
+                                "Sıçrama adayları",
+                                "Kalıcı / destekli",
+                                "Top-5'e yaklaşanlar",
+                            ),
+                            horizontal=True,
+                            key="daily_ranking_movement_wide_filter",
+                        )
+                        if _daily_movement_filter == "Sıçrama adayları":
+                            _daily_movement_df = _daily_movement_df[
+                                _daily_movement_df["Sıçrama görünürlüğü"].eq("ADAY")
+                            ]
+                        elif _daily_movement_filter == "Kalıcı / destekli":
+                            _daily_movement_df = _daily_movement_df[
+                                _daily_movement_df["Kalıcılık"].isin(("KALICI", "DESTEKLI"))
+                            ]
+                        elif _daily_movement_filter == "Top-5'e yaklaşanlar":
+                            _daily_movement_df = _daily_movement_df[
+                                pd.to_numeric(
+                                    _daily_movement_df["Top-5 uzaklık"],
+                                    errors="coerce",
+                                ) <= 20
+                            ]
+
+                        st.dataframe(
+                            _daily_movement_df,
+                            width="stretch",
+                            hide_index=True,
+                            column_config={
+                                "Bugün": st.column_config.NumberColumn(format="#%d"),
+                                "1S Δ": st.column_config.NumberColumn(format="%d"),
+                                "3S Δ": st.column_config.NumberColumn(format="%d"),
+                                "5S Δ": st.column_config.NumberColumn(format="%d"),
+                                "Sıçrama ivmesi": st.column_config.NumberColumn(format="%.1f"),
+                            },
+                        )
+                        st.caption(
+                            f"Gösterilen: {len(_daily_movement_df)} / "
+                            f"{len(_daily_movement_rows)} hisse. "
+                            "Neden? sütunu ham sıra hareketi, hızlanma ve kalıcılığı "
+                            "açıklanabilir biçimde gösterir."
+                        )
+                except Exception as _daily_ranking_movement_error:
+                    st.warning(
+                        "Geniş evren sıralama hareketi hazırlanamadı; Top-5 karar "
+                        "zinciri çalışmaya devam eder. Detay: "
+                        f"{_daily_ranking_movement_error}"
+                    )
+            # RANKING_MOVEMENT_WIDE_DAILY_PANEL_V1_END
+
+            # DUAL_RUN_DAILY_BUY_DECISION_V1
+            _decision_phase = resolve_daily_buy_decision_phase()
+            _decision_store = DailyBuyDecisionJsonStore()
+            if _decision_phase is not None:
+                try:
+                    _decision_snapshot = build_daily_buy_decision_snapshot(
+                        _morning_snapshot.candidates,
+                        phase=_decision_phase,
+                        decisions=_final_buy_decisions,
+                    )
+                    _decision_store.save(_decision_snapshot)
+                    DecisionOutputArchiveJsonStore().save_snapshot(_decision_snapshot)
+                except (OSError, ValueError, TypeError) as _decision_store_error:
+                    st.caption(
+                        "Akşam/sabah karar snapshot'ı kaydedilemedi: "
+                        f"{_decision_store_error}"
+                    )
+
+            try:
+                _decision_snapshots = _decision_store.load()
+            except (OSError, ValueError, TypeError):
+                _decision_snapshots = {}
+
+            _evening_snapshot = _decision_snapshots.get("EVENING")
+            _morning_decision_snapshot = _decision_snapshots.get("MORNING")
+            _decision_changes = compare_evening_morning(
+                _evening_snapshot,
+                _morning_decision_snapshot,
+            )
+            if _evening_snapshot is not None:
+                st.caption(
+                    "Seans sonu liste: "
+                    f"{_evening_snapshot.created_at} · "
+                    f"{len(_evening_snapshot.candidates)} aday"
+                )
+            if _morning_decision_snapshot is not None:
+                st.caption(
+                    "Sabah yeniden değerlendirme: "
+                    f"{_morning_decision_snapshot.created_at} · "
+                    f"{len(_morning_decision_snapshot.candidates)} aday"
+                )
+            if _decision_changes:
+                st.markdown("##### Akşam → Sabah karar değişimi")
+                st.caption(
+                    "Karar değişim nedeni; teknik görünüm/skor, hacim, risk-getiri, "
+                    "giriş hazırlığı, sıçrama kalite kapısı, sıra hareketi ve veri "
+                    "durumundaki akşam→sabah farklardan deterministik olarak türetilir."
+                )
+                st.dataframe(
+                    pd.DataFrame(daily_buy_decision_change_rows(_decision_changes)),
+                    width="stretch",
+                    hide_index=True,
+                )
+
+            # EOD_MORNING_BOARD_DELTA_SUMMARY_V1
+            _board_delta_summary = build_eod_morning_board_delta(
+                _evening_snapshot,
+                _morning_decision_snapshot,
+            )
+            if _board_delta_summary is not None:
+                st.markdown("##### Akşam → 09:00 Aksiyon Farkı — Tek Bakış")
+                st.caption(
+                    "Seans sonu ön aksiyon listesi ile 09:00 nihai karar yapısını read-only "
+                    "özetler; yeni skor, sinyal veya karar üretmez."
+                )
+                metrik_izgarasi_goster(
+                    (
+                        ("Akşam AL", str(_board_delta_summary.evening_buy)),
+                        ("09:00 AL", str(_board_delta_summary.morning_buy)),
+                        ("Güçlenen", str(_board_delta_summary.upgrades)),
+                        ("Zayıflayan", str(_board_delta_summary.downgrades)),
+                        ("Yeni / Çıkan", f"{_board_delta_summary.added} / {_board_delta_summary.removed}"),
+                        ("Değişmeyen", str(_board_delta_summary.unchanged)),
+                    )
+                )
+                st.info(_board_delta_summary.headline)
+                _board_delta_rows = eod_morning_board_delta_rows(_board_delta_summary)
+                if _board_delta_rows:
+                    st.dataframe(
+                        pd.DataFrame(_board_delta_rows),
+                        width="stretch",
+                        hide_index=True,
+                    )
+                else:
+                    st.caption("Akşam ve 09:00 arasında karar veya Top-5 üyeliği değişmedi.")
+            # EOD_MORNING_BOARD_DELTA_SUMMARY_V1_END
+
+            # DECISION_OUTPUT_ARCHIVE_DAILY_COMPARE_V1
+            try:
+                _decision_archive_store = DecisionOutputArchiveJsonStore()
+                _decision_archive_records = _decision_archive_store.load()
+                with st.expander("Karar Çıktı Arşivi / Günler Arası Karşılaştırma", expanded=False):
+                    st.caption(
+                        "EOD ve 09:00 Top-5 karar board'ları günlük olarak saklanır. "
+                        "Bu görünüm geçmiş kararları yeniden açar ve günler arasındaki "
+                        "Top-5 / AL / sıra / karar değişimini read-only karşılaştırır."
+                    )
+                    _archive_rows = decision_output_archive_rows(
+                        _decision_archive_records, limit=30
+                    )
+                    if _archive_rows:
+                        st.dataframe(
+                            pd.DataFrame(_archive_rows),
+                            width="stretch",
+                            hide_index=True,
+                        )
+
+                        _archive_dates = tuple(sorted(
+                            {item.run_date for item in _decision_archive_records},
+                            reverse=True,
+                        ))
+                        _selected_archive_date = st.selectbox(
+                            "Geçmiş karar günü",
+                            options=_archive_dates,
+                            key="daily_decision_archive_selected_date",
+                        )
+                        _selected_date_records = _decision_archive_store.by_date(
+                            _selected_archive_date
+                        )
+                        for _archive_record in _selected_date_records:
+                            st.markdown(
+                                f"**{_archive_record.run_date} · {_archive_record.phase}**"
+                            )
+                            st.dataframe(
+                                pd.DataFrame(decision_output_board_rows(_archive_record)),
+                                width="stretch",
+                                hide_index=True,
+                            )
+
+                        st.markdown("**Son iki 09:00 günü karşılaştırması**")
+                        _daily_archive_delta = latest_daily_compare(
+                            _decision_archive_records, phase="MORNING"
+                        )
+                        if _daily_archive_delta is not None:
+                            st.dataframe(
+                                pd.DataFrame(
+                                    daily_decision_archive_delta_rows(_daily_archive_delta)
+                                ),
+                                width="stretch",
+                                hide_index=True,
+                            )
+                        else:
+                            st.caption(
+                                "Günler arası 09:00 karşılaştırması için en az iki günlük arşiv gerekir."
+                            )
+
+                        st.markdown("**Karar çıktısı ↔ otomasyon audit eşleşmesi**")
+                        try:
+                            _decision_archive_audit = ScheduledRunAuditJsonStore().load()
+                            st.dataframe(
+                                pd.DataFrame(
+                                    decision_output_audit_rows(
+                                        _decision_archive_records,
+                                        _decision_archive_audit,
+                                        limit=30,
+                                    )
+                                ),
+                                width="stretch",
+                                hide_index=True,
+                            )
+                        except (OSError, ValueError, TypeError) as _archive_audit_error:
+                            st.caption(
+                                f"Karar arşivi audit eşleşmesi okunamadı: {_archive_audit_error}"
+                            )
+                    else:
+                        st.caption("Henüz arşivlenmiş günlük karar çıktısı yok.")
+            except (OSError, ValueError, TypeError) as _decision_archive_error:
+                st.caption(f"Karar çıktı arşivi okunamadı: {_decision_archive_error}")
+            # DECISION_OUTPUT_ARCHIVE_DAILY_COMPARE_V1_END
+
+            # EOD_FINAL_ACTION_BOARD_V1
+            if _decision_phase == "EVENING":
+                _eod_final_actions = build_eod_final_actions(
+                    _morning_snapshot.candidates,
+                    _final_buy_decisions,
+                )
+                st.markdown("##### Seans Sonu — Ertesi Gün Ön Aksiyon Listesi")
+                st.caption(
+                    "Kapanış verisiyle ertesi gün için ilk aksiyon listesi hazırlanır. "
+                    "AL adayları önce gösterilir; Top-5'in orijinal sırası, aday kaynağı, "
+                    "giriş hazırlığı ve kalite kanıtları değiştirilmez. Sabah 09:00 "
+                    "yeniden değerlendirmesi bu listenin yerine geçebilir."
+                )
+                st.dataframe(
+                    pd.DataFrame(eod_final_action_rows(_eod_final_actions)),
+                    width="stretch",
+                    hide_index=True,
+                )
+                _eod_buy_actions = [
+                    item.symbol for item in _eod_final_actions
+                    if item.decision == "AL"
+                ]
+                if _eod_buy_actions:
+                    st.success("Seans sonu ertesi gün AL adayları: " + ", ".join(_eod_buy_actions))
+                else:
+                    st.info("Seans sonu listesinde ertesi gün için AL koşullarını tamamlayan aday yok.")
+            # EOD_FINAL_ACTION_BOARD_V1_END
+
+            # MORNING_FINAL_ACTION_BOARD_V1
+            if _decision_phase == "MORNING":
+                _morning_final_actions = build_morning_final_actions(
+                    _morning_snapshot.candidates,
+                    _final_buy_decisions,
+                )
+                st.markdown("##### 09:00 Nihai Aksiyon Listesi")
+                st.caption(
+                    "Sabah yeniden değerlendirmesinden sonra AL adayları önce gösterilir; "
+                    "Top-5'in orijinal sırası, aday kaynağı, giriş hazırlığı ve kalite "
+                    "kanıtları değiştirilmez. Bu görünüm yeni skor veya yeni karar üretmez."
+                )
+                st.dataframe(
+                    pd.DataFrame(morning_final_action_rows(_morning_final_actions)),
+                    width="stretch",
+                    hide_index=True,
+                )
+                _morning_buy_actions = [
+                    item.symbol for item in _morning_final_actions
+                    if item.decision == "AL"
+                ]
+                if _morning_buy_actions:
+                    st.success("09:00 AL adayları: " + ", ".join(_morning_buy_actions))
+                else:
+                    st.info("09:00 listesinde AL koşullarını tamamlayan aday yok.")
+            # MORNING_FINAL_ACTION_BOARD_V1_END
+
+            _decision_replacements = compare_evening_morning_replacements(
+                _evening_snapshot,
+                _morning_decision_snapshot,
+            )
+            if _decision_replacements:
+                st.markdown("##### Sabah Top-5 yer değişimleri")
+                st.caption(
+                    "Akşam listesinden çıkan ve sabah listesine giren adaylar eşleştirilir. "
+                    "Yer değişimi bağlamı karar, giriş hazırlığı, sıçrama kalite kapısı "
+                    "ve aday kaynağını gösterir; nedensellik iddiası değildir."
+                )
+                st.dataframe(
+                    pd.DataFrame(
+                        daily_buy_decision_replacement_rows(_decision_replacements)
+                    ),
+                    width="stretch",
+                    hide_index=True,
+                )
+
+            # DAILY_BUY_DECISION_OUTCOME_TRACKING_V1
+            _outcome_store = BuyDecisionOutcomeJsonStore()
+            try:
+                _outcome_records = _outcome_store.load()
+                if _decision_phase == "MORNING":
+                    _outcome_records = register_buy_decisions(
+                        _outcome_records,
+                        _final_buy_decisions,
+                        phase="MORNING",
+                    )
+                _current_prices = {
+                    card.symbol: card.reference_price
+                    for card in _morning_snapshot.candidates
+                    if card.reference_price is not None
+                }
+                if _current_prices:
+                    _outcome_records = apply_session_prices(
+                        _outcome_records,
+                        _current_prices,
+                    )
+                _outcome_store.save(_outcome_records)
+            except (OSError, ValueError, TypeError, json.JSONDecodeError) as _outcome_error:
+                st.caption(f"AL karar performans takibi güncellenemedi: {_outcome_error}")
+                _outcome_records = ()
+
+            if _outcome_records:
+                st.markdown("##### AL karar isabet takibi")
+                st.dataframe(
+                    pd.DataFrame(buy_decision_hit_summary(_outcome_records)),
+                    width="stretch",
+                    hide_index=True,
+                )
+                with st.expander("AL karar geçmişi ve 1/3/5 seans sonuçları", expanded=False):
+                    st.dataframe(
+                        pd.DataFrame(buy_decision_outcome_rows(_outcome_records)),
+                        width="stretch",
+                        hide_index=True,
+                    )
+                _calibration_slices = build_buy_decision_calibration(_outcome_records)
+                if _calibration_slices:
+                    with st.expander("Karar kalibrasyonu / outcome feedback", expanded=False):
+                        st.caption(
+                            "Bu görünüm yalnız mevcut AL kararlarının performansını kırılımlarda ölçer; "
+                            "karar eşiklerini otomatik değiştirmez. En az 10 örnek olmadan kalibrasyon "
+                            "önerisi üretmez."
+                        )
+                        st.dataframe(
+                            pd.DataFrame(buy_decision_calibration_rows(_calibration_slices)),
+                            width="stretch",
+                            hide_index=True,
+                        )
+
+                _daily_reviews = build_daily_decision_reviews(_outcome_records)
+                if _daily_reviews:
+                    with st.expander("Günlük karar kalite raporu", expanded=False):
+                        st.caption(
+                            "Başarı/başarısızlık nedenleri nedensellik iddiası değildir; karar anında "
+                            "mevcut olan teknik, hacim, risk/getiri, sıralama ve görünürlük kanıtlarını "
+                            "sonraki 1/3/5 seans sonuçlarıyla birlikte gösterir."
+                        )
+                        st.dataframe(
+                            pd.DataFrame(daily_decision_review_summary(_daily_reviews)),
+                            width="stretch",
+                            hide_index=True,
+                        )
+                        st.dataframe(
+                            pd.DataFrame(daily_decision_review_rows(_daily_reviews)),
+                            width="stretch",
+                            hide_index=True,
+                        )
+
+                if _calibration_slices:
+                    _threshold_recommendations = build_threshold_recommendations(
+                        _calibration_slices
+                    )
+                    if _threshold_recommendations:
+                        with st.expander("Threshold recommendation / read-only", expanded=False):
+                            st.caption(
+                                "Bu görünüm yalnız outcome kanıtından eşik inceleme önerisi üretir. "
+                                "Karar eşiklerini değiştirmez; herhangi bir değişiklik manuel inceleme "
+                                "ve ayrı onay gerektirir."
+                            )
+                            st.dataframe(
+                                pd.DataFrame(
+                                    threshold_recommendation_rows(
+                                        _threshold_recommendations
+                                    )
+                                ),
+                                width="stretch",
+                                hide_index=True,
+                            )
+
+                            # RECOMMENDATION_GOVERNANCE_MANUAL_APPROVAL_V1
+                            _governance_store = RecommendationGovernanceJsonStore()
+                            try:
+                                _governance_records = sync_governance_records(
+                                    _governance_store.load(),
+                                    _threshold_recommendations,
+                                )
+                                _governance_store.save(_governance_records)
+                            except (OSError, ValueError, TypeError, json.JSONDecodeError) as _governance_error:
+                                st.caption(f"Öneri governance kaydı güncellenemedi: {_governance_error}")
+                                _governance_records = ()
+
+                            if _governance_records:
+                                st.markdown("###### Recommendation governance / manual approval")
+                                st.caption(
+                                    "Onay veya ret yalnız governance kaydını değiştirir; AL/BEKLE/İŞLEM YOK "
+                                    "eşikleri ve karar kuralları otomatik olarak değişmez."
+                                )
+                                st.dataframe(
+                                    pd.DataFrame(governance_rows(_governance_records)),
+                                    width="stretch",
+                                    hide_index=True,
+                                )
+                                _pending_governance = tuple(
+                                    item for item in _governance_records if item.status == "BEKLİYOR"
+                                )
+                                if _pending_governance:
+                                    _governance_id = st.selectbox(
+                                        "İncelenecek eşik önerisi",
+                                        options=tuple(item.recommendation_id for item in _pending_governance),
+                                        format_func=lambda value: next(
+                                            f"{item.dimension} · {item.horizon} · {item.recommendation}"
+                                            for item in _pending_governance
+                                            if item.recommendation_id == value
+                                        ),
+                                        key="daily_buy_decision_governance_review_id",
+                                    )
+                                    _gov_cols = st.columns(2)
+                                    if _gov_cols[0].button(
+                                        "Governance önerisini onayla",
+                                        key="daily_buy_decision_governance_approve",
+                                        width="stretch",
+                                    ):
+                                        _governance_records = review_governance_record(
+                                            _governance_records,
+                                            _governance_id,
+                                            GOVERNANCE_APPROVED,
+                                        )
+                                        _governance_store.save(_governance_records)
+                                        st.success("Öneri governance kaydında ONAYLANDI. Karar eşikleri değiştirilmedi.")
+                                    if _gov_cols[1].button(
+                                        "Governance önerisini reddet",
+                                        key="daily_buy_decision_governance_reject",
+                                        width="stretch",
+                                    ):
+                                        _governance_records = review_governance_record(
+                                            _governance_records,
+                                            _governance_id,
+                                            GOVERNANCE_REJECTED,
+                                        )
+                                        _governance_store.save(_governance_records)
+                                        st.info("Öneri governance kaydında REDDEDİLDİ. Karar eşikleri değiştirilmedi.")
+
+            st.caption(
+                "Aday sırası mevcut BIST Toplu Tarama sonucundan gelir. "
+                "Early Visibility yalnız araştırma bağlamı ekler; teknik skoru "
+                "ve mevcut sıralamayı değiştirmez. Seans sonu ve sabah çalışma "
+                "pencerelerinde liste snapshot'ı saklanır ve değişimler karşılaştırılır."
+            )
+
+    # V11_TRACK1_OBSERVABILITY_UI
+    st.markdown("#### Operasyon Sağlığı — Tek Bakış")
+    st.caption(
+        "Mevcut Günlük Operasyon kanıtını tek yerde özetler; yeni teknik skor, sinyal, "
+        "AL/SAT kararı veya ayrı veri deposu üretmez."
+    )
+    st.dataframe(
+        pd.DataFrame(observability_rows(summary)),
+        width="stretch",
+        hide_index=True,
+    )
+
+
+    st.markdown("#### Operasyon özeti")
+    metrik_izgarasi_goster(
+        (
+            ("Veri durumu", summary.delayed_data_status),
+            (
+                "Ölçülen gecikme",
+                "—"
+                if summary.delayed_data_age_minutes is None
+                else f"{summary.delayed_data_age_minutes:.1f} dk",
+            ),
+            (
+                "Bekleyen sonuç",
+                str(summary.pending_signal_horizons),
+            ),
+            (
+                "Tamamlanan sonuç",
+                str(summary.completed_signal_horizons),
+            ),
+            (
+                "Sinyal kaydı",
+                str(summary.signal_record_count),
+            ),
+            (
+                "Gölge işlem",
+                str(summary.shadow_trade_count),
+            ),
+            (
+                "Gerçek işlem",
+                str(summary.real_trade_count),
+            ),
+            (
+                "Güvenlik kilidi",
+                "Aktif" if summary.delayed_data_locked else "Kapalı",
+            ),
+        )
+    )
+
+    _gunluk_ai_karar_destegi_goster()
+    _ai_gecmis_egilim_goster()
+
+    st.markdown("#### Öncelikli operasyon uyarıları")
+    st.caption("Kritik uyarılar bu bölümde öncelik sırasıyla gösterilir.")
+    if summary.alerts:
+        st.dataframe(
+            pd.DataFrame(alert_rows(summary.alerts)),
+            width="stretch",
+            hide_index=True,
+        )
+    else:
+        st.success("Kritik operasyon uyarısı yok.")
+
+    st.markdown("#### Bugünkü görevler ve hedef modül")
+    if summary.delayed_data_locked:
+        st.warning(
+            "Yeni analiz / yeni işlem görevleri veri güvenlik kilidi nedeniyle bloklu. "
+            "Görevler bilgi amaçlı listelenir; Açık Pozisyon İzleme kullanılabilir."
+        )
+    else:
+        st.caption("Bugünkü yapılacak işlemler bu bölümde hedef modüllerle birlikte listelenir.")
+    st.dataframe(
+        pd.DataFrame(task_rows(summary.tasks)),
+        width="stretch",
+        hide_index=True,
+    )
+
+    st.markdown("#### Modül yönlendirmesi")
+    st.info(
+        "Veri sorunu → Gecikmeli Veri Pilotu · tarama ihtiyacı → BIST Toplu Tarama / "
+        "Fırsat Radarı · tek-hisse teyidi → Güncel Teknik Analiz · "
+        "sonuç takibi → Sinyal Sonuçları · işlem takibi → Gölge Portföy."
+    )
+
+    if st.button(
+        "Operasyon panelini yenile",
+        key="daily_operation_refresh",
+        width="stretch",
+    ):
+        st.rerun()
+MEMBERSHIP=backend\scripts\sector_member_strength_check.py:14|main|ARGS=
+def main() -> int:
+    parser = argparse.ArgumentParser(
+        description=(
+            "Resmî BIST üyeliklerinden sektör göreceli güç kontrolü."
+        )
+    )
+    parser.add_argument(
+        "--universe",
+        default="BIST 100",
+        choices=("BIST 30", "BIST 50", "BIST 100", "BIST 500", "BIST Tüm"),
+        help="Sektör üyelerinin kesiştirileceği referans tarama evreni.",
+    )
+    args = parser.parse_args()
+
+    try:
+        result = build_sector_member_strength_map(
+            reference_universe=args.universe,
+        )
+    except SectorMemberStrengthError as exc:
+        print(f"SEKTÖR ÜYE ANALİZİ BAŞARISIZ: {exc}")
+        return 1
+
+    print()
+    print(
+        f"Sektör üye gücü — {result.reference_universe} — "
+        f"XU100 karşılaştırması — {result.analysis_date.isoformat()}"
+    )
+    print()
+
+    table = pd.DataFrame(sector_member_strength_rows(result))
+    if table.empty:
+        print("Güncel sektör sonucu bulunamadı.")
+        return 1
+
+    columns = [
+        "Sıra",
+        "Sektör",
+        "Endeks",
+        "Skor",
+        "Durum",
+        "Güven",
+        "Üye",
+        "Güncel üye",
+        "Kapsama (%)",
+        "1G medyan (%)",
+        "5G medyan (%)",
+        "20G medyan (%)",
+        "RS 1G",
+        "RS 5G",
+        "RS 20G",
+        "Bileşik RS",
+        "1G pozitif (%)",
+        "EMA21 üstü (%)",
+        "Momentum + (%)",
+        "Medyan hacim",
+    ]
+    print(table[columns].to_string(index=False))
+
+    if result.errors:
+        print()
+        print("Kullanılamayan / temsil gücü yetersiz sektörler:")
+        for error in result.errors:
+            print(f"- {error}")
+
+    print()
+    print(
+        "Not: Bu katman sektör bağlamı ve göreceli güç üretir; "
+        "adayları elemez ve alım/satım sinyali üretmez."
+    )
+    return 0
+MEMBERSHIP=backend\app\analysis\market_regime.py:113|endeks_sembolunu_hazirla|ARGS=sembol
+def endeks_sembolunu_hazirla(sembol: str) -> str:
+    temiz = sembol.strip().upper().replace(" ", "")
+    if temiz not in ENDESK_ALIASES:
+        raise ValueError(
+            "Desteklenmeyen endeks sembolü. Geçerli değerler: XU100, XU030, XUTUM."
+        )
+    return ENDESK_ALIASES[temiz]
+MEMBERSHIP=backend\app\analysis\market_regime.py:443|piyasa_rejimi_karsilastirmasi|ARGS=semboller;downloader;ikincil_downloader;yeniden_deneme_politikasi
+def piyasa_rejimi_karsilastirmasi(
+    semboller: tuple[str,...] = ("XU100","XU030","XUTUM"),
+    *,
+    downloader: DataDownloader | None = None,
+    ikincil_downloader: DataDownloader | None = None,
+    yeniden_deneme_politikasi: MarketRegimeRetryPolicy = MarketRegimeRetryPolicy(),
+) -> tuple[MarketRegimeResult,...]:
+    sonuclar: list[MarketRegimeResult] = []
+    hatalar: list[str] = []
+    for sembol in semboller:
+        try:
+            sonuclar.append(
+                piyasa_rejimini_analiz_et(
+                    sembol,
+                    downloader=downloader,
+                    ikincil_downloader=ikincil_downloader,
+                    yeniden_deneme_politikasi=yeniden_deneme_politikasi,
+                )
+            )
+        except MarketRegimeError as hata:
+            if endeks_sembolunu_hazirla(sembol) == "XU100":
+                raise
+            hatalar.append(f"{sembol}: {hata}")
+    if not sonuclar:
+        raise MarketRegimeError("Hiçbir endeks için piyasa rejimi sonucu üretilemedi.")
+    return tuple(sonuclar)
+MEMBERSHIP=backend\app\analysis\market_scanner.py:299|_sektor_referans_evrenini_sec|ARGS=tarama_evreni
+def _sektor_referans_evrenini_sec(tarama_evreni: str) -> str:
+    """
+    Sektör gücü için kontrollü referans evren seçer.
+
+    BIST 30 kendi bileşenleriyle; diğer tarama türleri ise maliyet ve
+    karşılaştırılabilirlik nedeniyle BIST 100 sektör bağlamıyla değerlendirilir.
+    """
+    if tarama_evreni == "BIST 30":
+        return "BIST 30"
+    return "BIST 100"
+MEMBERSHIP=backend\app\diagnostics\system_check.py:659|_bist_evreni_kontrolu|ARGS=kok
+def _bist_evreni_kontrolu(kok: Path) -> SystemCheckItem:
+    basla = perf_counter()
+    try:
+        snapshot = kok / "backend" / "resources" / "bist_endeks_bilesenleri.csv"
+        depo = BistUniverseRepository(
+            snapshot_yolu=snapshot,
+            onbellek_yolu=kok / "backend" / "cache" / "sistem_kontrol.csv",
+        )
+        beklenenler = {
+            "BIST 30": 30,
+            "BIST 100": 100,
+            "BIST 500": 500,
+            "BIST Tüm": 500,
+        }
+        sayilar: list[str] = []
+        for ad, minimum in beklenenler.items():
+            evren = depo.evreni_yukle(ad, internetten_guncelle=False)
+            if evren.sembol_sayisi < minimum:
+                raise ValueError(
+                    f"{ad} yalnızca {evren.sembol_sayisi} sembol içeriyor; "
+                    f"minimum {minimum} bekleniyor."
+                )
+            sayilar.append(f"{ad}: {evren.sembol_sayisi}")
+    except Exception as hata:
+        return _hata_itemi(
+            "BIST tarama evrenleri",
+            hata,
+            sure_ms=_sure_ms(basla),
+        )
+
+    return SystemCheckItem(
+        ad="BIST tarama evrenleri",
+        durum=BASARILI,
+        aciklama=", ".join(sayilar),
+        sure_ms=_sure_ms(basla),
+    )
+MEMBERSHIP=backend\app\operations\daily_buy_decision_scheduled_runner.py:143|_default_runtime|ARGS=
+def _default_runtime() -> ScheduledRunRuntime:
+    from backend.app.analysis.daily_buy_decision_closeout import build_daily_buy_decisions
+    from backend.app.analysis.daily_buy_decision_cycle import (
+        DailyBuyDecisionJsonStore,
+        build_daily_buy_decision_snapshot,
+    )
+    from backend.app.analysis.daily_operation_panel import build_daily_operation_summary
+    from backend.app.analysis.morning_operation_snapshot import build_morning_operation_snapshot
+    from backend.app.analysis.ranking_visibility_service import build_current_visibility_context
+    from backend.app.analysis.market_scanner import MarketScanRequest
+    from backend.app.compliance.dashboard_market_scanner_source_factory import build_dashboard_market_scanner
+    from backend.app.data.delayed_data_pilot import DelayedDataPilotStore
+    from backend.app.analysis.signal_outcome_tracking import SignalOutcomeJsonStore
+    from backend.app.history.trade_journal import TradeJournalStore, TradeJournalError
+    from backend.app.analysis.shadow_portfolio import ShadowPortfolioStore, ShadowPortfolioError
+
+    class Runtime:
+        def operation_summary(self) -> object:
+            pilot_store = DelayedDataPilotStore()
+            signal_store = SignalOutcomeJsonStore()
+            trade_store = TradeJournalStore()
+            shadow_store = ShadowPortfolioStore()
+            try:
+                trades = trade_store.list_records()
+            except TradeJournalError:
+                trades = ()
+            try:
+                shadow = shadow_store.list()
+            except ShadowPortfolioError:
+                shadow = ()
+            return build_daily_operation_summary(
+                pilot_records=pilot_store.list(),
+                signal_outcomes=signal_store.list(),
+                trade_records=trades,
+                shadow_positions=shadow,
+            )
+
+        def scan(self) -> object:
+            service = build_dashboard_market_scanner(vbts_hard_block=False)
+            request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi="dengeli",
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            return service.calistir(request)
+
+        def visibility_contexts(self) -> tuple[object, ...]:
+            try:
+                return tuple(build_current_visibility_context())
+            except Exception:
+                return ()
+
+        def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+            return build_morning_operation_snapshot(
+                operation_summary=operation_summary,
+                scan_result=scan_result,
+                visibility_contexts=visibility_contexts,
+                limit=5,
+            )
+
+        def decisions(self, cards: tuple[object, ...]) -> tuple[object, ...]:
+            return tuple(build_daily_buy_decisions(cards))
+
+        def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None:
+            snapshot = build_daily_buy_decision_snapshot(
+                cards,
+                phase=phase,
+                now=now,
+                decisions=decisions,
+            )
+            DailyBuyDecisionJsonStore().save(snapshot)
+            from backend.app.analysis.daily_buy_decision_output_archive import (
+                DecisionOutputArchiveJsonStore,
+            )
+            DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+
+    return Runtime()
+MEMBERSHIP=backend\app\operations\daily_buy_decision_scheduled_runner.py:180|scan|ARGS=self
+def scan(self) -> object:
+            service = build_dashboard_market_scanner(vbts_hard_block=False)
+            request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi="dengeli",
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            return service.calistir(request)
+MEMBERSHIP=backend\app\sector_analysis\sector_candidate_context.py:155|build_live_candidate_sector_contexts|ARGS=symbols;reference_universe;repository
+def build_live_candidate_sector_contexts(
+    symbols: Iterable[str],
+    *,
+    reference_universe: str = "BIST 100",
+    repository: BistUniverseRepository | None = None,
+) -> CandidateSectorContextBundle:
+    """
+    Canlı sektör güç haritasını oluşturup adaylarla eşleştirir.
+
+    Üyelik verisi aynı repository/cache zincirinden okunur. Sektör analizi
+    başarısız olursa çağıran katman teknik taramayı yine de koruyabilir.
+    """
+    repo = repository or BistUniverseRepository()
+
+    try:
+        strength_map = build_sector_member_strength_map(
+            reference_universe=reference_universe,
+            repository=repo,
+            # Ana tarama zaten resmi BIST üyelik kaynağını yenileyebildiği için
+            # aynı işlemde ikinci bir internet üyelik çağrısı yapmıyoruz.
+            refresh_membership=False,
+        )
+    except (SectorMemberStrengthError, BistUniverseError, ValueError) as exc:
+        raise SectorMemberStrengthError(
+            f"Aday sektör bağlamı üretilemedi: {exc}"
+        ) from exc
+
+    return build_candidate_sector_contexts(
+        symbols,
+        strength_map=strength_map,
+        repository=repo,
+    )
+MEMBERSHIP=backend\app\sector_analysis\sector_market_strength.py:285|analyze_sector_index|ARGS=definition;benchmark_frame;loader;bars
+def analyze_sector_index(
+    definition: SectorIndexDefinition,
+    *,
+    benchmark_frame: pd.DataFrame,
+    loader: MarketDataLoader = fiyat_verisi_getir,
+    bars: int = 90,
+) -> SectorMarketStrengthResult:
+    """Tek bir sektör endeksini XU100'e göre değerlendirir.
+
+    Sonuç yalnızca sektör bağlamı ve göreceli güç üretir.
+    Alım/satım sinyali veya hard aday filtresi üretmez.
+    """
+
+    sector_frame = _load_frame(
+        definition.yahoo_symbol,
+        loader=loader,
+        bars=bars,
+    )
+
+    benchmark_last = pd.Timestamp(benchmark_frame.index[-1]).date()
+    sector_last = pd.Timestamp(sector_frame.index[-1]).date()
+
+    if sector_last != benchmark_last:
+        raise SectorMarketStrengthError(
+            f"{definition.code} son veri tarihi {sector_last}; "
+            f"XU100 tarihi {benchmark_last}. Güncel sektör karşılaştırması yapılamadı."
+        )
+
+    sector_close, benchmark_close = _align_close(
+        sector_frame,
+        benchmark_frame,
+    )
+
+    return_1d = _return_percent(sector_close, 1)
+    return_5d = _return_percent(sector_close, 5)
+    return_20d = _return_percent(sector_close, 20)
+
+    benchmark_return_1d = _return_percent(benchmark_close, 1)
+    benchmark_return_5d = _return_percent(benchmark_close, 5)
+    benchmark_return_20d = _return_percent(benchmark_close, 20)
+
+    relative_1d = return_1d - benchmark_return_1d
+    relative_5d = return_5d - benchmark_return_5d
+    relative_20d = return_20d - benchmark_return_20d
+
+    relative_composite = (
+        relative_1d * 0.20
+        + relative_5d * 0.35
+        + relative_20d * 0.45
+    )
+
+    relative_score = _relative_score(
+        relative_1d,
+        relative_5d,
+        relative_20d,
+    )
+    trend_score, trend_status = _trend_metrics(sector_frame)
+    momentum_score, momentum_status = _momentum_metrics(sector_frame)
+    volume_score, volume_ratio, volume_available = _volume_metrics(
+        sector_frame
+    )
+
+    strength_score = int(
+        relative_score
+        + trend_score
+        + momentum_score
+        + volume_score
+    )
+
+    return SectorMarketStrengthResult(
+        rank=0,
+        code=definition.code,
+        name=definition.name,
+        yahoo_symbol=definition.yahoo_symbol,
+        analysis_date=sector_last,
+        close=float(sector_frame["Close"].iloc[-1]),
+        return_1d=return_1d,
+        return_5d=return_5d,
+        return_20d=return_20d,
+        benchmark_return_1d=benchmark_return_1d,
+        benchmark_return_5d=benchmark_return_5d,
+        benchmark_return_20d=benchmark_return_20d,
+        relative_1d=relative_1d,
+        relative_5d=relative_5d,
+        relative_20d=relative_20d,
+        relative_composite=relative_composite,
+        relative_score=relative_score,
+        trend_score=trend_score,
+        momentum_score=momentum_score,
+        volume_score=volume_score,
+        strength_score=strength_score,
+        status=_status(strength_score),
+        trend_status=trend_status,
+        momentum_status=momentum_status,
+        volume_ratio=volume_ratio,
+        volume_available=volume_available,
+    )
+MEMBERSHIP=backend\app\sector_analysis\sector_member_strength.py:250|_aggregate_sector|ARGS=definition;members;benchmark_frame;loader;frame_cache;bars;minimum_members;minimum_coverage
+def _aggregate_sector(
+    definition: SectorMemberDefinition,
+    *,
+    members: tuple[str, ...],
+    benchmark_frame: pd.DataFrame,
+    loader: MarketDataLoader,
+    frame_cache: dict[str, pd.DataFrame | Exception],
+    bars: int,
+    minimum_members: int,
+    minimum_coverage: float,
+) -> SectorMemberStrengthResult:
+    benchmark_date = pd.Timestamp(benchmark_frame.index[-1]).date()
+    metrics: list[_MemberMetrics] = []
+
+    for symbol in members:
+        cached = frame_cache.get(symbol)
+        if cached is None:
+            try:
+                cached = _load_frame(
+                    symbol,
+                    loader=loader,
+                    bars=bars,
+                )
+            except Exception as exc:
+                cached = exc
+            frame_cache[symbol] = cached
+
+        if isinstance(cached, Exception):
+            continue
+
+        if pd.Timestamp(cached.index[-1]).date() != benchmark_date:
+            continue
+
+        try:
+            metrics.append(_member_metrics(cached))
+        except Exception:
+            continue
+
+    total = len(members)
+    valid = len(metrics)
+    coverage = (valid / total) if total else 0.0
+
+    # BIST 100 kesişiminde bazı gerçek sektörlerin doğal olarak yalnızca
+    # iki üyesi bulunabilir. Böyle bir sektörü 2/2 güncel olduğunda tamamen
+    # kaybetmek yerine "Düşük" güvenle bağlam olarak tutuyoruz.
+    # Tek üyeli sektörler sektör temsili sayılmaz.
+    if total <= 1:
+        raise SectorMemberStrengthError(
+            f"{definition.code} için sektör temsili yetersiz: "
+            f"{total} referans üye."
+        )
+
+    if total == 2:
+        required = 2
+        confidence = "Düşük"
+    else:
+        required = max(
+            minimum_members,
+            ceil(total * minimum_coverage),
+        )
+        confidence = (
+            "Yüksek"
+            if coverage >= 0.80 and valid >= 5
+            else "Orta"
+        )
+
+    if valid < required:
+        raise SectorMemberStrengthError(
+            f"{definition.code} için temsil gücü yetersiz: "
+            f"{valid}/{total} güncel üye; gereken en az {required}."
+        )
+
+    return_1d = float(median(m.return_1d for m in metrics))
+    return_5d = float(median(m.return_5d for m in metrics))
+    return_20d = float(median(m.return_20d for m in metrics))
+
+    benchmark_close = benchmark_frame["Close"]
+    benchmark_return_1d = _return_percent(benchmark_close, 1)
+    benchmark_return_5d = _return_percent(benchmark_close, 5)
+    benchmark_return_20d = _return_percent(benchmark_close, 20)
+
+    relative_1d = return_1d - benchmark_return_1d
+    relative_5d = return_5d - benchmark_return_5d
+    relative_20d = return_20d - benchmark_return_20d
+    relative_composite = (
+        relative_1d * 0.20
+        + relative_5d * 0.35
+        + relative_20d * 0.45
+    )
+
+    positive_1d_ratio = sum(m.positive_1d for m in metrics) / valid
+    positive_5d_ratio = sum(m.positive_5d for m in metrics) / valid
+    above_ema21_ratio = sum(m.above_ema21 for m in metrics) / valid
+    short_trend_ratio = (
+        sum(m.short_trend_positive for m in metrics) / valid
+    )
+    momentum_positive_ratio = (
+        sum(m.momentum_positive for m in metrics) / valid
+    )
+
+    volume_values = [
+        m.volume_ratio
+        for m in metrics
+        if m.volume_ratio is not None
+    ]
+    median_volume_ratio = (
+        float(median(volume_values))
+        if volume_values
+        else None
+    )
+
+    relative_score = _relative_score(
+        relative_1d,
+        relative_5d,
+        relative_20d,
+    )
+    trend_score = int(
+        round(
+            15 * above_ema21_ratio
+            + 10 * short_trend_ratio
+        )
+    )
+    momentum_score = int(
+        round(
+            10 * positive_5d_ratio
+            + 10 * momentum_positive_ratio
+        )
+    )
+
+    volume_component = 0.5
+    if median_volume_ratio is not None:
+        volume_component = min(
+            max(median_volume_ratio / 1.20, 0.0),
+            1.0,
+        )
+
+    participation_score = int(
+        round(
+            10 * positive_1d_ratio
+            + 5 * volume_component
+        )
+    )
+
+    strength_score = max(
+        0,
+        min(
+            100,
+            relative_score
+            + trend_score
+            + momentum_score
+            + participation_score,
+        ),
+    )
+
+    return SectorMemberStrengthResult(
+        rank=0,
+        code=definition.code,
+        name=definition.name,
+        analysis_date=benchmark_date,
+        member_count=total,
+        valid_member_count=valid,
+        coverage_ratio=coverage,
+        return_1d=return_1d,
+        return_5d=return_5d,
+        return_20d=return_20d,
+        benchmark_return_1d=benchmark_return_1d,
+        benchmark_return_5d=benchmark_return_5d,
+        benchmark_return_20d=benchmark_return_20d,
+        relative_1d=relative_1d,
+        relative_5d=relative_5d,
+        relative_20d=relative_20d,
+        relative_composite=relative_composite,
+        positive_1d_ratio=positive_1d_ratio,
+        positive_5d_ratio=positive_5d_ratio,
+        above_ema21_ratio=above_ema21_ratio,
+        short_trend_ratio=short_trend_ratio,
+        momentum_positive_ratio=momentum_positive_ratio,
+        median_volume_ratio=median_volume_ratio,
+        relative_score=relative_score,
+        trend_score=trend_score,
+        momentum_score=momentum_score,
+        participation_score=participation_score,
+        strength_score=strength_score,
+        status=_status(strength_score),
+        confidence=confidence,
+    )
+MEMBERSHIP=backend\app\sector_analysis\sector_member_strength.py:438|build_sector_member_strength_map|ARGS=sectors;reference_universe;benchmark_symbol;repository;loader;bars;minimum_members;minimum_coverage;refresh_membership
+def build_sector_member_strength_map(
+    *,
+    sectors: Iterable[SectorMemberDefinition] = DEFAULT_MEMBER_SECTORS,
+    reference_universe: str = "BIST 100",
+    benchmark_symbol: str = BENCHMARK_SYMBOL,
+    repository: BistUniverseRepository | None = None,
+    loader: MarketDataLoader = fiyat_verisi_getir,
+    bars: int = 90,
+    minimum_members: int = 3,
+    minimum_coverage: float = 0.60,
+    refresh_membership: bool = True,
+) -> SectorMemberStrengthMap:
+    """
+    Sektör gücünü Yahoo sektör endekslerinden değil, resmî BIST sektör
+    üyelikleri ve üyelerin gerçek fiyatlarından üretir.
+
+    Varsayılan olarak sektör üyeleri BIST 100 ile kesiştirilir. Böylece
+    BIST 100 aday taramasında kullanılan bağlam, aynı yatırım evreninden
+    üretilir. Sonuç bir hard filtre değildir.
+    """
+    if bars < 60:
+        raise ValueError("Sektör üye analizi için en az 60 bar istenmelidir.")
+    if minimum_members < 1:
+        raise ValueError("minimum_members en az 1 olmalıdır.")
+    if not 0 < minimum_coverage <= 1:
+        raise ValueError("minimum_coverage 0 ile 1 arasında olmalıdır.")
+
+    repo = repository or BistUniverseRepository()
+
+    try:
+        reference = repo.evreni_yukle(
+            reference_universe,
+            internetten_guncelle=refresh_membership,
+        )
+    except (ValueError, BistUniverseError) as exc:
+        raise SectorMemberStrengthError(
+            f"{reference_universe} üyeleri yüklenemedi: {exc}"
+        ) from exc
+
+    reference_symbols = set(reference.semboller)
+
+    benchmark_frame = _load_frame(
+        benchmark_symbol,
+        loader=loader,
+        bars=bars,
+    )
+    benchmark_date = pd.Timestamp(benchmark_frame.index[-1]).date()
+
+    frame_cache: dict[str, pd.DataFrame | Exception] = {}
+    results: list[SectorMemberStrengthResult] = []
+    errors: list[str] = []
+
+    for definition in tuple(sectors):
+        try:
+            sector_universe = repo.endeks_bilesenlerini_yukle(
+                definition.code,
+                endeks_adi=definition.name,
+                # Referans evreni yükleme adımı güncel dosyayı cache'e yazdı.
+                # Aynı çalışmada her sektör için yeniden internet çağrısı yapma.
+                internetten_guncelle=False,
+            )
+            members = tuple(
+                symbol
+                for symbol in sector_universe.semboller
+                if symbol in reference_symbols
+            )
+            if not members:
+                raise SectorMemberStrengthError(
+                    f"{reference_universe} referans evreninde üye yok."
+                )
+
+            results.append(
+                _aggregate_sector(
+                    definition,
+                    members=members,
+                    benchmark_frame=benchmark_frame,
+                    loader=loader,
+                    frame_cache=frame_cache,
+                    bars=bars,
+                    minimum_members=minimum_members,
+                    minimum_coverage=minimum_coverage,
+                )
+            )
+        except (
+            BistUniverseError,
+            SectorMemberStrengthError,
+            ValueError,
+        ) as exc:
+            errors.append(f"{definition.code}: {exc}")
+        except Exception as exc:
+            errors.append(
+                f"{definition.code}: Beklenmeyen sektör analizi hatası: {exc}"
+            )
+
+    if not results:
+        raise SectorMemberStrengthError(
+            "Hiçbir sektör için üye-hisse tabanlı güç sonucu üretilemedi."
+        )
+
+    ordered = sorted(
+        results,
+        key=lambda item: (
+            item.strength_score,
+            item.relative_composite,
+            item.coverage_ratio,
+        ),
+        reverse=True,
+    )
+    ranked = tuple(
+        replace(item, rank=rank)
+        for rank, item in enumerate(ordered, start=1)
+    )
+
+    return SectorMemberStrengthMap(
+        reference_universe=reference_universe,
+        benchmark_symbol=benchmark_symbol,
+        analysis_date=benchmark_date,
+        items=ranked,
+        errors=tuple(errors),
+    )
+MEMBERSHIP=backend\app\ui\market_regime_dashboard.py:72|piyasa_rejimi_baglami_olustur|ARGS=sonuc;bugun
+def piyasa_rejimi_baglami_olustur(
+    sonuc: MarketRegimeDashboardResult,
+    *,
+    bugun: date | None = None,
+) -> MarketRegimeContext:
+    """Ana BIST 100 sonucundan tarihli ve doğrulanabilir rejim bağlamı üretir."""
+
+    ana = sonuc.ana_rejim
+    bugun_degeri = bugun or date.today()
+    veri_guncel = not ana.veri_tazeligi.kilitli
+    guven_var = bool(str(ana.guven_duzeyi).strip())
+    gecerli = veri_guncel and guven_var
+
+    nedenler: list[str] = []
+    if not veri_guncel:
+        nedenler.append(
+            "BIST 100 rejim verisi tazelik kilidinde."
+        )
+    if not guven_var:
+        nedenler.append(
+            "Piyasa rejimi güven düzeyi üretilemedi."
+        )
+
+    return MarketRegimeContext(
+        rejim=ana.rejim,
+        analiz_tarihi=str(ana.analiz_tarihi),
+        guven_duzeyi=str(ana.guven_duzeyi),
+        kaynak=str(ana.yahoo_sembolu),
+        veri_durumu="Güncel" if veri_guncel else "Kilitli",
+        beklenen_tarih=str(ana.veri_tazeligi.beklenen_tarih),
+        olusturulma_tarihi=bugun_degeri.isoformat(),
+        gecerli=gecerli,
+        gecersizlik_nedeni=" ".join(nedenler),
+    )
+MEMBERSHIP=backend\app\ui\market_regime_dashboard.py:120|calistir|ARGS=self
+def calistir(self) -> MarketRegimeDashboardResult:
+        try:
+            sonuclar = tuple(self._yukleyici())
+        except Exception as hata:
+            raise MarketRegimeDashboardError(str(hata)) from hata
+        if not sonuclar or not any(item.sembol == "XU100" for item in sonuclar):
+            raise MarketRegimeDashboardError("BIST 100 piyasa rejimi sonucu üretilemedi.")
+        return MarketRegimeDashboardResult(sonuclar=sonuclar)
+MEMBERSHIP=backend\app\ui\momentum_batch_history_integration.py:42|render_momentum_batch_history_panel|ARGS=st;minimum_skor;maksimum_aday;ozel_semboller;internetten_guncelle;default_start_date;default_end_date
+def render_momentum_batch_history_panel(
+    st,
+    *,
+    minimum_skor: int,
+    maksimum_aday: int,
+    ozel_semboller: tuple[str, ...],
+    internetten_guncelle: bool,
+    default_start_date: date,
+    default_end_date: date,
+):
+    """
+    Sprint-135 geriye dönük uyumluluk katmanı.
+    Eski testler ve olası dış çağrılar bozulmadan kalır.
+    """
+    def scan_day(cut_date: date, universe: str):
+        return momentum_batch_scan_day(
+            cut_date,
+            universe,
+            minimum_skor=minimum_skor,
+            maksimum_aday=maksimum_aday,
+            ozel_semboller=ozel_semboller,
+            internetten_guncelle=internetten_guncelle,
+        )
+
+    return render_batch_historical_export_panel(
+        st,
+        scan_day=scan_day,
+        default_start_date=default_start_date,
+        default_end_date=default_end_date,
+        universe_options=("BIST100", "BIST Tüm"),
+    )
+MEMBERSHIP=backend\app\ui\sprint136_batch_history_ui.py:95|render_sprint136_batch_panel|ARGS=st;minimum_skor;maksimum_aday;ozel_semboller;internetten_guncelle;default_start_date;default_end_date
+def render_sprint136_batch_panel(
+    st,
+    *,
+    minimum_skor: int,
+    maksimum_aday: int,
+    ozel_semboller: tuple[str, ...],
+    internetten_guncelle: bool,
+    default_start_date: date,
+    default_end_date: date,
+):
+    st.subheader("Toplu Tarihsel Tarama")
+    st.caption(
+        "Her işlem günü sırayla çalıştırılır. İlerleme, çalışan tarih ve "
+        "günlük sonuç sayısı ekranda gösterilir."
+    )
+
+    universe = st.selectbox(
+        "Toplu tarama evreni",
+        options=["BIST100", "BIST Tüm"],
+        key="s136_universe",
+    )
+    start_date = st.date_input(
+        "Başlangıç tarihi",
+        value=default_start_date,
+        key="s136_start",
+    )
+    end_date = st.date_input(
+        "Bitiş tarihi",
+        value=default_end_date,
+        key="s136_end",
+    )
+    include_zip = st.checkbox(
+        "Günlük CSV'leri ayrıca ZIP olarak hazırla",
+        value=False,
+        key="s136_zip",
+    )
+
+    if not st.button(
+        "Toplu tarihsel taramayı başlat",
+        key="s136_start_button",
+    ):
+        return None
+
+    if end_date < start_date:
+        st.error("Bitiş tarihi başlangıç tarihinden önce olamaz.")
+        return None
+
+    progress_bar = st.progress(0.0)
+    status = st.empty()
+    detail = st.empty()
+
+    def on_progress(progress: BatchProgress) -> None:
+        if progress.status == "started":
+            status.info(
+                f"{progress.current_index}/{progress.total_days} · "
+                f"{progress.cut_date.isoformat()} çalışıyor..."
+            )
+            return
+
+        progress_bar.progress(progress.fraction)
+
+        if progress.status == "completed":
+            status.info(
+                f"{progress.current_index}/{progress.total_days} · "
+                f"{progress.cut_date.isoformat()} tamamlandı"
+            )
+            detail.caption(
+                f"{progress.row_count} aday · "
+                f"{progress.elapsed_seconds:.1f} sn"
+            )
+        elif progress.status == "failed":
+            status.warning(
+                f"{progress.current_index}/{progress.total_days} · "
+                f"{progress.cut_date.isoformat()} hata verdi; sonraki güne geçiliyor"
+            )
+            detail.caption(progress.error or "Bilinmeyen hata")
+
+    scanner = ReusableMomentumBatchScanner(
+        minimum_skor=minimum_skor,
+        maksimum_aday=maksimum_aday,
+        ozel_semboller=ozel_semboller,
+        internetten_guncelle=internetten_guncelle,
+    )
+
+    output = execute_resilient_batch_export(
+        start_date=start_date,
+        end_date=end_date,
+        universe=str(universe),
+        scanner=scanner,
+        include_daily_zip=include_zip,
+        on_progress=on_progress,
+    )
+
+    progress_bar.progress(1.0)
+    st.success(
+        f"Toplu tarama tamamlandı · {output.processed_days} gün başarılı · "
+        f"{output.failed_days} gün hatalı · {output.total_rows} satır"
+    )
+
+    st.download_button(
+        "Birleşik CSV indir",
+        data=output.combined_csv,
+        file_name=output.combined_filename,
+        mime="text/csv",
+        key="s136_combined_download",
+    )
+
+    if output.failure_csv is not None:
+        st.download_button(
+            "Hatalı günler CSV indir",
+            data=output.failure_csv,
+            file_name="tarihsel_toplu_hatalar.csv",
+            mime="text/csv",
+            key="s136_failure_download",
+        )
+
+    if output.daily_zip_bytes is not None and output.daily_zip_filename is not None:
+        st.download_button(
+            "Günlük CSV ZIP indir",
+            data=output.daily_zip_bytes,
+            file_name=output.daily_zip_filename,
+            mime="application/zip",
+            key="s136_zip_download",
+        )
+
+    return output
+
+=== 6B. BIST100 RAW REFERENCES ===
+backend\dashboard.backup_before_navigation_fix.py:3130: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.backup_before_navigation_fix.py:3931: f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansı · "
+backend\dashboard.backup_before_navigation_fix.py:4449: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.py:3273: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.py:4075: f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansı · "
+backend\dashboard.py:4574: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.py:8260: evren="BIST 100",
+backend\scripts\sector_member_strength_check.py:22: default="BIST 100",
+backend\scripts\sector_member_strength_check.py:23: choices=("BIST 30", "BIST 50", "BIST 100", "BIST 500", "BIST Tüm"),
+backend\tests\test_ai_daily_review_service.py:90: assert package["reports"][0]["raw_text"].startswith("BIST 100")
+backend\tests\test_batch_historical_export.py:59: req = BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100")
+backend\tests\test_batch_historical_export.py:65: assert result.combined_rows[0]["Evren"] == "BIST100"
+backend\tests\test_batch_historical_export.py:95: {"Hisse": "AAA", "Sıra": 1, "Kesim Tarihi": "2026-07-01", "Evren": "BIST100"}
+backend\tests\test_batch_historical_export.py:105: "Evren": "BIST100",
+backend\tests\test_batch_historical_export.py:133: req = BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100")
+backend\tests\test_batch_historical_export.py:141: "2026-07-01_BIST100.csv",
+backend\tests\test_batch_historical_export.py:142: "2026-07-02_BIST100.csv",
+backend\tests\test_batch_historical_export.py:147: req = BatchReplayRequest(date(2026, 6, 29), date(2026, 7, 29), "BIST100")
+backend\tests\test_batch_historical_export.py:149: "tarihsel_toplu_BIST100_2026-06-29_2026-07-29.csv"
+backend\tests\test_batch_historical_export.py:152: "tarihsel_gunluk_BIST100_2026-06-29_2026-07-29.zip"
+backend\tests\test_batch_historical_export_ui.py:47: universe="BIST100",
+backend\tests\test_batch_historical_export_ui.py:63: universe="BIST100",
+backend\tests\test_bist_daily_market_universe_selector.py:7: assert '"XU100": "BIST 100"' in text
+backend\tests\test_bist_toplu_tarama_role_clarity_v11.py:23: "BIST 100",
+backend\tests\test_bist_universe.py:18: ORNEK_CSV = """BILESEN KODU;BULTEN_ADI;ENDEKS KODU;ENDEKS ADI;ENDEKS INGILIZCE ADI;TARIH(GG/AA/YYYY)\nCONSTITUENT CODE;CONSTITUENT NAME;INDEX CODE;INDEX NAME IN TURKISH;INDEX NAME IN ENGLISH;DATE(DD/MM/YYYY)\nTHYAO.E;TURK HAVA YOLLARI;XU100;BIST 100;BIST 100;27/07/2026\nASELS.E;ASELSAN;XU100;BIST 100;BIST 100;27/07/2026\nTHYAO.E;TURK HAVA YOLLARI;XU030;BIST 30;BIST 30;27/07/2026\n"""
+backend\tests\test_bist_universe.py:24: evren_adi="BIST 100",
+backend\tests\test_bist_universe.py:25: endeks_kodu="XU100",
+backend\tests\test_bist_universe.py:49: evren = depo.evreni_yukle("BIST 100")
+backend\tests\test_daily_operation_ai_context.py:36: conflicts=["Kurum görüşleri ayrışıyor"], watch=["BIST100 destekleri"]),
+backend\tests\test_daily_operation_ai_context.py:50: assert context.watch_items == ("BIST100 destekleri",)
+backend\tests\test_daily_operation_panel_integration_fix_v1.py:8: assert 'evren="BIST 100"' in dashboard
+backend\tests\test_dashboard_market_scanner_factory.py:24: endeks_kodu="XU100",
+backend\tests\test_dashboard_market_scanner_factory.py:136: evren="BIST 100",
+backend\tests\test_market_context_dashboard.py:55: manual_text="BIST100 pozitif. 13.200 destek, 14.228 direnç.",
+backend\tests\test_market_context_dashboard.py:77: uploaded_file=Uploaded("BIST100 pozitif.".encode("utf-8")),
+backend\tests\test_market_context_dashboard.py:113: text="ICBC: BIST100 pozitif.",
+backend\tests\test_market_context_dashboard.py:119: text="Gedik: BIST100 temkinli.",
+backend\tests\test_market_context_extractors.py:11: "BIST100 pozitif.",
+backend\tests\test_market_context_extractors.py:16: assert item.raw_text == "BIST100 pozitif."
+backend\tests\test_market_context_extractors.py:28: "\ufeffBIST100 güne pozitif başlayabilir.",
+backend\tests\test_market_context_models.py:14: "raw_text": "BIST100 güne pozitif başlayabilir.",
+backend\tests\test_market_context_parser.py:5: BIST100 endeksinin güne temkinli ancak pozitif bir başlangıç yapmasını bekliyoruz.
+backend\tests\test_market_context_parser.py:8: BIST100 için 13.200 ve 12.966 destek;
+backend\tests\test_market_context_parser_rev1.py:6: BIST100 endeksinin güne temkinli ancak pozitif başlamasını bekliyoruz.
+backend\tests\test_market_context_parser_rev1.py:7: BIST100 için 13.200 ve 12.966 destek;
+backend\tests\test_market_context_service.py:8: BIST100 endeksinin güne temkinli ancak pozitif bir başlangıç yapmasını bekliyoruz.
+backend\tests\test_market_context_service.py:11: BIST100 için 13.200 ve 12.966 destek;
+backend\tests\test_market_context_service.py:59: "BIST100 pozitif. 13.200 destek, 14.228 direnç.",
+backend\tests\test_market_context_service.py:80: text="BIST100 pozitif.",
+backend\tests\test_market_context_service.py:91: text="BIST100 pozitif.",
+backend\tests\test_market_context_service.py:102: text="ICBC: BIST100 pozitif.",
+backend\tests\test_market_context_service.py:108: text="Gedik: BIST100 temkinli.",
+backend\tests\test_market_context_service_isolation.py:33: text="BIST100 pozitif.",
+backend\tests\test_market_context_store.py:15: raw_text="BIST100 güne pozitif başlayabilir.",
+backend\tests\test_market_context_store.py:41: "BIST100   pozitif.\r\nDestek: 13200"
+backend\tests\test_market_context_store.py:44: "BIST100 pozitif.\nDestek: 13200"
+backend\tests\test_market_regime_live.py:38: assert endeks_sembolunu_hazirla("xu100.is") == "XU100"
+backend\tests\test_market_scanner.py:59: endeks_kodu="XU100",
+backend\tests\test_market_scanner.py:89: evren="BIST 100",
+backend\tests\test_market_scanner.py:191: evren="BIST 100",
+backend\tests\test_market_scanner.py:273: evren="BIST 100",
+backend\tests\test_market_scanner_sector_context.py:48: endeks_kodu="XU100",
+backend\tests\test_market_scanner_sector_context.py:80: assert reference_universe == "BIST 100"
+backend\tests\test_market_scanner_sector_context.py:93: evren="BIST 100",
+backend\tests\test_market_scanner_sector_context.py:115: evren="BIST 100",
+backend\tests\test_market_scanner_sector_context.py:140: evren="BIST 100",
+backend\tests\test_momentum_batch_history_integration.py:29: "BIST100",
+backend\tests\test_momentum_batch_history_integration.py:37: assert request.evren == "BIST 100"
+backend\tests\test_momentum_batch_history_integration.py:64: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_momentum_discovery.py:169: evren="BIST 100",
+backend\tests\test_prebreakout_universe.py:28: "BIST 100",
+backend\tests\test_replay_batch_adapter.py:14: assert common_universe_mapper("BIST100") == "BIST 100"
+backend\tests\test_replay_batch_adapter.py:31: rows = adapter.scan_day(date(2026, 7, 1), "BIST100")
+backend\tests\test_replay_batch_adapter.py:33: assert calls == [(date(2026, 7, 1), "BIST 100")]
+backend\tests\test_research_profile_memory_v1.py:124: bundle(AS_OF), universe_name="BIST 100", store=store
+backend\tests\test_resilient_batch_replay.py:11: BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100"),
+backend\tests\test_resilient_batch_replay.py:30: BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100"),
+backend\tests\test_resilient_batch_replay.py:42: BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 1), "BIST100"),
+backend\tests\test_reusable_momentum_batch_scanner.py:32: scanner.scan_day(date(2026, 7, 1), "BIST100")
+backend\tests\test_reusable_momentum_batch_scanner.py:33: scanner.scan_day(date(2026, 7, 2), "BIST100")
+backend\tests\test_reusable_momentum_batch_scanner.py:56: scanner.scan_day(date(2026, 7, 1), "BIST100")
+backend\tests\test_reusable_momentum_batch_scanner.py:57: scanner.scan_day(date(2026, 7, 2), "BIST100")
+backend\tests\test_sector_candidate_context.py:80: reference_universe="BIST 100",
+backend\tests\test_sector_member_strength.py:109: def test_sektor_bist100_uyeleriyle_kisitlanir(tmp_path: Path):
+backend\tests\test_sprint136_backward_compatibility.py:34: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_sprint142_hardening.py:21: assert detect_report_date("GÜNLÜK BÜLTEN 03.08.2026\nBIST100") == "2026-08-03"
+backend\tests\test_sprint142_hardening.py:30: text="GÜNLÜK BÜLTEN 03.08.2026\nBIST100 pozitif.",
+backend\tests\test_sprint142_hardening.py:39: text="BIST100 pozitif.",
+backend\tests\test_sprint146_vbts_soft_warning.py:92: evren="BIST 100",
+backend\tests\test_system_check.py:178: assert "BIST 100" in item.aciklama
+backend\app\analysis\bist_universe.py:19: "BIST 100": "XU100",
+backend\app\analysis\market_regime.py:27: "XU100": "BIST 100",
+backend\app\analysis\market_regime.py:37: "XU100": "XU100", "XU100.IS": "XU100", "BIST100": "XU100",
+backend\app\analysis\market_regime.py:117: "Desteklenmeyen endeks sembolü. Geçerli değerler: XU100, XU030, XUTUM."
+backend\app\analysis\market_regime.py:463: if endeks_sembolunu_hazirla(sembol) == "XU100":
+backend\app\analysis\market_scanner.py:44: "BIST 100",
+backend\app\analysis\market_scanner.py:308: return "BIST 100"
+backend\app\analysis\momentum_walk_forward.py:32: evren: str = "BIST 100"
+backend\app\diagnostics\system_check.py:669: "BIST 100": 100,
+backend\app\history\batch_historical_export.py:20: universe: str = "BIST100"
+backend\app\history\replay_batch_adapter.py:55: "bist100": "BIST 100",
+backend\app\market_context\daily_market_briefing.py:32: "BIST100",
+backend\app\market_context\parser.py:66: if "bist100" in s.casefold() or "endeks" in s.casefold():
+backend\app\operations\daily_buy_decision_scheduled_runner.py:183: evren="BIST 100",
+backend\app\prebreakout\prebreakout_universe.py:15: "BIST 100",
+backend\app\sector_analysis\sector_candidate_context.py:158: reference_universe: str = "BIST 100",
+backend\app\sector_analysis\sector_market_strength.py:292: """Tek bir sektör endeksini XU100'e göre değerlendirir.
+backend\app\sector_analysis\sector_member_strength.py:441: reference_universe: str = "BIST 100",
+backend\app\ui\batch_historical_export_ui.py:91: universe_options: tuple[str, ...] = ("BIST100", "BIST Tüm"),
+backend\app\ui\bist_daily_market_dashboard.py:201: "XU100": "BIST 100",
+backend\app\ui\momentum_batch_history_integration.py:71: universe_options=("BIST100", "BIST Tüm"),
+backend\app\ui\sprint136_batch_history_ui.py:113: options=["BIST100", "BIST Tüm"],
+
+=== 7. CANDIDATE SNAPSHOT FUNCTIONS ===
+CANDIDATE_SNAPSHOT=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:32
+def candidate_snapshot(self, operation_summary, scan_result, visibility_contexts):
+        return SimpleNamespace(candidates=(SimpleNamespace(symbol="AAA"),))
+CANDIDATE_SNAPSHOT=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:36
+def candidate_snapshot(self, operation_summary, scan_result, visibility_contexts):
+        return SimpleNamespace(candidates=(SimpleNamespace(symbol="AAA"), SimpleNamespace(symbol="BBB")))
+CANDIDATE_SNAPSHOT=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:34
+def candidate_snapshot(self, operation_summary, scan_result, visibility_contexts):
+        return SimpleNamespace(candidates=(SimpleNamespace(symbol="AAA"), SimpleNamespace(symbol="BBB")))
+CANDIDATE_SNAPSHOT=backend\app\operations\daily_buy_decision_scheduled_runner.py:35
+def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object: ...
+CANDIDATE_SNAPSHOT=backend\app\operations\daily_buy_decision_scheduled_runner.py:198
+def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+            return build_morning_operation_snapshot(
+                operation_summary=operation_summary,
+                scan_result=scan_result,
+                visibility_contexts=visibility_contexts,
+                limit=5,
+            )
+
+=== 8. DECISION ===
+BLOCKERS=NONE
+WARNINGS=NO_EXACT_EXISTING_RESULT_ADAPTER_FUNCTION_FOUND
+DECISION=READY_FOR_ONE_SCAN_BIST_TUM_REUSE_IMPLEMENTATION
+NEXT=IMPLEMENT_SINGLE_SCAN_REUSE_ONE_LIMITED_BLOCK
+
+EXPECTED_IMPLEMENTATION_SHAPE:
+1) canonical close obtains ONE BIST Tüm MarketScanResult
+2) exact BIST100 membership provider filters an in-memory legacy view
+3) execute_scheduled_run consumes injected/prebuilt legacy view
+4) full result remains available for Next-Day read model
+5) no second scanner / no new store / no AL-SAT authority change

@@ -1,0 +1,67 @@
+{
+  "artifact_type": "HISTORICAL_NAV_STALE4_RECHECK",
+  "checked_at_utc": "2026-10-13T09:52:43.613425+00:00",
+  "source_report": "_discovery\\erste_hungary\\historical_nav_old929_20261007_coverage.json",
+  "results": [
+    {
+      "isin": "LU0011850392",
+      "instrument_id": "7711",
+      "previous_latest_date": "2022-02-28",
+      "http_status": 200,
+      "nav_points": 2104,
+      "latest_date": "2022-02-28",
+      "latest_nav": 53.6,
+      "target_date_found": false,
+      "nav_2026_10_07": null,
+      "nav_2026_10_08": null,
+      "nav_2026_10_09": null,
+      "error": null
+    },
+    {
+      "isin": "LU0113311731",
+      "instrument_id": "1112",
+      "previous_latest_date": "2022-07-01",
+      "http_status": 200,
+      "nav_points": 5191,
+      "latest_date": "2022-07-01",
+      "latest_nav": 30.77645118,
+      "target_date_found": false,
+      "nav_2026_10_07": null,
+      "nav_2026_10_08": null,
+      "nav_2026_10_09": null,
+      "error": null
+    },
+    {
+      "isin": "LU0117895796",
+      "instrument_id": "9161",
+      "previous_latest_date": "2025-03-24",
+      "http_status": 200,
+      "nav_points": 5391,
+      "latest_date": "2025-03-24",
+      "latest_nav": 0.1307,
+      "target_date_found": false,
+      "nav_2026_10_07": null,
+      "nav_2026_10_08": null,
+      "nav_2026_10_09": null,
+      "error": null
+    },
+    {
+      "isin": "LU0823403356",
+      "instrument_id": "6042",
+      "previous_latest_date": "2023-07-03",
+      "http_status": 200,
+      "nav_points": 2010,
+      "latest_date": "2023-07-03",
+      "latest_nav": 55.33,
+      "target_date_found": false,
+      "nav_2026_10_07": null,
+      "nav_2026_10_08": null,
+      "nav_2026_10_09": null,
+      "error": null
+    }
+  ],
+  "rank_history_write": false,
+  "production_decisions_modified": false,
+  "trade_authority": "NONE",
+  "forced_fill": false
+}

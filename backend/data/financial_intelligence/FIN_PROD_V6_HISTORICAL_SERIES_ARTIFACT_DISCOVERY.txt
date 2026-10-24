@@ -1,0 +1,13 @@
+﻿FIN_PROD_V6_HISTORICAL_SERIES_ARTIFACT_DISCOVERY
+====================================================================================================
+ARTIFACT_HITS=0
+
+===== MANIFEST_AND_PATH_REFERENCES =====
+REF|D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json|$.symbols[0].sector_profile|'INDUSTRIAL'
+REF|D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json|$.symbols[0].stages[0].path|'D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json'
+REF|D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json|$.symbols[0].stages[1].path|'D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_acceptance.json'
+REF|D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json|$.symbols[0].stages[2].path|'D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_fair_value_acceptance.json'
+REF|D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json|$.symbols[0].stages[3].path|'D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_production_closure.json'
+REF|D:\Projects\Hisse-Robotu\backend\data\financial_intelligence_acceptance_TUPRS_2026_2.json|$.historical_point_count|112
+
+FIN_PROD_V6_HISTORICAL_SERIES_ARTIFACT_DISCOVERY=PASS

@@ -1,0 +1,51 @@
+﻿FIN_PROD_V6_CAPITAL_EFFICIENCY_EXACT_PROBE
+==========================================================================================
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence_acceptance_TUPRS_2026_2.json
+STATUS=PRESENT
+VALUE|$.financial_health.components[4].code|'CAPITAL_EFFICIENCY'
+VALUE|$.financial_health.explanation|'Financial Health V1; likidite, bilan├зo dayan─▒kl─▒l─▒─Я─▒, k├вrl─▒l─▒k, nakit kalitesi, sermaye verimlili─Яi ve kar┼Я─▒la┼Яt─▒r─▒labilir d├╢nem istikrar─▒n─▒ deterministic olarak ├╢l├зer. ROE/ROA alanlar─▒ ara d├╢nem k├вr─▒n─▒n d├╢nem g├╝n say─▒s─▒na g├╢re y─▒ll─▒kland─▒r─▒lm─▒┼Я proxy g├╢stergeleridir; nihai ROIC/ortalama sermaye hesab─▒ de─Яildir. Bu de─Яerlendirme al─▒m/sat─▒m sinyali de─Яildir.'
+==========================================================================================
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_canonical_investability_evidence.json
+STATUS=PRESENT
+==========================================================================================
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_long_term_evidence_completion.json
+STATUS=PRESENT
+==========================================================================================
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_production_closure.json
+STATUS=PRESENT
+==========================================================================================
+CODE_PRODUCER_HINTS
+FILE=backend\app\analysis\canonical_investability_evidence.py
+00133:             "CAPITAL_EFFICIENCY_NOT_SYNTHESIZED",
+---
+FILE=backend\app\analysis\financial_health.py
+00407:     capital_efficiency = _score_component(
+00408:         "CAPITAL_EFFICIENCY",
+00477:         capital_efficiency,
+00571:         "nihai ROIC/ortalama sermaye hesab─▒ de─Яildir. Bu de─Яerlendirme al─▒m/sat─▒m sinyali de─Яildir."
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+00067:         capital_efficiency_score=_d(lraw.get("capital_efficiency_score")),
+---
+FILE=backend\app\analysis\financial_intelligence_production_v2.py
+00013:         "required_focus": ("margins", "cash_conversion", "capital_efficiency", "cyclicality"),
+---
+FILE=backend\app\analysis\investability_production_closure.py
+00027:     "capital_efficiency",
+00141:         elif key == "capital_efficiency" and result.get("capital_efficiency_score") is None:
+00142:             result["capital_efficiency_score"] = val
+00162:         ("capital_efficiency", capeff, Decimal("0.12")),
+00224:     cap_eff = _D(evidence.get("capital_efficiency_score"))
+00242:         capital_efficiency_score=cap_eff,
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+00103:         capital_efficiency_score=_d(long_raw.get("capital_efficiency_score")),
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+00142:     flags.append("CAPITAL_EFFICIENCY_REMAINS_UNWIRED")
+---
+FILE=backend\app\analysis\long_term_investability.py
+00029:     capital_efficiency_score: Decimal | None,
+00038:         _component("CAPITAL_EFFICIENCY", capital_efficiency_score, "0.12", "ROIC/sermaye verimlili─Яi"),
+---
+FIN_PROD_V6_CAPITAL_EFFICIENCY_EXACT_PROBE=PASS

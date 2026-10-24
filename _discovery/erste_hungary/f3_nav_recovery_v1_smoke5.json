@@ -1,0 +1,67 @@
+[
+  {
+    "isin": "AT0000A3N1Y4",
+    "status": "UNAVAILABLE",
+    "reason": "NO_OBSERVATION_ON_OR_BEFORE_1Y_START",
+    "max_drawdown_1y": null,
+    "latest_date": "2026-10-20",
+    "target_start_date": "2025-10-20",
+    "start_observation_date": null,
+    "start_lag_days": null,
+    "freshness_days": 0,
+    "window_points": 0,
+    "series_count": 138
+  },
+  {
+    "isin": "AT0000A3P9Z2",
+    "status": "RECOVERED",
+    "reason": "QUALIFIED",
+    "max_drawdown_1y": "-0.1280590548022145550830458156",
+    "latest_date": "2026-10-20",
+    "target_start_date": "2025-10-20",
+    "start_observation_date": "2025-10-20",
+    "start_lag_days": 0,
+    "freshness_days": 0,
+    "window_points": 249,
+    "series_count": 249
+  },
+  {
+    "isin": "AT0000A3PA11",
+    "status": "RECOVERED",
+    "reason": "QUALIFIED",
+    "max_drawdown_1y": "-0.1085053529134962149834716714",
+    "latest_date": "2026-10-20",
+    "target_start_date": "2025-10-20",
+    "start_observation_date": "2025-10-20",
+    "start_lag_days": 0,
+    "freshness_days": 0,
+    "window_points": 249,
+    "series_count": 249
+  },
+  {
+    "isin": "AT0000A3RVA4",
+    "status": "UNAVAILABLE",
+    "reason": "NO_OBSERVATION_ON_OR_BEFORE_1Y_START",
+    "max_drawdown_1y": null,
+    "latest_date": "2026-10-20",
+    "target_start_date": "2025-10-20",
+    "start_observation_date": null,
+    "start_lag_days": null,
+    "freshness_days": 0,
+    "window_points": 0,
+    "series_count": 167
+  },
+  {
+    "isin": "AT0000A3S446",
+    "status": "UNAVAILABLE",
+    "reason": "NO_OBSERVATION_ON_OR_BEFORE_1Y_START",
+    "max_drawdown_1y": null,
+    "latest_date": "2026-10-20",
+    "target_start_date": "2025-10-20",
+    "start_observation_date": null,
+    "start_lag_days": null,
+    "freshness_days": 0,
+    "window_points": 0,
+    "series_count": 141
+  }
+]

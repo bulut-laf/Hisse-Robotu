@@ -1,0 +1,562 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818142950
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-RankingJump-V1-Block1-Preflight-Rev1.ps1
+Process ID: 476
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== HISSE ROBOTU — RANKING JUMP V1 — BLOCK 1 PREFLIGHT ===
+READ_ONLY=YES
+PRODUCTION_MUTATION=NO
+GOAL=AUTHORITATIVE_RANKING_MEMORY_SEAM
+
+=== CANDIDATE FILES ===
+CANDIDATE_FILE_COUNT=180
+FILE=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-RankingJump-V1-Block1-Preflight-20260818-142950.txt
+FILE=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-V1.1-Archive-Review-Discoverability-Exact-20260817-143042.txt
+FILE=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-V1.1-Delayed-Pilot-Current-Snapshot-UI-Kur-20260817-181321.txt
+FILE=D:\Projects\Hisse-Robotu\_discovery\task-engine-v1-exact-backup-20260818-015220\daily_operation_panel.py
+FILE=D:\Projects\Hisse-Robotu\_discovery\task-engine-v1-exact-backup-20260818-015541\daily_operation_panel.py
+FILE=D:\Projects\Hisse-Robotu\_discovery\task-engine-v1-exact-backup-20260818-095508\daily_operation_panel.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\bist_daily_market.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_ai_context.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\backtest\daily_equity_curve.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\bist_official_daily.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\decision_engine\candidate_labels.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\decision_engine\candidate_ranking.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\decision_engine\daily_decision_report.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\decision_support\candidate_ranking.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_filter.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_pagination.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_summary.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_daily_review_service.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_evaluation_archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_history_view.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\daily_ai_package.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\daily_context_summary.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\daily_market_briefing.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\market_context\recommendation_archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\archive_view.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_developments.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_monitor.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_operation.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_action_summary.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_alerts.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_closure.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_confidence.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_diagnosis.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_finalization.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_followup.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_recovery.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operational_health.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_v2_decision_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\reporting\daily_report_export.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_candidate_context.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_ranking.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\bist_daily_market_dashboard.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\current_session_snapshot.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\daily_market_briefing_panel.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\momentum_batch_history_integration.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\official_source_operations_panel.py
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\sprint136_batch_history_ui.py
+FILE=D:\Projects\Hisse-Robotu\backend\backend\data\prebreakout_alarm_history.jsonl
+FILE=D:\Projects\Hisse-Robotu\backend\backend\data\prebreakout_daily_operation_archive.jsonl
+FILE=D:\Projects\Hisse-Robotu\backend\backend\data\prebreakout_operation_diagnosis.json
+FILE=D:\Projects\Hisse-Robotu\backend\backend\data\prebreakout_operation_recovery.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\market_context_archive\2026-08-03\daily_manifest.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\market_context_archive\2026-08-04\daily_manifest.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\market_context_archive\2026-08-05\daily_manifest.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\market_context_archive\2026-08-06\daily_manifest.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\market_context_archive\2026-08-07\daily_manifest.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\market_context_archive\2026-08-10\daily_manifest.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\prebreakout_alarm_history.jsonl
+FILE=D:\Projects\Hisse-Robotu\backend\data\prebreakout_daily_operation_archive.jsonl
+FILE=D:\Projects\Hisse-Robotu\backend\data\prebreakout_operation_diagnosis.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\prebreakout_operation_recovery.json
+FILE=D:\Projects\Hisse-Robotu\backend\run_scan_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_ai_daily_review_service.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_ai_evaluation_archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_ai_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_ai_history_trend_dashboard.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_ai_history_view.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history_backup.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history_backup_ui.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history_comparison.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history_filter.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history_management_ui.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history_pagination.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_history_summary.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_backtest_service_daily_equity.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_daily_market.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_daily_market_company_name_matching_v11.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_daily_market_custom_list.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_daily_market_dashboard_wiring.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_daily_market_universe_selector.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_official_archive.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_official_archive_rev1.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_bist_official_daily.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_candidate_labels.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_candidate_ranking.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_current_session_snapshot.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_ai_package.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_context_summary.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_decision_report.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_developments_role_clarity_v11.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_equity_curve.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_market_briefing.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_dashboard.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_shadow.py
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_daily_report_export.py
+
+=== EXACT HISTORY/RANK REFERENCES ===
+REFERENCE_COUNT=1948
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:35::build_fundamental_snapshot,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:51::SignalSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:86::WeeklyPerformanceArchive,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:127::fetch_delayed_snapshot,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:174::from backend.app.analysis.sector_score_ranking import (
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:175::SectorScoreRankingError,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:176::build_sector_score_ranking,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:177::sector_score_ranking_rows,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:191::from backend.app.reporting.fundamental_report_archive import (
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:192::FundamentalReportArchiveError,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:193::FundamentalReportArchiveFilter,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:194::FundamentalReportJsonArchive,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:195::archived_reports_csv_bytes,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:196::archived_reports_pdf_bytes,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:197::compare_archived_reports,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:198::report_archive_rows,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:200::search_archived_reports,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:290::from backend.app.ui.current_session_snapshot import (
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:291::CurrentSessionSnapshotError,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:2803::except (CurrentSessionSnapshotError, ValueError) as hata:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:4085::"rank": secili_satir.get("Sıra"),
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:4341::sembol_snapshot = build_fundamental_snapshot(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:4345::sembol_snapshot,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5487::def _buyume_tablosu(snapshot) -> pd.DataFrame:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5491::("Önceki çeyrek", snapshot.quarter_growth),
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5492::("Geçen yıl aynı dönem", snapshot.annual_growth),
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5652::.report_archive_maximum_age_days
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5670::if value == temel_ayarlar.default_archive_sort
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5713::report_archive_maximum_age_days=int(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5716::default_archive_sort=siralama_etiketleri[
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5873::snapshot = build_fundamental_snapshot(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5884::latest = snapshot.latest
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5885::ratios = snapshot.ratios
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:5886::kalite = calculate_fundamental_quality(snapshot, tazelik)
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6212::build_sector_score_ranking(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6231::except SectorScoreRankingError as hata:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6247::f"{siralama_kaydi.rank}/"
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6276::sector_score_ranking_rows(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6339::f"{guc_kaydi.rank}/"
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6481::buyume = _buyume_tablosu(snapshot)
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6502::if snapshot.quality_flags:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6503::for uyari in snapshot.quality_flags:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6541::sector_ranking=rapor_sektor_siralamasi,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6543::quality_flags=tuple(snapshot.quality_flags),
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6579::rapor_arsivi = FundamentalReportJsonArchive()
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6584::except FundamentalReportArchiveError as hata:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6600::.report_archive_maximum_age_days
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6603::except FundamentalReportArchiveError as hata:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6661::temel_ayarlar.default_archive_sort
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6725::search_archived_reports(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6727::FundamentalReportArchiveFilter(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6746::except FundamentalReportArchiveError as hata:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6758::report_archive_rows(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6767::arsiv_csv = archived_reports_csv_bytes(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6802::arsiv_pdf = archived_reports_pdf_bytes(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6835::report_archive_rows(arsiv_raporlari)
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6872::compare_archived_reports(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6877::except FundamentalReportArchiveError as hata:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:6915::archive_tab,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7250::snapshot = SignalSnapshot(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7273::outcome = evaluate_signal(snapshot, price_frame)
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7292::with archive_tab:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7607::def render_delayed_snapshot() -> None:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7609::snapshot = fetch_delayed_snapshot(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7613::store.append(snapshot)
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7620::("Durum", snapshot.status),
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7621::("Son fiyat", f"{snapshot.last_price:.2f}"),
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7624::f"{snapshot.measured_delay_minutes:.1f} dk",
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7628::f"{snapshot.expected_delay_minutes} dk",
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7632::str(snapshot.missing_bar_count),
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7636::"AKTİF" if snapshot.locked else "Kapalı",
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7645::"Sembol": snapshot.symbol,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7646::"Borsa zamanı": snapshot.exchange_time,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7647::"Sisteme alınma zamanı": snapshot.received_time,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7648::"Gün içi açılış": snapshot.day_open,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7649::"Gün içi yüksek": snapshot.day_high,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7650::"Gün içi düşük": snapshot.day_low,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7651::"Kümülatif hacim": snapshot.cumulative_volume,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7652::"Son bar hacmi": snapshot.latest_bar_volume,
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7654::snapshot.price_change_percent
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7663::if snapshot.locked:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7668::elif snapshot.preview_only:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7683::render_delayed_snapshot()
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:7692::render_delayed_snapshot()
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8441::f"{item.snapshot.signal_date} · "
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8442::f"{item.snapshot.symbol.removesuffix('.IS')} · "
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8443::f"{item.snapshot.decision_class} · "
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8444::f"{item.snapshot.quality_score}"
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8679::archive = WeeklyPerformanceArchive()
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8731::summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8774::key="weekly_report_archive",
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8778::paths = archive.save(
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8827::with archive_tab:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8828::archived = archive.list()
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8829::if not archived:
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:8841::for path in archived
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:9089::"Snapshot yalnızca hedef testler, tam regresyon ve sistem kontrolü "
+REF=D:\Projects\Hisse-Robotu\backend\dashboard.py:9091::"Olustur-V13-Snapshot.ps1 komutuyla oluşturulmalıdır."
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:280::def _monthly_profile_snapshots(daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame):
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:283::return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:290::"snapshot": "CURRENT_PARTIAL" if is_partial else "CURRENT_CLOSED",
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:295::"snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:304::if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:340::{"snapshot":"CURRENT_PARTIAL","matches":[]},
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:341::{"snapshot":"LAST_CLOSED","matches":[]},
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:345::current, closed = _monthly_profile_snapshots(daily, edges, profiles)
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:349::{"snapshot":"CURRENT_PARTIAL","matches":[]},
+REF=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:350::{"snapshot":"LAST_CLOSED","matches":[]},
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:14::SignalSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:117::def _record_key(snapshot: SignalSnapshot) -> tuple[str, date]:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:118::return snapshot.symbol, snapshot.signal_date
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:123::snapshot: SignalSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:125::key = _record_key(snapshot)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:127::if _record_key(outcome.snapshot) == key:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:137::snapshot: SignalSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:143::current = find_existing_outcome(store.list(), snapshot)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:144::evaluated = evaluate_signal(snapshot, frame)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:155::preserved_snapshot = current.snapshot
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:156::refreshed = evaluate_signal(preserved_snapshot, frame)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:166::path_name=f"{current.snapshot.record_id}.json",
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:201::snapshot = SignalSnapshot(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:222::snapshot.symbol,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:228::snapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:249::outcome.snapshot.symbol,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:250::start_date=outcome.snapshot.signal_date,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:254::refreshed = evaluate_signal(outcome.snapshot, frame)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:269::f"{outcome.snapshot.symbol} · "
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:270::f"{outcome.snapshot.signal_date}: {error}"
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\bist_universe.py:58::snapshot_yolu: str | Path | None = None,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\bist_universe.py:63::self._snapshot_yolu = Path(snapshot_yolu) if snapshot_yolu else (
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\bist_universe.py:125::(self._snapshot_yolu, "Paketlenmiş BIST anlık görüntüsü"),
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py:9::FundamentalSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py:176::def build_fundamental_snapshot(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py:180::) -> FundamentalSnapshot:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py:235::return FundamentalSnapshot(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:8::from ..models.fundamental_models import FundamentalSnapshot
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:72::snapshot: FundamentalSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:75::ratios = snapshot.ratios
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:76::latest = snapshot.latest
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:155::annual = snapshot.annual_growth
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:59::outcome.snapshot.daily_direction
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:65::outcome.snapshot.weekly_direction
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:71::outcome.snapshot.momentum_state
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:76::lambda outcome: outcome.snapshot.volume_confirmation,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:81::outcome.snapshot.divergence_type
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:87::outcome.snapshot.market_regime
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:94::if outcome.snapshot.atr_percent is None
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:95::else 1.0 <= outcome.snapshot.atr_percent <= 4.5
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:102::if outcome.snapshot.risk_reward_ratio is None
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:103::else outcome.snapshot.risk_reward_ratio >= 2.0
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:108::lambda outcome: outcome.snapshot.quality_score >= 70,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:18::from ..models.fundamental_models import FundamentalSnapshot
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:19::from .fundamental_analysis import build_fundamental_snapshot
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:27::snapshot: FundamentalSnapshot | None
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:68::snapshot=None,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:82::snapshot = build_fundamental_snapshot(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:95::snapshot=snapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:241::yuzdelikler = goreceli_seri.rank(pct=True, method="average")
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:242::egim_yuzdelikleri = goreceli_egim_seri.rank(pct=True, method="average")
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:62::class MomentumSignalSnapshot:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:84::sinyal_gecmisi: tuple[MomentumSignalSnapshot, ...] = ()
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:166::gecmis_haritasi: dict[str, tuple[MomentumSignalSnapshot, ...]] = {}
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:246::) -> dict[str, tuple[MomentumSignalSnapshot, ...]]:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:263::harita: dict[str, list[MomentumSignalSnapshot]] = {
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:275::MomentumSignalSnapshot(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:291::gecmis: tuple[MomentumSignalSnapshot, ...],
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:13::TimeframeSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:110::snapshots = _zorunlu_zaman_dilimlerini_getir(paket)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:112::haftalik = _zaman_dilimini_analiz_et(snapshots[HAFTALIK])
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:113::gunluk = _zaman_dilimini_analiz_et(snapshots[GUNLUK])
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:114::saatlik = _zaman_dilimini_analiz_et(snapshots[SAATLIK])
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:155::) -> dict[str, TimeframeSnapshot]:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:156::snapshots: dict[str, TimeframeSnapshot] = {}
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:158::for snapshot in paket.zaman_dilimleri:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:159::if snapshot.ad in {SAATLIK, GUNLUK, HAFTALIK}:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:160::if snapshot.ad in snapshots:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:162::f"Yinelenen zaman dilimi bulundu: {snapshot.ad}"
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:164::snapshots[snapshot.ad] = snapshot
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:168::if ad not in snapshots
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:176::return snapshots
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:180::snapshot: TimeframeSnapshot,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:183::gostergeli = teknik_gostergeleri_ekle(snapshot.veri)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:186::f"{snapshot.ad} göstergeleri hesaplanamadı: {hata}"
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:192::f"{snapshot.ad} teknik analizi için en az iki geçerli "
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:246::ad=snapshot.ad,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py:247::interval=snapshot.interval,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:11::class SectorScoreRankingError(ValueError):
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:16::class SectorScoreRankingItem:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:17::rank: int
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:34::class SectorScoreRanking:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:39::items: tuple[SectorScoreRankingItem, ...]
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:55::raise SectorScoreRankingError(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:80::def build_sector_score_ranking(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:89::) -> SectorScoreRanking:
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:92::raise SectorScoreRankingError(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:96::raise SectorScoreRankingError(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:114::raise SectorScoreRankingError(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:128::raise SectorScoreRankingError(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:135::raise SectorScoreRankingError(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:156::SectorScoreRankingItem(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:157::rank=index,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:187::return SectorScoreRanking(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:196::def sector_score_ranking_rows(
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:197::ranking: SectorScoreRanking,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:201::"Sıra": item.rank,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:214::for item in ranking.items
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_strength_map.py:9::from .sector_score_ranking import quality_class
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_strength_map.py:18::rank: int
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_strength_map.py:188::SectorStrengthItem(rank=index, **row)
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\sector_strength_map.py:214::"Sıra": item.rank,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:15::from .signal_outcome_tracking import SignalOutcome, SignalSnapshot
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:331::snapshot = outcome.snapshot
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:334::symbol=snapshot.symbol,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:335::entry_date=snapshot.signal_date,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:336::entry_price=snapshot.reference_price,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:339::stop_loss=snapshot.stop_loss,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:340::target_1=snapshot.target_1,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:341::target_2=snapshot.target_2,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:342::signal_record_id=snapshot.record_id,
+REF=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:343::signal_class=snapshot.decision_class,
+
+=== PERSISTENCE SHAPES ===
+PERSISTENCE_REFERENCE_COUNT=590
+PERSIST=D:\Projects\Hisse-Robotu\backend\run_scan_history.py:35::"SQLite veritabanında saklanan hisse "
+PERSIST=D:\Projects\Hisse-Robotu\backend\run_scan_history.py:46::"SQLite veritabanının yolu. "
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:162::edges = pd.read_csv(QUANTILE_FILE)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:163::profiles = pd.read_csv(PASSED_PROFILE_FILE)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:181::edges = pd.read_csv(MONTHLY_QUANTILE_FILE)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:182::profiles = pd.read_csv(MONTHLY_PASSED_PROFILE_FILE)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:271::matches.append({
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:339::payloads.append(_monthly_profile_status(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:346::payloads.append(_monthly_profile_status(current, closed))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:348::payloads.append(_monthly_profile_status(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:418::matched.append(p)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:530::strong_reasons.append("Aylık fiyat EMA6 ve EMA12 üzerinde; ortalamalar yukarı sıralı.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:533::strong_reasons.append("Aylık kısa trend eğimi pozitif.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:536::strong_reasons.append("6 aylık göreli performans XU100 üzerinde.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:539::strong_reasons.append("Aylık momentum güçlü fakat aşırı değil.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:542::strong_reasons.append("Aylık higher-high yapısı korunuyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:545::strong_reasons.append("Aylık higher-low yapısı korunuyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:548::strong_reasons.append("Aylık hacim 6 aylık ortalamanın üzerinde.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:572::early_reasons.append("Fiyat aylık EMA6 çevresinde/üzerinde.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:575::early_reasons.append("Aylık trend eğimi artık belirgin biçimde aşağı değil.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:578::early_reasons.append("Aylık RSI toparlanıyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:581::early_reasons.append("Ana aylık dirence %12 içinde.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:584::early_reasons.append("3 aylık göreli güç XU100'e karşı iyileşiyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:587::early_reasons.append("Aylık hacim davranışı zayıf değil.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:590::early_reasons.append("Erken higher-low yapısı oluşuyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:648::weekly_rows.append(row)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:655::strong_rows.append(strong)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:657::early_rows.append(early)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_ai_context.py:47::result.append(text)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_ai_context.py:185::payload = json.loads(path.read_text(encoding="utf-8"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_ai_context.py:189::records.append(payload)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:93::alerts.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:101::tasks.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:114::alerts.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:122::tasks.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:131::alerts.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:141::alerts.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:151::alerts.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:159::tasks.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:169::tasks.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:179::tasks.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:188::tasks.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:196::tasks.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:225::hatalar.append(MomentumFailure(sembol=sembol, hata=str(hata)))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:251::adaylar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:261::hatalar.append(MomentumFailure(sembol=sembol, hata=str(hata)))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:438::tazelik_hatalari.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:503::uygun_adaylar.append(aday)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:513::elenen_adaylar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:588::kayitlar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:758::pozitif.append("BIST evrenine göre göreceli güç ve güç eğimi yüksek.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:770::pozitif.append("Fiyat ivmesi kısa ve orta vadede olumlu.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:782::pozitif.append("Hacim birikimi kademeli biçimde güçleniyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:784::riskler.append("Güncel hacim ve hacim eğimi zayıf.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:793::pozitif.append("20 günlük direnç üzerinde kırılım oluştu.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:795::pozitif.append("Fiyat 20 günlük dirence en fazla %3 uzakta.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:797::pozitif.append("Fiyat veya ATR aralığında sıkışma var.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:809::pozitif.append("Trend yapısı yükselen ortalamalar ve diplerle destekleniyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:811::riskler.append("Trend yapısı henüz yeterince güçlü değil.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:816::riskler.append("Ortalama TL hacmi düşük; giriş ve çıkış riski yüksek.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:830::riskler.append("Fiyat kısa vadede aşırı uzamış; peşinden koşma riski var.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:885::riskler.append("Mevcut işlem planı minimum risk/ödül koşulunu karşılamıyor.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:954::nedenler.append(f"Momentum skoru {toplam}; görünür hazırlık sınıfı için en az 45 gerekli.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:956::nedenler.append("Fiyat/ATR sıkışması oluşmadı.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:958::nedenler.append("Kademeli hacim birikimi koşulu oluşmadı.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:960::nedenler.append(f"Yakın dirence uzaklık %{zirve_uzakligi * 100:.2f}; E2 için en fazla %5 gerekli.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:962::nedenler.append(f"Trend puanı {trend}/15; hazırlık için yetersiz.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:964::nedenler.append("E0-E3, kırılım veya işleme hazır sınıflarının birleşik koşulları oluşmadı.")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:143::hatalar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:154::hatalar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:190::getiriler.append((gun, deger))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:216::sonuclar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:261::secili_tarihler.append(tum_tarihler[indeks])
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:274::harita.setdefault(aday.sembol, []).append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:421::kayitlar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\decision_engine\candidate_labels.py:14::results.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:537::kayitlar.append(kayit)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:663::metadata = json.dumps(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:678::veri = json.loads(metadata_yolu.read_text(encoding="utf-8"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:706::satirlar.append((onek, " | ".join(str(item) for item in deger)))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:708::satirlar.append((onek, "" if deger is None else deger))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:730::dosya_verileri.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:92::metadata = json.dumps(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:102::record_files.append(_manifest_file(metadata_path, metadata))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:111::record_files.append(_manifest_file(archive_path, data))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:113::manifest_records.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:128::json.dumps(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:194::created.append(target)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:255::manifest = json.loads(manifest_raw.decode("utf-8"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:269::validated_records.append(validated)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:343::result.append(raw_record)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:381::json.loads(metadata_data.decode("utf-8"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_backup.py:406::relative_files.append((artifact.goreli_yol, data))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py:90::uyarilar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py:94::uyarilar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py:98::uyarilar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py:102::uyarilar.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py:229::metrikler.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_comparison.py:240::metrikler.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\backtest_history_filter.py:63::sonuc.append(kayit)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:59::result.append(current)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:90::day_results.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:113::keys.append(fixed)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:120::keys.append(key)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:125::def rows_to_csv_text(rows: Sequence[Mapping[str, object]]) -> str:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:148::path.write_text(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:149::rows_to_csv_text(result.combined_rows),
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\batch_historical_export.py:168::"\ufeff" + rows_to_csv_text(day.rows),
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:60::yol.write_text(json.dumps(veri, ensure_ascii=False, indent=2), encoding="utf-8")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:130::sonuc.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:166::hazirliklar.append(tarih)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:199::veri = json.loads(yol.read_text(encoding="utf-8"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\resilient_batch_replay.py:98::days.append(day)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\resilient_batch_replay.py:117::failures.append(failure)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:4::import sqlite3
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:43::"""Tarama sonuçlarını SQLite veritabanında saklar."""
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:70::except sqlite3.Error as hata:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:99::izin_verilen_gorunumler = json.dumps(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:186::except sqlite3.Error as hata:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:226::except sqlite3.Error as hata:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:258::) -> sqlite3.Connection:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:259::baglanti = sqlite3.connect(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:263::baglanti.row_factory = sqlite3.Row
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:321::baglanti: sqlite3.Connection,
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:4::import sqlite3
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:56::"""SQLite veritabanındaki tarama ayrıntılarını okur."""
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:159::except sqlite3.Error as hata:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:224::) -> sqlite3.Connection:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:225::baglanti = sqlite3.connect(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:229::baglanti.row_factory = sqlite3.Row
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:241::deger = json.loads(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:273::satir: sqlite3.Row,
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:193::raw = json.loads(self.file_path.read_text(encoding="utf-8-sig"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:206::records.append(record)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:232::temporary.write_text(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:233::json.dumps([item.to_dict() for item in ordered], ensure_ascii=False, indent=2),
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:245::def records_to_csv_bytes(records: Iterable[TradeRecord]) -> bytes:
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:307::records.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:350::return records_to_csv_bytes((sample,))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_history.py:20::self.evaluations.append(evaluation)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_history.py:54::payload = json.loads(path.read_text(encoding="utf-8"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_history.py:63::records.append(payload)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\market_context\ai_history_view.py:27::rows.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:150::news_by_event.setdefault(item.event_id, []).append(item)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:170::priority_rows.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:209::official_statuses.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:187::def append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:213::json.dumps(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:275::record = _payload_to_record(json.loads(line))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:285::records.append(record)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:349::summaries.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:50::json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n" for row in rows
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:52::temporary.write_text(content, encoding="utf-8")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:64::for line in target.read_text(encoding="utf-8").splitlines():
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:67::payload = json.loads(line)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:69::records.append(AlarmHistoryRecord(**payload))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:141::for line in target.read_text(encoding="utf-8").splitlines():
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:144::payload = json.loads(line)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:146::records.append(DecisionJournalRecord(**payload))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py:247::forward.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:179::rows.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:247::groups.setdefault(key, []).append(result)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:257::rows.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:379::values.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:451::variants.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:464::variants.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:482::scenarios.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:604::recommendations.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py:683::validations.append(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:202::payload.append(row)
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:204::target.write_text(
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:205::json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:216::raw = json.loads(target.read_text(encoding="utf-8"))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:223::records.append(CandidateLifecycleRecord(**payload))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py:107::closes.append(float(horizon.close_return_pct))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py:109::maximums.append(float(horizon.max_return_pct))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py:92::values.append(float(regime.success_rate_pct))
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py:149::reasons.append("Toplam örneklem yetersiz")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py:151::reasons.append("Örneklem kaybı fazla")
+PERSIST=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py:153::reasons.append("Rejim çeşitliliği yetersiz")
+
+=== DECISION ===
+DECISION=EXISTING_RANKING_MEMORY_SEAM_CANDIDATES_FOUND
+STRONG_CANDIDATE_COUNT=17
+NEXT=EXACT_SEAM_REUSE_PROOF
+PRODUCTION_STATUS=UNCHANGED
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-RankingJump-V1-Block1-Preflight-20260818-142950.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818142954
+**********************

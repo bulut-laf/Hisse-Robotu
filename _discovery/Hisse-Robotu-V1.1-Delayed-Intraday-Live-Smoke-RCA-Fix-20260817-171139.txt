@@ -1,0 +1,28 @@
+﻿STDOUT: STAGE=FETCH
+STDOUT: LIVE_FETCH=OK
+STDOUT: SYMBOL=THYAO
+STDOUT: NORMALIZED_SYMBOL=THYAO.IS
+STDOUT: SNAPSHOT_TYPE=DelayedDataSnapshot
+STDOUT: FIELD_CUMULATIVE_VOLUME=24056009.0
+STDOUT: FIELD_DAY_HIGH=307.25
+STDOUT: FIELD_DAY_LOW=300.75
+STDOUT: FIELD_DAY_OPEN=306.0
+STDOUT: FIELD_ERROR_MESSAGE=
+STDOUT: FIELD_EXPECTED_DELAY_MINUTES=15
+STDOUT: FIELD_LAST_PRICE=301.5
+STDOUT: FIELD_LATEST_BAR_COMPLETED=False
+STDOUT: FIELD_LATEST_BAR_VOLUME=18674.0
+STDOUT: FIELD_LOCKED=False
+STDOUT: FIELD_MEASURED_DELAY_MINUTES=16.69
+STDOUT: FIELD_MISSING_BAR_COUNT=0
+STDOUT: FIELD_PREVIEW_ONLY=True
+STDOUT: FIELD_SOURCE=yfinance
+STDERR: Traceback (most recent call last):
+STDERR:   File "C:\Users\user\AppData\Local\Temp\hr_delayed_live_smoke_3c90f4f0a2474c33bd1e0dfa3545e63d.py", line 61, in <module>
+STDERR:     print(f"FIELD_{key.upper()}={value}")
+STDERR:     ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+STDERR:   File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1251.py", line 19, in encode
+STDERR:     return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+STDERR:            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+STDERR: UnicodeEncodeError: 'charmap' codec can't encode character '\xfc' in position 14: character maps to <undefined>
+EXIT_CODE=1

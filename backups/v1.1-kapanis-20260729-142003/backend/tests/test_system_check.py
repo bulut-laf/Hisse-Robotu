@@ -1,0 +1,294 @@
+from __future__ import annotations
+
+from datetime import datetime
+import json
+from pathlib import Path
+import subprocess
+import sys
+
+import pytest
+
+from backend.app.diagnostics import system_check as sistem
+from backend.app.diagnostics.system_check import (
+    BASARILI,
+    BASARISIZ,
+    UYARI,
+    SystemCheckItem,
+    SystemCheckReport,
+    sistem_kontrolu_calistir,
+)
+from backend.run_system_check import rapor_metni_olustur
+
+
+PROJE_KOKU = Path(__file__).resolve().parents[2]
+KOMUT_DOSYASI = PROJE_KOKU / "backend" / "run_system_check.py"
+GEREKSINIMLER = PROJE_KOKU / "requirements.txt"
+BASLATICI = PROJE_KOKU / "Hisse-Robotu-Baslat.ps1"
+KULLANIM = PROJE_KOKU / "KULLANIM.md"
+
+
+def _item(ad: str, durum: str, kritik: bool = True) -> SystemCheckItem:
+    return SystemCheckItem(ad=ad, durum=durum, aciklama="test", kritik=kritik)
+
+
+def _sabit_zaman() -> datetime:
+    return datetime(2026, 7, 26, 21, 30, 0)
+
+
+def test_kontrol_itemi_gecersiz_durumu_reddeder() -> None:
+    with pytest.raises(ValueError, match="Geçersiz kontrol durumu"):
+        SystemCheckItem(ad="Test", durum="Bilinmiyor", aciklama="-")
+
+
+def test_kontrol_itemi_bos_adi_reddeder() -> None:
+    with pytest.raises(ValueError, match="adı boş"):
+        SystemCheckItem(ad=" ", durum=BASARILI, aciklama="-")
+
+
+def test_rapor_kritik_hata_yokken_kullanima_hazirdir() -> None:
+    rapor = SystemCheckReport(
+        surum="Sprint-36",
+        baslangic_zamani="2026-07-26T21:30:00",
+        bitis_zamani="2026-07-26T21:30:01",
+        kontroller=(
+            _item("Bir", BASARILI),
+            _item("İki", UYARI, kritik=False),
+            _item("Üç", BASARISIZ, kritik=False),
+        ),
+    )
+
+    assert rapor.kullanima_hazir is True
+    assert rapor.basarili_sayisi == 1
+    assert rapor.uyari_sayisi == 1
+    assert rapor.basarisiz_sayisi == 1
+
+
+def test_rapor_kritik_hatada_kullanima_hazir_degildir() -> None:
+    rapor = SystemCheckReport(
+        surum="Sprint-36",
+        baslangic_zamani="-",
+        bitis_zamani="-",
+        kontroller=(_item("Kritik", BASARISIZ),),
+    )
+
+    assert rapor.kullanima_hazir is False
+
+
+def test_rapor_jsonu_turkce_karakterleri_korur() -> None:
+    rapor = SystemCheckReport(
+        surum="Sprint-36",
+        baslangic_zamani="-",
+        bitis_zamani="-",
+        kontroller=(_item("Çalışma ortamı", BASARILI),),
+    )
+
+    veri = json.loads(rapor.json_metni())
+    assert veri["kullanima_hazir"] is True
+    assert veri["kontroller"][0]["ad"] == "Çalışma ortamı"
+
+
+def test_zorunlu_eksik_modul_kritik_hata_uretir() -> None:
+    item = sistem._tek_modul_kontrolu(
+        "yfinance",
+        "Piyasa verisi",
+        True,
+        lambda _ad: None,
+    )
+
+    assert item.durum == BASARISIZ
+    assert item.kritik is True
+
+
+def test_istege_bagli_eksik_modul_yalnizca_uyari_uretir() -> None:
+    item = sistem._tek_modul_kontrolu(
+        "pytest",
+        "Testler",
+        False,
+        lambda _ad: None,
+    )
+
+    assert item.durum == UYARI
+    assert item.kritik is False
+
+
+def test_proje_yapisi_eksik_dosyayi_bildirir(tmp_path: Path) -> None:
+    item = sistem._proje_yapisi_kontrolu(tmp_path)
+
+    assert item.durum == BASARISIZ
+    assert "backend/dashboard.py" in item.aciklama
+
+
+def test_kaynak_derleme_kontrolu_sozdizimi_hatasini_bulur(tmp_path: Path) -> None:
+    backend = tmp_path / "backend"
+    backend.mkdir()
+    (backend / "bozuk.py").write_text("def bozuk(:\n", encoding="utf-8")
+
+    item = sistem._kaynak_derleme_kontrolu(tmp_path)
+
+    assert item.durum == BASARISIZ
+    assert "SyntaxError" in item.aciklama
+
+
+def test_sentetik_gunluk_veri_backtest_icin_yeterlidir() -> None:
+    veri = sistem._sentetik_gunluk_veri()
+
+    assert len(veri) == 360
+    assert list(veri.columns) == ["Open", "High", "Low", "Close", "Volume"]
+    assert veri.index.is_monotonic_increasing
+
+
+def test_sentetik_coklu_zaman_paketi_uc_zaman_dilimini_icerir() -> None:
+    paket = sistem._sentetik_coklu_zaman_paketi()
+
+    assert paket.sembol == "THYAO.IS"
+    assert paket.getir("Saatlik").bar_sayisi == 300
+    assert paket.getir("Günlük").bar_sayisi == 500
+    assert paket.getir("Haftalık").bar_sayisi == 260
+
+
+def test_sentetik_backtest_uçtan_uca_sonuc_uretir() -> None:
+    sonuc = sistem._sentetik_backtest_calistir()
+
+    assert sonuc.ozet.sembol == "THYAO.IS"
+    assert sonuc.ozet.fiyat_bar_sayisi == 360
+    assert sonuc.ozet.tamamlanan_islem_sayisi > 0
+    assert len(sonuc.ozet.analiz_kimligi) == 12
+
+
+def test_rapor_uretimi_kontrolu_csv_ve_pdf_uretir() -> None:
+    sonuc = sistem._sentetik_backtest_calistir()
+    item = sistem._rapor_uretimi_kontrolu(sonuc)
+
+    assert item.durum == BASARILI
+    assert "CSV" in item.aciklama
+    assert "PDF" in item.aciklama
+
+
+def test_gecmis_kaydi_kontrolu_kaydi_geri_okur() -> None:
+    sonuc = sistem._sentetik_backtest_calistir()
+    item = sistem._gecmis_kaydi_kontrolu(sonuc)
+
+    assert item.durum == BASARILI
+
+
+def test_bist_evreni_kontrolu_paketlenmis_listeleri_dogrular() -> None:
+    item = sistem._bist_evreni_kontrolu(PROJE_KOKU)
+
+    assert item.durum == BASARILI
+    assert "BIST 100" in item.aciklama
+    assert "BIST Tüm" in item.aciklama
+
+
+def test_toplu_tarama_zinciri_uc_sembolu_analiz_eder() -> None:
+    item = sistem._toplu_tarama_zinciri_kontrolu()
+
+    assert item.durum == BASARILI
+    assert "3 sembol" in item.aciklama
+
+
+
+def test_momentum_kesif_zinciri_siniflandirma_yapar() -> None:
+    item = sistem._momentum_kesif_zinciri_kontrolu()
+
+    assert item.durum == BASARILI
+    assert "3 sembol" in item.aciklama
+
+def test_momentum_walk_forward_zinciri_gelecegi_gizler() -> None:
+    item = sistem._momentum_walk_forward_zinciri_kontrolu()
+
+    assert item.durum == BASARILI
+    assert "5/10/20" in item.aciklama
+    assert "tepe/dip" in item.aciklama
+
+
+def test_kayip_analizi_ve_guvenlik_kilidi_zinciri_calısir() -> None:
+    item = sistem._kayip_analizi_guvenlik_zinciri_kontrolu()
+
+    assert item.durum == BASARILI
+    assert "3 tamamlanmış işlem" in item.aciklama
+    assert "günlük/haftalık" in item.aciklama
+
+
+def test_canli_analiz_zinciri_teknik_plan_ve_pozisyonu_baglar() -> None:
+    item = sistem._canli_analiz_zinciri_kontrolu()
+
+    assert item.durum == BASARILI
+    assert "Teknik skor" in item.aciklama
+    assert "pozisyon" in item.aciklama
+
+
+def test_tam_sistem_kontrolu_sahte_modul_bulucuyla_hazirdir(
+    tmp_path: Path,
+) -> None:
+    rapor = sistem_kontrolu_calistir(
+        proje_koku=PROJE_KOKU,
+        modul_bulucu=lambda _ad: object(),
+        gecmis_klasoru=tmp_path / "gecmis",
+        simdi=_sabit_zaman,
+    )
+
+    assert rapor.kullanima_hazir is True
+    assert rapor.basarisiz_sayisi == 0
+    assert rapor.basarili_sayisi == len(rapor.kontroller)
+    assert rapor.surum == "Sprint-38"
+    assert any(
+        item.ad == "KAP/VBTS güvenli yapılandırma"
+        for item in rapor.kontroller
+    )
+
+
+def test_terminal_calistiricisi_dogrudan_dosya_olarak_acilir() -> None:
+    ortam = {**__import__("os").environ, "PYTHONUTF8": "1"}
+    sonuc = subprocess.run(
+        [sys.executable, str(KOMUT_DOSYASI), "--help"],
+        cwd=PROJE_KOKU,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace",
+        env=ortam,
+        check=False,
+    )
+
+    assert sonuc.returncode == 0
+    assert "ağ bağlantısı" in sonuc.stdout
+    assert "--json" in sonuc.stdout
+
+
+def test_terminal_raporu_kullanima_hazir_sonucunu_gosterir() -> None:
+    rapor = SystemCheckReport(
+        surum="Sprint-36",
+        baslangic_zamani="-",
+        bitis_zamani="-",
+        kontroller=(_item("Python", BASARILI),),
+    )
+
+    metin = rapor_metni_olustur(rapor)
+    assert "Sistem kullanıma hazır" in metin
+    assert "[OK]" in metin
+
+
+def test_requirements_tum_calisma_paketlerini_icerir() -> None:
+    kaynak = GEREKSINIMLER.read_text(encoding="utf-8")
+
+    for paket in ("numpy", "pandas", "yfinance", "streamlit", "reportlab", "pytest"):
+        assert paket in kaynak
+
+
+def test_powershell_baslaticisi_venv_ve_streamlit_kullanir() -> None:
+    kaynak = BASLATICI.read_text(encoding="utf-8")
+
+    assert '.venv\\Scripts\\python.exe' in kaynak
+    assert "-m streamlit run" in kaynak
+    assert "requirements.txt" in kaynak
+
+
+def test_kullanim_kilavuzu_ana_akislar_ve_kontrol_komutunu_icerir() -> None:
+    kaynak = KULLANIM.read_text(encoding="utf-8")
+
+    assert "backend.run_system_check" in kaynak
+    assert "Güncel Teknik Analiz" in kaynak
+    assert "BIST Toplu Tarama" in kaynak
+    assert "Açık Pozisyon İzleme" in kaynak
+    assert "İşlem Kayıp Analizi" in kaynak
+    assert "Analiz Geçmişi" in kaynak

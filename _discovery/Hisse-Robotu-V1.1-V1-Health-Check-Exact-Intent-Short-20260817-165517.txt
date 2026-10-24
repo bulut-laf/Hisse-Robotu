@@ -1,0 +1,10 @@
+﻿SYMBOLS=validate_context_bundle
+TEST SYMBOL=validate_context_bundle FILE=D:\Projects\Hisse-Robotu\backend\tests\test_market_context_v1_health.py COUNT=3
+HAS_PLACEHOLDER=False
+HAS_UI=False
+HAS_PERSISTENCE=False
+HAS_HEALTH_OUTPUT=False
+HAS_RUNTIME_EXCEPTION=False
+DECISION=ISOLATED_HEALTH_UTILITY_LIKELY_INTENTIONAL
+NEXT=No V1.1 wiring gap proven. Keep unchanged.
+PRODUCTION_MUTATION=YOK

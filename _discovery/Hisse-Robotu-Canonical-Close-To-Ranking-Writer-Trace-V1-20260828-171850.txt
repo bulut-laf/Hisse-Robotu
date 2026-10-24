@@ -1,0 +1,1609 @@
+=== HISSE ROBOTU — CANONICAL CLOSE TO RANKING WRITER TRACE V1 ===
+MODE=READ_ONLY
+PURPOSE=TRACE_LEGACY_EVENING_RUNTIME_TO_EXISTING_RANKING_MEMORY_WRITER
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+RANKING_MEMORY_WRITE=NO
+NETWORK_CALL=NO
+
+=== 1. EXECUTE_SCHEDULED_RUN EXACT DEFINITION ===
+--- DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:225|execute_scheduled_run ---
+CALLS=ScheduledRunAuditJsonStore;ScheduledRunJsonStore;ScheduledRunRecord;_default_runtime;_normalize_phase;datetime.now;engine.candidate_snapshot;engine.decisions;engine.operation_summary;engine.persist_decision_snapshot;engine.scan;engine.visibility_contexts;getattr;history_store.append;len;state_store.load;state_store.save;str;timestamp.date;timestamp.isoformat;tuple;type
+def execute_scheduled_run(
+    phase: str,
+    *,
+    now: datetime | None = None,
+    runtime: ScheduledRunRuntime | None = None,
+    store: ScheduledRunJsonStore | None = None,
+    force: bool = False,
+    audit_store: ScheduledRunAuditJsonStore | None = None,
+    run_kind: str = "SCHEDULED",
+) -> ScheduledRunRecord:
+    phase_value = _normalize_phase(phase)
+    timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    run_date = timestamp.date().isoformat()
+    state_store = store or ScheduledRunJsonStore()
+    history_store = audit_store or ScheduledRunAuditJsonStore()
+    key = f"{run_date}:{phase_value}"
+    existing = state_store.load().get(key)
+    if existing is not None and existing.status == "SUCCESS" and not force:
+        skipped = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=existing.started_at,
+            finished_at=existing.finished_at,
+            status="SKIPPED",
+            candidate_count=existing.candidate_count,
+            buy_symbols=existing.buy_symbols,
+            detail="Aynı gün/faz için başarılı otomatik koşu zaten mevcut.",
+            run_kind=run_kind,
+        )
+        history_store.append(skipped)
+        return skipped
+
+    started_at = timestamp.isoformat(timespec="seconds")
+    engine = runtime or _default_runtime()
+    try:
+        summary = engine.operation_summary()
+        scan_result = engine.scan()
+        visibility = engine.visibility_contexts()
+        candidate_snapshot = engine.candidate_snapshot(summary, scan_result, visibility)
+        cards = tuple(getattr(candidate_snapshot, "candidates", ()) or ())
+        decisions = engine.decisions(cards)
+        engine.persist_decision_snapshot(cards, decisions, phase_value, timestamp)
+        buy_symbols = tuple(
+            str(getattr(item, "symbol", "")).strip().upper()
+            for item in decisions
+            if str(getattr(item, "decision", "")).strip().upper() == "AL"
+        )
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="SUCCESS",
+            candidate_count=len(cards),
+            buy_symbols=buy_symbols,
+            detail="Seans sonu/sabah günlük karar koşusu tamamlandı.",
+            run_kind=run_kind,
+        )
+    except Exception as error:
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="FAILED",
+            candidate_count=0,
+            buy_symbols=(),
+            detail=f"{type(error).__name__}: {error}",
+            run_kind=run_kind,
+        )
+    state_store.save(record)
+    history_store.append(record)
+    return record
+
+
+=== 2. ENTRY CALL GRAPH (MAX DEPTH 3) ===
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:225|FUNC=execute_scheduled_run|DEPTH=0|CALLS=ScheduledRunAuditJsonStore;ScheduledRunJsonStore;ScheduledRunRecord;_default_runtime;_normalize_phase;append;candidate_snapshot;date;decisions;getattr;isoformat;len;load;now;operation_summary;persist_decision_snapshot;save;scan;str;tuple;type;visibility_contexts
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:143|FUNC=_default_runtime|DEPTH=1|CALLS=DailyBuyDecisionJsonStore;DecisionOutputArchiveJsonStore;DelayedDataPilotStore;MarketScanRequest;Runtime;ShadowPortfolioStore;SignalOutcomeJsonStore;TradeJournalStore;build_current_visibility_context;build_daily_buy_decision_snapshot;build_daily_buy_decisions;build_daily_operation_summary;build_dashboard_market_scanner;build_morning_operation_snapshot;calistir;list;list_records;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:136|FUNC=_normalize_phase|DEPTH=1|CALLS=ValueError;str
+NODE=backend\app\operations\scheduled_operation_phase_runner.py:104|FUNC=_normalize_phase|DEPTH=1|CALLS=ScheduledOperationPhaseError;str
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:116|FUNC=append|DEPTH=1|CALLS=append;asdict;dumps;list;load;mkdir;write_text
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:35|FUNC=candidate_snapshot|DEPTH=1|CALLS=
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:198|FUNC=candidate_snapshot|DEPTH=1|CALLS=build_morning_operation_snapshot
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:36|FUNC=decisions|DEPTH=1|CALLS=
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:206|FUNC=decisions|DEPTH=1|CALLS=build_daily_buy_decisions;tuple
+NODE=backend\app\analysis\active_shadow_trader.py:320|FUNC=load|DEPTH=1|CALLS=ActiveShadowTraderError;TraderState;exists;get;loads;read_text
+NODE=backend\app\analysis\daily_buy_decision_cycle.py:155|FUNC=load|DEPTH=1|CALLS=DailyBuyDecisionCandidate;DailyBuyDecisionSnapshot;dict;exists;get;loads;read_text;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_outcomes.py:156|FUNC=load|DEPTH=1|CALLS=BuyDecisionOutcomeRecord;exists;get;loads;read_text;tuple
+NODE=backend\app\analysis\daily_buy_decision_output_archive.py:52|FUNC=load|DEPTH=1|CALLS=DailyBuyDecisionCandidate;DecisionOutputArchiveRecord;append;dict;exists;get;isinstance;loads;read_text;sorted;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_recommendation_governance.py:110|FUNC=load|DEPTH=1|CALLS=RecommendationGovernanceRecord;ValueError;append;exists;isinstance;loads;read_text;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:44|FUNC=load|DEPTH=1|CALLS=ScheduledRunRecord;dict;exists;get;loads;read_text;str;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:98|FUNC=load|DEPTH=1|CALLS=ScheduledRunRecord;append;dict;exists;get;isinstance;loads;read_text;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:32|FUNC=operation_summary|DEPTH=1|CALLS=
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:160|FUNC=operation_summary|DEPTH=1|CALLS=DelayedDataPilotStore;ShadowPortfolioStore;SignalOutcomeJsonStore;TradeJournalStore;build_daily_operation_summary;list;list_records
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:37|FUNC=persist_decision_snapshot|DEPTH=1|CALLS=
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:209|FUNC=persist_decision_snapshot|DEPTH=1|CALLS=DailyBuyDecisionJsonStore;DecisionOutputArchiveJsonStore;build_daily_buy_decision_snapshot
+NODE=backend\app\analysis\daily_buy_decision_cycle.py:172|FUNC=save|DEPTH=1|CALLS=asdict;dumps;items;load;mkdir;write_text
+NODE=backend\app\analysis\daily_buy_decision_outcomes.py:170|FUNC=save|DEPTH=1|CALLS=asdict;dumps;mkdir;write_text
+NODE=backend\app\analysis\daily_buy_decision_output_archive.py:82|FUNC=save|DEPTH=1|CALLS=asdict;dumps;load;mkdir;sorted;values;write_text
+NODE=backend\app\analysis\daily_buy_decision_recommendation_governance.py:126|FUNC=save|DEPTH=1|CALLS=asdict;dumps;mkdir;tuple;write_text
+NODE=backend\app\analysis\shadow_portfolio.py:223|FUNC=save|DEPTH=1|CALLS=_write;list;values
+NODE=backend\app\analysis\signal_outcome_tracking.py:236|FUNC=save|DEPTH=1|CALLS=asdict;dumps;mkdir;write_text
+NODE=backend\app\analysis\weekly_performance_report.py:524|FUNC=save|DEPTH=1|CALLS=asdict;dumps;isoformat;mkdir;write_bytes;write_text
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:61|FUNC=save|DEPTH=1|CALLS=asdict;dumps;items;load;mkdir;sorted;write_text
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:33|FUNC=scan|DEPTH=1|CALLS=
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:180|FUNC=scan|DEPTH=1|CALLS=MarketScanRequest;build_dashboard_market_scanner;calistir
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:34|FUNC=visibility_contexts|DEPTH=1|CALLS=
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:192|FUNC=visibility_contexts|DEPTH=1|CALLS=build_current_visibility_context;tuple
+NODE=backend\app\analysis\ranking_visibility_service.py:9|FUNC=build_current_visibility_context|DEPTH=2|CALLS=RankObservationJsonlStore;build_visibility_context_from_trajectory;list
+NODE=backend\app\analysis\daily_buy_decision_cycle.py:121|FUNC=build_daily_buy_decision_snapshot|DEPTH=2|CALLS=DailyBuyDecisionSnapshot;ValueError;_candidate_from_card;get;getattr;isoformat;now;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_closeout.py:99|FUNC=build_daily_buy_decisions|DEPTH=2|CALLS=DailyBuyDecision;_decision_for;append;bool;enumerate;float;getattr;int;str;tuple
+NODE=backend\app\analysis\daily_operation_panel.py:68|FUNC=build_daily_operation_summary|DEPTH=2|CALLS=DailyOperationSummary;OperationAlert;OperationTask;_latest_pilot;_signal_counts;append;bool;casefold;float;len;sort;sum;tuple
+NODE=backend\app\analysis\morning_operation_snapshot.py:28|FUNC=build_morning_operation_snapshot|DEPTH=2|CALLS=MorningOperationSnapshot;_critical_alert_count;append;build_morning_candidate_cards;len
+NODE=backend\app\analysis\market_scanner.py:146|FUNC=calistir|DEPTH=2|CALLS=DataFrame;MarketScanResult;MarketScannerError;ValueError;_sector_context_provider;_sektor_referans_evrenini_sec;apply;apply_known_measures;build_live_candidate_sector_contexts;dict;isinstance;len;profil_al;str;tara;tarama_evreni_yukle;tarama_sonucunu_filtrele;to_datetime;toplu_veri_tazeligini_degerlendir;tuple
+NODE=backend\app\analysis\momentum_discovery.py:312|FUNC=calistir|DEPTH=2|CALLS=MarketScanRequest;MomentumDiscoveryError;MomentumDiscoveryResult;MomentumFailure;_on_tazelik_getirici;_veri_getirici;analiz_et;append;dict;durum_bildir;durum_bildirimi;isinstance;isoformat;items;kaydet;len;perf_counter;rejime_gore_trend_politikasi;replace;round;str;strip;tarama_evreni_yukle;toplu_veri_tazeligini_degerlendir;trend_adayini_degerlendir;tuple;zenginlestir
+NODE=backend\app\analysis\momentum_walk_forward.py:121|FUNC=calistir|DEPTH=2|CALLS=MomentumFailure;MomentumWalkForwardOutcome;Timestamp;_gecmisle_zenginlestir;_sinif_onceligi;_sinyal_gecmisi_olustur;analiz_et;append;extend;float;get;idxmax;idxmin;int;items;len;max;min;set;sort;sort_index;sorted;str;to_datetime;to_numeric;tuple
+NODE=backend\app\analysis\momentum_walk_forward.py:349|FUNC=calistir|DEPTH=2|CALLS=MarketScanRequest;MomentumFailure;MomentumWalkForwardError;MomentumWalkForwardResult;_veri_getirici;calistir;isinstance;len;str;tarama_evreni_yukle;tuple
+NODE=backend\app\analysis\ranking_memory.py:110|FUNC=list|DEPTH=2|CALLS=RankObservation;append;exists;get;loads;read_text;strip;tuple
+NODE=backend\app\analysis\shadow_portfolio.py:185|FUNC=list|DEPTH=2|CALLS=ShadowPortfolioError;exists;from_dict;isinstance;loads;read_text;sorted;tuple
+NODE=backend\app\analysis\signal_outcome_tracking.py:259|FUNC=list|DEPTH=2|CALLS=HorizonOutcome;SignalOutcome;SignalSnapshot;append;dict;exists;fromisoformat;get;glob;loads;read_text;sorted;str;tuple
+NODE=backend\app\analysis\weekly_performance_report.py:554|FUNC=list|DEPTH=2|CALLS=exists;glob;sorted;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:116|FUNC=append|DEPTH=2|CALLS=append;asdict;dumps;list;load;mkdir;write_text
+NODE=backend\app\analysis\active_shadow_trader.py:320|FUNC=load|DEPTH=2|CALLS=ActiveShadowTraderError;TraderState;exists;get;loads;read_text
+NODE=backend\app\analysis\daily_buy_decision_cycle.py:155|FUNC=load|DEPTH=2|CALLS=DailyBuyDecisionCandidate;DailyBuyDecisionSnapshot;dict;exists;get;loads;read_text;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_outcomes.py:156|FUNC=load|DEPTH=2|CALLS=BuyDecisionOutcomeRecord;exists;get;loads;read_text;tuple
+NODE=backend\app\analysis\daily_buy_decision_output_archive.py:52|FUNC=load|DEPTH=2|CALLS=DailyBuyDecisionCandidate;DecisionOutputArchiveRecord;append;dict;exists;get;isinstance;loads;read_text;sorted;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_recommendation_governance.py:110|FUNC=load|DEPTH=2|CALLS=RecommendationGovernanceRecord;ValueError;append;exists;isinstance;loads;read_text;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:44|FUNC=load|DEPTH=2|CALLS=ScheduledRunRecord;dict;exists;get;loads;read_text;str;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:98|FUNC=load|DEPTH=2|CALLS=ScheduledRunRecord;append;dict;exists;get;isinstance;loads;read_text;tuple
+NODE=backend\app\analysis\shadow_portfolio.py:257|FUNC=_write|DEPTH=2|CALLS=ShadowPortfolioError;dumps;mkdir;replace;to_dict;with_suffix;write_text
+NODE=backend\app\analysis\ranking_visibility_context.py:23|FUNC=build_visibility_context_from_trajectory|DEPTH=3|CALLS=RankingVisibilityContext;append;build_rank_trajectories;tuple
+NODE=backend\app\analysis\ranking_memory.py:110|FUNC=list|DEPTH=3|CALLS=RankObservation;append;exists;get;loads;read_text;strip;tuple
+NODE=backend\app\analysis\shadow_portfolio.py:185|FUNC=list|DEPTH=3|CALLS=ShadowPortfolioError;exists;from_dict;isinstance;loads;read_text;sorted;tuple
+NODE=backend\app\analysis\signal_outcome_tracking.py:259|FUNC=list|DEPTH=3|CALLS=HorizonOutcome;SignalOutcome;SignalSnapshot;append;dict;exists;fromisoformat;get;glob;loads;read_text;sorted;str;tuple
+NODE=backend\app\analysis\weekly_performance_report.py:554|FUNC=list|DEPTH=3|CALLS=exists;glob;sorted;tuple
+NODE=backend\app\analysis\daily_buy_decision_cycle.py:76|FUNC=_candidate_from_card|DEPTH=3|CALLS=DailyBuyDecisionCandidate;bool;float;getattr;int;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_closeout.py:33|FUNC=_decision_for|DEPTH=3|CALLS=_negative_technical;_positive_technical;append;bool;float;fromkeys;getattr;int;list;str;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:116|FUNC=append|DEPTH=3|CALLS=append;asdict;dumps;list;load;mkdir;write_text
+NODE=backend\app\analysis\daily_operation_panel.py:44|FUNC=_latest_pilot|DEPTH=3|CALLS=max;tuple
+NODE=backend\app\analysis\daily_operation_panel.py:53|FUNC=_signal_counts|DEPTH=3|CALLS=len;tuple
+NODE=backend\app\analysis\morning_operation_snapshot.py:21|FUNC=_critical_alert_count|DEPTH=3|CALLS=str;sum
+NODE=backend\app\analysis\morning_candidate_flow.py:117|FUNC=build_morning_candidate_cards|DEPTH=3|CALLS=MorningCandidateCard;ValueError;_candidate_selection;_normalize_symbol;_operational_status;_reference_price;_selection_reason;_visibility_by_symbol;append;bool;enumerate;evaluate_jump_candidate_entry_readiness;evaluate_jump_candidate_quality;float;get;getattr;int;str;tuple
+NODE=backend\app\analysis\market_scanner.py:299|FUNC=_sektor_referans_evrenini_sec|DEPTH=3|CALLS=
+NODE=backend\app\analysis\scan_profiles.py:70|FUNC=profil_al|DEPTH=3|CALLS=ValueError;profil_adlari;strip
+NODE=backend\app\analysis\stock_scanner.py:82|FUNC=tara|DEPTH=3|CALLS=ScanFailure;StockScanResult;ValueError;_sembolleri_hazirla;analiz_et;append;enumerate;ilerleme_bildirimi;len;sorted;str;tuple
+NODE=backend\app\analysis\stock_scanner.py:175|FUNC=tara|DEPTH=3|CALLS=ScanFailure;StockScanResult;ValueError;_sembolleri_hazirla;_veri_getirici;append;enumerate;get;ilerleme_bildirimi;len;sorted;str;tuple;veriden_analiz_et
+NODE=backend\app\analysis\market_scanner.py:311|FUNC=tarama_evreni_yukle|DEPTH=3|CALLS=BistUniverseRepository;Path;ValueError;evreni_yukle;izleme_listesi_yukle;sembolleri_normalize_et
+NODE=backend\app\analysis\scan_filter.py:99|FUNC=tarama_sonucunu_filtrele|DEPTH=3|CALLS=FilteredScanResult;ScanRejection;_eleme_nedenlerini_bul;append;tuple
+NODE=backend\app\analysis\momentum_discovery.py:207|FUNC=analiz_et|DEPTH=3|CALLS=MomentumFailure;Series;_adayi_olustur;_ham_momentum_olcutleri;_sinif_onceligi;append;enumerate;float;ilerleme_bildirimi;items;len;rank;sort;sorted;str;tuple;veriden_analiz_et
+NODE=backend\app\analysis\stock_analyzer.py:97|FUNC=analiz_et|DEPTH=3|CALLS=StockAnalyzerError;_sembolu_temizle;fiyat_verisi_getir;resmi_gunluk_cercevesi_guncelle;veriden_analiz_et
+NODE=backend\app\analysis\momentum_discovery.py:320|FUNC=durum_bildir|DEPTH=3|CALLS=durum_bildirimi
+NODE=backend\dashboard.py:3432|FUNC=durum_bildir|DEPTH=3|CALLS=info
+NODE=backend\app\analysis\trend_scan_policy.py:46|FUNC=rejime_gore_trend_politikasi|DEPTH=3|CALLS=TrendScanPolicy;ValueError
+NODE=backend\app\analysis\trend_scan_policy.py:72|FUNC=trend_adayini_degerlendir|DEPTH=3|CALLS=TrendScanDecision;append;startswith;tuple
+NODE=backend\app\analysis\momentum_walk_forward.py:289|FUNC=_gecmisle_zenginlestir|DEPTH=3|CALLS=Timestamp;len;replace;tuple
+NODE=backend\app\analysis\momentum_discovery.py:968|FUNC=_sinif_onceligi|DEPTH=3|CALLS=
+NODE=backend\app\analysis\momentum_walk_forward.py:491|FUNC=_sinif_onceligi|DEPTH=3|CALLS=
+NODE=backend\app\analysis\momentum_walk_forward.py:240|FUNC=_sinyal_gecmisi_olustur|DEPTH=3|CALLS=MomentumSignalSnapshot;Timestamp;analiz_et;append;items;len;range;setdefault;sorted;to_datetime;tuple;values
+NODE=backend\app\analysis\market_scanner.py:146|FUNC=calistir|DEPTH=3|CALLS=DataFrame;MarketScanResult;MarketScannerError;ValueError;_sector_context_provider;_sektor_referans_evrenini_sec;apply;apply_known_measures;build_live_candidate_sector_contexts;dict;isinstance;len;profil_al;str;tara;tarama_evreni_yukle;tarama_sonucunu_filtrele;to_datetime;toplu_veri_tazeligini_degerlendir;tuple
+NODE=backend\app\analysis\momentum_discovery.py:312|FUNC=calistir|DEPTH=3|CALLS=MarketScanRequest;MomentumDiscoveryError;MomentumDiscoveryResult;MomentumFailure;_on_tazelik_getirici;_veri_getirici;analiz_et;append;dict;durum_bildir;durum_bildirimi;isinstance;isoformat;items;kaydet;len;perf_counter;rejime_gore_trend_politikasi;replace;round;str;strip;tarama_evreni_yukle;toplu_veri_tazeligini_degerlendir;trend_adayini_degerlendir;tuple;zenginlestir
+NODE=backend\app\analysis\momentum_walk_forward.py:121|FUNC=calistir|DEPTH=3|CALLS=MomentumFailure;MomentumWalkForwardOutcome;Timestamp;_gecmisle_zenginlestir;_sinif_onceligi;_sinyal_gecmisi_olustur;analiz_et;append;extend;float;get;idxmax;idxmin;int;items;len;max;min;set;sort;sort_index;sorted;str;to_datetime;to_numeric;tuple
+NODE=backend\app\analysis\momentum_walk_forward.py:349|FUNC=calistir|DEPTH=3|CALLS=MarketScanRequest;MomentumFailure;MomentumWalkForwardError;MomentumWalkForwardResult;_veri_getirici;calistir;isinstance;len;str;tarama_evreni_yukle;tuple
+NODE=backend\app\analysis\shadow_portfolio.py:166|FUNC=from_dict|DEPTH=3|CALLS=cls;dict;fromisoformat;get;str
+NODE=backend\app\analysis\active_shadow_trader.py:320|FUNC=load|DEPTH=3|CALLS=ActiveShadowTraderError;TraderState;exists;get;loads;read_text
+NODE=backend\app\analysis\daily_buy_decision_cycle.py:155|FUNC=load|DEPTH=3|CALLS=DailyBuyDecisionCandidate;DailyBuyDecisionSnapshot;dict;exists;get;loads;read_text;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_outcomes.py:156|FUNC=load|DEPTH=3|CALLS=BuyDecisionOutcomeRecord;exists;get;loads;read_text;tuple
+NODE=backend\app\analysis\daily_buy_decision_output_archive.py:52|FUNC=load|DEPTH=3|CALLS=DailyBuyDecisionCandidate;DecisionOutputArchiveRecord;append;dict;exists;get;isinstance;loads;read_text;sorted;str;tuple
+NODE=backend\app\analysis\daily_buy_decision_recommendation_governance.py:110|FUNC=load|DEPTH=3|CALLS=RecommendationGovernanceRecord;ValueError;append;exists;isinstance;loads;read_text;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:44|FUNC=load|DEPTH=3|CALLS=ScheduledRunRecord;dict;exists;get;loads;read_text;str;tuple
+NODE=backend\app\operations\daily_buy_decision_scheduled_runner.py:98|FUNC=load|DEPTH=3|CALLS=ScheduledRunRecord;append;dict;exists;get;isinstance;loads;read_text;tuple
+NODE=backend\app\analysis\shadow_portfolio.py:158|FUNC=to_dict|DEPTH=3|CALLS=asdict;isoformat
+
+=== 3. REACHABLE RANKING-WRITER CHECK ===
+WRITER_PATH=NONE_WITHIN_DEPTH_3
+REACHABLE_WRITER_NAMES=
+
+=== 4. EXISTING WRITER DEFINITIONS AND CALLERS ===
+--- WRITER_NAME=append_snapshot ---
+DEF_COUNT=1
+DEF=backend\app\analysis\ranking_memory.py:134|append_snapshot
+def append_snapshot(self, observations):
+        incoming = tuple(observations)
+        if not incoming:
+            return 0
+
+        existing_keys = {self._key(item) for item in self.list()}
+        new_items = [item for item in incoming if self._key(item) not in existing_keys]
+        if not new_items:
+            return 0
+
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with self.path.open("a", encoding="utf-8") as handle:
+            for item in new_items:
+                handle.write(
+                    json.dumps(asdict(item), ensure_ascii=False, sort_keys=True) + "\n"
+                )
+        return len(new_items)
+CALLER_COUNT=0
+
+--- WRITER_NAME=observations_from_research_rows ---
+DEF_COUNT=1
+DEF=backend\app\analysis\ranking_memory.py:30|observations_from_research_rows
+def observations_from_research_rows(*, rows, as_of, universe_source, profile_name):
+    materialized = tuple(rows)
+    ranked_universe_size = len(materialized)
+
+    if ranked_universe_size == 0:
+        return ()
+
+    observations = []
+
+    for row in materialized:
+        symbol = _clean_symbol(
+            row.get("Hisse")
+            or row.get("hisse")
+            or row.get("symbol")
+            or row.get("Symbol")
+        )
+
+        rank = _coerce_rank(
+            row.get("Sıra")
+            or row.get("Sira")
+            or row.get("rank")
+            or row.get("Rank")
+        )
+
+        if not symbol or rank is None:
+            continue
+
+        observations.append(
+            RankObservation(
+                as_of=str(as_of),
+                symbol=symbol,
+                rank=rank,
+                ranked_universe_size=ranked_universe_size,
+                universe_source=str(universe_source or ""),
+                profile_name=str(profile_name or ""),
+            )
+        )
+
+    return tuple(observations)
+CALLER=backend\app\analysis\historical_research_replay.py:101|replay_canonical_research|CALLS=BatchStockScanner;HistoricalResearchReplayResult;ValueError;_analysis_date;as_of.isoformat;build_cut_date_fetcher;candidate.sembol.removesuffix;enumerate;future_dates.append;int;latest.isoformat;len;max;observations_from_research_rows;profil_al;range;scanner.tara;sembolleri_normalize_et;set;str;tarama_sonucunu_filtrele;tuple
+CALLER=backend\app\analysis\ranking_snapshot_adapter.py:11|persist_research_rank_snapshot|CALLS=RankObservationJsonlStore;date.today;observations_from_research_rows
+CALLER=backend\dashboard.py:4037|bist_toplu_tarama_sonucu_goster|CALLS=Path;RankObservationJsonlStore;_alsata_aday_gonder;_alsata_adaylari_toplu_gonder;_candidate.sembol.removesuffix;_rank_history_f.write;_rank_history_log.open;_rank_history_log.parent.mkdir;_three_f.write;_three_log.open;_three_log.parent.mkdir;a.sembol.removesuffix;aciklama_listesi_goster;aday.sembol.removesuffix;aday_tablosu_kayitlari;any;apply_optional_fundamental_filter;build_ranking_movement_rows;datetime.now;elenen.sembol.removesuffix;elenen_kayitlari.append;enumerate;hata.sembol.removesuffix;len;metrik_izgarasi_goster;next;observations_from_research_rows;payloadlar.append;pd.DataFrame;pd.to_numeric;ranking_movement_table_rows;render_research_profiles_panel;row.get;satir.get;secili.sembol.removesuffix;secili_satir.get;sembol.removesuffix;sorted;st.button;st.caption;st.column_config.NumberColumn;st.column_config.TextColumn;st.columns;st.dataframe;st.error;st.expander;st.info;st.markdown;st.multiselect;st.radio;st.selectbox;st.subheader;st.success;st.warning;str;tuple;type;vbts_nedenleri.get;vbts_nedenleri.items;veri_tazeligi_kilidi_goster;webbrowser.open;write_scan_row_opinion;zip
+CALLER_COUNT=3
+
+--- WRITER_NAME=persist_research_rank_snapshot ---
+DEF_COUNT=1
+DEF=backend\app\analysis\ranking_snapshot_adapter.py:11|persist_research_rank_snapshot
+def persist_research_rank_snapshot(
+    *,
+    rows,
+    as_of: str | None = None,
+    universe_source: str = "",
+    profile_name: str = "",
+    store=None,
+) -> int:
+    observations = observations_from_research_rows(
+        rows=rows,
+        as_of=as_of or date.today().isoformat(),
+        universe_source=universe_source,
+        profile_name=profile_name,
+    )
+
+    return (store or RankObservationJsonlStore()).append_snapshot(
+        observations
+    )
+CALLER_COUNT=0
+
+=== 5. EVENING SCAN / RESEARCH ROW INPUT CANDIDATES ===
+--- CANDIDATE=backend\app\analysis\daily_buy_decision_closeout.py:33|_decision_for ---
+def _decision_for(card: object) -> tuple[str, tuple[str, ...], tuple[str, ...]]:
+    score = int(getattr(card, "technical_score"))
+    view = str(getattr(card, "technical_view", ""))
+    priority = str(getattr(card, "research_priority", "NORMAL")).upper()
+    visibility = str(getattr(card, "visibility_state", "") or "").upper()
+    rank_change = getattr(card, "rank_change", None)
+    volume = float(getattr(card, "volume_ratio", 0.0))
+    rr = float(getattr(card, "risk_reward", 0.0))
+    blocked = bool(getattr(card, "data_blocked", False))
+    selection_source = str(getattr(card, "selection_source", "TARAMA") or "TARAMA").upper()
+    jump_quality = str(getattr(card, "jump_quality", "-") or "-").upper()
+    entry_readiness = str(getattr(card, "entry_readiness", "-") or "-").upper()
+
+    reasons: list[str] = []
+    cautions: list[str] = list(getattr(card, "risks", ()) or ())
+
+    if _positive_technical(view):
+        reasons.append("Teknik görünüm pozitif")
+    if score >= 70:
+        reasons.append(f"Teknik skor güçlü ({score})")
+    if volume >= 1.0:
+        reasons.append(f"Hacim teyidi mevcut ({volume:.2f})")
+    if rr >= 1.5:
+        reasons.append(f"Risk/getiri yeterli ({rr:.2f})")
+    if priority == "HIGH":
+        reasons.append("Araştırma önceliği yüksek")
+    if rank_change is not None and int(rank_change) > 0:
+        reasons.append(f"Sıralama iyileşiyor (+{int(rank_change)})")
+    if visibility in {"IMPROVING", "RISING", "ACCELERATING"}:
+        reasons.append(f"Erken görünürlük {visibility}")
+
+    if blocked:
+        cautions.append("Kısmi/gecikmeli veri — karar mevcut son güvenilir veriyle üretildi")
+    if volume < 1.0:
+        cautions.append(f"Hacim teyidi zayıf ({volume:.2f})")
+    if rr < 1.5:
+        cautions.append(f"Risk/getiri hedefin altında ({rr:.2f})")
+    if rank_change is not None and int(rank_change) < 0:
+        cautions.append(f"Sıralama geriliyor ({int(rank_change)})")
+
+    jump_ready_for_buy = True
+    if selection_source == "SICRAMA":
+        if jump_quality not in {"UYGUN", "-"}:
+            jump_ready_for_buy = False
+            cautions.append("Sıçrama kalite kapısı AL için uygun değil")
+        if entry_readiness not in {"GİRİŞE HAZIR", "-"}:
+            jump_ready_for_buy = False
+            cautions.append(f"Sıçrama giriş hazırlığı: {entry_readiness}")
+
+    # Closeout yeni birleşik skor üretmez; mevcut kanıtlar için deterministik kapı uygular.
+    if _negative_technical(view) or score < 55 or rr < 1.0:
+        decision = "İŞLEM YOK"
+    elif (
+        _positive_technical(view)
+        and score >= 70
+        and rr >= 1.5
+        and volume >= 1.0
+        and jump_ready_for_buy
+    ):
+        decision = "AL"
+    else:
+        decision = "BEKLE"
+
+    return decision, tuple(reasons), tuple(dict.fromkeys(cautions))
+
+--- CANDIDATE=backend\app\analysis\daily_buy_decision_closeout.py:99|build_daily_buy_decisions ---
+def build_daily_buy_decisions(cards: Iterable[object]) -> tuple[DailyBuyDecision, ...]:
+    result: list[DailyBuyDecision] = []
+    for index, card in enumerate(cards, start=1):
+        decision, reasons, cautions = _decision_for(card)
+        result.append(
+            DailyBuyDecision(
+                priority=index,
+                symbol=str(getattr(card, "symbol", "")).strip().upper(),
+                decision=decision,
+                technical_score=int(getattr(card, "technical_score")),
+                technical_view=str(getattr(card, "technical_view", "")),
+                rank_change=(
+                    int(getattr(card, "rank_change"))
+                    if getattr(card, "rank_change", None) is not None
+                    else None
+                ),
+                research_priority=str(getattr(card, "research_priority", "NORMAL")),
+                visibility_state=(
+                    str(getattr(card, "visibility_state"))
+                    if getattr(card, "visibility_state", None) is not None
+                    else None
+                ),
+                volume_ratio=float(getattr(card, "volume_ratio", 0.0)),
+                risk_reward=float(getattr(card, "risk_reward", 0.0)),
+                data_status=("KISMİ" if bool(getattr(card, "data_blocked", False)) else "UYGUN"),
+                reasons=reasons,
+                cautions=cautions,
+            )
+        )
+    return tuple(result)
+
+--- CANDIDATE=backend\app\analysis\daily_buy_decision_cycle.py:76|_candidate_from_card ---
+def _candidate_from_card(
+    card: object,
+    decision: object | None = None,
+) -> DailyBuyDecisionCandidate:
+    return DailyBuyDecisionCandidate(
+        rank=int(getattr(card, "rank")),
+        symbol=str(getattr(card, "symbol", "")).strip().upper(),
+        technical_score=int(getattr(card, "technical_score")),
+        technical_view=str(getattr(card, "technical_view", "")),
+        research_priority=str(getattr(card, "research_priority", "NORMAL")),
+        visibility_state=(
+            str(getattr(card, "visibility_state"))
+            if getattr(card, "visibility_state", None) is not None
+            else None
+        ),
+        rank_change=(
+            int(getattr(card, "rank_change"))
+            if getattr(card, "rank_change", None) is not None
+            else None
+        ),
+        operational_status=str(getattr(card, "operational_status", "")),
+        data_blocked=bool(getattr(card, "data_blocked", False)),
+        decision=(
+            str(getattr(decision, "decision"))
+            if decision is not None and getattr(decision, "decision", None) is not None
+            else None
+        ),
+        volume_ratio=(
+            float(getattr(card, "volume_ratio"))
+            if getattr(card, "volume_ratio", None) is not None
+            else None
+        ),
+        risk_reward=(
+            float(getattr(card, "risk_reward"))
+            if getattr(card, "risk_reward", None) is not None
+            else None
+        ),
+        selection_source=str(getattr(card, "selection_source", "TARAMA") or "TARAMA").upper(),
+        jump_quality=str(getattr(card, "jump_quality", "-") or "-").upper(),
+        entry_readiness=str(getattr(card, "entry_readiness", "-") or "-").upper(),
+        decision_reasons=tuple(getattr(decision, "reasons", ()) or ()),
+        decision_cautions=tuple(getattr(decision, "cautions", ()) or ()),
+    )
+
+--- CANDIDATE=backend\app\analysis\daily_operation_panel.py:68|build_daily_operation_summary ---
+def build_daily_operation_summary(
+    *,
+    pilot_records: Iterable[PilotLogRecord],
+    signal_outcomes: Iterable[SignalOutcome],
+    trade_records: Iterable[TradeRecord],
+    shadow_positions: Iterable[ShadowPosition] = (),
+) -> DailyOperationSummary:
+    latest = _latest_pilot(pilot_records)
+    signals, pending, completed = _signal_counts(signal_outcomes)
+    trades = tuple(trade_records)
+
+    journal_shadow_count = sum(
+        item.account_type.casefold().startswith("deneme")
+        for item in trades
+    )
+    shadow_count = journal_shadow_count + len(tuple(shadow_positions))
+    real_count = len(trades) - journal_shadow_count
+
+    alerts: list[OperationAlert] = []
+    tasks: list[OperationTask] = []
+
+    if latest is None:
+        delayed_status = "Ölçüm yok"
+        delayed_age = None
+        delayed_locked = True
+        alerts.append(
+            OperationAlert(
+                1,
+                "Kritik",
+                "Gecikmeli veri ölçümü yok",
+                "Gün içi veri kalitesi ve gecikme durumu doğrulanamadı.",
+            )
+        )
+        tasks.append(
+            OperationTask(
+                1,
+                "Gecikmeli veriyi güncelle",
+                "Pilot ekranda en az bir ölçüm alın.",
+                "Gecikmeli Veri Pilotu",
+            )
+        )
+    else:
+        delayed_age = float(latest.measured_delay_minutes)
+
+        # Günlük Operasyon son geçerli kapanış verisi ile çalışabilir.
+        # Sert kilit yalnızca kullanılabilir veri hiç yoksa uygulanır.
+        delayed_locked = bool(
+            latest.locked and latest.status in {"Veri yok", "Ölçüm yok"}
+        )
+        delayed_status = (
+            latest.status
+            if not latest.locked or delayed_locked
+            else "Eski/gecikmeli veri — son geçerli veriyle devam"
+        )
+
+        if latest.locked and not delayed_locked:
+            alerts.append(
+                OperationAlert(
+                    2,
+                    "Uyarı",
+                    "Veri eski/gecikmeli — operasyon devam ediyor",
+                    "Son geçerli güvenilir veri kullanılıyor; yeni veri geldikçe yeniden değerlendirilecek.",
+                )
+            )
+        elif delayed_locked:
+            alerts.append(
+                OperationAlert(
+                    1,
+                    "Kritik",
+                    "Kullanılabilir veri yok",
+                    latest.status,
+                )
+            )
+
+        if delayed_locked:
+            tasks.append(
+                OperationTask(
+                    1,
+                    "Veri kaynağını yeniden kontrol et",
+                    "Yeni ölçüm alıp eksik bar ve gecikmeyi doğrulayın.",
+                    "Gecikmeli Veri Pilotu",
+                )
+            )
+        if latest.preview_only and not latest.locked:
+            alerts.append(
+                OperationAlert(
+                    3,
+                    "Bilgi",
+                    "Gün içi ön izleme",
+                    "Gecikmeli veri kesin işlem sinyali değildir.",
+                )
+            )
+
+        if latest.missing_bar_count > 0:
+            alerts.append(
+                OperationAlert(
+                    2,
+                    "Uyarı",
+                    "Eksik gün içi bar",
+                    f"{latest.missing_bar_count} bar eksik.",
+                )
+            )
+
+    if pending > 0:
+        alerts.append(
+            OperationAlert(
+                2,
+                "Uyarı",
+                "Bekleyen sonuç ölçümleri",
+                f"{pending} adet 5/10/20 günlük ölçüm henüz tamamlanmadı.",
+            )
+        )
+        tasks.append(
+            OperationTask(
+                2,
+                "Sinyal sonuçlarını güncelle",
+                "Tamamlanan ölçüm ufuklarını yeniden hesaplayın.",
+                "Sinyal Sonuçları",
+            )
+        )
+
+    if signals == 0:
+        tasks.append(
+            OperationTask(
+                2,
+                "İlk sinyal kaydını oluştur",
+                "Karar matrisi sonucu için referans kayıt oluşturun.",
+                "Sinyal Sonuçları",
+            )
+        )
+
+    if shadow_count == 0:
+        tasks.append(
+            OperationTask(
+                3,
+                "Gölge işlem kaydı oluştur",
+                "Gerçek para kullanmadan işlem günlüğü verisi biriktirin.",
+                "İşlem Kayıp Analizi",
+            )
+        )
+... <TRUNCATED AFTER 140 LINES>
+
+--- CANDIDATE=backend\app\analysis\market_scanner.py:146|calistir ---
+def calistir(
+        self,
+        istek: MarketScanRequest,
+        ilerleme_bildirimi: ProgressCallback | None = None,
+    ) -> MarketScanResult:
+        vbts_engellenen_semboller: tuple[str, ...] = ()
+        vbts_engelleme_nedenleri: dict[str, tuple[str, ...]] = {}
+        vbts_dogrulama_uyarisi = self._vbts_warning
+
+        try:
+            semboller, evren_kaynagi, evren_tarihi = (
+                tarama_evreni_yukle(
+                    istek,
+                    evren_repository=self._evren_repository,
+                    izleme_listesi_yolu=self._izleme_listesi_yolu,
+                )
+            )
+
+            if self._vbts_scan_filter is not None:
+                if self._vbts_control_date is None:
+                    raise ValueError(
+                        "VBTS kontrol tarihi belirtilmelidir."
+                    )
+
+                if self._vbts_control_time is None:
+                    raise ValueError(
+                        "VBTS kontrol zamanı belirtilmelidir."
+                    )
+
+                try:
+                    vbts_sonucu = self._vbts_scan_filter.apply(
+                        symbols=semboller,
+                        control_date=self._vbts_control_date,
+                        control_time=self._vbts_control_time,
+                    )
+                except VbtsDatasetNotUsableError:
+                    if self._vbts_hard_block:
+                        raise
+
+                    vbts_dogrulama_uyarisi = (
+                        "VBTS veri paketi güncel ve doğrulanmış değil. "
+                        "Tarama devam etti; dosyada bilinen aktif tedbirler "
+                        "uyarı olarak gösterilir, yeni tedbirler eksik olabilir."
+                    )
+                    vbts_sonucu = self._vbts_scan_filter.apply_known_measures(
+                        symbols=semboller,
+                        control_date=self._vbts_control_date,
+                    )
+                    vbts_engellenen_semboller = vbts_sonucu.blocked_symbols
+                    vbts_engelleme_nedenleri = dict(vbts_sonucu.block_reasons)
+                else:
+                    vbts_engellenen_semboller = vbts_sonucu.blocked_symbols
+                    vbts_engelleme_nedenleri = dict(vbts_sonucu.block_reasons)
+                    if self._vbts_hard_block:
+                        semboller = vbts_sonucu.allowed_symbols
+
+            profil = profil_al(istek.profil_adi)
+
+            tarama = self._tarayici.tara(
+                semboller=semboller,
+                ilerleme_bildirimi=ilerleme_bildirimi,
+            )
+
+            filtrelenmis = tarama_sonucunu_filtrele(
+                tarama=tarama,
+                kriterler=profil.kriterler,
+            )
+
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+
+            raise MarketScannerError(str(hata)) from hata
+
+        adaylar = tuple(
+            filtrelenmis.adaylar[: istek.maksimum_aday]
+        )
+
+        sektor_baglamlari: dict[str, CandidateSectorContext] = {}
+        sektor_baglami_uyarisi: str | None = None
+        sektor_referans_evreni: str | None = None
+
+        if istek.sektor_baglami_aktif and adaylar:
+            sektor_referans_evreni = _sektor_referans_evrenini_sec(
+                istek.evren
+            )
+            sembol_listesi = tuple(aday.sembol for aday in adaylar)
+
+            try:
+                if self._sector_context_provider is not None:
+                    sektor_paketi = self._sector_context_provider(
+                        sembol_listesi,
+                        sektor_referans_evreni,
+                    )
+                else:
+                    sektor_paketi = build_live_candidate_sector_contexts(
+                        sembol_listesi,
+                        reference_universe=sektor_referans_evreni,
+                        repository=self._evren_repository,
+                    )
+
+                sektor_baglamlari = dict(sektor_paketi.contexts)
+                sektor_referans_evreni = sektor_paketi.reference_universe
+
+                if sektor_paketi.errors:
+                    sektor_baglami_uyarisi = (
+                        "Sektör bağlamı kısmen üretildi; "
+                        f"{len(sektor_paketi.errors)} sektör/üyelik "
+                        "sınırlaması kaydedildi. Teknik tarama sonucu "
+                        "değiştirilmedi."
+                    )
+            except Exception as hata:
+                if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                    raise
+                sektor_baglami_uyarisi = (
+                    "Sektör bağlamı üretilemedi: "
+                    f"{hata}. Teknik tarama sonucu değiştirilmedi."
+                )
+
+        tum_sonuclar = tuple(tarama.basarili_sonuclar)
+
+        tazelik_verileri = {
+            sonuc.sembol: pd.DataFrame(
+                {"Close": [sonuc.kapanis]},
+                index=pd.to_datetime([sonuc.analiz_tarihi]),
+            )
+            for sonuc in tum_sonuclar
+        }
+
+        veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+            tazelik_verileri
+        )
+
+        return MarketScanResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=evren_kaynagi,
+            evren_tarihi=evren_tarihi,
+            evren_sembol_sayisi=len(semboller),
+            profil=profil,
+            filtrelenmis=filtrelenmis,
+... <TRUNCATED AFTER 140 LINES>
+
+--- CANDIDATE=backend\app\analysis\momentum_discovery.py:207|analiz_et ---
+def analiz_et(
+        self,
+        veriler: dict[str, pd.DataFrame],
+        ilerleme_bildirimi: ProgressCallback | None = None,
+    ) -> tuple[tuple[MomentumCandidate, ...], tuple[MomentumFailure, ...]]:
+        if not veriler:
+            return (), ()
+
+        hamlar: dict[str, dict[str, object]] = {}
+        hatalar: list[MomentumFailure] = []
+        semboller = tuple(sorted(veriler))
+
+        for sira, sembol in enumerate(semboller, start=1):
+            if ilerleme_bildirimi is not None:
+                ilerleme_bildirimi(sira, len(semboller), sembol)
+            try:
+                hamlar[sembol] = _ham_momentum_olcutleri(veriler[sembol])
+            except (ValueError, KeyError, TypeError) as hata:
+                hatalar.append(MomentumFailure(sembol=sembol, hata=str(hata)))
+
+        if not hamlar:
+            return (), tuple(hatalar)
+
+        goreceli_seri = pd.Series(
+            {sembol: float(ham["goreceli_ham"]) for sembol, ham in hamlar.items()},
+            dtype=float,
+        )
+        goreceli_egim_seri = pd.Series(
+            {
+                sembol: float(ham["goreceli_egim_ham"])
+                for sembol, ham in hamlar.items()
+            },
+            dtype=float,
+        )
+        yuzdelikler = goreceli_seri.rank(pct=True, method="average")
+        egim_yuzdelikleri = goreceli_egim_seri.rank(pct=True, method="average")
+
+        adaylar: list[MomentumCandidate] = []
+        for sembol, ham in hamlar.items():
+            try:
+                teknik = self._analiz_motoru.veriden_analiz_et(
+                    sembol=sembol,
+                    fiyat_verisi=veriler[sembol],
+                )
+                adaylar.append(
+                    _adayi_olustur(
+                        sembol=sembol,
+                        ham=ham,
+                        goreceli_yuzdelik=float(yuzdelikler.loc[sembol]),
+                        goreceli_egim_yuzdelik=float(egim_yuzdelikleri.loc[sembol]),
+                        teknik=teknik,
+                    )
+                )
+            except (ValueError, StockAnalyzerError) as hata:
+                hatalar.append(MomentumFailure(sembol=sembol, hata=str(hata)))
+
+        adaylar.sort(
+            key=lambda aday: (
+                _sinif_onceligi(aday.sinif),
+                -aday.momentum_skoru,
+                -aday.teknik_skor,
+                aday.sembol,
+            )
+        )
+        return tuple(adaylar), tuple(hatalar)
+
+--- CANDIDATE=backend\app\analysis\momentum_discovery.py:312|calistir ---
+def calistir(
+        self,
+        istek: MomentumDiscoveryRequest,
+        ilerleme_bildirimi: ProgressCallback | None = None,
+        durum_bildirimi: StatusCallback | None = None,
+    ) -> MomentumDiscoveryResult:
+        baslangic_zamani = perf_counter()
+
+        def durum_bildir(mesaj: str) -> None:
+            if durum_bildirimi is not None:
+                durum_bildirimi(mesaj)
+
+        try:
+            durum_bildir("Tarama evreni hazırlanıyor...")
+            market_istegi = MarketScanRequest(
+                evren=istek.evren,
+                profil_adi="gevsek",
+                maksimum_aday=istek.maksimum_aday,
+                ozel_semboller=istek.ozel_semboller,
+                internetten_evren_guncelle=istek.internetten_evren_guncelle,
+            )
+            semboller, kaynak, tarih = tarama_evreni_yukle(
+                market_istegi,
+                evren_repository=self._evren_repository,
+                izleme_listesi_yolu=self._izleme_listesi_yolu,
+            )
+            on_tazelik_referans_sembol: str | None = None
+            if self._veri_tazeligi_kilidi_aktif:
+                on_tazelik_referans_sembol = semboller[0]
+                durum_bildir(
+                    f"{on_tazelik_referans_sembol} ile ön tazelik kontrolü yapılıyor..."
+                )
+                on_yeniden_deneme = 0
+                while True:
+                    on_veri_sonucu = self._on_tazelik_getirici(
+                        on_tazelik_referans_sembol,
+                        islem_gunu=5,
+                        indirme_donemi="1mo",
+                    )
+                    on_veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+                        on_veri_sonucu.veriler
+                    )
+                    if not on_veri_tazeligi.kilitli:
+                        break
+                    if (
+                        on_yeniden_deneme
+                        >= self._on_tazelik_azami_yeniden_deneme
+                    ):
+                        break
+                    on_yeniden_deneme += 1
+                    durum_bildir(
+                        "Referans sembol verisi güncel değil; "
+                        f"kontrollü yeniden deneme "
+                        f"{on_yeniden_deneme}/"
+                        f"{self._on_tazelik_azami_yeniden_deneme}..."
+                    )
+
+                if on_veri_tazeligi.kilitli:
+                    on_hatalar = tuple(
+                        MomentumFailure(
+                            sembol=hata.sembol,
+                            hata=hata.hata,
+                        )
+                        for hata in on_veri_sonucu.hatalar
+                    )
+                    return MomentumDiscoveryResult(
+                        evren_adi=istek.evren,
+                        evren_kaynagi=kaynak,
+                        evren_tarihi=tarih,
+                        evren_sembol_sayisi=len(semboller),
+                        basarili_sayisi=0,
+                        adaylar=(),
+                        asiri_yukselmisler=(),
+                        izleme_disi=(),
+                        hatalar=on_hatalar,
+                        veri_tazeligi=on_veri_tazeligi,
+                        piyasa_rejimi=istek.piyasa_rejimi,
+                        on_tazelik_kontrolu=True,
+                        on_tazelik_referans_sembol=(
+                            on_tazelik_referans_sembol
+                        ),
+                        toplu_tarama_baslatildi=False,
+                        indirilen_sembol_sayisi=len(
+                            on_veri_sonucu.veriler
+                        ),
+                        analiz_edilen_sembol_sayisi=0,
+                        veri_hatasi_sayisi=len(on_veri_sonucu.hatalar),
+                        toplam_sure_saniye=round(
+                            perf_counter() - baslangic_zamani,
+                            3,
+                        ),
+                        yeniden_deneme_sayisi=on_yeniden_deneme,
+                        veri_kaynagi="birincil referans veri yolu",
+                        tazelik_kilit_asamasi=(
+                            on_veri_tazeligi.kilit_asamasi
+                        ),
+                        sonraki_kontrol_zamani=(
+                            on_veri_tazeligi.sonraki_kontrol_zamani.isoformat()
+                            if on_veri_tazeligi.sonraki_kontrol_zamani
+                            is not None
+                            else ""
+                        ),
+                    )
+
+            durum_bildir(
+                f"{len(semboller)} sembol için toplu fiyat verisi indiriliyor..."
+            )
+            veri_sonucu = self._veri_getirici(
+                semboller,
+                islem_gunu=160,
+                indirme_donemi="1y",
+            )
+            veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+                veri_sonucu.veriler
+            )
+
+            kullanilabilir_veriler = dict(veri_sonucu.veriler)
+            tazelik_hatalari: list[MomentumFailure] = []
+
+            if self._veri_tazeligi_kilidi_aktif:
+                kullanilabilir_veriler = {}
+                for sembol, veri in veri_sonucu.veriler.items():
+                    sembol_tazeligi = toplu_veri_tazeligini_degerlendir(
+                        {sembol: veri}
+                    )
+                    if sembol_tazeligi.kilitli:
+                        tazelik_hatalari.append(
+                            MomentumFailure(
+                                sembol=sembol,
+                                hata=(
+                                    "Tazelik nedeniyle analiz dışı bırakıldı. "
+                                    f"Son veri: {sembol_tazeligi.en_yeni_tarih or '-'}; "
+                                    f"beklenen: {sembol_tazeligi.beklenen_tarih}."
+                                ),
+                            )
+                        )
+                        continue
+                    kullanilabilir_veriler[sembol] = veri
+
+            if (
+... <TRUNCATED AFTER 140 LINES>
+
+--- CANDIDATE=backend\app\analysis\momentum_walk_forward.py:121|calistir ---
+def calistir(
+        self,
+        veriler: dict[str, pd.DataFrame],
+        *,
+        kesim_tarihi: str,
+        ufuklar: Iterable[int] = (5, 10, 20),
+        sinyal_gecmisi_olustur: bool = False,
+        sinyal_gecmisi_adim_sayisi: int = 6,
+        sinyal_gecmisi_adim_bari: int = 5,
+    ) -> tuple[tuple[MomentumWalkForwardOutcome, ...], tuple[MomentumFailure, ...]]:
+        kesim = pd.Timestamp(kesim_tarihi)
+        ufuk = tuple(sorted(set(int(gun) for gun in ufuklar)))
+        gecmisler: dict[str, pd.DataFrame] = {}
+        tam_veriler: dict[str, pd.DataFrame] = {}
+        hatalar: list[MomentumFailure] = []
+
+        for sembol, veri in veriler.items():
+            sirali = veri.sort_index().copy()
+            tarih_indexi = pd.to_datetime(sirali.index)
+            gecmis = sirali.loc[tarih_indexi <= kesim]
+            gelecek = sirali.loc[tarih_indexi > kesim]
+            if len(gecmis) < 80:
+                hatalar.append(
+                    MomentumFailure(
+                        sembol=sembol,
+                        hata=(
+                            f"{kesim_tarihi} kesiminde yalnızca {len(gecmis)} "
+                            "işlem günü var; en az 80 gerekli."
+                        ),
+                    )
+                )
+                continue
+            if gelecek.empty:
+                hatalar.append(
+                    MomentumFailure(
+                        sembol=sembol,
+                        hata=f"{kesim_tarihi} sonrasında ileri performans verisi yok.",
+                    )
+                )
+                continue
+            gecmisler[sembol] = gecmis
+            tam_veriler[sembol] = sirali
+
+        adaylar, motor_hatalari = self._motor.analiz_et(gecmisler)
+        hatalar.extend(motor_hatalari)
+        gecmis_haritasi: dict[str, tuple[MomentumSignalSnapshot, ...]] = {}
+        if sinyal_gecmisi_olustur and gecmisler:
+            gecmis_haritasi = self._sinyal_gecmisi_olustur(
+                gecmisler,
+                adim_sayisi=sinyal_gecmisi_adim_sayisi,
+                adim_bari=sinyal_gecmisi_adim_bari,
+            )
+
+        sonuclar: list[MomentumWalkForwardOutcome] = []
+        azami_ufuk = max(ufuk)
+        for aday in adaylar:
+            sinyal_gecmisi = gecmis_haritasi.get(aday.sembol, ())
+            aday = self._gecmisle_zenginlestir(aday, sinyal_gecmisi)
+            tam = tam_veriler[aday.sembol]
+            ileri = tam.loc[pd.to_datetime(tam.index) > kesim].head(azami_ufuk)
+            kapanislar = pd.to_numeric(ileri["Close"], errors="coerce").dropna()
+            baslangic = float(aday.kapanis)
+            getiriler: list[tuple[int, float | None]] = []
+            for gun in ufuk:
+                deger = (
+                    float(kapanislar.iloc[gun - 1] / baslangic - 1.0)
+                    if len(kapanislar) >= gun and baslangic > 0
+                    else None
+                )
+                getiriler.append((gun, deger))
+
+            yuksekler = pd.to_numeric(
+                ileri["High"] if "High" in ileri.columns else ileri["Close"],
+                errors="coerce",
+            ).dropna()
+            dusukler = pd.to_numeric(
+                ileri["Low"] if "Low" in ileri.columns else ileri["Close"],
+                errors="coerce",
+            ).dropna()
+            if yuksekler.empty or dusukler.empty or baslangic <= 0:
+                mfe = None
+                mae = None
+                maksimum_fiyat = None
+                minimum_fiyat = None
+                maksimum_tarih = ""
+                minimum_tarih = ""
+            else:
+                maksimum_fiyat = float(yuksekler.max())
+                minimum_fiyat = float(dusukler.min())
+                mfe = float(maksimum_fiyat / baslangic - 1.0)
+                # Azami ters hareket kullanıcıya pozitif risk büyüklüğü olarak gösterilir.
+                mae = max(0.0, float(1.0 - minimum_fiyat / baslangic))
+                maksimum_tarih = str(pd.Timestamp(yuksekler.idxmax()).date())
+                minimum_tarih = str(pd.Timestamp(dusukler.idxmin()).date())
+
+            sonuclar.append(
+                MomentumWalkForwardOutcome(
+                    aday=aday,
+                    ileri_getiriler=tuple(getiriler),
+                    maksimum_olumlu_hareket=mfe,
+                    maksimum_ters_hareket=mae,
+                    ileri_bar_sayisi=len(ileri),
+                    maksimum_fiyat=maksimum_fiyat,
+                    maksimum_fiyat_tarihi=maksimum_tarih,
+                    minimum_fiyat=minimum_fiyat,
+                    minimum_fiyat_tarihi=minimum_tarih,
+                    sinyal_gecmisi=sinyal_gecmisi,
+                )
+            )
+
+        sonuclar.sort(
+            key=lambda sonuc: (
+                _sinif_onceligi(sonuc.aday.sinif),
+                -sonuc.aday.momentum_skoru,
+                sonuc.aday.sembol,
+            )
+        )
+        return tuple(sonuclar), tuple(hatalar)
+
+--- CANDIDATE=backend\app\analysis\momentum_walk_forward.py:240|_sinyal_gecmisi_olustur ---
+def _sinyal_gecmisi_olustur(
+        self,
+        gecmisler: dict[str, pd.DataFrame],
+        *,
+        adim_sayisi: int,
+        adim_bari: int,
+    ) -> dict[str, tuple[MomentumSignalSnapshot, ...]]:
+        tum_tarihler = sorted(
+            {
+                pd.Timestamp(tarih)
+                for veri in gecmisler.values()
+                for tarih in pd.to_datetime(veri.index)
+            }
+        )
+        if not tum_tarihler:
+            return {}
+        secili_tarihler: list[pd.Timestamp] = []
+        son = len(tum_tarihler) - 1
+        for sira in range(adim_sayisi - 1, -1, -1):
+            indeks = son - sira * adim_bari
+            if indeks >= 0:
+                secili_tarihler.append(tum_tarihler[indeks])
+
+        harita: dict[str, list[MomentumSignalSnapshot]] = {
+            sembol: [] for sembol in gecmisler
+        }
+        for tarih in secili_tarihler:
+            kesit = {
+                sembol: veri.loc[pd.to_datetime(veri.index) <= tarih]
+                for sembol, veri in gecmisler.items()
+                if len(veri.loc[pd.to_datetime(veri.index) <= tarih]) >= 80
+            }
+            adaylar, _ = self._motor.analiz_et(kesit)
+            for aday in adaylar:
+                harita.setdefault(aday.sembol, []).append(
+                    MomentumSignalSnapshot(
+                        tarih=aday.analiz_tarihi,
+                        sinif=aday.sinif,
+                        momentum_skoru=aday.momentum_skoru,
+                        kapanis=aday.kapanis,
+                        yakin_direnc=aday.yakin_direnc,
+                        kirilim_tetik_seviyesi=aday.kirilim_tetik_seviyesi,
+                        dirence_uzaklik=aday.yirmi_gunluk_zirve_uzakligi,
+                        izleme_disi_nedeni=aday.izleme_disi_nedeni,
+                    )
+                )
+        return {sembol: tuple(kayitlar) for sembol, kayitlar in harita.items()}
+
+--- CANDIDATE=backend\app\analysis\momentum_walk_forward.py:349|calistir ---
+def calistir(self, istek: MomentumWalkForwardRequest) -> MomentumWalkForwardResult:
+        try:
+            market_istegi = MarketScanRequest(
+                evren=istek.evren,
+                profil_adi="gevsek",
+                maksimum_aday=istek.maksimum_aday,
+                ozel_semboller=istek.ozel_semboller,
+                internetten_evren_guncelle=istek.internetten_evren_guncelle,
+            )
+            semboller, kaynak, tarih = tarama_evreni_yukle(
+                market_istegi,
+                evren_repository=self._evren_repository,
+                izleme_listesi_yolu=self._izleme_listesi_yolu,
+            )
+            veri_sonucu = self._veri_getirici(
+                semboller,
+                islem_gunu=420,
+                indirme_donemi="2y",
+            )
+            # Otomatik sınıf zinciri, hesap yükünü sınırlamak için küçük özel/
+            # kayıtlı listelerde hazırlanır. Büyük evrenlerde kesim sınıfı ve
+            # ileri performans yine eksiksiz hesaplanır.
+            gecmis_olustur = len(semboller) <= 10
+            tum_sonuclar, motor_hatalari = self._motor.calistir(
+                veri_sonucu.veriler,
+                kesim_tarihi=istek.kesim_tarihi,
+                ufuklar=istek.ufuklar,
+                sinyal_gecmisi_olustur=gecmis_olustur,
+                sinyal_gecmisi_adim_sayisi=istek.sinyal_gecmisi_adim_sayisi,
+                sinyal_gecmisi_adim_bari=istek.sinyal_gecmisi_adim_bari,
+            )
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+            raise MomentumWalkForwardError(str(hata)) from hata
+
+        gorunen = tuple(
+            sonuc
+            for sonuc in tum_sonuclar
+            if sonuc.aday.sinif != SINIF_IZLEME_DISI
+            and (
+                sonuc.aday.momentum_skoru >= istek.minimum_skor
+                or sonuc.aday.sinif == SINIF_KALICI_HAZIRLIK
+            )
+        )[: istek.maksimum_aday]
+        izleme_disi = tuple(
+            sonuc for sonuc in tum_sonuclar if sonuc.aday.sinif == SINIF_IZLEME_DISI
+        )
+        veri_hatalari = tuple(
+            MomentumFailure(sembol=hata.sembol, hata=hata.hata)
+            for hata in veri_sonucu.hatalar
+        )
+        return MomentumWalkForwardResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=kaynak,
+            evren_tarihi=tarih,
+            kesim_tarihi=istek.kesim_tarihi,
+            evren_sembol_sayisi=len(semboller),
+            basarili_sayisi=len(tum_sonuclar),
+            sonuclar=gorunen,
+            izleme_disi=izleme_disi,
+            hatalar=veri_hatalari + motor_hatalari,
+            sinyal_gecmisi_hesaplandi=gecmis_olustur,
+        )
+
+--- CANDIDATE=backend\app\analysis\morning_candidate_flow.py:73|_operational_status ---
+def _operational_status(
+    *,
+    technical_view: str,
+    research_priority: str,
+    data_blocked: bool,
+) -> str:
+    if data_blocked:
+        return "KISMİ VERİ — İNCELEMEYE DEVAM"
+
+    if research_priority == "HIGH":
+        return "ARAŞTIRMA ÖNCELİĞİ YÜKSEK"
+
+    if technical_view == "Pozitif Teknik Görünüm":
+        return "TEKNİK ADAY"
+
+    return "TEYİT BEKLİYOR"
+
+--- CANDIDATE=backend\app\analysis\morning_candidate_flow.py:117|build_morning_candidate_cards ---
+def build_morning_candidate_cards(
+    scan_result: object,
+    *,
+    visibility_contexts: Iterable[object] = (),
+    limit: int = 5,
+    include_movement_pool: bool = False,
+) -> tuple[MorningCandidateCard, ...]:
+    """
+    Mevcut BIST toplu tarama sırasını değiştirmeden ilk sabah aday kartlarını
+    üretir.
+
+    Bu adapter yeni skor/sinyal üretmez. BatchStockScanner/MarketScanResult
+    tarafından belirlenmiş aday sırasını korur; Early Visibility yalnız
+    araştırma bağlamı ve veri-blok durumu olarak karta eklenir.
+    """
+    if limit < 1:
+        raise ValueError("limit en az 1 olmalıdır.")
+
+    candidates = tuple(getattr(scan_result, "adaylar", ()))
+    visibility = _visibility_by_symbol(visibility_contexts)
+
+    cards: list[MorningCandidateCard] = []
+
+    selected = (
+        _candidate_selection(candidates, visibility, limit=limit)
+        if include_movement_pool
+        else tuple((candidate, "TARAMA", "Mevcut tarama sırası korunuyor.") for candidate in candidates[:limit])
+    )
+
+    for rank, (candidate, selection_source, priority_reason) in enumerate(selected, start=1):
+        symbol = _normalize_symbol(getattr(candidate, "sembol", ""))
+        signal = getattr(candidate, "sinyal")
+        risk_plan = getattr(candidate, "risk_plani")
+        context = visibility.get(symbol)
+
+        research_priority = (
+            str(getattr(context, "research_priority", "NORMAL")).upper()
+            if context is not None
+            else "NORMAL"
+        )
+        data_blocked = bool(
+            getattr(context, "data_blocked", False)
+            if context is not None
+            else False
+        )
+        visibility_state = (
+            str(getattr(context, "visibility_state"))
+            if context is not None
+            and getattr(context, "visibility_state", None) is not None
+            else None
+        )
+        rank_change = (
+            int(getattr(context, "rank_change"))
+            if context is not None
+            and getattr(context, "rank_change", None) is not None
+            else None
+        )
+
+        technical_view = str(getattr(signal, "karar"))
+
+        _jump_quality = evaluate_jump_candidate_quality(candidate)
+        _entry_readiness = evaluate_jump_candidate_entry_readiness(candidate)
+
+        cards.append(
+            MorningCandidateCard(
+                rank=rank,
+                symbol=symbol,
+                technical_score=int(getattr(signal, "skor")),
+                technical_view=technical_view,
+                research_priority=research_priority,
+                visibility_state=visibility_state,
+                rank_change=rank_change,
+                data_blocked=data_blocked,
+                volume_ratio=float(getattr(candidate, "hacim_orani")),
+                risk_reward=float(getattr(risk_plan, "risk_odul_orani")),
+                reference_price=_reference_price(candidate),
+                positive_reasons=tuple(
+                    getattr(signal, "pozitif_nedenler", ())
+                ),
+                risks=tuple(getattr(signal, "riskler", ())),
+                operational_status=_operational_status(
+                    technical_view=technical_view,
+                    research_priority=research_priority,
+                    data_blocked=data_blocked,
+                ),
+                selection_source=selection_source,
+                selection_reason=_selection_reason(
+                    source=selection_source,
+                    rank_change=rank_change,
+                ),
+                jump_quality=(
+                    "UYGUN" if _jump_quality.eligible else "FİLTRE DIŞI"
+                ),
+                jump_quality_reason=" · ".join(_jump_quality.reasons),
+                entry_readiness=_entry_readiness.state,
+                entry_readiness_reason=" · ".join(_entry_readiness.reasons),
+                entry_extension_atr=_entry_readiness.extension_atr,
+                priority_reason=priority_reason,
+            )
+        )
+
+    return tuple(cards)
+
+--- CANDIDATE=backend\app\analysis\morning_operation_snapshot.py:28|build_morning_operation_snapshot ---
+def build_morning_operation_snapshot(
+    *,
+    operation_summary: DailyOperationSummary,
+    scan_result: object,
+    visibility_contexts: Iterable[object] = (),
+    limit: int = 5,
+) -> MorningOperationSnapshot:
+    """
+    Daily Operations sağlık kanıtı ile mevcut tarama adaylarını tek sabah
+    snapshot'ında birleştirir.
+
+    Yeni skor/sinyal üretmez. Veri güvenlik kilidi veya kritik operasyon
+    uyarısı aday listesini kapatmaz; mevcut son güvenilir tarama sonucu
+    uyarılı şekilde sunulmaya devam eder.
+    """
+    critical_count = _critical_alert_count(operation_summary)
+
+    cards = build_morning_candidate_cards(
+        scan_result,
+        visibility_contexts=visibility_contexts,
+        limit=limit,
+        include_movement_pool=True,
+    )
+
+    warning_reasons: list[str] = []
+    if operation_summary.delayed_data_locked:
+        warning_reasons.append("Veri güvenlik kilidi aktif")
+    if critical_count > 0:
+        warning_reasons.append(f"{critical_count} kritik operasyon uyarısı mevcut")
+
+    return MorningOperationSnapshot(
+        operation_state="UYARILI_HAZIR" if warning_reasons else "HAZIR",
+        operation_reason=(
+            "; ".join(warning_reasons) + ". Son geçerli aday listesi korunuyor."
+            if warning_reasons
+            else "Sabah aday akışı operasyona hazır."
+        ),
+        candidate_count=len(cards),
+        candidates=cards,
+    )
+
+--- CANDIDATE=backend\app\analysis\ranking_visibility_context.py:23|build_visibility_context_from_trajectory ---
+def build_visibility_context_from_trajectory(
+    observations: Iterable[RankObservation],
+) -> tuple[RankingVisibilityContext, ...]:
+    trajectories = build_rank_trajectories(observations)
+
+    results = []
+
+    for item in trajectories:
+        gain = item.gain_3s or item.gain_1s or 0
+
+        if gain > 0:
+            state = "IMPROVING"
+        elif gain < 0:
+            state = "WEAKENING"
+        else:
+            state = "STABLE"
+
+        priority = (
+            "HIGH"
+            if gain >= 20
+            else "MEDIUM"
+            if gain > 0
+            else "NORMAL"
+        )
+
+        results.append(
+            RankingVisibilityContext(
+                symbol=item.symbol,
+                current_rank=item.current_rank,
+                previous_rank=item.rank_3s,
+                rank_change=gain,
+                visibility_state=state,
+                zone_transition=(
+                    item.zone_events[0]
+                    if item.zone_events
+                    else None
+                ),
+                research_priority=priority,
+            )
+        )
+
+    return tuple(results)
+
+--- CANDIDATE=backend\app\analysis\scan_filter.py:99|tarama_sonucunu_filtrele ---
+def tarama_sonucunu_filtrele(
+    tarama: StockScanResult,
+    kriterler: ScanFilterCriteria,
+) -> FilteredScanResult:
+    """
+    Başarılı tarama sonuçlarına belirtilen filtreleri uygular.
+
+    Elenen hisselerin bütün analiz sonucu korunur.
+    """
+    adaylar: list[StockAnalysisResult] = []
+    elenenler: list[ScanRejection] = []
+
+    for sonuc in tarama.basarili_sonuclar:
+        nedenler = _eleme_nedenlerini_bul(
+            sonuc=sonuc,
+            kriterler=kriterler,
+        )
+
+        if nedenler:
+            elenenler.append(
+                ScanRejection(
+                    sembol=sonuc.sembol,
+                    nedenler=tuple(nedenler),
+                    sonuc=sonuc,
+                )
+            )
+        else:
+            adaylar.append(sonuc)
+
+    return FilteredScanResult(
+        adaylar=tuple(adaylar),
+        elenenler=tuple(elenenler),
+        hatalar=tarama.hatalar,
+    )
+
+--- CANDIDATE=backend\app\operations\daily_buy_decision_scheduled_runner.py:143|_default_runtime ---
+def _default_runtime() -> ScheduledRunRuntime:
+    from backend.app.analysis.daily_buy_decision_closeout import build_daily_buy_decisions
+    from backend.app.analysis.daily_buy_decision_cycle import (
+        DailyBuyDecisionJsonStore,
+        build_daily_buy_decision_snapshot,
+    )
+    from backend.app.analysis.daily_operation_panel import build_daily_operation_summary
+    from backend.app.analysis.morning_operation_snapshot import build_morning_operation_snapshot
+    from backend.app.analysis.ranking_visibility_service import build_current_visibility_context
+    from backend.app.analysis.market_scanner import MarketScanRequest
+    from backend.app.compliance.dashboard_market_scanner_source_factory import build_dashboard_market_scanner
+    from backend.app.data.delayed_data_pilot import DelayedDataPilotStore
+    from backend.app.analysis.signal_outcome_tracking import SignalOutcomeJsonStore
+    from backend.app.history.trade_journal import TradeJournalStore, TradeJournalError
+    from backend.app.analysis.shadow_portfolio import ShadowPortfolioStore, ShadowPortfolioError
+
+    class Runtime:
+        def operation_summary(self) -> object:
+            pilot_store = DelayedDataPilotStore()
+            signal_store = SignalOutcomeJsonStore()
+            trade_store = TradeJournalStore()
+            shadow_store = ShadowPortfolioStore()
+            try:
+                trades = trade_store.list_records()
+            except TradeJournalError:
+                trades = ()
+            try:
+                shadow = shadow_store.list()
+            except ShadowPortfolioError:
+                shadow = ()
+            return build_daily_operation_summary(
+                pilot_records=pilot_store.list(),
+                signal_outcomes=signal_store.list(),
+                trade_records=trades,
+                shadow_positions=shadow,
+            )
+
+        def scan(self) -> object:
+            service = build_dashboard_market_scanner(vbts_hard_block=False)
+            request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi="dengeli",
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            return service.calistir(request)
+
+        def visibility_contexts(self) -> tuple[object, ...]:
+            try:
+                return tuple(build_current_visibility_context())
+            except Exception:
+                return ()
+
+        def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+            return build_morning_operation_snapshot(
+                operation_summary=operation_summary,
+                scan_result=scan_result,
+                visibility_contexts=visibility_contexts,
+                limit=5,
+            )
+
+        def decisions(self, cards: tuple[object, ...]) -> tuple[object, ...]:
+            return tuple(build_daily_buy_decisions(cards))
+
+        def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None:
+            snapshot = build_daily_buy_decision_snapshot(
+                cards,
+                phase=phase,
+                now=now,
+                decisions=decisions,
+            )
+            DailyBuyDecisionJsonStore().save(snapshot)
+            from backend.app.analysis.daily_buy_decision_output_archive import (
+                DecisionOutputArchiveJsonStore,
+            )
+            DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+
+    return Runtime()
+
+--- CANDIDATE=backend\app\operations\daily_buy_decision_scheduled_runner.py:225|execute_scheduled_run ---
+def execute_scheduled_run(
+    phase: str,
+    *,
+    now: datetime | None = None,
+    runtime: ScheduledRunRuntime | None = None,
+    store: ScheduledRunJsonStore | None = None,
+    force: bool = False,
+    audit_store: ScheduledRunAuditJsonStore | None = None,
+    run_kind: str = "SCHEDULED",
+) -> ScheduledRunRecord:
+    phase_value = _normalize_phase(phase)
+    timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    run_date = timestamp.date().isoformat()
+    state_store = store or ScheduledRunJsonStore()
+    history_store = audit_store or ScheduledRunAuditJsonStore()
+    key = f"{run_date}:{phase_value}"
+    existing = state_store.load().get(key)
+    if existing is not None and existing.status == "SUCCESS" and not force:
+        skipped = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=existing.started_at,
+            finished_at=existing.finished_at,
+            status="SKIPPED",
+            candidate_count=existing.candidate_count,
+            buy_symbols=existing.buy_symbols,
+            detail="Aynı gün/faz için başarılı otomatik koşu zaten mevcut.",
+            run_kind=run_kind,
+        )
+        history_store.append(skipped)
+        return skipped
+
+    started_at = timestamp.isoformat(timespec="seconds")
+    engine = runtime or _default_runtime()
+    try:
+        summary = engine.operation_summary()
+        scan_result = engine.scan()
+        visibility = engine.visibility_contexts()
+        candidate_snapshot = engine.candidate_snapshot(summary, scan_result, visibility)
+        cards = tuple(getattr(candidate_snapshot, "candidates", ()) or ())
+        decisions = engine.decisions(cards)
+        engine.persist_decision_snapshot(cards, decisions, phase_value, timestamp)
+        buy_symbols = tuple(
+            str(getattr(item, "symbol", "")).strip().upper()
+            for item in decisions
+            if str(getattr(item, "decision", "")).strip().upper() == "AL"
+        )
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="SUCCESS",
+            candidate_count=len(cards),
+            buy_symbols=buy_symbols,
+            detail="Seans sonu/sabah günlük karar koşusu tamamlandı.",
+            run_kind=run_kind,
+        )
+    except Exception as error:
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="FAILED",
+            candidate_count=0,
+            buy_symbols=(),
+            detail=f"{type(error).__name__}: {error}",
+            run_kind=run_kind,
+        )
+    state_store.save(record)
+    history_store.append(record)
+    return record
+
+--- CANDIDATE=backend\app\operations\daily_buy_decision_scheduled_runner.py:35|candidate_snapshot ---
+def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object: ...
+
+--- CANDIDATE=backend\app\operations\daily_buy_decision_scheduled_runner.py:180|scan ---
+def scan(self) -> object:
+            service = build_dashboard_market_scanner(vbts_hard_block=False)
+            request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi="dengeli",
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            return service.calistir(request)
+
+--- CANDIDATE=backend\app\operations\daily_buy_decision_scheduled_runner.py:198|candidate_snapshot ---
+def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+            return build_morning_operation_snapshot(
+                operation_summary=operation_summary,
+                scan_result=scan_result,
+                visibility_contexts=visibility_contexts,
+                limit=5,
+            )
+
+INPUT_CANDIDATE_FUNCTIONS=20
+
+=== 6. TRACE DECISION ===
+DECISION=LEGACY_EVENING_NOT_CONNECTED_TO_RANKING_WRITER
+NEXT=DESIGN_MINIMAL_CANONICAL_CLOSE_RANK_SNAPSHOT_ADAPTER_WIRING
+SCHEDULER_CHANGES_REQUIRED=NO
+SECOND_SCANNER_REQUIRED=NO
+NEW_STORE_REQUIRED=NO
+EXISTING_WRITER_REUSE_REQUIRED=YES
+PRODUCTION_THRESHOLD_SELECTION=BLOCKED
+CURRENT_FAST_MOVER_BASELINE=3418_PASS
+
+=== 7. SAFETY ===
+READ_ONLY=YES
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+RANKING_MEMORY_WRITE=NO
+PROFILE_MEMORY_WRITE=NO
+EARLY_VISIBILITY_MUTATION=NO
+MAIN_TOP5_MUTATION=NO
+AL_SAT_MUTATION=NO
+REPORT_ONLY=YES

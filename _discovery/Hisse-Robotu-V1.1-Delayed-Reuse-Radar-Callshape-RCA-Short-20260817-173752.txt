@@ -1,0 +1,11 @@
+﻿PUBLIC_SYMBOLS=OpportunityRadarResult,run_opportunity_radar
+IMPORT_COUNT=1
+IMPORT LINE=32 MODULE=backend.app.ui.opportunity_radar_dashboard NAMES=[('render_opportunity_radar', None)]
+CALL_COUNT=1
+CALL LINE=9153 NAME=render_opportunity_radar SRC=render_opportunity_radar()
+CONTAINER_COUNT=5
+CONTAINER LINE=2263 NAME=guncel_teknik_analiz_formu
+CONTAINER LINE=4163 NAME=bist_toplu_tarama_formu
+CONTAINER LINE=5550 NAME=temel_analiz_formu
+CONTAINER LINE=7722 NAME=gunluk_operasyon_paneli_formu
+CONTAINER LINE=9090 NAME=main

@@ -1,0 +1,22 @@
+BIST VERI KOK NEDEN TESHISI
+========================================================================
+Hedef tarih: 2026-08-03
+Python: 3.14.6 | yfinance: 1.5.1
+
+SEMBOL OZETI
+------------------------------------------------------------------------
+THYAO.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+ASELS.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+TUPRS.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+SAHOL.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+KCHOL.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+AKBNK.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+GARAN.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+BIMAS.IS   RAW=EKSIK YF_DL=YOK   YF_HIST=YOK  
+
+SONUC
+------------------------------------------------------------------------
+UPSTREAM_YAHOO_OR_PROVIDER_GAP
+Yahoo ham chart yanıtında 2026-08-03 OHLC yalnızca 0/8 sembolde tam.
+
+JSON: D:\Projects\Hisse-Robotu\bist_veri_kok_neden_20260804_121750.json

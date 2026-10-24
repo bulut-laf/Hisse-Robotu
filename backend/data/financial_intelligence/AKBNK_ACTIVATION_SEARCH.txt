@@ -1,0 +1,267 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_model_contract.py:110:def assert_bank_model_input_ready(
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_model_contract.py:136:"assert_bank_model_input_ready",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:49:scoring_ready: bool
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:50:production_evidence: bool
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:51:activation_ready: bool
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:84:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:85:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:86:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:115:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:116:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:117:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:130:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:131:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:132:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:145:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:146:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:147:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:160:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:161:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:162:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:184:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:185:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:186:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:203:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:204:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:205:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:218:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:219:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:220:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:237:scoring_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:238:production_evidence=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:239:activation_ready=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:251:scoring_ready=True,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:252:production_evidence=True,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_production_source_onboarding.py:253:activation_ready=True,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_scoring_engine.py:10:assert_bank_model_input_ready,
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_bank_scoring_engine.py:197:assert_bank_model_input_ready(payload)
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_canonical_adapter_acceptance.py:46:print("PRODUCTION_EVIDENCE=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:108:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:110:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:117:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:172:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:175:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:190:"scoring_ready": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:195:"production_evidence": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:209:print(f"SCORING_READY={result['scoring_ready']}")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_bank_real_data_intake_gate.py:211:print(f"PRODUCTION_EVIDENCE={result['production_evidence']}")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_canonical_adapter_acceptance.py:33:print("PRODUCTION_EVIDENCE=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:167:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:171:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:189:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:193:print("PRODUCTION_EVIDENCE=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:269:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:272:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:303:"scoring_ready": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:309:"production_evidence": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:343:f"SCORING_READY="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:344:f"{result['scoring_ready']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:351:f"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_holding_real_data_intake_gate.py:352:f"{result['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_canonical_adapter_acceptance.py:33:print("PRODUCTION_EVIDENCE=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:167:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:171:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:202:"SCORING_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:208:"PRODUCTION_EVIDENCE=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:291:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:294:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:325:"scoring_ready": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:331:"production_evidence": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:367:f"SCORING_READY="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:368:f"{result['scoring_ready']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:375:f"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_insurance_real_data_intake_gate.py:376:f"{result['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_canonical_adapter_acceptance.py:33:print("PRODUCTION_EVIDENCE=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:167:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:171:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:189:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:193:print("PRODUCTION_EVIDENCE=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:269:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:272:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:303:"scoring_ready": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:309:"production_evidence": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:343:f"SCORING_READY="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:344:f"{result['scoring_ready']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:351:f"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_reit_real_data_intake_gate.py:352:f"{result['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_release_status_manifest.py:74:"production_evidence_synthesized":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:34:production_evidence = {}
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:54:production_evidence[sector] = bool(
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:55:data.get("production_evidence")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:58:if production_evidence[sector]:
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:60:f"{sector}_UNEXPECTED_PRODUCTION_EVIDENCE"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:73:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:74:production_evidence,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:112:f"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_2_sector_expansion_closure.py:113:f"{manifest['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_bank_metric_contract_pdf_evidence_mapping_preflight.py:399:"scoring_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_bank_metric_contract_pdf_evidence_mapping_preflight.py:401:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_bank_metric_contract_pdf_evidence_mapping_preflight.py:583:"SCORING_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_bank_metric_contract_pdf_evidence_mapping_preflight.py:586:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_dotted_key_bank_canonical_gate.py:45:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_dotted_key_bank_canonical_gate.py:46:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_dotted_key_bank_canonical_gate.py:47:"activation_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_dotted_key_bank_canonical_gate.py:67:result["production_evidence"] = True
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_dotted_key_bank_canonical_gate.py:77:print(f"PRODUCTION_EVIDENCE={result['production_evidence']}")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_dotted_key_bank_canonical_gate.py:79:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_dotted_key_bank_canonical_gate.py:80:print("ACTIVATION_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:158:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:160:"scoring_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:162:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:228:"production_evidence"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:297:"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:298:f"{result['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:301:"SCORING_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate.py:304:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:363:"scoring_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:365:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:367:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:580:"production_evidence"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:684:"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:685:f"{serializable['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:688:"SCORING_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate.py:691:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:202:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:208:"scoring_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:210:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:373:"production_evidence"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:407:"production_evidence"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:496:"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:497:f"{result['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:507:"SCORING_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse.py:510:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_evidence_normalization_text_extraction.py:379:"scoring_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_evidence_normalization_text_extraction.py:381:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_evidence_normalization_text_extraction.py:656:"SCORING_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_evidence_normalization_text_extraction.py:659:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_signature_offset_repair.py:151:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_signature_offset_repair.py:152:"activation_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_signature_offset_repair.py:376:"SCORING_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_kap_pdf_signature_offset_repair.py:379:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe.py:109:"production_evidence": bool(contexts),
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe.py:111:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe.py:112:"activation_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe.py:135:print(f"PRODUCTION_EVIDENCE={bool(contexts)}")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe.py:137:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe.py:138:print("ACTIVATION_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate.py:51:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate.py:52:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate.py:53:"activation_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate.py:75:result["production_evidence"] = True
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate.py:95:print(f"PRODUCTION_EVIDENCE={result['production_evidence']}")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate.py:96:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate.py:97:print("ACTIVATION_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:158:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:160:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:161:"activation_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:238:result["production_evidence"] = True
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:254:not result["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:303:print(f"PRODUCTION_EVIDENCE={result['production_evidence']}")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:305:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition.py:306:print("ACTIVATION_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_capital_ratio_exact_evidence_probe.py:97:"production_evidence": True,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_capital_ratio_exact_evidence_probe.py:99:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_capital_ratio_exact_evidence_probe.py:100:"activation_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_capital_ratio_exact_evidence_probe.py:122:print("PRODUCTION_EVIDENCE=True")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_capital_ratio_exact_evidence_probe.py:124:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_capital_ratio_exact_evidence_probe.py:125:print("ACTIVATION_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate.py:100:"production_evidence": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate.py:101:"scoring_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate.py:102:"activation_ready": False,
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate.py:126:result["production_evidence"] = True
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate.py:147:print(f"PRODUCTION_EVIDENCE={result['production_evidence']}")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate.py:148:print("SCORING_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate.py:149:print("ACTIVATION_READY=False")
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py:307:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py:309:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py:368:"PRODUCTION_EVIDENCE=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py:371:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe.py:201:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe.py:203:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe.py:275:f"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe.py:276:f"{result['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe.py:279:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_official_kap_financial_acquisition_preflight.py:282:"bank_activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_official_kap_financial_acquisition_preflight.py:388:"BANK_ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_production_source_onboarding_acceptance.py:34:f"CONTRACT_PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_production_source_onboarding_acceptance.py:35:f"{blocked.production_evidence}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_production_source_onboarding_acceptance.py:38:f"CONTRACT_ACTIVATION_READY="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_production_source_onboarding_acceptance.py:39:f"{blocked.activation_ready}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_real_source_discovery_evidence_intake.py:281:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_real_source_discovery_evidence_intake.py:285:"activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_real_source_discovery_evidence_intake.py:332:f"PRODUCTION_EVIDENCE="
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_real_source_discovery_evidence_intake.py:333:f"{result['production_evidence']}"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_bank_real_source_discovery_evidence_intake.py:336:"ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_official_kap_bank_financial_acquisition_contract.py:203:"production_evidence":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_official_kap_bank_financial_acquisition_contract.py:205:"bank_activation_ready":
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_official_kap_bank_financial_acquisition_contract.py:263:"PRODUCTION_EVIDENCE=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_3_official_kap_bank_financial_acquisition_contract.py:266:"BANK_ACTIVATION_READY=False"
+D:\Projects\Hisse-Robotu\backend\scripts\run_fin_prod_v8_fin016_production_closure.py:55:"production_evidence": contract.get("production_evidence"),
+D:\Projects\Hisse-Robotu\backend\scripts\run_fin_prod_v8_fin016_validation_report.py:38:payload["production_evidence"] = False
+D:\Projects\Hisse-Robotu\backend\scripts\run_fin_prod_v9_historical_pit_producer_and_calibration.py:345:"production_evidence": count > 0,
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_model_contract_v1.py:8:assert_bank_model_input_ready,
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_model_contract_v1.py:47:assert_bank_model_input_ready(payload)
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_model_contract_v1.py:73:assert_bank_model_input_ready(payload)
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:35:assert result.production_evidence is True
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:36:assert result.activation_ready is True
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:38:assert result.scoring_ready is True
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:50:assert result.production_evidence is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:51:assert result.activation_ready is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:68:assert result.production_evidence is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:69:assert result.activation_ready is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:82:assert result.production_evidence is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:97:assert result.production_evidence is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_production_source_onboarding_v1.py:98:assert result.activation_ready is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_real_data_intake_gate_v1.py:27:assert data["scoring_ready"] is True
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_real_data_intake_gate_v1.py:28:assert data["production_evidence"] is True
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_real_data_intake_gate_v1.py:31:assert data["scoring_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_holding_real_data_intake_gate_v1.py:69:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_holding_real_data_intake_gate_v1.py:73:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_holding_real_data_intake_gate_v1.py:82:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_holding_real_data_intake_gate_v1.py:86:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_insurance_real_data_intake_gate_v1.py:69:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_insurance_real_data_intake_gate_v1.py:73:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_insurance_real_data_intake_gate_v1.py:82:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_insurance_real_data_intake_gate_v1.py:86:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_reit_real_data_intake_gate_v1.py:69:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_reit_real_data_intake_gate_v1.py:73:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_reit_real_data_intake_gate_v1.py:82:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_reit_real_data_intake_gate_v1.py:86:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_2_release_status_manifest_v1.py:22:assert data["production_evidence_synthesized"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_2_sector_expansion_closure_v1.py:105:assert data["scoring_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_2_sector_expansion_closure_v1.py:106:assert data["production_evidence"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_2_sector_expansion_closure_v1.py:133:"production_evidence": {
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_bank_metric_contract_pdf_evidence_mapping_preflight_v1.py:35:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_bank_metric_contract_pdf_evidence_mapping_preflight_v1.py:40:data["activation_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate_v1.py:63:"scoring_ready"
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_exact_nested_bank_canonical_mapping_gate_v1.py:67:"activation_ready"
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate_v1.py:41:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_exact_numeric_bank_metric_extraction_canonical_gate_v1.py:46:data["activation_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse_v1.py:43:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse_v1.py:47:data["activation_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_kap_financial_attachment_canonical_parse_v1.py:60:if data["production_evidence"]:
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_kap_pdf_evidence_normalization_text_extraction_v1.py:54:"scoring_ready"
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_kap_pdf_evidence_normalization_text_extraction_v1.py:61:"activation_ready"
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_kap_pdf_signature_offset_repair_v1.py:56:data["scoring_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_kap_pdf_signature_offset_repair_v1.py:60:data["activation_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe_v1.py:14:assert data["scoring_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_npl_ratio_exact_evidence_probe_v1.py:15:assert data["activation_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate_v1.py:15:assert data["scoring_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_npl_ratio_selection_and_canonical_gate_v1.py:16:assert data["activation_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition_v1.py:33:assert data["activation_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition_v1.py:34:assert data["scoring_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_official_kap_live_financial_evidence_acquisition_v1.py:38:if data["production_evidence"]:
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate_v1.py:16:assert data["scoring_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_akbnk_tier1_selection_and_canonical_gate_v1.py:17:assert data["activation_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py:34:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py:38:data["activation_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe_v1.py:77:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe_v1.py:92:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_kap_xls_semantic_evidence_probe_v1.py:97:data["activation_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_official_kap_financial_acquisition_preflight_v1.py:63:"bank_activation_ready"
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_real_source_discovery_v1.py:29:assert data["activation_ready"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_real_source_discovery_v1.py:39:assert data["production_evidence"] is False
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_bank_real_source_discovery_v1.py:41:assert data["production_evidence"] is True
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_official_kap_bank_financial_acquisition_contract_v1.py:30:data["production_evidence"]
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_3_official_kap_bank_financial_acquisition_contract_v1.py:34:data["bank_activation_ready"]
+D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v8_fin016_production_closure.py:13:assert data["core_contract"]["production_evidence"] is False

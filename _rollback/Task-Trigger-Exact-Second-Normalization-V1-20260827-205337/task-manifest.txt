@@ -1,0 +1,5 @@
+HisseRobotu-0845-PreOpen|D:\Projects\Hisse-Robotu\_rollback\Task-Trigger-Exact-Second-Normalization-V1-20260827-205337\HisseRobotu-0845-PreOpen.xml
+HisseRobotu-0900-DailyDecision|D:\Projects\Hisse-Robotu\_rollback\Task-Trigger-Exact-Second-Normalization-V1-20260827-205337\HisseRobotu-0900-DailyDecision.xml
+HisseRobotu-1020-PostOpen|D:\Projects\Hisse-Robotu\_rollback\Task-Trigger-Exact-Second-Normalization-V1-20260827-205337\HisseRobotu-1020-PostOpen.xml
+HisseRobotu-1720-PreClose|D:\Projects\Hisse-Robotu\_rollback\Task-Trigger-Exact-Second-Normalization-V1-20260827-205337\HisseRobotu-1720-PreClose.xml
+HisseRobotu-1830-CanonicalClose|D:\Projects\Hisse-Robotu\_rollback\Task-Trigger-Exact-Second-Normalization-V1-20260827-205337\HisseRobotu-1830-CanonicalClose.xml

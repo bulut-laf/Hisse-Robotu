@@ -1,0 +1,637 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+  "identity": {
+    "symbol": "TUPRS",
+    "company_name": "TÜPRAŞ-TÜRKİYE PETROL RAFİNERİLERİ A.Ş.",
+    "disclosure_id": "1643116",
+    "fiscal_year": 2026,
+    "fiscal_period": 2,
+    "report_date": "2026-06-30",
+    "published_at": "2026-08-04T18:24:32",
+    "consolidation_scope": "KONSOLIDE",
+    "currency": "TRY",
+    "currency_scale": "1000",
+    "source": "KAP"
+  },
+  "canonical_fact_count": 408,
+  "historical_point_count": 112,
+  "series_warnings": [],
+  "financial_health": {
+    "symbol": "TUPRS",
+    "score": 94,
+    "grade": "VERY_STRONG",
+    "financial_risk": "LOW",
+    "locked": false,
+    "components": [
+      {
+        "code": "LIQUIDITY",
+        "label": "Likidite",
+        "score": 13,
+        "maximum_score": 15,
+        "coverage": "100.00",
+        "reasons": [
+          "Cari oran borç ödeme kapasitesini destekliyor.",
+          "Nakit tamponu kısa vadeli yükümlülüklere karşı güçlü."
+        ],
+        "cautions": []
+      },
+      {
+        "code": "BALANCE_SHEET",
+        "label": "Bilanço Dayanıklılığı",
+        "score": 20,
+        "maximum_score": 20,
+        "coverage": "100.00",
+        "reasons": [
+          "Özkaynak/aktif oranı bilanço dayanıklılığını destekliyor.",
+          "Finansal borç/özkaynak seviyesi kontrollü.",
+          "Net borç baskısı düşük; net nakit pozisyonu bilanço kalitesini destekliyor."
+        ],
+        "cautions": []
+      },
+      {
+        "code": "PROFITABILITY",
+        "label": "Kârlılık",
+        "score": 16,
+        "maximum_score": 20,
+        "coverage": "100.00",
+        "reasons": [
+          "Brüt kâr marjı pozitif.",
+          "Esas faaliyet marjı pozitif ve anlamlı.",
+          "Net kâr marjı pozitif ve anlamlı.",
+          "Esas faaliyet kârı pozitif."
+        ],
+        "cautions": []
+      },
+      {
+        "code": "CASH_QUALITY",
+        "label": "Nakit Kalitesi",
+        "score": 20,
+        "maximum_score": 20,
+        "coverage": "100.00",
+        "reasons": [
+          "İşletme faaliyetlerinden nakit akışı pozitif.",
+          "Açıklanan kâr işletme nakit akışıyla destekleniyor.",
+          "İşletme nakit akışı/hasılat oranı güçlü."
+        ],
+        "cautions": []
+      },
+      {
+        "code": "CAPITAL_EFFICIENCY",
+        "label": "Sermaye Verimliliği",
+        "score": 15,
+        "maximum_score": 15,
+        "coverage": "100.00",
+        "reasons": [
+          "Yıllıklandırılmış ROE göstergesi güçlü.",
+          "Yıllıklandırılmış ROA göstergesi güçlü."
+        ],
+        "cautions": []
+      },
+      {
+        "code": "STABILITY",
+        "label": "Finansal İstikrar",
+        "score": 10,
+        "maximum_score": 10,
+        "coverage": "100.00",
+        "reasons": [
+          "Karşılaştırılabilir döneme göre hasılat büyüyor.",
+          "Esas faaliyet marjı korunuyor veya genişliyor.",
+          "Karşılaştırılabilir döneme göre net kâr büyüyor.",
+          "Karşılaştırılabilir döneme göre işletme nakit akışı büyüyor."
+        ],
+        "cautions": []
+      }
+    ],
+    "metrics": [
+      {
+        "code": "CURRENT_RATIO",
+        "value": "1.35",
+        "unit": "x",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "CASH_RATIO",
+        "value": "0.60",
+        "unit": "x",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "EQUITY_RATIO",
+        "value": "53.87",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "LIABILITIES_TO_EQUITY",
+        "value": "0.86",
+        "unit": "x",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "FINANCIAL_DEBT",
+        "value": "68200679",
+        "unit": "TRY",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "NET_DEBT",
+        "value": "-127640261",
+        "unit": "TRY",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "FINANCIAL_DEBT_TO_EQUITY",
+        "value": "0.15",
+        "unit": "x",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "NET_DEBT_TO_EQUITY",
+        "value": "-0.28",
+        "unit": "x",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "GROSS_MARGIN",
+        "value": "12.69",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "OPERATING_MARGIN",
+        "value": "8.91",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": "3.91",
+        "comparison_period_end": "2025-06-30"
+      },
+      {
+        "code": "NET_MARGIN",
+        "value": "7.59",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "OCF_TO_NET_INCOME",
+        "value": "2.63",
+        "unit": "x",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "OCF_MARGIN",
+        "value": "19.97",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "ROE_PROXY_ANNUALIZED",
+        "value": "21.88",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "ROA_PROXY_ANNUALIZED",
+        "value": "11.79",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "REVENUE_GROWTH_COMPARABLE",
+        "value": "42.81",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": "464119398",
+        "comparison_period_end": "2025-06-30"
+      },
+      {
+        "code": "OPERATING_PROFIT_GROWTH_COMPARABLE",
+        "value": "225.01",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": "18160918",
+        "comparison_period_end": "2025-06-30"
+      },
+      {
+        "code": "NET_INCOME_GROWTH_COMPARABLE",
+        "value": "319.58",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": "11981560",
+        "comparison_period_end": "2025-06-30"
+      },
+      {
+        "code": "OCF_GROWTH_COMPARABLE",
+        "value": "781.70",
+        "unit": "%",
+        "source_period_end": "2026-06-30",
+        "comparison_value": "15012559",
+        "comparison_period_end": "2025-06-30"
+      }
+    ],
+    "positive_evidence": [
+      "NET_CASH",
+      "STRONG_CASH_CONVERSION",
+      "EQUITY_STRENGTH",
+      "POSITIVE_OPERATING_CASH_FLOW",
+      "MARGIN_EXPANSION"
+    ],
+    "cautions": [
+      "CURRENT_RATIO_BELOW_1_5"
+    ],
+    "data_coverage": "100.00",
+    "explanation": "Financial Health V1; likidite, bilanço dayanıklılığı, kârlılık, nakit kalitesi, sermaye verimliliği ve karşılaştırılabilir dönem istikrarını deterministic olarak ölçer. ROE/ROA alanları ara dönem kârının dönem gün sayısına göre yıllıklandırılmış proxy göstergeleridir; nihai ROIC/ortalama sermaye hesabı değildir. Bu değerlendirme alım/satım sinyali değildir.",
+    "as_of": "2026-08-04T18:24:32",
+    "engine_version": "fin003-v1"
+  },
+  "earnings_cash_quality": {
+    "symbol": "TUPRS",
+    "score": 100,
+    "grade": "VERY_HIGH",
+    "locked": false,
+    "data_coverage": "100",
+    "earnings_quality": "HIGH",
+    "cash_quality": "HIGH",
+    "normalized_earnings_status": "NOT_AVAILABLE_WITHOUT_ONE_OFF_CLASSIFICATION",
+    "metrics": [
+      {
+        "code": "OPERATING_MARGIN",
+        "value": "8.91",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "NET_MARGIN",
+        "value": "7.59",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "OCF_TO_NET_INCOME",
+        "value": "2.63",
+        "unit": "x",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "FREE_CASH_FLOW",
+        "value": "120508319",
+        "unit": "currency_scale",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "FCF_TO_NET_INCOME",
+        "value": "2.40",
+        "unit": "x",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "FCF_MARGIN",
+        "value": "18.18",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "ACCRUAL_GAP",
+        "value": "-82093890",
+        "unit": "currency_scale",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "ACCRUAL_RATIO",
+        "value": "-163.30",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "OPERATING_TO_PRETAX",
+        "value": "0.97",
+        "unit": "x",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "NONCORE_TO_PRETAX",
+        "value": "6.77",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": null,
+        "comparison_period_end": null
+      },
+      {
+        "code": "REVENUE_GROWTH_YOY",
+        "value": "42.81",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": "464119398",
+        "comparison_period_end": "2025-06-30"
+      },
+      {
+        "code": "OPERATING_PROFIT_GROWTH_YOY",
+        "value": "225.01",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": "18160918",
+        "comparison_period_end": "2025-06-30"
+      },
+      {
+        "code": "NET_INCOME_GROWTH_YOY",
+        "value": "319.58",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": "11981560",
+        "comparison_period_end": "2025-06-30"
+      },
+      {
+        "code": "OCF_GROWTH_YOY",
+        "value": "781.70",
+        "unit": "%",
+        "current_period_end": "2026-06-30",
+        "comparison_value": "15012559",
+        "comparison_period_end": "2025-06-30"
+      }
+    ],
+    "positive_evidence": [
+      "POSITIVE_OPERATING_PROFIT",
+      "PRETAX_PROFIT_OPERATING_SUPPORTED",
+      "NONCORE_DEPENDENCE_LOW",
+      "EARNINGS_GROWTH_OPERATING_SUPPORTED",
+      "POSITIVE_OPERATING_CASH_FLOW",
+      "STRONG_CASH_CONVERSION",
+      "POSITIVE_FCF",
+      "LOW_ACCRUAL_RISK",
+      "CASH_FLOW_GROWTH"
+    ],
+    "cautions": [],
+    "explanation": "Bu değerlendirme kârın esas faaliyet ve nakit akışıyla desteklenme kalitesini ölçer; normalize kâr yalnız açık tek-seferlik kalem sınıflandırması varsa üretilebilir. Bu çıktı alım/satım sinyali değildir.",
+    "as_of": "2026-08-04T18:24:32",
+    "engine_version": "fin004-v1"
+  },
+  "financial_risk": {
+    "symbol": "TUPRS",
+    "risk_score": 0,
+    "risk_level": "LOW",
+    "locked": false,
+    "data_coverage": "50.00",
+    "flags": [
+      {
+        "code": "NET_DEBT_ACCELERATION",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "Net borçta eşik üstü kötüleşme yok."
+      },
+      {
+        "code": "MARGIN_COMPRESSION",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "Esas faaliyet marjında eşik üstü daralma yok."
+      },
+      {
+        "code": "NEGATIVE_OPERATING_CASH_FLOW",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "İşletme faaliyetlerinden nakit akışı pozitif."
+      },
+      {
+        "code": "NEGATIVE_FCF",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "Basit serbest nakit akışı pozitiftir."
+      },
+      {
+        "code": "PROFIT_WITHOUT_CASH",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "Kârın nakit desteğinde kritik bozulma yok."
+      },
+      {
+        "code": "RECEIVABLES_OUTPACE_REVENUE",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "Aynı tarihli önceki yıl alacak bakiyesi bulunmadığı için karşılaştırma yapılmadı."
+      },
+      {
+        "code": "INVENTORY_BUILDUP",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "Aynı tarihli önceki yıl stok bakiyesi bulunmadığı için karşılaştırma yapılmadı."
+      },
+      {
+        "code": "EQUITY_EROSION",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "Özkaynak erozyonu yok."
+      },
+      {
+        "code": "SHORT_TERM_DEBT_PRESSURE",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "Kısa vadeli finansal borç baskısı düşük."
+      },
+      {
+        "code": "INTEREST_COVERAGE_STRESS",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "Saf faiz gideri canonical veri olarak bulunmadığı için finance expense ikame edilmedi."
+      },
+      {
+        "code": "DILUTION_RISK",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "Pay adedi/sermaye hareketleri FIN-006 Ownership & Free Float katmanına bırakıldı."
+      },
+      {
+        "code": "WORKING_CAPITAL_STRESS",
+        "status": "INACTIVE",
+        "severity": "INFO",
+        "reason": "Net işletme sermayesinde stres sinyali yok."
+      },
+      {
+        "code": "AUDITOR_WARNING",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "Denetçi görüşü sınıflandırma katmanı henüz canonical değildir."
+      },
+      {
+        "code": "GOING_CONCERN_WARNING",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "İşletmenin sürekliliği notları için canonical note classifier gerekir."
+      },
+      {
+        "code": "RELATED_PARTY_EXPOSURE",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "İlişkili taraf yoğunluğu için not bazlı canonical sınıflandırma gerekir."
+      },
+      {
+        "code": "CONTINGENT_LIABILITY_RISK",
+        "status": "NOT_EVALUATED",
+        "severity": "UNKNOWN",
+        "reason": "Şarta bağlı yükümlülükler için not bazlı canonical sınıflandırma gerekir."
+      }
+    ],
+    "metrics": [
+      {
+        "code": "NET_DEBT",
+        "value": "-141818592",
+        "unit": "currency_scale"
+      },
+      {
+        "code": "PREVIOUS_NET_DEBT",
+        "value": "-82255536",
+        "unit": "currency_scale"
+      },
+      {
+        "code": "NET_DEBT_CHANGE",
+        "value": "-59563056",
+        "unit": "currency_scale"
+      },
+      {
+        "code": "OPERATING_MARGIN",
+        "value": "8.91",
+        "unit": "%"
+      },
+      {
+        "code": "PRIOR_OPERATING_MARGIN",
+        "value": "3.91",
+        "unit": "%"
+      },
+      {
+        "code": "OPERATING_MARGIN_DELTA",
+        "value": "5.00",
+        "unit": "pp"
+      },
+      {
+        "code": "OCF_TO_NET_INCOME",
+        "value": "2.63",
+        "unit": "x"
+      },
+      {
+        "code": "FREE_CASH_FLOW",
+        "value": "120508319",
+        "unit": "currency_scale"
+      },
+      {
+        "code": "SHORT_TERM_DEBT_TO_CASH",
+        "value": "0.09",
+        "unit": "x"
+      },
+      {
+        "code": "SHORT_TERM_DEBT_TO_EQUITY",
+        "value": "0.04",
+        "unit": "x"
+      },
+      {
+        "code": "WORKING_CAPITAL",
+        "value": "114111553",
+        "unit": "currency_scale"
+      },
+      {
+        "code": "WORKING_CAPITAL_CHANGE",
+        "value": "44.24",
+        "unit": "%"
+      },
+      {
+        "code": "EQUITY_GROWTH_SINCE_PRIOR_BALANCE",
+        "value": "6.38",
+        "unit": "%"
+      },
+      {
+        "code": "REVENUE_GROWTH_YOY",
+        "value": "42.81",
+        "unit": "%"
+      },
+      {
+        "code": "RECEIVABLES_GROWTH_YOY",
+        "value": null,
+        "unit": "%"
+      },
+      {
+        "code": "INVENTORY_GROWTH_YOY",
+        "value": null,
+        "unit": "%"
+      },
+      {
+        "code": "INTEREST_COVERAGE",
+        "value": null,
+        "unit": "x"
+      }
+    ],
+    "positive_evidence": [
+      "NET_CASH",
+      "NET_DEBT_IMPROVING",
+      "MARGIN_EXPANSION",
+      "POSITIVE_OPERATING_CASH_FLOW",
+      "POSITIVE_FCF",
+      "STRONG_CASH_CONVERSION",
+      "EQUITY_GROWTH",
+      "SHORT_TERM_DEBT_COVERAGE_STRONG",
+      "POSITIVE_WORKING_CAPITAL"
+    ],
+    "explanation": "FIN-005 finansal kötüleşme ve risk bayraklarını point-in-time canonical veriden deterministik üretir. NOT_EVALUATED bir riskin yok olduğu anlamına gelmez; veri/katman eksikliği nedeniyle hüküm verilmediğini gösterir. Finance expense saf faiz gideri yerine, yıl sonu bilançosu da aynı-tarih YoY bilanço yerine kullanılmaz. Bu çıktı alım/satım sinyali değildir.",
+    "as_of": "2026-08-04T18:24:32",
+    "engine_version": "fin005-v1"
+  },
+  "ownership": null,
+  "market_multiples": null,
+  "valuation_status": "DATA_INSUFFICIENT",
+  "acceptance_checks": {
+    "symbol_ok": true,
+    "canonical_points_present": true,
+    "health_unlocked": true,
+    "risk_unlocked": true,
+    "cash_quality_unlocked": true,
+    "read_only": true
+  },
+  "limitations": [
+    "Fair value / DCF is not generated without explicit forecast assumptions.",
+    "Short-term investability is not generated without market/technical context.",
+    "Long-term investability is not generated without business-quality/governance/growth context.",
+    "Missing inputs are fail-closed; no values are invented."
+  ]
+}

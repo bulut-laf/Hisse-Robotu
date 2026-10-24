@@ -1,0 +1,543 @@
+﻿=== SPRINT-1 KAYNAK INCELEMESI ===
+
+=== DOSYA: backend\app\analysis\high_conviction_buy_gate.py ===
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Iterable
+
+
+HIGH_CONFIDENCE = "AL вЂ” YГњKSEK GГњVEN"
+NORMAL_CONFIDENCE = "AL вЂ” NORMAL GГњVEN"
+WAIT = "BEKLE"
+NO_TRADE = "Д°ЕћLEM YOK"
+
+_SUPPORTIVE_VISIBILITY = {"IMPROVING", "RISING", "ACCELERATING"}
+
+
+@dataclass(frozen=True)
+class HistoricalSupport:
+    status: str
+    supportive_slices: int
+    evaluated_slices: int
+    reasons: tuple[str, ...]
+
+
+@dataclass(frozen=True)
+class HighConvictionDecision:
+    priority: int
+    symbol: str
+    base_decision: str
+    conviction: str
+    technical_gate: str
+    volume_gate: str
+    risk_reward_gate: str
+    timing_gate: str
+    entry_gate: str
+    data_gate: str
+    history_gate: str
+    reasons: tuple[str, ...]
+    blockers: tuple[str, ...]
+
+
+def _positive_technical(view: object) -> bool:
+    return "pozitif" in str(view or "").casefold()
+
+
+def _score_segment(value: int) -> str:
+    if value >= 80:
+        return "80+"
+    if value >= 70:
+        return "70-79"
+    return "<70"
+
+
+def _ratio_segment(value: float, *, high: float, mid: float) -> str:
+    if value >= high:
+        return f">={high:g}"
+    if value >= mid:
+        return f"{mid:g}-{high:g}"
+    return f"<{mid:g}"
+
+
+def _relevant_calibration_keys(decision: object) -> tuple[tuple[str, str], ...]:
+    return (
+        ("Teknik skor", _score_segment(int(getattr(decision, "technical_score", 0)))),
+        (
+            "Hacim",
+            _ratio_segment(
+                float(getattr(decision, "volume_ratio", 0.0)), high=1.3, mid=1.0
+            ),
+        ),
+        (
+            "Risk/Getiri",
+            _ratio_segment(
+                float(getattr(decision, "risk_reward", 0.0)), high=2.0, mid=1.5
+            ),
+        ),
+    )
+
+
+def evaluate_historical_support(
+    decision: object,
+    calibration_slices: Iterable[object] = (),
+) -> HistoricalSupport:
+    """Use only existing outcome calibration; never creates a new score.
+
+    High-confidence history support requires at least two supportive core
+    calibration slices at 3S/5S. A slice is supportive only when the existing
+    calibration layer already labels it DESTEKLEYД°CД° with >=10 samples,
+    >=60% hit rate and positive average return.
+    """
+    keys = set(_relevant_calibration_keys(decision))
+    relevant = []
+    for item in calibration_slices:
+        key = (str(getattr(item, "dimension", "")), str(getattr(item, "segment", "")))
+        horizon = str(getattr(item, "horizon", "")).upper()
+        if key in keys and horizon in {"3S", "5S"}:
+            relevant.append(item)
+
+    supportive = []
+    for item in relevant:
+        sample_size = int(getattr(item, "sample_size", 0))
+        hit_rate = getattr(item, "hit_rate", None)
+        average_return = getattr(item, "average_return", None)
+        status = str(getattr(item, "status", "")).upper()
+        if (
+            status == "DESTEKLEYД°CД°"
+            and sample_size >= 10
+            and hit_rate is not None
+            and float(hit_rate) >= 60.0
+            and average_return is not None
+            and float(average_return) > 0.0
+        ):
+            supportive.append(item)
+
+    reasons = tuple(
+        f"{getattr(item, 'dimension', '-')} {getattr(item, 'segment', '-')} "
+        f"{getattr(item, 'horizon', '-')} В· n={int(getattr(item, 'sample_size', 0))} В· "
+        f"isabet={float(getattr(item, 'hit_rate', 0.0)):.1f}% В· "
+        f"ort={float(getattr(item, 'average_return', 0.0)):.2f}%"
+        for item in supportive
+    )
+
+    if len(supportive) >= 2:
+        status = "DESTEKLEYД°CД°"
+    elif relevant:
+        status = "YETERSД°Z / KARIЕћIK"
+    else:
+        status = "YETERSД°Z VERД°"
+
+    return HistoricalSupport(
+        status=status,
+        supportive_slices=len(supportive),
+        evaluated_slices=len(relevant),
+        reasons=reasons,
+    )
+
+
+def _timing_pass(card: object, decision: object) -> tuple[bool, str]:
+    rank_change = getattr(decision, "rank_change", None)
+    priority = str(getattr(decision, "research_priority", "NORMAL") or "NORMAL").upper()
+    visibility = str(getattr(decision, "visibility_state", "") or "").upper()
+
+    if rank_change is not None and int(rank_change) < 0:
+        return False, f"SД±ralama geriliyor ({int(rank_change)})"
+    if rank_change is not None and int(rank_change) > 0:
+        return True, f"SД±ralama iyileЕџiyor (+{int(rank_change)})"
+    if visibility in _SUPPORTIVE_VISIBILITY:
+        return True, f"Erken gГ¶rГјnГјrlГјk {visibility}"
+    if priority == "HIGH":
+        return True, "AraЕџtД±rma Г¶nceliДџi HIGH"
+    return False, "Pozitif zamanlama/ranking kanД±tД± yok"
+
+
+def _entry_pass(card: object) -> tuple[bool, str]:
+    source = str(getattr(card, "selection_source", "TARAMA") or "TARAMA").upper()
+    quality = str(getattr(card, "jump_quality", "-") or "-").upper()
+    readiness = str(getattr(card, "entry_readiness", "-") or "-").upper()
+
+    if source == "SICRAMA":
+        if quality != "UYGUN":
+            return False, f"SД±Г§rama kalite kapД±sД± {quality}"
+        if readiness != "GД°RД°ЕћE HAZIR":
+            return False, f"GiriЕџ hazД±rlД±ДџД± {readiness}"
+        return True, "SД±Г§rama kalite + giriЕџ hazД±rlД±ДџД± uygun"
+
+    if readiness in {"TEYД°T BEKLД°YOR", "ERKEN", "AЕћIRI UZAMIЕћ"}:
+        return False, f"GiriЕџ hazД±rlД±ДџД± {readiness}"
+    return True, "Mevcut giriЕџ kapД±sД± engel Гјretmiyor"
+
+
+def build_high_conviction_buy_gate(
+    cards: Iterable[object],
+    decisions: Iterable[object],
+    *,
+    calibration_slices: Iterable[object] = (),
+) -> tuple[HighConvictionDecision, ...]:
+    """Classify existing daily decisions without changing the AL/SAT engine.
+
+    This is a strict confidence overlay. It never upgrades BEKLE/Д°ЕћLEM YOK to AL,
+    never changes existing thresholds, and creates no combined confidence score.
+    """
+    cards_by_symbol = {
+        str(getattr(card, "symbol", "")).strip().upper(): card for card in cards
+    }
+    calibration = tuple(calibration_slices)
+    result: list[HighConvictionDecision] = []
+
+    for decision in decisions:
+        symbol = str(getattr(decision, "symbol", "")).strip().upper()
+        card = cards_by_symbol.get(symbol)
+        base = str(getattr(decision, "decision", "")).upper()
+        priority = int(getattr(decision, "priority", 0))
+
+        score = int(getattr(decision, "technical_score", 0))
+        view = str(getattr(decision, "technical_view", ""))
+        volume = float(getattr(decision, "volume_ratio", 0.0))
+        rr = float(getattr(decision, "risk_reward", 0.0))
+        data_status = str(getattr(decision, "data_status", "UYGUN") or "UYGUN").upper()
+
+        technical_ok = _positive_technical(view) and score >= 80
+        volume_ok = volume >= 1.30
+        rr_ok = rr >= 2.0
+        timing_ok, timing_reason = _timing_pass(card, decision)
+        entry_ok, entry_reason = _entry_pass(card) if card is not None else (False, "Aday kartД± yok")
+        data_ok = data_status == "UYGUN"
+        history = evaluate_historical_support(decision, calibration)
+        history_ok = history.status == "DESTEKLEYД°CД°"
+
+        reasons: list[str] = []
+        blockers: list[str] = []
+
+        if technical_ok:
+            reasons.append(f"Teknik kapД± geГ§ti ({score})")
+        else:
+            blockers.append(f"Teknik kapД±: pozitif gГ¶rГјnГјm + skor >=80 gerekli ({score})")
+        if volume_ok:
+            reasons.append(f"Hacim kapД±sД± geГ§ti ({volume:.2f})")
+        else:
+            blockers.append(f"Hacim kapД±sД±: >=1.30 gerekli ({volume:.2f})")
+        if rr_ok:
+            reasons.append(f"Risk/getiri kapД±sД± geГ§ti ({rr:.2f})")
+        else:
+            blockers.append(f"Risk/getiri kapД±sД±: >=2.00 gerekli ({rr:.2f})")
+        if timing_ok:
+            reasons.append(timing_reason)
+        else:
+            blockers.append(timing_reason)
+        if entry_ok:
+            reasons.append(entry_reason)
+        else:
+            blockers.append(entry_reason)
+        if data_ok:
+            reasons.append("Veri durumu UYGUN")
+        else:
+            blockers.append("KД±smi/gecikmeli veri yГјksek gГјveni engelliyor")
+        if history_ok:
+            reasons.append("Outcome geГ§miЕџi destekleyici")
+            reasons.extend(history.reasons)
+        else:
+            blockers.append(
+                "Outcome geГ§miЕџi yГјksek gГјven iГ§in henГјz destekleyici deДџil "
+                f"({history.supportive_slices}/{max(history.evaluated_slices, 1)} destekleyici dilim)"
+
+=== DOSYA: backend\app\analysis\jump_candidate_quality.py ===
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class JumpCandidateQualityPolicy:
+    minimum_technical_score: int = 60
+    minimum_volume_ratio: float = 1.0
+    minimum_risk_reward: float = 1.5
+    maximum_extension_atr: float = 2.0
+
+
+@dataclass(frozen=True)
+class JumpCandidateQualityResult:
+    eligible: bool
+    technical_ok: bool
+    volume_ok: bool
+    risk_reward_ok: bool
+    entry_ok: bool
+    extension_atr: float | None
+    reasons: tuple[str, ...]
+
+
+def _float_attr(obj: object, name: str) -> float | None:
+    value = getattr(obj, name, None)
+    if value in (None, ""):
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _extension_atr(candidate: object) -> float | None:
+    close = _float_attr(candidate, "kapanis")
+    ema9 = _float_attr(candidate, "ema9")
+    atr14 = _float_attr(candidate, "atr14")
+    if close is None or ema9 is None or atr14 is None or atr14 <= 0:
+        return None
+    return max(0.0, (close - ema9) / atr14)
+
+
+def evaluate_jump_candidate_quality(
+    candidate: object,
+    *,
+    policy: JumpCandidateQualityPolicy | None = None,
+) -> JumpCandidateQualityResult:
+    """SД±Г§rama havuzu iГ§in aГ§Д±klanabilir, skor Гјretmeyen kalite kapД±sД±."""
+    policy = policy or JumpCandidateQualityPolicy()
+    signal = getattr(candidate, "sinyal", None)
+    risk_plan = getattr(candidate, "risk_plani", None)
+
+    technical_score = int(getattr(signal, "skor", 0) or 0)
+    technical_view = str(getattr(signal, "karar", "") or "")
+    volume_ratio = float(getattr(candidate, "hacim_orani", 0.0) or 0.0)
+    risk_reward = float(getattr(risk_plan, "risk_odul_orani", 0.0) or 0.0)
+    extension_atr = _extension_atr(candidate)
+
+    technical_ok = (
+        technical_score >= policy.minimum_technical_score
+        and technical_view != "Negatif Teknik GГ¶rГјnГјm"
+    )
+    volume_ok = volume_ratio >= policy.minimum_volume_ratio
+    risk_reward_ok = risk_reward >= policy.minimum_risk_reward
+    entry_ok = (
+        extension_atr is None
+        or extension_atr <= policy.maximum_extension_atr
+    )
+
+    reasons: list[str] = []
+    reasons.append(
+        f"teknik {technical_score} {'uygun' if technical_ok else 'zayД±f'}"
+    )
+    reasons.append(
+        f"hacim {volume_ratio:.2f}x {'uygun' if volume_ok else 'zayД±f'}"
+    )
+    reasons.append(
+        f"R/R {risk_reward:.2f} {'uygun' if risk_reward_ok else 'zayД±f'}"
+    )
+    if extension_atr is None:
+        reasons.append("aЕџД±rД± uzama Г¶lГ§ГјmГј yok; bloklamadД±")
+    else:
+        reasons.append(
+            f"uzama {extension_atr:.2f} ATR "
+            f"{'uygun' if entry_ok else 'yГјksek'}"
+        )
+
+    return JumpCandidateQualityResult(
+        eligible=technical_ok and volume_ok and risk_reward_ok and entry_ok,
+        technical_ok=technical_ok,
+        volume_ok=volume_ok,
+        risk_reward_ok=risk_reward_ok,
+        entry_ok=entry_ok,
+        extension_atr=extension_atr,
+        reasons=tuple(reasons),
+    )
+
+=== DOSYA: backend\app\analysis\jump_candidate_entry_readiness.py ===
+from __future__ import annotations
+
+from dataclasses import dataclass
+
+from backend.app.analysis.jump_candidate_quality import (
+    JumpCandidateQualityPolicy,
+    evaluate_jump_candidate_quality,
+)
+
+
+READY = "GД°RД°ЕћE HAZIR"
+WAIT_CONFIRMATION = "TEYД°T BEKLД°YOR"
+EARLY = "ERKEN"
+OVEREXTENDED = "AЕћIRI UZAMIЕћ"
+
+
+@dataclass(frozen=True)
+class JumpCandidateEntryReadinessPolicy:
+    minimum_ready_technical_score: int = 70
+    minimum_ready_volume_ratio: float = 1.20
+    minimum_ready_risk_reward: float = 1.50
+    maximum_ready_extension_atr: float = 1.25
+    maximum_wait_extension_atr: float = 2.00
+
+
+@dataclass(frozen=True)
+class JumpCandidateEntryReadinessResult:
+    state: str
+    ready: bool
+    technical_score: int
+    volume_ratio: float
+    risk_reward: float
+    extension_atr: float | None
+    resistance_distance_pct: float | None
+    reasons: tuple[str, ...]
+
+
+def _float_attr(obj: object, name: str) -> float | None:
+    value = getattr(obj, name, None)
+    if value in (None, ""):
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _resistance_distance_pct(candidate: object) -> float | None:
+    levels = getattr(candidate, "destek_direnc", None)
+    return _float_attr(levels, "direnc_uzaklik_yuzde") if levels is not None else None
+
+
+def evaluate_jump_candidate_entry_readiness(
+    candidate: object,
+    *,
+    policy: JumpCandidateEntryReadinessPolicy | None = None,
+) -> JumpCandidateEntryReadinessResult:
+    """SД±Г§rama adayД±nД±n giriЕџ zamanlamasД±nД± aГ§Д±klanabilir durumlara ayД±rД±r.
+
+    Yeni skor Гјretmez. Mevcut teknik skor, hacim, risk/Г¶dГјl ve EMA9-ATR
+    uzama kanД±tlarД±nД± kullanД±r. Destek/direnГ§ mesafesi yalnД±z aГ§Д±klayД±cД± baДџlamdД±r.
+    """
+    policy = policy or JumpCandidateEntryReadinessPolicy()
+    signal = getattr(candidate, "sinyal", None)
+    risk_plan = getattr(candidate, "risk_plani", None)
+
+    technical_score = int(getattr(signal, "skor", 0) or 0)
+    technical_view = str(getattr(signal, "karar", "") or "")
+    volume_ratio = float(getattr(candidate, "hacim_orani", 0.0) or 0.0)
+    risk_reward = float(getattr(risk_plan, "risk_odul_orani", 0.0) or 0.0)
+    resistance_distance_pct = _resistance_distance_pct(candidate)
+
+    quality = evaluate_jump_candidate_quality(
+        candidate,
+        policy=JumpCandidateQualityPolicy(
+            minimum_technical_score=60,
+            minimum_volume_ratio=1.0,
+            minimum_risk_reward=policy.minimum_ready_risk_reward,
+            maximum_extension_atr=policy.maximum_wait_extension_atr,
+        ),
+    )
+    extension_atr = quality.extension_atr
+
+    reasons: list[str] = []
+
+    if extension_atr is not None and extension_atr > policy.maximum_wait_extension_atr:
+        state = OVEREXTENDED
+        reasons.append(
+            f"EMA9 Гјzeri uzama {extension_atr:.2f} ATR; "
+            f"{policy.maximum_wait_extension_atr:.2f} ATR sД±nД±rД±nД±n Гјzerinde."
+        )
+    elif not quality.eligible:
+        state = EARLY
+        if technical_score < 60 or technical_view == "Negatif Teknik GГ¶rГјnГјm":
+            reasons.append("Teknik kalite sД±Г§rama giriЕџ hazД±rlД±ДџД± iГ§in henГјz yeterli deДџil.")
+        if volume_ratio < 1.0:
+            reasons.append("Hacim teyidi henГјz oluЕџmadД±.")
+        if risk_reward < policy.minimum_ready_risk_reward:
+            reasons.append("Risk/getiri giriЕџ hazД±rlД±ДџД± iГ§in yetersiz.")
+        if not reasons:
+            reasons.append("Kalite kapД±sД± henГјz tamamlanmadД±.")
+    else:
+        strong_technical = (
+            technical_score >= policy.minimum_ready_technical_score
+            and technical_view == "Pozitif Teknik GГ¶rГјnГјm"
+        )
+        strong_volume = volume_ratio >= policy.minimum_ready_volume_ratio
+        acceptable_extension = (
+            extension_atr is None
+            or extension_atr <= policy.maximum_ready_extension_atr
+        )
+
+        if strong_technical and strong_volume and acceptable_extension:
+            state = READY
+            reasons.append(
+                f"Teknik {technical_score}, hacim {volume_ratio:.2f}x ve "
+                f"R/R {risk_reward:.2f} giriЕџ hazД±rlД±ДџД±nД± destekliyor."
+            )
+        else:
+            state = WAIT_CONFIRMATION
+            if not strong_technical:
+                reasons.append(
+                    f"Teknik skor/gГ¶rГјnГјm henГјz gГјГ§lГј teyit vermiyor ({technical_score})."
+                )
+            if not strong_volume:
+                reasons.append(
+                    f"Hacim {volume_ratio:.2f}x; gГјГ§lГј giriЕџ teyidi iГ§in "
+                    f"{policy.minimum_ready_volume_ratio:.2f}x bekleniyor."
+                )
+            if not acceptable_extension and extension_atr is not None:
+                reasons.append(
+                    f"Uzama {extension_atr:.2f} ATR; fiyatД±n giriЕџ bГ¶lgesine "
+                    "yaklaЕџmasД± bekleniyor."
+                )
+
+    if resistance_distance_pct is not None:
+        reasons.append(
+            f"En yakД±n direnГ§ mesafesi %{resistance_distance_pct:.2f}; "
+            "yalnД±z zamanlama baДџlamД± olarak gГ¶steriliyor."
+        )
+
+    if extension_atr is None:
+        reasons.append("ATR uzama Г¶lГ§ГјmГј yok; tek baЕџД±na giriЕџ durumunu bloklamadД±.")
+
+    return JumpCandidateEntryReadinessResult(
+        state=state,
+        ready=state == READY,
+        technical_score=technical_score,
+        volume_ratio=volume_ratio,
+        risk_reward=risk_reward,
+        extension_atr=extension_atr,
+        resistance_distance_pct=resistance_distance_pct,
+        reasons=tuple(reasons),
+    )
+
+=== ILGILI TEST DOSYALARI ===
+D:\Projects\Hisse-Robotu\backend\tests\test_candidate_labels.py
+D:\Projects\Hisse-Robotu\backend\tests\test_candidate_ranking.py
+D:\Projects\Hisse-Robotu\backend\tests\test_early_visibility_readiness_check.py
+D:\Projects\Hisse-Robotu\backend\tests\test_entry_conditions.py
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_candidate_output_integration_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_candidate_output_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_candidate_performance_history_v9.py
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_candidate_performance_measurement_v9.py
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_candidate_performance_runtime_v9.py
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_candidate_performance_v9.py
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_1_multi_symbol_rollout_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_v1_standalone_ui_entry.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_non_blocking_entry_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_high_conviction_buy_gate_dashboard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_high_conviction_buy_gate_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_intraday_candidate_validation_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_r1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_quality_filter_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_candidate_flow.py
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_revalidation_candidate_replacement_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_opportunity_radar.py
+D:\Projects\Hisse-Robotu\backend\tests\test_opportunity_radar_dashboard_wiring.py
+D:\Projects\Hisse-Robotu\backend\tests\test_opportunity_radar_monthly_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_lifecycle.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar_ui.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_scan_radar_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ranking_jump_v1_ui.py
+D:\Projects\Hisse-Robotu\backend\tests\test_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_sector_candidate_context.py
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint147_candidate_discovery_contract.py
+D:\Projects\Hisse-Robotu\backend\tests\test_turbo_08_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_turbo_09_release_candidate_gate.py
+D:\Projects\Hisse-Robotu\backend\tests\test_turbo_10_todays_five_candidates.py
+D:\Projects\Hisse-Robotu\backend\tests\test_turbo_11_candidate_decision_card.py
+D:\Projects\Hisse-Robotu\backend\tests\test_turbo_12_candidate_tracking_result.py
+D:\Projects\Hisse-Robotu\backend\tests\test_v1_operations_01d_candidate_cards.py
+D:\Projects\Hisse-Robotu\backend\tests\test_v1_operations_01e_candidate_outcome.py

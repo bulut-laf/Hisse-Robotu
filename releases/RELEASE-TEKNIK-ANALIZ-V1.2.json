@@ -1,0 +1,25 @@
+﻿{
+    "release":  "Teknik Analiz V1.2",
+    "generated_at":  "2026-07-31T14:04:47.5813184+03:00",
+    "project_root":  "D:\\Projects\\Hisse-Robotu",
+    "target_tests_passed":  77,
+    "full_regression_passed":  1106,
+    "system_check_ready":  true,
+    "compileall_ok":  true,
+    "source_file_count":  586,
+    "snapshot_file":  "Hisse-Robotu-Teknik-Analiz-V1.2.zip",
+    "snapshot_size_bytes":  1673206,
+    "snapshot_sha256":  "D2E1457322C20DD7CDD265BC9F05D4CBD2A461F5F5F28D88463BE8F59F96108F",
+    "scope":  [
+                  "RSI/MACD divergence",
+                  "daily-weekly decision matrix",
+                  "signal outcome tracking",
+                  "indicator contribution analysis",
+                  "walk-forward calibration"
+              ],
+    "excluded_scope":  [
+                           "live market data",
+                           "order book",
+                           "scalping execution"
+                       ]
+}

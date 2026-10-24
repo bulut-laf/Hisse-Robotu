@@ -1,0 +1,32 @@
+{
+  "version": "erste-hungary-f3-nav-recovery-v1",
+  "reference_date": "2026-10-20",
+  "target_count": 5,
+  "recovered_count": 2,
+  "unavailable_count": 3,
+  "reason_counts": {
+    "NO_OBSERVATION_ON_OR_BEFORE_1Y_START": 3,
+    "QUALIFIED": 2
+  },
+  "f3_state_counts": {
+    "CAUTION": 205,
+    "POSITIVE": 347,
+    "NEUTRAL": 347,
+    "UNAVAILABLE": 30
+  },
+  "class_counts": {
+    "D": 306,
+    "C": 448,
+    "B": 142,
+    "X": 33
+  },
+  "eligibility_counts": {
+    "MULTI_FAMILY_WEAKENING": 306,
+    "OBSERVATION_REQUIRED": 448,
+    "DEVELOPING_MULTI_FAMILY_SUPPORT": 142,
+    "INSUFFICIENT_INDEPENDENT_EVIDENCE": 33
+  },
+  "trade_authority_counts": {
+    "NONE": 929
+  }
+}

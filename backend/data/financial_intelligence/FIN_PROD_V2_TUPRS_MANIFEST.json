@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_PRODUCTION_EXPANSION_V2",
+  "symbols": [
+    {
+      "symbol": "TUPRS",
+      "sector_profile": "INDUSTRIAL",
+      "sector_routing": {
+        "valuation_models": [
+          "DCF_FCFF",
+          "EV_SALES",
+          "P_E",
+          "P_B"
+        ],
+        "required_focus": [
+          "margins",
+          "cash_conversion",
+          "capital_efficiency",
+          "cyclicality"
+        ],
+        "cyclicality_default": "MEDIUM"
+      },
+      "stages": [
+        {
+          "stage": "financial_core",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+          "status": "PASS",
+          "blocker": null
+        },
+        {
+          "stage": "market_ownership",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_acceptance.json",
+          "status": "PASS",
+          "blocker": null
+        },
+        {
+          "stage": "fair_value",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_fair_value_acceptance.json",
+          "status": "PASS",
+          "blocker": null
+        },
+        {
+          "stage": "investability",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_production_closure.json",
+          "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS",
+          "blocker": null
+        }
+      ],
+      "decision_support_status": "READY_FOR_DECISION_SUPPORT",
+      "blockers": [],
+      "warnings": [
+        "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT",
+        "LONG_TERM_CANONICAL_COVERAGE"
+      ],
+      "read_only": true,
+      "schema_version": "fin-prod-v2-manifest-v1"
+    }
+  ],
+  "summary": {
+    "READY_FOR_DECISION_SUPPORT": 1
+  },
+  "production_rules": [
+    "Existing FIN-001..016 outputs are reused; no duplicate scoring engine.",
+    "Sector routing is explicit and fail-safe; unknown sectors use GENERIC.",
+    "Missing artifacts remain missing and do not become zero.",
+    "AL/SAT, scanner, ranking and portfolio outputs are not mutated.",
+    "This orchestrator is a manifest/orchestration layer, not a recommendation engine."
+  ],
+  "schema_version": "fin-prod-v2-batch-v1"
+}

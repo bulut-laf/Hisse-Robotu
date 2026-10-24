@@ -1,0 +1,51 @@
+{
+  "review_id": "b19230c02f684313b63f4c85822656c2",
+  "date": "2026-08-10",
+  "created_at": "2026-08-10T11:06:58Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 4.014,
+  "report_count": 3,
+  "sources": [
+    "Yatırım Finansman"
+  ],
+  "document_ids": [
+    "050b41728b8e4b9ab191cf65f288ae9e",
+    "95a37f9f1c644947a86997c0a3c84fdf",
+    "b18d25ecb5c944749122c38b4f9bf73a"
+  ],
+  "output": {
+    "summary": "10 Ağustos 2026 tarihli piyasa brifinglerine göre, BIST 100 endeksinin güne pozitif bir başlangıç yapması beklenmektedir. Cuma günü açıklanan ABD tarım dışı istihdam verisinin beklentilerin altında kalarak zayıf gelmesi, Fed'in Eylül ayında faiz artırma ihtimalini zayıflatmış ve küresel risk iştahını desteklemiştir. Buna karşın Hürmüz Boğazı'na ilişkin jeopolitik belirsizlikler ve petrol fiyatlarının yüksek seyretmesi risk unsuru olmaya devam etmektedir. İç tarafta, aralarında VAKBN ve HALKB'nin de bulunduğu banka bilançoları takip edilirken, HALKB'nin ikincil halka arz ve %25 oranında bedelli sermaye artırımı kararı açıklaması dikkat çekmiştir. Ayrıca haftanın en önemli ajanda maddesi olarak 13 Ağustos'ta yayımlanacak yılın 3. Enflasyon Raporu sunumu öne çıkmaktadır.",
+    "positive_factors": [
+      "ABD tarım dışı istihdam verisinin zayıf gelmesiyle Fed'in faiz artırım beklentilerinin zayıflaması",
+      "BIST100 endeksinin 5 ve 10 günlük hareketli ortalamalar üzerinde tutunma eğilimi koruması",
+      "Türkiye'nin 5 yıllık CDS risk priminde görülen kademeli iyileşme",
+      "VAKBN ve HALKB'nin beklentilerle uyumlu veya beklentilerin üzerinde net kâr açıklamaları"
+    ],
+    "risk_factors": [
+      "Hürmüz Boğazı'ndaki belirsizlikler ve deniz ablukasının sürmesiyle petrol fiyatlarının yüksek kalması",
+      "Yüksek TL mevduat ve swap maliyetlerinin bankacılık sektöründe marjları baskılaması",
+      "Yıl sonu enflasyon ve politika faizi beklentilerinin mevcut hedeflerin üzerinde seyretmesi",
+      "Yüksek faaliyet giderleri ve enflasyonist baskılar"
+    ],
+    "stock_specific_risks": [
+      "VAKBN tarafında swap dahil net faiz marjı ile özkaynak kârlılığı beklentilerinin aşağı yönlü revize edilmesi",
+      "HALKB'de aktif kalitesindeki bozulma, artan takipteki krediler ve yüksek faaliyet giderleri",
+      "HALKB'nin ikincil halka arzı ve bedelli sermaye artırımının mevcut yatırımcılar açısından mekanik pay ve hisse başına kâr (EPS) sulanması yaratma potansiyeli",
+      "MSCI Global Standart Endeksi'nde olası bir revizyonda SAHOL'ün listeden çıkarılma ihtimali ve halka açıklık oranları düzenlemesiyle bazı hisselerde oluşabilecek satış baskısı"
+    ],
+    "aligned_points": [
+      "ABD'de tarım dışı istihdamın Temmuz ayında azaldığı ve işsizlik oranının gerilediği yönündeki veriler",
+      "VAKBN ve HALKB'nin 2Ç26 finansal sonuçlarının piyasalarca detaylı şekilde değerlendirilmesi ve TÜFEX gelirlerinin banka kârlılıklarını desteklemesi",
+      "Hürmüz Boğazı'na dair jeopolitik risklerin enerji ve emtia fiyatları üzerinde yarattığı belirsizlik"
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "13 Ağustos 2026 tarihinde yayımlanacak yılın 3. Enflasyon Raporu sunumu ve TCMB'nin olası hedef güncellemeleri",
+      "CCOLA ve ENJSA'nın 2Ç26 finansal sonuçları",
+      "Haziran ayı Sanayi Üretimi ve Perakende Satışlar verileri",
+      "ABD Tüketici (CPI) ve Üretici (PPI) Enflasyon verileri",
+      "MSCI üçüncü dönem endeks değişiklikleri"
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+﻿=== BASELINE CLEAN ===
+.                                                                        [100%]
+1 passed in 1.42s
+
+=== TEMP PATCH ===
+TEMP_PATCH_APPLIED=YES
+
+=== SINGLE RETRY ===
+.                                                                        [100%]
+1 passed in 1.56s
+SINGLE_EXIT=0
+
+=== WHOLE FILE ===
+.......                                                                  [100%]
+7 passed in 2.03s
+FILE_EXIT=0
+
+=== RELATED CLUSTER ===
+........................................................................ [ 97%]
+..                                                                       [100%]
+74 passed, 2949 deselected in 8.09s
+CLUSTER_EXIT=0
+
+DECISION=FAILURE_NOT_REPRODUCED_IN_CONTROLLED_CONTEXT
+ROLLBACK=YES
+PRODUCTION_MUTATION=YOK

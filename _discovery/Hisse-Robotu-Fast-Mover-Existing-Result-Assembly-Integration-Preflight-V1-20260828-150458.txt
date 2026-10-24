@@ -1,0 +1,733 @@
+=== HISSE ROBOTU — FAST MOVER EXISTING RESULT ASSEMBLY INTEGRATION PREFLIGHT V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+GIT_REQUIRED=NO
+REPOSITORY_WIDE_DISCOVERY=NO
+SEARCH_SCOPE=backend/app/{analysis,operations}
+BASELINE_REFERENCE=3410_PASSED
+
+=== 1. FAST MOVER READ MODEL CONTRACT ===
+FILE=backend\app\analysis\fast_mover_watch.py
+SHA256=04B93C274327EB527FB5D41203935AEBCFC4BDB0CD6FB8A3F32E32B1B293D997
+MARKER=class FastMoverState|PRESENT=YES
+MARKER=class FastMoverVisibilityPolicy|PRESENT=YES
+MARKER=class FastMoverObservation|PRESENT=YES
+MARKER=class FastMoverReadModel|PRESENT=YES
+MARKER=def evaluate_fast_mover|PRESENT=YES
+MARKER=def order_fast_movers|PRESENT=YES
+FAST_MOVER_SCORE_PRESENT=NO
+PERSISTENCE_TOKEN_PRESENT=NO
+
+=== 2. PRECLOSE / INTRADAY PRODUCTION SEAMS ===
+FILE=backend\app\operations\preclose_partial_daily_preview.py
+SHA256=1316F83F8B77CCA5ECBCF5BD2876CC6C9C14E78E5DD72C9DBCABA18F25CE2115
+DEF=backend\app\operations\preclose_partial_daily_preview.py:37|ClassDef|PreclosePartialDailyPreviewError
+DEF=backend\app\operations\preclose_partial_daily_preview.py:42|ClassDef|PreclosePreviewResult
+DEF=backend\app\operations\preclose_partial_daily_preview.py:61|FunctionDef|_preclose_guard
+DEF=backend\app\operations\preclose_partial_daily_preview.py:77|FunctionDef|overlay_partial_daily_bar
+DEF=backend\app\operations\preclose_partial_daily_preview.py:156|FunctionDef|build_preclose_overlay_fetcher
+DEF=backend\app\operations\preclose_partial_daily_preview.py:242|FunctionDef|run_preclose_partial_preview
+DEF=backend\app\operations\preclose_partial_daily_preview.py:324|FunctionDef|preclose_preview_rows
+FILE=backend\app\operations\scheduled_operation_phase_runner.py
+SHA256=7CFA17A8017529DD82CDBB692E11ADA052986A6721FD404B8661049C65035A19
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:51|ClassDef|ScheduledOperationPhaseError
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:56|ClassDef|ScheduledOperationPhaseResult
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:84|FunctionDef|preclose_preview
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:104|FunctionDef|_normalize_phase
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:337|FunctionDef|preclose_preview
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:383|FunctionDef|execute_operation_phase
+DEF=backend\app\operations\scheduled_operation_phase_runner.py:426|FunctionDef|operation_phase_rows
+FILE=backend\app\operations\scheduled_intraday_batch.py
+SHA256=6E8FCB3407146A97C49C86608CBD86C6A66D37BDC61211837405AFC68978FF5C
+DEF=backend\app\operations\scheduled_intraday_batch.py:23|ClassDef|ScheduledIntradayBatchFailure
+DEF=backend\app\operations\scheduled_intraday_batch.py:29|ClassDef|ScheduledIntradayBatchResult
+DEF=backend\app\operations\scheduled_intraday_batch.py:81|FunctionDef|fetch_scheduled_intraday_batch
+
+PRECLOSE_RUNNER_PRESENT=YES
+INTRADAY_BATCH_PRESENT=YES
+PRECLOSE_17_20_PRESENT=YES
+NONCANONICAL_WRITE_GUARD_PRESENT=YES
+
+=== 3. EXISTING RESULT ASSEMBLY / ROW BUILD SEAMS ===
+REF=backend\app\analysis\active_shadow_trader.py:207|            candidates.append((previous_active_stop, "Mevcut aktif stop", "Daha önce yükseltilmiş stop aşağı indirilmez."))
+REF=backend\app\analysis\active_shadow_trader.py:210|            candidates.append((entry, "Başa baş", "Pozisyon en az 1R ilerledi; stop giriş fiyatına taşınabilir."))
+REF=backend\app\analysis\active_shadow_trader.py:213|            candidates.append((
+REF=backend\app\analysis\active_shadow_trader.py:220|            candidates.append((
+REF=backend\app\analysis\active_shadow_trader.py:229|        reasons.append(stop_reason)
+REF=backend\app\analysis\active_shadow_trader.py:233|        reasons.append("İlk stop tanımlı olmadığı için R bazlı stop yükseltmesi hesaplanmadı.")
+REF=backend\app\analysis\active_shadow_trader.py:243|        reasons.append("Manuel fiyat aktif stop seviyesine geldi veya altına indi.")
+REF=backend\app\analysis\active_shadow_trader.py:247|            reasons.append("Teknik görünüm manuel kontrolde bozuldu olarak işaretlendi.")
+REF=backend\app\analysis\active_shadow_trader.py:249|            reasons.append("Haber/olay riski yüksek olarak işaretlendi.")
+REF=backend\app\analysis\active_shadow_trader.py:252|        reasons.append("Pozisyon zaman eşiğini aştı ve yeterli R ilerlemesi göstermedi.")
+REF=backend\app\analysis\active_shadow_trader.py:255|        reasons.append("Yeni risk/teyit nedeniyle pozisyon yakın izlemeye alındı.")
+REF=backend\app\analysis\active_shadow_trader.py:258|        reasons.append("Stop ihlali veya güçlü çıkış gerekçesi yok.")
+REF=backend\app\analysis\active_shadow_trader.py:343|            temp.replace(self.state_path)
+REF=backend\app\analysis\active_shadow_trader.py:391|        rows.append({
+REF=backend\app\analysis\automatic_signal_tracking.py:268|            errors.append(
+REF=backend\app\analysis\bist_daily_market.py:67|            satirlar.append(satir)
+REF=backend\app\analysis\bist_daily_market.py:125|                rows = list(reader)
+REF=backend\app\analysis\bist_daily_market.py:155|            out.append(token)
+REF=backend\app\analysis\bist_daily_market.py:227|            normalized.append(s)
+REF=backend\app\analysis\bist_universe.py:102|        if not kod or not kod.replace("_", "").isalnum():
+REF=backend\app\analysis\bist_universe.py:121|                hatalar.append(f"Güncel kaynak: {hata}")
+REF=backend\app\analysis\bist_universe.py:137|                hatalar.append(f"{kaynak}: {hata}")
+REF=backend\app\analysis\bist_universe.py:182|        semboller.append(yahoo_sembolu)
+REF=backend\app\analysis\daily_buy_decision_calibration.py:95|                buckets[(dimension, segment, horizon)].append(value)
+REF=backend\app\analysis\daily_buy_decision_calibration.py:102|        result.append(
+REF=backend\app\analysis\daily_buy_decision_closeout.py:50|        reasons.append("Teknik görünüm pozitif")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:52|        reasons.append(f"Teknik skor güçlü ({score})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:54|        reasons.append(f"Hacim teyidi mevcut ({volume:.2f})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:56|        reasons.append(f"Risk/getiri yeterli ({rr:.2f})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:58|        reasons.append("Araştırma önceliği yüksek")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:60|        reasons.append(f"Sıralama iyileşiyor (+{int(rank_change)})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:62|        reasons.append(f"Erken görünürlük {visibility}")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:65|        cautions.append("Kısmi/gecikmeli veri — karar mevcut son güvenilir veriyle üretildi")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:67|        cautions.append(f"Hacim teyidi zayıf ({volume:.2f})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:69|        cautions.append(f"Risk/getiri hedefin altında ({rr:.2f})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:71|        cautions.append(f"Sıralama geriliyor ({int(rank_change)})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:77|            cautions.append("Sıçrama kalite kapısı AL için uygun değil")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:80|            cautions.append(f"Sıçrama giriş hazırlığı: {entry_readiness}")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:103|        result.append(
+REF=backend\app\analysis\daily_buy_decision_cycle.py:202|        reasons.append(f"Karar {old.decision or '-'}→{new.decision or '-'}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:205|        reasons.append(f"Teknik görünüm değişti ({old.technical_view}→{new.technical_view})")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:207|        reasons.append(f"Teknik skor {old.technical_score}→{new.technical_score}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:214|            reasons.append(f"{label} ({_fmt_number(old.volume_ratio)}→{_fmt_number(new.volume_ratio)})")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:216|            reasons.append(f"Hacim {_fmt_number(old.volume_ratio)}→{_fmt_number(new.volume_ratio)}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:225|            reasons.append(f"{label} ({_fmt_number(old.risk_reward)}→{_fmt_number(new.risk_reward)})")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:228|            reasons.append(f"{label} ({_fmt_number(old.risk_reward)}→{_fmt_number(new.risk_reward)})")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:230|            reasons.append(f"Risk/getiri {_fmt_number(old.risk_reward)}→{_fmt_number(new.risk_reward)}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:233|        reasons.append(f"Giriş hazırlığı {old.entry_readiness}→{new.entry_readiness}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:235|        reasons.append(f"Sıçrama kalite kapısı {old.jump_quality}→{new.jump_quality}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:237|        reasons.append(f"Aday kaynağı {old.selection_source}→{new.selection_source}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:239|        reasons.append(f"Araştırma önceliği {old.research_priority}→{new.research_priority}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:241|        reasons.append(f"Erken görünürlük {old.visibility_state or '-'}→{new.visibility_state or '-'}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:265|            reasons.append("Sabah listesine yeni girdi")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:267|            reasons.append("Sabah listeden çıktı")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:271|                reasons.append(f"Öncelik sırası {old.rank}→{new.rank}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:273|                reasons.append(
+REF=backend\app\analysis\daily_buy_decision_cycle.py:277|                reasons.append("Sıralama hareketi güncellendi")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:279|                reasons.append("Veri kalite durumu değişti")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:280|        changes.append(
+REF=backend\app\analysis\daily_buy_decision_cycle.py:321|        parts.append("Sabah sıçrama havuzundan listeye girdi")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:323|        parts.append("Sabah tarama havuzundan listeye girdi")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:326|        parts.append(f"Giriş hazırlığı: {incoming.entry_readiness}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:328|        parts.append(f"Sıçrama kalite kapısı: {incoming.jump_quality}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:330|        parts.append(f"Sabah karar: {incoming.decision}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:333|        parts.append(f"Çıkan aday akşam kararı: {outgoing.decision}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:335|        parts.append(f"Çıkan aday giriş hazırlığı: {outgoing.entry_readiness}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:359|        replacements.append(
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:67|        timestamp = timestamp.replace(tzinfo=ISTANBUL)
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:96|            checks.append(OperationalCloseoutCheck(label, "BEKLİYOR", "Planlanan çalışma saati henüz gelmedi."))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:100|            missing.append(f"{label}: zamanlanmış koşu kaydı yok")
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:101|            checks.append(OperationalCloseoutCheck(label, "EKSİK", "Zamanlanmış/recovery koşu kaydı bulunamadı."))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:107|            missing.append(f"{label}: koşu başarılı değil ({state_status or 'BİLİNMİYOR'})")
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:108|            checks.append(OperationalCloseoutCheck(label, "BAŞARISIZ", detail))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:112|        checks.append(
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:128|            checks.append(
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:136|            missing.append(f"{label}: audit eşleşmesi yok")
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:137|            checks.append(OperationalCloseoutCheck(f"{label} Audit", "EKSİK", "Başarılı koşuyla eşleşen audit kaydı bulunamadı."))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:148|                checks.append(
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:156|                missing.append(f"{label}: scheduler/arşiv aday sayısı uyuşmuyor")
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:157|                checks.append(
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:165|            missing.append(f"{label}: karar arşivi yok")
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:166|            checks.append(OperationalCloseoutCheck(f"{label} Karar Arşivi", "EKSİK", "Günlük karar çıktı arşivi bulunamadı."))
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:57|            returns.append(None)
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:60|        returns.append(((price / reference_price) - 1.0) * 100.0)
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:87|        result.append(
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:137|                observations.append((day_key, price))
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:140|        updated.append(
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:141|            replace(
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:181|    rows = []
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:183|        rows.append(
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:207|        result.append(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:59|        rows = raw if isinstance(raw, list) else []
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:68|                result.append(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:113|            created = created.replace(tzinfo=ISTANBUL)
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:220|        rows.append(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:299|        rows.append(
+REF=backend\app\analysis\daily_buy_decision_recommendation_governance.py:97|            updated.append(replace(item, status=status, reviewed_at=timestamp))
+REF=backend\app\analysis\daily_buy_decision_recommendation_governance.py:99|            updated.append(item)
+REF=backend\app\analysis\daily_buy_decision_recommendation_governance.py:123|            records.append(record)
+REF=backend\app\analysis\daily_buy_decision_review.py:35|        supporting.append("Teknik skor 80+")
+REF=backend\app\analysis\daily_buy_decision_review.py:37|        caution.append("Teknik skor 70 altı")
+REF=backend\app\analysis\daily_buy_decision_review.py:41|        supporting.append("Hacim teyidi güçlü")
+REF=backend\app\analysis\daily_buy_decision_review.py:43|        caution.append("Hacim teyidi zayıf")
+REF=backend\app\analysis\daily_buy_decision_review.py:47|        supporting.append("Risk/getiri 2.0+")
+REF=backend\app\analysis\daily_buy_decision_review.py:49|        caution.append("Risk/getiri 1.5 altı")
+REF=backend\app\analysis\daily_buy_decision_review.py:55|            supporting.append("Sıralama ivmesi +30 ve üzeri")
+REF=backend\app\analysis\daily_buy_decision_review.py:57|            caution.append("Sıralama gerilemesi")
+REF=backend\app\analysis\daily_buy_decision_review.py:61|        supporting.append("Araştırma önceliği HIGH")
+REF=backend\app\analysis\daily_buy_decision_review.py:65|        supporting.append(f"Erken görünürlük {visibility}")
+REF=backend\app\analysis\daily_buy_decision_review.py:67|        caution.append(f"Erken görünürlük {visibility}")
+REF=backend\app\analysis\daily_buy_decision_review.py:78|        reviews.append(
+REF=backend\app\analysis\daily_buy_decision_review.py:114|        buckets[item.decision_date].append(item)
+REF=backend\app\analysis\daily_buy_decision_review.py:123|        rows.append(
+REF=backend\app\analysis\daily_buy_decision_threshold_recommendation.py:38|        grouped[(item.dimension, item.horizon)].append(item)
+REF=backend\app\analysis\daily_buy_decision_threshold_recommendation.py:45|            result.append(
+REF=backend\app\analysis\daily_buy_decision_threshold_recommendation.py:105|        result.append(
+REF=backend\app\analysis\daily_early_trajectory.py:99|        candidates.append(
+REF=backend\app\analysis\daily_early_trajectory.py:132|    rows = []
+REF=backend\app\analysis\daily_early_trajectory.py:134|        rows.append(
+REF=backend\app\analysis\daily_operation_ai_context.py:47|        result.append(text)
+REF=backend\app\analysis\daily_operation_ai_context.py:189|                records.append(payload)
+REF=backend\app\analysis\daily_operation_panel.py:93|        alerts.append(
+REF=backend\app\analysis\daily_operation_panel.py:101|        tasks.append(
+REF=backend\app\analysis\daily_operation_panel.py:124|            alerts.append(
+REF=backend\app\analysis\daily_operation_panel.py:133|            alerts.append(
+REF=backend\app\analysis\daily_operation_panel.py:143|            tasks.append(
+REF=backend\app\analysis\daily_operation_panel.py:152|            alerts.append(
+REF=backend\app\analysis\daily_operation_panel.py:162|            alerts.append(
+REF=backend\app\analysis\daily_operation_panel.py:172|        alerts.append(
+REF=backend\app\analysis\daily_operation_panel.py:180|        tasks.append(
+REF=backend\app\analysis\daily_operation_panel.py:190|        tasks.append(
+REF=backend\app\analysis\daily_operation_panel.py:200|        tasks.append(
+REF=backend\app\analysis\daily_operation_panel.py:209|    tasks.append(
+REF=backend\app\analysis\daily_operation_panel.py:217|    tasks.append(
+REF=backend\app\analysis\divergence_analysis.py:111|            positions.append(position)
+REF=backend\app\analysis\divergence_analysis.py:137|        points.append(
+REF=backend\app\analysis\divergence_analysis.py:307|            signals.append(
+REF=backend\app\analysis\divergence_analysis.py:467|            rows.append(
+REF=backend\app\analysis\eod_final_action_board.py:54|        items.append(
+REF=backend\app\analysis\eod_morning_board_delta.py:57|        parts.append(f"Karar {old_decision}→{new_decision}")
+REF_COUNT=627
+
+=== 4. PREVIOUS CANONICAL RANK READ SEAMS ===
+REF=backend\app\analysis\daily_buy_decision_calibration.py:86|    horizon_attrs = (("1S", "return_1s"), ("3S", "return_3s"), ("5S", "return_5s"))
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:31|    return_1s: float | None = None
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:32|    return_3s: float | None = None
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:33|    return_5s: float | None = None
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:144|                return_1s=returns[0],
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:145|                return_3s=returns[1],
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:146|                return_5s=returns[2],
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:190|                "1S getiri (%)": round(item.return_1s, 2) if item.return_1s is not None else "-",
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:191|                "3S getiri (%)": round(item.return_3s, 2) if item.return_3s is not None else "-",
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:192|                "5S getiri (%)": round(item.return_5s, 2) if item.return_5s is not None else "-",
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:204|    for horizon, attr in ((1, "return_1s"), (3, "return_3s"), (5, "return_5s")):
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:171|        if current_by_symbol[symbol].rank != previous_by_symbol[symbol].rank
+REF=backend\app\analysis\daily_buy_decision_review.py:22|    for horizon, attr in (("5S", "return_5s"), ("3S", "return_3s"), ("1S", "return_1s")):
+REF=backend\app\analysis\daily_early_trajectory.py:18|    rank_1s: int
+REF=backend\app\analysis\daily_early_trajectory.py:19|    rank_3s: int
+REF=backend\app\analysis\daily_early_trajectory.py:20|    rank_5s: int
+REF=backend\app\analysis\daily_early_trajectory.py:21|    gain_1s: int
+REF=backend\app\analysis\daily_early_trajectory.py:22|    gain_3s: int
+REF=backend\app\analysis\daily_early_trajectory.py:23|    gain_5s: int
+REF=backend\app\analysis\daily_early_trajectory.py:29|            f"{self.rank_5s} → {self.rank_3s} → "
+REF=backend\app\analysis\daily_early_trajectory.py:30|            f"{self.rank_1s} → {self.current_rank}"
+REF=backend\app\analysis\daily_early_trajectory.py:36|        item.rank_5s,
+REF=backend\app\analysis\daily_early_trajectory.py:37|        item.rank_3s,
+REF=backend\app\analysis\daily_early_trajectory.py:38|        item.rank_1s,
+REF=backend\app\analysis\daily_early_trajectory.py:40|        item.gain_1s,
+REF=backend\app\analysis\daily_early_trajectory.py:41|        item.gain_3s,
+REF=backend\app\analysis\daily_early_trajectory.py:42|        item.gain_5s,
+REF=backend\app\analysis\daily_early_trajectory.py:48|        item.rank_5s > item.rank_3s > item.rank_1s > item.current_rank
+REF=backend\app\analysis\daily_early_trajectory.py:49|        and item.gain_1s > 0
+REF=backend\app\analysis\daily_early_trajectory.py:50|        and item.gain_3s > 0
+REF=backend\app\analysis\daily_early_trajectory.py:51|        and item.gain_5s > 0
+REF=backend\app\analysis\daily_early_trajectory.py:67|    comparable Research trajectories whose 5S -> 3S -> 1S -> today path
+REF=backend\app\analysis\daily_early_trajectory.py:71|    1) 3S rank gain descending (primary early-visibility horizon)
+REF=backend\app\analysis\daily_early_trajectory.py:72|    2) 5S rank gain descending (persistence context)
+REF=backend\app\analysis\daily_early_trajectory.py:73|    3) 1S rank gain descending (latest continuation)
+REF=backend\app\analysis\daily_early_trajectory.py:103|                rank_1s=int(item.rank_1s),
+REF=backend\app\analysis\daily_early_trajectory.py:104|                rank_3s=int(item.rank_3s),
+REF=backend\app\analysis\daily_early_trajectory.py:105|                rank_5s=int(item.rank_5s),
+REF=backend\app\analysis\daily_early_trajectory.py:106|                gain_1s=int(item.gain_1s),
+REF=backend\app\analysis\daily_early_trajectory.py:107|                gain_3s=int(item.gain_3s),
+REF=backend\app\analysis\daily_early_trajectory.py:108|                gain_5s=int(item.gain_5s),
+REF=backend\app\analysis\daily_early_trajectory.py:114|            -item.gain_3s,
+REF=backend\app\analysis\daily_early_trajectory.py:115|            -item.gain_5s,
+REF=backend\app\analysis\daily_early_trajectory.py:116|            -item.gain_1s,
+REF=backend\app\analysis\daily_early_trajectory.py:139|                "1S Δ": f"+{item.gain_1s}",
+REF=backend\app\analysis\daily_early_trajectory.py:140|                "3S Δ": f"+{item.gain_3s}",
+REF=backend\app\analysis\daily_early_trajectory.py:141|                "5S Δ": f"+{item.gain_5s}",
+REF=backend\app\analysis\early_visibility_report.py:14|            "previous_rank": item.previous_rank,
+REF=backend\app\analysis\fast_mover_watch.py:59|    previous_canonical_rank: int | None
+REF=backend\app\analysis\fast_mover_watch.py:87|    previous_canonical_rank: int | None
+REF=backend\app\analysis\fast_mover_watch.py:146|        observation.previous_canonical_rank,
+REF=backend\app\analysis\fast_mover_watch.py:153|        and observation.previous_canonical_rank is not None
+REF=backend\app\analysis\fast_mover_watch.py:155|        rank_gain = observation.previous_canonical_rank - observation.current_rank
+REF=backend\app\analysis\fast_mover_watch.py:170|        observation.previous_canonical_rank is None
+REF=backend\app\analysis\fast_mover_watch.py:182|    if observation.previous_canonical_rank is not None and previous_pct is None:
+REF=backend\app\analysis\fast_mover_watch.py:192|            previous_canonical_rank=observation.previous_canonical_rank,
+REF=backend\app\analysis\fast_mover_watch.py:229|            previous_canonical_rank=observation.previous_canonical_rank,
+REF=backend\app\analysis\fast_mover_watch.py:263|            previous_canonical_rank=observation.previous_canonical_rank,
+REF=backend\app\analysis\fast_mover_watch.py:295|        previous_canonical_rank=observation.previous_canonical_rank,
+REF=backend\app\analysis\high_conviction_buy_gate.py:85|    calibration slices at 3S/5S. A slice is supportive only when the existing
+REF=backend\app\analysis\high_conviction_buy_gate.py:94|        if key in keys and horizon in {"3S", "5S"}:
+REF=backend\app\analysis\historical_research_replay.py:13|- Ranking Memory is never written here;
+REF=backend\app\analysis\historical_research_replay.py:25|from .ranking_memory import RankObservation, observations_from_research_rows
+REF=backend\app\analysis\jump_candidate_priority_merge.py:59|    parts = [f"{readiness}", f"tarama #{scan_rank}"]
+REF=backend\app\analysis\ranking_memory.py:97|            path = project_root / "data" / "ranking_memory" / "rank_observations.jsonl"
+REF=backend\app\analysis\ranking_memory.py:245|def rank_history_for_symbol(observations, symbol):
+REF=backend\app\analysis\ranking_movement_visibility.py:6|from backend.app.analysis.ranking_memory import RankObservation
+REF=backend\app\analysis\ranking_movement_visibility.py:14|    gain_1s: int | None
+REF=backend\app\analysis\ranking_movement_visibility.py:15|    gain_3s: int | None
+REF=backend\app\analysis\ranking_movement_visibility.py:16|    gain_5s: int | None
+REF=backend\app\analysis\ranking_movement_visibility.py:18|    positive_steps_5s: int
+REF=backend\app\analysis\ranking_movement_visibility.py:52|def _positive_steps_5s(history: list[RankObservation]) -> int:
+REF=backend\app\analysis\ranking_movement_visibility.py:55|        previous.rank > current.rank
+REF=backend\app\analysis\ranking_movement_visibility.py:83|        positive_steps = _positive_steps_5s(history)
+REF=backend\app\analysis\ranking_movement_visibility.py:88|                gain_1s=trajectory.gain_1s,
+REF=backend\app\analysis\ranking_movement_visibility.py:89|                gain_3s=trajectory.gain_3s,
+REF=backend\app\analysis\ranking_movement_visibility.py:90|                gain_5s=trajectory.gain_5s,
+REF=backend\app\analysis\ranking_movement_visibility.py:92|                positive_steps_5s=positive_steps,
+REF=backend\app\analysis\ranking_movement_visibility.py:104|                row.gain_3s is None,
+REF=backend\app\analysis\ranking_movement_visibility.py:105|                -(row.gain_3s or -10**9),
+REF=backend\app\analysis\ranking_movement_visibility.py:118|    if row.gain_3s is None:
+REF=backend\app\analysis\ranking_movement_visibility.py:120|    if row.gain_3s <= 0:
+REF=backend\app\analysis\ranking_movement_visibility.py:123|    parts = [f"3S +{row.gain_3s} sıra"]
+REF=backend\app\analysis\ranking_movement_visibility.py:124|    if row.gain_1s is not None and row.gain_1s > 0:
+REF=backend\app\analysis\ranking_movement_visibility.py:125|        parts.append(f"1S +{row.gain_1s}")
+REF=backend\app\analysis\ranking_movement_visibility.py:129|        parts.append("5S hareket kalıcı")
+REF=backend\app\analysis\ranking_movement_visibility.py:131|        parts.append("5S hareket destekli")
+REF=backend\app\analysis\ranking_movement_visibility.py:146|            "1S Δ": row.gain_1s if row.gain_1s is not None else "-",
+REF=backend\app\analysis\ranking_movement_visibility.py:147|            "3S Δ": row.gain_3s if row.gain_3s is not None else "-",
+REF=backend\app\analysis\ranking_movement_visibility.py:148|            "5S Δ": row.gain_5s if row.gain_5s is not None else "-",
+REF=backend\app\analysis\ranking_movement_visibility.py:150|            "5S pozitif adım": row.positive_steps_5s,
+REF=backend\app\analysis\ranking_movement_visibility.py:156|                if row.comparable and row.gain_3s is not None and row.gain_3s > 0
+REF=backend\app\analysis\ranking_snapshot_adapter.py:5|from backend.app.analysis.ranking_memory import (
+REF=backend\app\analysis\ranking_trajectory.py:7|from backend.app.analysis.ranking_memory import RankObservation
+REF=backend\app\analysis\ranking_trajectory.py:24|    rank_1s: int | None
+REF=backend\app\analysis\ranking_trajectory.py:25|    rank_3s: int | None
+REF=backend\app\analysis\ranking_trajectory.py:26|    rank_5s: int | None
+REF=backend\app\analysis\ranking_trajectory.py:28|    gain_1s: int | None
+REF=backend\app\analysis\ranking_trajectory.py:29|    gain_3s: int | None
+REF=backend\app\analysis\ranking_trajectory.py:30|    gain_5s: int | None
+REF=backend\app\analysis\ranking_trajectory.py:32|    normalized_3s: float | None
+REF=backend\app\analysis\ranking_trajectory.py:33|    normalized_gain_3s: float | None
+REF=backend\app\analysis\ranking_trajectory.py:76|def _previous(items: list[RankObservation], sessions_back: int) -> RankObservation | None:
+REF=backend\app\analysis\ranking_trajectory.py:103|def _zone_events(previous: RankObservation | None, current: RankObservation) -> tuple[str, ...]:
+REF=backend\app\analysis\ranking_trajectory.py:108|        if previous.rank > limit and current.rank <= limit:
+REF=backend\app\analysis\ranking_trajectory.py:184|    norm_3s = (
+REF=backend\app\analysis\ranking_trajectory.py:195|        rank_1s=p1.rank if p1 else None,
+REF=backend\app\analysis\ranking_trajectory.py:196|        rank_3s=p3.rank if p3 else None,
+REF=backend\app\analysis\ranking_trajectory.py:197|        rank_5s=p5.rank if p5 else None,
+REF=backend\app\analysis\ranking_trajectory.py:199|        gain_1s=(p1.rank - current.rank) if p1 else None,
+REF=backend\app\analysis\ranking_trajectory.py:200|        gain_3s=(p3.rank - current.rank) if p3 else None,
+REF=backend\app\analysis\ranking_trajectory.py:201|        gain_5s=(p5.rank - current.rank) if p5 else None,
+REF=backend\app\analysis\ranking_trajectory.py:203|        normalized_3s=norm_3s,
+REF=backend\app\analysis\ranking_trajectory.py:204|        normalized_gain_3s=(norm_3s - norm_current) if norm_3s is not None else None,
+REF=backend\app\analysis\ranking_trajectory.py:225|                item.gain_3s is None,
+REF=backend\app\analysis\ranking_trajectory.py:226|                -(item.gain_3s or -10**9),
+REF=backend\app\analysis\ranking_validation.py:6|from backend.app.analysis.ranking_memory import RankObservation
+REF=backend\app\analysis\ranking_visibility_context.py:6|from backend.app.analysis.ranking_memory import RankObservation
+REF=backend\app\analysis\ranking_visibility_context.py:14|    previous_rank: int | None
+REF=backend\app\analysis\ranking_visibility_context.py:31|        gain = item.gain_3s or item.gain_1s or 0
+REF=backend\app\analysis\ranking_visibility_context.py:52|                previous_rank=item.rank_3s,
+REF=backend\app\analysis\ranking_visibility_context.py:76|        previous_rank=visibility.previous_rank,
+REF=backend\app\analysis\ranking_visibility_service.py:3|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+REF=backend\app\analysis\research_profile_memory.py:8|from .ranking_memory import RankObservationJsonlStore, ResearchProfileObservation
+REF=backend\app\analysis\research_profile_memory.py:44|    rank_1s: int | None
+REF=backend\app\analysis\research_profile_memory.py:45|    rank_3s: int | None
+REF=backend\app\analysis\research_profile_memory.py:46|    rank_5s: int | None
+REF=backend\app\analysis\research_profile_memory.py:47|    gain_1s: int | None
+REF=backend\app\analysis\research_profile_memory.py:48|    gain_3s: int | None
+REF=backend\app\analysis\research_profile_memory.py:49|    gain_5s: int | None
+REF=backend\app\analysis\research_profile_memory.py:60|        return f"{self.rank_5s} → {self.rank_3s} → {self.rank_1s} → {self.current_rank}"
+REF=backend\app\analysis\research_profile_memory.py:228|        or trajectory.rank_1s is None
+REF=backend\app\analysis\research_profile_memory.py:229|        or trajectory.rank_3s is None
+REF=backend\app\analysis\research_profile_memory.py:230|        or trajectory.rank_5s is None
+REF=backend\app\analysis\research_profile_memory.py:235|        rank_1s=trajectory.rank_1s,
+REF=backend\app\analysis\research_profile_memory.py:236|        rank_3s=trajectory.rank_3s,
+REF=backend\app\analysis\research_profile_memory.py:237|        rank_5s=trajectory.rank_5s,
+REF=backend\app\analysis\research_profile_memory.py:238|        gain_1s=trajectory.gain_1s,
+REF=backend\app\analysis\research_profile_memory.py:239|        gain_3s=trajectory.gain_3s,
+REF=backend\app\analysis\research_profile_memory.py:240|        gain_5s=trajectory.gain_5s,
+REF_COUNT=143
+
+=== 5. UNIVERSE SIZE / COMPARABILITY INPUTS ===
+REF=backend\app\analysis\bist_daily_market.py:9|from backend.app.analysis.bist_universe import BistUniverseRepository
+REF=backend\app\analysis\bist_daily_market.py:17|    evren_adi: str
+REF=backend\app\analysis\bist_daily_market.py:18|    evren_sembol_sayisi: int
+REF=backend\app\analysis\bist_daily_market.py:21|    evren_kaynagi: str
+REF=backend\app\analysis\bist_daily_market.py:22|    evren_tarihi: str
+REF=backend\app\analysis\bist_daily_market.py:55|def _sonuc_olustur(evren, semboller: list[str], *, evren_adi: str) -> BistDailyMarketResult:
+REF=backend\app\analysis\bist_daily_market.py:78|        evren_adi=evren_adi,
+REF=backend\app\analysis\bist_daily_market.py:79|        evren_sembol_sayisi=len(semboller),
+REF=backend\app\analysis\bist_daily_market.py:82|        evren_kaynagi=evren.kaynak,
+REF=backend\app\analysis\bist_daily_market.py:83|        evren_tarihi=evren.tarih,
+REF=backend\app\analysis\bist_daily_market.py:92|    evren_adi: str = "BIST Tüm",
+REF=backend\app\analysis\bist_daily_market.py:95|    evren = BistUniverseRepository().evreni_yukle(
+REF=backend\app\analysis\bist_daily_market.py:96|        evren_adi,
+REF=backend\app\analysis\bist_daily_market.py:99|    return _sonuc_olustur(evren, list(evren.semboller), evren_adi=evren.ad)
+REF=backend\app\analysis\bist_daily_market.py:103|    evren = BistUniverseRepository().evreni_yukle(
+REF=backend\app\analysis\bist_daily_market.py:107|    return evren, [str(x).upper() for x in evren.semboller]
+REF=backend\app\analysis\bist_daily_market.py:162|    universe_symbols: list[str],
+REF=backend\app\analysis\bist_daily_market.py:170|    canonical = [s.removesuffix(".IS") for s in universe_symbols]
+REF=backend\app\analysis\bist_daily_market.py:215|    evren, universe_symbols = bist_tum_sembollerini_yukle(
+REF=backend\app\analysis\bist_daily_market.py:218|    universe_set = set(universe_symbols)
+REF=backend\app\analysis\bist_daily_market.py:226|        if s in universe_set and s not in seen:
+REF=backend\app\analysis\bist_daily_market.py:230|    return _sonuc_olustur(evren, normalized, evren_adi="Özel Liste")
+REF=backend\app\analysis\bist_universe.py:16|EVREN_KODLARI = {
+REF=backend\app\analysis\bist_universe.py:25|class BistUniverseError(Exception):
+REF=backend\app\analysis\bist_universe.py:30|class BistUniverse:
+REF=backend\app\analysis\bist_universe.py:31|    """Bir BIST tarama evreninin sembollerini ve veri kaynağını temsil eder."""
+REF=backend\app\analysis\bist_universe.py:48|class BistUniverseRepository:
+REF=backend\app\analysis\bist_universe.py:52|    Ağ erişimi başarısız olursa önce son başarılı yerel önbelleği, ardından
+REF=backend\app\analysis\bist_universe.py:71|    def evreni_yukle(
+REF=backend\app\analysis\bist_universe.py:73|        evren_adi: str,
+REF=backend\app\analysis\bist_universe.py:75|    ) -> BistUniverse:
+REF=backend\app\analysis\bist_universe.py:76|        if evren_adi not in EVREN_KODLARI:
+REF=backend\app\analysis\bist_universe.py:78|                f"Bilinmeyen BIST evreni: {evren_adi}. "
+REF=backend\app\analysis\bist_universe.py:79|                f"Geçerli seçenekler: {', '.join(EVREN_KODLARI)}"
+REF=backend\app\analysis\bist_universe.py:83|            EVREN_KODLARI[evren_adi],
+REF=backend\app\analysis\bist_universe.py:84|            endeks_adi=evren_adi,
+REF=backend\app\analysis\bist_universe.py:94|    ) -> BistUniverse:
+REF=backend\app\analysis\bist_universe.py:98|        Bu yöntem BIST 30/50/100 gibi tarama evrenlerinin yanında XBANK,
+REF=backend\app\analysis\bist_universe.py:111|                evren = bist_bilesen_csvsini_ayristir(
+REF=backend\app\analysis\bist_universe.py:113|                    evren_adi=ad,
+REF=backend\app\analysis\bist_universe.py:119|                return evren
+REF=backend\app\analysis\bist_universe.py:120|            except (OSError, URLError, ValueError, BistUniverseError) as hata:
+REF=backend\app\analysis\bist_universe.py:131|                    evren_adi=ad,
+REF=backend\app\analysis\bist_universe.py:136|            except (OSError, ValueError, BistUniverseError) as hata:
+REF=backend\app\analysis\bist_universe.py:139|        raise BistUniverseError(
+REF=backend\app\analysis\bist_universe.py:154|    evren_adi: str,
+REF=backend\app\analysis\bist_universe.py:158|) -> BistUniverse:
+REF=backend\app\analysis\bist_universe.py:189|        raise BistUniverseError(
+REF=backend\app\analysis\bist_universe.py:195|    return BistUniverse(
+REF=backend\app\analysis\bist_universe.py:196|        ad=evren_adi,
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:107|            missing.append(f"{label}: koşu başarılı değil ({state_status or 'BİLİNMİYOR'})")
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:116|                f"Koşu başarılı · {candidate_count} aday · AL: {', '.join(tuple(getattr(state, 'buy_symbols', ()) or ())) or '-'}",
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:137|            checks.append(OperationalCloseoutCheck(f"{label} Audit", "EKSİK", "Başarılı koşuyla eşleşen audit kaydı bulunamadı."))
+REF=backend\app\analysis\fast_mover_watch.py:60|    current_universe_size: int | None
+REF=backend\app\analysis\fast_mover_watch.py:61|    previous_universe_size: int | None
+REF=backend\app\analysis\fast_mover_watch.py:117|def _percentile_position(rank: int | None, universe_size: int | None) -> float | None:
+REF=backend\app\analysis\fast_mover_watch.py:118|    if rank is None or universe_size is None:
+REF=backend\app\analysis\fast_mover_watch.py:120|    if rank < 1 or universe_size < 1 or rank > universe_size:
+REF=backend\app\analysis\fast_mover_watch.py:122|    if universe_size == 1:
+REF=backend\app\analysis\fast_mover_watch.py:124|    return 1.0 - ((rank - 1) / (universe_size - 1))
+REF=backend\app\analysis\fast_mover_watch.py:143|        observation.current_universe_size,
+REF=backend\app\analysis\fast_mover_watch.py:147|        observation.previous_universe_size,
+REF=backend\app\analysis\fast_mover_watch.py:167|    if observation.current_rank is None or observation.current_universe_size is None:
+REF=backend\app\analysis\fast_mover_watch.py:171|        or observation.previous_universe_size is None
+REF=backend\app\analysis\fast_mover_watch.py:181|        hard_blocks.append("CURRENT_UNIVERSE_POSITION_INVALID")
+REF=backend\app\analysis\fast_mover_watch.py:183|        hard_blocks.append("PREVIOUS_UNIVERSE_POSITION_INVALID")
+REF=backend\app\analysis\historical_research_replay.py:9|- explicit historical universe input;
+REF=backend\app\analysis\historical_research_replay.py:35|HISTORICAL_REPLAY_UNIVERSE_SOURCE = "HISTORICAL_XUTUM_OFFICIAL_LEDGER_V1"
+REF=backend\app\analysis\historical_research_replay.py:43|    universe_source: str
+REF=backend\app\analysis\historical_research_replay.py:45|    input_universe_size: int
+REF=backend\app\analysis\historical_research_replay.py:46|    successful_scan_count: int
+REF=backend\app\analysis\historical_research_replay.py:106|    universe_source: str = HISTORICAL_REPLAY_UNIVERSE_SOURCE,
+REF=backend\app\analysis\historical_research_replay.py:113|        raise ValueError("Historical replay requires at least one universe symbol.")
+REF=backend\app\analysis\historical_research_replay.py:116|    source = str(universe_source or "").strip()
+REF=backend\app\analysis\historical_research_replay.py:118|        raise ValueError("Historical replay requires a stable universe_source.")
+REF=backend\app\analysis\historical_research_replay.py:174|        universe_source=source,
+REF=backend\app\analysis\historical_research_replay.py:186|        universe_source=source,
+REF=backend\app\analysis\historical_research_replay.py:188|        input_universe_size=len(normalized_symbols),
+REF=backend\app\analysis\historical_research_replay.py:189|        successful_scan_count=len(scan.basarili_sonuclar),
+REF=backend\app\analysis\market_scanner.py:13|from .bist_universe import (
+REF=backend\app\analysis\market_scanner.py:14|    EVREN_KODLARI,
+REF=backend\app\analysis\market_scanner.py:15|    BistUniverse,
+REF=backend\app\analysis\market_scanner.py:16|    BistUniverseRepository,
+REF=backend\app\analysis\market_scanner.py:38|EVREN_IZLEME_LISTESI = "Kayıtlı İzleme Listesi"
+REF=backend\app\analysis\market_scanner.py:39|EVREN_OZEL_LISTE = "Özel Liste"
+REF=backend\app\analysis\market_scanner.py:41|TARAMA_EVRENLERI = (
+REF=backend\app\analysis\market_scanner.py:42|    EVREN_IZLEME_LISTESI,
+REF=backend\app\analysis\market_scanner.py:47|    EVREN_OZEL_LISTE,
+REF=backend\app\analysis\market_scanner.py:59|    evren: str = EVREN_IZLEME_LISTESI
+REF=backend\app\analysis\market_scanner.py:63|    internetten_evren_guncelle: bool = True
+REF=backend\app\analysis\market_scanner.py:67|        if self.evren not in TARAMA_EVRENLERI:
+REF=backend\app\analysis\market_scanner.py:68|            raise ValueError(f"Geçersiz tarama evreni: {self.evren}")
+REF=backend\app\analysis\market_scanner.py:82|    evren_adi: str
+REF=backend\app\analysis\market_scanner.py:83|    evren_kaynagi: str
+REF=backend\app\analysis\market_scanner.py:84|    evren_tarihi: str
+REF=backend\app\analysis\market_scanner.py:85|    evren_sembol_sayisi: int
+REF=backend\app\analysis\market_scanner.py:89|    # RPV1_SPRINT02_SUCCESSFUL_RESULTS — same canonical scan, read-only exposure.
+REF=backend\app\analysis\market_scanner.py:90|    tum_sonuclar: tuple[StockAnalysisResult, ...] = ()
+REF=backend\app\analysis\market_scanner.py:97|    sektor_referans_evreni: str | None = None
+REF=backend\app\analysis\market_scanner.py:112|    """Evren yükleme, toplu analiz, filtreleme ve aday sıralamasını birleştirir."""
+REF=backend\app\analysis\market_scanner.py:116|        evren_repository: BistUniverseRepository | None = None,
+REF=backend\app\analysis\market_scanner.py:128|        self._evren_repository = (
+REF=backend\app\analysis\market_scanner.py:129|            evren_repository or BistUniverseRepository()
+REF=backend\app\analysis\market_scanner.py:156|            semboller, evren_kaynagi, evren_tarihi = (
+REF=backend\app\analysis\market_scanner.py:157|                tarama_evreni_yukle(
+REF=backend\app\analysis\market_scanner.py:159|                    evren_repository=self._evren_repository,
+REF=backend\app\analysis\market_scanner.py:226|        sektor_referans_evreni: str | None = None
+REF=backend\app\analysis\market_scanner.py:229|            sektor_referans_evreni = _sektor_referans_evrenini_sec(
+REF=backend\app\analysis\market_scanner.py:230|                istek.evren
+REF=backend\app\analysis\market_scanner.py:238|                        sektor_referans_evreni,
+REF=backend\app\analysis\market_scanner.py:243|                        reference_universe=sektor_referans_evreni,
+REF=backend\app\analysis\market_scanner.py:244|                        repository=self._evren_repository,
+REF=backend\app\analysis\market_scanner.py:248|                sektor_referans_evreni = sektor_paketi.reference_universe
+REF=backend\app\analysis\market_scanner.py:265|        tum_sonuclar = tuple(tarama.basarili_sonuclar)
+REF=backend\app\analysis\market_scanner.py:272|            for sonuc in tum_sonuclar
+REF=backend\app\analysis\market_scanner.py:280|            evren_adi=istek.evren,
+REF=backend\app\analysis\market_scanner.py:281|            evren_kaynagi=evren_kaynagi,
+REF=backend\app\analysis\market_scanner.py:282|            evren_tarihi=evren_tarihi,
+REF=backend\app\analysis\market_scanner.py:283|            evren_sembol_sayisi=len(semboller),
+REF=backend\app\analysis\market_scanner.py:287|            tum_sonuclar=tuple(tarama.basarili_sonuclar),
+REF=backend\app\analysis\market_scanner.py:294|            sektor_referans_evreni=sektor_referans_evreni,
+REF=backend\app\analysis\market_scanner.py:299|def _sektor_referans_evrenini_sec(tarama_evreni: str) -> str:
+REF=backend\app\analysis\market_scanner.py:301|    Sektör gücü için kontrollü referans evren seçer.
+REF=backend\app\analysis\market_scanner.py:306|    if tarama_evreni == "BIST 30":
+REF=backend\app\analysis\market_scanner.py:311|def tarama_evreni_yukle(
+REF=backend\app\analysis\market_scanner.py:314|    evren_repository: BistUniverseRepository | None = None,
+REF=backend\app\analysis\market_scanner.py:317|    """BIST, kayıtlı liste veya özel liste evrenini ortak biçimde çözer."""
+REF=backend\app\analysis\market_scanner.py:320|    repository = evren_repository or BistUniverseRepository()
+REF=backend\app\analysis\market_scanner.py:328|    if istek.evren in EVREN_KODLARI:
+REF=backend\app\analysis\market_scanner.py:329|        evren: BistUniverse = repository.evreni_yukle(
+REF=backend\app\analysis\market_scanner.py:330|            istek.evren,
+REF=backend\app\analysis\market_scanner.py:331|            internetten_guncelle=istek.internetten_evren_guncelle,
+REF=backend\app\analysis\market_scanner.py:334|        return evren.semboller, evren.kaynak, evren.tarih
+REF=backend\app\analysis\market_scanner.py:336|    if istek.evren == EVREN_IZLEME_LISTESI:
+REF=backend\app\analysis\market_scanner.py:489|                as_of=sonuc.evren_tarihi,
+REF=backend\app\analysis\momentum_discovery.py:19|from .bist_universe import BistUniverseRepository
+REF=backend\app\analysis\momentum_discovery.py:21|    EVREN_IZLEME_LISTESI,
+REF=backend\app\analysis\momentum_discovery.py:22|    EVREN_OZEL_LISTE,
+REF=backend\app\analysis\momentum_discovery.py:23|    TARAMA_EVRENLERI,
+REF=backend\app\analysis\momentum_discovery.py:25|    tarama_evreni_yukle,
+REF_COUNT=286
+
+=== 6. EXISTING QUALITY CONTEXT ===
+REF=backend\app\analysis\automatic_signal_tracking.py:191|    momentum_state: str = "",
+REF=backend\app\analysis\automatic_signal_tracking.py:192|    volume_confirmation: bool | None = None,
+REF=backend\app\analysis\automatic_signal_tracking.py:212|        momentum_state=momentum_state,
+REF=backend\app\analysis\automatic_signal_tracking.py:213|        volume_confirmation=volume_confirmation,
+REF=backend\app\analysis\bist_daily_market.py:50|        "Hacim": float(son["Volume"]),
+REF=backend\app\analysis\daily_buy_decision_calibration.py:55|        ("Teknik skor", _band_score(int(getattr(record, "technical_score", 0)))),
+REF=backend\app\analysis\daily_buy_decision_calibration.py:57|            "Hacim",
+REF=backend\app\analysis\daily_buy_decision_calibration.py:58|            _band_ratio(float(getattr(record, "volume_ratio", 0.0)), high=1.3, mid=1.0),
+REF=backend\app\analysis\daily_buy_decision_closeout.py:12|    technical_score: int
+REF=backend\app\analysis\daily_buy_decision_closeout.py:17|    volume_ratio: float
+REF=backend\app\analysis\daily_buy_decision_closeout.py:34|    score = int(getattr(card, "technical_score"))
+REF=backend\app\analysis\daily_buy_decision_closeout.py:39|    volume = float(getattr(card, "volume_ratio", 0.0))
+REF=backend\app\analysis\daily_buy_decision_closeout.py:52|        reasons.append(f"Teknik skor güçlü ({score})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:53|    if volume >= 1.0:
+REF=backend\app\analysis\daily_buy_decision_closeout.py:54|        reasons.append(f"Hacim teyidi mevcut ({volume:.2f})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:66|    if volume < 1.0:
+REF=backend\app\analysis\daily_buy_decision_closeout.py:67|        cautions.append(f"Hacim teyidi zayıf ({volume:.2f})")
+REF=backend\app\analysis\daily_buy_decision_closeout.py:89|        and volume >= 1.0
+REF=backend\app\analysis\daily_buy_decision_closeout.py:108|                technical_score=int(getattr(card, "technical_score")),
+REF=backend\app\analysis\daily_buy_decision_closeout.py:121|                volume_ratio=float(getattr(card, "volume_ratio", 0.0)),
+REF=backend\app\analysis\daily_buy_decision_closeout.py:137|            "Teknik skor": item.technical_score,
+REF=backend\app\analysis\daily_buy_decision_closeout.py:139|            "Hacim": round(item.volume_ratio, 2),
+REF=backend\app\analysis\daily_buy_decision_cycle.py:18|    technical_score: int
+REF=backend\app\analysis\daily_buy_decision_cycle.py:26|    volume_ratio: float | None = None
+REF=backend\app\analysis\daily_buy_decision_cycle.py:83|        technical_score=int(getattr(card, "technical_score")),
+REF=backend\app\analysis\daily_buy_decision_cycle.py:103|        volume_ratio=(
+REF=backend\app\analysis\daily_buy_decision_cycle.py:104|            float(getattr(card, "volume_ratio"))
+REF=backend\app\analysis\daily_buy_decision_cycle.py:105|            if getattr(card, "volume_ratio", None) is not None
+REF=backend\app\analysis\daily_buy_decision_cycle.py:206|    if old.technical_score != new.technical_score:
+REF=backend\app\analysis\daily_buy_decision_cycle.py:207|        reasons.append(f"Teknik skor {old.technical_score}→{new.technical_score}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:209|    if old.volume_ratio != new.volume_ratio:
+REF=backend\app\analysis\daily_buy_decision_cycle.py:210|        old_ok = old.volume_ratio is not None and old.volume_ratio >= 1.0
+REF=backend\app\analysis\daily_buy_decision_cycle.py:211|        new_ok = new.volume_ratio is not None and new.volume_ratio >= 1.0
+REF=backend\app\analysis\daily_buy_decision_cycle.py:213|            label = "Hacim teyidi geldi" if new_ok else "Hacim teyidi kayboldu"
+REF=backend\app\analysis\daily_buy_decision_cycle.py:214|            reasons.append(f"{label} ({_fmt_number(old.volume_ratio)}→{_fmt_number(new.volume_ratio)})")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:216|            reasons.append(f"Hacim {_fmt_number(old.volume_ratio)}→{_fmt_number(new.volume_ratio)}")
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:24|    technical_score: int = 0
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:25|    volume_ratio: float = 0.0
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:96|                technical_score=int(getattr(item, "technical_score", 0)),
+REF=backend\app\analysis\daily_buy_decision_outcomes.py:97|                volume_ratio=float(getattr(item, "volume_ratio", 0.0)),
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:246|            "Teknik skor": item.technical_score,
+REF=backend\app\analysis\daily_buy_decision_review.py:33|    technical = int(getattr(record, "technical_score", 0) or 0)
+REF=backend\app\analysis\daily_buy_decision_review.py:35|        supporting.append("Teknik skor 80+")
+REF=backend\app\analysis\daily_buy_decision_review.py:37|        caution.append("Teknik skor 70 altı")
+REF=backend\app\analysis\daily_buy_decision_review.py:39|    volume = float(getattr(record, "volume_ratio", 0.0) or 0.0)
+REF=backend\app\analysis\daily_buy_decision_review.py:40|    if volume >= 1.3:
+REF=backend\app\analysis\daily_buy_decision_review.py:41|        supporting.append("Hacim teyidi güçlü")
+REF=backend\app\analysis\daily_buy_decision_review.py:42|    elif volume < 1.0:
+REF=backend\app\analysis\daily_buy_decision_review.py:43|        caution.append("Hacim teyidi zayıf")
+REF=backend\app\analysis\daily_operation_ai_context.py:84|    Teknik skor, işlem sinyali veya AL/SAT kararı üretmez.
+REF=backend\app\analysis\divergence_analysis.py:40|    volume_confirmation: bool
+REF=backend\app\analysis\divergence_analysis.py:56|        "trend, hacim, destek/direnç ve risk koşullarıyla birlikte değerlendirilir."
+REF=backend\app\analysis\divergence_analysis.py:61|    required = {"Close", "Volume"}
+REF=backend\app\analysis\divergence_analysis.py:148|def _volume_confirmation(
+REF=backend\app\analysis\divergence_analysis.py:155|    volume = frame["Volume"].astype(float)
+REF=backend\app\analysis\divergence_analysis.py:156|    average = volume.rolling(20, min_periods=10).mean()
+REF=backend\app\analysis\divergence_analysis.py:157|    second_volume = float(volume.iloc[second_position])
+REF=backend\app\analysis\divergence_analysis.py:163|    ratio = second_volume / second_average
+REF=backend\app\analysis\divergence_analysis.py:179|    volume_confirmation: bool,
+REF=backend\app\analysis\divergence_analysis.py:190|    if volume_confirmation:
+REF=backend\app\analysis\divergence_analysis.py:286|            volume_confirmed = _volume_confirmation(
+REF=backend\app\analysis\divergence_analysis.py:298|                volume_confirmation=volume_confirmed,
+REF=backend\app\analysis\divergence_analysis.py:320|                    volume_confirmation=volume_confirmed,
+REF=backend\app\analysis\divergence_analysis.py:369|        subset=["Close", "Volume", "RSI14", "MACD_Histogram"]
+REF=backend\app\analysis\divergence_analysis.py:476|                    "Hacim teyidi": (
+REF=backend\app\analysis\divergence_analysis.py:477|                        "Var" if signal.volume_confirmation else "Yok"
+REF=backend\app\analysis\eod_final_action_board.py:17|    technical_score: int
+REF=backend\app\analysis\eod_final_action_board.py:18|    volume_ratio: float
+REF=backend\app\analysis\eod_final_action_board.py:64|                technical_score=int(getattr(decision, "technical_score", 0)),
+REF=backend\app\analysis\eod_final_action_board.py:65|                volume_ratio=float(getattr(decision, "volume_ratio", 0.0)),
+REF=backend\app\analysis\eod_final_action_board.py:84|            technical_score=item.technical_score,
+REF=backend\app\analysis\eod_final_action_board.py:85|            volume_ratio=item.volume_ratio,
+REF=backend\app\analysis\eod_final_action_board.py:107|            "Teknik skor": item.technical_score,
+REF=backend\app\analysis\eod_final_action_board.py:108|            "Hacim": round(item.volume_ratio, 2),
+REF=backend\app\analysis\fast_mover_watch.py:30|    ENTRY_DISTANCE = "ENTRY_DISTANCE"
+REF=backend\app\analysis\fast_mover_watch.py:70|    research_score_current: float | None = None
+REF=backend\app\analysis\fast_mover_watch.py:71|    research_score_previous: float | None = None
+REF=backend\app\analysis\fast_mover_watch.py:94|    research_score_current: float | None
+REF=backend\app\analysis\fast_mover_watch.py:95|    research_score_previous: float | None
+REF=backend\app\analysis\fast_mover_watch.py:96|    research_score_delta: float | None
+REF=backend\app\analysis\fast_mover_watch.py:159|        observation.research_score_current,
+REF=backend\app\analysis\fast_mover_watch.py:160|        observation.research_score_previous,
+REF=backend\app\analysis\fast_mover_watch.py:197|            research_score_current=observation.research_score_current,
+REF=backend\app\analysis\fast_mover_watch.py:198|            research_score_previous=observation.research_score_previous,
+REF=backend\app\analysis\fast_mover_watch.py:199|            research_score_delta=score_delta,
+REF=backend\app\analysis\fast_mover_watch.py:234|            research_score_current=observation.research_score_current,
+REF=backend\app\analysis\fast_mover_watch.py:235|            research_score_previous=observation.research_score_previous,
+REF=backend\app\analysis\fast_mover_watch.py:236|            research_score_delta=score_delta,
+REF=backend\app\analysis\fast_mover_watch.py:268|            research_score_current=observation.research_score_current,
+REF=backend\app\analysis\fast_mover_watch.py:269|            research_score_previous=observation.research_score_previous,
+REF=backend\app\analysis\fast_mover_watch.py:270|            research_score_delta=score_delta,
+REF=backend\app\analysis\fast_mover_watch.py:300|        research_score_current=observation.research_score_current,
+REF=backend\app\analysis\fast_mover_watch.py:301|        research_score_previous=observation.research_score_previous,
+REF=backend\app\analysis\fast_mover_watch.py:302|        research_score_delta=score_delta,
+REF=backend\app\analysis\high_conviction_buy_gate.py:30|    volume_gate: str
+REF=backend\app\analysis\high_conviction_buy_gate.py:62|        ("Teknik skor", _score_segment(int(getattr(decision, "technical_score", 0)))),
+REF=backend\app\analysis\high_conviction_buy_gate.py:64|            "Hacim",
+REF=backend\app\analysis\high_conviction_buy_gate.py:66|                float(getattr(decision, "volume_ratio", 0.0)), high=1.3, mid=1.0
+REF=backend\app\analysis\high_conviction_buy_gate.py:192|        score = int(getattr(decision, "technical_score", 0))
+REF=backend\app\analysis\high_conviction_buy_gate.py:194|        volume = float(getattr(decision, "volume_ratio", 0.0))
+REF=backend\app\analysis\high_conviction_buy_gate.py:199|        volume_ok = volume >= 1.30
+REF=backend\app\analysis\high_conviction_buy_gate.py:214|        if volume_ok:
+REF=backend\app\analysis\high_conviction_buy_gate.py:215|            reasons.append(f"Hacim kapısı geçti ({volume:.2f})")
+REF=backend\app\analysis\high_conviction_buy_gate.py:217|            blockers.append(f"Hacim kapısı: >=1.30 gerekli ({volume:.2f})")
+REF=backend\app\analysis\high_conviction_buy_gate.py:245|        elif all((technical_ok, volume_ok, rr_ok, timing_ok, entry_ok, data_ok, history_ok)):
+REF=backend\app\analysis\high_conviction_buy_gate.py:257|                volume_gate="GEÇTİ" if volume_ok else "KALDI",
+REF=backend\app\analysis\high_conviction_buy_gate.py:281|            "Hacim": item.volume_gate,
+REF=backend\app\analysis\historical_research_replay.py:3|Bu katman yeni teknik skor, işlem sinyali veya AL/SAT kararı üretmez.
+REF=backend\app\analysis\indicator_contribution.py:57|            "Günlük trend pozitif",
+REF=backend\app\analysis\indicator_contribution.py:63|            "Haftalık trend pozitif",
+REF=backend\app\analysis\indicator_contribution.py:69|            "Momentum pozitif",
+REF=backend\app\analysis\indicator_contribution.py:71|                outcome.snapshot.momentum_state
+REF=backend\app\analysis\indicator_contribution.py:75|            "Hacim teyidi",
+REF=backend\app\analysis\indicator_contribution.py:76|            lambda outcome: outcome.snapshot.volume_confirmation,
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:19|    minimum_ready_technical_score: int = 70
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:20|    minimum_ready_volume_ratio: float = 1.20
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:30|    technical_score: int
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:31|    volume_ratio: float
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:34|    resistance_distance_pct: float | None
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:48|def _resistance_distance_pct(candidate: object) -> float | None:
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:60|    Yeni skor üretmez. Mevcut teknik skor, hacim, risk/ödül ve EMA9-ATR
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:67|    technical_score = int(getattr(signal, "skor", 0) or 0)
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:69|    volume_ratio = float(getattr(candidate, "hacim_orani", 0.0) or 0.0)
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:71|    resistance_distance_pct = _resistance_distance_pct(candidate)
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:76|            minimum_technical_score=60,
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:77|            minimum_volume_ratio=1.0,
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:94|        if technical_score < 60 or technical_view == "Negatif Teknik Görünüm":
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:96|        if volume_ratio < 1.0:
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:97|            reasons.append("Hacim teyidi henüz oluşmadı.")
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:104|            technical_score >= policy.minimum_ready_technical_score
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:107|        strong_volume = volume_ratio >= policy.minimum_ready_volume_ratio
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:113|        if strong_technical and strong_volume and acceptable_extension:
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:116|                f"Teknik {technical_score}, hacim {volume_ratio:.2f}x ve "
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:123|                    f"Teknik skor/görünüm henüz güçlü teyit vermiyor ({technical_score})."
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:125|            if not strong_volume:
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:127|                    f"Hacim {volume_ratio:.2f}x; güçlü giriş teyidi için "
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:128|                    f"{policy.minimum_ready_volume_ratio:.2f}x bekleniyor."
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:136|    if resistance_distance_pct is not None:
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:138|            f"En yakın direnç mesafesi %{resistance_distance_pct:.2f}; "
+REF=backend\app\analysis\jump_candidate_entry_readiness.py:148|        technical_score=technical_score,
+REF_COUNT=799
+
+=== 7. EARLY VISIBILITY OVERLAP READ CONTEXT ===
+REF=backend\app\analysis\daily_buy_decision_calibration.py:66|        ("Erken görünürlük", str(getattr(record, "visibility_state", "-") or "-").upper()),
+REF=backend\app\analysis\daily_buy_decision_closeout.py:62|        reasons.append(f"Erken görünürlük {visibility}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:241|        reasons.append(f"Erken görünürlük {old.visibility_state or '-'}→{new.visibility_state or '-'}")
+REF=backend\app\analysis\daily_buy_decision_cycle.py:277|                reasons.append("Sıralama hareketi güncellendi")
+REF=backend\app\analysis\daily_buy_decision_review.py:65|        supporting.append(f"Erken görünürlük {visibility}")
+REF=backend\app\analysis\daily_buy_decision_review.py:67|        caution.append(f"Erken görünürlük {visibility}")
+REF=backend\app\analysis\daily_early_trajectory.py:71|    1) 3S rank gain descending (primary early-visibility horizon)
+REF=backend\app\analysis\early_visibility_report.py:7|def build_early_visibility_report(
+REF=backend\app\analysis\early_visibility_tracking_bridge.py:7|class EarlyVisibilityTrackingContext:
+REF=backend\app\analysis\early_visibility_tracking_bridge.py:11|    source: str = "EARLY_VISIBILITY"
+REF=backend\app\analysis\early_visibility_tracking_bridge.py:14|def build_early_visibility_tracking_context(
+REF=backend\app\analysis\early_visibility_tracking_bridge.py:19|) -> EarlyVisibilityTrackingContext:
+REF=backend\app\analysis\early_visibility_tracking_bridge.py:20|    return EarlyVisibilityTrackingContext(
+REF=backend\app\analysis\fast_mover_watch.py:75|    early_visibility_overlap: bool = False
+REF=backend\app\analysis\fast_mover_watch.py:102|    early_visibility_overlap: bool
+REF=backend\app\analysis\fast_mover_watch.py:204|            early_visibility_overlap=observation.early_visibility_overlap,
+REF=backend\app\analysis\fast_mover_watch.py:241|            early_visibility_overlap=observation.early_visibility_overlap,
+REF=backend\app\analysis\fast_mover_watch.py:275|            early_visibility_overlap=observation.early_visibility_overlap,
+REF=backend\app\analysis\fast_mover_watch.py:278|    if observation.early_visibility_overlap:
+REF=backend\app\analysis\fast_mover_watch.py:286|    if observation.early_visibility_overlap:
+REF=backend\app\analysis\fast_mover_watch.py:287|        reasons.append("EARLY_VISIBILITY_OVERLAP")
+REF=backend\app\analysis\fast_mover_watch.py:307|        early_visibility_overlap=observation.early_visibility_overlap,
+REF=backend\app\analysis\high_conviction_buy_gate.py:146|        return True, f"Erken görünürlük {visibility}"
+REF=backend\app\analysis\morning_candidate_flow.py:129|    tarafından belirlenmiş aday sırasını korur; Early Visibility yalnız
+REF=backend\app\analysis\morning_candidate_flow.py:244|            "Erken görünürlük": card.visibility_state or "-",
+REF=backend\app\analysis\ranking_movement_visibility.py:11|class RankingMovementRow:
+REF=backend\app\analysis\ranking_movement_visibility.py:73|def build_ranking_movement_rows(
+REF=backend\app\analysis\ranking_movement_visibility.py:75|) -> tuple[RankingMovementRow, ...]:
+REF=backend\app\analysis\ranking_movement_visibility.py:78|    result: list[RankingMovementRow] = []
+REF=backend\app\analysis\ranking_movement_visibility.py:85|            RankingMovementRow(
+REF=backend\app\analysis\ranking_movement_visibility.py:114|def ranking_movement_reason(row: RankingMovementRow) -> str:
+REF=backend\app\analysis\ranking_movement_visibility.py:139|def ranking_movement_table_rows(
+REF=backend\app\analysis\ranking_movement_visibility.py:140|    rows: Iterable[RankingMovementRow],
+REF=backend\app\analysis\ranking_movement_visibility.py:149|            "Sıçrama ivmesi": round(row.acceleration, 1) if row.acceleration is not None else "-",
+REF=backend\app\analysis\ranking_movement_visibility.py:159|            "Neden?": ranking_movement_reason(row),
+REF=backend\app\analysis\ranking_quality_context.py:26|class EarlyVisibilityQualityContext:
+REF=backend\app\analysis\ranking_quality_context.py:154|) -> EarlyVisibilityQualityContext:
+REF=backend\app\analysis\ranking_quality_context.py:156|    return EarlyVisibilityQualityContext(
+REF=backend\app\analysis\ranking_validation.py:13|class EarlyVisibilityOutcome:
+REF=backend\app\analysis\ranking_validation.py:32|class EarlyVisibilityValidationSummary:
+REF=backend\app\analysis\ranking_validation.py:68|) -> tuple[EarlyVisibilityOutcome, ...]:
+REF=backend\app\analysis\ranking_validation.py:78|    outcomes: list[EarlyVisibilityOutcome] = []
+REF=backend\app\analysis\ranking_validation.py:84|                EarlyVisibilityOutcome(
+REF=backend\app\analysis\ranking_validation.py:121|            EarlyVisibilityOutcome(
+REF=backend\app\analysis\ranking_validation.py:144|    outcomes: Iterable[EarlyVisibilityOutcome],
+REF=backend\app\analysis\ranking_validation.py:147|) -> EarlyVisibilityValidationSummary:
+REF=backend\app\analysis\ranking_validation.py:152|        return EarlyVisibilityValidationSummary(
+REF=backend\app\analysis\ranking_validation.py:173|    return EarlyVisibilityValidationSummary(
+REF=backend\app\analysis\ranking_validation.py:191|) -> tuple[EarlyVisibilityOutcome, ...]:
+REF=backend\app\analysis\ranking_validation.py:193|    result: list[EarlyVisibilityOutcome] = []
+REF=backend\app\analysis\ranking_visibility_context.py:66|from backend.app.analysis.ranking_quality_context import EarlyVisibilityQualityContext
+REF=backend\app\analysis\ranking_visibility_context.py:71|    quality: EarlyVisibilityQualityContext | None,
+REF=backend\app\analysis\ranking_visibility_explanation.py:10|    EarlyVisibilityQualityContext,
+REF=backend\app\analysis\ranking_visibility_explanation.py:49|    quality: EarlyVisibilityQualityContext | None,
+REF=backend\app\analysis\ranking_visibility_explanation.py:62|    quality: EarlyVisibilityQualityContext | None = None,
+REF_COUNT=55
+
+=== 8. CANDIDATE INTEGRATION SEAMS ===
+CANDIDATE=backend\app\analysis\technical_confirmation.py|EVIDENCE_WEIGHT=76
+CANDIDATE=backend\app\analysis\daily_buy_decision_cycle.py|EVIDENCE_WEIGHT=56
+CANDIDATE=backend\app\analysis\signal_engine.py|EVIDENCE_WEIGHT=54
+CANDIDATE=backend\app\analysis\multi_timeframe_analysis.py|EVIDENCE_WEIGHT=52
+CANDIDATE=backend\app\analysis\momentum_discovery.py|EVIDENCE_WEIGHT=50
+CANDIDATE=backend\app\analysis\position_monitor.py|EVIDENCE_WEIGHT=40
+CANDIDATE=backend\app\analysis\research_profiles.py|EVIDENCE_WEIGHT=40
+CANDIDATE=backend\app\operations\preclose_partial_daily_preview.py|EVIDENCE_WEIGHT=39
+CANDIDATE=backend\app\analysis\market_regime.py|EVIDENCE_WEIGHT=38
+CANDIDATE=backend\app\operations\scheduled_operation_phase_runner.py|EVIDENCE_WEIGHT=38
+CANDIDATE=backend\app\analysis\high_conviction_buy_gate.py|EVIDENCE_WEIGHT=34
+CANDIDATE=backend\app\analysis\daily_buy_decision_closeout.py|EVIDENCE_WEIGHT=28
+NOTE=EVIDENCE_WEIGHT_IS_PREFLIGHT_REPORT_HEURISTIC_NOT_PRODUCT_SCORE
+
+=== 9. CONTRACT READINESS ===
+FAST_MOVER_READ_MODEL_PRESENT=YES
+CURRENT_PARTIAL_RESULT_REUSE_PROVEN=YES
+PREVIOUS_CANONICAL_RANK_READ_CONTEXT_PROVEN=YES
+UNIVERSE_COMPARABILITY_INPUT_PROVEN=YES
+QUALITY_CONTEXT_PROVEN=YES
+EARLY_VISIBILITY_OVERLAP_CONTEXT_PROVEN=YES
+NONCANONICAL_WRITE_SAFETY_PROVEN=YES
+
+=== 10. DECISION ===
+DECISION=READY_FOR_EXISTING_RESULT_ASSEMBLY_INTEGRATION
+NEXT_SCOPE=PRECLOSE_RESULT_ASSEMBLY_READ_ONLY_FAST_MOVER_ATTACHMENT
+IMPLEMENTATION_SHAPE=ONE_LIMITED_BLOCK
+NEW_ENGINE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+SECOND_UNIVERSE_TRAVERSAL=NO
+RANKING_MEMORY_WRITE=NO
+PROFILE_MEMORY_WRITE=NO
+EARLY_VISIBILITY_MUTATION=NO
+MAIN_TOP5_MUTATION=NO
+AL_SAT_MUTATION=NO
+PRODUCTION_THRESHOLDS_INVENTED=NO
+FULL_REGRESSION_REQUIRED=YES
+
+=== 11. SAFETY ===
+READ_ONLY=YES
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+REPORT_ONLY=YES

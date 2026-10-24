@@ -1,0 +1,58 @@
+﻿[
+    {
+        "relative_path":  "KULLANIM.md",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "KULLANIM_KILAVUZU.md",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "PROJECT_NOTES.md",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "VERSION",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\dashboard.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\diagnostics\\system_check.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\history\\backtest_history.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\history\\backtest_history_comparison.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\history\\backtest_history_pagination.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\history\\backtest_history_summary.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\ui\\live_analysis_dashboard.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\tests\\test_live_analysis_history.py",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\tests\\test_system_check.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\tests\\test_v11_closeout_version.py",
+        "existed_before":  true
+    }
+]

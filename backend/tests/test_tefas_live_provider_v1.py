@@ -1,0 +1,142 @@
+import json
+
+import pytest
+
+import backend.app.funds.tefas_adapter as tefas
+
+
+class FakeResponse:
+    def __init__(self, body: bytes, url: str):
+        self._body = body
+        self._url = url
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        return False
+
+    def geturl(self):
+        return self._url
+
+    def read(self, size=-1):
+        return self._body
+
+
+def test_history_uses_verified_post_json_contract(monkeypatch):
+    captured = {}
+
+    response = {
+        "errorCode": 0,
+        "errorMessage": None,
+        "resultList": [
+            {
+                "fonKodu": "TST",
+                "fonUnvan": "Test Fon",
+                "tarih": "2026-08-31",
+                "fiyat": "1.2500",
+            }
+        ],
+    }
+
+    def fake_urlopen(request, timeout):
+        captured["request"] = request
+        captured["timeout"] = timeout
+        return FakeResponse(
+            json.dumps(response).encode("utf-8"),
+            request.full_url,
+        )
+
+    monkeypatch.setattr(tefas, "urlopen", fake_urlopen)
+
+    rows = tefas.fetch_tefas_fund_history_rows(" tst ")
+
+    request = captured["request"]
+
+    assert request.get_method() == "POST"
+
+    assert request.full_url == (
+        "https://www.tefas.gov.tr/api/funds/"
+        "fonFiyatBilgiGetir"
+    )
+
+    assert json.loads(
+        request.data.decode("utf-8")
+    ) == {
+        "fonKodu": "TST",
+        "dil": "TR",
+        "periyod": 1,
+    }
+
+    assert captured["timeout"] == 10
+    assert rows[0]["fonKodu"] == "TST"
+
+
+def test_old_endpoint_is_rejected_before_network(monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError(
+            "network must not be reached"
+        )
+
+    monkeypatch.setattr(
+        tefas,
+        "urlopen",
+        forbidden,
+    )
+
+    with pytest.raises(
+        tefas.TefasProviderError,
+        match="ENDPOINT_NOT_ALLOWED",
+    ):
+        tefas.fetch_tefas_result_list(
+            "BindHistoryInfo",
+            {},
+        )
+
+
+def test_unverified_period_is_rejected_before_network(monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError(
+            "network must not be reached"
+        )
+
+    monkeypatch.setattr(
+        tefas,
+        "urlopen",
+        forbidden,
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="period=1",
+    ):
+        tefas.fetch_tefas_fund_history_rows(
+            "TST",
+            period=3,
+        )
+
+
+def test_result_list_is_required(monkeypatch):
+    response = {
+        "errorCode": 0,
+        "errorMessage": None,
+        "resultList": {},
+    }
+
+    def fake_urlopen(request, timeout):
+        return FakeResponse(
+            json.dumps(response).encode("utf-8"),
+            request.full_url,
+        )
+
+    monkeypatch.setattr(
+        tefas,
+        "urlopen",
+        fake_urlopen,
+    )
+
+    with pytest.raises(
+        tefas.TefasProviderError,
+        match="RESULT_LIST_MISSING",
+    ):
+        tefas.fetch_tefas_fund_detail_rows("TST")

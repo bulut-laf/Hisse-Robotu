@@ -1,0 +1,11 @@
+$THYAO.IS: possibly delisted; no price data found  (1d 2025-09-17 -> 2026-10-22)
+$TKNKA.IS: possibly delisted; no price data found  (1d 2025-09-17 -> 2026-10-22)
+$TATGD.IS: possibly delisted; no price data found  (1d 2025-09-17 -> 2026-10-22)
+$SOKM.IS: possibly delisted; no price data found  (1d 2025-09-17 -> 2026-10-22)
+
+4 Failed downloads:
+['THYAO.IS', 'TATGD.IS', 'SOKM.IS', 'TKNKA.IS']: possibly delisted; no price data found  (1d 2025-09-17 -> 2026-10-22)
+$ISATR.IS: possibly delisted; no price data found  (period=1d)
+
+1 Failed download:
+['ISATR.IS']: possibly delisted; no price data found  (period=1d)

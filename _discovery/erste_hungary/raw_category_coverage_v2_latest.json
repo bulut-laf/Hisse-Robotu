@@ -1,0 +1,29 @@
+{
+  "record_count": 929,
+  "unique_category_count": 9,
+  "category_counts": {
+    "Részvény": 480,
+    "Kötvény": 217,
+    "Abszolút hozamú": 117,
+    "Vegyes": 92,
+    "Pénzpiac": 6,
+    "Nyersanyag": 6,
+    "Ingatlan": 4,
+    "Alapok alapja": 4,
+    "Származtatott": 3
+  },
+  "risk_counts": {
+    "Magas": 526,
+    "Közepes": 345,
+    "Alacsony": 54,
+    "Dokumentumok": 4
+  },
+  "currency_counts": {
+    "EUR": 411,
+    "USD": 265,
+    "HUF": 245,
+    "CHF": 3,
+    "GBP": 3,
+    "JPY": 2
+  }
+}

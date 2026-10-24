@@ -1,0 +1,140 @@
+=== HISSE ROBOTU — BASELINE REGRESSION FAILURE FAMILY REPORT V1 ===
+MODE=DIAGNOSTIC
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NEW_FEATURE_MUTATION=NO
+LASTFAILED_CACHE=D:\Projects\Hisse-Robotu\.pytest_cache\v\cache\lastfailed
+FAILED_TOTAL=520
+
+=== TOP FAILING TEST FILES ===
+FAIL_FILE_COUNT=15|FILE=backend/tests/test_sprint177_daily_operations_ui_contract.py
+FAIL_FILE_COUNT=12|FILE=backend/tests/test_sprint176_operation_audit_renderer_contract.py
+FAIL_FILE_COUNT=11|FILE=backend/tests/test_sprint174_official_source_health_ui_contract.py
+FAIL_FILE_COUNT=10|FILE=backend/tests/test_sprint176_operation_history_ui_contract.py
+FAIL_FILE_COUNT=10|FILE=backend/tests/test_sprint178_news_center_v1_contract.py
+FAIL_FILE_COUNT=9|FILE=backend/tests/test_news_center_official_source_feed_renderer.py
+FAIL_FILE_COUNT=9|FILE=backend/tests/test_sprint171_borsa_istanbul_adapter_ui_contract.py
+FAIL_FILE_COUNT=9|FILE=backend/tests/test_sprint172_resmi_gazete_adapter_ui_contract.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_shadow_portfolio_dashboard.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_sprint163_last_minute_ui_contract.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_sprint166_kap_adapter_ui_contract.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_sprint168_tuik_adapter_ui_contract.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_sprint169_spk_adapter_ui_contract.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_sprint170_hmb_adapter_ui_contract.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_sprint173_official_source_consolidation.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_sprint175_official_source_feed_ui_consolidation.py
+FAIL_FILE_COUNT=8|FILE=backend/tests/test_technical_decision_matrix_dashboard.py
+FAIL_FILE_COUNT=7|FILE=backend/tests/test_daily_operation_panel_dashboard.py
+FAIL_FILE_COUNT=7|FILE=backend/tests/test_signal_outcome_tracking_dashboard.py
+FAIL_FILE_COUNT=7|FILE=backend/tests/test_sprint167_tcmb_adapter_ui_contract.py
+
+=== REPRESENTATIVE FAILURE TRACES ===
+REPRESENTATIVE_COUNT=6
+
+--- REPRESENTATIVE 1 ---
+NODEID=backend/tests/test_daily_buy_decision_automation_bridge_dashboard_v1.py::test_windows_task_installer_registers_both_phases
+EXIT=4
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Projects\Hisse-Robotu
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 0 items
+
+============================ no tests ran in 0.12s ============================
+
+ERROR: file or directory not found: backend/tests/test_daily_buy_decision_automation_bridge_dashboard_v1.py::test_windows_task_installer_registers_both_phases
+
+--- REPRESENTATIVE 2 ---
+NODEID=backend/tests/test_windows_task_installer_morning_compatibility_v1.py::test_legacy_morning_decision_is_preserved_as_compatibility_task
+EXIT=4
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Projects\Hisse-Robotu
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 0 items
+
+============================ no tests ran in 0.04s ============================
+
+ERROR: file or directory not found: backend/tests/test_windows_task_installer_morning_compatibility_v1.py::test_legacy_morning_decision_is_preserved_as_compatibility_task
+
+--- REPRESENTATIVE 3 ---
+NODEID=backend/tests/test_ai_history_trend_dashboard.py::test_dashboard_contains_ai_history_trend_section
+EXIT=4
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Projects\Hisse-Robotu
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 0 items
+
+============================ no tests ran in 0.04s ============================
+
+ERROR: file or directory not found: backend/tests/test_ai_history_trend_dashboard.py::test_dashboard_contains_ai_history_trend_section
+
+--- REPRESENTATIVE 4 ---
+NODEID=backend/tests/test_automatic_signal_tracking_dashboard.py::test_otomatik_kayit_sekmesi_vardir
+EXIT=4
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Projects\Hisse-Robotu
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 0 items
+
+============================ no tests ran in 0.04s ============================
+
+ERROR: file or directory not found: backend/tests/test_automatic_signal_tracking_dashboard.py::test_otomatik_kayit_sekmesi_vardir
+
+--- REPRESENTATIVE 5 ---
+NODEID=backend/tests/test_bist_daily_market_custom_list.py::test_ui_contains_custom_list_contract
+EXIT=4
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Projects\Hisse-Robotu
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 0 items
+
+============================ no tests ran in 0.03s ============================
+
+ERROR: file or directory not found: backend/tests/test_bist_daily_market_custom_list.py::test_ui_contains_custom_list_contract
+
+--- REPRESENTATIVE 6 ---
+NODEID=backend/tests/test_bist_daily_market_dashboard_wiring.py::test_dashboard_bist_gunluk_piyasa_wiring
+EXIT=4
+============================= test session starts =============================
+platform win32 -- Python 3.14.6, pytest-9.1.1, pluggy-1.6.0 -- D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Projects\Hisse-Robotu
+configfile: pytest.ini
+plugins: anyio-4.14.2
+collecting ... collected 0 items
+
+============================ no tests ran in 0.04s ============================
+
+ERROR: file or directory not found: backend/tests/test_bist_daily_market_dashboard_wiring.py::test_dashboard_bist_gunluk_piyasa_wiring
+
+=== EXCEPTION SIGNATURES ===
+
+=== INTERPRETATION GUARD ===
+FAST_MOVER_OUT_OF_SCOPE=YES
+DO_NOT_PATCH_FAST_MOVER=YES
+DO_NOT_PATCH_SCHEDULER=YES
+DO_NOT_CREATE_NEW_FEATURE=YES
+NEXT=CLASSIFY_519_FAILURES_INTO_1_TO_3_ROOT_CAUSE_FAMILIES
+
+=== SAFETY ===
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+REPORT_ONLY=YES

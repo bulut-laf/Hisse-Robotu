@@ -1,0 +1,166 @@
+{
+  "contract_id": "NEXT_DAY_PHASE7C_SAFE_RUNTIME_HOOK_GATE_V1",
+  "mode": "READ_ONLY",
+  "parse_errors": [],
+  "blockers": [],
+  "canonical_close": {
+    "path": "backend/app/operations/scheduled_operation_phase_runner.py",
+    "line": 354,
+    "class": "ProductionScheduledOperationRuntime"
+  },
+  "execute_scheduled_run": {
+    "path": "backend/app/operations/daily_buy_decision_scheduled_runner.py",
+    "line": 225,
+    "args": [
+      "phase",
+      "now",
+      "runtime",
+      "store",
+      "force",
+      "audit_store",
+      "run_kind"
+    ],
+    "scan_call_count": 1,
+    "scan_names": [
+      "scan_result"
+    ]
+  },
+  "live_scan_consumers": [
+    {
+      "line": 263,
+      "call": "engine.candidate_snapshot",
+      "base": "candidate_snapshot",
+      "source": "engine.candidate_snapshot(summary, scan_result, visibility)"
+    }
+  ],
+  "safe_live_consumers": [],
+  "unsafe_live_consumers": [
+    {
+      "line": 263,
+      "call": "engine.candidate_snapshot",
+      "base": "candidate_snapshot",
+      "source": "engine.candidate_snapshot(summary, scan_result, visibility)",
+      "origin": {
+        "kind": "LOCAL",
+        "path": "backend/app/operations/daily_buy_decision_scheduled_runner.py",
+        "line": 35,
+        "name": "candidate_snapshot"
+      }
+    }
+  ],
+  "candidate_snapshot_defs": [
+    {
+      "path": "backend/tests/test_daily_buy_decision_automation_health_recovery_v1.py",
+      "line": 32,
+      "class": "Runtime",
+      "args": [
+        "self",
+        "operation_summary",
+        "scan_result",
+        "visibility_contexts"
+      ]
+    },
+    {
+      "path": "backend/tests/test_daily_buy_decision_scheduled_runner_v1.py",
+      "line": 36,
+      "class": "Runtime",
+      "args": [
+        "self",
+        "operation_summary",
+        "scan_result",
+        "visibility_contexts"
+      ]
+    },
+    {
+      "path": "backend/tests/test_daily_buy_decision_scheduler_audit_history_v1.py",
+      "line": 34,
+      "class": "Runtime",
+      "args": [
+        "self",
+        "operation_summary",
+        "scan_result",
+        "visibility_contexts"
+      ]
+    },
+    {
+      "path": "backend/app/operations/daily_buy_decision_scheduled_runner.py",
+      "line": 35,
+      "class": "ScheduledRunRuntime",
+      "args": [
+        "self",
+        "operation_summary",
+        "scan_result",
+        "visibility_contexts"
+      ]
+    },
+    {
+      "path": "backend/app/operations/daily_buy_decision_scheduled_runner.py",
+      "line": 198,
+      "class": "Runtime",
+      "args": [
+        "self",
+        "operation_summary",
+        "scan_result",
+        "visibility_contexts"
+      ]
+    }
+  ],
+  "callback_bindings": [],
+  "safe_callback_bindings": [],
+  "blocked_callback_bindings": [],
+  "external_scan_result_functions": [
+    {
+      "path": "backend/app/analysis/morning_candidate_flow.py",
+      "line": 117,
+      "name": "build_morning_candidate_cards",
+      "args": [
+        "scan_result",
+        "visibility_contexts",
+        "limit",
+        "include_movement_pool"
+      ]
+    },
+    {
+      "path": "backend/app/analysis/morning_operation_snapshot.py",
+      "line": 28,
+      "name": "build_morning_operation_snapshot",
+      "args": [
+        "operation_summary",
+        "scan_result",
+        "visibility_contexts",
+        "limit"
+      ]
+    },
+    {
+      "path": "backend/app/analysis/research_profiles_daily.py",
+      "line": 440,
+      "name": "research_profile_as_of_from_scan",
+      "args": [
+        "scan_result",
+        "fallback"
+      ]
+    },
+    {
+      "path": "backend/app/operations/preclose_partial_daily_preview.py",
+      "line": 339,
+      "name": "preclose_preview_rows",
+      "args": [
+        "result"
+      ]
+    }
+  ],
+  "safe_hook": null,
+  "decision": "STOP_RUNTIME_HOOK_POLICY_GAP",
+  "next": "DESIGN_DECISION_REQUIRED_MINIMAL_SCHEDULER_HOOK_OR_EXISTING_EXTERNAL_CALLBACK",
+  "preservation": {
+    "source_mutation": false,
+    "scheduler_mutation": false,
+    "phase_runner_mutation": false,
+    "second_scanner": false,
+    "second_universe_traversal": false,
+    "new_store": false,
+    "new_score": false,
+    "outcome_tuning": false,
+    "al_sat_authority": false
+  }
+}

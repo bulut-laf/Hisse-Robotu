@@ -1,0 +1,67 @@
+{
+  "schema_version": "financial-intelligence-v1-release-manifest-v3",
+  "status": "READY_FOR_V1_RELEASE_WITH_KNOWN_LIMITATIONS",
+  "product": "Financial Intelligence V1",
+  "reference_symbol": "TUPRS",
+  "read_only_decision_support": true,
+  "decision_engine_mutation": false,
+  "al_sat_mutation": false,
+  "scanner_mutation": false,
+  "ranking_mutation": false,
+  "portfolio_mutation": false,
+  "fin001_to_fin016": {
+    "roadmap_complete": true,
+    "fin016_closure_mode": "CLOSED_WITH_EXPLICIT_BLOCKER"
+  },
+  "release_checks": {
+    "v3_ready_symbols_contains_tuprs": true,
+    "v4_coverage_status_exact": true,
+    "v4_decision_support_exact": true,
+    "v4_short_term_pass": true,
+    "v4_long_term_pass": true,
+    "v4_no_unresolved_blockers": true,
+    "v4_full_canonical_coverage": true,
+    "short_term_ready": true,
+    "long_term_coverage_value": 0.95,
+    "long_term_ready": true,
+    "panel_status_pass": true,
+    "panel_coverage_status_exact": true,
+    "panel_decision_support_exact": true,
+    "panel_ready": true,
+    "fin016_core_closed_fail_closed": true
+  },
+  "missing_sources": [],
+  "invalid_sources": [],
+  "release_blockers": [],
+  "known_limitations": [
+    "HISTORICAL_PIT_OBSERVATION_PRODUCER_MISSING"
+  ],
+  "regression_baseline": {
+    "passed": 3794,
+    "skipped": 1,
+    "result": "PASS"
+  },
+  "canonical_sources": {
+    "v2_manifest": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V2_TUPRS_MANIFEST.json",
+    "v3_live_batch": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V3_LIVE_BATCH.json",
+    "v4_coverage": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V4_CANONICAL_COVERAGE.json",
+    "short_term": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_short_term_canonical_context.json",
+    "long_term": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_long_term_canonical_coverage.json",
+    "panel": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_financial_intelligence_panel.json",
+    "investability_acceptance": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_acceptance.json",
+    "investability_closure": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_production_closure.json",
+    "market_ownership": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_acceptance.json",
+    "fin016_closure": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V8_FIN016_PRODUCTION_CLOSURE.json"
+  },
+  "release_contract": [
+    "FIN-001_TO_FIN-016_MAIN_ROADMAP_COMPLETE",
+    "TUPRS_CANONICAL_REFERENCE_CHAIN_REQUIRED",
+    "EXACT_KEY_SCHEMA_TOLERANT_READING_ONLY",
+    "NO_FUZZY_FIELD_MAPPING",
+    "READ_ONLY_DECISION_SUPPORT",
+    "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION",
+    "POINT_IN_TIME_FAIL_CLOSED",
+    "NO_SYNTHETIC_PRODUCTION_CALIBRATION",
+    "KNOWN_LIMITATIONS_MUST_REMAIN_VISIBLE"
+  ]
+}

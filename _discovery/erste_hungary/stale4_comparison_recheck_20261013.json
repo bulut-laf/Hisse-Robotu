@@ -1,0 +1,46 @@
+{
+  "artifact_type": "STALE4_COMPARISON_RECHECK",
+  "checked_at_utc": "2026-10-13T09:59:21.236856+00:00",
+  "results": [
+    {
+      "isin": "LU0011850392",
+      "success": true,
+      "nav_date": "2022-02-28",
+      "nav": "53.6",
+      "error": null,
+      "returned_isin": "LU0011850392",
+      "name": "BGF EMERGING EUROPE A2 EUR"
+    },
+    {
+      "isin": "LU0113311731",
+      "success": true,
+      "nav_date": "2022-07-01",
+      "nav": "30.776451",
+      "error": null,
+      "returned_isin": "LU0113311731",
+      "name": "GOLDMAN SACHS EMERGING EUROPE EQUITY X CAP EUR"
+    },
+    {
+      "isin": "LU0117895796",
+      "success": true,
+      "nav_date": "2025-03-24",
+      "nav": "0.1307",
+      "error": null,
+      "returned_isin": "LU0117895796",
+      "name": "JPM EMERGING EUROPE EQUITY D (ACC) - EUR"
+    },
+    {
+      "isin": "LU0823403356",
+      "success": true,
+      "nav_date": "2023-07-03",
+      "nav": "55.33",
+      "error": null,
+      "returned_isin": "LU0823403356",
+      "name": "BNP PARIBAS FUNDS EUROPE EMERGING EQUITY EUR"
+    }
+  ],
+  "rank_history_write": false,
+  "production_decisions_modified": false,
+  "trade_authority": "NONE",
+  "forced_fill": false
+}

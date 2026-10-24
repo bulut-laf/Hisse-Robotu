@@ -1,0 +1,48 @@
+{
+  "version": "erste-hungary-f4-evidence-bridge-v1",
+  "result_count": 929,
+  "baseline_result_count": 929,
+  "baseline_class_counts": {
+    "B": 143,
+    "C": 449,
+    "D": 308,
+    "X": 29
+  },
+  "f4_ready": 278,
+  "f4_unavailable": 651,
+  "f4_state_counts": {
+    "CAUTION": 51,
+    "NEUTRAL": 122,
+    "POSITIVE": 105,
+    "UNAVAILABLE": 651
+  },
+  "class_counts": {
+    "A": 7,
+    "B": 174,
+    "C": 400,
+    "D": 322,
+    "X": 26
+  },
+  "eligibility_counts": {},
+  "trade_authority_counts": {
+    "NONE": 929
+  },
+  "classification_transitions": {
+    "B->A": 7,
+    "B->B": 133,
+    "B->D": 3,
+    "C->B": 41,
+    "C->C": 397,
+    "C->D": 11,
+    "D->D": 308,
+    "X->C": 3,
+    "X->X": 26
+  },
+  "baseline_source": "f1_f2_f3_evidence_v1_latest.json",
+  "f4_source": "fh9_bamosz_turnover_progress_v11.jsonl",
+  "f1_f2_f3_recomputed": false,
+  "mutation": "DISCOVERY_OUTPUT_ONLY",
+  "production_mutation": "NO",
+  "semantic_proxy": "NO",
+  "forced_fill": "NO"
+}

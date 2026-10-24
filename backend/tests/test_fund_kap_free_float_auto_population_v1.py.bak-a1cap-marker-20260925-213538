@@ -1,0 +1,256 @@
+from datetime import date
+from decimal import Decimal
+
+import pytest
+
+from backend.app.funds.free_float_store import FreeFloatJsonStore
+from backend.app.funds.kap_free_float_auto_population import (
+    KAP_BIST_COMPANIES_URL,
+    KAP_FREE_FLOAT_TABLE_URL,
+    KapFreeFloatError,
+    discover_kap_company_general_urls,
+    parse_kap_bist_company_directory,
+    parse_kap_free_float_general_page,
+    parse_kap_free_float_table,
+    populate_kap_free_float_for_symbols,
+)
+
+
+def _directory_html():
+    return """
+    <html><body>
+      <a href="/tr/sirket-bilgileri/ozet/858-anadolu-efes-biracilik-ve-malt-sanayii-a-s">AEFES</a>
+      <a href="/tr/sirket-bilgileri/ozet/976-haci-omer-sabanci-holding-a-s">SAHOL</a>
+      <a href="https://evil.example/tr/sirket-bilgileri/ozet/1473-turk-telekomunikasyon-a-s">TTKOM</a>
+    </body></html>
+    """
+
+
+def _general_html(symbol="AEFES", amount="1.911.232.452,75", ratio="32,28"):
+    return f"""
+    <html><body>
+      <h2>Fiili Dolaşımdaki Paylar</h2>
+      <table>
+        <tr><th>Borsa Kodu</th><th>Fiili Dolaşımdaki Pay Tutarı(TL)</th><th>Fiili Dolaşımdaki Pay Oranı(%)</th></tr>
+        <tr><td>{symbol}</td><td>{amount}</td><td>{ratio}</td></tr>
+      </table>
+      <h2>Sermayeyi Temsil Eden Paylara İlişkin Bilgi</h2>
+    </body></html>
+    """
+
+
+def _free_float_table_html(include_ttkom=True):
+    ttkom = (
+        "<tr><td>TÜRK TELEKOMÜNİKASYON A.Ş.</td><td>TTKOM</td>"
+        "<td>463.448.324,45</td><td>13,24</td></tr>"
+        if include_ttkom
+        else ""
+    )
+    return f"""
+    <html><body>
+      <h1>Fiili Dolaşımdaki Paylar</h1>
+      <table>
+        <tr><th>Şirket</th><th>Borsa Kodu</th><th>Fiili Dolaşımdaki Pay Tutarı(TL)</th><th>Fiili Dolaşımdaki Pay Oranı(%)</th></tr>
+        <tr><td>HACI ÖMER SABANCI HOLDİNG A.Ş.</td><td>SAHOL</td><td>1.094.758.337,4</td><td>52,12</td></tr>
+        {ttkom}
+        <tr><td>ICBC TURKEY BANK A.Ş.</td><td>ICBCT</td><td>20.838.667,63</td><td>4,73</td></tr>
+        <tr><td></td><td>ICBCT</td><td>61.446.615,48</td><td>7,14</td></tr>
+      </table>
+    </body></html>
+    """
+
+
+def test_directory_discovers_only_requested_symbols_and_converts_summary_to_general():
+    refs = parse_kap_bist_company_directory(
+        _directory_html(),
+        symbols=("AEFES", "SAHOL"),
+    )
+    assert set(refs) == {"AEFES", "SAHOL"}
+    assert refs["SAHOL"].general_url == (
+        "https://www.kap.org.tr/tr/sirket-bilgileri/genel/"
+        "976-haci-omer-sabanci-holding-a-s"
+    )
+
+
+def test_general_page_parses_official_free_float_amount_in_nominal_tl_unit():
+    record = parse_kap_free_float_general_page(
+        _general_html(),
+        source_url=(
+            "https://www.kap.org.tr/tr/sirket-bilgileri/genel/"
+            "858-anadolu-efes-biracilik-ve-malt-sanayii-a-s"
+        ),
+        expected_symbol="AEFES",
+        observed_on=date(2026, 9, 4),
+    )
+    assert record.symbol == "AEFES"
+    assert record.free_float_shares == Decimal("1911232452.75")
+    assert record.as_of == date(2026, 9, 4)
+    assert record.source == "KAP"
+
+
+def test_general_page_requires_expected_symbol_row():
+    with pytest.raises(KapFreeFloatError, match="SYMBOL_ROW_MISSING"):
+        parse_kap_free_float_general_page(
+            _general_html(symbol="SAHOL"),
+            source_url="https://www.kap.org.tr/tr/sirket-bilgileri/genel/976-haci-omer-sabanci-holding-a-s",
+            expected_symbol="AEFES",
+            observed_on=date(2026, 9, 4),
+        )
+
+
+def test_discovery_never_calls_network_without_explicit_enablement():
+    calls = []
+
+    def forbidden(url, timeout):
+        calls.append((url, timeout))
+        raise AssertionError("NETWORK_CALLED")
+
+    with pytest.raises(KapFreeFloatError, match="NETWORK_DISABLED"):
+        discover_kap_company_general_urls(
+            symbols=("AEFES",),
+            fetcher=forbidden,
+        )
+    assert calls == []
+
+
+def test_official_aggregate_table_parses_sahol_and_ttkom_rows():
+    records = parse_kap_free_float_table(
+        _free_float_table_html(),
+        symbols=("SAHOL", "TTKOM"),
+        source_url=KAP_FREE_FLOAT_TABLE_URL,
+        observed_on=date(2026, 9, 4),
+    )
+    by_symbol = {item.symbol: item for item in records}
+    assert by_symbol["SAHOL"].free_float_shares == Decimal("1094758337.4")
+    assert by_symbol["TTKOM"].free_float_shares == Decimal("463448324.45")
+    assert by_symbol["SAHOL"].source_ref == KAP_FREE_FLOAT_TABLE_URL
+
+
+def test_official_aggregate_table_sums_multiple_rows_for_same_symbol():
+    records = parse_kap_free_float_table(
+        _free_float_table_html(),
+        symbols=("ICBCT",),
+        source_url=KAP_FREE_FLOAT_TABLE_URL,
+        observed_on=date(2026, 9, 4),
+    )
+    assert records[0].free_float_shares == Decimal("82285283.11")
+
+
+def test_population_fetches_one_official_table_and_persists_requested_records(tmp_path):
+    store = FreeFloatJsonStore(tmp_path / "fdo.json")
+    calls = []
+
+    def table_fetcher(url, timeout):
+        calls.append((url, timeout))
+        assert url == KAP_FREE_FLOAT_TABLE_URL
+        return _free_float_table_html().encode(), url, "text/html; charset=utf-8"
+
+    summary = populate_kap_free_float_for_symbols(
+        store=store,
+        symbols=("SAHOL", "TTKOM"),
+        network_enabled=True,
+        observed_on=date(2026, 9, 4),
+        table_fetcher=table_fetcher,
+    )
+
+    assert len(calls) == 1
+    assert summary.requested == 2
+    assert summary.discovered == 2
+    assert summary.attempted == 2
+    assert summary.inserted == 2
+    assert summary.failures == ()
+    assert {item.symbol for item in store.list_records()} == {"SAHOL", "TTKOM"}
+
+
+def test_population_is_idempotent_for_same_observation_and_source(tmp_path):
+    store = FreeFloatJsonStore(tmp_path / "fdo.json")
+
+    def table_fetcher(url, timeout):
+        return _free_float_table_html().encode(), url, "text/html"
+
+    first = populate_kap_free_float_for_symbols(
+        store=store,
+        symbols=("SAHOL",),
+        network_enabled=True,
+        observed_on=date(2026, 9, 4),
+        table_fetcher=table_fetcher,
+    )
+    second = populate_kap_free_float_for_symbols(
+        store=store,
+        symbols=("SAHOL",),
+        network_enabled=True,
+        observed_on=date(2026, 9, 4),
+        table_fetcher=table_fetcher,
+    )
+    assert first.inserted == 1
+    assert second.inserted == 0
+    assert second.unchanged == 1
+
+
+def test_population_isolates_missing_symbol_and_keeps_valid_record(tmp_path):
+    store = FreeFloatJsonStore(tmp_path / "fdo.json")
+
+    def table_fetcher(url, timeout):
+        return _free_float_table_html(include_ttkom=False).encode(), url, "text/html"
+
+    summary = populate_kap_free_float_for_symbols(
+        store=store,
+        symbols=("SAHOL", "TTKOM"),
+        network_enabled=True,
+        observed_on=date(2026, 9, 4),
+        table_fetcher=table_fetcher,
+    )
+    assert summary.inserted == 1
+    assert len(summary.failures) == 1
+    assert summary.failures[0].symbol == "TTKOM"
+    assert summary.failures[0].error == "KAP_FDO_SYMBOL_ROW_MISSING:TTKOM"
+
+
+def test_population_rejects_non_kap_redirect_without_mutating_store(tmp_path):
+    store = FreeFloatJsonStore(tmp_path / "fdo.json")
+
+    def table_fetcher(url, timeout):
+        return _free_float_table_html().encode(), "https://evil.example/fdo", "text/html"
+
+    with pytest.raises(KapFreeFloatError, match="HOST_NOT_ALLOWED"):
+        populate_kap_free_float_for_symbols(
+            store=store,
+            symbols=("SAHOL",),
+            network_enabled=True,
+            observed_on=date(2026, 9, 4),
+            table_fetcher=table_fetcher,
+        )
+    assert store.list_records() == ()
+
+
+
+def test_official_aggregate_table_parses_current_wide_a1cap_format():
+    html = """
+    <html><body>
+      <h1>Fiili Dola??mdaki Paylar</h1>
+      <table>
+        <tr>
+          <td>A1 CAPITAL YATIRIM MENKUL DEGERLER A.S.</td>
+          <td>A1CAP</td>
+          <td>675.000.000,00</td>
+          <td>404.250.000,00</td>
+          <td>270.750.000,00</td>
+          <td>37.891.527,59</td>
+          <td>3.795.682,62</td>
+          <td>229.062.789,79</td>
+          <td>33,93</td>
+        </tr>
+      </table>
+    </body></html>
+    """
+
+    records = parse_kap_free_float_table(
+        html,
+        symbols=("A1CAP",),
+        source_url=KAP_FREE_FLOAT_TABLE_URL,
+        observed_on=date(2026, 9, 25),
+    )
+
+    assert len(records) == 1
+    assert records[0].symbol == "A1CAP"
+    assert records[0].free_float_shares == Decimal("229062789.79")

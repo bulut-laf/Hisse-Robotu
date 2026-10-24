@@ -1,0 +1,1092 @@
+{
+  "contract_id": "NEXT_DAY_PHASE7B_F4_EXACT_SEAM_RESOLVER_V1",
+  "mode": "READ_ONLY",
+  "same_scan_authorities": {
+    "stock": {
+      "exists": true,
+      "path": "backend\\app\\analysis\\stock_analyzer.py",
+      "class": "StockAnalysisResult",
+      "fields": [
+        "sembol",
+        "analiz_tarihi",
+        "kapanis",
+        "hacim",
+        "ema9",
+        "ema21",
+        "rsi14",
+        "macd",
+        "macd_sinyal",
+        "macd_histogram",
+        "atr14",
+        "atr_yuzde",
+        "hacim_orani",
+        "hacim_durumu",
+        "destek_direnc",
+        "hedef_kaynagi",
+        "risk_plani",
+        "sinyal"
+      ]
+    },
+    "support": {
+      "exists": true,
+      "path": "backend\\app\\analysis\\support_resistance.py",
+      "class": "SupportResistanceResult",
+      "fields": [
+        "mevcut_fiyat",
+        "destek",
+        "direnc",
+        "destek_uzaklik_yuzde",
+        "direnc_uzaklik_yuzde",
+        "pivot_dip_sayisi",
+        "pivot_tepe_sayisi"
+      ]
+    },
+    "risk": {
+      "exists": true,
+      "path": "backend\\app\\risk\\risk_engine.py",
+      "class": "RiskPlan",
+      "fields": [
+        "giris_fiyati",
+        "stop_loss",
+        "hedef_fiyat",
+        "risk_tutari",
+        "odul_tutari",
+        "risk_odul_orani",
+        "atr",
+        "atr_yuzde",
+        "risk_notu",
+        "minimum_risk_odul",
+        "filtreyi_gecti"
+      ]
+    }
+  },
+  "prebreakout_files_scanned": [
+    "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+    "backend\\app\\prebreakout\\prebreakout_early_radar.py",
+    "backend\\app\\prebreakout\\prebreakout_stage.py",
+    "backend\\app\\prebreakout\\prebreakout_score.py",
+    "backend\\app\\prebreakout\\prebreakout_engine.py",
+    "backend\\app\\prebreakout\\prebreakout_models.py",
+    "backend\\app\\prebreakout\\prebreakout_candidate_lifecycle.py",
+    "backend\\app\\prebreakout\\prebreakout_features.py",
+    "backend\\app\\prebreakout\\prebreakout_historical_validation.py",
+    "backend\\app\\prebreakout\\prebreakout_release_readiness.py",
+    "backend\\app\\prebreakout\\prebreakout_v2_first_live_evaluation.py",
+    "backend\\app\\prebreakout\\prebreakout_v2_sample_adequacy.py",
+    "backend\\app\\prebreakout\\prebreakout_validation_report.py"
+  ],
+  "scan_candidate_snapshot_fields": [
+    "symbol",
+    "rank",
+    "stage",
+    "momentum",
+    "score",
+    "resistance_distance_pct",
+    "sessions_since_first_seen",
+    "realized_move_pct",
+    "rank_velocity",
+    "score_velocity",
+    "momentum_velocity"
+  ],
+  "snapshot_mapper": {
+    "kind": "function",
+    "path": "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+    "name": "snapshot_from_mapping",
+    "line": 67,
+    "args": [
+      "row"
+    ],
+    "calls": [
+      "first",
+      "first",
+      "first",
+      "first",
+      "first",
+      "first",
+      "ScanCandidateSnapshot",
+      "ValueError",
+      "str",
+      "int",
+      "float",
+      "_optional_float",
+      "_optional_float",
+      "_optional_float",
+      "int",
+      "str",
+      "float",
+      "float",
+      "float",
+      "first",
+      "first",
+      "first",
+      "first",
+      "first"
+    ],
+    "forbidden_io_hits": [],
+    "f4_comparisons": [
+      "resistance_distance in (None, \"\")"
+    ]
+  },
+  "same_scan_distance_raw": true,
+  "resistance_field_candidates": [
+    "direnc",
+    "direnc_uzaklik_yuzde"
+  ],
+  "pure_f4_candidates": [
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+      "name": "candidate_to_radar_input",
+      "line": 41,
+      "args": [
+        "candidate"
+      ],
+      "calls": [
+        "EarlyRadarInput"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+      "name": "snapshot_from_mapping",
+      "line": 67,
+      "args": [
+        "row"
+      ],
+      "calls": [
+        "first",
+        "first",
+        "first",
+        "first",
+        "first",
+        "first",
+        "ScanCandidateSnapshot",
+        "ValueError",
+        "str",
+        "int",
+        "float",
+        "_optional_float",
+        "_optional_float",
+        "_optional_float",
+        "int",
+        "str",
+        "float",
+        "float",
+        "float",
+        "first",
+        "first",
+        "first",
+        "first",
+        "first"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "resistance_distance in (None, \"\")"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_early_radar.py",
+      "name": "classify_early_radar",
+      "line": 111,
+      "args": [
+        "data",
+        "high_priority_threshold",
+        "watch_threshold",
+        "maturity_sessions",
+        "maturity_move_pct"
+      ],
+      "calls": [
+        "_priority_score",
+        "upper",
+        "EarlyRadarOutput",
+        "ValueError",
+        "ValueError",
+        "ValueError",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "tuple"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if maturity is MaturityDecision.KAR_KORUMA: early = EarlyRadarDecision.YOK movement_phase = \"OLGUN\" new_entry_message = \"Yeni giriş için geç olabilir; teyit sonrası risk/ödül yeniden değerlendir.\" position_message = \"Mevcut pozisyonda kâr koruma / stop sıkılaştırma değerlendirmesi.\" else: if priority >= high_priority_threshold: early = EarlyRadarDecision.YUKSEK_ONCELIK elif priority >= watch_threshold: early = EarlyRadarDecision.IZLE else: early = EarlyRadarDecision.YOK if maturity is MaturityDecision.OLGUNLASIYOR: movement_phase = \"GÜÇLÜ / OLGUNLAŞIYOR\" new_entry_message = \"Yeni girişte harek",
+        "if maturity is MaturityDecision.OLGUNLASIYOR: movement_phase = \"GÜÇLÜ / OLGUNLAŞIYOR\" new_entry_message = \"Yeni girişte hareket yaşını ve kalan risk/ödülü kontrol et.\" position_message = \"Pozisyon varsa momentum bozulmasını izle.\" elif early is EarlyRadarDecision.YUKSEK_ONCELIK: movement_phase = \"ERKEN / GELİŞİYOR\" new_entry_message = \"Erken Radar yüksek öncelik: teyit koşulları yakından izlenmeli.\" position_message = \"Pozisyon yoksa izleme adayı; mevcut pozisyon varsa trend korunuyor.\" elif early is EarlyRadarDecision.IZLE: movement_phase = \"HAZIRLIK / GELİŞİYOR\" new_entry_message = \"Erken Ra",
+        "elif early is EarlyRadarDecision.YUKSEK_ONCELIK: movement_phase = \"ERKEN / GELİŞİYOR\" new_entry_message = \"Erken Radar yüksek öncelik: teyit koşulları yakından izlenmeli.\" position_message = \"Pozisyon yoksa izleme adayı; mevcut pozisyon varsa trend korunuyor.\" elif early is EarlyRadarDecision.IZLE: movement_phase = \"HAZIRLIK / GELİŞİYOR\" new_entry_message = \"Erken Radar izleme: henüz yüksek öncelik değil.\" position_message = \"Güçlenme ve teyit devamı izlenmeli.\" else: movement_phase = \"NÖTR\" new_entry_message = \"Erken fırsat sinyali yok.\" position_message = \"Mevcut teknik plan korunur.\"",
+        "elif early is EarlyRadarDecision.IZLE: movement_phase = \"HAZIRLIK / GELİŞİYOR\" new_entry_message = \"Erken Radar izleme: henüz yüksek öncelik değil.\" position_message = \"Güçlenme ve teyit devamı izlenmeli.\" else: movement_phase = \"NÖTR\" new_entry_message = \"Erken fırsat sinyali yok.\" position_message = \"Mevcut teknik plan korunur.\""
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_stage.py",
+      "name": "asamayi_belirle",
+      "line": 24,
+      "args": [
+        "score",
+        "features",
+        "late_entry",
+        "momentum_score",
+        "threshold_policy"
+      ],
+      "calls": [
+        "mevcut_esik_politikasi",
+        "active_policy.minimum_momentum_score"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if score < 45: return PreBreakoutStage.HAZIRLIK_YOK"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_candidate_lifecycle.py",
+      "name": "adayin_yasam_dongusunu_degerlendir",
+      "line": 69,
+      "args": [
+        "signal",
+        "observations",
+        "config",
+        "as_of_date"
+      ],
+      "calls": [
+        "CandidateLifecycleConfig",
+        "date.fromisoformat",
+        "sorted",
+        "enumerate",
+        "CandidateLifecycleRecord",
+        "_return_pct",
+        "_return_pct",
+        "float",
+        "len",
+        "CandidateLifecycleRecord",
+        "max",
+        "min",
+        "CandidateLifecycleRecord",
+        "CandidateLifecycleRecord",
+        "max",
+        "len",
+        "observation_date.isoformat",
+        "len",
+        "item.observation_date.isoformat",
+        "item.observation_date.isoformat"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_features.py",
+      "name": "ozellikleri_hesapla",
+      "line": 58,
+      "args": [
+        "data",
+        "resistance_window"
+      ],
+      "calls": [
+        "copy",
+        "dropna",
+        "_ema",
+        "_ema",
+        "_ema",
+        "_rsi",
+        "_ema",
+        "_atr",
+        "float",
+        "float",
+        "float",
+        "_average_or_zero",
+        "_average_or_zero",
+        "_average_or_zero",
+        "_average_or_zero",
+        "_average_or_zero",
+        "close.pct_change",
+        "volume.where",
+        "volume.where",
+        "_average_or_zero",
+        "float",
+        "_safe_pct",
+        "float",
+        "float",
+        "max",
+        "max",
+        "PreBreakoutFeatures",
+        "PreBreakoutDataError",
+        "len",
+        "PreBreakoutDataError",
+        "len",
+        "PreBreakoutDataError",
+        "any",
+        "any",
+        "PreBreakoutDataError",
+        "_ema",
+        "_ema",
+        "max",
+        "min",
+        "min",
+        "clean.apply",
+        "_average_or_zero",
+        "_average_or_zero",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_release_readiness.py",
+      "name": "on_yukselis_surum_hazirligini_degerlendir",
+      "line": 31,
+      "args": [
+        "validations",
+        "policy",
+        "leakage_guard_confirmed"
+      ],
+      "calls": [
+        "tuple",
+        "tuple",
+        "PreBreakoutReleaseReadiness",
+        "all",
+        "len",
+        "policy.minimum_momentum_score"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_release_readiness.py",
+      "name": "surum_hazirligini_tabloya_cevir",
+      "line": 76,
+      "args": [
+        "report"
+      ],
+      "calls": [
+        "pd.DataFrame"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_first_live_evaluation.py",
+      "name": "ilk_gercek_kullanim_degerlendirmesini_yap",
+      "line": 42,
+      "args": [
+        "sample_status",
+        "measured_candidate_count",
+        "mature_20d_candidate_count",
+        "success_rate_pct",
+        "false_positive_rate_pct",
+        "average_trigger_sessions",
+        "portfolio_return_pct",
+        "max_drawdown_pct",
+        "policy"
+      ],
+      "calls": [
+        "FirstLiveEvaluation",
+        "FirstLiveEvaluationPolicy",
+        "FirstLiveEvaluation",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "max",
+        "max",
+        "tuple",
+        "max",
+        "max",
+        "int",
+        "int",
+        "int",
+        "int"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if ( not sample_status.first_evaluation_ready or sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR ): return FirstLiveEvaluation( sample_ready=False, measured_candidate_count=max(0, int(measured_candidate_count)), mature_20d_candidate_count=max(0, int(mature_20d_candidate_count)), success_rate_pct=success_rate_pct, false_positive_rate_pct=false_positive_rate_pct, average_trigger_sessions=average_trigger_sessions, portfolio_return_pct=portfolio_return_pct, max_drawdown_pct=max_drawdown_pct, model_decision=ModelDecision.MODELI_KORU, reasons=(\"Canlı örneklem ilk değerlendir",
+        "not sample_status.first_evaluation_ready or sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR",
+        "sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_sample_adequacy.py",
+      "name": "canli_orneklem_yeterliligini_degerlendir",
+      "line": 44,
+      "args": [
+        "observation_days",
+        "measured_candidate_count",
+        "mature_20d_candidate_count",
+        "reliable_regime_group_count",
+        "covered_stage_count",
+        "technical_ready",
+        "policy"
+      ],
+      "calls": [
+        "max",
+        "max",
+        "max",
+        "max",
+        "max",
+        "tuple",
+        "round",
+        "SampleAdequacyStatus",
+        "SampleAdequacyPolicy",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "sum",
+        "len"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if ready: readiness = SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR summary = ( \"İlk gerçek kullanım değerlendirme eşiği karşılandı. \" \"Performans analizi yapılabilir; model eşikleri otomatik değiştirilmez.\" ) elif technical_ready and completion_ratio >= 0.75: readiness = SampleReadiness.ON_DEGERLENDIRME summary = ( \"Örneklem ilk değerlendirme eşiğine yaklaştı. Ara sonuçlar izlenebilir \" \"ancak model kararı için veri birikimi sürdürülmeli.\" ) else: readiness = SampleReadiness.IZLEMEYE_DEVAM summary = ( \"Canlı örneklem henüz ilk değerlendirme için yeterli değil. \" \"Mevcut V2 modeli değiştirilmeden ",
+        "elif technical_ready and completion_ratio >= 0.75: readiness = SampleReadiness.ON_DEGERLENDIRME summary = ( \"Örneklem ilk değerlendirme eşiğine yaklaştı. Ara sonuçlar izlenebilir \" \"ancak model kararı için veri birikimi sürdürülmeli.\" ) else: readiness = SampleReadiness.IZLEMEYE_DEVAM summary = ( \"Canlı örneklem henüz ilk değerlendirme için yeterli değil. \" \"Mevcut V2 modeli değiştirilmeden gözleme devam edilmeli.\" )"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_sample_adequacy.py",
+      "name": "orneklem_yeterliligini_metne_cevir",
+      "line": 156,
+      "args": [
+        "status"
+      ],
+      "calls": [
+        "join",
+        "join"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_validation_report.py",
+      "name": "dogrulama_kayitlarini_tabloya_cevir",
+      "line": 11,
+      "args": [
+        "records"
+      ],
+      "calls": [
+        "pd.DataFrame",
+        "rows.append",
+        "record.cutoff_date.isoformat"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    }
+  ],
+  "usable_f4_classifiers": [
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+      "name": "snapshot_from_mapping",
+      "line": 67,
+      "args": [
+        "row"
+      ],
+      "calls": [
+        "first",
+        "first",
+        "first",
+        "first",
+        "first",
+        "first",
+        "ScanCandidateSnapshot",
+        "ValueError",
+        "str",
+        "int",
+        "float",
+        "_optional_float",
+        "_optional_float",
+        "_optional_float",
+        "int",
+        "str",
+        "float",
+        "float",
+        "float",
+        "first",
+        "first",
+        "first",
+        "first",
+        "first"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "resistance_distance in (None, \"\")"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_first_live_evaluation.py",
+      "name": "ilk_gercek_kullanim_degerlendirmesini_yap",
+      "line": 42,
+      "args": [
+        "sample_status",
+        "measured_candidate_count",
+        "mature_20d_candidate_count",
+        "success_rate_pct",
+        "false_positive_rate_pct",
+        "average_trigger_sessions",
+        "portfolio_return_pct",
+        "max_drawdown_pct",
+        "policy"
+      ],
+      "calls": [
+        "FirstLiveEvaluation",
+        "FirstLiveEvaluationPolicy",
+        "FirstLiveEvaluation",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "max",
+        "max",
+        "tuple",
+        "max",
+        "max",
+        "int",
+        "int",
+        "int",
+        "int"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if ( not sample_status.first_evaluation_ready or sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR ): return FirstLiveEvaluation( sample_ready=False, measured_candidate_count=max(0, int(measured_candidate_count)), mature_20d_candidate_count=max(0, int(mature_20d_candidate_count)), success_rate_pct=success_rate_pct, false_positive_rate_pct=false_positive_rate_pct, average_trigger_sessions=average_trigger_sessions, portfolio_return_pct=portfolio_return_pct, max_drawdown_pct=max_drawdown_pct, model_decision=ModelDecision.MODELI_KORU, reasons=(\"Canlı örneklem ilk değerlendir",
+        "not sample_status.first_evaluation_ready or sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR",
+        "sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_sample_adequacy.py",
+      "name": "canli_orneklem_yeterliligini_degerlendir",
+      "line": 44,
+      "args": [
+        "observation_days",
+        "measured_candidate_count",
+        "mature_20d_candidate_count",
+        "reliable_regime_group_count",
+        "covered_stage_count",
+        "technical_ready",
+        "policy"
+      ],
+      "calls": [
+        "max",
+        "max",
+        "max",
+        "max",
+        "max",
+        "tuple",
+        "round",
+        "SampleAdequacyStatus",
+        "SampleAdequacyPolicy",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "sum",
+        "len"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if ready: readiness = SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR summary = ( \"İlk gerçek kullanım değerlendirme eşiği karşılandı. \" \"Performans analizi yapılabilir; model eşikleri otomatik değiştirilmez.\" ) elif technical_ready and completion_ratio >= 0.75: readiness = SampleReadiness.ON_DEGERLENDIRME summary = ( \"Örneklem ilk değerlendirme eşiğine yaklaştı. Ara sonuçlar izlenebilir \" \"ancak model kararı için veri birikimi sürdürülmeli.\" ) else: readiness = SampleReadiness.IZLEMEYE_DEVAM summary = ( \"Canlı örneklem henüz ilk değerlendirme için yeterli değil. \" \"Mevcut V2 modeli değiştirilmeden ",
+        "elif technical_ready and completion_ratio >= 0.75: readiness = SampleReadiness.ON_DEGERLENDIRME summary = ( \"Örneklem ilk değerlendirme eşiğine yaklaştı. Ara sonuçlar izlenebilir \" \"ancak model kararı için veri birikimi sürdürülmeli.\" ) else: readiness = SampleReadiness.IZLEMEYE_DEVAM summary = ( \"Canlı örneklem henüz ilk değerlendirme için yeterli değil. \" \"Mevcut V2 modeli değiştirilmeden gözleme devam edilmeli.\" )"
+      ]
+    }
+  ],
+  "blockers": [],
+  "warnings": [],
+  "decision": "READY_FOR_PHASE7C_MINIMAL_F4_ADAPTER_AND_RUNTIME_WIRING",
+  "next": "WIRE_EXISTING_PREBREAKOUT_F4_AUTHORITY_FROM_SAME_CANONICAL_SCAN",
+  "preservation": {
+    "production_mutation": false,
+    "scheduler_mutation": false,
+    "scanner_invocation": false,
+    "network_call": false,
+    "new_score": false,
+    "new_store": false,
+    "second_scanner": false,
+    "second_universe_traversal": false,
+    "outcome_tuning": false,
+    "al_sat_authority": false
+  },
+  "inventory": [
+    {
+      "kind": "class",
+      "path": "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+      "name": "ScanCandidateSnapshot",
+      "line": 17,
+      "fields": [
+        "symbol",
+        "rank",
+        "stage",
+        "momentum",
+        "score",
+        "resistance_distance_pct",
+        "sessions_since_first_seen",
+        "realized_move_pct",
+        "rank_velocity",
+        "score_velocity",
+        "momentum_velocity"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+      "name": "candidate_to_radar_input",
+      "line": 41,
+      "args": [
+        "candidate"
+      ],
+      "calls": [
+        "EarlyRadarInput"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_scan_radar_integration.py",
+      "name": "snapshot_from_mapping",
+      "line": 67,
+      "args": [
+        "row"
+      ],
+      "calls": [
+        "first",
+        "first",
+        "first",
+        "first",
+        "first",
+        "first",
+        "ScanCandidateSnapshot",
+        "ValueError",
+        "str",
+        "int",
+        "float",
+        "_optional_float",
+        "_optional_float",
+        "_optional_float",
+        "int",
+        "str",
+        "float",
+        "float",
+        "float",
+        "first",
+        "first",
+        "first",
+        "first",
+        "first"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "resistance_distance in (None, \"\")"
+      ]
+    },
+    {
+      "kind": "class",
+      "path": "backend\\app\\prebreakout\\prebreakout_early_radar.py",
+      "name": "EarlyRadarInput",
+      "line": 20,
+      "fields": [
+        "rank",
+        "stage",
+        "momentum",
+        "rank_velocity",
+        "score_velocity",
+        "momentum_velocity",
+        "sessions_since_first_seen",
+        "realized_move_pct",
+        "score",
+        "resistance_distance_pct"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_early_radar.py",
+      "name": "classify_early_radar",
+      "line": 111,
+      "args": [
+        "data",
+        "high_priority_threshold",
+        "watch_threshold",
+        "maturity_sessions",
+        "maturity_move_pct"
+      ],
+      "calls": [
+        "_priority_score",
+        "upper",
+        "EarlyRadarOutput",
+        "ValueError",
+        "ValueError",
+        "ValueError",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "tuple"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if maturity is MaturityDecision.KAR_KORUMA: early = EarlyRadarDecision.YOK movement_phase = \"OLGUN\" new_entry_message = \"Yeni giriş için geç olabilir; teyit sonrası risk/ödül yeniden değerlendir.\" position_message = \"Mevcut pozisyonda kâr koruma / stop sıkılaştırma değerlendirmesi.\" else: if priority >= high_priority_threshold: early = EarlyRadarDecision.YUKSEK_ONCELIK elif priority >= watch_threshold: early = EarlyRadarDecision.IZLE else: early = EarlyRadarDecision.YOK if maturity is MaturityDecision.OLGUNLASIYOR: movement_phase = \"GÜÇLÜ / OLGUNLAŞIYOR\" new_entry_message = \"Yeni girişte harek",
+        "if maturity is MaturityDecision.OLGUNLASIYOR: movement_phase = \"GÜÇLÜ / OLGUNLAŞIYOR\" new_entry_message = \"Yeni girişte hareket yaşını ve kalan risk/ödülü kontrol et.\" position_message = \"Pozisyon varsa momentum bozulmasını izle.\" elif early is EarlyRadarDecision.YUKSEK_ONCELIK: movement_phase = \"ERKEN / GELİŞİYOR\" new_entry_message = \"Erken Radar yüksek öncelik: teyit koşulları yakından izlenmeli.\" position_message = \"Pozisyon yoksa izleme adayı; mevcut pozisyon varsa trend korunuyor.\" elif early is EarlyRadarDecision.IZLE: movement_phase = \"HAZIRLIK / GELİŞİYOR\" new_entry_message = \"Erken Ra",
+        "elif early is EarlyRadarDecision.YUKSEK_ONCELIK: movement_phase = \"ERKEN / GELİŞİYOR\" new_entry_message = \"Erken Radar yüksek öncelik: teyit koşulları yakından izlenmeli.\" position_message = \"Pozisyon yoksa izleme adayı; mevcut pozisyon varsa trend korunuyor.\" elif early is EarlyRadarDecision.IZLE: movement_phase = \"HAZIRLIK / GELİŞİYOR\" new_entry_message = \"Erken Radar izleme: henüz yüksek öncelik değil.\" position_message = \"Güçlenme ve teyit devamı izlenmeli.\" else: movement_phase = \"NÖTR\" new_entry_message = \"Erken fırsat sinyali yok.\" position_message = \"Mevcut teknik plan korunur.\"",
+        "elif early is EarlyRadarDecision.IZLE: movement_phase = \"HAZIRLIK / GELİŞİYOR\" new_entry_message = \"Erken Radar izleme: henüz yüksek öncelik değil.\" position_message = \"Güçlenme ve teyit devamı izlenmeli.\" else: movement_phase = \"NÖTR\" new_entry_message = \"Erken fırsat sinyali yok.\" position_message = \"Mevcut teknik plan korunur.\""
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_stage.py",
+      "name": "asamayi_belirle",
+      "line": 24,
+      "args": [
+        "score",
+        "features",
+        "late_entry",
+        "momentum_score",
+        "threshold_policy"
+      ],
+      "calls": [
+        "mevcut_esik_politikasi",
+        "active_policy.minimum_momentum_score"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if score < 45: return PreBreakoutStage.HAZIRLIK_YOK"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_candidate_lifecycle.py",
+      "name": "adayin_yasam_dongusunu_degerlendir",
+      "line": 69,
+      "args": [
+        "signal",
+        "observations",
+        "config",
+        "as_of_date"
+      ],
+      "calls": [
+        "CandidateLifecycleConfig",
+        "date.fromisoformat",
+        "sorted",
+        "enumerate",
+        "CandidateLifecycleRecord",
+        "_return_pct",
+        "_return_pct",
+        "float",
+        "len",
+        "CandidateLifecycleRecord",
+        "max",
+        "min",
+        "CandidateLifecycleRecord",
+        "CandidateLifecycleRecord",
+        "max",
+        "len",
+        "observation_date.isoformat",
+        "len",
+        "item.observation_date.isoformat",
+        "item.observation_date.isoformat"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_features.py",
+      "name": "ozellikleri_hesapla",
+      "line": 58,
+      "args": [
+        "data",
+        "resistance_window"
+      ],
+      "calls": [
+        "copy",
+        "dropna",
+        "_ema",
+        "_ema",
+        "_ema",
+        "_rsi",
+        "_ema",
+        "_atr",
+        "float",
+        "float",
+        "float",
+        "_average_or_zero",
+        "_average_or_zero",
+        "_average_or_zero",
+        "_average_or_zero",
+        "_average_or_zero",
+        "close.pct_change",
+        "volume.where",
+        "volume.where",
+        "_average_or_zero",
+        "float",
+        "_safe_pct",
+        "float",
+        "float",
+        "max",
+        "max",
+        "PreBreakoutFeatures",
+        "PreBreakoutDataError",
+        "len",
+        "PreBreakoutDataError",
+        "len",
+        "PreBreakoutDataError",
+        "any",
+        "any",
+        "PreBreakoutDataError",
+        "_ema",
+        "_ema",
+        "max",
+        "min",
+        "min",
+        "clean.apply",
+        "_average_or_zero",
+        "_average_or_zero",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float",
+        "float"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "class",
+      "path": "backend\\app\\prebreakout\\prebreakout_historical_validation.py",
+      "name": "HistoricalCandidateObservation",
+      "line": 10,
+      "fields": [
+        "cut_date",
+        "symbol",
+        "rank",
+        "stage",
+        "momentum",
+        "signal_price",
+        "future_max_upside_pct",
+        "max_adverse_excursion_pct",
+        "resistance_distance_pct",
+        "score"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_release_readiness.py",
+      "name": "on_yukselis_surum_hazirligini_degerlendir",
+      "line": 31,
+      "args": [
+        "validations",
+        "policy",
+        "leakage_guard_confirmed"
+      ],
+      "calls": [
+        "tuple",
+        "tuple",
+        "PreBreakoutReleaseReadiness",
+        "all",
+        "len",
+        "policy.minimum_momentum_score"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_release_readiness.py",
+      "name": "surum_hazirligini_tabloya_cevir",
+      "line": 76,
+      "args": [
+        "report"
+      ],
+      "calls": [
+        "pd.DataFrame"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_first_live_evaluation.py",
+      "name": "ilk_gercek_kullanim_degerlendirmesini_yap",
+      "line": 42,
+      "args": [
+        "sample_status",
+        "measured_candidate_count",
+        "mature_20d_candidate_count",
+        "success_rate_pct",
+        "false_positive_rate_pct",
+        "average_trigger_sessions",
+        "portfolio_return_pct",
+        "max_drawdown_pct",
+        "policy"
+      ],
+      "calls": [
+        "FirstLiveEvaluation",
+        "FirstLiveEvaluationPolicy",
+        "FirstLiveEvaluation",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "reasons.append",
+        "max",
+        "max",
+        "tuple",
+        "max",
+        "max",
+        "int",
+        "int",
+        "int",
+        "int"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if ( not sample_status.first_evaluation_ready or sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR ): return FirstLiveEvaluation( sample_ready=False, measured_candidate_count=max(0, int(measured_candidate_count)), mature_20d_candidate_count=max(0, int(mature_20d_candidate_count)), success_rate_pct=success_rate_pct, false_positive_rate_pct=false_positive_rate_pct, average_trigger_sessions=average_trigger_sessions, portfolio_return_pct=portfolio_return_pct, max_drawdown_pct=max_drawdown_pct, model_decision=ModelDecision.MODELI_KORU, reasons=(\"Canlı örneklem ilk değerlendir",
+        "not sample_status.first_evaluation_ready or sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR",
+        "sample_status.readiness is not SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR"
+      ]
+    },
+    {
+      "kind": "class",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_sample_adequacy.py",
+      "name": "SampleAdequacyStatus",
+      "line": 25,
+      "fields": [
+        "observation_days",
+        "measured_candidate_count",
+        "mature_20d_candidate_count",
+        "reliable_regime_group_count",
+        "covered_stage_count",
+        "readiness",
+        "first_evaluation_ready",
+        "completion_ratio",
+        "missing_conditions",
+        "summary"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_sample_adequacy.py",
+      "name": "canli_orneklem_yeterliligini_degerlendir",
+      "line": 44,
+      "args": [
+        "observation_days",
+        "measured_candidate_count",
+        "mature_20d_candidate_count",
+        "reliable_regime_group_count",
+        "covered_stage_count",
+        "technical_ready",
+        "policy"
+      ],
+      "calls": [
+        "max",
+        "max",
+        "max",
+        "max",
+        "max",
+        "tuple",
+        "round",
+        "SampleAdequacyStatus",
+        "SampleAdequacyPolicy",
+        "int",
+        "int",
+        "int",
+        "int",
+        "int",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "_ratio",
+        "sum",
+        "len"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": [
+        "if ready: readiness = SampleReadiness.ILK_DEGERLENDIRMEYE_HAZIR summary = ( \"İlk gerçek kullanım değerlendirme eşiği karşılandı. \" \"Performans analizi yapılabilir; model eşikleri otomatik değiştirilmez.\" ) elif technical_ready and completion_ratio >= 0.75: readiness = SampleReadiness.ON_DEGERLENDIRME summary = ( \"Örneklem ilk değerlendirme eşiğine yaklaştı. Ara sonuçlar izlenebilir \" \"ancak model kararı için veri birikimi sürdürülmeli.\" ) else: readiness = SampleReadiness.IZLEMEYE_DEVAM summary = ( \"Canlı örneklem henüz ilk değerlendirme için yeterli değil. \" \"Mevcut V2 modeli değiştirilmeden ",
+        "elif technical_ready and completion_ratio >= 0.75: readiness = SampleReadiness.ON_DEGERLENDIRME summary = ( \"Örneklem ilk değerlendirme eşiğine yaklaştı. Ara sonuçlar izlenebilir \" \"ancak model kararı için veri birikimi sürdürülmeli.\" ) else: readiness = SampleReadiness.IZLEMEYE_DEVAM summary = ( \"Canlı örneklem henüz ilk değerlendirme için yeterli değil. \" \"Mevcut V2 modeli değiştirilmeden gözleme devam edilmeli.\" )"
+      ]
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_v2_sample_adequacy.py",
+      "name": "orneklem_yeterliligini_metne_cevir",
+      "line": 156,
+      "args": [
+        "status"
+      ],
+      "calls": [
+        "join",
+        "join"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    },
+    {
+      "kind": "function",
+      "path": "backend\\app\\prebreakout\\prebreakout_validation_report.py",
+      "name": "dogrulama_kayitlarini_tabloya_cevir",
+      "line": 11,
+      "args": [
+        "records"
+      ],
+      "calls": [
+        "pd.DataFrame",
+        "rows.append",
+        "record.cutoff_date.isoformat"
+      ],
+      "forbidden_io_hits": [],
+      "f4_comparisons": []
+    }
+  ]
+}

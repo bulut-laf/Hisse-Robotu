@@ -1,0 +1,50 @@
+{
+  "date": "2026-08-10",
+  "document_count": 4,
+  "documents": [
+    {
+      "document_id": "050b41728b8e4b9ab191cf65f288ae9e",
+      "source": "Yatırım Finansman",
+      "document_date": "2026-08-10",
+      "input_type": "pdf",
+      "content_hash": "4815e56b7330fb2839fc8edf5c350627b8cb8d222cbbef5dcda684d743442eae",
+      "processed_path": "market_context_processed\\2026-08-10\\050b41728b8e4b9ab191cf65f288ae9e.json",
+      "raw_path": "market_context_raw\\2026-08-10\\050b41728b8e4b9ab191cf65f288ae9e.txt"
+    },
+    {
+      "document_id": "95a37f9f1c644947a86997c0a3c84fdf",
+      "source": "Yatırım Finansman",
+      "document_date": "2026-08-10",
+      "input_type": "pdf",
+      "content_hash": "c2181f8e8708d8a24f496314da07fc4cc1661101b5d8b7ea374a4aad3d30c8d6",
+      "processed_path": "market_context_processed\\2026-08-10\\95a37f9f1c644947a86997c0a3c84fdf.json",
+      "raw_path": "market_context_raw\\2026-08-10\\95a37f9f1c644947a86997c0a3c84fdf.txt"
+    },
+    {
+      "document_id": "b18d25ecb5c944749122c38b4f9bf73a",
+      "source": "Yatırım Finansman",
+      "document_date": "2026-08-10",
+      "input_type": "pdf",
+      "content_hash": "498d7fd4c84fbf93b3d2f44f0faf5d20691e7b572bbba86b6d1706ef7e60ff6b",
+      "processed_path": "market_context_processed\\2026-08-10\\b18d25ecb5c944749122c38b4f9bf73a.json",
+      "raw_path": "market_context_raw\\2026-08-10\\b18d25ecb5c944749122c38b4f9bf73a.txt"
+    },
+    {
+      "document_id": "349ff429d3374fd2be45cfb869d859f0",
+      "source": "Yatirim Fánansman",
+      "document_date": "2026-08-10",
+      "input_type": "text",
+      "content_hash": "cf9661221ccdee0b4262d3b07cff29087be2a6e6d678385af1eaea79857a0c59",
+      "processed_path": "market_context_processed\\2026-08-10\\349ff429d3374fd2be45cfb869d859f0.json",
+      "raw_path": "market_context_raw\\2026-08-10\\349ff429d3374fd2be45cfb869d859f0.txt"
+    }
+  ],
+  "sources": [
+    "Yatirim Fánansman",
+    "Yatırım Finansman"
+  ],
+  "created_at": "2026-08-10T06:25:41Z",
+  "updated_at": "2026-08-10T13:30:33Z",
+  "ai_review_status": "reviewed",
+  "ai_review_id": "5ec1de618aea428ba1c3f9918e5f8785"
+}

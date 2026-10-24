@@ -1,0 +1,178 @@
+{
+  "status": "PASS",
+  "files": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_model_contract.py",
+      "definitions": [
+        {
+          "name": "BankModelValidation",
+          "line_start": 57,
+          "line_end": 62
+        },
+        {
+          "name": "validate_bank_model_input",
+          "line_start": 65,
+          "line_end": 107
+        },
+        {
+          "name": "assert_bank_model_input_ready",
+          "line_start": 110,
+          "line_end": 117
+        },
+        {
+          "name": "bank_component_weight",
+          "line_start": 120,
+          "line_end": 126
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_canonical_adapter.py",
+      "definitions": [
+        {
+          "name": "BankCanonicalAdapterResult",
+          "line_start": 15,
+          "line_end": 21
+        },
+        {
+          "name": "_parse_iso_date",
+          "line_start": 24,
+          "line_end": 35
+        },
+        {
+          "name": "_number",
+          "line_start": 38,
+          "line_end": 49
+        },
+        {
+          "name": "adapt_bank_canonical_input",
+          "line_start": 52,
+          "line_end": 187
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_scoring_engine.py",
+      "definitions": [
+        {
+          "name": "_clamp",
+          "line_start": 17,
+          "line_end": 18
+        },
+        {
+          "name": "_higher_better",
+          "line_start": 21,
+          "line_end": 37
+        },
+        {
+          "name": "_lower_better",
+          "line_start": 40,
+          "line_end": 56
+        },
+        {
+          "name": "_range_best",
+          "line_start": 59,
+          "line_end": 89
+        },
+        {
+          "name": "_growth_quality_score",
+          "line_start": 92,
+          "line_end": 125
+        },
+        {
+          "name": "BankScoreResult",
+          "line_start": 170,
+          "line_end": 176
+        },
+        {
+          "name": "_number",
+          "line_start": 179,
+          "line_end": 190
+        },
+        {
+          "name": "score_bank_model",
+          "line_start": 193,
+          "line_end": 287
+        }
+      ]
+    }
+  ],
+  "required_metric_paths": [
+    "ASSET_QUALITY.npl_coverage_ratio",
+    "ASSET_QUALITY.npl_ratio",
+    "CAPITAL_ADEQUACY.capital_adequacy_ratio",
+    "CAPITAL_ADEQUACY.tier1_capital_ratio",
+    "EFFICIENCY.cost_to_income_ratio",
+    "FUNDING_LIQUIDITY.liquidity_ratio",
+    "FUNDING_LIQUIDITY.loan_to_deposit_ratio",
+    "GROWTH_QUALITY.composite",
+    "GROWTH_QUALITY.deposit_growth",
+    "GROWTH_QUALITY.loan_growth",
+    "GROWTH_QUALITY.net_income_growth",
+    "PROFITABILITY.net_interest_margin",
+    "PROFITABILITY.roa",
+    "PROFITABILITY.roe"
+  ],
+  "component_metric_map": {
+    "ASSET_QUALITY": [
+      "npl_coverage_ratio",
+      "npl_ratio"
+    ],
+    "CAPITAL_ADEQUACY": [
+      "capital_adequacy_ratio",
+      "tier1_capital_ratio"
+    ],
+    "EFFICIENCY": [
+      "cost_to_income_ratio"
+    ],
+    "FUNDING_LIQUIDITY": [
+      "liquidity_ratio",
+      "loan_to_deposit_ratio"
+    ],
+    "GROWTH_QUALITY": [
+      "composite",
+      "deposit_growth",
+      "loan_growth",
+      "net_income_growth"
+    ],
+    "PROFITABILITY": [
+      "net_interest_margin",
+      "roa",
+      "roe"
+    ]
+  },
+  "adapter_functions": [
+    {
+      "name": "_parse_iso_date",
+      "line_start": 24,
+      "line_end": 35
+    },
+    {
+      "name": "_number",
+      "line_start": 38,
+      "line_end": 49
+    },
+    {
+      "name": "adapt_bank_canonical_input",
+      "line_start": 52,
+      "line_end": 187
+    }
+  ],
+  "blocker_sites": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_canonical_adapter.py",
+      "line": 41,
+      "snippet": "0029: \n0030:     try:\n0031:         return date.fromisoformat(text)\n0032:     except ValueError as exc:\n0033:         raise ValueError(\n0034:             f\"{field}_INVALID:{text}\"\n0035:         ) from exc\n0036: \n0037: \n0038: def _number(value: Any, key: str) -> float:\n0039:     if value is None or isinstance(value, bool):\n0040:         raise ValueError(\n0041:             f\"BANK_CANONICAL_METRIC_MISSING:{key}\"\n0042:         )\n0043: \n0044:     try:\n0045:         return float(value)\n0046:     except (TypeError, ValueError) as exc:\n0047:         raise ValueError(\n0048:             f\"BANK_CANONICAL_METRIC_NOT_NUMERIC:{key}\"\n0049:         ) from exc\n0050: \n0051: \n0052: def adapt_bank_canonical_input(\n0053:     record: Mapping[str, Any],\n0054: ) -> BankCanonicalAdapterResult:\n0055: \n0056:     symbol = str(\n0057:         record.get(\"symbol\") or \"\""
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_bank_canonical_adapter.py",
+      "line": 147,
+      "snippet": "0135:             payload[component] = {}\n0136: \n0137:             for metric in BANK_REQUIRED_METRICS[\n0138:                 component\n0139:             ]:\n0140: \n0141:                 canonical_key = (\n0142:                     f\"{component}.{metric}\"\n0143:                 )\n0144: \n0145:                 if canonical_key not in facts:\n0146:                     raise ValueError(\n0147:                         \"BANK_CANONICAL_METRIC_MISSING:\"\n0148:                         + canonical_key\n0149:                     )\n0150: \n0151:                 payload[component][metric] = _number(\n0152:                     facts[canonical_key],\n0153:                     canonical_key,\n0154:                 )\n0155: \n0156:     except ValueError as exc:\n0157:         return BankCanonicalAdapterResult(\n0158:             status=\"BLOCKED\",\n0159:             symbol=symbol,\n0160:             as_of=as_of_date.isoformat(),\n0161:             publication_date=publication.isoformat(),\n0162:             payload=None,\n0163:             blocker=str(exc),"
+    }
+  ],
+  "canonical_shape_ready": true,
+  "production_mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO",
+  "blockers": []
+}

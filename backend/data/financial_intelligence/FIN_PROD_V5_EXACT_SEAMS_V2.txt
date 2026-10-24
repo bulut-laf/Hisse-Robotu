@@ -1,0 +1,78 @@
+﻿================================================================================
+FILE=backend/app/data/market_data.py
+EXISTS=True
+--------------------------------------------------------------------------------
+NAME=fiyat_verisi_getir
+TYPE=FunctionDef
+LINES=17-85
+SIGNATURE=sembol: str, islem_gunu: int=60, indirme_donemi: str='6mo', yalnizca_tamamlanmis_gunler: bool=True
+RETURN_ANNOTATION=pd.DataFrame
+RETURN_EXPR=veri.tail(islem_gunu).copy()
+--------------------------------------------------------------------------------
+NAME=fiyat_verisini_duzelt
+TYPE=FunctionDef
+LINES=88-106
+SIGNATURE=veri: pd.DataFrame, yalnizca_tamamlanmis_gunler: bool=True
+RETURN_ANNOTATION=pd.DataFrame
+RETURN_EXPR=temiz_veri
+--------------------------------------------------------------------------------
+NAME=guvenli_fiyat_verisi_getir
+TYPE=FunctionDef
+LINES=252-278
+SIGNATURE=sembol: str, islem_gunu: int=60, indirme_donemi: str='6mo', *, ikincil_yukleyici=None, onbellek_klasoru=None
+RETURN_ANNOTATION=NONE
+RETURN_EXPR=recovered
+================================================================================
+FILE=backend/app/data/bist_official_daily.py
+EXISTS=True
+--------------------------------------------------------------------------------
+NAME=normalize_symbol
+TYPE=FunctionDef
+LINES=70-78
+SIGNATURE=symbol: str
+RETURN_ANNOTATION=str
+RETURN_EXPR=value
+--------------------------------------------------------------------------------
+NAME=official_daily_data_get
+TYPE=FunctionDef
+LINES=385-429
+SIGNATURE=symbols: Iterable[str] | None, islem_tarihi: date, *, archive_root: Path | str | None=None, fetcher: Callable[[str], bytes] | None=None, suffix_candidates: Iterable[str]=DEFAULT_SUFFIX_CANDIDATES, skip_invalid: bool=False
+RETURN_ANNOTATION=OfficialDailyBatchResult
+RETURN_EXPR=OfficialDailyBatchResult(islem_tarihi=islem_tarihi, kaynak_url=source_url, veriler=data, bulunamayan_semboller=missing, arsiv_dosyasi=archive_file, gecersiz_semboller=invalid)
+================================================================================
+FILE=backend/app/operations/scheduled_operation_phase_runner.py
+EXISTS=True
+--------------------------------------------------------------------------------
+NAME=execute_operation_phase
+TYPE=FunctionDef
+LINES=383-423
+SIGNATURE=phase: str, *, now: datetime | None=None, runtime: ScheduledOperationRuntime | None=None, enforce_schedule: bool=True
+RETURN_ANNOTATION=ScheduledOperationPhaseResult
+RETURN_EXPR=result
+MISSING=canonical_close
+================================================================================
+FILE=backend/app/analysis/technical_confirmation.py
+EXISTS=True
+--------------------------------------------------------------------------------
+NAME=teknik_teyit_analizi_yap
+TYPE=FunctionDef
+LINES=182-233
+SIGNATURE=paket: MultiTimeframeDataBundle
+RETURN_ANNOTATION=MultiTimeframeTechnicalConfirmation
+RETURN_EXPR=MultiTimeframeTechnicalConfirmation(sembol=paket.sembol, veri_kimligi=paket.veri_kimligi, analiz_kimligi=analiz_kimligi, haftalik=haftalik, gunluk=gunluk, saatlik=saatlik, teyit_skoru=int(teyit_skoru), teyit_durumu=teyit_durumu, pozitif_nedenler=pozitif_nedenler, riskler=riskler)
+--------------------------------------------------------------------------------
+NAME=zaman_dilimi_teyidini_hesapla
+TYPE=FunctionDef
+LINES=236-327
+SIGNATURE=snapshot: TimeframeSnapshot, pivot_genisligi: int=2, hacim_esigi: float=1.5
+RETURN_ANNOTATION=TimeframeConfirmationResult
+RETURN_EXPR=TimeframeConfirmationResult(ad=snapshot.ad, interval=snapshot.interval, son_zaman=pd.Timestamp(gecerli.index[-1]), kapanis=float(son['Close']), destek=None if seviyeler.destek is None else seviyeler.destek.fiyat, direnc=None if seviyeler.direnc is None else seviyeler.direnc.fiyat, destek_gucu=None if seviyeler.destek is None else seviyeler.destek.guc, direnc_gucu=None if seviyeler.direnc is None else seviyeler.direnc.guc, kirilim=kirilim, ortalamalar=ortalamalar, momentum=momentum, skor=skor, yon=_yon_belirle(skor), pozitif_nedenler=tuple(pozitif_nedenler), riskler=tuple(riskler))
+================================================================================
+FILE=backend/app/analysis/market_regime.py
+EXISTS=True
+--------------------------------------------------------------------------------
+NAME=piyasa_rejimini_analiz_et
+TYPE=FunctionDef
+LINES=361-440
+SIGNATURE=sembol: str, *, downloader: DataDownloader | None=None, ikincil_downloader: DataDownloader | None=None, saatlik_veri_dene: bool=True, yeniden_deneme_politikasi: MarketRegimeRetryPolicy=MarketRegimeRetryPolicy()
+RETURN_ANNOTATION=MarketRegimeResult

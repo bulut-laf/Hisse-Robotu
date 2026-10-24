@@ -1,0 +1,284 @@
+﻿TEFAS_MIGRATION_SOURCE_CONTRACT
+ADAPTER=D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py
+TEST=D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py
+
+===== ADAPTER_BEGIN =====
+001: from __future__ import annotations
+002: 
+003: from datetime import date, datetime
+004: from decimal import Decimal
+005: from typing import Iterable, Mapping
+006: 
+007: from backend.app.news_center.official_source_http import fetch_official_source_bytes
+008: 
+009: from .contracts import DataQualityState, FundDailyObservation, FundIdentity
+010: from .normalization import normalize_fund_code, normalize_text, parse_decimal_tr
+011: 
+012: 
+013: class TefasProviderError(RuntimeError):
+014:     pass
+015: 
+016: 
+017: def canonical_tefas_fund_id(provider_fund_id: object) -> str:
+018:     return f"fund:tefas:{normalize_fund_code(provider_fund_id)}"
+019: 
+020: 
+021: def fetch_tefas_bytes(url: str, timeout_seconds: int = 10) -> bytes:
+022:     response = fetch_official_source_bytes(
+023:         url, timeout_seconds, user_agent="Hisse-Robotu/Fund-Research-V1",
+024:         error_type=TefasProviderError, source_label="TEFAS",
+025:     )
+026:     return response.body
+027: 
+028: 
+029: def map_tefas_rows(
+030:     rows: Iterable[Mapping[str, object]], *, requested_at: datetime,
+031:     fetched_at: datetime, source_as_of: datetime,
+032: ) -> tuple[FundIdentity | FundDailyObservation, ...]:
+033:     """Doğrulanmış adapter sınırı. Canlı payload alanları doğrulanana dek fixture mapping."""
+034:     result: list[FundIdentity | FundDailyObservation] = []
+035:     seen: set[tuple[str, date]] = set()
+036:     for row in sorted(rows, key=lambda x: normalize_fund_code(x.get("fund_code"))):
+037:         code = normalize_fund_code(row.get("fund_code"))
+038:         observed = date.fromisoformat(str(row["observation_date"]))
+039:         key = (code, observed)
+040:         if key in seen:
+041:             raise TefasProviderError(f"DUPLICATE_FUND_OBSERVATION:{code}:{observed}")
+042:         seen.add(key)
+043:         canonical_id = canonical_tefas_fund_id(row.get("provider_fund_id", code))
+044:         category_id = normalize_text(row.get("category_id")) or None
+045:         category_name = normalize_text(row.get("category_name")) or None
+046:         quality = DataQualityState.PARTIAL if any(
+047:             row.get(name) in (None, "") for name in ("unit_price", "fund_size", "investor_count")
+048:         ) else DataQualityState.VALID
+049:         result.append(FundIdentity(
+050:             fund_code=code, fund_name=normalize_text(row.get("fund_name")),
+051:             canonical_fund_id=canonical_id, category_id=category_id,
+052:             category_name=category_name, provider="TEFAS",
+053:             provider_fund_id=normalize_fund_code(row.get("provider_fund_id", code)),
+054:             currency=normalize_fund_code(row.get("currency", "TRY")),
+055:             is_active=bool(row.get("is_active", True)), as_of_date=observed,
+056:         ))
+057:         investor_raw = parse_decimal_tr(row.get("investor_count"))
+058:         result.append(FundDailyObservation(
+059:             canonical_fund_id=canonical_id, observation_date=observed,
+060:             unit_price=parse_decimal_tr(row.get("unit_price")),
+061:             fund_size=parse_decimal_tr(row.get("fund_size")),
+062:             investor_count=int(investor_raw) if investor_raw is not None else None,
+063:             shares_outstanding=parse_decimal_tr(row.get("shares_outstanding")),
+064:             daily_return=parse_decimal_tr(row.get("daily_return"), percent=True),
+065:             provider="TEFAS", fetched_at=fetched_at, source_as_of=source_as_of,
+066:             data_quality_state=quality,
+067:         ))
+068:     return tuple(result)
+===== ADAPTER_END =====
+
+===== DATA_CONTRACT_TEST_BEGIN =====
+001: from datetime import date, datetime, timezone
+002: from decimal import Decimal
+003: 
+004: import pytest
+005: 
+006: from backend.app.funds.contracts import DataQualityState, FundDailyObservation, to_primitive
+007: from backend.app.funds.normalization import parse_decimal_tr, validate_allocation
+008: from backend.app.funds.store import FundObservationJsonStore
+009: from backend.app.funds.tefas_adapter import TefasProviderError, map_tefas_rows
+010: 
+011: UTC = timezone.utc
+012: STAMP = datetime(2026, 9, 1, 9, 0, tzinfo=UTC)
+013: 
+014: 
+015: def row(**changes):
+016:     value = {"fund_code": " tst ", "fund_name": "  Türkçe   Fon ", "provider_fund_id": "tst",
+017:              "category_id": "debt", "category_name": "Borçlanma Araçları", "currency": "try",
+018:              "observation_date": "2026-08-31", "unit_price": "1,2500", "fund_size": "1.234,50",
+019:              "investor_count": "1.005", "daily_return": "0,50%", "is_active": True}
+020:     value.update(changes)
+021:     return value
+022: 
+023: 
+024: def mapped(**changes):
+025:     return map_tefas_rows([row(**changes)], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+026: 
+027: 
+028: def test_locale_normalization_preserves_zero_and_missing():
+029:     assert parse_decimal_tr("0") == Decimal("0")
+030:     assert parse_decimal_tr("") is None
+031:     assert parse_decimal_tr("1.234,50") == Decimal("1234.50")
+032:     assert parse_decimal_tr("0,50%", percent=True) == Decimal("0.005")
+033:     with pytest.raises(ValueError):
+034:         parse_decimal_tr("bozuk")
+035: 
+036: 
+037: def test_fixture_maps_identity_and_daily_observation_deterministically():
+038:     identity, observation = mapped()
+039:     assert identity.fund_code == "TST" and identity.fund_name == "Türkçe Fon"
+040:     assert observation.unit_price == Decimal("1.2500")
+041:     assert observation.investor_count == 1005
+042:     assert observation.data_quality_state is DataQualityState.VALID
+043:     assert mapped() == mapped()
+044: 
+045: 
+046: def test_partial_payload_is_not_filled():
+047:     _, observation = mapped(unit_price=None)
+048:     assert observation.unit_price is None
+049:     assert observation.data_quality_state is DataQualityState.PARTIAL
+050: 
+051: 
+052: def test_duplicate_and_future_observation_rejected():
+053:     with pytest.raises(TefasProviderError, match="DUPLICATE"):
+054:         map_tefas_rows([row(), row()], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+055:     with pytest.raises(ValueError, match="leri"):
+056:         mapped(observation_date="2999-01-01")
+057: 
+058: 
+059: def test_timezone_is_explicit():
+060:     item = mapped()[1]
+061:     values = {name: getattr(item, name) for name in item.__dataclass_fields__}
+062:     values["fetched_at"] = datetime(2026, 9, 1)
+063:     with pytest.raises(ValueError, match="timezone-aware"):
+064:         FundDailyObservation(**values)
+065: 
+066: 
+067: def test_allocation_mismatch_is_not_silently_normalized():
+068:     with pytest.raises(ValueError, match="100"):
+069:         validate_allocation({"equity": Decimal("40"), "cash": Decimal("20")})
+070: 
+071: 
+072: def test_store_is_idempotent_and_read_back_keeps_provenance(tmp_path):
+073:     store = FundObservationJsonStore(tmp_path / "funds" / "observations.json")
+074:     observation = mapped()[1]
+075:     first = store.upsert([observation])
+076:     second = store.upsert([observation])
+077:     assert (first.inserted, second.unchanged, second.total_records) == (1, 1, 1)
+078:     saved = store.list_records()[0]
+079:     assert saved["provider"] == "TEFAS"
+080:     assert saved["canonical_fund_id"].startswith("fund:tefas:")
+081: 
+082: 
+083: def test_serialization_keeps_decimal_and_dates_exact():
+084:     payload = to_primitive(mapped()[1])
+085:     assert payload["unit_price"] == "1.2500"
+086:     assert payload["observation_date"] == "2026-08-31"
+087:     assert payload["record_type"] == "FundDailyObservation"
+===== DATA_CONTRACT_TEST_END =====
+
+===== LOCAL_DEPENDENCY_SIGNATURES =====
+DEPENDENCY=D:\Projects\Hisse-Robotu\backend\app\funds\contracts.py
+contracts.py:L009: FUND_SCHEMA_VERSION = "fund-data-contract-v1"
+contracts.py:L012: class DataQualityState(str, Enum):
+contracts.py:L013: VALID = "VALID"
+contracts.py:L014: PARTIAL = "PARTIAL"
+contracts.py:L015: STALE = "STALE"
+contracts.py:L016: INVALID = "INVALID"
+contracts.py:L017: UNAVAILABLE = "UNAVAILABLE"
+contracts.py:L020: class FreshnessState(str, Enum):
+contracts.py:L021: CURRENT = "CURRENT"
+contracts.py:L022: STALE = "STALE"
+contracts.py:L023: UNKNOWN = "UNKNOWN"
+contracts.py:L026: def _utc(value: datetime, name: str) -> None:
+contracts.py:L031: def _fund_id(value: str) -> str:
+contracts.py:L032: clean = value.strip()
+contracts.py:L038: @dataclass(frozen=True, slots=True)
+contracts.py:L039: class FundIdentity:
+contracts.py:L040: fund_code: str
+contracts.py:L041: fund_name: str
+contracts.py:L042: canonical_fund_id: str
+contracts.py:L043: category_id: str | None
+contracts.py:L044: category_name: str | None
+contracts.py:L045: provider: str
+contracts.py:L046: provider_fund_id: str
+contracts.py:L047: currency: str
+contracts.py:L048: is_active: bool
+contracts.py:L049: as_of_date: date
+contracts.py:L051: def __post_init__(self) -> None:
+contracts.py:L057: @dataclass(frozen=True, slots=True)
+contracts.py:L058: class FundDailyObservation:
+contracts.py:L059: canonical_fund_id: str
+contracts.py:L060: observation_date: date
+contracts.py:L061: unit_price: Decimal | None
+contracts.py:L062: fund_size: Decimal | None
+contracts.py:L063: investor_count: int | None
+contracts.py:L064: shares_outstanding: Decimal | None
+contracts.py:L065: daily_return: Decimal | None
+contracts.py:L066: provider: str
+contracts.py:L067: fetched_at: datetime
+contracts.py:L068: source_as_of: datetime
+contracts.py:L069: data_quality_state: DataQualityState
+contracts.py:L071: def __post_init__(self) -> None:
+contracts.py:L079: @dataclass(frozen=True, slots=True)
+contracts.py:L080: class FundPortfolioObservation:
+contracts.py:L081: canonical_fund_id: str
+contracts.py:L082: observation_date: date
+contracts.py:L083: asset_allocation: Mapping[str, Decimal] | None
+contracts.py:L084: major_holdings: tuple[str, ...] | None
+contracts.py:L085: cash_ratio: Decimal | None
+contracts.py:L086: equity_ratio: Decimal | None
+contracts.py:L087: fixed_income_ratio: Decimal | None
+contracts.py:L088: foreign_asset_ratio: Decimal | None
+contracts.py:L089: precious_metal_ratio: Decimal | None
+contracts.py:L090: other_ratio: Decimal | None
+contracts.py:L091: provider: str
+contracts.py:L092: fetched_at: datetime
+contracts.py:L093: data_quality_state: DataQualityState
+contracts.py:L095: def __post_init__(self) -> None:
+contracts.py:L100: @dataclass(frozen=True, slots=True)
+contracts.py:L101: class FundCostAndMetadata:
+contracts.py:L102: canonical_fund_id: str
+contracts.py:L103: management_fee: Decimal | None
+contracts.py:L104: total_expense_ratio: Decimal | None
+contracts.py:L105: risk_value: str | None
+contracts.py:L106: benchmark: str | None
+contracts.py:L107: inception_date: date | None
+contracts.py:L108: settlement_terms: str | None
+contracts.py:L109: minimum_transaction_amount: Decimal | None
+contracts.py:L110: umbrella_fund: str | None
+contracts.py:L111: founder: str | None
+contracts.py:L112: manager: str | None
+contracts.py:L113: tax_metadata: str | None
+contracts.py:L114: provider: str
+contracts.py:L115: source_as_of: datetime
+contracts.py:L116: data_quality_state: DataQualityState
+contracts.py:L118: def __post_init__(self) -> None:
+contracts.py:L123: @dataclass(frozen=True, slots=True)
+contracts.py:L124: class FundCategoryMembership:
+contracts.py:L125: canonical_fund_id: str
+contracts.py:L126: category_id: str | None
+contracts.py:L127: category_name: str | None
+contracts.py:L128: provider_category_label: str | None
+contracts.py:L129: effective_from: date
+contracts.py:L130: effective_to: date | None
+contracts.py:L131: provider: str
+contracts.py:L132: source_as_of: datetime
+contracts.py:L133: mapping_state: str = "MAPPED"
+contracts.py:L135: def __post_init__(self) -> None:
+contracts.py:L142: FundRecord = FundIdentity | FundDailyObservation | FundPortfolioObservation | FundCostAndMetadata | FundCategoryMembership
+contracts.py:L145: @dataclass(frozen=True, slots=True)
+contracts.py:L146: class FundDataEnvelope:
+contracts.py:L147: provider: str
+contracts.py:L148: requested_at: datetime
+contracts.py:L149: fetched_at: datetime
+contracts.py:L150: source_as_of: datetime
+contracts.py:L151: records: tuple[FundRecord, ...]
+contracts.py:L152: warnings: tuple[str, ...] = ()
+contracts.py:L153: validation_errors: tuple[str, ...] = ()
+contracts.py:L154: completeness: Decimal = Decimal("1")
+contracts.py:L155: freshness_state: FreshnessState = FreshnessState.UNKNOWN
+contracts.py:L156: provenance: Mapping[str, str] | None = None
+contracts.py:L157: schema_version: str = FUND_SCHEMA_VERSION
+contracts.py:L159: def __post_init__(self) -> None:
+contracts.py:L168: def to_primitive(value: Any) -> Any:
+contracts.py:L176: payload = {f.name: to_primitive(getattr(value, f.name)) for f in fields(value)}
+
+DEPENDENCY=D:\Projects\Hisse-Robotu\backend\app\funds\normalization.py
+normalization.py:L007: def normalize_fund_code(value: object) -> str:
+normalization.py:L008: code = re.sub(r"\s+", "", str(value or "")).upper()
+normalization.py:L014: def normalize_text(value: object) -> str:
+normalization.py:L018: def parse_decimal_tr(value: object, *, percent: bool = False) -> Decimal | None:
+normalization.py:L024: raw = str(value).strip().replace("%", "").replace("\u00a0", "").replace(" ", "")
+normalization.py:L028: raw = raw.replace(".", "").replace(",", ".")
+normalization.py:L031: raw = raw.replace(".", "")
+normalization.py:L032: try:
+normalization.py:L033: parsed = Decimal(raw)
+normalization.py:L039: def validate_allocation(values: dict[str, Decimal], tolerance: Decimal = Decimal("0.5")) -> None:
+

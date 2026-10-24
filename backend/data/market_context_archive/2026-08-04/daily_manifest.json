@@ -1,0 +1,68 @@
+{
+  "date": "2026-08-04",
+  "document_count": 6,
+  "documents": [
+    {
+      "document_id": "59a4572d43e045fea51dc38b1e4af1a6",
+      "source": "ICBC",
+      "document_date": "2026-08-04",
+      "input_type": "text",
+      "content_hash": "c0bf659d39b3b25868279d67d7a18d5b4fdd34653a82a876c82ca76502034415",
+      "processed_path": "market_context_processed\\2026-08-04\\59a4572d43e045fea51dc38b1e4af1a6.json",
+      "raw_path": "market_context_raw\\2026-08-04\\59a4572d43e045fea51dc38b1e4af1a6.txt"
+    },
+    {
+      "document_id": "75ad14a6171c4be3aa2ec266c365efbb",
+      "source": "Yatırım Finansman",
+      "document_date": "2026-08-04",
+      "input_type": "pdf",
+      "content_hash": "d8f47585bdac24facc5a24ba2ba30c3ec1b4eddcf422b3f7611967178e4e209a",
+      "processed_path": "market_context_processed\\2026-08-04\\75ad14a6171c4be3aa2ec266c365efbb.json",
+      "raw_path": "market_context_raw\\2026-08-04\\75ad14a6171c4be3aa2ec266c365efbb.txt"
+    },
+    {
+      "document_id": "f0312cb9848f473fa08a191e7f6eab09",
+      "source": "Yatırım Finansman",
+      "document_date": "2026-08-04",
+      "input_type": "pdf",
+      "content_hash": "1f60592ab533a24e31dc0dfb6ef61535e268926b48c70cda6c04230ea9862e4f",
+      "processed_path": "market_context_processed\\2026-08-04\\f0312cb9848f473fa08a191e7f6eab09.json",
+      "raw_path": "market_context_raw\\2026-08-04\\f0312cb9848f473fa08a191e7f6eab09.txt"
+    },
+    {
+      "document_id": "2a9aaa29ab92468ebe0f85c942a992c6",
+      "source": "Yatırım Finansman",
+      "document_date": "2026-08-04",
+      "input_type": "pdf",
+      "content_hash": "aeb853a325a0f2c940827c7fc2d96afd52c2a6e455fb0b9e9d411621d89c5da4",
+      "processed_path": "market_context_processed\\2026-08-04\\2a9aaa29ab92468ebe0f85c942a992c6.json",
+      "raw_path": "market_context_raw\\2026-08-04\\2a9aaa29ab92468ebe0f85c942a992c6.txt"
+    },
+    {
+      "document_id": "7fbe7528058146fbb8c2be9a89a03210",
+      "source": "Yatırım Finansman",
+      "document_date": "2026-08-04",
+      "input_type": "pdf",
+      "content_hash": "80bcca2fa154cfaade1af14fd908c421e4942604615866e0d3adee5afd1001eb",
+      "processed_path": "market_context_processed\\2026-08-04\\7fbe7528058146fbb8c2be9a89a03210.json",
+      "raw_path": "market_context_raw\\2026-08-04\\7fbe7528058146fbb8c2be9a89a03210.txt"
+    },
+    {
+      "document_id": "ccace5632b534ea6b7db7ba680086fa4",
+      "source": "ICBC",
+      "document_date": "2026-08-04",
+      "input_type": "pdf",
+      "content_hash": "3a7c8d53c081957643117ec3cfc48e1d76bf72e04debca6b0f726f5d6352d812",
+      "processed_path": "market_context_processed\\2026-08-04\\ccace5632b534ea6b7db7ba680086fa4.json",
+      "raw_path": "market_context_raw\\2026-08-04\\ccace5632b534ea6b7db7ba680086fa4.txt"
+    }
+  ],
+  "sources": [
+    "ICBC",
+    "Yatırım Finansman"
+  ],
+  "created_at": "2026-08-03T08:16:25Z",
+  "updated_at": "2026-08-03T21:12:25Z",
+  "ai_review_status": "reviewed",
+  "ai_review_id": "2f8d23b8b63a4afdb7388006ce39e526"
+}

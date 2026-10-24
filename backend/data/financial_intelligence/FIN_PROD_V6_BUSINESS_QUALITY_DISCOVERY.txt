@@ -1,0 +1,1836 @@
+﻿FIN_PROD_V6_BUSINESS_QUALITY_DISCOVERY
+
+===== FUNDAMENTAL_QUALITY_MODULE =====
+FILE=backend\app\analysis\fundamental_analysis.py
+FUNC=calculate_ratios
+ARGS=period: FinancialPeriod
+00041: def calculate_ratios(
+00042:     period: FinancialPeriod,
+00043: ) -> FundamentalRatios:
+00044:     net_debt = period.total_debt - period.cash_and_equivalents
+00045:     free_cash_flow = (
+00046:         period.operating_cash_flow - period.capital_expenditure
+00047:     )
+00048: 
+00049:     return FundamentalRatios(
+00050:         symbol=period.symbol,
+00051:         period_key=period.period_key,
+00052:         gross_margin=_safe_ratio(
+00053:             period.gross_profit,
+00054:             period.revenue,
+00055:             percentage=True,
+00056:         ),
+00057:         operating_margin=_safe_ratio(
+00058:             period.operating_profit,
+00059:             period.revenue,
+00060:             percentage=True,
+00061:         ),
+00062:         ebitda_margin=_safe_ratio(
+00063:             period.ebitda,
+00064:             period.revenue,
+00065:             percentage=True,
+00066:         ),
+00067:         net_margin=_safe_ratio(
+00068:             period.net_income,
+00069:             period.revenue,
+00070:             percentage=True,
+00071:         ),
+00072:         roe=_safe_ratio(
+00073:             period.net_income,
+00074:             period.total_equity,
+00075:             percentage=True,
+00076:         ),
+00077:         roa=_safe_ratio(
+00078:             period.net_income,
+00079:             period.total_assets,
+00080:             percentage=True,
+00081:         ),
+00082:         current_ratio=_safe_ratio(
+00083:             period.current_assets,
+00084:             period.current_liabilities,
+00085:         ),
+00086:         debt_to_equity=_safe_ratio(
+00087:             period.total_debt,
+00088:             period.total_equity,
+00089:         ),
+00090:         net_debt=net_debt.quantize(Decimal("0.01")),
+00091:         net_debt_to_ebitda=_safe_ratio(
+00092:             net_debt,
+00093:             period.ebitda,
+00094:         ),
+00095:         free_cash_flow=free_cash_flow.quantize(
+00096:             Decimal("0.01")
+00097:         ),
+00098:         free_cash_flow_margin=_safe_ratio(
+00099:             free_cash_flow,
+00100:             period.revenue,
+00101:             percentage=True,
+00102:         ),
+00103:     )
+---
+FUNC=calculate_growth
+ARGS=current: FinancialPeriod, comparison: FinancialPeriod
+00106: def calculate_growth(
+00107:     current: FinancialPeriod,
+00108:     comparison: FinancialPeriod,
+00109: ) -> FundamentalGrowth:
+00110:     if current.symbol != comparison.symbol:
+00111:         raise ValueError(
+00112:             "B├╝y├╝me kar┼Я─▒la┼Яt─▒rmas─▒ ayn─▒ sembol i├зin yap─▒lmal─▒d─▒r."
+00113:         )
+00114:     if current.currency != comparison.currency:
+00115:         raise ValueError(
+00116:             "B├╝y├╝me kar┼Я─▒la┼Яt─▒rmas─▒nda para birimleri ayn─▒ olmal─▒d─▒r."
+00117:         )
+00118: 
+00119:     return FundamentalGrowth(
+00120:         symbol=current.symbol,
+00121:         current_period_key=current.period_key,
+00122:         comparison_period_key=comparison.period_key,
+00123:         revenue_growth=_growth(
+00124:             current.revenue,
+00125:             comparison.revenue,
+00126:         ),
+00127:         ebitda_growth=_growth(
+00128:             current.ebitda,
+00129:             comparison.ebitda,
+00130:         ),
+00131:         net_income_growth=_growth(
+00132:             current.net_income,
+00133:             comparison.net_income,
+00134:         ),
+00135:         equity_growth=_growth(
+00136:             current.total_equity,
+00137:             comparison.total_equity,
+00138:         ),
+00139:         operating_cash_flow_growth=_growth(
+00140:             current.operating_cash_flow,
+00141:             comparison.operating_cash_flow,
+00142:         ),
+00143:     )
+---
+FUNC=_quality_flags
+ARGS=latest: FinancialPeriod, ratios: FundamentalRatios
+00146: def _quality_flags(
+00147:     latest: FinancialPeriod,
+00148:     ratios: FundamentalRatios,
+00149: ) -> tuple[str, ...]:
+00150:     flags: list[str] = []
+00151: 
+00152:     if latest.net_income < 0:
+00153:         flags.append("D├╢nem net zararla kapand─▒.")
+00154:     if latest.operating_cash_flow < 0:
+00155:         flags.append("─░┼Яletme faaliyetlerinden nakit ak─▒┼Я─▒ negatif.")
+00156:     if ratios.free_cash_flow < 0:
+00157:         flags.append("Serbest nakit ak─▒┼Я─▒ negatif.")
+00158:     if (
+00159:         ratios.current_ratio is not None
+00160:         and ratios.current_ratio < Decimal("1")
+00161:     ):
+00162:         flags.append("Cari oran 1 seviyesinin alt─▒nda.")
+00163:     if (
+00164:         ratios.debt_to_equity is not None
+00165:         and ratios.debt_to_equity > Decimal("2")
+00166:     ):
+00167:         flags.append("Bor├з/├╢zsermaye oran─▒ 2 seviyesinin ├╝zerinde.")
+00168:     if latest.total_equity <= 0:
+00169:         flags.append("├Цzsermaye pozitif de─Яil.")
+00170:     if latest.revenue == 0:
+00171:         flags.append("Has─▒lat s─▒f─▒r; marjlar hesaplanamad─▒.")
+00172: 
+00173:     return tuple(flags)
+---
+FUNC=build_fundamental_snapshot
+ARGS=periods: list[FinancialPeriod], *, source_metadata: dict[str, str] | None=None
+00176: def build_fundamental_snapshot(
+00177:     periods: list[FinancialPeriod],
+00178:     *,
+00179:     source_metadata: dict[str, str] | None = None,
+00180: ) -> FundamentalSnapshot:
+00181:     if not periods:
+00182:         raise ValueError(
+00183:             "Temel analiz i├зin en az bir finansal d├╢nem gereklidir."
+00184:         )
+00185: 
+00186:     symbols = {period.symbol for period in periods}
+00187:     currencies = {period.currency for period in periods}
+00188:     if len(symbols) != 1:
+00189:         raise ValueError(
+00190:             "Tek bir temel analiz ├╢zeti yaln─▒zca bir sembol i├зerebilir."
+00191:         )
+00192:     if len(currencies) != 1:
+00193:         raise ValueError(
+00194:             "D├╢nemlerin para birimi ayn─▒ olmal─▒d─▒r."
+00195:         )
+00196: 
+00197:     ordered = sorted(
+00198:         periods,
+00199:         key=lambda item: (
+00200:             item.period_end,
+00201:             item.fiscal_year,
+00202:             item.fiscal_quarter,
+00203:         ),
+00204:         reverse=True,
+00205:     )
+00206:     latest = ordered[0]
+00207: 
+00208:     previous_quarter = next(
+00209:         (
+00210:             item
+00211:             for item in ordered[1:]
+00212:             if (
+00213:                 item.fiscal_year,
+00214:                 item.fiscal_quarter,
+00215:             )
+00216:             == _previous_quarter_key(
+00217:                 latest.fiscal_year,
+00218:                 latest.fiscal_quarter,
+00219:             )
+00220:         ),
+00221:         None,
+00222:     )
+00223:     previous_year_same_quarter = next(
+00224:         (
+00225:             item
+00226:             for item in ordered[1:]
+00227:             if item.fiscal_year == latest.fiscal_year - 1
+00228:             and item.fiscal_quarter == latest.fiscal_quarter
+00229:         ),
+00230:         None,
+00231:     )
+00232: 
+00233:     ratios = calculate_ratios(latest)
+00234: 
+00235:     return FundamentalSnapshot(
+00236:         latest=latest,
+00237:         previous_quarter=previous_quarter,
+00238:         previous_year_same_quarter=previous_year_same_quarter,
+00239:         ratios=ratios,
+00240:         quarter_growth=(
+00241:             calculate_growth(latest, previous_quarter)
+00242:             if previous_quarter is not None
+00243:             else None
+00244:         ),
+00245:         annual_growth=(
+00246:             calculate_growth(
+00247:                 latest,
+00248:                 previous_year_same_quarter,
+00249:             )
+00250:             if previous_year_same_quarter is not None
+00251:             else None
+00252:         ),
+00253:         quality_flags=_quality_flags(latest, ratios),
+00254:         source_metadata=source_metadata or {},
+00255:     )
+---
+FILE=backend\app\analysis\fundamental_quality.py
+CLASS=FundamentalQualityComponent
+00012: class FundamentalQualityComponent:
+00013:     name: str
+00014:     score: int
+00015:     maximum_score: int
+00016:     reasons: tuple[str, ...]
+00017:     risks: tuple[str, ...]
+---
+CLASS=FundamentalQualityScore
+00021: class FundamentalQualityScore:
+00022:     symbol: str
+00023:     period_key: str
+00024:     total_score: int | None
+00025:     profitability: FundamentalQualityComponent
+00026:     growth: FundamentalQualityComponent
+00027:     leverage: FundamentalQualityComponent
+00028:     liquidity: FundamentalQualityComponent
+00029:     cash_flow: FundamentalQualityComponent
+00030:     locked: bool
+00031:     explanation: str
+00032: 
+00033:     @property
+00034:     def grade(self) -> str:
+00035:         if self.total_score is None:
+00036:             return "Hesaplanamad─▒"
+00037:         if self.total_score >= 80:
+00038:             return "G├╝├зl├╝"
+00039:         if self.total_score >= 65:
+00040:             return "─░yi"
+00041:         if self.total_score >= 50:
+00042:             return "Orta"
+00043:         return "Zay─▒f"
+---
+FUNC=calculate_fundamental_quality
+ARGS=snapshot: FundamentalSnapshot, freshness: FundamentalFreshnessResult
+00071: def calculate_fundamental_quality(
+00072:     snapshot: FundamentalSnapshot,
+00073:     freshness: FundamentalFreshnessResult,
+00074: ) -> FundamentalQualityScore:
+00075:     ratios = snapshot.ratios
+00076:     latest = snapshot.latest
+00077: 
+00078:     empty = FundamentalQualityComponent("", 0, 0, (), ())
+00079: 
+00080:     if freshness.locked:
+00081:         return FundamentalQualityScore(
+00082:             symbol=latest.symbol,
+00083:             period_key=latest.period_key,
+00084:             total_score=None,
+00085:             profitability=empty,
+00086:             growth=empty,
+00087:             leverage=empty,
+00088:             liquidity=empty,
+00089:             cash_flow=empty,
+00090:             locked=True,
+00091:             explanation=(
+00092:                 "Bilan├зo tazelik kilidi aktif; temel kalite skoru "
+00093:                 "├╝retilmedi."
+00094:             ),
+00095:         )
+00096: 
+00097:     required = (
+00098:         ratios.net_margin,
+00099:         ratios.roe,
+00100:         ratios.current_ratio,
+00101:         ratios.debt_to_equity,
+00102:         ratios.net_debt_to_ebitda,
+00103:         ratios.free_cash_flow_margin,
+00104:     )
+00105:     if any(value is None for value in required):
+00106:         return FundamentalQualityScore(
+00107:             symbol=latest.symbol,
+00108:             period_key=latest.period_key,
+00109:             total_score=None,
+00110:             profitability=empty,
+00111:             growth=empty,
+00112:             leverage=empty,
+00113:             liquidity=empty,
+00114:             cash_flow=empty,
+00115:             locked=True,
+00116:             explanation=(
+00117:                 "Temel kalite skoru i├зin gerekli finansal oranlar─▒n "
+00118:                 "tamam─▒ hesaplanamad─▒."
+00119:             ),
+00120:         )
+00121: 
+00122:     profitability = _component(
+00123:         "K├вrl─▒l─▒k",
+00124:         25,
+00125:         (
+00126:             (
+00127:                 ratios.net_margin >= Decimal("10"),
+00128:                 8,
+00129:                 "Net k├вr marj─▒ en az %10.",
+00130:                 "Net k├вr marj─▒ %10 alt─▒nda.",
+00131:             ),
+00132:             (
+00133:                 ratios.roe >= Decimal("15"),
+00134:                 7,
+00135:                 "ROE en az %15.",
+00136:                 "ROE %15 alt─▒nda.",
+00137:             ),
+00138:             (
+00139:                 ratios.roa is not None
+00140:                 and ratios.roa >= Decimal("5"),
+00141:                 5,
+00142:                 "ROA en az %5.",
+00143:                 "ROA %5 alt─▒nda veya hesaplanamad─▒.",
+00144:             ),
+00145:             (
+00146:                 ratios.ebitda_margin is not None
+00147:                 and ratios.ebitda_margin >= Decimal("15"),
+00148:                 5,
+00149:                 "FAV├ЦK marj─▒ en az %15.",
+00150:                 "FAV├ЦK marj─▒ %15 alt─▒nda veya hesaplanamad─▒.",
+00151:             ),
+00152:         ),
+00153:     )
+00154: 
+00155:     annual = snapshot.annual_growth
+00156:     growth = _component(
+00157:         "B├╝y├╝me",
+00158:         25,
+00159:         (
+00160:             (
+00161:                 annual is not None
+00162:                 and annual.revenue_growth is not None
+00163:                 and annual.revenue_growth >= Decimal("10"),
+00164:                 7,
+00165:                 "Y─▒ll─▒k has─▒lat b├╝y├╝mesi en az %10.",
+00166:                 "Y─▒ll─▒k has─▒lat b├╝y├╝mesi %10 alt─▒nda veya eksik.",
+00167:             ),
+00168:             (
+00169:                 annual is not None
+00170:                 and annual.ebitda_growth is not None
+00171:                 and annual.ebitda_growth >= Decimal("10"),
+00172:                 7,
+00173:                 "Y─▒ll─▒k FAV├ЦK b├╝y├╝mesi en az %10.",
+00174:                 "Y─▒ll─▒k FAV├ЦK b├╝y├╝mesi %10 alt─▒nda veya eksik.",
+00175:             ),
+00176:             (
+00177:                 annual is not None
+00178:                 and annual.net_income_growth is not None
+00179:                 and annual.net_income_growth >= Decimal("10"),
+00180:                 7,
+00181:                 "Y─▒ll─▒k net k├вr b├╝y├╝mesi en az %10.",
+---
+CLASS=OptionalFundamentalFilterResult
+00297: class OptionalFundamentalFilterResult:
+00298:     accepted: tuple[T, ...]
+00299:     rejected: tuple[T, ...]
+00300:     missing: tuple[T, ...]
+---
+FUNC=apply_optional_fundamental_filter
+ARGS=candidates: Iterable[T], *, symbol_getter, scores: Mapping[str, FundamentalQualityScore], enabled: bool, minimum_score: int
+00303: def apply_optional_fundamental_filter(
+00304:     candidates: Iterable[T],
+00305:     *,
+00306:     symbol_getter,
+00307:     scores: Mapping[str, FundamentalQualityScore],
+00308:     enabled: bool,
+00309:     minimum_score: int,
+00310: ) -> OptionalFundamentalFilterResult:
+00311:     items = tuple(candidates)
+00312: 
+00313:     if not enabled:
+00314:         return OptionalFundamentalFilterResult(
+00315:             accepted=items,
+00316:             rejected=(),
+00317:             missing=(),
+00318:         )
+00319:     if not 0 <= minimum_score <= 100:
+00320:         raise ValueError("Minimum temel kalite skoru 0тАУ100 aras─▒nda olmal─▒d─▒r.")
+00321: 
+00322:     accepted: list[T] = []
+00323:     rejected: list[T] = []
+00324:     missing: list[T] = []
+00325: 
+00326:     for item in items:
+00327:         symbol = str(symbol_getter(item)).removesuffix(".IS").upper()
+00328:         score = scores.get(symbol)
+00329:         if score is None or score.locked or score.total_score is None:
+00330:             missing.append(item)
+00331:         elif score.total_score >= minimum_score:
+00332:             accepted.append(item)
+00333:         else:
+00334:             rejected.append(item)
+00335: 
+00336:     return OptionalFundamentalFilterResult(
+00337:         accepted=tuple(accepted),
+00338:         rejected=tuple(rejected),
+00339:         missing=tuple(missing),
+00340:     )
+---
+FILE=backend\app\analysis\fundamental_score_history.py
+CLASS=FundamentalScoreChange
+00009: class FundamentalScoreChange:
+00010:     symbol: str
+00011:     current_period: str
+00012:     previous_period: str
+00013:     total_change: int
+00014:     profitability_change: int
+00015:     growth_change: int
+00016:     leverage_change: int
+00017:     liquidity_change: int
+00018:     cash_flow_change: int
+00019:     improving_components: tuple[str, ...]
+00020:     weakening_components: tuple[str, ...]
+---
+FUNC=calculate_score_change
+ARGS=current: StoredFundamentalScore, previous: StoredFundamentalScore
+00023: def calculate_score_change(
+00024:     current: StoredFundamentalScore,
+00025:     previous: StoredFundamentalScore,
+00026: ) -> FundamentalScoreChange:
+00027:     if current.symbol != previous.symbol:
+00028:         raise ValueError(
+00029:             "Skor de─Яi┼Яimi ayn─▒ ┼Яirket i├зin hesaplanmal─▒d─▒r."
+00030:         )
+00031:     if current.period_end <= previous.period_end:
+00032:         raise ValueError(
+00033:             "G├╝ncel skor d├╢nemi ├╢nceki d├╢nemden sonra olmal─▒d─▒r."
+00034:         )
+00035: 
+00036:     current_score = current.score
+00037:     previous_score = previous.score
+00038: 
+00039:     if (
+00040:         current_score.total_score is None
+00041:         or previous_score.total_score is None
+00042:     ):
+00043:         raise ValueError(
+00044:             "Hesaplanamayan temel skorlar kar┼Я─▒la┼Яt─▒r─▒lamaz."
+00045:         )
+00046: 
+00047:     components = {
+00048:         "K├вrl─▒l─▒k": (
+00049:             current_score.profitability.score
+00050:             - previous_score.profitability.score
+00051:         ),
+00052:         "B├╝y├╝me": (
+00053:             current_score.growth.score
+00054:             - previous_score.growth.score
+00055:         ),
+00056:         "Bor├зluluk": (
+00057:             current_score.leverage.score
+00058:             - previous_score.leverage.score
+00059:         ),
+00060:         "Likidite": (
+00061:             current_score.liquidity.score
+00062:             - previous_score.liquidity.score
+00063:         ),
+00064:         "Nakit ak─▒┼Я─▒": (
+00065:             current_score.cash_flow.score
+00066:             - previous_score.cash_flow.score
+00067:         ),
+00068:     }
+00069: 
+00070:     return FundamentalScoreChange(
+00071:         symbol=current.symbol,
+00072:         current_period=current.period_key,
+00073:         previous_period=previous.period_key,
+00074:         total_change=(
+00075:             current_score.total_score
+00076:             - previous_score.total_score
+00077:         ),
+00078:         profitability_change=components["K├вrl─▒l─▒k"],
+00079:         growth_change=components["B├╝y├╝me"],
+00080:         leverage_change=components["Bor├зluluk"],
+00081:         liquidity_change=components["Likidite"],
+00082:         cash_flow_change=components["Nakit ak─▒┼Я─▒"],
+00083:         improving_components=tuple(
+00084:             name for name, change in components.items() if change > 0
+00085:         ),
+00086:         weakening_components=tuple(
+00087:             name for name, change in components.items() if change < 0
+00088:         ),
+00089:     )
+---
+FILE=backend\app\analysis\kap_fundamental_service.py
+CLASS=KapFundamentalAnalysisResult
+00023: class KapFundamentalAnalysisResult:
+00024:     package: KapFundamentalPackage
+00025:     freshness: FundamentalFreshnessResult
+00026:     store_result: FundamentalStoreResult | None
+00027:     snapshot: FundamentalSnapshot | None
+00028:     locked: bool
+00029:     explanation: str
+---
+CLASS=KapFundamentalService
+00032: class KapFundamentalService:
+00033:     """KAP finansal veri alma, do─Яrulama, saklama ve analiz zinciri."""
+00034: 
+00035:     def __init__(
+00036:         self,
+00037:         *,
+00038:         client: KapFundamentalClient,
+00039:         store: FundamentalJsonStore | None = None,
+00040:     ) -> None:
+00041:         self._client = client
+00042:         self._store = store
+00043: 
+00044:     def analyze(
+00045:         self,
+00046:         symbol: str,
+00047:         *,
+00048:         start_date: date | None = None,
+00049:         end_date: date | None = None,
+00050:         today: date | None = None,
+00051:     ) -> KapFundamentalAnalysisResult:
+00052:         package = self._client.fetch(
+00053:             symbol,
+00054:             start_date=start_date,
+00055:             end_date=end_date,
+00056:         )
+00057: 
+00058:         freshness = evaluate_fundamental_freshness(
+00059:             package.periods,
+00060:             today=today,
+00061:         )
+00062: 
+00063:         if package.status.locked or freshness.locked:
+00064:             return KapFundamentalAnalysisResult(
+00065:                 package=package,
+00066:                 freshness=freshness,
+00067:                 store_result=None,
+00068:                 snapshot=None,
+00069:                 locked=True,
+00070:                 explanation=(
+00071:                     package.status.explanation
+00072:                     if package.status.locked
+00073:                     else freshness.explanation
+00074:                 ),
+00075:             )
+00076: 
+00077:         store_result = (
+00078:             self._store.upsert(package.periods)
+00079:             if self._store is not None
+00080:             else None
+00081:         )
+00082:         snapshot = build_fundamental_snapshot(
+00083:             list(package.periods),
+00084:             source_metadata={
+00085:                 "provider": package.status.source,
+00086:                 "data_identity": package.status.data_identity,
+00087:                 "fetched_at": package.status.fetched_at.isoformat(),
+00088:             },
+00089:         )
+00090: 
+00091:         return KapFundamentalAnalysisResult(
+00092:             package=package,
+00093:             freshness=freshness,
+00094:             store_result=store_result,
+00095:             snapshot=snapshot,
+00096:             locked=False,
+00097:             explanation=(
+00098:                 "KAP finansal veri paketi do─Яruland─▒ ve temel "
+00099:                 "analiz ├╢zeti ├╝retildi."
+00100:             ),
+00101:         )
+---
+FILE=backend\app\data\fundamental_data.py
+CLASS=FundamentalDataError
+00043: class FundamentalDataError(ValueError):
+00044:     """Bilan├зo verisi okuma veya do─Яrulama hatas─▒."""
+---
+CLASS=FundamentalFreshnessPolicy
+00048: class FundamentalFreshnessPolicy:
+00049:     maximum_age_days: int = 190
+00050:     future_tolerance_days: int = 2
+00051: 
+00052:     def __post_init__(self) -> None:
+00053:         if self.maximum_age_days < 1:
+00054:             raise ValueError(
+00055:                 "Azami bilan├зo ya┼Я─▒ en az 1 g├╝n olmal─▒d─▒r."
+00056:             )
+00057:         if self.future_tolerance_days < 0:
+00058:             raise ValueError(
+00059:                 "Gelecek tarih tolerans─▒ negatif olamaz."
+00060:             )
+---
+CLASS=FundamentalFreshnessResult
+00064: class FundamentalFreshnessResult:
+00065:     status: str
+00066:     latest_period_end: date | None
+00067:     age_days: int | None
+00068:     locked: bool
+00069:     explanation: str
+---
+FUNC=load_fundamental_file
+ARGS=path: str | Path
+00202: def load_fundamental_file(
+00203:     path: str | Path,
+00204: ) -> list[FinancialPeriod]:
+00205:     file_path = Path(path)
+00206:     if not file_path.exists():
+00207:         raise FundamentalDataError(
+00208:             f"Bilan├зo dosyas─▒ bulunamad─▒: {file_path}"
+00209:         )
+00210:     suffix = file_path.suffix.lower()
+00211:     payload = file_path.read_bytes()
+00212:     if suffix == ".csv":
+00213:         return periods_from_csv_bytes(payload)
+00214:     if suffix == ".json":
+00215:         return periods_from_json_bytes(payload)
+00216:     raise FundamentalDataError(
+00217:         "Bilan├зo dosyas─▒ CSV veya JSON olmal─▒d─▒r."
+00218:     )
+---
+FUNC=evaluate_fundamental_freshness
+ARGS=periods: Iterable[FinancialPeriod], *, today: date | None=None, policy: FundamentalFreshnessPolicy=FundamentalFreshnessPolicy()
+00221: def evaluate_fundamental_freshness(
+00222:     periods: Iterable[FinancialPeriod],
+00223:     *,
+00224:     today: date | None = None,
+00225:     policy: FundamentalFreshnessPolicy = (
+00226:         FundamentalFreshnessPolicy()
+00227:     ),
+00228: ) -> FundamentalFreshnessResult:
+00229:     items = list(periods)
+00230:     reference = today or date.today()
+00231: 
+00232:     if not items:
+00233:         return FundamentalFreshnessResult(
+00234:             status=MISSING,
+00235:             latest_period_end=None,
+00236:             age_days=None,
+00237:             locked=True,
+00238:             explanation=(
+00239:                 "Do─Яrulanabilir finansal d├╢nem bulunmad─▒; "
+00240:                 "temel analiz durduruldu."
+00241:             ),
+00242:         )
+00243: 
+00244:     latest = max(item.period_end for item in items)
+00245:     if latest > reference + timedelta(
+00246:         days=policy.future_tolerance_days
+00247:     ):
+00248:         return FundamentalFreshnessResult(
+00249:             status=FUTURE,
+00250:             latest_period_end=latest,
+00251:             age_days=(reference - latest).days,
+00252:             locked=True,
+00253:             explanation=(
+00254:                 f"Son bilan├зo d├╢nemi {latest}; bug├╝n {reference}. "
+00255:                 "Gelecek tarihli veya hatal─▒ d├╢nem alg─▒land─▒."
+00256:             ),
+00257:         )
+00258: 
+00259:     age_days = max(0, (reference - latest).days)
+00260:     if age_days > policy.maximum_age_days:
+00261:         return FundamentalFreshnessResult(
+00262:             status=STALE,
+00263:             latest_period_end=latest,
+00264:             age_days=age_days,
+00265:             locked=True,
+00266:             explanation=(
+00267:                 f"Son bilan├зo d├╢nemi {latest}; veri "
+00268:                 f"{age_days} g├╝nl├╝k. Temel analiz i├зin "
+00269:                 "g├╝ncel finansal tablo gereklidir."
+00270:             ),
+00271:         )
+00272: 
+00273:     return FundamentalFreshnessResult(
+00274:         status=CURRENT,
+00275:         latest_period_end=latest,
+00276:         age_days=age_days,
+00277:         locked=False,
+00278:         explanation=(
+00279:             f"Son bilan├зo d├╢nemi {latest}; temel analiz "
+00280:             "tazelik politikas─▒n─▒ ge├зiyor."
+00281:         ),
+00282:     )
+---
+FILE=backend\app\data\fundamental_score_store.py
+CLASS=FundamentalScoreStoreError
+00018: class FundamentalScoreStoreError(RuntimeError):
+00019:     """Temel kalite skoru deposu okunamad─▒─Я─▒nda veya do─Яrulanamad─▒─Я─▒nda kullan─▒l─▒r."""
+---
+CLASS=FundamentalScoreStoreResult
+00023: class FundamentalScoreStoreResult:
+00024:     inserted: int
+00025:     updated: int
+00026:     unchanged: int
+00027:     total_records: int
+---
+CLASS=StoredFundamentalScore
+00031: class StoredFundamentalScore:
+00032:     symbol: str
+00033:     period_key: str
+00034:     period_end: date
+00035:     data_identity: str
+00036:     score: FundamentalQualityScore
+00037:     calculated_at: datetime
+---
+CLASS=FundamentalScoreJsonStore
+00152: class FundamentalScoreJsonStore:
+00153:     """Temel kalite skorlar─▒n─▒ ┼Яirket ve bilan├зo d├╢nemi baz─▒nda saklar."""
+00154: 
+00155:     def __init__(
+00156:         self,
+00157:         path: str | Path = "backend/data/fundamental_scores.json",
+00158:     ) -> None:
+00159:         self.path = Path(path)
+00160: 
+00161:     @staticmethod
+00162:     def _key(symbol: str, period_key: str) -> str:
+00163:         return f"{symbol.strip().upper()}|{period_key}"
+00164: 
+00165:     def _read(self) -> dict[str, dict[str, object]]:
+00166:         if not self.path.exists():
+00167:             return {}
+00168: 
+00169:         try:
+00170:             payload = json.loads(
+00171:                 self.path.read_text(encoding="utf-8")
+00172:             )
+00173:         except Exception as exc:
+00174:             raise FundamentalScoreStoreError(
+00175:                 "Temel skor deposu okunamad─▒."
+00176:             ) from exc
+00177: 
+00178:         if not isinstance(payload, dict):
+00179:             raise FundamentalScoreStoreError(
+00180:                 "Temel skor deposu nesne bi├зiminde olmal─▒d─▒r."
+00181:             )
+00182: 
+00183:         return payload
+00184: 
+00185:     def save(
+00186:         self,
+00187:         *,
+00188:         periods: Iterable[FinancialPeriod],
+00189:         score: FundamentalQualityScore,
+00190:     ) -> FundamentalScoreStoreResult:
+00191:         items = tuple(periods)
+00192:         if not items:
+00193:             raise ValueError(
+00194:                 "Temel skor kayd─▒ i├зin finansal d├╢nem gereklidir."
+00195:             )
+00196:         if score.locked or score.total_score is None:
+00197:             raise ValueError(
+00198:                 "Kilitli veya hesaplanamayan temel skor kaydedilemez."
+00199:             )
+00200: 
+00201:         latest = max(items, key=lambda item: item.period_end)
+00202:         if latest.symbol != score.symbol:
+00203:             raise ValueError(
+00204:                 "Temel skor sembol├╝ finansal d├╢nemlerle e┼Яle┼Яmiyor."
+00205:             )
+00206:         if latest.period_key != score.period_key:
+00207:             raise ValueError(
+00208:                 "Temel skor d├╢nemi son finansal d├╢nemle e┼Яle┼Яmiyor."
+00209:             )
+00210: 
+00211:         identity = financial_periods_identity(items)
+00212:         key = self._key(score.symbol, score.period_key)
+00213:         records = self._read()
+00214:         existing = records.get(key)
+00215: 
+00216:         record = {
+00217:             "symbol": score.symbol,
+00218:             "period_key": score.period_key,
+00219:             "period_end": latest.period_end.isoformat(),
+00220:             "data_identity": identity,
+00221:             "calculated_at": datetime.now(
+00222:                 timezone.utc
+00223:             ).isoformat(),
+00224:             "score": _score_to_record(score),
+00225:         }
+00226: 
+00227:         inserted = 0
+00228:         updated = 0
+00229:         unchanged = 0
+00230: 
+00231:         if existing is None:
+00232:             inserted = 1
+00233:         elif (
+00234:             existing.get("data_identity") == identity
+00235:             and existing.get("score") == record["score"]
+00236:         ):
+00237:             unchanged = 1
+00238:             record = existing
+00239:         else:
+00240:             updated = 1
+00241: 
+00242:         records[key] = record
+---
+FILE=backend\app\data\fundamental_settings.py
+CLASS=FundamentalSettingsError
+00009: class FundamentalSettingsError(ValueError):
+00010:     """Temel analiz ayarlar─▒ okunamad─▒─Я─▒nda veya ge├зersiz oldu─Яunda kullan─▒l─▒r."""
+---
+CLASS=FundamentalAnalysisSettings
+00024: class FundamentalAnalysisSettings:
+00025:     strong_threshold: int = 80
+00026:     balanced_threshold: int = 65
+00027:     watch_threshold: int = 50
+00028:     minimum_sector_company_count: int = 3
+00029:     sector_change_threshold: float = 3.0
+00030:     score_history_maximum_age_days: int = 730
+00031:     report_archive_maximum_age_days: int = 1095
+00032:     default_archive_sort: ArchiveSortPreference = "period_desc"
+00033: 
+00034:     def __post_init__(self) -> None:
+00035:         thresholds = (
+00036:             self.strong_threshold,
+00037:             self.balanced_threshold,
+00038:             self.watch_threshold,
+00039:         )
+00040:         if any(not 0 <= value <= 100 for value in thresholds):
+00041:             raise FundamentalSettingsError(
+00042:                 "Temel kalite e┼Яikleri 0тАУ100 aral─▒─Я─▒nda olmal─▒d─▒r."
+00043:             )
+00044:         if not (
+00045:             self.strong_threshold
+00046:             > self.balanced_threshold
+00047:             > self.watch_threshold
+00048:         ):
+00049:             raise FundamentalSettingsError(
+00050:                 "Kalite e┼Яikleri G├╝├зl├╝ > Dengeli > ─░zlenmeli "
+00051:                 "s─▒ras─▒n─▒ korumal─▒d─▒r."
+00052:             )
+00053:         if self.minimum_sector_company_count < 2:
+00054:             raise FundamentalSettingsError(
+00055:                 "Sekt├╢r kar┼Я─▒la┼Яt─▒rmas─▒ i├зin asgari ┼Яirket say─▒s─▒ "
+00056:                 "en az 2 olmal─▒d─▒r."
+00057:             )
+00058:         if not 0.1 <= self.sector_change_threshold <= 25:
+00059:             raise FundamentalSettingsError(
+00060:                 "Sekt├╢r de─Яi┼Яim e┼Яi─Яi 0,1тАУ25 aral─▒─Я─▒nda olmal─▒d─▒r."
+00061:             )
+00062:         if self.score_history_maximum_age_days < 30:
+00063:             raise FundamentalSettingsError(
+00064:                 "Temel skor ge├зmi┼Яi ya┼Я─▒ en az 30 g├╝n olmal─▒d─▒r."
+00065:             )
+00066:         if self.report_archive_maximum_age_days < 30:
+00067:             raise FundamentalSettingsError(
+00068:                 "Rapor ar┼Яivi ya┼Я─▒ en az 30 g├╝n olmal─▒d─▒r."
+00069:             )
+00070:         valid_sorts = {
+00071:             "period_desc",
+00072:             "period_asc",
+00073:             "created_desc",
+00074:             "created_asc",
+00075:             "score_desc",
+00076:             "score_asc",
+00077:         }
+00078:         if self.default_archive_sort not in valid_sorts:
+00079:             raise FundamentalSettingsError(
+00080:                 "Varsay─▒lan ar┼Яiv s─▒ralamas─▒ ge├зersiz."
+00081:             )
+---
+CLASS=FundamentalSettingsJsonStore
+00087: class FundamentalSettingsJsonStore:
+00088:     def __init__(
+00089:         self,
+00090:         path: Path | str = Path(
+00091:             "backend/data/fundamental_analysis_settings.json"
+00092:         ),
+00093:     ) -> None:
+00094:         self.path = Path(path)
+00095: 
+00096:     def load(self) -> FundamentalAnalysisSettings:
+00097:         if not self.path.exists():
+00098:             return DEFAULT_FUNDAMENTAL_SETTINGS
+00099:         try:
+00100:             raw = json.loads(self.path.read_text(encoding="utf-8"))
+00101:             if not isinstance(raw, dict):
+00102:                 raise TypeError("Ayar k├╢k├╝ nesne olmal─▒d─▒r.")
+00103:             return FundamentalAnalysisSettings(**raw)
+00104:         except (
+00105:             OSError,
+00106:             json.JSONDecodeError,
+00107:             TypeError,
+00108:             FundamentalSettingsError,
+00109:         ) as exc:
+00110:             raise FundamentalSettingsError(
+00111:                 "Temel analiz ayar dosyas─▒ okunamad─▒ veya ge├зersiz."
+00112:             ) from exc
+00113: 
+00114:     def save(
+00115:         self,
+00116:         settings: FundamentalAnalysisSettings,
+00117:     ) -> FundamentalAnalysisSettings:
+00118:         self.path.parent.mkdir(parents=True, exist_ok=True)
+00119:         temporary = self.path.with_suffix(self.path.suffix + ".tmp")
+00120:         temporary.write_text(
+00121:             json.dumps(
+00122:                 asdict(settings),
+00123:                 ensure_ascii=False,
+00124:                 indent=2,
+00125:             ),
+00126:             encoding="utf-8",
+00127:         )
+00128:         temporary.replace(self.path)
+00129:         return settings
+00130: 
+00131:     def reset(self) -> FundamentalAnalysisSettings:
+00132:         return self.save(DEFAULT_FUNDAMENTAL_SETTINGS)
+---
+FILE=backend\app\data\fundamental_store.py
+CLASS=FundamentalStoreError
+00014: class FundamentalStoreError(RuntimeError):
+00015:     """Finansal d├╢nem deposu hata t├╝r├╝."""
+---
+CLASS=FundamentalStoreResult
+00019: class FundamentalStoreResult:
+00020:     inserted: int
+00021:     updated: int
+00022:     unchanged: int
+00023:     total_records: int
+---
+CLASS=FundamentalJsonStore
+00051: class FundamentalJsonStore:
+00052:     """Finansal d├╢nemleri sembol-y─▒l-├зeyrek anahtar─▒yla g├╝venle saklar."""
+00053: 
+00054:     def __init__(self, path: str | Path) -> None:
+00055:         self.path = Path(path)
+00056: 
+00057:     @staticmethod
+00058:     def _key(period: FinancialPeriod) -> str:
+00059:         return (
+00060:             f"{period.symbol}|"
+00061:             f"{period.fiscal_year}|"
+00062:             f"{period.fiscal_quarter}"
+00063:         )
+00064: 
+00065:     def _read(self) -> dict[str, dict[str, object]]:
+00066:         if not self.path.exists():
+00067:             return {}
+00068:         try:
+00069:             payload = json.loads(
+00070:                 self.path.read_text(encoding="utf-8")
+00071:             )
+00072:         except Exception as exc:
+00073:             raise FundamentalStoreError(
+00074:                 "Finansal d├╢nem deposu okunamad─▒."
+00075:             ) from exc
+00076:         if not isinstance(payload, dict):
+00077:             raise FundamentalStoreError(
+00078:                 "Finansal d├╢nem deposu nesne bi├зiminde olmal─▒d─▒r."
+00079:             )
+00080:         return payload
+00081: 
+00082:     def upsert(
+00083:         self,
+00084:         periods: Iterable[FinancialPeriod],
+00085:     ) -> FundamentalStoreResult:
+00086:         existing = self._read()
+00087:         inserted = 0
+00088:         updated = 0
+00089:         unchanged = 0
+00090: 
+00091:         for period in periods:
+00092:             key = self._key(period)
+00093:             record = _period_to_record(period)
+00094:             digest = _period_digest(period)
+00095:             stored = existing.get(key)
+00096: 
+00097:             if stored is None:
+00098:                 inserted += 1
+00099:             elif stored.get("_digest") == digest:
+00100:                 unchanged += 1
+00101:                 continue
+00102:             else:
+00103:                 updated += 1
+00104: 
+00105:             existing[key] = {
+00106:                 **record,
+00107:                 "_digest": digest,
+00108:             }
+00109: 
+00110:         self.path.parent.mkdir(parents=True, exist_ok=True)
+00111:         temporary = self.path.with_suffix(
+00112:             self.path.suffix + ".tmp"
+00113:         )
+00114:         temporary.write_text(
+00115:             json.dumps(
+00116:                 existing,
+00117:                 ensure_ascii=False,
+00118:                 indent=2,
+00119:                 sort_keys=True,
+00120:             ),
+00121:             encoding="utf-8",
+00122:         )
+00123:         temporary.replace(self.path)
+00124: 
+00125:         return FundamentalStoreResult(
+00126:             inserted=inserted,
+00127:             updated=updated,
+00128:             unchanged=unchanged,
+00129:             total_records=len(existing),
+00130:         )
+---
+FILE=backend\app\data\kap_fundamental_source.py
+CLASS=KapFundamentalError
+00017: class KapFundamentalError(RuntimeError):
+00018:     """KAP finansal veri entegrasyonunun ortak hata t├╝r├╝."""
+---
+CLASS=KapFundamentalSourceError
+00021: class KapFundamentalSourceError(KapFundamentalError):
+00022:     """KAP finansal veri kayna─Я─▒na eri┼Яilemedi─Яinde olu┼Яur."""
+---
+CLASS=KapFundamentalParseError
+00025: class KapFundamentalParseError(KapFundamentalError):
+00026:     """KAP finansal veri paketi g├╝venle ayr─▒┼Яt─▒r─▒lamad─▒─Я─▒nda olu┼Яur."""
+---
+CLASS=KapFundamentalSourceStatus
+00036: class KapFundamentalSourceStatus:
+00037:     symbol: str
+00038:     source: str
+00039:     fetched_at: datetime
+00040:     record_count: int
+00041:     accepted_count: int
+00042:     rejected_count: int
+00043:     data_identity: str
+00044:     locked: bool
+00045:     explanation: str
+---
+CLASS=KapFundamentalPackage
+00049: class KapFundamentalPackage:
+00050:     periods: tuple[FinancialPeriod, ...]
+00051:     status: KapFundamentalSourceStatus
+00052:     rejected_records: tuple[str, ...]
+---
+CLASS=KapFundamentalClient
+00207: class KapFundamentalClient:
+00208:     """Yap─▒land─▒r─▒lm─▒┼Я KAP finansal kay─▒tlar─▒n─▒ standart modele d├╢n├╝┼Яt├╝r├╝r."""
+00209: 
+00210:     def __init__(
+00211:         self,
+00212:         *,
+00213:         fetcher: FundamentalFetcher,
+00214:         source_name: str = "KAP",
+00215:     ) -> None:
+00216:         self._fetcher = fetcher
+00217:         self._source_name = source_name.strip() or "KAP"
+00218: 
+00219:     def fetch(
+00220:         self,
+00221:         symbol: str,
+00222:         *,
+00223:         start_date: date | None = None,
+00224:         end_date: date | None = None,
+00225:     ) -> KapFundamentalPackage:
+00226:         normalized_symbol = symbol.strip().upper()
+00227:         if not normalized_symbol:
+00228:             raise ValueError("┼Юirket sembol├╝ bo┼Я olamaz.")
+00229: 
+00230:         try:
+00231:             raw_records = list(
+00232:                 self._fetcher(
+00233:                     normalized_symbol,
+00234:                     start_date,
+00235:                     end_date,
+00236:                 )
+00237:             )
+00238:         except Exception as exc:
+00239:             raise KapFundamentalSourceError(
+00240:                 f"{normalized_symbol} KAP finansal verisi al─▒namad─▒: {exc}"
+00241:             ) from exc
+00242: 
+00243:         accepted_records: list[dict[str, Any]] = []
+00244:         rejected: list[str] = []
+00245: 
+00246:         for index, record in enumerate(raw_records, start=1):
+00247:             try:
+00248:                 accepted_records.append(
+00249:                     normalize_kap_record(
+00250:                         record,
+00251:                         requested_symbol=normalized_symbol,
+00252:                     )
+00253:                 )
+00254:             except (
+00255:                 ValueError,
+00256:                 TypeError,
+00257:                 KapFundamentalParseError,
+00258:             ) as exc:
+00259:                 rejected.append(f"Kay─▒t {index}: {exc}")
+00260: 
+00261:         try:
+00262:             periods = periods_from_records(accepted_records)
+00263:         except FundamentalDataError as exc:
+00264:             raise KapFundamentalParseError(str(exc)) from exc
+00265: 
+00266:         fetched_at = datetime.now().astimezone()
+00267:         if not periods:
+00268:             status = KapFundamentalSourceStatus(
+00269:                 symbol=normalized_symbol,
+00270:                 source=self._source_name,
+00271:                 fetched_at=fetched_at,
+00272:                 record_count=len(raw_records),
+00273:                 accepted_count=0,
+00274:                 rejected_count=len(rejected),
+00275:                 data_identity="",
+00276:                 locked=True,
+00277:                 explanation=(
+00278:                     "Do─Яrulanabilir KAP finansal d├╢nemi bulunmad─▒; "
+00279:                     "temel analiz kilitlendi."
+00280:                 ),
+00281:             )
+00282:             return KapFundamentalPackage(
+00283:                 periods=(),
+00284:                 status=status,
+00285:                 rejected_records=tuple(rejected),
+00286:             )
+00287: 
+00288:         identity = _package_identity(periods)
+00289:         status = KapFundamentalSourceStatus(
+00290:             symbol=normalized_symbol,
+00291:             source=self._source_name,
+00292:             fetched_at=fetched_at,
+00293:             record_count=len(raw_records),
+00294:             accepted_count=len(periods),
+00295:             rejected_count=len(rejected),
+00296:             data_identity=identity,
+00297:             locked=False,
+---
+FILE=backend\app\models\fundamental_models.py
+CLASS=FundamentalModelError
+00009: class FundamentalModelError(ValueError):
+00010:     """Temel analiz veri modeli do─Яrulama hatas─▒."""
+---
+CLASS=FundamentalRatios
+00123: class FundamentalRatios:
+00124:     symbol: str
+00125:     period_key: str
+00126:     gross_margin: Decimal | None
+00127:     operating_margin: Decimal | None
+00128:     ebitda_margin: Decimal | None
+00129:     net_margin: Decimal | None
+00130:     roe: Decimal | None
+00131:     roa: Decimal | None
+00132:     current_ratio: Decimal | None
+00133:     debt_to_equity: Decimal | None
+00134:     net_debt: Decimal
+00135:     net_debt_to_ebitda: Decimal | None
+00136:     free_cash_flow: Decimal
+00137:     free_cash_flow_margin: Decimal | None
+---
+CLASS=FundamentalGrowth
+00141: class FundamentalGrowth:
+00142:     symbol: str
+00143:     current_period_key: str
+00144:     comparison_period_key: str
+00145:     revenue_growth: Decimal | None
+00146:     ebitda_growth: Decimal | None
+00147:     net_income_growth: Decimal | None
+00148:     equity_growth: Decimal | None
+00149:     operating_cash_flow_growth: Decimal | None
+---
+CLASS=FundamentalSnapshot
+00153: class FundamentalSnapshot:
+00154:     latest: FinancialPeriod
+00155:     previous_quarter: FinancialPeriod | None
+00156:     previous_year_same_quarter: FinancialPeriod | None
+00157:     ratios: FundamentalRatios
+00158:     quarter_growth: FundamentalGrowth | None
+00159:     annual_growth: FundamentalGrowth | None
+00160:     quality_flags: tuple[str, ...]
+00161:     source_metadata: Mapping[str, str]
+---
+FILE=backend\app\reporting\fundamental_report.py
+CLASS=FundamentalReportError
+00027: class FundamentalReportError(ValueError):
+00028:     """Temel analiz raporu ├╝retilemedi."""
+---
+CLASS=FundamentalReport
+00032: class FundamentalReport:
+00033:     symbol: str
+00034:     period_key: str
+00035:     period_end: date
+00036:     currency: str
+00037:     source: str
+00038:     freshness_status: str
+00039:     age_days: int | None
+00040:     total_score: int | None
+00041:     grade: str
+00042:     component_scores: tuple[tuple[str, int, int], ...]
+00043:     score_change: str
+00044:     ratio_rows: tuple[tuple[str, str], ...]
+00045:     sector_ratio_rows: tuple[tuple[str, str, str, str], ...]
+00046:     sector_ranking: str
+00047:     sector_strength: str
+00048:     quality_flags: tuple[str, ...]
+00049:     generated_at: datetime
+00050:     disclaimer: str = (
+00051:         "Bu rapor bilgilendirme ama├зl─▒d─▒r; yat─▒r─▒m dan─▒┼Яmanl─▒─Я─▒ "
+00052:         "veya al─▒m/sat─▒m tavsiyesi de─Яildir."
+00053:     )
+00054: 
+00055:     def __post_init__(self) -> None:
+00056:         if not self.symbol.strip():
+00057:             raise FundamentalReportError("┼Юirket sembol├╝ bo┼Я olamaz.")
+00058:         if not self.period_key.strip():
+00059:             raise FundamentalReportError("Finansal d├╢nem bo┼Я olamaz.")
+00060:         if not self.currency.strip():
+00061:             raise FundamentalReportError("Para birimi bo┼Я olamaz.")
+00062:         if not self.source.strip():
+00063:             raise FundamentalReportError("Veri kayna─Я─▒ bo┼Я olamaz.")
+00064:         if self.total_score is not None and not 0 <= self.total_score <= 100:
+00065:             raise FundamentalReportError(
+00066:                 "Temel kalite skoru 0тАУ100 aral─▒─Я─▒nda olmal─▒d─▒r."
+00067:             )
+---
+FUNC=fundamental_report_csv_bytes
+ARGS=report: FundamentalReport
+00078: def fundamental_report_csv_bytes(
+00079:     report: FundamentalReport,
+00080: ) -> bytes:
+00081:     output = io.StringIO()
+00082:     writer = csv.writer(output, lineterminator="\n")
+00083:     writer.writerow(("B├╢l├╝m", "G├╢sterge", "De─Яer", "Referans", "Konum"))
+00084: 
+00085:     summary = (
+00086:         ("┼Юirket", report.symbol),
+00087:         ("D├╢nem", report.period_key),
+00088:         ("D├╢nem sonu", report.period_end.isoformat()),
+00089:         ("Para birimi", report.currency),
+00090:         ("Kaynak", report.source),
+00091:         ("Tazelik", report.freshness_status),
+00092:         (
+00093:             "Veri ya┼Я─▒",
+00094:             f"{report.age_days} g├╝n"
+00095:             if report.age_days is not None
+00096:             else "Bilinmiyor",
+00097:         ),
+00098:         (
+00099:             "Temel kalite skoru",
+00100:             f"{report.total_score}/100"
+00101:             if report.total_score is not None
+00102:             else "Hesaplanamad─▒",
+00103:         ),
+00104:         ("Kalite s─▒n─▒f─▒", report.grade),
+00105:         ("D├╢nemsel skor de─Яi┼Яimi", report.score_change),
+00106:         ("Sekt├╢r s─▒ralamas─▒", report.sector_ranking),
+00107:         ("Sekt├╢r g├╝├з haritas─▒", report.sector_strength),
+00108:     )
+00109:     for metric, value in summary:
+00110:         writer.writerow(("├Цzet", metric, value, "", ""))
+00111: 
+00112:     for name, score, maximum in report.component_scores:
+00113:         writer.writerow(
+00114:             ("Alt skor", name, f"{score}/{maximum}", "", "")
+00115:         )
+00116: 
+00117:     for metric, value in report.ratio_rows:
+00118:         writer.writerow(("Finansal oran", metric, value, "", ""))
+00119: 
+00120:     for metric, company, sector_median, position in report.sector_ratio_rows:
+00121:         writer.writerow(
+00122:             (
+00123:                 "Sekt├╢r oran kar┼Я─▒la┼Яt─▒rmas─▒",
+00124:                 metric,
+00125:                 company,
+00126:                 sector_median,
+00127:                 position,
+00128:             )
+00129:         )
+00130: 
+00131:     if report.quality_flags:
+00132:         for flag in report.quality_flags:
+00133:             writer.writerow(("Kalite uyar─▒s─▒", "Uyar─▒", flag, "", ""))
+00134:     else:
+00135:         writer.writerow(
+00136:             (
+00137:                 "Kalite uyar─▒s─▒",
+00138:                 "Durum",
+00139:                 "Belirgin kalite uyar─▒s─▒ yok",
+00140:                 "",
+00141:                 "",
+00142:             )
+00143:         )
+00144: 
+00145:     writer.writerow(("Yasal uyar─▒", "A├з─▒klama", report.disclaimer, "", ""))
+00146:     writer.writerow(
+00147:         (
+00148:             "Rapor",
+00149:             "├Ьretim zaman─▒",
+00150:             report.generated_at.astimezone(timezone.utc).isoformat(),
+00151:             "",
+00152:             "",
+00153:         )
+00154:     )
+00155:     return output.getvalue().encode("utf-8-sig")
+---
+FUNC=fundamental_report_pdf_bytes
+ARGS=report: FundamentalReport
+00221: def fundamental_report_pdf_bytes(
+00222:     report: FundamentalReport,
+00223: ) -> bytes:
+00224:     buffer = io.BytesIO()
+00225:     font_name = _register_pdf_font()
+00226:     styles = getSampleStyleSheet()
+00227:     title_style = ParagraphStyle(
+00228:         "FundamentalTitle",
+00229:         parent=styles["Title"],
+00230:         fontName=font_name,
+00231:         fontSize=16,
+00232:         leading=19,
+00233:         spaceAfter=8,
+00234:     )
+00235:     heading_style = ParagraphStyle(
+00236:         "FundamentalHeading",
+00237:         parent=styles["Heading2"],
+00238:         fontName=font_name,
+00239:         fontSize=11,
+00240:         leading=14,
+00241:         spaceBefore=8,
+00242:         spaceAfter=5,
+00243:     )
+00244:     body_style = ParagraphStyle(
+00245:         "FundamentalBody",
+00246:         parent=styles["BodyText"],
+00247:         fontName=font_name,
+00248:         fontSize=8,
+00249:         leading=11,
+00250:     )
+00251: 
+00252:     document = SimpleDocTemplate(
+00253:         buffer,
+00254:         pagesize=A4,
+00255:         rightMargin=15 * mm,
+00256:         leftMargin=15 * mm,
+00257:         topMargin=15 * mm,
+00258:         bottomMargin=15 * mm,
+00259:         title=f"{report.symbol} Temel Analiz ├Цzeti",
+00260:         author="Hisse Robotu",
+00261:     )
+00262: 
+00263:     story = [
+00264:         Paragraph(
+00265:             _pdf_text(
+00266:                 f"{report.symbol} Temel Analiz ├Цzet Raporu",
+00267:                 font_name,
+00268:             ),
+00269:             title_style,
+00270:         ),
+00271:         Paragraph(
+00272:             _pdf_text(report.disclaimer, font_name),
+00273:             body_style,
+00274:         ),
+00275:         Spacer(1, 5 * mm),
+00276:         Paragraph(_pdf_text("Rapor ├╢zeti", font_name), heading_style),
+00277:         _table(
+00278:             (
+00279:                 ("G├╢sterge", "De─Яer"),
+00280:                 ("┼Юirket", report.symbol),
+00281:                 ("D├╢nem", report.period_key),
+00282:                 ("D├╢nem sonu", report.period_end.isoformat()),
+00283:                 ("Para birimi", report.currency),
+00284:                 ("Kaynak", report.source),
+00285:                 ("Tazelik", report.freshness_status),
+00286:                 (
+00287:                     "Veri ya┼Я─▒",
+00288:                     f"{report.age_days} g├╝n"
+00289:                     if report.age_days is not None
+00290:                     else "Bilinmiyor",
+00291:                 ),
+00292:                 (
+00293:                     "Temel kalite skoru",
+00294:                     f"{report.total_score}/100"
+00295:                     if report.total_score is not None
+00296:                     else "Hesaplanamad─▒",
+00297:                 ),
+00298:                 ("Kalite s─▒n─▒f─▒", report.grade),
+00299:                 ("D├╢nemsel skor de─Яi┼Яimi", report.score_change),
+00300:             ),
+00301:             font_name=font_name,
+00302:             column_widths=(55 * mm, 115 * mm),
+00303:         ),
+00304:         Paragraph(_pdf_text("Alt skorlar", font_name), heading_style),
+00305:         _table(
+00306:             (
+00307:                 ("Bile┼Яen", "Skor"),
+00308:                 *(
+00309:                     (name, f"{score}/{maximum}")
+00310:                     for name, score, maximum
+00311:                     in report.component_scores
+00312:                 ),
+00313:             ),
+00314:             font_name=font_name,
+00315:             column_widths=(100 * mm, 70 * mm),
+00316:         ),
+00317:         Paragraph(
+00318:             _pdf_text("Finansal oranlar", font_name),
+00319:             heading_style,
+00320:         ),
+00321:         _table(
+00322:             (("G├╢sterge", "De─Яer"), *report.ratio_rows),
+00323:             font_name=font_name,
+00324:             column_widths=(100 * mm, 70 * mm),
+00325:         ),
+00326:     ]
+00327: 
+00328:     if report.sector_ratio_rows:
+00329:         story.extend(
+00330:             (
+00331:                 Paragraph(
+---
+FUNC=fundamental_report_file_names
+ARGS=report: FundamentalReport
+00426: def fundamental_report_file_names(
+00427:     report: FundamentalReport,
+00428: ) -> tuple[str, str]:
+00429:     base = (
+00430:         f"{report.symbol}_{report.period_key}_temel_analiz_ozeti"
+00431:     )
+00432:     return f"{base}.csv", f"{base}.pdf"
+---
+FILE=backend\app\reporting\fundamental_report_archive.py
+CLASS=FundamentalReportArchiveError
+00029: class FundamentalReportArchiveError(ValueError):
+00030:     """Temel analiz rapor ar┼Яivi i┼Яlemi ba┼Яar─▒s─▒z oldu."""
+---
+CLASS=ArchivedFundamentalReport
+00034: class ArchivedFundamentalReport:
+00035:     report_id: str
+00036:     data_identity: str
+00037:     symbol: str
+00038:     period_key: str
+00039:     period_end: date
+00040:     created_at: datetime
+00041:     report: FundamentalReport
+---
+CLASS=FundamentalReportArchiveSaveResult
+00045: class FundamentalReportArchiveSaveResult:
+00046:     inserted: int
+00047:     unchanged: int
+00048:     archived: ArchivedFundamentalReport
+---
+CLASS=FundamentalReportComparison
+00052: class FundamentalReportComparison:
+00053:     symbol: str
+00054:     previous_period: str
+00055:     current_period: str
+00056:     total_score_change: int | None
+00057:     component_changes: tuple[tuple[str, int], ...]
+00058:     ratio_changes: tuple[tuple[str, str, str], ...]
+00059:     sector_ranking_change: tuple[str, str]
+00060:     sector_strength_change: tuple[str, str]
+00061:     source_change: tuple[str, str]
+00062:     freshness_change: tuple[str, str]
+---
+CLASS=FundamentalReportJsonArchive
+00146: class FundamentalReportJsonArchive:
+00147:     def __init__(
+00148:         self,
+00149:         path: Path | str = Path(
+00150:             "backend/data/fundamental_report_archive.json"
+00151:         ),
+00152:     ) -> None:
+00153:         self.path = Path(path)
+00154: 
+00155:     def _read(self) -> list[dict[str, Any]]:
+00156:         if not self.path.exists():
+00157:             return []
+00158:         try:
+00159:             raw = json.loads(self.path.read_text(encoding="utf-8"))
+00160:         except (OSError, json.JSONDecodeError) as exc:
+00161:             raise FundamentalReportArchiveError(
+00162:                 "Temel rapor ar┼Яivi okunamad─▒."
+00163:             ) from exc
+00164:         if not isinstance(raw, list):
+00165:             raise FundamentalReportArchiveError(
+00166:                 "Temel rapor ar┼Яiv bi├зimi ge├зersiz."
+00167:             )
+00168:         return raw
+00169: 
+00170:     def _write(self, records: list[dict[str, Any]]) -> None:
+00171:         self.path.parent.mkdir(parents=True, exist_ok=True)
+00172:         temporary = self.path.with_suffix(
+00173:             self.path.suffix + ".tmp"
+00174:         )
+00175:         temporary.write_text(
+00176:             json.dumps(
+00177:                 records,
+00178:                 ensure_ascii=False,
+00179:                 indent=2,
+00180:                 default=_json_default,
+00181:             ),
+00182:             encoding="utf-8",
+00183:         )
+00184:         temporary.replace(self.path)
+00185: 
+00186:     @staticmethod
+00187:     def _to_archived(
+00188:         record: dict[str, Any],
+00189:     ) -> ArchivedFundamentalReport:
+00190:         try:
+00191:             report = _report_from_payload(record["report"])
+00192:             return ArchivedFundamentalReport(
+00193:                 report_id=str(record["report_id"]),
+00194:                 data_identity=str(record["data_identity"]),
+00195:                 symbol=str(record["symbol"]).upper(),
+00196:                 period_key=str(record["period_key"]),
+00197:                 period_end=date.fromisoformat(
+00198:                     str(record["period_end"])
+00199:                 ),
+00200:                 created_at=datetime.fromisoformat(
+00201:                     str(record["created_at"])
+00202:                 ),
+00203:                 report=report,
+00204:             )
+00205:         except Exception as exc:
+00206:             raise FundamentalReportArchiveError(
+00207:                 "Ar┼Яivde ge├зersiz temel rapor kayd─▒ bulundu."
+00208:             ) from exc
+00209: 
+00210:     def save(
+00211:         self,
+00212:         report: FundamentalReport,
+00213:     ) -> FundamentalReportArchiveSaveResult:
+00214:         identity = _data_identity(report)
+00215:         records = self._read()
+00216: 
+00217:         for record in records:
+00218:             if (
+00219:                 str(record.get("symbol", "")).upper()
+00220:                 == report.symbol.upper()
+00221:                 and str(record.get("data_identity", ""))
+00222:                 == identity
+00223:             ):
+00224:                 archived = self._to_archived(record)
+00225:                 return FundamentalReportArchiveSaveResult(
+00226:                     inserted=0,
+00227:                     unchanged=1,
+00228:                     archived=archived,
+00229:                 )
+00230: 
+00231:         created_at = datetime.now(timezone.utc)
+00232:         report_id = (
+00233:             f"{report.symbol.upper()}-{report.period_key}-"
+00234:             f"{created_at.strftime('%Y%m%dT%H%M%S%fZ')}"
+00235:         )
+00236:         record = {
+---
+CLASS=FundamentalReportArchiveFilter
+00498: class FundamentalReportArchiveFilter:
+00499:     symbol_query: str = ""
+00500:     period_start: date | None = None
+00501:     period_end: date | None = None
+00502:     minimum_score: int | None = None
+00503:     maximum_score: int | None = None
+00504:     grades: tuple[str, ...] = ()
+00505:     sources: tuple[str, ...] = ()
+00506:     freshness_statuses: tuple[str, ...] = ()
+00507:     sort_by: ArchiveSortField = "period_desc"
+00508: 
+00509:     def __post_init__(self) -> None:
+00510:         if (
+00511:             self.period_start is not None
+00512:             and self.period_end is not None
+00513:             and self.period_start > self.period_end
+00514:         ):
+00515:             raise FundamentalReportArchiveError(
+00516:                 "D├╢nem ba┼Яlang─▒c─▒ d├╢nem biti┼Яinden sonra olamaz."
+00517:             )
+00518:         for name, value in (
+00519:             ("Asgari skor", self.minimum_score),
+00520:             ("Azami skor", self.maximum_score),
+00521:         ):
+00522:             if value is not None and not 0 <= value <= 100:
+00523:                 raise FundamentalReportArchiveError(
+00524:                     f"{name} 0тАУ100 aral─▒─Я─▒nda olmal─▒d─▒r."
+00525:                 )
+00526:         if (
+00527:             self.minimum_score is not None
+00528:             and self.maximum_score is not None
+00529:             and self.minimum_score > self.maximum_score
+00530:         ):
+00531:             raise FundamentalReportArchiveError(
+00532:                 "Asgari skor azami skordan b├╝y├╝k olamaz."
+00533:             )
+00534:         valid_sorts = {
+00535:             "period_desc",
+00536:             "period_asc",
+00537:             "created_desc",
+00538:             "created_asc",
+00539:             "score_desc",
+00540:             "score_asc",
+00541:         }
+00542:         if self.sort_by not in valid_sorts:
+00543:             raise FundamentalReportArchiveError(
+00544:                 "Ar┼Яiv s─▒ralama alan─▒ ge├зersiz."
+00545:             )
+---
+
+===== FUNDAMENTAL_SNAPSHOT_PRODUCERS =====
+FILE=backend\app\analysis\fundamental_analysis.py
+LINE=235
+00223:     previous_year_same_quarter = next(
+00224:         (
+00225:             item
+00226:             for item in ordered[1:]
+00227:             if item.fiscal_year == latest.fiscal_year - 1
+00228:             and item.fiscal_quarter == latest.fiscal_quarter
+00229:         ),
+00230:         None,
+00231:     )
+00232: 
+00233:     ratios = calculate_ratios(latest)
+00234: 
+00235:     return FundamentalSnapshot(
+00236:         latest=latest,
+00237:         previous_quarter=previous_quarter,
+00238:         previous_year_same_quarter=previous_year_same_quarter,
+00239:         ratios=ratios,
+00240:         quarter_growth=(
+00241:             calculate_growth(latest, previous_quarter)
+00242:             if previous_quarter is not None
+00243:             else None
+00244:         ),
+00245:         annual_growth=(
+00246:             calculate_growth(
+00247:                 latest,
+00248:                 previous_year_same_quarter,
+00249:             )
+00250:             if previous_year_same_quarter is not None
+00251:             else None
+00252:         ),
+00253:         quality_flags=_quality_flags(latest, ratios),
+00254:         source_metadata=source_metadata or {},
+00255:     )
+00256: 
+00257: 
+00258: def _previous_quarter_key(
+00259:     fiscal_year: int,
+00260:     fiscal_quarter: int,
+00261: ) -> tuple[int, int]:
+00262:     if fiscal_quarter == 1:
+00263:         return fiscal_year - 1, 4
+00264:     return fiscal_year, fiscal_quarter - 1
+---
+FILE=backend\app\analysis\fundamental_quality.py
+LINE=71
+00059:         else:
+00060:             risks.append(negative)
+00061: 
+00062:     return FundamentalQualityComponent(
+00063:         name=name,
+00064:         score=min(score, maximum),
+00065:         maximum_score=maximum,
+00066:         reasons=tuple(reasons),
+00067:         risks=tuple(risks),
+00068:     )
+00069: 
+00070: 
+00071: def calculate_fundamental_quality(
+00072:     snapshot: FundamentalSnapshot,
+00073:     freshness: FundamentalFreshnessResult,
+00074: ) -> FundamentalQualityScore:
+00075:     ratios = snapshot.ratios
+00076:     latest = snapshot.latest
+00077: 
+00078:     empty = FundamentalQualityComponent("", 0, 0, (), ())
+00079: 
+00080:     if freshness.locked:
+00081:         return FundamentalQualityScore(
+00082:             symbol=latest.symbol,
+00083:             period_key=latest.period_key,
+00084:             total_score=None,
+00085:             profitability=empty,
+00086:             growth=empty,
+00087:             leverage=empty,
+00088:             liquidity=empty,
+00089:             cash_flow=empty,
+00090:             locked=True,
+00091:             explanation=(
+00092:                 "Bilan├зo tazelik kilidi aktif; temel kalite skoru "
+00093:                 "├╝retilmedi."
+00094:             ),
+00095:         )
+00096: 
+00097:     required = (
+00098:         ratios.net_margin,
+00099:         ratios.roe,
+00100:         ratios.current_ratio,
+00101:         ratios.debt_to_equity,
+00102:         ratios.net_debt_to_ebitda,
+00103:         ratios.free_cash_flow_margin,
+00104:     )
+00105:     if any(value is None for value in required):
+00106:         return FundamentalQualityScore(
+---
+FILE=backend\app\analysis\research_profiles_daily.py
+LINE=236
+00224: def snapshot_from_periods(
+00225:     symbol: str,
+00226:     periods: Iterable[object],
+00227:     *,
+00228:     context: ResearchProfileContext | None = None,
+00229: ) -> FundamentalSnapshot:
+00230:     context = context or ResearchProfileContext()
+00231:     ordered = sorted(
+00232:         tuple(periods),
+00233:         key=lambda item: _period_date(item) or date.min,
+00234:     )
+00235:     if not ordered:
+00236:         return FundamentalSnapshot(
+00237:             symbol=_symbol(symbol),
+00238:             market_cap_try=context.market_cap_try,
+00239:             free_float_shares=context.free_float_shares,
+00240:             ttm_cfo=context.ttm_cfo,
+00241:             ttm_operating_profit=context.ttm_operating_profit,
+00242:             net_cash=context.net_cash,
+00243:             net_debt_ebitda=context.net_debt_ebitda,
+00244:             debt_equity=context.debt_equity,
+00245:             cfo_direction=context.cfo_direction,
+00246:             leverage_direction=context.leverage_direction,
+00247:             capex=context.capex,
+00248:         )
+00249: 
+00250:     latest = ordered[-1]
+00251:     latest_date = _period_date(latest)
+00252:     previous = (
+00253:         _same_period_last_year(ordered, latest_date)
+00254:         if latest_date is not None
+00255:         else None
+00256:     )
+00257: 
+00258:     revenue = _float(_field(latest, *_REVENUE_FIELDS))
+00259:     previous_revenue = _float(_field(previous, *_REVENUE_FIELDS))
+00260: 
+00261:     gross_profit = _float(_field(latest, *_GROSS_PROFIT_FIELDS))
+00262:     previous_gross_profit = _float(_field(previous, *_GROSS_PROFIT_FIELDS))
+00263: 
+00264:     ebitda = _float(_field(latest, *_EBITDA_FIELDS))
+00265:     previous_ebitda = _float(_field(previous, *_EBITDA_FIELDS))
+00266: 
+00267:     operating_profit = _float(_field(latest, *_OPERATING_PROFIT_FIELDS))
+00268:     previous_operating_profit = _float(
+00269:         _field(previous, *_OPERATING_PROFIT_FIELDS)
+00270:     )
+00271: 
+---
+LINE=308
+00296:     cfo_direction = context.cfo_direction or _trend(current_cfo, previous_cfo)
+00297:     leverage_direction = context.leverage_direction or _trend(
+00298:         computed_net_cash, previous_net_cash
+00299:     )
+00300: 
+00301:     # RPV1_COVERAGE_HARDENING_V1:
+00302:     # Explicit context keeps precedence; otherwise reuse canonical balance ratios.
+00303:     (
+00304:         canonical_net_debt_ebitda,
+00305:         canonical_debt_equity,
+00306:     ) = _canonical_balance_ratios(latest)
+00307: 
+00308:     return FundamentalSnapshot(
+00309:         symbol=_symbol(symbol),
+00310:         market_cap_try=context.market_cap_try,
+00311:         free_float_shares=context.free_float_shares,
+00312:         ttm_cfo=(
+00313:             context.ttm_cfo
+00314:             if context.ttm_cfo is not None
+00315:             else explicit_ttm_cfo
+00316:         ),
+00317:         ttm_operating_profit=(
+00318:             context.ttm_operating_profit
+00319:             if context.ttm_operating_profit is not None
+00320:             else explicit_ttm_operating_profit
+00321:         ),
+00322:         latest_ebitda=ebitda,
+00323:         latest_operating_profit=operating_profit,
+00324:         net_cash=(
+00325:             context.net_cash
+00326:             if context.net_cash is not None
+00327:             else computed_net_cash
+00328:         ),
+00329:         net_debt_ebitda=(
+00330:             context.net_debt_ebitda
+00331:             if context.net_debt_ebitda is not None
+00332:             else canonical_net_debt_ebitda
+00333:         ),
+00334:         debt_equity=(
+00335:             context.debt_equity
+00336:             if context.debt_equity is not None
+00337:             else canonical_debt_equity
+00338:         ),
+00339:         revenue_yoy_pct=_pct_change(revenue, previous_revenue),
+00340:         gross_margin_delta_pp=_delta(
+00341:             _margin(gross_profit, revenue),
+00342:             _margin(previous_gross_profit, previous_revenue),
+00343:         ),
+---
+
+===== TUPRS_EXISTING_FUNDAMENTAL_FIELDS =====
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json
+MATCHED=cash_conversion,capital_efficiency
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_canonical_investability_evidence.json
+MATCHED=capital_efficiency
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_acceptance.json
+MATCHED=capital_efficiency
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_production_closure.json
+MATCHED=capital_efficiency
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_long_term_evidence_completion.json
+MATCHED=capital_efficiency
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence_acceptance_TUPRS_2026_2.json
+MATCHED=roic,roe,roa,operating_margin,gross_margin,net_margin,cash_conversion,capital_efficiency
+---
+ARTIFACT_HITS=6
+
+FIN_PROD_V6_BUSINESS_QUALITY_DISCOVERY=PASS

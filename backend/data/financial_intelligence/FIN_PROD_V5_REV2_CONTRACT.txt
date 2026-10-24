@@ -1,0 +1,16 @@
+﻿================================================================================
+FILE=backend\app\analysis\short_term_investability.py
+--------------------------------------------------------------------------------
+NAME=calculate_short_term_investability
+00022: def calculate_short_term_investability(
+00023:     symbol: str,
+00024:     as_of_date: date,
+00025:     *,
+00026:     financial_health_score: int | None,
+00027:     risk_score: int | None,
+00028:     financial_momentum: Decimal | None,
+00029:     valuation_stretch: Decimal | None,
+00030:     market: MarketContextInput,
+00031: ) -> InvestabilityResult:
+00032:     # FIN-013 is read-only evidence. It must not invent missing market context.
+00033:     components = tuple(c for c in (

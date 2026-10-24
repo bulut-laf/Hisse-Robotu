@@ -1,0 +1,152 @@
+{
+  "artifact_type": "HISTORICAL_NAV_ACCESS_PROBE",
+  "observation_date": "2026-10-07",
+  "sample_size": 20,
+  "success_with_target_date": 0,
+  "results": [
+    {
+      "isin": "AT0000494893",
+      "instrument_id": "2522",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000605324",
+      "instrument_id": "7241",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000605332",
+      "instrument_id": "4142",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000627476",
+      "instrument_id": "362",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000639067",
+      "instrument_id": "762",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000658968",
+      "instrument_id": "5842",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000658976",
+      "instrument_id": "7261",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000658984",
+      "instrument_id": "7471",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673165",
+      "instrument_id": "7192",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673181",
+      "instrument_id": "722",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673199",
+      "instrument_id": "5892",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673215",
+      "instrument_id": "7371",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673249",
+      "instrument_id": "292",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673280",
+      "instrument_id": "5852",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673306",
+      "instrument_id": "682",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673322",
+      "instrument_id": "11752",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673355",
+      "instrument_id": "282",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673371",
+      "instrument_id": "712",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000673389",
+      "instrument_id": "2582",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "isin": "AT0000A00G88",
+      "instrument_id": "272",
+      "nav_points": 0,
+      "target_date_found": false,
+      "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    }
+  ],
+  "rank_history_write": false,
+  "production_decisions_modified": false,
+  "trade_authority": "NONE",
+  "forced_fill": false
+}

@@ -1,0 +1,125 @@
+{
+  "status": "BLOCKED",
+  "mode": "READ_ONLY_CANONICAL_BUSINESS_QUALITY_ADAPTER_V6_REV3",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "resolved_inputs": {
+    "revenue": {
+      "metric_code": "REVENUE",
+      "value": "386420235",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "gross_profit": {
+      "metric_code": "GROSS_PROFIT",
+      "value": "61036950",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "operating_profit": {
+      "metric_code": "OPERATING_PROFIT",
+      "value": "46833690",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "net_income": {
+      "metric_code": "NET_INCOME",
+      "value": "46189781",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_assets": {
+      "metric_code": "TOTAL_ASSETS",
+      "value": "859987516",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_equity": {
+      "metric_code": "TOTAL_EQUITY",
+      "value": "463306781",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "cash_and_equivalents": {
+      "metric_code": "CASH_EQUIVALENTS",
+      "value": "195840940",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "current_assets": {
+      "metric_code": "CURRENT_ASSETS",
+      "value": "439480874",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "current_liabilities": {
+      "metric_code": "CURRENT_LIABILITIES",
+      "value": "325369321",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "operating_cash_flow": {
+      "metric_code": "OPERATING_CASH_FLOW",
+      "value": "132366363",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "capital_expenditure": {
+      "metric_code": "CAPEX",
+      "value": "-11858044",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_debt": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+      "metric_code": "FINANCIAL_DEBT",
+      "value": "68200679",
+      "source_period_end": "2026-06-30",
+      "semantic_guard": "existing accepted FINANCIAL_DEBT reused; no new debt formula"
+    },
+    "shares_outstanding": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_acceptance.json",
+      "field": "input_convention.legal_share_piece_count",
+      "value": "192679559800",
+      "issued_capital_try": "1926795598",
+      "legal_share_nominal_try": "0.01",
+      "semantic_guard": "exact legal share piece count from existing FIN-006 acceptance"
+    }
+  },
+  "missing_requirements": [
+    "ebitda"
+  ],
+  "business_quality": null,
+  "blockers": [
+    "BUSINESS_QUALITY_CANONICAL_INPUTS_INCOMPLETE"
+  ],
+  "rules": [
+    "No missing value is converted to zero.",
+    "No TTM EBITDA is synthesized.",
+    "Single-period EBITDA is derived only when OPERATING_PROFIT and DEPRECIATION_AMORTIZATION are exact canonical same-period PIT points.",
+    "Shares use existing FIN-006 legal_share_piece_count.",
+    "Existing calculate_fundamental_quality remains the only quality scoring engine."
+  ]
+}

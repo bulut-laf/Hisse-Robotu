@@ -1,0 +1,13 @@
+{
+  "rank_history_version": "erste-hungary-rank-history-v1",
+  "rank_date": "2026-09-24",
+  "inserted_count": 929,
+  "skipped_existing_count": 0,
+  "history_row_count": 929,
+  "unique_date_count": 1,
+  "unique_isin_count": 929,
+  "two_date_fund_count": 0,
+  "rank_date_counts": {
+    "2026-09-24": 929
+  }
+}

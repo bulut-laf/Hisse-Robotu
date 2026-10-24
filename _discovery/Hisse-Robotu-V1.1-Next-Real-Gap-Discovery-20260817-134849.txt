@@ -1,0 +1,958 @@
+﻿2026-08-17 — HISSE ROBOTU V1.1 — NEXT REAL GAP DISCOVERY
+MODE=READ_ONLY
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+PRODUCTION_MUTATION=YOK
+
+PYTHON_FILES=1180
+POWERSHELL_FILES=85
+UI_FILES=0
+TEST_FILES=645
+
+[REVIEW_DAILY_OPS_OUTCOME_HITS]
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:13 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:140 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:187 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:236 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:228 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:14 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:50 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:64 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:84 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:103 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:123 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:146 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:11 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:92 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_v13_calibration_closeout_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\backend\dashboard.py:50 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6911 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7734 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8054 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8854 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8998 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\app\analysis\signal_outcome_tracking.py:222 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:11 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:92 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:6470 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:6470 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\app\analysis\signal_outcome_tracking.py:228 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:6477 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:6484 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6493 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\tests\test_daily_operation_panel_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6499 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:7121 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:13 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:140 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:187 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:236 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:14 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:50 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:64 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:84 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:103 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:123 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:146 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6504 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:7307 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6517 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:7320 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:7421 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6527 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7330 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7431 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6535 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7338 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7439 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7936 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6535 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7338 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7439 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7936 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\tests\test_v13_calibration_closeout_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6544 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7347 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7448 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7945 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:8089 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\tests\test_v13_calibration_closeout_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6544 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7347 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7448 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7945 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:8089 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:31 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6591 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:7394 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:7690 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8187 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8331 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:32 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6594 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:7397 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:7693 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8190 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8334 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:32 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6638 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7441 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7737 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8234 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8378 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:32 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:6639 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:7442 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:7738 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8235 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8379 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:23 [WeeklyPerformanceReport] class WeeklyPerformanceReportError(ValueError):
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:28 [WeeklyPerformanceReport] class WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:120 [WeeklyPerformanceReport] ) -> WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:122 [WeeklyPerformanceReport] raise WeeklyPerformanceReportError("Rapor dönemi en az 1 gün olmalıdır.")
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:214 [WeeklyPerformanceReport] return WeeklyPerformanceReport(
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:272 [WeeklyPerformanceReport] def summary_rows(report: WeeklyPerformanceReport) -> list[dict[str, object]]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:312 [WeeklyPerformanceReport] def weekly_report_csv_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:396 [WeeklyPerformanceReport] def weekly_report_pdf_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:526 [WeeklyPerformanceReport] report: WeeklyPerformanceReport,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:87 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8698 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:23 [WeeklyPerformanceReport] class WeeklyPerformanceReportError(ValueError):
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:28 [WeeklyPerformanceReport] class WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:120 [WeeklyPerformanceReport] ) -> WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:122 [WeeklyPerformanceReport] raise WeeklyPerformanceReportError("Rapor dönemi en az 1 gün olmalıdır.")
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:214 [WeeklyPerformanceReport] return WeeklyPerformanceReport(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:272 [WeeklyPerformanceReport] def summary_rows(report: WeeklyPerformanceReport) -> list[dict[str, object]]:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:312 [WeeklyPerformanceReport] def weekly_report_csv_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:396 [WeeklyPerformanceReport] def weekly_report_pdf_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:526 [WeeklyPerformanceReport] report: WeeklyPerformanceReport,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7773 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7781 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7781 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7790 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7790 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:57 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8032 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:58 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8035 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:58 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8079 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:58 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8080 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:516 [WeeklyPerformanceArchive] class WeeklyPerformanceArchive:
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:12 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:122 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive(tmp_path)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:86 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8673 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:516 [WeeklyPerformanceArchive] class WeeklyPerformanceArchive:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:12 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:122 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7748 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7756 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7756 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7765 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7765 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:56 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8007 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8010 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8054 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8055 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:360 [success_summary] def success_summary(
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:16 [success_summary] success_summary,
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:113 [success_summary] summary = success_summary(outcomes, horizon=10)
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking_dashboard.py:24 [success_summary] assert "success_summary" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking_dashboard.py:64 [success_summary] assert "success_summary" in text
+D:\Projects\Hisse-Robotu\backend\dashboard.py:55 [success_summary] success_summary,
+
+[RELIABILITY_HITS]
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:40 [stale] stale_progress_r: float = 0.50
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:49 [stale] self.stale_progress_r,
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:238 [stale] and (r_multiple is None or r_multiple < policy.stale_progress_r)
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:38 [stale] STALE = "Eski bilanço"
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:262 [stale] status=STALE,
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py:70 [stale] def test_stale_review_is_marked_as_not_current_day():
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:10 [stale] STALE,
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:106 [stale] assert result.status == STALE
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint146_vbts_soft_warning.py:40 [stale] class _StaleFilter:
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint146_vbts_soft_warning.py:121 [stale] def test_soft_vbts_mode_continues_when_dataset_is_stale(monkeypatch):
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint146_vbts_soft_warning.py:128 [stale] vbts_scan_filter=_StaleFilter(),
+D:\Projects\Hisse-Robotu\Sprint54_Rev1_temel_analiz_altyapisi\backend\app\data\fundamental_data.py:38 [stale] STALE = "Eski bilanço"
+D:\Projects\Hisse-Robotu\Sprint54_Rev1_temel_analiz_altyapisi\backend\app\data\fundamental_data.py:262 [stale] status=STALE,
+D:\Projects\Hisse-Robotu\Sprint54_Rev1_temel_analiz_altyapisi\backend\tests\test_fundamental_data.py:10 [stale] STALE,
+D:\Projects\Hisse-Robotu\Sprint54_Rev1_temel_analiz_altyapisi\backend\tests\test_fundamental_data.py:101 [stale] assert result.status == STALE
+D:\Projects\Hisse-Robotu\Sprint54_Rev2_eski_bilanco_test_duzeltmesi\backend\tests\test_fundamental_data.py:10 [stale] STALE,
+D:\Projects\Hisse-Robotu\Sprint54_Rev2_eski_bilanco_test_duzeltmesi\backend\tests\test_fundamental_data.py:106 [stale] assert result.status == STALE
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\tests\test_sprint146_vbts_soft_warning.py:40 [stale] class _StaleFilter:
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\tests\test_sprint146_vbts_soft_warning.py:114 [stale] def test_soft_vbts_mode_continues_when_dataset_is_stale(monkeypatch):
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\tests\test_sprint146_vbts_soft_warning.py:121 [stale] vbts_scan_filter=_StaleFilter(),
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:7 [freshness] from ..data.fundamental_data import FundamentalFreshnessResult
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:73 [freshness] freshness: FundamentalFreshnessResult,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py:80 [freshness] if freshness.locked:
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:7 [freshness] FundamentalFreshnessResult,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:8 [freshness] evaluate_fundamental_freshness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:25 [freshness] freshness: FundamentalFreshnessResult
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:58 [freshness] freshness = evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:63 [freshness] if package.status.locked or freshness.locked:
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:66 [freshness] freshness=freshness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:73 [freshness] else freshness.explanation
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:93 [freshness] freshness=freshness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py:11 [freshness] from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py:65 [freshness] veri_tazeligi: DataFreshnessResult
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py:224 [freshness] freshness_evaluator=gunluk_veri_tazeligini_degerlendir,
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py:27 [freshness] from ..data.data_freshness import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py:28 [freshness] BatchDataFreshnessResult,
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py:89 [freshness] veri_tazeligi: BatchDataFreshnessResult | None = None
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:17 [freshness] from ..data.data_freshness import BatchDataFreshnessResult, toplu_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:165 [freshness] veri_tazeligi: BatchDataFreshnessResult | None = None
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_reference.py:13 [freshness] FundamentalFreshnessPolicy,
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_reference.py:14 [freshness] evaluate_fundamental_freshness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_reference.py:164 [freshness] freshness_policy: FundamentalFreshnessPolicy | None = None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_reference.py:171 [freshness] policy = freshness_policy or FundamentalFreshnessPolicy()
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_reference.py:179 [freshness] freshness = evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_reference.py:184 [freshness] if freshness.locked:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:19 [freshness] class DataFreshnessPolicy:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:36 [freshness] class DataFreshnessResult:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:52 [freshness] class BatchDataFreshnessResult:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:69 [freshness] politika: DataFreshnessPolicy = DataFreshnessPolicy(),
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:87 [freshness] politika: DataFreshnessPolicy = DataFreshnessPolicy(),
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:115 [freshness] politika: DataFreshnessPolicy = DataFreshnessPolicy(),
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:116 [freshness] ) -> DataFreshnessResult:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:122 [freshness] return DataFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:155 [freshness] return DataFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:173 [freshness] return DataFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:193 [freshness] return DataFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:222 [freshness] return DataFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:238 [freshness] politika: DataFreshnessPolicy = DataFreshnessPolicy(),
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:239 [freshness] ) -> BatchDataFreshnessResult:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:310 [freshness] return BatchDataFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:343 [freshness] politika: DataFreshnessPolicy,
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:352 [freshness] def _is_gunu_mu(gun: date, politika: DataFreshnessPolicy) -> bool:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:356 [freshness] def _onceki_is_gunu(gun: date, politika: DataFreshnessPolicy) -> date:
+D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py:366 [freshness] politika: DataFreshnessPolicy,
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:16 [freshness] from .data_freshness import gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:33 [freshness] FreshnessEvaluator = Callable[[pd.DataFrame], object]
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:70 [freshness] freshness = gunluk_veri_tazeligini_degerlendir(frame)
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:71 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:72 [freshness] raise DataSourceRecoveryError("Yerel önbellek güncel değil: " + freshness.aciklama)
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:120 [freshness] freshness_evaluator: FreshnessEvaluator | None = None,
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:123 [freshness] evaluator = freshness_evaluator or gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:130 [freshness] freshness = evaluator(frame)
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:131 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:132 [freshness] raise DataSourceRecoveryError(freshness.aciklama)
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:141 [freshness] freshness = evaluator(frame)
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:142 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\backend\app\data\data_source_recovery.py:143 [freshness] raise DataSourceRecoveryError(freshness.aciklama)
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:48 [freshness] class FundamentalFreshnessPolicy:
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:64 [freshness] class FundamentalFreshnessResult:
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:221 [freshness] def evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:225 [freshness] policy: FundamentalFreshnessPolicy = (
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:226 [freshness] FundamentalFreshnessPolicy()
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:228 [freshness] ) -> FundamentalFreshnessResult:
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:233 [freshness] return FundamentalFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:248 [freshness] return FundamentalFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:261 [freshness] return FundamentalFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:273 [freshness] return FundamentalFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:33 [freshness] from ..data.data_freshness import gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:148 [freshness] "backend/app/data/data_freshness.py",
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_stock_chat.py:149 [freshness] freshness = getattr(result, "veri_tazeligi", None)
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_stock_chat.py:167 [freshness] "data_freshness": _safe_value(freshness),
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py:38 [freshness] freshness_status: str
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py:91 [freshness] ("Tazelik", report.freshness_status),
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py:285 [freshness] ("Tazelik", report.freshness_status),
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:62 [freshness] freshness_change: tuple[str, str]
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:102 [freshness] freshness_status=str(payload["freshness_status"]),
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:402 [freshness] freshness_change=(
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:403 [freshness] previous.report.freshness_status,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:404 [freshness] current.report.freshness_status,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:421 [freshness] "Tazelik": item.report.freshness_status,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:479 [freshness] "Önceki": comparison.freshness_change[0],
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:480 [freshness] "Güncel": comparison.freshness_change[1],
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:506 [freshness] freshness_statuses: tuple[str, ...] = ()
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:577 [freshness] freshness = {
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:579 [freshness] for value in filters.freshness_statuses
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:611 [freshness] freshness
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:612 [freshness] and item.report.freshness_status not in freshness
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:644 [freshness] "freshness_status",
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:658 [freshness] item.report.freshness_status,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:716 [freshness] ["Tazelik", report.freshness_status],
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:24 [freshness] from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:60 [freshness] veri_tazeligi: DataFreshnessResult | None = None
+D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py:5 [freshness] from backend.app.data.data_freshness import (
+D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness_message_semantics.py:7 [freshness] from backend.app.data.data_freshness import (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:33 [freshness] assert "evaluate_fundamental_freshness" in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:12 [freshness] FundamentalFreshnessPolicy,
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:13 [freshness] evaluate_fundamental_freshness,
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:78 [freshness] result = evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:98 [freshness] result = evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:101 [freshness] policy=FundamentalFreshnessPolicy(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:121 [freshness] result = evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:14 [freshness] FundamentalFreshnessResult,
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:45 [freshness] def freshness(locked=False):
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:46 [freshness] return FundamentalFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:73 [freshness] freshness(),
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:89 [freshness] freshness(locked=True),
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:124 [freshness] score = calculate_fundamental_quality(snapshot, freshness())
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:23 [freshness] freshness_status="Güncel",
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:32 [freshness] freshness_status="Güncel",
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:79 [freshness] freshness_statuses=("Güncel",),
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:31 [freshness] assert "freshness_status=tazelik.status" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:12 [freshness] FundamentalFreshnessResult,
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:49 [freshness] freshness = FundamentalFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:56 [freshness] return calculate_fundamental_quality(snapshot, freshness)
+D:\Projects\Hisse-Robotu\backend\tests\test_live_analysis_history.py:10 [freshness] from backend.app.data.data_freshness import DataFreshnessResult
+D:\Projects\Hisse-Robotu\backend\tests\test_live_analysis_history.py:86 [freshness] tazelik = DataFreshnessResult(
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:12 [freshness] freshness = kaynak.index(
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:15 [freshness] lock = kaynak.index("self._veri_tazeligi_kilidi_aktif", freshness)
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py:19 [freshness] assert freshness < lock < locked_flag < engine
+D:\Projects\Hisse-Robotu\backend\dashboard.py:204 [freshness] evaluate_fundamental_freshness,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:289 [freshness] from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+D:\Projects\Hisse-Robotu\backend\dashboard.py:1928 [freshness] def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+D:\Projects\Hisse-Robotu\backend\dashboard.py:1934 [freshness] if isinstance(sonuc, BatchDataFreshnessResult):
+D:\Projects\Hisse-Robotu\backend\dashboard.py:4334 [freshness] evaluate_fundamental_freshness(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:5836 [freshness] tazelik = evaluate_fundamental_freshness(sirket_donemleri)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6524 [freshness] freshness_status=tazelik.status,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6687 [freshness] item.report.freshness_status
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6737 [freshness] freshness_statuses=tuple(
+D:\Projects\Hisse-Robotu\Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:11 [freshness] from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:64 [freshness] veri_tazeligi: DataFreshnessResult
+D:\Projects\Hisse-Robotu\Sprint52_Rev2_test_uyumluluk_duzeltmesi\Kur-Sprint52-Rev2.ps1:13 [freshness] python -m pytest backend/tests/test_data_freshness.py backend/tests/test_market_regime_live.py backend/tests/test_momentum_freshness_regime_merge.py backend/tests/test_market_regime_dashboard.py -q
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:11 [freshness] from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:65 [freshness] veri_tazeligi: DataFreshnessResult
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:16 [freshness] from .data_freshness import gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:69 [freshness] freshness = gunluk_veri_tazeligini_degerlendir(frame)
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:70 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:71 [freshness] raise DataSourceRecoveryError("Yerel önbellek güncel değil: " + freshness.aciklama)
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:127 [freshness] freshness = gunluk_veri_tazeligini_degerlendir(frame)
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:128 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:129 [freshness] raise DataSourceRecoveryError(freshness.aciklama)
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:138 [freshness] freshness = gunluk_veri_tazeligini_degerlendir(frame)
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:139 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:140 [freshness] raise DataSourceRecoveryError(freshness.aciklama)
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\dashboard.py:86 [freshness] from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\dashboard.py:1709 [freshness] def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\dashboard.py:1715 [freshness] if isinstance(sonuc, BatchDataFreshnessResult):
+D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\Kur-Sprint53.ps1:10 [freshness] python -m pytest backend/tests/test_market_data.py backend/tests/test_batch_market_data.py backend/tests/test_market_regime_live.py backend/tests/test_data_freshness.py -q
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:11 [freshness] from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:65 [freshness] veri_tazeligi: DataFreshnessResult
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:229 [freshness] freshness_evaluator=gunluk_veri_tazeligini_degerlendir,
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:16 [freshness] from .data_freshness import gunluk_veri_tazeligini_degerlendir
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:33 [freshness] FreshnessEvaluator = Callable[[pd.DataFrame], object]
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:70 [freshness] freshness = gunluk_veri_tazeligini_degerlendir(frame)
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:71 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:72 [freshness] raise DataSourceRecoveryError("Yerel önbellek güncel değil: " + freshness.aciklama)
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:120 [freshness] freshness_evaluator: FreshnessEvaluator = gunluk_veri_tazeligini_degerlendir,
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:129 [freshness] freshness = freshness_evaluator(frame)
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:130 [freshness] if freshness.kilitli:
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:131 [freshness] raise DataSourceRecoveryError(freshness.aciklama)
+D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:140 [freshness] freshness = freshness_evaluator(frame)
+
+[OBSERVABILITY_VISIBILITY_HITS]
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:249 [observability] # V11_TRACK1_OBSERVABILITY_ROWS
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:250 [observability] def observability_rows(summary: DailyOperationSummary) -> list[dict[str, object]]:
+D:\Projects\Hisse-Robotu\backend\dashboard.py:133 [observability] observability_rows,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7756 [observability] # V11_TRACK1_OBSERVABILITY_UI
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7763 [observability] pd.DataFrame(observability_rows(summary)),
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:31 [status] delayed_data_status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:89 [status] delayed_status = "Ölçüm yok"
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:109 [status] delayed_status = latest.status
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:118 [status] latest.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:208 [status] delayed_data_status=delayed_status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:259 [status] {"Alan": "Veri durumu", "Değer": summary.delayed_data_status},
+D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:40 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:274 [status] status="Yüksek benzerlik",
+D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:318 [status] "Durum": item.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:63 [status] if package.status.locked or freshness.locked:
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:71 [status] package.status.explanation
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:72 [status] if package.status.locked
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:85 [status] "provider": package.status.source,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:86 [status] "data_identity": package.status.data_identity,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:87 [status] "fetched_at": package.status.fetched_at.isoformat(),
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py:435 [status] "Sektör görünümü": sektor_baglami.sector_status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:197 [status] StatusCallback = Callable[[str], None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:316 [status] durum_bildirimi: StatusCallback | None = None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:22 [status] OPEN_STATUS = "Açık"
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:23 [status] CLOSED_STATUS = "Kapalı"
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:42 [status] status: str = OPEN_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:66 [status] if self.status not in (OPEN_STATUS, CLOSED_STATUS):
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:93 [status] if self.status == CLOSED_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:130 [status] if self.status == CLOSED_STATUS and self.exit_price is not None:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:136 [status] if self.status == CLOSED_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:142 [status] if self.status != CLOSED_STATUS or self.exit_price is None:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:153 [status] if self.status == CLOSED_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:204 [status] item.status != OPEN_STATUS,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:252 [status] and item.status == OPEN_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:360 [status] if position.status != OPEN_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:365 [status] status=CLOSED_STATUS,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:414 [status] if position.status != OPEN_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:471 [status] if position.status != OPEN_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:503 [status] "Durum": item.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py:14 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py:31 [status] status=snapshot.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:32 [status] sample_status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:189 [status] sample_status=(
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:283 [status] "Örneklem durumu": item.sample_status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:369 [status] item.sample_status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:21 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:44 [status] item.critical and item.status == "Başarısız"
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:50 [status] return sum(item.status == "Uyarı" for item in self.criteria)
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:62 [status] status = "Başarılı"
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:64 [status] status = "Uyarı"
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:66 [status] status = "Başarısız"
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:69 [status] status=status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:101 [status] item.status == "Kapalı"
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:105 [status] item.sample_status == "Yeterli"
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:167 [status] item.critical and item.status == "Başarısız"
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:170 [status] warnings = sum(item.status == "Uyarı" for item in criteria)
+D:\Projects\Hisse-Robotu\backend\app\analysis\v13_calibration_closeout.py:203 [status] "Durum": item.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:64 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:453 [status] status = "Kararlı bölge"
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:455 [status] status = "İzlenebilir"
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:457 [status] status = "Aşırı uyum riski"
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:472 [status] status=status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:488 [status] if item.status == "Kararlı bölge"
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:565 [status] "Durum": item.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:20 [status] from .shadow_portfolio import CLOSED_STATUS, OPEN_STATUS, ShadowPosition
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:136 [status] if item.status == CLOSED_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:141 [status] item for item in all_positions if item.status == OPEN_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:189 [status] item.status,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:23 [status] STATUS_ACTIVE = "Aktif"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:24 [status] STATUS_FUTURE = "Gelecekte başlayacak"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:25 [status] STATUS_EXPIRED = "Süresi dolmuş"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:62 [status] def status(self, on_date: date | None = None) -> str:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:65 [status] return STATUS_FUTURE
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:67 [status] return STATUS_EXPIRED
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:68 [status] return STATUS_ACTIVE
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:85 [status] "Durum": self.status(on_date),
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:287 [status] active = tuple(record for record in records if record.status(current) == STATUS_ACTIVE)
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:288 [status] future = tuple(record for record in records if record.status(current) == STATUS_FUTURE)
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:289 [status] expired = tuple(record for record in records if record.status(current) == STATUS_EXPIRED)
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:388 [status] class DashboardVbtsOperationalStatus:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:511 [status] def read_operational_status(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:514 [status] ) -> DashboardVbtsOperationalStatus:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:527 [status] return DashboardVbtsOperationalStatus(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:726 [status] registry_status: str
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:727 [status] active_csv_status: str
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:728 [status] backup_status: str
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:729 [status] audit_status: str
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:942 [status] registry_status = f"Sağlıklı · {len(registry_records)} kayıt"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:944 [status] registry_status = "Bozuk"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:949 [status] registry_status = "Yok"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:954 [status] active_csv_status = f"Sağlıklı · {len(active_records)} aktif kayıt"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:957 [status] active_csv_status = "Arşivle uyumsuz"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:963 [status] active_csv_status = "Bozuk"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:967 [status] active_csv_status = "Yok"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:968 [status] if any(record.status() == STATUS_ACTIVE for record in registry_records):
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:983 [status] backup_status = f"Sağlıklı · {len(backups)} yedek"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:985 [status] backup_status = "Bütünlük hatası"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:991 [status] audit_status = f"Sağlıklı · {len(events)} işlem"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:994 [status] audit_status = "Bozuk"
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:1000 [status] registry_status=registry_status,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:1001 [status] active_csv_status=active_csv_status,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:1002 [status] backup_status=backup_status,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:1003 [status] audit_status=audit_status,
+D:\Projects\Hisse-Robotu\backend\app\compliance\kap_http_source.py:99 [status] status_code = getattr(response, "status_code", None)
+D:\Projects\Hisse-Robotu\backend\app\compliance\kap_http_source.py:101 [status] if status_code != 200:
+D:\Projects\Hisse-Robotu\backend\app\compliance\kap_http_source.py:104 [status] f"{status_code}"
+D:\Projects\Hisse-Robotu\backend\app\compliance\kap_vbts_client.py:10 [status] from backend.app.compliance.vbts_source_status import VbtsSourceStatus
+D:\Projects\Hisse-Robotu\backend\app\compliance\kap_vbts_client.py:113 [status] status = VbtsSourceStatus(
+D:\Projects\Hisse-Robotu\backend\app\compliance\kap_vbts_client.py:122 [status] status=status,
+D:\Projects\Hisse-Robotu\backend\app\compliance\manual_vbts_csv.py:10 [status] from backend.app.compliance.vbts_source_status import VbtsSourceStatus
+D:\Projects\Hisse-Robotu\backend\app\compliance\manual_vbts_csv.py:119 [status] status=VbtsSourceStatus(
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_dataset.py:8 [status] from backend.app.compliance.vbts_source_status import VbtsSourceStatus
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_dataset.py:14 [status] status: VbtsSourceStatus
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_dataset.py:19 [status] status: VbtsSourceStatus,
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_dataset.py:23 [status] if len(normalized_measures) != status.record_count:
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_dataset.py:31 [status] if measure.source != status.source
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_dataset.py:40 [status] object.__setattr__(self, "status", status)
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_dataset.py:47 [status] return self.status.is_usable_at(
+D:\Projects\Hisse-Robotu\backend\app\compliance\vbts_source_status.py:8 [status] class VbtsSourceStatus:
+D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py:67 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py:99 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py:194 [status] def _status_for(
+D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py:293 [status] status, locked, preview_only, completed = _status_for(
+D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py:307 [status] status=status,
+D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py:349 [status] status=snapshot.status,
+D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py:418 [status] "Durum": item.status,
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:65 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:234 [status] status=MISSING,
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:249 [status] status=FUTURE,
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:262 [status] status=STALE,
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py:274 [status] status=CURRENT,
+D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py:42 [status] class KapApiConfigurationStatus:
+D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py:91 [status] ) -> KapApiConfigurationStatus:
+D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py:106 [status] return KapApiConfigurationStatus(
+D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py:116 [status] return KapApiConfigurationStatus(
+D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py:127 [status] return KapApiConfigurationStatus(
+D:\Projects\Hisse-Robotu\backend\app\data\kap_fundamental_source.py:36 [status] class KapFundamentalSourceStatus:
+D:\Projects\Hisse-Robotu\backend\app\data\kap_fundamental_source.py:51 [status] status: KapFundamentalSourceStatus
+D:\Projects\Hisse-Robotu\backend\app\data\kap_fundamental_source.py:268 [status] status = KapFundamentalSourceStatus(
+D:\Projects\Hisse-Robotu\backend\app\data\kap_fundamental_source.py:284 [status] status=status,
+D:\Projects\Hisse-Robotu\backend\app\data\kap_fundamental_source.py:289 [status] status = KapFundamentalSourceStatus(
+D:\Projects\Hisse-Robotu\backend\app\data\kap_fundamental_source.py:305 [status] status=status,
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\calibration.py:14 [status] status = "stable"
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\calibration.py:16 [status] status = "review"
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\calibration.py:18 [status] status = "needs_improvement"
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\calibration.py:21 [status] "status": status,
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\dashboard_decision_card.py:13 [status] "status": decision.get("decision_label", "İZLE"),
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\decision_display.py:18 [status] status = decision.get("decision")
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\decision_display.py:22 [status] "display_status": mapping.get(status, "İZLE"),
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\portfolio_decision_bridge.py:15 [status] status = "SAT ADAYI"
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\portfolio_decision_bridge.py:17 [status] status = "TUT"
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\portfolio_decision_bridge.py:19 [status] status = "İZLE"
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\portfolio_decision_bridge.py:23 [status] "decision_label": status,
+D:\Projects\Hisse-Robotu\backend\app\history\resilient_batch_replay.py:26 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\history\resilient_batch_replay.py:82 [status] status="started",
+D:\Projects\Hisse-Robotu\backend\app\history\resilient_batch_replay.py:107 [status] status="completed",
+D:\Projects\Hisse-Robotu\backend\app\history\resilient_batch_replay.py:125 [status] status="failed",
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:291 [status] status TEXT NOT NULL,
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:376 [status] status,
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:124 [status] status,
+
+[UX_OPERATIONAL_SURFACE_HITS]
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:9 [dashboard] from ..ui.backtest_dashboard import (
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:10 [dashboard] BacktestDashboardService,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:11 [dashboard] DashboardBacktestRequest,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:12 [dashboard] DashboardResult,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:29 [dashboard] class DashboardRunnerProtocol(Protocol):
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:30 [dashboard] def calistir(self, istek: DashboardBacktestRequest) -> DashboardResult:
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:35 [dashboard] DashboardRunnerFactory = Callable[[pd.DataFrame], DashboardRunnerProtocol]
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:56 [dashboard] baz_sonuc: DashboardResult
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:57 [dashboard] karsilastirma_sonucu: DashboardResult
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:77 [dashboard] dashboard_uretici: DashboardRunnerFactory | None = None,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:81 [dashboard] if dashboard_uretici is not None and not callable(dashboard_uretici):
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:82 [dashboard] raise TypeError("Dashboard üretici çağrılabilir olmalıdır.")
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:85 [dashboard] self._dashboard_uretici = (
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:86 [dashboard] dashboard_uretici
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:87 [dashboard] if dashboard_uretici is not None
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:88 [dashboard] else self._varsayilan_dashboard_uret
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:93 [dashboard] baz_istek: DashboardBacktestRequest,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:94 [dashboard] karsilastirma_istegi: DashboardBacktestRequest,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:123 [dashboard] baz_calistirici = self._dashboard_uretici(baz_veri)
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:124 [dashboard] karsilastirma_calistiricisi = self._dashboard_uretici(
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:165 [dashboard] baz_istek: DashboardBacktestRequest,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:166 [dashboard] karsilastirma_istegi: DashboardBacktestRequest,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:168 [dashboard] if not isinstance(baz_istek, DashboardBacktestRequest) or not isinstance(
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:169 [dashboard] karsilastirma_istegi, DashboardBacktestRequest
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:172 [dashboard] "Karşılaştırma için iki DashboardBacktestRequest gereklidir."
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:193 [dashboard] def _varsayilan_dashboard_uret(
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:195 [dashboard] ) -> BacktestDashboardService:
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:201 [dashboard] return BacktestDashboardService(
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:207 [dashboard] baz: DashboardResult,
+D:\Projects\Hisse-Robotu\backend\app\backtest\same_data_comparison.py:208 [dashboard] karsilastirma: DashboardResult,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:15 [dashboard] class DashboardManualVbtsError(RuntimeError):
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:16 [dashboard] """Dashboard için manuel VBTS veri seti hazırlanamadığında oluşur."""
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:22 [dashboard] def load_dashboard_vbts_dataset(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:34 [dashboard] raise DashboardManualVbtsError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:46 [dashboard] raise DashboardManualVbtsError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:51 [dashboard] raise DashboardManualVbtsError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:62 [dashboard] raise DashboardManualVbtsError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py:76 [dashboard] raise DashboardManualVbtsError(str(exc)) from exc
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_factory.py:15 [dashboard] class DashboardMarketScannerFactoryError(RuntimeError):
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_factory.py:16 [dashboard] """KAP/VBTS korumalı dashboard taraması hazırlanamadığında oluşur."""
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_factory.py:77 [dashboard] raise DashboardMarketScannerFactoryError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:12 [dashboard] from backend.app.compliance.dashboard_manual_vbts import (
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:13 [dashboard] DashboardManualVbtsError,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:14 [dashboard] load_dashboard_vbts_dataset,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:19 [dashboard] class DashboardMarketScannerSourceError(RuntimeError):
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:20 [dashboard] """Dashboard tarama servisi seçilen VBTS kaynağıyla kurulamadığında oluşur."""
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:26 [dashboard] def build_dashboard_market_scanner(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:37 [dashboard] Varsayılan davranış geriye dönük uyum için strict'tir. Dashboard,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:63 [dashboard] raise DashboardMarketScannerSourceError(mesaj)
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:72 [dashboard] raise DashboardMarketScannerSourceError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:77 [dashboard] raise DashboardMarketScannerSourceError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:88 [dashboard] raise DashboardMarketScannerSourceError(mesaj)
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:91 [dashboard] dataset = load_dashboard_vbts_dataset(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:94 [dashboard] except DashboardManualVbtsError as exc:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:101 [dashboard] raise DashboardMarketScannerSourceError(str(exc)) from exc
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py:122 [dashboard] raise DashboardMarketScannerSourceError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:38 [dashboard] class DashboardVbtsManagerError(ValueError):
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:43 [dashboard] class DashboardVbtsRecord:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:91 [dashboard] class DashboardVbtsLifecycle:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:92 [dashboard] active: tuple[DashboardVbtsRecord, ...]
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:93 [dashboard] future: tuple[DashboardVbtsRecord, ...]
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:94 [dashboard] expired: tuple[DashboardVbtsRecord, ...]
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:97 [dashboard] def all_records(self) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:128 [dashboard] raise DashboardVbtsManagerError("Hisse sembolü geçersizdir.")
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:136 [dashboard] raise DashboardVbtsManagerError(f"{field_name} boş bırakılamaz.")
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:149 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:161 [dashboard] ) -> DashboardVbtsRecord:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:170 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:177 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:181 [dashboard] return DashboardVbtsRecord(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:190 [dashboard] def _read_records(path: Path) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:198 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:212 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:219 [dashboard] records: tuple[DashboardVbtsRecord, ...],
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:247 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:253 [dashboard] records: tuple[DashboardVbtsRecord, ...],
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:254 [dashboard] ) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:256 [dashboard] unique: list[DashboardVbtsRecord] = []
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:275 [dashboard] def list_vbts_records(csv_path: Path) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:283 [dashboard] records: tuple[DashboardVbtsRecord, ...],
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:285 [dashboard] ) -> DashboardVbtsLifecycle:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:290 [dashboard] return DashboardVbtsLifecycle(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:299 [dashboard] records: tuple[DashboardVbtsRecord, ...] | None = None,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:301 [dashboard] ) -> DashboardVbtsLifecycle:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:316 [dashboard] record: DashboardVbtsRecord,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:317 [dashboard] ) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:320 [dashboard] raise DashboardVbtsManagerError("Aynı VBTS kaydı zaten mevcut.")
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:341 [dashboard] ) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:346 [dashboard] raise DashboardVbtsManagerError("Silinecek VBTS kaydı bulunamadı.")
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:367 [dashboard] ) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:388 [dashboard] class DashboardVbtsOperationalStatus:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:426 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:452 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:464 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:472 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:476 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:485 [dashboard] lifecycle: DashboardVbtsLifecycle,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:506 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:513 [dashboard] lifecycle: DashboardVbtsLifecycle,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:514 [dashboard] ) -> DashboardVbtsOperationalStatus:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:522 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:527 [dashboard] return DashboardVbtsOperationalStatus(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:549 [dashboard] ) -> DashboardVbtsLifecycle:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:565 [dashboard] class DashboardVbtsBackupInfo:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:573 [dashboard] def list_vbts_backups(csv_path: Path) -> tuple[DashboardVbtsBackupInfo, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:579 [dashboard] items: list[DashboardVbtsBackupInfo] = []
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:594 [dashboard] DashboardVbtsBackupInfo(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:603 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:614 [dashboard] tuple[DashboardVbtsRecord, ...],
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:615 [dashboard] DashboardVbtsLifecycle,
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:621 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:625 [dashboard] raise DashboardVbtsManagerError("Seçilen VBTS yedeği bulunamadı.")
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:627 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:634 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:644 [dashboard] ) -> tuple[DashboardVbtsRecord, ...]:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:670 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:681 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:693 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:697 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:724 [dashboard] class DashboardVbtsHealthReport:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:746 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:759 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:763 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:769 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:791 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:816 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:821 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:826 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:860 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:879 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:892 [dashboard] raise DashboardVbtsManagerError(
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:934 [dashboard] ) -> DashboardVbtsHealthReport:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:943 [dashboard] except DashboardVbtsManagerError as exc:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:962 [dashboard] except DashboardVbtsManagerError as exc:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:984 [dashboard] except DashboardVbtsManagerError as exc:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:992 [dashboard] except DashboardVbtsManagerError as exc:
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py:998 [dashboard] return DashboardVbtsHealthReport(
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\dashboard_decision_card.py:9 [dashboard] """Karar motoru sonucunu dashboard kart yapısına dönüştürür."""
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:42 [dashboard] from ..ui.backtest_dashboard import (
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:43 [dashboard] BacktestDashboardService,
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:44 [dashboard] DashboardBacktestRequest,
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:45 [dashboard] DashboardResult,
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:146 [dashboard] "backend/dashboard.py",
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:162 [dashboard] "backend/app/ui/live_analysis_dashboard.py",
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:163 [dashboard] "backend/requirements-dashboard.txt",
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:210 [dashboard] backtest_sonucu: DashboardResult | None = None
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:594 [dashboard] def _sentetik_backtest_calistir() -> DashboardResult:
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:600 [dashboard] servis = BacktestDashboardService(
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:604 [dashboard] DashboardBacktestRequest(
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:612 [dashboard] def _rapor_uretimi_kontrolu(sonuc: DashboardResult) -> SystemCheckItem:
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:635 [dashboard] def _gecmis_kaydi_kontrolu(sonuc: DashboardResult) -> SystemCheckItem:
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:15 [dashboard] from ..ui.backtest_dashboard import DashboardResult
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:16 [dashboard] from ..ui.live_analysis_dashboard import LiveAnalysisResult
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:17 [dashboard] from ..ui.portfolio_dashboard import PortfolioDashboardResult
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:233 [dashboard] sonuc: DashboardResult,
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:235 [dashboard] if not isinstance(sonuc, DashboardResult):
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:236 [dashboard] raise TypeError("Tek-hisse geçmiş sonucu DashboardResult olmalıdır.")
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:291 [dashboard] sonuc: PortfolioDashboardResult,
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:293 [dashboard] if not isinstance(sonuc, PortfolioDashboardResult):
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:295 [dashboard] "Portföy geçmiş sonucu PortfolioDashboardResult olmalıdır."
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_card.py:8 [dashboard] class AIDashboardCard:
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_integration.py:5 [dashboard] from backend.app.market_context.ai_dashboard_provider import (
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_integration.py:6 [dashboard] build_ai_dashboard_payload,
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_integration.py:10 [dashboard] def build_ai_dashboard_view(
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_integration.py:13 [dashboard] """AI dashboard entegrasyon akışı hazırlığı.
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_integration.py:19 [dashboard] payload = build_ai_dashboard_payload(evaluation)
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_provider.py:6 [dashboard] def build_ai_dashboard_payload(
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_provider.py:9 [dashboard] """AI dashboard görünümü için veri sağlayıcı hazırlığı.
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_v1_health_check.py:14 [dashboard] def validate_ai_dashboard_payload(
+D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_market_strength.py:455 [dashboard] """Dashboard/CSV için sade sektör güç satırları üretir."""
+D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_member_strength.py:563 [dashboard] """Dashboard/CSV için sade, sinyal üretmeyen sektör bağlam satırları."""
+D:\Projects\Hisse-Robotu\backend\app\system\dashboard_connection_validation.py:6 [dashboard] def validate_dashboard_connection(
+D:\Projects\Hisse-Robotu\backend\app\system\dashboard_connection_validation.py:9 [dashboard] """Dashboard veri bağlantısı kontrolü."""
+D:\Projects\Hisse-Robotu\backend\app\system\data_flow_validation.py:15 [dashboard] "dashboard": bool(flow.get("dashboard")),
+D:\Projects\Hisse-Robotu\backend\app\system\end_to_end_validation.py:17 [dashboard] "dashboard": bool(flow.get("dashboard")),
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:29 [dashboard] class DashboardBacktestRequest:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:84 [dashboard] class DashboardSummary:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:105 [dashboard] class DashboardTradeRow:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:135 [dashboard] class DashboardResult:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:138 [dashboard] ozet: DashboardSummary
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:139 [dashboard] islemler: tuple[DashboardTradeRow, ...]
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:154 [dashboard] class BacktestDashboardService:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:169 [dashboard] istek: DashboardBacktestRequest,
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:170 [dashboard] ) -> DashboardResult:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:171 [dashboard] if not isinstance(istek, DashboardBacktestRequest):
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:173 [dashboard] "Arayüz isteği DashboardBacktestRequest olmalıdır."
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:181 [dashboard] return DashboardResult(
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:189 [dashboard] ) -> DashboardSummary:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:211 [dashboard] return DashboardSummary(
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:253 [dashboard] ) -> tuple[DashboardTradeRow, ...]:
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py:255 [dashboard] DashboardTradeRow(
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:33 [dashboard] class LiveAnalysisDashboardError(Exception):
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:65 [dashboard] class OpenPositionDashboardRequest:
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:105 [dashboard] class LiveAnalysisDashboardService:
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:144 [dashboard] raise LiveAnalysisDashboardError(str(hata)) from hata
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:155 [dashboard] class OpenPositionDashboardService:
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:170 [dashboard] istek: OpenPositionDashboardRequest,
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py:191 [dashboard] raise LiveAnalysisDashboardError(str(hata)) from hata
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard.py:17 [dashboard] def render_market_context_dashboard(
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s157.py:6 [dashboard] from backend.app.ui.market_context_dashboard import (
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s157.py:7 [dashboard] render_market_context_dashboard as _render_existing_market_context_dashboard,
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s157.py:78 [dashboard] # Eski dashboard kodu statik anahtarı okursa geriye dönük uyumluluk sürer.
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s157.py:122 [dashboard] # Mevcut dashboard widget'ları henüz çizilmediği için bu atama güvenlidir.
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s157.py:174 [dashboard] def render_market_context_dashboard(st, *, project_root: Path) -> None:
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s157.py:204 [dashboard] _render_existing_market_context_dashboard(
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s182.py:6 [dashboard] from backend.app.ui.market_context_dashboard_s157 import (
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s182.py:8 [dashboard] render_market_context_dashboard as _render_market_context_dashboard_s157,
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s182.py:16 [dashboard] def render_market_context_dashboard(st: Any, *, project_root: Path) -> None:
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s182.py:25 [dashboard] _render_market_context_dashboard_s157(st, project_root=project_root)
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:39 [dashboard] class MarketRegimeDashboardResult:
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:73 [dashboard] sonuc: MarketRegimeDashboardResult,
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:109 [dashboard] class MarketRegimeDashboardError(Exception):
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:116 [dashboard] class MarketRegimeDashboardService:
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:120 [dashboard] def calistir(self) -> MarketRegimeDashboardResult:
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:124 [dashboard] raise MarketRegimeDashboardError(str(hata)) from hata
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:126 [dashboard] raise MarketRegimeDashboardError("BIST 100 piyasa rejimi sonucu üretilemedi.")
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py:127 [dashboard] return MarketRegimeDashboardResult(sonuclar=sonuclar)
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:185 [dashboard] def render_news_center_dashboard(st) -> None:
+D:\Projects\Hisse-Robotu\backend\app\ui\portfolio_dashboard.py:43 [dashboard] MAKSIMUM_DASHBOARD_SEMBOLU = 10
+D:\Projects\Hisse-Robotu\backend\app\ui\portfolio_dashboard.py:46 [dashboard] class PortfolioDashboardError(RuntimeError):
+
+[TEST_COVERAGE_HITS]
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:13 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:140 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:187 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:236 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:228 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:14 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:50 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:64 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:84 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:103 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:123 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:146 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:11 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:92 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_v13_calibration_closeout_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\backend\dashboard.py:50 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6911 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7734 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8054 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8854 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8998 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\app\analysis\signal_outcome_tracking.py:222 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:11 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:92 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:6470 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:6470 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\app\analysis\signal_outcome_tracking.py:228 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:6477 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:6484 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6493 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\tests\test_daily_operation_panel_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6499 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:7121 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:13 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:140 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:187 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:236 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:14 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:50 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:64 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:84 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:103 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:123 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:146 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6504 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:7307 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6517 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:7320 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:7421 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6527 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7330 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7431 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6535 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7338 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7439 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7936 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6535 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7338 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7439 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7936 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\tests\test_v13_calibration_closeout_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6544 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7347 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7448 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7945 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:8089 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\tests\test_v13_calibration_closeout_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6544 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7347 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7448 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7945 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:8089 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:31 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6591 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:7394 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:7690 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8187 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8331 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:32 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6594 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:7397 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:7693 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8190 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8334 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:32 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6638 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7441 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7737 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8234 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8378 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:32 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:6639 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:7442 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:7738 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8235 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8379 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:23 [WeeklyPerformanceReport] class WeeklyPerformanceReportError(ValueError):
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:28 [WeeklyPerformanceReport] class WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:120 [WeeklyPerformanceReport] ) -> WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:122 [WeeklyPerformanceReport] raise WeeklyPerformanceReportError("Rapor dönemi en az 1 gün olmalıdır.")
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:214 [WeeklyPerformanceReport] return WeeklyPerformanceReport(
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:272 [WeeklyPerformanceReport] def summary_rows(report: WeeklyPerformanceReport) -> list[dict[str, object]]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:312 [WeeklyPerformanceReport] def weekly_report_csv_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:396 [WeeklyPerformanceReport] def weekly_report_pdf_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:526 [WeeklyPerformanceReport] report: WeeklyPerformanceReport,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:87 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8698 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:23 [WeeklyPerformanceReport] class WeeklyPerformanceReportError(ValueError):
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:28 [WeeklyPerformanceReport] class WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:120 [WeeklyPerformanceReport] ) -> WeeklyPerformanceReport:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:122 [WeeklyPerformanceReport] raise WeeklyPerformanceReportError("Rapor dönemi en az 1 gün olmalıdır.")
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:214 [WeeklyPerformanceReport] return WeeklyPerformanceReport(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:272 [WeeklyPerformanceReport] def summary_rows(report: WeeklyPerformanceReport) -> list[dict[str, object]]:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:312 [WeeklyPerformanceReport] def weekly_report_csv_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:396 [WeeklyPerformanceReport] def weekly_report_pdf_bytes(report: WeeklyPerformanceReport) -> bytes:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:526 [WeeklyPerformanceReport] report: WeeklyPerformanceReport,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7773 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7781 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7781 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7790 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:52 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7790 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:57 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8032 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:58 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8035 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:58 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8079 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:58 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8080 [WeeklyPerformanceReport] WeeklyPerformanceReportError,
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_performance_report.py:516 [WeeklyPerformanceArchive] class WeeklyPerformanceArchive:
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:12 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\backend\tests\test_weekly_performance_report.py:122 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive(tmp_path)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:86 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8673 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\app\analysis\weekly_performance_report.py:516 [WeeklyPerformanceArchive] class WeeklyPerformanceArchive:
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:12 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\tests\test_weekly_performance_report.py:122 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:7748 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:7756 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:7756 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:7765 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:51 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:7765 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:56 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:8007 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:8010 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8054 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:57 [WeeklyPerformanceArchive] WeeklyPerformanceArchive,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:8055 [WeeklyPerformanceArchive] archive = WeeklyPerformanceArchive()
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:9 [prebreakout] from backend.app.prebreakout.prebreakout_operation_alerts import OperationTrendAlarm
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:12 [prebreakout] DEFAULT_ALARM_HISTORY_PATH = Path("backend/data/prebreakout_alarm_history.jsonl")
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py:13 [prebreakout] DEFAULT_DECISION_JOURNAL_PATH = Path("backend/data/prebreakout_decision_journal.jsonl")
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py:9 [prebreakout] from backend.app.prebreakout.prebreakout_engine import (
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py:12 [prebreakout] from backend.app.prebreakout.prebreakout_models import (
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py:13 [prebreakout] PreBreakoutConfig,
+
+CANDIDATE=A — Daily Ops → Outcome/Weekly Review workflow wiring & visibility
+EVIDENCE=47
+CROSS_WIRING=0
+INTERPRETATION=INVESTIGATE: modules exist but direct shared-surface wiring is not obvious from literal evidence.
+
+CANDIDATE=B — Automatic outcome update health/freshness visibility
+EVIDENCE=42
+CROSS_WIRING=0
+INTERPRETATION=LIKELY_EXISTING_OR_PARTIAL: verify exact health surface and user visibility.
+
+CANDIDATE=C — Archive/history → actionable review discoverability
+EVIDENCE=39
+CROSS_WIRING=0
+INTERPRETATION=INVESTIGATE: archive exists; dashboard/panel discoverability is not obvious from literal evidence.
+
+DISCOVERY_DECISION=REAL_GAP_CANDIDATE_REQUIRES_EXACT_CALL_CHAIN
+NEXT=En yüksek öncelikli INVESTIGATE adayı için exact source/call-chain doğrulanmalı. Kanıtlanmadan production mutation YOK.
+PRODUCTION_MUTATION=YOK

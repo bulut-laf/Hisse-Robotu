@@ -1,0 +1,104 @@
+{
+  "target_count": 929,
+  "already_completed_count": 928,
+  "attempted_count": 1,
+  "success_count_this_run": 1,
+  "failure_count_this_run": 0,
+  "completed_total_count": 929,
+  "remaining_count": 0,
+  "field_coverage": {
+    "isin": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "name": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "fund_manager": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "inception_date": {
+      "non_null": 928,
+      "total": 929,
+      "ratio": 0.9989235737351991
+    },
+    "currency": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "return_ytd": {
+      "non_null": 925,
+      "total": 929,
+      "ratio": 0.9956942949407965
+    },
+    "return_1y": {
+      "non_null": 897,
+      "total": 929,
+      "ratio": 0.9655543595263725
+    },
+    "return_5y": {
+      "non_null": 761,
+      "total": 929,
+      "ratio": 0.8191603875134553
+    },
+    "volatility_1y": {
+      "non_null": 928,
+      "total": 929,
+      "ratio": 0.9989235737351991
+    },
+    "volatility_3y": {
+      "non_null": 816,
+      "total": 929,
+      "ratio": 0.8783638320775027
+    },
+    "volatility_5y": {
+      "non_null": 741,
+      "total": 929,
+      "ratio": 0.7976318622174381
+    },
+    "max_drawdown_1y": {
+      "non_null": 897,
+      "total": 929,
+      "ratio": 0.9655543595263725
+    },
+    "max_drawdown_5y": {
+      "non_null": 823,
+      "total": 929,
+      "ratio": 0.8858988159311088
+    },
+    "nav": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "nav_date": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "net_asset_value": {
+      "non_null": 614,
+      "total": 929,
+      "ratio": 0.6609257265877287
+    },
+    "category_raw": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "risk_raw": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    }
+  },
+  "error_type_counts": {
+    "ValueError": 1
+  }
+}

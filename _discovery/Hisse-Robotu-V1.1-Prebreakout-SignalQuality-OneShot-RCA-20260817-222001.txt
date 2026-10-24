@@ -1,0 +1,68 @@
+﻿=== SIGNAL QUALITY RCA ===
+QUALITY_RELEVANT_SYMBOLS=37
+QUALITY_ASSIGNMENTS=400
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=20|PreBreakoutCalibrationRow
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=40|PreBreakoutMomentumCalibrationRow
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=107|PreBreakoutThresholdValidationRow
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=150|asama_kalibrasyonunu_hesapla
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=202|asama_kalibrasyonunu_tabloya_cevir
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=238|momentum_kalibrasyonunu_hesapla
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=280|momentum_kalibrasyonunu_tabloya_cevir
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=310|kalibrasyon_ozetini_hesapla
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=369|asama_guven_araliklarini_hesapla
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=414|asama_guven_araliklarini_tabloya_cevir
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=434|lider_duyarlilik_senaryolarini_hesapla
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=551|kalibrasyon_esik_onerilerini_hesapla
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=641|esik_onerilerini_tarihsel_dogrula
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=702|esik_dogrulamalarini_tabloya_cevir
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py|LINE=21|ThresholdCalibrationScenario
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py|LINE=96|kontrollu_esik_kalibrasyonunu_degerlendir
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py|LINE=111|classify_early_radar
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_engine.py|LINE=26|_reasons
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_engine.py|LINE=43|on_yukselis_hazirligini_analiz_et
+SYMBOL|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_features.py|LINE=58|ozellikleri_hesapla
+CANDIDATE_ARTIFACTS=5
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\prebreakout_operation_recovery.json
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\prebreakout_operation_diagnosis.json
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\prebreakout_alarm_history.jsonl
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\prebreakout_daily_operation_archive.jsonl
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\prebreakout_decision_journal.jsonl
+PARSED_RESULT_ROWS=4
+PARSED_SOURCE_FILES=3
+NORMALIZED_QUALITY_ROWS=0
+EXISTING_ANALYSIS_HELPERS=74
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=150|asama_kalibrasyonunu_hesapla
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=202|asama_kalibrasyonunu_tabloya_cevir
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=238|momentum_kalibrasyonunu_hesapla
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=280|momentum_kalibrasyonunu_tabloya_cevir
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=300|guvenilir_asama_satirlarini_sec
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=310|kalibrasyon_ozetini_hesapla
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=369|asama_guven_araliklarini_hesapla
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=407|temkinli_lider_asamayi_sec
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=414|asama_guven_araliklarini_tabloya_cevir
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=434|lider_duyarlilik_senaryolarini_hesapla
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=493|lider_kararlilik_ozetini_hesapla
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=551|kalibrasyon_esik_onerilerini_hesapla
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=620|kalibrasyon_esik_onerilerini_tabloya_cevir
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=641|esik_onerilerini_tarihsel_dogrula
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=702|esik_dogrulamalarini_tabloya_cevir
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=726|dogrulanmis_esik_politikasi_olustur
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py|LINE=71|_stage_row
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py|LINE=138|aday_kalitesini_degerlendir
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py|LINE=219|aday_kalitesi_tablosu
+HELPER|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py|LINE=71|_validate_scenario
+QUALITY_GATE_EVIDENCE={"momentum": 47, "regime": 36, "relative_strength": 4, "resistance": 12, "risk_reward": 5, "trend": 12, "volume": 13}
+QUALITY_TEST_FILES=60
+QUALITY_ASSERTIONS=79
+RCA_DECISION=STATIC_QUALITY_CONTRACTS_FOUND_ROW_LEVEL_EVIDENCE_LIMITED
+RCA_FLAGS=NO_PERSISTED_ROW_LEVEL_VALIDATION_DATA
+NEXT=Use existing validation execution path to emit/read row-level feature+outcome evidence before changing filters.
+PRODUCTION_MUTATION=YOK
+STATIC_EXIT_CODE=0
+
+=== TARGET TESTS ===
+........................................................................ [ 49%]
+........................................................................ [ 98%]
+..                                                                       [100%]
+146 passed, 2874 deselected in 42.39s
+PYTEST_EXIT_CODE=0

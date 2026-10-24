@@ -1,0 +1,334 @@
+=== PRODUCTION BRIDGE ===
+from __future__ import annotations
+
+from dataclasses import replace
+from decimal import Decimal
+from typing import Any
+
+from backend.app.funds.evidence_mapper import FundEvidenceInput, EvidenceState
+
+BRIDGE_VERSION = "erste-hungary-f4-evidence-bridge-v1"
+
+
+def derive_f4_state(
+    *,
+    fund_size_change: Decimal | None,
+    net_flow_ratio: Decimal | None,
+) -> EvidenceState:
+    values = [fund_size_change, net_flow_ratio]
+    available = [v for v in values if v is not None]
+
+    if len(available) < 2:
+        return EvidenceState.UNAVAILABLE
+
+    positive = sum(1 for value in available if value > 0)
+    caution = sum(1 for value in available if value < 0)
+
+    if positive >= 2:
+        return EvidenceState.POSITIVE
+    if caution >= 2:
+        return EvidenceState.CAUTION
+    return EvidenceState.NEUTRAL
+
+
+def inject_f4_fields(
+    base: FundEvidenceInput,
+    *,
+    fund_size_change: Decimal | None,
+    net_flow_ratio: Decimal | None,
+) -> FundEvidenceInput:
+    return replace(
+        base,
+        fund_size_change=fund_size_change,
+        investor_change=None,
+        net_flow_ratio=net_flow_ratio,
+    )
+
+
+def derive_fund_size_change(
+    previous_nav: Decimal | None,
+    latest_nav: Decimal | None,
+) -> Decimal | None:
+    if previous_nav is None or latest_nav is None:
+        return None
+    if previous_nav <= 0 or latest_nav <= 0:
+        return None
+    return (latest_nav / previous_nav) - Decimal("1")
+
+=== PRODUCTION BRIDGE RUNNER: F4 REFERENCES ===
+
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:12:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:13:# IMPORTANT:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:14:# F1-F3 are consumed from the already validated baseline evidence.
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:15:# They are NOT recomputed here. F4 is the only newly added family.
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:16:EVIDENCE = DISC / "f1_f2_f3_evidence_v1_latest.json"
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:17:F4 = DISC / "fh9_bamosz_turnover_progress_v11.jsonl"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:18:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:19:OUTPUT = DISC / "f1_f2_f3_f4_evidence_v1_latest.json"
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:20:SUMMARY = DISC / "f1_f2_f3_f4_evidence_v1_summary_latest.json"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:21:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:22:VALID_STATES = {"POSITIVE", "CAUTION", "NEUTRAL"}
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:23:BRIDGE_VERSION = "erste-hungary-f4-evidence-bridge-v1"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:24:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:25:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:26:def norm_isin(value):
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:27:    s = str(value or "").upper().strip()
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:28:    m = re.search(r"([A-Z]{2}[A-Z0-9]{10})", s)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:29:    return m.group(1) if m else re.sub(r"[^A-Z0-9]", "", s)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:31:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:32:def normalize_state(value):
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:33:    s = str(value or "").strip().upper()
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:34:    if s.startswith("EVIDENCESTATE."):
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:35:        s = s.split(".", 1)[1]
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:36:    return s
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:37:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:38:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:39:def load_jsonl(path):
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:40:    out = {}
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:50:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:51:def classify(states, category_id):
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:52:    available = sum(
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:53:        1 for family in ("F1", "F2", "F3", "F4")
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:54:        if states.get(family) in VALID_STATES
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:55:    )
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:56:    positive = sum(
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:57:        1 for family in ("F1", "F2", "F3", "F4")
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:58:        if states.get(family) == "POSITIVE"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:59:    )
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:60:    caution = sum(
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:61:        1 for family in ("F1", "F2", "F3", "F4")
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:62:        if states.get(family) == "CAUTION"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:63:    )
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:64:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:65:    if not category_id:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:66:        return "X"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:67:    if available < 3:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:88:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:89:def main():
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:90:    if not EVIDENCE.exists():
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:91:        raise SystemExit("F4_BASELINE_EVIDENCE_MISSING")
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:92:    if not F4.exists():
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:93:        raise SystemExit("F4_BAMOSZ_CACHE_MISSING")
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:94:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:95:    baseline = json.loads(EVIDENCE.read_text(encoding="utf-8"))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:96:    if not isinstance(baseline, list):
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:97:        raise SystemExit("F4_BASELINE_EVIDENCE_ROOT_NOT_LIST")
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:98:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:99:    f4_rows = load_jsonl(F4)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:100:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:101:    rows = []
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:102:    f4_state_counts = Counter()
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:103:    class_counts = Counter()
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:104:    eligibility_counts = Counter()
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:105:    trade_counts = Counter()
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:106:    transitions = Counter()
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:107:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:108:    ready = 0
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:110:    baseline_counts = Counter()
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:111:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:112:    # Baseline gate: prove that the F1-F3 states/classifications are exactly
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:113:    # the previously validated 929-record baseline before adding F4.
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:114:    for row in baseline:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:115:        baseline_counts[str(row.get("classification") or "").upper()] += 1
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:116:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:117:    for row in baseline:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:118:        isin = norm_isin(row.get("isin"))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:119:        states = {
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:123:        }
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:124:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:125:        old_class = str(row.get("classification") or "").upper()
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:126:        f4_cache = f4_rows.get(isin, {})
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:127:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:128:        prev = f4_cache.get("previous")
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:129:        latest = f4_cache.get("latest")
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:130:        flow_raw = f4_cache.get("latest_net_flow_ratio")
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:131:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:132:        size_change = None
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:133:        flow = None
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:134:        f4_state = "UNAVAILABLE"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:135:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:136:        if (
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:137:            f4_cache.get("reason") == "SUCCESS"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:138:            and isinstance(prev, dict)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:139:            and isinstance(latest, dict)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:140:            and flow_raw not in (None, "")
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:141:        ):
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:142:            try:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:143:                prev_nav = Decimal(str(prev.get("nav")))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:149:                    negative = int(size_change < 0) + int(flow < 0)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:150:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:151:                    if positive >= 2:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:152:                        f4_state = "POSITIVE"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:153:                    elif negative >= 2:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:154:                        f4_state = "CAUTION"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:155:                    else:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:156:                        f4_state = "NEUTRAL"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:157:            except Exception:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:158:                size_change = None
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:159:                flow = None
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:160:                f4_state = "UNAVAILABLE"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:161:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:162:        states["F4"] = f4_state
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:163:        new_class = classify(states, row.get("category_id"))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:164:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:165:        class_counts[new_class] += 1
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:166:        f4_state_counts[f4_state] += 1
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:167:        transitions[(old_class, new_class)] += 1
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:168:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:169:        if f4_state in VALID_STATES:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:170:            ready += 1
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:171:        else:
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:172:            unavailable += 1
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:173:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:174:        # Preserve baseline identity and F1-F3 fields exactly; only add F4.
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:175:        output_row = dict(row)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:176:        output_row.update({
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:177:            "f4_state": f4_state,
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:178:            "fund_size_change": None if size_change is None else str(size_change),
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:179:            "net_flow_ratio": None if flow is None else str(flow),
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:180:            "f4_previous_date": prev.get("date") if isinstance(prev, dict) else None,
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:181:            "f4_latest_date": latest.get("date") if isinstance(latest, dict) else None,
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:182:            "classification": new_class,
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:183:            "eligibility_reason": (
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:184:                "MULTI_FAMILY_WEAKENING" if new_class == "D"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:185:                else "BROAD_STRENGTH_WITH_RELATIVE_OR_TREND_CONFIRMATION" if new_class == "A"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:186:                else "DEVELOPING_MULTI_FAMILY_SUPPORT" if new_class == "B"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:187:                else "INSUFFICIENT_INDEPENDENT_EVIDENCE" if new_class == "X"
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:202:        "result_count": len(rows),
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:203:        "baseline_result_count": len(baseline),
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:204:        "baseline_class_counts": dict(sorted(baseline_counts.items())),
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:205:        "f4_ready": ready,
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:206:        "f4_unavailable": unavailable,
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:207:        "f4_state_counts": dict(sorted(f4_state_counts.items())),
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:208:        "class_counts": dict(sorted(class_counts.items())),
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:209:        "eligibility_counts": dict(sorted(eligibility_counts.items())),
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:210:        "trade_authority_counts": {"NONE": len(rows)},
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:211:        "classification_transitions": {
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:212:            f"{a}->{b}": n for (a, b), n in sorted(transitions.items())
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:213:        },
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:214:        "baseline_source": "f1_f2_f3_evidence_v1_latest.json",
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:215:        "f4_source": "fh9_bamosz_turnover_progress_v11.jsonl",
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:216:        "f1_f2_f3_recomputed": False,
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:217:        "mutation": "DISCOVERY_OUTPUT_ONLY",
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:218:        "production_mutation": "NO",
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:219:        "semantic_proxy": "NO",
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:220:        "forced_fill": "NO",
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:221:    }
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:225:        encoding="utf-8",
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:226:    )
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:227:
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:228:    print("F4_BRIDGE_VERSION=" + BRIDGE_VERSION)
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:229:    print("RESULT_COUNT=" + str(len(rows)))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:230:    print("BASELINE_RESULT_COUNT=" + str(len(baseline)))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:231:    print("F1_F2_F3_RECOMPUTED=NO")
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:232:    print("F4_READY=" + str(ready))
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:233:    print("F4_UNAVAILABLE=" + str(unavailable))
+> _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:234:    print("F4_STATE_COUNTS=" + json.dumps(dict(sorted(f4_state_counts.items())), sort_keys=True))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:235:    print("BASELINE_CLASS_COUNTS=" + json.dumps(dict(sorted(baseline_counts.items())), sort_keys=True))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:236:    print("CLASS_COUNTS=" + json.dumps(dict(sorted(class_counts.items())), sort_keys=True))
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:237:    print("CLASSIFICATION_TRANSITIONS=" + json.dumps(
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:238:        {f"{a}->{b}": n for (a, b), n in sorted(transitions.items())},
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:239:        sort_keys=True,
+  _discovery\erste_hungary\fh9_f4_production_bridge_v1.py:240:    ))
+
+
+
+
+=== RELATED TEST FILES ===
+
+Name                                                                            Length
+----                                                                            ------
+test_erste_hungary_bulk_metadata_v1.py                                            3343
+test_erste_hungary_comparison_v1.py                                               5505
+test_erste_hungary_data_contract_v1.py                                            2801
+test_erste_hungary_endpoint_discovery_v1.py                                       1446
+test_erste_hungary_evidence_bridge_v1.py                                          2281
+test_erste_hungary_evidence_read_model_v1.py                                      1677
+test_erste_hungary_evidence_surface_v1.py                                         4344
+test_erste_hungary_f2_bridge_v1.py                                                2539
+test_erste_hungary_f3_bridge_v1.py                                                2447
+test_erste_hungary_f3_nav_recovery_v1.py                                          2198
+test_erste_hungary_f4_bridge_v1.py                                                2160
+test_erste_hungary_f4_csv.py                                                      1828
+test_erste_hungary_live_discovery_v1.py                                           2988
+test_erste_hungary_official_eligibility_view_v1.py                                2165
+test_erste_hungary_official_status_v1.py                                          1914
+test_erste_hungary_rank_history_v1.py                                             1975
+test_erste_hungary_rank_seed_v1.py                                                4437
+test_erste_hungary_rank_trend_v1.py                                               1710
+test_erste_hungary_universe_v1.py                                                 3809
+test_erste_shadow_portfolio.py                                                    4149
+test_fundamental_analysis.py                                                      3516
+test_fundamental_dashboard.py                                                     1412
+test_fundamental_data.py                                                          3023
+test_fundamental_models.py                                                        1555
+test_fundamental_quality.py                                                       3478
+test_fundamental_quality_dashboard.py                                              992
+test_fundamental_report.py                                                        2530
+test_fundamental_report_archive.py                                                4603
+test_fundamental_report_archive_dashboard.py                                      1021
+test_fundamental_report_archive_filter.py                                         4235
+test_fundamental_report_archive_filter_dashboard.py                               1498
+test_fundamental_report_dashboard.py                                              1151
+test_fundamental_role_clarity_v11.py                                              1256
+test_fundamental_score_history.py                                                 2340
+test_fundamental_score_history_dashboard.py                                       1202
+test_fundamental_score_history_store.py                                           4591
+test_fundamental_score_store.py                                                   3984
+test_fundamental_score_store_dashboard.py                                         1062
+test_fundamental_settings.py                                                      2767
+test_fundamental_settings_dashboard.py                                            1398
+test_fundamental_settings_integration.py                                          3481
+test_fundamental_store.py                                                         1697
+test_fundamental_v1_closeout.py                                                   3973
+test_fund_analysis_center_ui_v1.py                                                7638
+test_fund_analysis_engine_v1.py                                                   3171
+test_fund_analysis_non_blocking_entry_v1.py                                       1510
+test_fund_canonical_rehydration_dashboard_wiring_v2.py                             903
+test_fund_canonical_rehydration_v1.py                                             1515
+test_fund_data_contract_v1.py                                                     3513
+test_fund_etf_context.py                                                           585
+test_fund_evidence_mapper_v1.py                                                   2624
+test_fund_f1_safe_unavailable_v1.py                                               2216
+test_fund_f3_invalid_price_resilience_v1.py                                       3082
+test_fund_f3_population_performance_v1.py                                         5783
+test_fund_f3_population_performance_v1.py.bak-provider2-20260902-013853           5496
+test_fund_f3_production_population_v1.py                                          4444
+test_fund_f3_provider_resilience_v1.py                                            5731
+test_fund_f3_store_read_model_v1.py                                               5049
+test_fund_f4_money_flow_v1.py                                                     5076
+test_fund_f5_safe_unavailable_v1.py                                               3822
+test_fund_fdo_pressure_live_render_v6.py                                           621
+test_fund_fdo_pressure_ui_wiring_v1.py                                             748
+test_fund_fdo_pressure_ui_wiring_v4.py                                             477
+test_fund_free_float_canonical_source_v1.py                                       3202
+test_fund_kap_free_float_auto_population_v1.py                                    8778
+test_fund_kap_free_float_auto_population_v1.py.bak-a1cap-marker-20260925-213538   8768
+test_fund_kap_free_float_auto_population_v1.py.bak-dual-format-20260925-213222    7885
+test_fund_kap_free_float_auto_population_v1.py.bak-regex-fix-20260925-213421      8768
+test_fund_kap_portfolio_auto_ingestion_v1.py                                      5183
+test_fund_kap_portfolio_ingestion_v1.py                                           8870
+test_fund_kap_portfolio_real_formats_v2.py                                        6933
+test_fund_live_pipeline_v1.py                                                     1488
+test_fund_numeric_canonical_id_guard_v1.py                                         379
+test_fund_outcome_v1.py                                                           1202
+test_fund_portfolio_tracking_v1.py                                                5426
+test_fund_post_core_integration_v1.py                                             2406
+test_fund_pressure_read_model_v1.py                                               4418
+test_fund_pressure_real_value_activation_v1.py                                     459
+test_fund_pressure_real_value_display_v5.py                                       2014
+test_fund_pressure_risk_v1.py                                                     4887
+test_fund_production_store_runtime_v1.py                                          5464
+test_fund_profile_auto_refresh_v1.py                                              2821
+test_fund_profile_nonblocking_refresh_v1.py                                       2093
+test_fund_risk_metrics_v1.py                                                      2061
+test_fund_tefas_history_f3_v1.py                                                  5275
+test_fund_tefas_history_population_v1.py                                          5854
+test_fund_tefas_history_population_v1.py.bak-period-contract-20260925-221115      5604
+test_fund_weekly_snapshot_v1.py                                                   1427
+test_kap_fundamental_service.py                                                   2272
+test_kap_fundamental_source.py                                                    2492
+test_kap_fund_cost_v1.py                                                          3767
+
+
+

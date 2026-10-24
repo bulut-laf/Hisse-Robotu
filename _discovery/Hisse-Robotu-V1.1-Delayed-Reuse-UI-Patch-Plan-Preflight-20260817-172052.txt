@@ -1,0 +1,119 @@
+﻿=== RADAR_RENDER_CONTEXT ===
+PATTERN=Fırsat Radarı LINE=421
+   411: }
+   412: 
+   413: ANALIZ_MODLARI = (
+   414:     "AГ§Д±k Pozisyon Д°zleme",
+   415:     "Analiz GeГ§miЕџi",
+   416:     "AynД± Veri KarЕџД±laЕџtД±rmasД±",
+   417:     "BaЕџarД± KarЕџД±laЕџtД±rmasД±",
+   418:     "BIST GГјnlГјk Piyasa",
+   419:     "BIST Toplu Tarama",
+   420:     "Г‡oklu Hisse PortfГ¶yГј",
+   421:     "FД±rsat RadarД±",
+   422:     "Gecikmeli Veri Pilotu",
+   423:     "GГ¶lge PortfГ¶y",
+   424:     "GГјncel Teknik Analiz",
+   425:     "GГјnlГјk Operasyon Paneli",
+   426:     "HaftalД±k Performans Raporu",
+   427:     "Д°Еџlem KayД±p Analizi",
+   428:     "Momentum KeЕџif",
+   429:     "Г–n YГјkseliЕџ HazД±rlД±k",
+   430:     "Г–n YГјkseliЕџ Toplu DoДџrulama",
+   431:     "Piyasa Haber, Olay ve Etki Merkezi",
+=== LIVE_RENDER_CONTEXT ===
+PATTERN=Güncel Teknik Analiz LINE=424
+   414:     "AГ§Д±k Pozisyon Д°zleme",
+   415:     "Analiz GeГ§miЕџi",
+   416:     "AynД± Veri KarЕџД±laЕџtД±rmasД±",
+   417:     "BaЕџarД± KarЕџД±laЕџtД±rmasД±",
+   418:     "BIST GГјnlГјk Piyasa",
+   419:     "BIST Toplu Tarama",
+   420:     "Г‡oklu Hisse PortfГ¶yГј",
+   421:     "FД±rsat RadarД±",
+   422:     "Gecikmeli Veri Pilotu",
+   423:     "GГ¶lge PortfГ¶y",
+   424:     "GГјncel Teknik Analiz",
+   425:     "GГјnlГјk Operasyon Paneli",
+   426:     "HaftalД±k Performans Raporu",
+   427:     "Д°Еџlem KayД±p Analizi",
+   428:     "Momentum KeЕџif",
+   429:     "Г–n YГјkseliЕџ HazД±rlД±k",
+   430:     "Г–n YГјkseliЕџ Toplu DoДџrulama",
+   431:     "Piyasa Haber, Olay ve Etki Merkezi",
+   432:     "Piyasa Rejimi",
+   433:     "Seans Г–ncesi BaДџlam",
+   434:     "Sinyal SonuГ§larД±",
+=== EXISTING_DELAYED_PILOT_CONTEXT ===
+PATTERN=Gecikmeli Veri Pilotu LINE=422
+   412: 
+   413: ANALIZ_MODLARI = (
+   414:     "AГ§Д±k Pozisyon Д°zleme",
+   415:     "Analiz GeГ§miЕџi",
+   416:     "AynД± Veri KarЕџД±laЕџtД±rmasД±",
+   417:     "BaЕџarД± KarЕџД±laЕџtД±rmasД±",
+   418:     "BIST GГјnlГјk Piyasa",
+   419:     "BIST Toplu Tarama",
+   420:     "Г‡oklu Hisse PortfГ¶yГј",
+   421:     "FД±rsat RadarД±",
+   422:     "Gecikmeli Veri Pilotu",
+   423:     "GГ¶lge PortfГ¶y",
+   424:     "GГјncel Teknik Analiz",
+   425:     "GГјnlГјk Operasyon Paneli",
+   426:     "HaftalД±k Performans Raporu",
+   427:     "Д°Еџlem KayД±p Analizi",
+   428:     "Momentum KeЕџif",
+   429:     "Г–n YГјkseliЕџ HazД±rlД±k",
+   430:     "Г–n YГјkseliЕџ Toplu DoДџrulama",
+   431:     "Piyasa Haber, Olay ve Etki Merkezi",
+   432:     "Piyasa Rejimi",
+SYMBOL_HINT PATTERN=symbol LINE=3648 TEXT=symbol=sembol,
+SYMBOL_HINT PATTERN=symbol LINE=3660 TEXT=f"{record.symbol.removesuffix('.IS')} VBTS kaydı eklendi. "
+SYMBOL_HINT PATTERN=symbol LINE=3669 TEXT=f"{record.symbol.removesuffix('.IS')} · "
+SYMBOL_HINT PATTERN=symbol LINE=3942 TEXT=symbol_getter=lambda aday: aday.sembol,
+SYMBOL_HINT PATTERN=symbol LINE=4079 TEXT="symbol": secili_sembol,
+SYMBOL_HINT PATTERN=symbol LINE=4091 TEXT=f"http://127.0.0.1:8765/?symbol={secili_sembol}",
+SYMBOL_HINT PATTERN=symbol LINE=4326 TEXT={item.symbol for item in temel_donemler}
+SYMBOL_HINT PATTERN=symbol LINE=4331 TEXT=if item.symbol == temel_sembol
+SYMBOL_HINT PATTERN=symbol LINE=4856 TEXT=f"{kayit.exit_date.isoformat()} · {kayit.symbol.removesuffix('.IS')} · "
+SYMBOL_HINT PATTERN=symbol LINE=4991 TEXT=symbol=sembol,
+SYMBOL_HINT PATTERN=symbol LINE=5009 TEXT=f"{kayit.symbol.removesuffix('.IS')} işlemi günlüğe kaydedildi."
+SYMBOL_HINT PATTERN=symbol LINE=5140 TEXT=symbol=sembol,
+SYMBOL_HINT PATTERN=symbol LINE=5826 TEXT=semboller = sorted({item.symbol for item in donemler})
+SYMBOL_HINT PATTERN=symbol LINE=5833 TEXT=item for item in donemler if item.symbol == sembol
+SYMBOL_HINT PATTERN=symbol LINE=5949 TEXT=latest.symbol,
+SYMBOL_HINT PATTERN=symbol LINE=6070 TEXT="Zorunlu sütunlar: symbol, sector. "
+SYMBOL_HINT PATTERN=symbol LINE=6096 TEXT=latest.symbol,
+SYMBOL_HINT PATTERN=symbol LINE=6124 TEXT=sektor_karsilastirmasi.symbol,
+SYMBOL_HINT PATTERN=symbol LINE=6241 TEXT=if item.symbol == latest.symbol
+SYMBOL_HINT PATTERN=symbol LINE=6391 TEXT=st.subheader(f"{latest.symbol} · {latest.period_key}")
+SYMBOL_HINT PATTERN=symbol LINE=6519 TEXT=symbol=latest.symbol,
+SYMBOL_HINT PATTERN=symbol LINE=6581 TEXT=arsiv_raporlari = rapor_arsivi.list_symbol(
+SYMBOL_HINT PATTERN=symbol LINE=6582 TEXT=temel_rapor.symbol
+SYMBOL_HINT PATTERN=symbol LINE=6613 TEXT=value=temel_rapor.symbol,
+SYMBOL_HINT PATTERN=symbol LINE=6728 TEXT=symbol_query=arsiv_sembol_arama,
+SYMBOL_HINT PATTERN=symbol LINE=6772 TEXT=f"{item.symbol} · {item.period_key} · "
+SYMBOL_HINT PATTERN=symbol LINE=6938 TEXT=auto_symbol = st.text_input(
+SYMBOL_HINT PATTERN=symbol LINE=6941 TEXT=key="auto_signal_symbol",
+SYMBOL_HINT PATTERN=symbol LINE=7043 TEXT=symbol=auto_symbol,
+SYMBOL_HINT PATTERN=symbol LINE=7116 TEXT=symbol = st.text_input(
+SYMBOL_HINT PATTERN=symbol LINE=7119 TEXT=key="signal_outcome_symbol",
+SYMBOL_HINT PATTERN=symbol LINE=7251 TEXT=symbol=symbol,
+SYMBOL_HINT PATTERN=symbol LINE=7582 TEXT=symbol = st.text_input(
+SYMBOL_HINT PATTERN=symbol LINE=7585 TEXT=key="delayed_pilot_symbol",
+SYMBOL_HINT PATTERN=symbol LINE=7610 TEXT=symbol,
+SYMBOL_HINT PATTERN=symbol LINE=7645 TEXT="Sembol": snapshot.symbol,
+SYMBOL_HINT PATTERN=symbol LINE=8165 TEXT=f"{item.symbol.removesuffix('.IS')} · "
+SYMBOL_HINT PATTERN=symbol LINE=8193 TEXT=_price_symbol_key = "_shadow_trader_manual_price_symbol"
+SYMBOL_HINT PATTERN=symbol LINE=8196 TEXT=_current_symbol = trader_position.symbol
+SYMBOL_HINT PATTERN=symbol LINE=8198 TEXT=if st.session_state.get(_price_symbol_key) != _current_symbol:
+RADAR_CONTEXT_FOUND=True
+LIVE_CONTEXT_FOUND=True
+PILOT_CONTEXT_FOUND=True
+DASH_HAS_PILOT_IMPORT=True
+DASH_HAS_FETCH_CALL=True
+DASH_HAS_PILOT_LABEL=True
+PILOT_CALLABLE=True
+DECISION=UI_PATCH_PLAN_READY
+NEXT=Build one UI-only patch with strict anchors, rollback, compile, target tests and one final regression.
+PRODUCTION_MUTATION=YOK

@@ -1,0 +1,35 @@
+{
+  "schema_version": "fin-prod-v8-fin016-pit-validation-report-v1",
+  "status": "PASS",
+  "mode": "READ_ONLY_POINT_IN_TIME_VALIDATION_AND_CALIBRATION",
+  "read_only": true,
+  "authoritative_scoring": "EXISTING_DETERMINISTIC_V1_UNCHANGED",
+  "weight_optimization": false,
+  "threshold_optimization": false,
+  "input_observation_count": 20,
+  "pit_usable_count": 20,
+  "pit_incomplete_count": 0,
+  "pit_leakage_count": 0,
+  "leakage_issues": [],
+  "calibration": {
+    "sample_size": 20,
+    "usable_size": 20,
+    "mean_forward_return": "0.02",
+    "high_score_mean_return": "0.05",
+    "low_score_mean_return": "-0.01",
+    "separation": "0.06",
+    "status": "POSITIVE_SEPARATION"
+  },
+  "blockers": [],
+  "rules": [
+    "PUBLICATION_DATE_MUST_BE_LTE_OBSERVATION_DATE",
+    "FUTURE_PUBLICATION_IS_EXCLUDED_AND_BLOCKING",
+    "CALIBRATION_MEASURES_SEPARATION_ONLY",
+    "NO_AUTO_WEIGHT_OPTIMIZATION",
+    "NO_AUTO_THRESHOLD_OPTIMIZATION",
+    "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION"
+  ],
+  "artifact_role": "CONTRACT_ACCEPTANCE_ONLY_NOT_PRODUCTION_MARKET_CALIBRATION",
+  "symbol": null,
+  "production_evidence": false
+}

@@ -1,0 +1,208 @@
+from __future__ import annotations
+
+import csv
+from collections.abc import Callable
+from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+
+from backend.app.compliance.vbts_dataset import VbtsDataset
+from backend.app.compliance.vbts_models import VbtsMeasure
+from backend.app.compliance.vbts_source_status import VbtsSourceStatus
+
+
+class ManualVbtsCsvError(RuntimeError):
+    """Manuel resmî VBTS CSV dosyası güvenli biçimde kullanılamadığında oluşur."""
+
+
+NowProvider = Callable[[], datetime]
+
+REQUIRED_COLUMNS = (
+    "symbol",
+    "measure_type",
+    "start_date",
+    "end_date",
+    "source_reference",
+)
+
+
+def load_official_vbts_csv(
+    csv_path: str | Path,
+    *,
+    fetched_at: datetime,
+    maximum_file_age: timedelta = timedelta(hours=24),
+    now_provider: NowProvider | None = None,
+) -> VbtsDataset:
+    """Resmî KAP bildirimlerinden hazırlanmış VBTS CSV dosyasını yükler."""
+
+    path = Path(csv_path).expanduser().resolve()
+
+    if not path.exists() or not path.is_file():
+        raise ManualVbtsCsvError(
+            f"VBTS CSV dosyası bulunamadı: {path}"
+        )
+
+    if fetched_at.tzinfo is None:
+        raise ManualVbtsCsvError(
+            "VBTS alınma zamanı saat dilimi içermelidir."
+        )
+
+    if maximum_file_age <= timedelta(0):
+        raise ManualVbtsCsvError(
+            "VBTS azami dosya yaşı sıfırdan büyük olmalıdır."
+        )
+
+    now = (
+        now_provider()
+        if now_provider is not None
+        else datetime.now(timezone.utc)
+    )
+
+    if now.tzinfo is None:
+        raise ManualVbtsCsvError(
+            "VBTS kontrol zamanı saat dilimi içermelidir."
+        )
+
+    modified_at = datetime.fromtimestamp(
+        path.stat().st_mtime,
+        tz=timezone.utc,
+    )
+
+    if now.astimezone(timezone.utc) - modified_at > maximum_file_age:
+        raise ManualVbtsCsvError(
+            "VBTS CSV dosyası güncel değil."
+        )
+
+    try:
+        with path.open(
+            "r",
+            encoding="utf-8-sig",
+            newline="",
+        ) as handle:
+            reader = csv.DictReader(handle)
+            fieldnames = tuple(reader.fieldnames or ())
+
+            missing = [
+                column
+                for column in REQUIRED_COLUMNS
+                if column not in fieldnames
+            ]
+            if missing:
+                raise ManualVbtsCsvError(
+                    "VBTS CSV zorunlu sütunları eksik: "
+                    + ", ".join(missing)
+                )
+
+            measures: list[VbtsMeasure] = []
+
+            for row_number, row in enumerate(reader, start=2):
+                measures.append(
+                    _row_to_measure(
+                        row,
+                        row_number=row_number,
+                    )
+                )
+
+    except ManualVbtsCsvError:
+        raise
+    except (OSError, UnicodeError, csv.Error) as exc:
+        raise ManualVbtsCsvError(
+            f"VBTS CSV dosyası okunamadı: {exc}"
+        ) from exc
+
+    return VbtsDataset(
+        measures=measures,
+        status=VbtsSourceStatus(
+            source="KAP_MANUEL_CSV",
+            fetched_at=fetched_at,
+            is_verified=True,
+            record_count=len(measures),
+        ),
+    )
+
+
+def _row_to_measure(
+    row: dict[str, str | None],
+    *,
+    row_number: int,
+) -> VbtsMeasure:
+    symbol = _required_text(
+        row.get("symbol"),
+        column="symbol",
+        row_number=row_number,
+    )
+    measure_type = _required_text(
+        row.get("measure_type"),
+        column="measure_type",
+        row_number=row_number,
+    )
+    source_reference = _required_text(
+        row.get("source_reference"),
+        column="source_reference",
+        row_number=row_number,
+    )
+
+    start_date = _parse_date(
+        row.get("start_date"),
+        column="start_date",
+        row_number=row_number,
+    )
+    end_date = _parse_date(
+        row.get("end_date"),
+        column="end_date",
+        row_number=row_number,
+    )
+
+    if end_date < start_date:
+        raise ManualVbtsCsvError(
+            f"{row_number}. satırda bitiş tarihi başlangıç tarihinden önce olamaz."
+        )
+
+    return VbtsMeasure(
+        symbol=_normalize_symbol(symbol),
+        measure_type=measure_type.strip().upper(),
+        start_date=start_date,
+        end_date=end_date,
+        source="KAP_MANUEL_CSV",
+        source_reference=source_reference,
+    )
+
+
+def _required_text(
+    value: str | None,
+    *,
+    column: str,
+    row_number: int,
+) -> str:
+    normalized = (value or "").strip()
+    if not normalized:
+        raise ManualVbtsCsvError(
+            f"{row_number}. satırda {column} alanı boş bırakılamaz."
+        )
+    return normalized
+
+
+def _parse_date(
+    value: str | None,
+    *,
+    column: str,
+    row_number: int,
+) -> date:
+    normalized = _required_text(
+        value,
+        column=column,
+        row_number=row_number,
+    )
+
+    try:
+        return date.fromisoformat(normalized)
+    except ValueError as exc:
+        raise ManualVbtsCsvError(
+            f"{row_number}. satırda {column} tarihi YYYY-MM-DD biçiminde olmalıdır."
+        ) from exc
+
+
+def _normalize_symbol(symbol: str) -> str:
+    normalized = symbol.strip().upper()
+    normalized = normalized.removesuffix(".E")
+    normalized = normalized.removesuffix(".IS")
+    return f"{normalized}.IS"

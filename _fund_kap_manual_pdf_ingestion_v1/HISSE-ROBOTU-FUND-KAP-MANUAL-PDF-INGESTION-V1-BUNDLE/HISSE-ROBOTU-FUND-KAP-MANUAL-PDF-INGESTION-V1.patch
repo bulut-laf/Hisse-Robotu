@@ -1,0 +1,350 @@
+diff --git a/backend/app/funds/kap_portfolio_ingestion.py b/backend/app/funds/kap_portfolio_ingestion.py
+index 2cfb5b2..e4ce5fc 100644
+--- a/backend/app/funds/kap_portfolio_ingestion.py
++++ b/backend/app/funds/kap_portfolio_ingestion.py
+@@ -349,6 +349,9 @@ def parse_kap_portfolio_report_text(
+ 
+ 
+ def _same_canonical_snapshot(existing: FundPortfolioSnapshot, incoming: FundPortfolioSnapshot) -> bool:
++    # Transport/provenance may differ (direct KAP URL vs. manual upload) while
++    # the canonical KAP portfolio snapshot itself is identical. Source reference
++    # therefore does not participate in idempotency identity.
+     return (
+         existing.canonical_fund_id == incoming.canonical_fund_id
+         and existing.portfolio_date == incoming.portfolio_date
+@@ -356,7 +359,120 @@ def _same_canonical_snapshot(existing: FundPortfolioSnapshot, incoming: FundPort
+         and existing.provider == incoming.provider
+         and existing.positions == incoming.positions
+         and existing.data_quality_state == incoming.data_quality_state
+-        and existing.source_reference == incoming.source_reference
++    )
++
++
++def _store_snapshot_idempotently(
++    store: FundPortfolioSnapshotJsonStore,
++    snapshot: FundPortfolioSnapshot,
++) -> PortfolioSnapshotStoreResult:
++    existing = tuple(
++        item
++        for item in store.list_snapshots()
++        if item.canonical_fund_id == snapshot.canonical_fund_id
++        and item.portfolio_date == snapshot.portfolio_date
++        and item.provider == snapshot.provider
++    )
++    if existing and any(_same_canonical_snapshot(item, snapshot) for item in existing):
++        return PortfolioSnapshotStoreResult(
++            inserted=0,
++            unchanged=1,
++            total_records=len(store.list_records()),
++        )
++    return store.append((snapshot,))
++
++
++def ingest_kap_portfolio_pdf_upload(
++    raw_pdf: bytes,
++    *,
++    filename: str,
++    report_year: int,
++    report_month: int,
++    publication_date: date,
++    store: FundPortfolioSnapshotJsonStore,
++    notification_id: str | None = None,
++    source_reference: str | None = None,
++    ingested_at: datetime | None = None,
++    pdf_text_extractor: PdfTextExtractor | None = None,
++) -> KapPortfolioIngestionResult:
++    """Ingest an explicitly uploaded KAP portfolio-allocation PDF without network access.
++
++    The user must provide the report period and publication date because those
++    facts are not reliably encoded inside every attachment PDF. The canonical
++    holdings parser and append-only snapshot store are reused unchanged.
++    """
++    if not isinstance(raw_pdf, (bytes, bytearray)) or not raw_pdf:
++        raise KapFundPortfolioError("KAP_MANUAL_UPLOAD_EMPTY")
++    raw = bytes(raw_pdf)
++    if len(raw) > MAX_KAP_PORTFOLIO_PDF_BYTES:
++        raise KapFundPortfolioError("KAP_PORTFOLIO_PDF_TOO_LARGE")
++
++    safe_name = Path(str(filename or "")).name.strip()
++    if not safe_name or not safe_name.casefold().endswith(".pdf"):
++        raise KapFundPortfolioError("KAP_MANUAL_UPLOAD_FILENAME_INVALID")
++    if not 2000 <= int(report_year) <= 2100:
++        raise ValueError("report_year 2000-2100 aralığında olmalıdır.")
++    if not 1 <= int(report_month) <= 12:
++        raise ValueError("report_month 1-12 aralığında olmalıdır.")
++
++    report_year = int(report_year)
++    report_month = int(report_month)
++    portfolio_last_day = calendar.monthrange(report_year, report_month)[1]
++    portfolio_date = date(report_year, report_month, portfolio_last_day)
++    if publication_date < portfolio_date:
++        raise ValueError("publication_date portfolio_date öncesinde olamaz.")
++
++    clean_notification = str(notification_id or "").strip()
++    if clean_notification and not clean_notification.isdigit():
++        raise KapFundPortfolioError("KAP_NOTIFICATION_ID_INVALID")
++    clean_source = str(source_reference or "").strip()
++    if len(clean_source) > 2048:
++        raise KapFundPortfolioError("KAP_SOURCE_REFERENCE_TOO_LONG")
++
++    if clean_notification:
++        detail_url = f"https://www.kap.org.tr/tr/Bildirim/{clean_notification}"
++    elif clean_source:
++        detail_url = clean_source
++    else:
++        detail_url = f"manual-upload:{safe_name}"
++
++    publication_at = datetime.combine(
++        publication_date,
++        datetime.min.time(),
++        tzinfo=ISTANBUL,
++    )
++    reference = KapPortfolioReportReference(
++        notification_id=clean_notification or "MANUAL",
++        detail_url=detail_url,
++        attachment_url=f"manual-upload:{safe_name}",
++        attachment_name=safe_name,
++        publication_at=publication_at,
++        report_year=report_year,
++        report_month=report_month,
++    )
++
++    extractor = pdf_text_extractor or extract_kap_portfolio_pdf_text
++    report_text = extractor(raw)
++    if re.search(
++        r"FON\s+PORTF[ÖO]Y\s+DE[GĞ]ER[İI]\s+TABLOSU",
++        report_text,
++        re.IGNORECASE,
++    ) is None:
++        raise KapFundPortfolioError("KAP_MANUAL_UPLOAD_NOT_PORTFOLIO_ATTACHMENT")
++
++    stamp = ingested_at if ingested_at is not None else datetime.now(timezone.utc)
++    if stamp.tzinfo is None or stamp.utcoffset() is None:
++        raise ValueError("ingested_at timezone-aware olmalıdır.")
++    snapshot = parse_kap_portfolio_report_text(
++        report_text,
++        reference=reference,
++        ingested_at=stamp,
++    )
++    store_result = _store_snapshot_idempotently(store, snapshot)
++    return KapPortfolioIngestionResult(
++        reference=reference,
++        snapshot=snapshot,
++        store_result=store_result,
+     )
+ 
+ 
+@@ -409,25 +525,7 @@ def ingest_kap_portfolio_report_url(
+         ingested_at=stamp,
+     )
+ 
+-    existing = tuple(
+-        item
+-        for item in store.list_snapshots()
+-        if item.canonical_fund_id == snapshot.canonical_fund_id
+-        and item.portfolio_date == snapshot.portfolio_date
+-        and item.provider == snapshot.provider
+-    )
+-    if existing:
+-        if any(_same_canonical_snapshot(item, snapshot) for item in existing):
+-            store_result = PortfolioSnapshotStoreResult(
+-                inserted=0,
+-                unchanged=1,
+-                total_records=len(store.list_records()),
+-            )
+-        else:
+-            # Delegate conflict wording and append-only protection to canonical store.
+-            store_result = store.append((snapshot,))
+-    else:
+-        store_result = store.append((snapshot,))
++    store_result = _store_snapshot_idempotently(store, snapshot)
+ 
+     return KapPortfolioIngestionResult(
+         reference=KapPortfolioReportReference(
+diff --git a/backend/app/ui/fund_analysis_center.py b/backend/app/ui/fund_analysis_center.py
+index b553118..db7a3b3 100644
+--- a/backend/app/ui/fund_analysis_center.py
++++ b/backend/app/ui/fund_analysis_center.py
+@@ -1,12 +1,14 @@
+ from __future__ import annotations
+ 
+ from dataclasses import dataclass
++from datetime import date
+ from decimal import Decimal
+ from typing import Any, Iterable, Mapping
+ 
+ from backend.app.funds.analysis_engine import FundAnalysisResult
+ from backend.app.funds.kap_portfolio_ingestion import (
+     KapFundPortfolioError,
++    ingest_kap_portfolio_pdf_upload,
+     ingest_kap_portfolio_report_url,
+ )
+ from backend.app.funds.portfolio_tracking import (
+@@ -221,6 +223,83 @@ def _render_portfolio_tracking(
+                         f"{ingestion.snapshot.portfolio_date.isoformat()} snapshot {status}."
+                     )
+ 
++    if (
++        hasattr(st, "file_uploader")
++        and hasattr(st, "number_input")
++        and hasattr(st, "date_input")
++        and hasattr(st, "text_input")
++        and hasattr(st, "button")
++    ):
++        st.markdown("##### Alternatif: KAP Portföy PDF Dosyası Yükle")
++        st.caption(
++            "Gerçek 'Portföy Dağılım Raporu' PDF eki gerekir. KAP bildirim sayfasının "
++            "PDF çıktısı veya ekran görüntüsü portföy tablosu içermediği için yeterli değildir. "
++            "Rapor dönemi ve KAP yayın tarihi kullanıcı tarafından açıkça doğrulanır."
++        )
++        uploaded_pdf = st.file_uploader(
++            "Portföy dağılım PDF'si",
++            type=["pdf"],
++            key="fund_portfolio_kap_manual_pdf",
++        )
++        current_year = date.today().year
++        report_year = int(st.number_input(
++            "Rapor yılı",
++            min_value=2000,
++            max_value=2100,
++            value=current_year,
++            step=1,
++            key="fund_portfolio_kap_manual_year",
++        ))
++        report_month = int(st.number_input(
++            "Rapor ayı",
++            min_value=1,
++            max_value=12,
++            value=max(1, date.today().month - 1),
++            step=1,
++            key="fund_portfolio_kap_manual_month",
++        ))
++        publication_date = st.date_input(
++            "KAP yayın tarihi",
++            value=date.today(),
++            key="fund_portfolio_kap_manual_publication_date",
++        )
++        notification_id = st.text_input(
++            "KAP bildirim numarası (opsiyonel)",
++            key="fund_portfolio_kap_manual_notification_id",
++            placeholder="1646130",
++        )
++        source_reference = st.text_input(
++            "Kaynak referansı (opsiyonel)",
++            key="fund_portfolio_kap_manual_source_reference",
++            placeholder="KAP/Fintables/kurucu site URL veya kısa kaynak notu",
++        )
++        if st.button(
++            "PDF'den Portföy Snapshot'ını İçeri Aktar",
++            key="fund_portfolio_kap_manual_ingest_button",
++            disabled=uploaded_pdf is None,
++        ):
++            try:
++                ingestion = ingest_kap_portfolio_pdf_upload(
++                    uploaded_pdf.getvalue(),
++                    filename=getattr(uploaded_pdf, "name", "portfolio.pdf"),
++                    report_year=report_year,
++                    report_month=report_month,
++                    publication_date=publication_date,
++                    notification_id=str(notification_id or "").strip() or None,
++                    source_reference=str(source_reference or "").strip() or None,
++                    store=store,
++                )
++            except (KapFundPortfolioError, PortfolioSnapshotStoreError, ValueError) as exc:
++                st.error(f"KAP PDF portföyü içeri alınamadı: {exc}")
++            else:
++                status = "eklendi" if ingestion.store_result.inserted else "zaten kayıtlı"
++                if hasattr(st, "success"):
++                    st.success(
++                        f"{ingestion.snapshot.canonical_fund_id} · "
++                        f"{ingestion.snapshot.portfolio_date.isoformat()} snapshot {status}. "
++                        "İçe aktarım modu: MANUAL_PDF."
++                    )
++
+     try:
+         model = build_fund_portfolio_tracking_read_model(store)
+     except PortfolioSnapshotStoreError:
+diff --git a/backend/tests/test_fund_kap_portfolio_ingestion_v1.py b/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
+index e12f237..e8e82b5 100644
+--- a/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
++++ b/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
+@@ -1,10 +1,11 @@
+-from datetime import datetime, timezone
++from datetime import date, datetime, timezone
+ from decimal import Decimal
+ 
+ import pytest
+ 
+ from backend.app.funds.kap_portfolio_ingestion import (
+     KapFundPortfolioError,
++    ingest_kap_portfolio_pdf_upload,
+     ingest_kap_portfolio_report_url,
+     parse_kap_portfolio_report_reference,
+     parse_kap_portfolio_report_text,
+@@ -132,3 +133,66 @@ def test_missing_equity_section_fails_closed():
+             reference=reference,
+             ingested_at=STAMP,
+         )
++
++
++def test_manual_pdf_upload_ingests_without_network_and_keeps_kap_identity(tmp_path):
++    store = FundPortfolioSnapshotJsonStore(tmp_path / "portfolio_snapshots.json")
++
++    first = ingest_kap_portfolio_pdf_upload(
++        b"%PDF-fake",
++        filename="AP5 FON MAYIS 2026 PORTFÖY DAĞILIM RAPORU.pdf",
++        report_year=2026,
++        report_month=5,
++        publication_date=date(2026, 6, 8),
++        notification_id="1614366",
++        source_reference="https://mirror.example/ap5-mayis.pdf",
++        store=store,
++        ingested_at=STAMP,
++        pdf_text_extractor=lambda _raw: REPORT_TEXT,
++    )
++
++    assert first.snapshot.canonical_fund_id == "fund:tefas:AP5"
++    assert first.snapshot.provider == "KAP"
++    assert first.snapshot.portfolio_date.isoformat() == "2026-05-31"
++    assert first.snapshot.publication_date.isoformat() == "2026-06-08"
++    assert first.snapshot.source_reference == DETAIL_URL
++    assert first.store_result.inserted == 1
++
++    second = ingest_kap_portfolio_pdf_upload(
++        b"%PDF-fake",
++        filename="same-report.pdf",
++        report_year=2026,
++        report_month=5,
++        publication_date=date(2026, 6, 8),
++        source_reference="https://different.example/ap5.pdf",
++        store=store,
++        ingested_at=datetime(2026, 9, 4, 10, 0, tzinfo=timezone.utc),
++        pdf_text_extractor=lambda _raw: REPORT_TEXT,
++    )
++    assert second.store_result.inserted == 0
++    assert second.store_result.unchanged == 1
++    assert len(store.list_snapshots()) == 1
++
++
++def test_manual_pdf_upload_rejects_notification_page_print_without_holdings_table(tmp_path):
++    store = FundPortfolioSnapshotJsonStore(tmp_path / "portfolio_snapshots.json")
++    notification_page_text = """
++    ATLAS PORTFÖY BEŞİNCİ HİSSE SENEDİ SERBEST FON AP5
++    Gönderim Tarihi 10.08.2026 10:35:38
++    Periyot 7. Aylık
++    Bildirim Ekleri (1)
++    AP5 FON TEMMUZ 2026 PORTFÖY DAĞILIM RAPORLARI.pdf
++    """
++
++    with pytest.raises(KapFundPortfolioError, match="NOT_PORTFOLIO_ATTACHMENT"):
++        ingest_kap_portfolio_pdf_upload(
++            b"%PDF-fake",
++            filename="kap-bildirim-sayfasi.pdf",
++            report_year=2026,
++            report_month=7,
++            publication_date=date(2026, 8, 10),
++            notification_id="1646130",
++            store=store,
++            ingested_at=STAMP,
++            pdf_text_extractor=lambda _raw: notification_page_text,
++        )

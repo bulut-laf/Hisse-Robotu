@@ -1,0 +1,299 @@
+{
+  "record_count": 929,
+  "coverage": {
+    "isin": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "name": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "fund_manager": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "inception_date": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "currency": {
+      "non_null": 929,
+      "total": 929,
+      "ratio": 1.0
+    },
+    "return_ytd": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "return_1y": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "return_5y": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "volatility_1y": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "volatility_3y": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "volatility_5y": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "max_drawdown_1y": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "max_drawdown_5y": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "nav": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "nav_date": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "net_asset_value": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "category_raw": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    },
+    "risk_raw": {
+      "non_null": 0,
+      "total": 929,
+      "ratio": 0.0
+    }
+  },
+  "category_values_top20": [],
+  "risk_values_top20": [],
+  "samples_first10": [
+    {
+      "isin": "AT0000494893",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000605324",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000605332",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000627476",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000639067",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000658968",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000658976",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000658984",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000673165",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    },
+    {
+      "isin": "AT0000673181",
+      "name": "Törlés",
+      "fund_manager": null,
+      "inception_date": null,
+      "currency": "Derivatív termékek és szolgáltatások",
+      "return_ytd": null,
+      "return_1y": null,
+      "return_5y": null,
+      "volatility_1y": null,
+      "volatility_3y": null,
+      "volatility_5y": null,
+      "max_drawdown_1y": null,
+      "max_drawdown_5y": null,
+      "nav": null,
+      "nav_date": null,
+      "net_asset_value": null,
+      "category_raw": null,
+      "risk_raw": null
+    }
+  ]
+}

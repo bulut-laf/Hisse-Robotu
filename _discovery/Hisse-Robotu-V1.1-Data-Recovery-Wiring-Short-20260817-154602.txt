@@ -1,0 +1,9 @@
+﻿RECOVERY_DEFS=_cache_paths,alpha_vantage_daily_loader,cache_read,cache_write,recover_daily_market_data
+MODULE_IMPORTED_DASHBOARD=False
+MODULE_IMPORTED_LIVE_UI=False
+FRESHNESS_LOCK_DASHBOARD=True
+FRESHNESS_EVAL_LIVE_UI=True
+OFFICIAL_REFRESH_LIVE_UI=True
+DECISION=SEPARATE_RECOVERY_MODULE_NOT_WIRED_BUT_EXISTING_REFRESH_PATH_ACTIVE
+NEXT=Do not patch yet; verify whether separate recovery module is intentionally unused/legacy.
+PRODUCTION_MUTATION=YOK

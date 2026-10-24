@@ -1,0 +1,48 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818153359
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-RankingJump-V1-Final-UI-Integration-Rev1.ps1
+Process ID: 11052
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== HISSE ROBOTU — RANKING JUMP V1 — FINAL UI INTEGRATION REV1 ===
+ANCHOR_STRATEGY=FIRST_EMPTY_GUARD_AFTER_AUTHORITATIVE_RESEARCH_SEAM
+NEW_ENGINE=NO
+NEW_SCORE=NO
+AL_SAT_AUTHORITY=NO
+MUTATION=APPLIED
+UI=SIRALAMA_HAREKETI_ERKEN_GORUNURLUK
+DEFAULT_VIEW=3S_ERKEN_SICRAYANLAR
+MAIN_RESEARCH_RANK_MUTATION=NO
+
+=== PY COMPILE ===
+
+
+=== TARGET TEST ===
+
+
+=== ONE FULL REGRESSION ===
+
+
+=== FINAL DECISION ===
+TARGET_TEST=PASS
+FULL_REGRESSION=PASS
+FINAL_UI_INTEGRATION=COMPLETE
+NEXT=FINAL_BROWSER_ACCEPTANCE
+ROLLBACK=NO
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-RankingJump-V1-UI-Rev1-20260818-153358.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818153737
+**********************

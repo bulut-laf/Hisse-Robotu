@@ -1,0 +1,1468 @@
+﻿=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=35 PATTERN=def 
+    32:     monthly_early: pd.DataFrame
+    33: 
+    34: 
+    35: def _normalize_ohlcv(df: pd.DataFrame) -> pd.DataFrame:
+    36:     x = df.copy()
+    37:     if isinstance(x.columns, pd.MultiIndex):
+    38:         x.columns = [str(c[0]) for c in x.columns]
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=53 PATTERN=def 
+    50:     return out[(out["High"] >= out["Low"]) & (out["Close"] >= out["Low"]) & (out["Close"] <= out["High"])]
+    51: 
+    52: 
+    53: def _rsi(s: pd.Series, n: int = 14) -> pd.Series:
+    54:     delta = s.diff()
+    55:     up = delta.clip(lower=0)
+    56:     down = -delta.clip(upper=0)
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=63 PATTERN=def 
+    60:     return (100 - 100 / (1 + rs)).fillna(50.0)
+    61: 
+    62: 
+    63: def _weekly(daily: pd.DataFrame) -> pd.DataFrame:
+    64:     d = _normalize_ohlcv(daily)
+    65:     return pd.DataFrame(
+    66:         {
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=76 PATTERN=def 
+    73:     ).dropna(subset=["Open", "High", "Low", "Close"])
+    74: 
+    75: 
+    76: def _weekly_enrich(w: pd.DataFrame) -> pd.DataFrame:
+    77:     # Research V1 Rev1 W1-W4 contract is intentionally preserved.
+    78:     z = w.copy()
+    79:     z["EMA20"] = z["Close"].ewm(span=20, adjust=False).mean()
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=156 PATTERN=def 
+   153:     return z
+   154: 
+   155: 
+   156: def _load_validated_profiles() -> tuple[pd.DataFrame, pd.DataFrame]:
+   157:     if not QUANTILE_FILE.exists() or not PASSED_PROFILE_FILE.exists():
+   158:         raise RuntimeError(
+   159:             "Validated profil dosyalari kurulu degil. "
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=178 PATTERN=def 
+   175: 
+   176: 
+   177: 
+   178: def _load_monthly_validated_profiles() -> tuple[pd.DataFrame, pd.DataFrame]:
+   179:     if not MONTHLY_QUANTILE_FILE.exists() or not MONTHLY_PASSED_PROFILE_FILE.exists():
+   180:         raise RuntimeError("Aylik validated profil dosyalari kurulu degil.")
+   181:     edges = pd.read_csv(MONTHLY_QUANTILE_FILE)
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=196 PATTERN=def 
+   193:     return edges, profiles
+   194: 
+   195: 
+   196: def _monthly_validation_months(daily: pd.DataFrame) -> pd.DataFrame:
+   197:     d = _normalize_ohlcv(daily).rename(
+   198:         columns={"Open":"open","High":"high","Low":"low","Close":"close","Volume":"volume"}
+   199:     )
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=209 PATTERN=def 
+   206:     return m
+   207: 
+   208: 
+   209: def _monthly_validation_features(daily: pd.DataFrame) -> pd.DataFrame:
+   210:     x = _monthly_validation_months(daily)
+   211:     x["ema6"] = x["close"].ewm(span=6, adjust=False, min_periods=6).mean()
+   212:     x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=246 PATTERN=def 
+   243:     return x
+   244: 
+   245: 
+   246: def _monthly_profile_matches(row: pd.Series, edges: pd.DataFrame, profiles: pd.DataFrame) -> list[dict[str, object]]:
+   247:     cls = str(row.get("research_class", ""))
+   248:     if cls not in {"GUCLU_TREND", "ERKEN_TREND"}:
+   249:         return []
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=280 PATTERN=def 
+   277:     return matches
+   278: 
+   279: 
+   280: def _monthly_profile_snapshots(daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame):
+   281:     z = _monthly_validation_features(daily)
+   282:     if z.empty:
+   283:         return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=301 PATTERN=def 
+   298:     return current, closed
+   299: 
+   300: 
+   301: def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+   302:     current_matches = list(current.get("matches", []))
+   303:     closed_matches = list(closed.get("matches", []))
+   304:     if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=330 PATTERN=def 
+   327:     }
+   328: 
+   329: 
+   330: def _apply_monthly_validation(frame, validation_data, edges, profiles):
+   331:     if frame.empty:
+   332:         return frame
+   333:     out = frame.copy()
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=358 PATTERN=def 
+   355:     return out
+   356: 
+   357: 
+   358: def _bin_ranges(edges: pd.DataFrame) -> dict[tuple[str, str], tuple[float, float]]:
+   359:     result: dict[tuple[str, str], tuple[float, float]] = {}
+   360:     for _, row in edges.iterrows():
+   361:         lo = -np.inf if pd.isna(row["lower_exclusive_or_equal"]) else float(row["lower_exclusive_or_equal"])
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=367 PATTERN=def 
+   364:     return result
+   365: 
+   366: 
+   367: def _in_bin(value: object, factor: str, bin_name: str, ranges: dict[tuple[str, str], tuple[float, float]]) -> bool:
+   368:     if pd.isna(value):
+   369:         return False
+   370:     bounds = ranges.get((factor, bin_name))
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=378 PATTERN=def 
+   375:     return (np.isneginf(lo) or number > lo) and number <= hi
+   376: 
+   377: 
+   378: def _weekly_row(symbol: str, daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame) -> dict[str, object] | None:
+   379:     w = _weekly_enrich(_weekly(daily))
+   380:     if len(w) < 26:
+   381:         return None
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=451 PATTERN=def 
+   448:     return base
+   449: 
+   450: 
+   451: def _monthly(daily: pd.DataFrame) -> pd.DataFrame:
+   452:     d = _normalize_ohlcv(daily)
+   453:     period = d.index.to_period("M")
+   454:     m = d.groupby(period).agg(
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=465 PATTERN=def 
+   462:     return m.dropna(subset=["Open", "High", "Low", "Close"])
+   463: 
+   464: 
+   465: def _monthly_metrics(daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> dict[str, object] | None:
+   466:     m = _monthly(daily)
+   467:     if len(m) < 12:
+   468:         return None
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=521 PATTERN=def 
+   518:     }
+   519: 
+   520: 
+   521: def _monthly_rows(symbol: str, daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> tuple[dict[str, object] | None, dict[str, object] | None]:
+   522:     x = _monthly_metrics(daily, benchmark)
+   523:     if x is None:
+   524:         return None, None
+=== RADAR_def  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=612 PATTERN=def 
+   609:     return strong, early
+   610: 
+   611: 
+   612: def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+   613:     edges, profiles = _load_validated_profiles()
+   614:     monthly_edges, monthly_profiles = _load_monthly_validated_profiles()
+   615:     universe = on_yukselis_evrenini_yukle(
+=== RADAR_class  ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=23 PATTERN=class 
+    20: 
+    21: 
+    22: @dataclass(frozen=True)
+    23: class OpportunityRadarResult:
+    24:     universe_name: str
+    25:     universe_source: str
+    26:     universe_date: str
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=40 PATTERN=close
+    37:     if isinstance(x.columns, pd.MultiIndex):
+    38:         x.columns = [str(c[0]) for c in x.columns]
+    39:     cmap = {str(c).strip().lower(): c for c in x.columns}
+    40:     needed = {"open": "Open", "high": "High", "low": "Low", "close": "Close"}
+    41:     missing = [src for src in needed if src not in cmap]
+    42:     if missing:
+    43:         raise ValueError("Eksik OHLC kolonlari: " + ", ".join(missing))
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=49 PATTERN=close
+    46:         out[dest] = pd.to_numeric(x[cmap[src]], errors="coerce")
+    47:     vol = cmap.get("volume")
+    48:     out["Volume"] = pd.to_numeric(x[vol], errors="coerce") if vol else np.nan
+    49:     out = out.dropna(subset=["Open", "High", "Low", "Close"]).sort_index()
+    50:     return out[(out["High"] >= out["Low"]) & (out["Close"] >= out["Low"]) & (out["Close"] <= out["High"])]
+    51: 
+    52: 
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=50 PATTERN=close
+    47:     vol = cmap.get("volume")
+    48:     out["Volume"] = pd.to_numeric(x[vol], errors="coerce") if vol else np.nan
+    49:     out = out.dropna(subset=["Open", "High", "Low", "Close"]).sort_index()
+    50:     return out[(out["High"] >= out["Low"]) & (out["Close"] >= out["Low"]) & (out["Close"] <= out["High"])]
+    51: 
+    52: 
+    53: def _rsi(s: pd.Series, n: int = 14) -> pd.Series:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=70 PATTERN=close
+    67:             "Open": d["Open"].resample("W-FRI").first(),
+    68:             "High": d["High"].resample("W-FRI").max(),
+    69:             "Low": d["Low"].resample("W-FRI").min(),
+    70:             "Close": d["Close"].resample("W-FRI").last(),
+    71:             "Volume": d["Volume"].resample("W-FRI").sum(min_count=1),
+    72:         }
+    73:     ).dropna(subset=["Open", "High", "Low", "Close"])
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=73 PATTERN=close
+    70:             "Close": d["Close"].resample("W-FRI").last(),
+    71:             "Volume": d["Volume"].resample("W-FRI").sum(min_count=1),
+    72:         }
+    73:     ).dropna(subset=["Open", "High", "Low", "Close"])
+    74: 
+    75: 
+    76: def _weekly_enrich(w: pd.DataFrame) -> pd.DataFrame:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=79 PATTERN=close
+    76: def _weekly_enrich(w: pd.DataFrame) -> pd.DataFrame:
+    77:     # Research V1 Rev1 W1-W4 contract is intentionally preserved.
+    78:     z = w.copy()
+    79:     z["EMA20"] = z["Close"].ewm(span=20, adjust=False).mean()
+    80:     z["EMA50"] = z["Close"].ewm(span=50, adjust=False).mean()
+    81:     z["EMA20Slope4"] = z["EMA20"] / z["EMA20"].shift(4) - 1
+    82:     z["RSI14"] = _rsi(z["Close"])
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=80 PATTERN=close
+    77:     # Research V1 Rev1 W1-W4 contract is intentionally preserved.
+    78:     z = w.copy()
+    79:     z["EMA20"] = z["Close"].ewm(span=20, adjust=False).mean()
+    80:     z["EMA50"] = z["Close"].ewm(span=50, adjust=False).mean()
+    81:     z["EMA20Slope4"] = z["EMA20"] / z["EMA20"].shift(4) - 1
+    82:     z["RSI14"] = _rsi(z["Close"])
+    83:     z["RSIDelta3"] = z["RSI14"] - z["RSI14"].shift(3)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=82 PATTERN=close
+    79:     z["EMA20"] = z["Close"].ewm(span=20, adjust=False).mean()
+    80:     z["EMA50"] = z["Close"].ewm(span=50, adjust=False).mean()
+    81:     z["EMA20Slope4"] = z["EMA20"] / z["EMA20"].shift(4) - 1
+    82:     z["RSI14"] = _rsi(z["Close"])
+    83:     z["RSIDelta3"] = z["RSI14"] - z["RSI14"].shift(3)
+    84: 
+    85:     prev_close = z["Close"].shift(1)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=85 PATTERN=close
+    82:     z["RSI14"] = _rsi(z["Close"])
+    83:     z["RSIDelta3"] = z["RSI14"] - z["RSI14"].shift(3)
+    84: 
+    85:     prev_close = z["Close"].shift(1)
+    86:     tr = pd.concat(
+    87:         [
+    88:             z["High"] - z["Low"],
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=89 PATTERN=close
+    86:     tr = pd.concat(
+    87:         [
+    88:             z["High"] - z["Low"],
+    89:             (z["High"] - prev_close).abs(),
+    90:             (z["Low"] - prev_close).abs(),
+    91:         ],
+    92:         axis=1,
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=90 PATTERN=close
+    87:         [
+    88:             z["High"] - z["Low"],
+    89:             (z["High"] - prev_close).abs(),
+    90:             (z["Low"] - prev_close).abs(),
+    91:         ],
+    92:         axis=1,
+    93:     ).max(axis=1)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=95 PATTERN=close
+    92:         axis=1,
+    93:     ).max(axis=1)
+    94:     z["ATR14"] = tr.rolling(14).mean()
+    95:     z["ATRPct"] = 100 * z["ATR14"] / z["Close"]
+    96:     z["ATRContract"] = z["ATRPct"] < z["ATRPct"].rolling(8).mean()
+    97:     z["VolMA8"] = z["Volume"].rolling(8).mean()
+    98:     z["VolRatio"] = z["Volume"] / z["VolMA8"].replace(0, np.nan)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=100 PATTERN=close
+    97:     z["VolMA8"] = z["Volume"].rolling(8).mean()
+    98:     z["VolRatio"] = z["Volume"] / z["VolMA8"].replace(0, np.nan)
+    99:     z["Res26"] = z["High"].shift(1).rolling(26, min_periods=13).max()
+   100:     z["DistResPct"] = 100 * (z["Res26"] - z["Close"]) / z["Close"]
+   101:     z["Breakout26"] = z["Close"] > z["Res26"]
+   102: 
+   103:     r6 = (z["High"].rolling(6).max() - z["Low"].rolling(6).min()) / z["Close"]
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=101 PATTERN=close
+    98:     z["VolRatio"] = z["Volume"] / z["VolMA8"].replace(0, np.nan)
+    99:     z["Res26"] = z["High"].shift(1).rolling(26, min_periods=13).max()
+   100:     z["DistResPct"] = 100 * (z["Res26"] - z["Close"]) / z["Close"]
+   101:     z["Breakout26"] = z["Close"] > z["Res26"]
+   102: 
+   103:     r6 = (z["High"].rolling(6).max() - z["Low"].rolling(6).min()) / z["Close"]
+   104:     z["Compression"] = r6 < r6.shift(6)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=103 PATTERN=close
+   100:     z["DistResPct"] = 100 * (z["Res26"] - z["Close"]) / z["Close"]
+   101:     z["Breakout26"] = z["Close"] > z["Res26"]
+   102: 
+   103:     r6 = (z["High"].rolling(6).max() - z["Low"].rolling(6).min()) / z["Close"]
+   104:     z["Compression"] = r6 < r6.shift(6)
+   105:     z["AboveEMA20"] = z["Close"] >= z["EMA20"]
+   106:     z["AboveEMA50"] = z["Close"] >= z["EMA50"]
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=105 PATTERN=close
+   102: 
+   103:     r6 = (z["High"].rolling(6).max() - z["Low"].rolling(6).min()) / z["Close"]
+   104:     z["Compression"] = r6 < r6.shift(6)
+   105:     z["AboveEMA20"] = z["Close"] >= z["EMA20"]
+   106:     z["AboveEMA50"] = z["Close"] >= z["EMA50"]
+   107: 
+   108:     trend = z["AboveEMA20"].astype(int) * 8 + z["AboveEMA50"].astype(int) * 5 + (z["EMA20Slope4"] > 0).astype(int) * 7
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=106 PATTERN=close
+   103:     r6 = (z["High"].rolling(6).max() - z["Low"].rolling(6).min()) / z["Close"]
+   104:     z["Compression"] = r6 < r6.shift(6)
+   105:     z["AboveEMA20"] = z["Close"] >= z["EMA20"]
+   106:     z["AboveEMA50"] = z["Close"] >= z["EMA50"]
+   107: 
+   108:     trend = z["AboveEMA20"].astype(int) * 8 + z["AboveEMA50"].astype(int) * 5 + (z["EMA20Slope4"] > 0).astype(int) * 7
+   109:     momentum = (z["RSI14"] >= 50).astype(int) * 8 + (z["RSI14"] <= 72).astype(int) * 4 + (z["RSIDelta3"] > 0).astype(int) * 8
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=144 PATTERN=close
+   141:         (~w4)
+   142:         & (~w3)
+   143:         & z["DistResPct"].between(5, 12)
+   144:         & (z["Close"] >= z["EMA20"] * 0.97)
+   145:         & (z["EMA20Slope4"] >= -0.01)
+   146:         & (z["RSI14"] >= 45)
+   147:         & (z["RSIDelta3"] >= 0)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=198 PATTERN=close
+   195: 
+   196: def _monthly_validation_months(daily: pd.DataFrame) -> pd.DataFrame:
+   197:     d = _normalize_ohlcv(daily).rename(
+   198:         columns={"Open":"open","High":"high","Low":"low","Close":"close","Volume":"volume"}
+   199:     )
+   200:     p = d.index.to_period("M")
+   201:     m = d.groupby(p).agg(
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=203 PATTERN=close
+   200:     p = d.index.to_period("M")
+   201:     m = d.groupby(p).agg(
+   202:         open=("open","first"), high=("high","max"), low=("low","min"),
+   203:         close=("close","last"), volume=("volume","sum"),
+   204:     )
+   205:     m.index = m.index.to_timestamp(how="end").normalize()
+   206:     return m
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=211 PATTERN=close
+   208: 
+   209: def _monthly_validation_features(daily: pd.DataFrame) -> pd.DataFrame:
+   210:     x = _monthly_validation_months(daily)
+   211:     x["ema6"] = x["close"].ewm(span=6, adjust=False, min_periods=6).mean()
+   212:     x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+   213:     x["ema24"] = x["close"].ewm(span=24, adjust=False, min_periods=24).mean()
+   214:     x["rsi14"] = _rsi(x["close"], 14)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=212 PATTERN=close
+   209: def _monthly_validation_features(daily: pd.DataFrame) -> pd.DataFrame:
+   210:     x = _monthly_validation_months(daily)
+   211:     x["ema6"] = x["close"].ewm(span=6, adjust=False, min_periods=6).mean()
+   212:     x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+   213:     x["ema24"] = x["close"].ewm(span=24, adjust=False, min_periods=24).mean()
+   214:     x["rsi14"] = _rsi(x["close"], 14)
+   215:     prev = x["close"].shift(1)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=213 PATTERN=close
+   210:     x = _monthly_validation_months(daily)
+   211:     x["ema6"] = x["close"].ewm(span=6, adjust=False, min_periods=6).mean()
+   212:     x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+   213:     x["ema24"] = x["close"].ewm(span=24, adjust=False, min_periods=24).mean()
+   214:     x["rsi14"] = _rsi(x["close"], 14)
+   215:     prev = x["close"].shift(1)
+   216:     tr = pd.concat([
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=214 PATTERN=close
+   211:     x["ema6"] = x["close"].ewm(span=6, adjust=False, min_periods=6).mean()
+   212:     x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+   213:     x["ema24"] = x["close"].ewm(span=24, adjust=False, min_periods=24).mean()
+   214:     x["rsi14"] = _rsi(x["close"], 14)
+   215:     prev = x["close"].shift(1)
+   216:     tr = pd.concat([
+   217:         x["high"] - x["low"],
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=215 PATTERN=close
+   212:     x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+   213:     x["ema24"] = x["close"].ewm(span=24, adjust=False, min_periods=24).mean()
+   214:     x["rsi14"] = _rsi(x["close"], 14)
+   215:     prev = x["close"].shift(1)
+   216:     tr = pd.concat([
+   217:         x["high"] - x["low"],
+   218:         (x["high"] - prev).abs(),
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=222 PATTERN=close
+   219:         (x["low"] - prev).abs(),
+   220:     ], axis=1).max(axis=1)
+   221:     x["atr14"] = tr.rolling(14, min_periods=14).mean()
+   222:     x["atr_pct"] = 100 * x["atr14"] / x["close"]
+   223:     x["vol_ratio"] = x["volume"] / x["volume"].rolling(6, min_periods=6).mean().replace(0, np.nan)
+   224:     x["ret_3m"] = 100 * (x["close"] / x["close"].shift(3) - 1)
+   225:     x["ret_6m"] = 100 * (x["close"] / x["close"].shift(6) - 1)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=224 PATTERN=close
+   221:     x["atr14"] = tr.rolling(14, min_periods=14).mean()
+   222:     x["atr_pct"] = 100 * x["atr14"] / x["close"]
+   223:     x["vol_ratio"] = x["volume"] / x["volume"].rolling(6, min_periods=6).mean().replace(0, np.nan)
+   224:     x["ret_3m"] = 100 * (x["close"] / x["close"].shift(3) - 1)
+   225:     x["ret_6m"] = 100 * (x["close"] / x["close"].shift(6) - 1)
+   226:     x["ema6_slope"] = 100 * (x["ema6"] / x["ema6"].shift(3) - 1)
+   227: 
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=225 PATTERN=close
+   222:     x["atr_pct"] = 100 * x["atr14"] / x["close"]
+   223:     x["vol_ratio"] = x["volume"] / x["volume"].rolling(6, min_periods=6).mean().replace(0, np.nan)
+   224:     x["ret_3m"] = 100 * (x["close"] / x["close"].shift(3) - 1)
+   225:     x["ret_6m"] = 100 * (x["close"] / x["close"].shift(6) - 1)
+   226:     x["ema6_slope"] = 100 * (x["ema6"] / x["ema6"].shift(3) - 1)
+   227: 
+   228:     strong = (
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=229 PATTERN=close
+   226:     x["ema6_slope"] = 100 * (x["ema6"] / x["ema6"].shift(3) - 1)
+   227: 
+   228:     strong = (
+   229:         (x["close"] > x["ema6"])
+   230:         & (x["ema6"] > x["ema12"])
+   231:         & (x["ema12"] > x["ema24"])
+   232:         & (x["ema6_slope"] > 0)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=236 PATTERN=close
+   233:         & (x["ret_3m"] > 0)
+   234:     )
+   235:     early = (
+   236:         (x["close"] > x["ema6"])
+   237:         & ((x["ema6"] >= x["ema12"]) | ((x["ema6"] < x["ema12"]) & (x["ema6_slope"] > 0)))
+   238:         & (x["ret_3m"] > -10)
+   239:         & (x["rsi14"].between(45, 70))
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=283 PATTERN=close
+   280: def _monthly_profile_snapshots(daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame):
+   281:     z = _monthly_validation_features(daily)
+   282:     if z.empty:
+   283:         return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+   284:     d = _normalize_ohlcv(daily)
+   285:     last_daily = pd.Timestamp(d.index.max()).normalize()
+   286:     current_end = last_daily.to_period("M").to_timestamp(how="end").normalize()
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=290 PATTERN=close
+   287:     is_partial = z.index[-1] == current_end and last_daily < current_end
+   288: 
+   289:     current = {
+   290:         "snapshot": "CURRENT_PARTIAL" if is_partial else "CURRENT_CLOSED",
+   291:         "matches": _monthly_profile_matches(z.iloc[-1], edges, profiles),
+   292:     }
+   293:     closed_row = z.iloc[-2] if is_partial and len(z) >= 2 else z.iloc[-1]
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=293 PATTERN=close
+   290:         "snapshot": "CURRENT_PARTIAL" if is_partial else "CURRENT_CLOSED",
+   291:         "matches": _monthly_profile_matches(z.iloc[-1], edges, profiles),
+   292:     }
+   293:     closed_row = z.iloc[-2] if is_partial and len(z) >= 2 else z.iloc[-1]
+   294:     closed = {
+   295:         "snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+   296:         "matches": _monthly_profile_matches(closed_row, edges, profiles),
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=294 PATTERN=close
+   291:         "matches": _monthly_profile_matches(z.iloc[-1], edges, profiles),
+   292:     }
+   293:     closed_row = z.iloc[-2] if is_partial and len(z) >= 2 else z.iloc[-1]
+   294:     closed = {
+   295:         "snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+   296:         "matches": _monthly_profile_matches(closed_row, edges, profiles),
+   297:     }
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=295 PATTERN=close
+   292:     }
+   293:     closed_row = z.iloc[-2] if is_partial and len(z) >= 2 else z.iloc[-1]
+   294:     closed = {
+   295:         "snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+   296:         "matches": _monthly_profile_matches(closed_row, edges, profiles),
+   297:     }
+   298:     return current, closed
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=296 PATTERN=close
+   293:     closed_row = z.iloc[-2] if is_partial and len(z) >= 2 else z.iloc[-1]
+   294:     closed = {
+   295:         "snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+   296:         "matches": _monthly_profile_matches(closed_row, edges, profiles),
+   297:     }
+   298:     return current, closed
+   299: 
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=298 PATTERN=close
+   295:         "snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+   296:         "matches": _monthly_profile_matches(closed_row, edges, profiles),
+   297:     }
+   298:     return current, closed
+   299: 
+   300: 
+   301: def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=301 PATTERN=close
+   298:     return current, closed
+   299: 
+   300: 
+   301: def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+   302:     current_matches = list(current.get("matches", []))
+   303:     closed_matches = list(closed.get("matches", []))
+   304:     if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=303 PATTERN=close
+   300: 
+   301: def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+   302:     current_matches = list(current.get("matches", []))
+   303:     closed_matches = list(closed.get("matches", []))
+   304:     if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+   305:         chosen = current_matches
+   306:         status = "Ay Д°Г§i GeГ§ici Match"
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=307 PATTERN=close
+   304:     if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+   305:         chosen = current_matches
+   306:         status = "Ay Д°Г§i GeГ§ici Match"
+   307:     elif closed_matches:
+   308:         chosen = closed_matches
+   309:         status = "Validated Profile Match"
+   310:     else:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=308 PATTERN=close
+   305:         chosen = current_matches
+   306:         status = "Ay Д°Г§i GeГ§ici Match"
+   307:     elif closed_matches:
+   308:         chosen = closed_matches
+   309:         status = "Validated Profile Match"
+   310:     else:
+   311:         chosen = []
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=341 PATTERN=close
+   338:         if daily is None:
+   339:             payloads.append(_monthly_profile_status(
+   340:                 {"snapshot":"CURRENT_PARTIAL","matches":[]},
+   341:                 {"snapshot":"LAST_CLOSED","matches":[]},
+   342:             ))
+   343:             continue
+   344:         try:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=345 PATTERN=close
+   342:             ))
+   343:             continue
+   344:         try:
+   345:             current, closed = _monthly_profile_snapshots(daily, edges, profiles)
+   346:             payloads.append(_monthly_profile_status(current, closed))
+   347:         except Exception:
+   348:             payloads.append(_monthly_profile_status(
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=346 PATTERN=close
+   343:             continue
+   344:         try:
+   345:             current, closed = _monthly_profile_snapshots(daily, edges, profiles)
+   346:             payloads.append(_monthly_profile_status(current, closed))
+   347:         except Exception:
+   348:             payloads.append(_monthly_profile_status(
+   349:                 {"snapshot":"CURRENT_PARTIAL","matches":[]},
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=350 PATTERN=close
+   347:         except Exception:
+   348:             payloads.append(_monthly_profile_status(
+   349:                 {"snapshot":"CURRENT_PARTIAL","matches":[]},
+   350:                 {"snapshot":"LAST_CLOSED","matches":[]},
+   351:             ))
+   352:     p = pd.DataFrame(payloads, index=out.index)
+   353:     for col in p.columns:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=395 PATTERN=close
+   392:         "RSI": float(r["RSI14"]),
+   393:         "Hacim OranД±": float(r["VolRatio"]),
+   394:         "ATR %": float(r["ATRPct"]),
+   395:         "KapanД±Еџ": float(r["Close"]),
+   396:         "Hafta": w.index[-1].date().isoformat(),
+   397:     }
+   398:     factor_values = {
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=458 PATTERN=close
+   455:         Open=("Open", "first"),
+   456:         High=("High", "max"),
+   457:         Low=("Low", "min"),
+   458:         Close=("Close", "last"),
+   459:         Volume=("Volume", "sum"),
+   460:     )
+   461:     m.index = m.index.to_timestamp(how="end").normalize()
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=462 PATTERN=close
+   459:         Volume=("Volume", "sum"),
+   460:     )
+   461:     m.index = m.index.to_timestamp(how="end").normalize()
+   462:     return m.dropna(subset=["Open", "High", "Low", "Close"])
+   463: 
+   464: 
+   465: def _monthly_metrics(daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> dict[str, object] | None:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=469 PATTERN=close
+   466:     m = _monthly(daily)
+   467:     if len(m) < 12:
+   468:         return None
+   469:     close, high, low, volume = m["Close"], m["High"], m["Low"], m["Volume"]
+   470:     ema6 = close.ewm(span=6, adjust=False).mean()
+   471:     ema12 = close.ewm(span=12, adjust=False).mean()
+   472:     rsi = _rsi(close, 6)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=470 PATTERN=close
+   467:     if len(m) < 12:
+   468:         return None
+   469:     close, high, low, volume = m["Close"], m["High"], m["Low"], m["Volume"]
+   470:     ema6 = close.ewm(span=6, adjust=False).mean()
+   471:     ema12 = close.ewm(span=12, adjust=False).mean()
+   472:     rsi = _rsi(close, 6)
+   473:     prev_close = close.shift(1)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=471 PATTERN=close
+   468:         return None
+   469:     close, high, low, volume = m["Close"], m["High"], m["Low"], m["Volume"]
+   470:     ema6 = close.ewm(span=6, adjust=False).mean()
+   471:     ema12 = close.ewm(span=12, adjust=False).mean()
+   472:     rsi = _rsi(close, 6)
+   473:     prev_close = close.shift(1)
+   474:     tr = pd.concat([high-low, (high-prev_close).abs(), (low-prev_close).abs()], axis=1).max(axis=1)
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=472 PATTERN=close
+   469:     close, high, low, volume = m["Close"], m["High"], m["Low"], m["Volume"]
+   470:     ema6 = close.ewm(span=6, adjust=False).mean()
+   471:     ema12 = close.ewm(span=12, adjust=False).mean()
+   472:     rsi = _rsi(close, 6)
+   473:     prev_close = close.shift(1)
+   474:     tr = pd.concat([high-low, (high-prev_close).abs(), (low-prev_close).abs()], axis=1).max(axis=1)
+   475:     atr = tr.rolling(6).mean()
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=473 PATTERN=close
+   470:     ema6 = close.ewm(span=6, adjust=False).mean()
+   471:     ema12 = close.ewm(span=12, adjust=False).mean()
+   472:     rsi = _rsi(close, 6)
+   473:     prev_close = close.shift(1)
+   474:     tr = pd.concat([high-low, (high-prev_close).abs(), (low-prev_close).abs()], axis=1).max(axis=1)
+   475:     atr = tr.rolling(6).mean()
+   476:     res12 = high.shift(1).rolling(12, min_periods=6).max()
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=474 PATTERN=close
+   471:     ema12 = close.ewm(span=12, adjust=False).mean()
+   472:     rsi = _rsi(close, 6)
+   473:     prev_close = close.shift(1)
+   474:     tr = pd.concat([high-low, (high-prev_close).abs(), (low-prev_close).abs()], axis=1).max(axis=1)
+   475:     atr = tr.rolling(6).mean()
+   476:     res12 = high.shift(1).rolling(12, min_periods=6).max()
+   477:     vol_ma6 = volume.rolling(6).mean()
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=480 PATTERN=close
+   477:     vol_ma6 = volume.rolling(6).mean()
+   478: 
+   479:     last = len(m) - 1
+   480:     ret3 = float(close.iloc[last] / close.iloc[max(0, last-3)] - 1)
+   481:     ret6 = float(close.iloc[last] / close.iloc[max(0, last-6)] - 1)
+   482:     bench3 = bench6 = np.nan
+   483:     benchmark_available = False
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=481 PATTERN=close
+   478: 
+   479:     last = len(m) - 1
+   480:     ret3 = float(close.iloc[last] / close.iloc[max(0, last-3)] - 1)
+   481:     ret6 = float(close.iloc[last] / close.iloc[max(0, last-6)] - 1)
+   482:     bench3 = bench6 = np.nan
+   483:     benchmark_available = False
+   484:     if benchmark is not None:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=487 PATTERN=close
+   484:     if benchmark is not None:
+   485:         bm = _monthly(benchmark)
+   486:         if len(bm) >= 7:
+   487:             bc = bm["Close"]
+   488:             bench3 = float(bc.iloc[-1] / bc.iloc[-4] - 1)
+   489:             bench6 = float(bc.iloc[-1] / bc.iloc[-7] - 1)
+   490:             benchmark_available = True
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=492 PATTERN=close
+   489:             bench6 = float(bc.iloc[-1] / bc.iloc[-7] - 1)
+   490:             benchmark_available = True
+   491: 
+   492:     dist = float(100 * (res12.iloc[-1] - close.iloc[-1]) / close.iloc[-1]) if pd.notna(res12.iloc[-1]) else np.nan
+   493:     vol_ratio = float(volume.iloc[-1] / vol_ma6.iloc[-1]) if pd.notna(vol_ma6.iloc[-1]) and vol_ma6.iloc[-1] > 0 else np.nan
+   494:     atr_pct = float(100 * atr.iloc[-1] / close.iloc[-1]) if pd.notna(atr.iloc[-1]) else np.nan
+   495:     ema6_slope3 = float(ema6.iloc[-1] / ema6.iloc[-4] - 1) if len(ema6) >= 4 and ema6.iloc[-4] else 0.0
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=494 PATTERN=close
+   491: 
+   492:     dist = float(100 * (res12.iloc[-1] - close.iloc[-1]) / close.iloc[-1]) if pd.notna(res12.iloc[-1]) else np.nan
+   493:     vol_ratio = float(volume.iloc[-1] / vol_ma6.iloc[-1]) if pd.notna(vol_ma6.iloc[-1]) and vol_ma6.iloc[-1] > 0 else np.nan
+   494:     atr_pct = float(100 * atr.iloc[-1] / close.iloc[-1]) if pd.notna(atr.iloc[-1]) else np.nan
+   495:     ema6_slope3 = float(ema6.iloc[-1] / ema6.iloc[-4] - 1) if len(ema6) >= 4 and ema6.iloc[-4] else 0.0
+   496:     rsi_delta2 = float(rsi.iloc[-1] - rsi.iloc[-3]) if len(rsi) >= 3 else 0.0
+   497:     higher_high = bool(high.tail(3).max() >= high.iloc[-6:-3].max()) if len(high) >= 6 else False
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=501 PATTERN=close
+   498:     higher_low = bool(low.tail(3).min() > low.iloc[-6:-3].min()) if len(low) >= 6 else False
+   499: 
+   500:     return {
+   501:         "close": float(close.iloc[-1]),
+   502:         "ema6": float(ema6.iloc[-1]),
+   503:         "ema12": float(ema12.iloc[-1]),
+   504:         "ema6_slope3": ema6_slope3,
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=528 PATTERN=close
+   525: 
+   526:     strong_score = 0
+   527:     strong_reasons: list[str] = []
+   528:     if x["close"] > x["ema6"] > x["ema12"]:
+   529:         strong_score += 30
+   530:         strong_reasons.append("AylД±k fiyat EMA6 ve EMA12 Гјzerinde; ortalamalar yukarД± sД±ralД±.")
+   531:     if x["ema6_slope3"] > 0:
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=569 PATTERN=close
+   566: 
+   567:     early_score = 0
+   568:     early_reasons: list[str] = []
+   569:     close_near_ema = x["close"] >= x["ema6"] * 0.97
+   570:     if close_near_ema:
+   571:         early_score += 15
+   572:         early_reasons.append("Fiyat aylД±k EMA6 Г§evresinde/Гјzerinde.")
+=== RADAR_close ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=570 PATTERN=close
+   567:     early_score = 0
+   568:     early_reasons: list[str] = []
+   569:     close_near_ema = x["close"] >= x["ema6"] * 0.97
+   570:     if close_near_ema:
+   571:         early_score += 15
+   572:         early_reasons.append("Fiyat aylД±k EMA6 Г§evresinde/Гјzerinde.")
+   573:     if x["ema6_slope3"] >= -0.01:
+=== RADAR_Opportunity ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=15 PATTERN=Opportunity
+    12: from backend.app.prebreakout.prebreakout_universe import on_yukselis_evrenini_yukle
+    13: 
+    14: 
+    15: PROFILE_DIR = Path(__file__).resolve().parents[1] / "data" / "opportunity_radar"
+    16: QUANTILE_FILE = PROFILE_DIR / "03_w2_w3_quantile_sinirlari_rev3.csv"
+    17: PASSED_PROFILE_FILE = PROFILE_DIR / "06_w2_w3_gecen_profiller_rev3.csv"
+    18: MONTHLY_QUANTILE_FILE = PROFILE_DIR / "03_aylik_quantile_sinirlari_rev2.csv"
+=== RADAR_Opportunity ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=23 PATTERN=Opportunity
+    20: 
+    21: 
+    22: @dataclass(frozen=True)
+    23: class OpportunityRadarResult:
+    24:     universe_name: str
+    25:     universe_source: str
+    26:     universe_date: str
+=== RADAR_Opportunity ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=612 PATTERN=Opportunity
+   609:     return strong, early
+   610: 
+   611: 
+   612: def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+   613:     edges, profiles = _load_validated_profiles()
+   614:     monthly_edges, monthly_profiles = _load_monthly_validated_profiles()
+   615:     universe = on_yukselis_evrenini_yukle(
+=== RADAR_Opportunity ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=727 PATTERN=Opportunity
+   724:     monthly_strong = monthly_strong.head(result_limit).reset_index(drop=True)
+   725:     monthly_early = monthly_early.head(result_limit).reset_index(drop=True)
+   726: 
+   727:     return OpportunityRadarResult(
+   728:         universe_name=universe.ad,
+   729:         universe_source=universe.kaynak,
+   730:         universe_date=universe.tarih,
+=== RADAR_Firsat ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py MATCH_LINE=160 PATTERN=Firsat
+   157:     if not QUANTILE_FILE.exists() or not PASSED_PROFILE_FILE.exists():
+   158:         raise RuntimeError(
+   159:             "Validated profil dosyalari kurulu degil. "
+   160:             "Firsat Radari kurucusunu Rev3 research ciktilari mevcutken tekrar calistirin."
+   161:         )
+   162:     edges = pd.read_csv(QUANTILE_FILE)
+   163:     profiles = pd.read_csv(PASSED_PROFILE_FILE)
+=== LIVE_class LiveAnalysisDashboardService ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=105 PATTERN=class LiveAnalysisDashboardService
+   101: TradePlanEngine = Callable[..., TradePlan]
+   102: PositionMonitorEngine = Callable[..., PositionMonitoringResult]
+   103: 
+   104: 
+   105: class LiveAnalysisDashboardService:
+   106:     """Veriyi bir kez indirip gГјncel teknik analiz ve planД± birlikte Гјretir."""
+   107: 
+   108:     def __init__(
+   109:         self,
+=== LIVE_def calistir ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=118 PATTERN=def calistir
+   114:         self._veri_getirici = veri_getirici
+   115:         self._teknik_motoru = teknik_motoru
+   116:         self._plan_motoru = plan_motoru
+   117: 
+   118:     def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+   119:         try:
+   120:             paket = self._veri_getirici(istek.sembol)
+   121:             if self._veri_getirici is coklu_zaman_dilimi_verisi_getir:
+   122:                 paket = resmi_gunluk_paketi_guncelle(
+=== LIVE_def calistir ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=168 PATTERN=def calistir
+   164:         self._veri_getirici = veri_getirici
+   165:         self._teknik_motoru = teknik_motoru
+   166:         self._izleme_motoru = izleme_motoru
+   167: 
+   168:     def calistir(
+   169:         self,
+   170:         istek: OpenPositionDashboardRequest,
+   171:     ) -> PositionMonitoringResult:
+   172:         try:
+=== LIVE_LiveAnalysisRequest ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=38 PATTERN=LiveAnalysisRequest
+    34:     """GГјncel analiz ekranД± sonucu hazД±rlanamadД±ДџД±nda kullanД±lД±r."""
+    35: 
+    36: 
+    37: @dataclass(frozen=True)
+    38: class LiveAnalysisRequest:
+    39:     """GГјncel teknik analiz ve iЕџlem planД± iГ§in kullanД±cД± girdileri."""
+    40: 
+    41:     sembol: str
+    42:     sermaye: float = 100_000.0
+=== LIVE_LiveAnalysisRequest ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=61 PATTERN=LiveAnalysisRequest
+    57:     paket: MultiTimeframeDataBundle
+    58:     teknik_teyit: MultiTimeframeTechnicalConfirmation
+    59:     islem_plani: TradePlan
+    60:     veri_tazeligi: DataFreshnessResult | None = None
+    61:     istek: LiveAnalysisRequest | None = None
+    62: 
+    63: 
+    64: @dataclass(frozen=True)
+    65: class OpenPositionDashboardRequest:
+=== LIVE_LiveAnalysisRequest ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=118 PATTERN=LiveAnalysisRequest
+   114:         self._veri_getirici = veri_getirici
+   115:         self._teknik_motoru = teknik_motoru
+   116:         self._plan_motoru = plan_motoru
+   117: 
+   118:     def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+   119:         try:
+   120:             paket = self._veri_getirici(istek.sembol)
+   121:             if self._veri_getirici is coklu_zaman_dilimi_verisi_getir:
+   122:                 paket = resmi_gunluk_paketi_guncelle(
+=== LIVE_LiveAnalysisResult ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=54 PATTERN=LiveAnalysisResult
+    50:             raise ValueError("Azami risk oranД± 0 ile 1 arasД±nda olmalД±dД±r.")
+    51: 
+    52: 
+    53: @dataclass(frozen=True)
+    54: class LiveAnalysisResult:
+    55:     """AynД± veri paketiyle ГјretilmiЕџ teknik teyit ve iЕџlem planД±."""
+    56: 
+    57:     paket: MultiTimeframeDataBundle
+    58:     teknik_teyit: MultiTimeframeTechnicalConfirmation
+=== LIVE_LiveAnalysisResult ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=118 PATTERN=LiveAnalysisResult
+   114:         self._veri_getirici = veri_getirici
+   115:         self._teknik_motoru = teknik_motoru
+   116:         self._plan_motoru = plan_motoru
+   117: 
+   118:     def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+   119:         try:
+   120:             paket = self._veri_getirici(istek.sembol)
+   121:             if self._veri_getirici is coklu_zaman_dilimi_verisi_getir:
+   122:                 paket = resmi_gunluk_paketi_guncelle(
+=== LIVE_LiveAnalysisResult ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=146 PATTERN=LiveAnalysisResult
+   142:             ValueError,
+   143:         ) as hata:
+   144:             raise LiveAnalysisDashboardError(str(hata)) from hata
+   145: 
+   146:         return LiveAnalysisResult(
+   147:             paket=paket,
+   148:             teknik_teyit=teknik_teyit,
+   149:             islem_plani=islem_plani,
+   150:             veri_tazeligi=veri_tazeligi,
+=== LIVE_veri_tazeligi ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=24 PATTERN=veri_tazeligi
+    20:     TradePlan,
+    21:     TradePlanError,
+    22:     islem_plani_olustur,
+    23: )
+    24: from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+    25: from ..data.multi_timeframe_data import (
+    26:     MultiTimeframeDataBundle,
+    27:     MultiTimeframeDataError,
+    28:     bist_sembolunu_hazirla,
+=== LIVE_veri_tazeligi ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=60 PATTERN=veri_tazeligi
+    56: 
+    57:     paket: MultiTimeframeDataBundle
+    58:     teknik_teyit: MultiTimeframeTechnicalConfirmation
+    59:     islem_plani: TradePlan
+    60:     veri_tazeligi: DataFreshnessResult | None = None
+    61:     istek: LiveAnalysisRequest | None = None
+    62: 
+    63: 
+    64: @dataclass(frozen=True)
+=== LIVE_veri_tazeligi ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=127 PATTERN=veri_tazeligi
+   123:                     paket,
+   124:                     istek.sembol,
+   125:                 )
+   126:             teknik_teyit = self._teknik_motoru(paket)
+   127:             veri_tazeligi = None
+   128:             if hasattr(paket, "getir"):
+   129:                 veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+   130:                     paket.getir("GГјnlГјk").veri
+   131:                 )
+=== LIVE_veri_tazeligi ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=129 PATTERN=veri_tazeligi
+   125:                 )
+   126:             teknik_teyit = self._teknik_motoru(paket)
+   127:             veri_tazeligi = None
+   128:             if hasattr(paket, "getir"):
+   129:                 veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+   130:                     paket.getir("GГјnlГјk").veri
+   131:                 )
+   132:             islem_plani = self._plan_motoru(
+   133:                 paket=paket,
+=== LIVE_veri_tazeligi ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=150 PATTERN=veri_tazeligi
+   146:         return LiveAnalysisResult(
+   147:             paket=paket,
+   148:             teknik_teyit=teknik_teyit,
+   149:             islem_plani=islem_plani,
+   150:             veri_tazeligi=veri_tazeligi,
+   151:             istek=istek,
+   152:         )
+   153: 
+   154: 
+=== LIVE_trade_plan ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=19 PATTERN=trade_plan
+    15:     MultiTimeframeTechnicalConfirmation,
+    16:     TechnicalConfirmationError,
+    17:     teknik_teyit_analizi_yap,
+    18: )
+    19: from ..analysis.trade_plan import (
+    20:     TradePlan,
+    21:     TradePlanError,
+    22:     islem_plani_olustur,
+    23: )
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=17 PATTERN=teknik
+    13: )
+    14: from ..analysis.technical_confirmation import (
+    15:     MultiTimeframeTechnicalConfirmation,
+    16:     TechnicalConfirmationError,
+    17:     teknik_teyit_analizi_yap,
+    18: )
+    19: from ..analysis.trade_plan import (
+    20:     TradePlan,
+    21:     TradePlanError,
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=39 PATTERN=teknik
+    35: 
+    36: 
+    37: @dataclass(frozen=True)
+    38: class LiveAnalysisRequest:
+    39:     """GГјncel teknik analiz ve iЕџlem planД± iГ§in kullanД±cД± girdileri."""
+    40: 
+    41:     sembol: str
+    42:     sermaye: float = 100_000.0
+    43:     azami_risk_orani: float = 0.01
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=55 PATTERN=teknik
+    51: 
+    52: 
+    53: @dataclass(frozen=True)
+    54: class LiveAnalysisResult:
+    55:     """AynД± veri paketiyle ГјretilmiЕџ teknik teyit ve iЕџlem planД±."""
+    56: 
+    57:     paket: MultiTimeframeDataBundle
+    58:     teknik_teyit: MultiTimeframeTechnicalConfirmation
+    59:     islem_plani: TradePlan
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=58 PATTERN=teknik
+    54: class LiveAnalysisResult:
+    55:     """AynД± veri paketiyle ГјretilmiЕџ teknik teyit ve iЕџlem planД±."""
+    56: 
+    57:     paket: MultiTimeframeDataBundle
+    58:     teknik_teyit: MultiTimeframeTechnicalConfirmation
+    59:     islem_plani: TradePlan
+    60:     veri_tazeligi: DataFreshnessResult | None = None
+    61:     istek: LiveAnalysisRequest | None = None
+    62: 
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=106 PATTERN=teknik
+   102: PositionMonitorEngine = Callable[..., PositionMonitoringResult]
+   103: 
+   104: 
+   105: class LiveAnalysisDashboardService:
+   106:     """Veriyi bir kez indirip gГјncel teknik analiz ve planД± birlikte Гјretir."""
+   107: 
+   108:     def __init__(
+   109:         self,
+   110:         veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=111 PATTERN=teknik
+   107: 
+   108:     def __init__(
+   109:         self,
+   110:         veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+   111:         teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+   112:         plan_motoru: TradePlanEngine = islem_plani_olustur,
+   113:     ) -> None:
+   114:         self._veri_getirici = veri_getirici
+   115:         self._teknik_motoru = teknik_motoru
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=115 PATTERN=teknik
+   111:         teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+   112:         plan_motoru: TradePlanEngine = islem_plani_olustur,
+   113:     ) -> None:
+   114:         self._veri_getirici = veri_getirici
+   115:         self._teknik_motoru = teknik_motoru
+   116:         self._plan_motoru = plan_motoru
+   117: 
+   118:     def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+   119:         try:
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=126 PATTERN=teknik
+   122:                 paket = resmi_gunluk_paketi_guncelle(
+   123:                     paket,
+   124:                     istek.sembol,
+   125:                 )
+   126:             teknik_teyit = self._teknik_motoru(paket)
+   127:             veri_tazeligi = None
+   128:             if hasattr(paket, "getir"):
+   129:                 veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+   130:                     paket.getir("GГјnlГјk").veri
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=134 PATTERN=teknik
+   130:                     paket.getir("GГјnlГјk").veri
+   131:                 )
+   132:             islem_plani = self._plan_motoru(
+   133:                 paket=paket,
+   134:                 teknik_teyit=teknik_teyit,
+   135:                 sermaye=istek.sermaye,
+   136:                 azami_risk_orani=istek.azami_risk_orani,
+   137:             )
+   138:         except (
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=148 PATTERN=teknik
+   144:             raise LiveAnalysisDashboardError(str(hata)) from hata
+   145: 
+   146:         return LiveAnalysisResult(
+   147:             paket=paket,
+   148:             teknik_teyit=teknik_teyit,
+   149:             islem_plani=islem_plani,
+   150:             veri_tazeligi=veri_tazeligi,
+   151:             istek=istek,
+   152:         )
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=156 PATTERN=teknik
+   152:         )
+   153: 
+   154: 
+   155: class OpenPositionDashboardService:
+   156:     """AynД± veri ve teknik teyitle aГ§Д±k pozisyon izleme sonucu Гјretir."""
+   157: 
+   158:     def __init__(
+   159:         self,
+   160:         veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=161 PATTERN=teknik
+   157: 
+   158:     def __init__(
+   159:         self,
+   160:         veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+   161:         teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+   162:         izleme_motoru: PositionMonitorEngine = acik_pozisyonu_izle,
+   163:     ) -> None:
+   164:         self._veri_getirici = veri_getirici
+   165:         self._teknik_motoru = teknik_motoru
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=165 PATTERN=teknik
+   161:         teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+   162:         izleme_motoru: PositionMonitorEngine = acik_pozisyonu_izle,
+   163:     ) -> None:
+   164:         self._veri_getirici = veri_getirici
+   165:         self._teknik_motoru = teknik_motoru
+   166:         self._izleme_motoru = izleme_motoru
+   167: 
+   168:     def calistir(
+   169:         self,
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=179 PATTERN=teknik
+   175:                 paket = resmi_gunluk_paketi_guncelle(
+   176:                     paket,
+   177:                     istek.sembol,
+   178:                 )
+   179:             teknik_teyit = self._teknik_motoru(paket)
+   180:             return self._izleme_motoru(
+   181:                 paket=paket,
+   182:                 teknik_teyit=teknik_teyit,
+   183:                 pozisyon=istek.pozisyon_olustur(),
+=== LIVE_teknik ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py MATCH_LINE=182 PATTERN=teknik
+   178:                 )
+   179:             teknik_teyit = self._teknik_motoru(paket)
+   180:             return self._izleme_motoru(
+   181:                 paket=paket,
+   182:                 teknik_teyit=teknik_teyit,
+   183:                 pozisyon=istek.pozisyon_olustur(),
+   184:             )
+   185:         except (
+   186:             MultiTimeframeDataError,
+=== DASH_RADAR_opportunity_radar ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=32 PATTERN=opportunity_radar
+    27: from backend.app.ui.news_center_dashboard import render_news_center_dashboard
+    28: 
+    29: from backend.app.ui.prebreakout_dashboard import on_yukselis_hazirlik_formu
+    30: from backend.app.ui.prebreakout_validation_dashboard import on_yukselis_toplu_dogrulama_formu
+    31: from backend.app.ui.bist_daily_market_dashboard import render_bist_daily_market
+    32: from backend.app.ui.opportunity_radar_dashboard import render_opportunity_radar
+    33: 
+    34: from backend.app.analysis.fundamental_analysis import (
+    35:     build_fundamental_snapshot,
+    36: )
+    37: from backend.app.analysis.divergence_analysis import (
+=== DASH_RADAR_opportunity_radar ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=9153 PATTERN=opportunity_radar
+  9148:     elif analiz_modu == "Piyasa Rejimi":
+  9149:         piyasa_rejimi_formu()
+  9150:     elif analiz_modu == "BIST GГјnlГјk Piyasa":
+  9151:         render_bist_daily_market()
+  9152:     elif analiz_modu == "FД±rsat RadarД±":
+  9153:         render_opportunity_radar()
+  9154:     elif analiz_modu == "Momentum KeЕџif":
+  9155:         momentum_kesif_formu()
+  9156:     elif analiz_modu == "Г–n YГјkseliЕџ HazД±rlД±k":
+  9157:         on_yukselis_hazirlik_formu()
+  9158:     elif analiz_modu == "Г–n YГјkseliЕџ Toplu DoДџrulama":
+=== DASH_RADAR_Fırsat Radarı ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=421 PATTERN=Fırsat Radarı
+   416:     "AynД± Veri KarЕџД±laЕџtД±rmasД±",
+   417:     "BaЕџarД± KarЕџД±laЕџtД±rmasД±",
+   418:     "BIST GГјnlГјk Piyasa",
+   419:     "BIST Toplu Tarama",
+   420:     "Г‡oklu Hisse PortfГ¶yГј",
+   421:     "FД±rsat RadarД±",
+   422:     "Gecikmeli Veri Pilotu",
+   423:     "GГ¶lge PortfГ¶y",
+   424:     "GГјncel Teknik Analiz",
+   425:     "GГјnlГјk Operasyon Paneli",
+   426:     "HaftalД±k Performans Raporu",
+=== DASH_RADAR_Fırsat Radarı ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=2266 PATTERN=Fırsat Radarı
+  2261: 
+  2262: 
+  2263: def guncel_teknik_analiz_formu() -> None:
+  2264:     st.header("GГјncel Teknik Analiz вЂ” Tek Hisse Derin Д°nceleme")
+  2265:     st.caption(
+  2266:         "FД±rsat RadarД± aday bulur; bu ekran seГ§ilen tek hisseyi saatlik, gГјnlГјk ve haftalД±k "        "teknik teyitlerle derinleЕџtirir. Teknik Grafik Terminali ise gГ¶rsel grafik Г§alД±Еџma alanД±dД±r."
+  2267:     )
+  2268:     st.info(
+  2269:         "Bu ekran teknik inceleme ve iЕџlem planД± Гјretir; karar matrisi alД±m/satД±m tavsiyesi deДџildir."
+  2270:     )
+  2271:     with st.sidebar:
+=== DASH_RADAR_Fırsat Radarı ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=4170 PATTERN=Fırsat Radarı
+  4165:     st.header("BIST Toplu Tarama вЂ” Genel Teknik Aday Havuzu")
+  4166:     st.caption(
+  4167:         "SeГ§ilen evrendeki hisseleri gГјnlГјk teknik skor, hacim, risk/getiri, VBTS ve isteДџe baДџlД± temel kalite filtresiyle sД±ralar."
+  4168:     )
+  4169:     st.info(
+  4170:         "FД±rsat RadarД± doДџrulanmД±Еџ haftalД±k/aylД±k profil eЕџleЕџmelerini Г¶ne Г§Д±karД±r; "
+  4171:         "BIST Toplu Tarama ise daha geniЕџ, profil-seГ§ilebilir genel teknik aday havuzu Гјretir. "
+  4172:         "Bu ekran kesin alД±m tavsiyesi vermez; seГ§ilen aday GГјncel Teknik Analiz veya AL-SAT ile derinleЕџtirilir."
+  4173:     )
+  4174:     bildirim = st.session_state.pop("vbts_yonetim_bildirimi", None)
+  4175:     if bildirim:
+=== DASH_RADAR_Fırsat Radarı ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=5559 PATTERN=Fırsat Radarı
+  5554:         "Ећirketin bilanГ§o kalitesi, bГјyГјme, kГўrlД±lД±k, borГ§luluk, likidite ve nakit akД±ЕџД± "
+  5555:         "gГ¶rГјnГјmГјnГј dГ¶nemsel ve sektГ¶r baДџlamД±nda inceler."
+  5556:     )
+  5557:     st.info(
+  5558:         "Bu ekran teknik giriЕџ zamanlamasД± veya AL/SAT kararД± Гјretmez. "
+  5559:         "FД±rsat RadarД± aday bulur; GГјncel Teknik Analiz teknik teyidi derinleЕџtirir; "
+  5560:         "Temel Analiz ise finansal kalite ve sГјrdГјrГјlebilirliДџi deДџerlendirir."
+  5561:     )
+  5562:     st.caption(
+  5563:         "Okuma sД±rasД±: Veri tazeliДџi в†’ Temel kalite skoru в†’ Finansal oranlar в†’ "
+  5564:         "SektГ¶r karЕџД±laЕџtД±rmasД± в†’ Skor geГ§miЕџi в†’ Rapor ve arЕџiv."
+=== DASH_RADAR_Fırsat Radarı ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=7831 PATTERN=Fırsat Radarı
+  7826:     )
+  7827: 
+  7828:     st.markdown("#### ModГјl yГ¶nlendirmesi")
+  7829:     st.info(
+  7830:         "Veri sorunu в†’ Gecikmeli Veri Pilotu В· tarama ihtiyacД± в†’ BIST Toplu Tarama / "
+  7831:         "FД±rsat RadarД± В· tek-hisse teyidi в†’ GГјncel Teknik Analiz В· "
+  7832:         "sonuГ§ takibi в†’ Sinyal SonuГ§larД± В· iЕџlem takibi в†’ GГ¶lge PortfГ¶y."
+  7833:     )
+  7834: 
+  7835:     if st.button(
+  7836:         "Operasyon panelini yenile",
+=== DASH_RADAR_Fırsat Radarı ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=9152 PATTERN=Fırsat Radarı
+  9147:         render_news_center_dashboard(st)
+  9148:     elif analiz_modu == "Piyasa Rejimi":
+  9149:         piyasa_rejimi_formu()
+  9150:     elif analiz_modu == "BIST GГјnlГјk Piyasa":
+  9151:         render_bist_daily_market()
+  9152:     elif analiz_modu == "FД±rsat RadarД±":
+  9153:         render_opportunity_radar()
+  9154:     elif analiz_modu == "Momentum KeЕџif":
+  9155:         momentum_kesif_formu()
+  9156:     elif analiz_modu == "Г–n YГјkseliЕџ HazД±rlД±k":
+  9157:         on_yukselis_hazirlik_formu()
+=== DASH_LIVE_LiveAnalysisDashboardService ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=302 PATTERN=LiveAnalysisDashboardService
+   297:     MarketRegimeDashboardService,
+   298:     piyasa_rejimi_baglami_olustur,
+   299: )
+   300: from backend.app.ui.live_analysis_dashboard import (
+   301:     LiveAnalysisDashboardError,
+   302:     LiveAnalysisDashboardService,
+   303:     LiveAnalysisRequest,
+   304:     LiveAnalysisResult,
+   305:     OpenPositionDashboardRequest,
+   306:     OpenPositionDashboardService,
+   307: )
+=== DASH_LIVE_LiveAnalysisDashboardService ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=2314 PATTERN=LiveAnalysisDashboardService
+  2309:             azami_risk_orani=float(risk_yuzde) / 100.0,
+  2310:         )
+  2311:         with st.spinner(
+  2312:             f"{istek.sembol} iГ§in saatlik, gГјnlГјk ve haftalД±k veri hazД±rlanД±yor..."
+  2313:         ):
+  2314:             sonuc = LiveAnalysisDashboardService().calistir(istek)
+  2315:     except (ValueError, TypeError, LiveAnalysisDashboardError) as hata:
+  2316:         st.error(str(hata))
+  2317:         return
+  2318: 
+  2319:     if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+=== DASH_LIVE_LiveAnalysisRequest ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=303 PATTERN=LiveAnalysisRequest
+   298:     piyasa_rejimi_baglami_olustur,
+   299: )
+   300: from backend.app.ui.live_analysis_dashboard import (
+   301:     LiveAnalysisDashboardError,
+   302:     LiveAnalysisDashboardService,
+   303:     LiveAnalysisRequest,
+   304:     LiveAnalysisResult,
+   305:     OpenPositionDashboardRequest,
+   306:     OpenPositionDashboardService,
+   307: )
+   308: from backend.app.analysis.position_monitor import PositionMonitoringResult
+=== DASH_LIVE_LiveAnalysisRequest ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=2306 PATTERN=LiveAnalysisRequest
+  2301:             "вЂGГјncel analizi Г§alД±ЕџtД±rвЂ™ dГјДџmesine basД±n."
+  2302:         )
+  2303:         return
+  2304: 
+  2305:     try:
+  2306:         istek = LiveAnalysisRequest(
+  2307:             sembol=sembol,
+  2308:             sermaye=float(sermaye),
+  2309:             azami_risk_orani=float(risk_yuzde) / 100.0,
+  2310:         )
+  2311:         with st.spinner(
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=424 PATTERN=Güncel Teknik Analiz
+   419:     "BIST Toplu Tarama",
+   420:     "Г‡oklu Hisse PortfГ¶yГј",
+   421:     "FД±rsat RadarД±",
+   422:     "Gecikmeli Veri Pilotu",
+   423:     "GГ¶lge PortfГ¶y",
+   424:     "GГјncel Teknik Analiz",
+   425:     "GГјnlГјk Operasyon Paneli",
+   426:     "HaftalД±k Performans Raporu",
+   427:     "Д°Еџlem KayД±p Analizi",
+   428:     "Momentum KeЕџif",
+   429:     "Г–n YГјkseliЕџ HazД±rlД±k",
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=678 PATTERN=Güncel Teknik Analiz
+   673: 
+   674: def gecmis_kaydi_etiketi(kayit: BacktestHistoryRecord) -> str:
+   675:     tur = {
+   676:         TEK_HISSE_ANALIZI: "Tek Hisse",
+   677:         PORTFOY_ANALIZI: "PortfГ¶y",
+   678:         GUNCEL_TEKNIK_ANALIZ: "GГјncel Teknik Analiz",
+   679:     }.get(kayit.analiz_turu, kayit.analiz_turu)
+   680:     semboller = ", ".join(kayit.semboller)
+   681:     return (
+   682:         f"{gecmis_zamani_yaz(kayit.kaydedilme_zamani)} В· "
+   683:         f"{tur} В· {semboller}"
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=1090 PATTERN=Güncel Teknik Analiz
+  1085: 
+  1086: 
+  1087: def guncel_analiz_gecmis_kaydi_goster(
+  1088:     kayit: BacktestHistoryRecord,
+  1089: ) -> None:
+  1090:     """KaydedilmiЕџ gГјncel teknik analiz sonucunu yeniden gГ¶sterir."""
+  1091: 
+  1092:     fiyat = _gecmis_alt_sozluk(kayit, "fiyat_verisi")
+  1093:     teknik = _gecmis_alt_sozluk(kayit, "teknik_teyit")
+  1094:     plan = _gecmis_alt_sozluk(kayit, "islem_plani")
+  1095:     pozisyon = _gecmis_alt_sozluk(kayit, "risk_ve_pozisyon")
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=1182 PATTERN=Güncel Teknik Analiz
+  1177: 
+  1178:     with st.sidebar:
+  1179:         st.header("Analiz geГ§miЕџi")
+  1180:         tur_etiketi = st.selectbox(
+  1181:             "KayД±t tГјrГј",
+  1182:             options=("TГјmГј", "Tek Hisse", "PortfГ¶y", "GГјncel Teknik Analiz"),
+  1183:             index=0,
+  1184:         )
+  1185:         arama = st.text_input(
+  1186:             "GeГ§miЕџte ara",
+  1187:             value="",
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=1225 PATTERN=Güncel Teknik Analiz
+  1220: 
+  1221:     tur_esleme = {
+  1222:         "TГјmГј": None,
+  1223:         "Tek Hisse": TEK_HISSE_ANALIZI,
+  1224:         "PortfГ¶y": PORTFOY_ANALIZI,
+  1225:         "GГјncel Teknik Analiz": GUNCEL_TEKNIK_ANALIZ,
+  1226:     }
+  1227:     depo = BacktestHistoryStore()
+  1228:     try:
+  1229:         tum_kayitlar = depo.kayitlari_listele(
+  1230:             analiz_turu=tur_esleme[tur_etiketi],
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=1971 PATTERN=Güncel Teknik Analiz
+  1966:     teknik = sonuc.teknik_teyit
+  1967:     plan = sonuc.islem_plani
+  1968: 
+  1969:     store_stock_ai_context(st, sonuc)
+  1970: 
+  1971:     st.subheader(f"{teknik.sembol} gГјncel teknik analiz")
+  1972:     st.caption(
+  1973:         "Г–zet: haftalД±k ana trend В· gГјnlГјk yГ¶n teyidi В· saatlik giriЕџ zamanlamasД± В· "        "RSI/MACD uyumsuzluk В· karar matrisi В· iЕџlem planД±"
+  1974:     )
+  1975:     metrik_izgarasi_goster(
+  1976:         (
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=2264 PATTERN=Güncel Teknik Analiz
+  2259:             )
+  2260:         )
+  2261: 
+  2262: 
+  2263: def guncel_teknik_analiz_formu() -> None:
+  2264:     st.header("GГјncel Teknik Analiz вЂ” Tek Hisse Derin Д°nceleme")
+  2265:     st.caption(
+  2266:         "FД±rsat RadarД± aday bulur; bu ekran seГ§ilen tek hisseyi saatlik, gГјnlГјk ve haftalД±k "        "teknik teyitlerle derinleЕџtirir. Teknik Grafik Terminali ise gГ¶rsel grafik Г§alД±Еџma alanД±dД±r."
+  2267:     )
+  2268:     st.info(
+  2269:         "Bu ekran teknik inceleme ve iЕџlem planД± Гјretir; karar matrisi alД±m/satД±m tavsiyesi deДџildir."
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=2272 PATTERN=Güncel Teknik Analiz
+  2267:     )
+  2268:     st.info(
+  2269:         "Bu ekran teknik inceleme ve iЕџlem planД± Гјretir; karar matrisi alД±m/satД±m tavsiyesi deДџildir."
+  2270:     )
+  2271:     with st.sidebar:
+  2272:         st.header("GГјncel teknik analiz")
+  2273:         with st.form("guncel_teknik_analiz_formu"):
+  2274:             sembol = st.text_input(
+  2275:                 "Hisse sembolГј",
+  2276:                 value="THYAO",
+  2277:                 help="BIST uzantД±sД± yazД±lmazsa .IS otomatik eklenir.",
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=2324 PATTERN=Güncel Teknik Analiz
+  2319:     if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+  2320:         return
+  2321:     guncel_analiz_sonucu_goster(sonuc)
+  2322:     kayit = gecmise_kaydet(sonuc)
+  2323:     if kayit is not None:
+  2324:         st.caption("GГјncel teknik analiz, Analiz GeГ§miЕџi'ne kaydedildi.")
+  2325: 
+  2326: 
+  2327: def momentum_aday_ayrintisi_goster(aday: MomentumCandidate) -> None:
+  2328:     st.subheader(
+  2329:         f"{aday.sembol.removesuffix('.IS')} В· "
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=2593 PATTERN=Güncel Teknik Analiz
+  2588:         f"Evren kaynaДџД±: {sonuc.evren_kaynagi} В· "
+  2589:         f"BileЕџen tarihi: {sonuc.evren_tarihi}"
+  2590:     )
+  2591:     st.info(
+  2592:         "Momentum skoru bir erken keЕџif Г¶lГ§ГјsГјdГјr; doДџrudan alД±m kararД± "
+  2593:         "deДџildir. C sД±nД±fД± adaylar bile ayrД±ntД±lД± GГјncel Teknik Analiz "
+  2594:         "ekranД±nda yeniden doДџrulanmalД±dД±r. KAP/haber katalizГ¶rГј bu sГјrГјmde "
+  2595:         "otomatik puanlanmaz ve ayrД±ca kontrol edilmelidir."
+  2596:     )
+  2597: 
+  2598:     kayitlar = momentum_aday_tablosu(sonuc)
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=4172 PATTERN=Güncel Teknik Analiz
+  4167:         "SeГ§ilen evrendeki hisseleri gГјnlГјk teknik skor, hacim, risk/getiri, VBTS ve isteДџe baДџlД± temel kalite filtresiyle sД±ralar."
+  4168:     )
+  4169:     st.info(
+  4170:         "FД±rsat RadarД± doДџrulanmД±Еџ haftalД±k/aylД±k profil eЕџleЕџmelerini Г¶ne Г§Д±karД±r; "
+  4171:         "BIST Toplu Tarama ise daha geniЕџ, profil-seГ§ilebilir genel teknik aday havuzu Гјretir. "
+  4172:         "Bu ekran kesin alД±m tavsiyesi vermez; seГ§ilen aday GГјncel Teknik Analiz veya AL-SAT ile derinleЕџtirilir."
+  4173:     )
+  4174:     bildirim = st.session_state.pop("vbts_yonetim_bildirimi", None)
+  4175:     if bildirim:
+  4176:         st.success(bildirim)
+  4177: 
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=5559 PATTERN=Güncel Teknik Analiz
+  5554:         "Ећirketin bilanГ§o kalitesi, bГјyГјme, kГўrlД±lД±k, borГ§luluk, likidite ve nakit akД±ЕџД± "
+  5555:         "gГ¶rГјnГјmГјnГј dГ¶nemsel ve sektГ¶r baДџlamД±nda inceler."
+  5556:     )
+  5557:     st.info(
+  5558:         "Bu ekran teknik giriЕџ zamanlamasД± veya AL/SAT kararД± Гјretmez. "
+  5559:         "FД±rsat RadarД± aday bulur; GГјncel Teknik Analiz teknik teyidi derinleЕџtirir; "
+  5560:         "Temel Analiz ise finansal kalite ve sГјrdГјrГјlebilirliДџi deДџerlendirir."
+  5561:     )
+  5562:     st.caption(
+  5563:         "Okuma sД±rasД±: Veri tazeliДџi в†’ Temel kalite skoru в†’ Finansal oranlar в†’ "
+  5564:         "SektГ¶r karЕџД±laЕџtД±rmasД± в†’ Skor geГ§miЕџi в†’ Rapor ve arЕџiv."
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=7831 PATTERN=Güncel Teknik Analiz
+  7826:     )
+  7827: 
+  7828:     st.markdown("#### ModГјl yГ¶nlendirmesi")
+  7829:     st.info(
+  7830:         "Veri sorunu в†’ Gecikmeli Veri Pilotu В· tarama ihtiyacД± в†’ BIST Toplu Tarama / "
+  7831:         "FД±rsat RadarД± В· tek-hisse teyidi в†’ GГјncel Teknik Analiz В· "
+  7832:         "sonuГ§ takibi в†’ Sinyal SonuГ§larД± В· iЕџlem takibi в†’ GГ¶lge PortfГ¶y."
+  7833:     )
+  7834: 
+  7835:     if st.button(
+  7836:         "Operasyon panelini yenile",
+=== DASH_LIVE_Güncel Teknik Analiz ===
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py MATCH_LINE=9137 PATTERN=Güncel Teknik Analiz
+  9132:         )
+  9133:         render_market_context_dashboard(
+  9134:             st,
+  9135:             project_root=Path(__file__).resolve().parents[1],
+  9136:         )
+  9137:     elif analiz_modu == "GГјncel Teknik Analiz":
+  9138:         guncel_teknik_analiz_formu()
+  9139:         st.caption(
+  9140:             "AI hisse sohbeti mevcut teknik analiz baДџlamД±nД± aГ§Д±klamaya yardД±mcД± olur; "
+  9141:             "teknik teyit skorunu, iЕџlem planД±nД± veya AL/SAT kararД±nД± deДџiЕџtirmez."
+  9142:         )
+RADAR_HAS_CLOSE=True
+RADAR_HAS_DELAYED=False
+LIVE_HAS_REQUEST=True
+LIVE_HAS_RESULT=True
+LIVE_HAS_FRESHNESS=True
+DECISION=EXACT_BOUNDARIES_FOUND_FOR_BOTH_SURFACES
+NEXT=Use report contexts to decide whether delayed snapshot belongs at dashboard adapter, service request, or render-only layer. No patch yet.
+PRODUCTION_MUTATION=YOK

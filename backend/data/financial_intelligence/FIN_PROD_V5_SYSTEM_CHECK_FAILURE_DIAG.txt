@@ -1,0 +1,50 @@
+from pathlib import Path
+import sys
+
+ROOT = Path(r"D:\Projects\Hisse-Robotu")
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from backend.tests.test_system_check import (
+    PROJE_KOKU,
+    _sabit_zaman,
+)
+
+# sistem_kontrolu_calistir importunu test dosyasının kullandığı
+# gerçek modülden al.
+import backend.tests.test_system_check as t
+
+runner = t.sistem_kontrolu_calistir
+
+rapor = runner(
+    proje_koku=PROJE_KOKU,
+    modul_bulucu=lambda _ad: object(),
+    gecmis_klasoru=ROOT / "backend" / "data" / "financial_intelligence" / "_system_check_diag_history",
+    simdi=_sabit_zaman,
+)
+
+print("SYSTEM_CHECK_READY=" + str(rapor.kullanima_hazir))
+print("VERSION=" + str(rapor.surum))
+print()
+
+for i, kontrol in enumerate(rapor.kontroller, start=1):
+    print(f"[{i}]")
+    for name in (
+        "ad",
+        "baslik",
+        "durum",
+        "hazir",
+        "basarili",
+        "kritik",
+        "aciklama",
+        "mesaj",
+        "detay",
+        "sure_ms",
+    ):
+        if hasattr(kontrol, name):
+            print(f"{name}={getattr(kontrol, name)!r}")
+    print("RAW=" + repr(kontrol))
+    print("---")
+
+print()
+print("FIN_PROD_V5_SYSTEM_CHECK_DIAG=PASS")

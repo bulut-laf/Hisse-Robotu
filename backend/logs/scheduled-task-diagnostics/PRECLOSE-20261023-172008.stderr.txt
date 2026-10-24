@@ -1,0 +1,4 @@
+$ISATR.IS: possibly delisted; no price data found  (period=1d)
+
+1 Failed download:
+['ISATR.IS']: possibly delisted; no price data found  (period=1d)

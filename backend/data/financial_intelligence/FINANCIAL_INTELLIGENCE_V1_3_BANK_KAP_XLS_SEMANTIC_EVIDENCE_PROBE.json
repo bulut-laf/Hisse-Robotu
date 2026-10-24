@@ -1,0 +1,20 @@
+{
+  "schema_version": "financial-intelligence-v1-3-bank-kap-xls-semantic-evidence-probe-v1",
+  "status": "PASS_FAIL_CLOSED",
+  "xls_file_count": 10,
+  "kap_parser_pass_count": 2,
+  "kap_parser_fail_count": 8,
+  "bank_kap_xls_count": 0,
+  "bank_kap_xls": [],
+  "selected_bank_source": null,
+  "selected_source_sha256": null,
+  "canonical_producer_ready": false,
+  "production_evidence": false,
+  "activation_ready": false,
+  "blockers": [
+    "NO_PARSEABLE_BANK_KAP_XLS_SOURCE"
+  ],
+  "mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

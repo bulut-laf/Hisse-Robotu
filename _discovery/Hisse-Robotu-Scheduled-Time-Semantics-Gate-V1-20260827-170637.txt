@@ -1,0 +1,123 @@
+=== HISSE ROBOTU тАФ SCHEDULED TIME SEMANTICS GATE V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+SCHEDULER_MUTATION=NO
+NETWORK_CALL=NO
+
+FILES_SCANNED=1876
+FOCUS_FILES=19
+FOCUS=_sprint144d_backup_20260804_150407\backend\app\data\data_freshness.py
+FOCUS=backend\app\analysis\jump_candidate_entry_readiness.py
+FOCUS=backend\app\analysis\morning_candidate_feedback.py
+FOCUS=backend\app\analysis\morning_candidate_flow.py
+FOCUS=backend\app\analysis\morning_candidate_outcome.py
+FOCUS=backend\app\data\data_freshness.py
+FOCUS=backend\app\operations\daily_buy_decision_scheduled_runner.py
+FOCUS=backend\app\opportunity_radar.py
+FOCUS=backend\app\ui\opportunity_radar_dashboard.py
+FOCUS=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py
+FOCUS=backend\tests\test_data_freshness.py
+FOCUS=backend\tests\test_data_freshness_message_semantics.py
+FOCUS=backend\tests\test_jump_candidate_entry_readiness_v1.py
+FOCUS=backend\tests\test_market_data_freshness_behavior.py
+FOCUS=backend\tests\test_morning_candidate_flow.py
+FOCUS=backend\tests\test_opportunity_radar.py
+FOCUS=backend\tests\test_opportunity_radar_dashboard_wiring.py
+FOCUS=backend\tests\test_opportunity_radar_monthly_validation.py
+FOCUS=scripts\install_daily_buy_decision_tasks.ps1
+
+=== 1. CURRENT-DAY BAR / SAFETY CUTOFF EVIDENCE ===
+CUTOFF_REF=_sprint144d_backup_20260804_150407\backend\app\data\data_freshness.py:213|f"Son tamamlanm─▒┼Я g├╝nl├╝k bar {son}. Bug├╝nk├╝ seans hen├╝z kapanmad─▒─Я─▒ veya "
+CUTOFF_REF=backend\app\data\data_freshness.py:214|f"Son tamamlanm─▒┼Я g├╝nl├╝k bar {son}. Bug├╝nk├╝ seans hen├╝z kapanmad─▒─Я─▒ veya "
+CUTOFF_REFS=2
+
+=== 2. 17:20 PRE-CLOSE INPUT CONTRACT ===
+PRECLOSE_REF=backend\app\opportunity_radar.py:283|return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+PRECLOSE_REF=backend\app\opportunity_radar.py:290|"snapshot": "CURRENT_PARTIAL" if is_partial else "CURRENT_CLOSED",
+PRECLOSE_REF=backend\app\opportunity_radar.py:295|"snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+PRECLOSE_REF=backend\app\opportunity_radar.py:304|if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+PRECLOSE_REF=backend\app\opportunity_radar.py:340|{"snapshot":"CURRENT_PARTIAL","matches":[]},
+PRECLOSE_REF=backend\app\opportunity_radar.py:341|{"snapshot":"LAST_CLOSED","matches":[]},
+PRECLOSE_REF=backend\app\opportunity_radar.py:349|{"snapshot":"CURRENT_PARTIAL","matches":[]},
+PRECLOSE_REF=backend\app\opportunity_radar.py:350|{"snapshot":"LAST_CLOSED","matches":[]},
+PRECLOSE_REF=backend\app\opportunity_radar.py:612|def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+PRECLOSE_REF=backend\app\opportunity_radar.py:620|# Tek veri hatti: mevcut batch market data seam. 420 completed days gives
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:6|from backend.app.opportunity_radar import OpportunityRadarResult, run_opportunity_radar
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:44|result = run_opportunity_radar(result_limit=int(result_limit))
+PRECLOSE_REF=backend\tests\test_opportunity_radar_monthly_validation.py:20|"snapshot": "CURRENT_PARTIAL",
+PRECLOSE_REF=backend\tests\test_opportunity_radar_monthly_validation.py:24|"snapshot": "LAST_CLOSED",
+PRECLOSE_REF=backend\tests\test_opportunity_radar_monthly_validation.py:32|{"snapshot": "CURRENT_PARTIAL", "matches": []},
+PRECLOSE_REF=backend\tests\test_opportunity_radar_monthly_validation.py:41|{"snapshot": "CURRENT_PARTIAL", "matches": []},
+PRECLOSE_REF=backend\tests\test_opportunity_radar_monthly_validation.py:42|{"snapshot": "LAST_CLOSED", "matches": []},
+MONTHLY_PARTIAL_SEMANTICS=YES
+CURRENT_DAY_INTRADAY_PARTIAL_SEAM=NO
+17_20_CURRENT_DAY_PARTIAL_AVAILABLE=NO
+
+=== 3. 18:20 CANONICAL CLOSE BAR CONTRACT ===
+CURRENT_SOURCE_18_30_SAFETY_EVIDENCE=NO
+18_20_CURRENT_DAY_FINAL_BAR_AVAILABLE=UNPROVEN
+
+=== 4. 08:45 GAP / ENTRY CONTRACT ===
+MORNING_REF=backend\app\analysis\jump_candidate_entry_readiness.py:53|def evaluate_jump_candidate_entry_readiness(
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:9|from backend.app.analysis.jump_candidate_entry_readiness import (
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:10|evaluate_jump_candidate_entry_readiness,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:37|entry_readiness: str = "-"
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:38|entry_readiness_reason: str = ""
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:178|_entry_readiness = evaluate_jump_candidate_entry_readiness(candidate)
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:211|entry_readiness=_entry_readiness.state,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:212|entry_readiness_reason=" ┬╖ ".join(_entry_readiness.reasons),
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:213|entry_extension_atr=_entry_readiness.extension_atr,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:234|"Giri┼Я haz─▒rl─▒─Я─▒": card.entry_readiness,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:235|"Giri┼Я haz─▒rl─▒─Я─▒ nedeni": card.entry_readiness_reason,
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:3|from backend.app.analysis.jump_candidate_entry_readiness import (
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:8|evaluate_jump_candidate_entry_readiness,
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:34|def test_entry_readiness_ready():
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:35|result = evaluate_jump_candidate_entry_readiness(candidate())
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:41|def test_entry_readiness_waits_for_confirmation():
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:42|result = evaluate_jump_candidate_entry_readiness(candidate(score=66, volume=1.05))
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:47|def test_entry_readiness_marks_early_when_quality_not_complete():
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:48|result = evaluate_jump_candidate_entry_readiness(candidate(score=55, volume=0.8))
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:52|def test_entry_readiness_marks_overextended():
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:53|result = evaluate_jump_candidate_entry_readiness(candidate(close=106.0, ema9=100.0, atr=2.0))
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:58|def test_morning_card_exposes_entry_readiness():
+MORNING_REF=backend\tests\test_jump_candidate_entry_readiness_v1.py:61|assert cards[0].entry_readiness == READY
+MORNING_GAP_OR_ENTRY_LOGIC=YES
+LIVE_OPEN_OR_INDICATIVE_PRICE_SEAM=NO
+08_45_REAL_OPEN_GAP_AVAILABLE=NO_BY_SESSION_TIME
+BIST_OPENING_AUCTION_START=09:40
+BIST_CONTINUOUS_SESSION_START=10:00
+
+=== 5. EXISTING AUTOMATION TIMES ===
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:28|-At 18:20
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:37|-At 09:00
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:39|Register-ScheduledTask `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:46|Register-ScheduledTask `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:50|-Description "Hisse Robotu 09:00 sabah yeniden de─Яerlendirme" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:53|Write-Host "Kuruldu: HisseRobotu-EOD-DailyDecision (18:20 hafta i├зi)"
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:54|Write-Host "Kuruldu: HisseRobotu-0900-DailyDecision (09:00 hafta i├зi)"
+
+=== 6. DECISION ===
+DECISION=BLOCKED_AS_CURRENTLY_LABELED
+BLOCKER=17:20_NEEDS_TRUE_CURRENT_DAY_PARTIAL_INPUT_ADAPTER
+BLOCKER=18:20_CURRENT_DAY_FINAL_BAR_NOT_PROVEN
+BLOCKER=08:45_CANNOT_BE_REAL_OPEN_GAP_CHECK
+SAFE_NEXT=NO_SCHEDULER_MUTATION
+RECOMMENDED_FLOW:
+08:45=PREOPEN_CONTEXT_ONLY
+10:05=POST_OPEN_GAP_ENTRY_CHECK
+17:20=PRECLOSE_PREVIEW_ONLY_AFTER_TRUE_PARTIAL_INPUT_IS_PROVEN
+18:30=CANONICAL_CLOSE_CANDIDATE_IF_CURRENT_18_30_SAFETY_IS_CONFIRMED
+
+SAFETY:
+NEW_ENGINE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+PARALLEL_SCHEDULER=NO
+17:20_CANONICAL_RANKING_WRITE=NO
+17:20_PROFILE_MEMORY_WRITE=NO
+17:20_AL_SAT_DECISION=NO
+
+=== GATE COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO

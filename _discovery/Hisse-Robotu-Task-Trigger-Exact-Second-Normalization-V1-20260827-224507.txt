@@ -1,0 +1,50 @@
+=== HISSE ROBOTU — TASK TRIGGER EXACT SECOND NORMALIZATION V1 ===
+MODE=SOURCE_PATCH_THEN_REGRESSION_THEN_TASK_REINSTALL
+REASON=NEXT_RUN_SECONDS_WERE_NONZERO
+TARGET=EXACT_HH_MM_00
+ADMIN=YES
+SOURCE_MUTATION=INSTALLER_ONLY
+WINDOWS_TASK_MUTATION=AFTER_FULL_REGRESSION_ONLY
+TASK_XML_BACKUP=REQUIRED
+MANUAL_TASK_EXECUTION=NO
+NEW_ENGINE=NO
+NEW_STORE=NO
+PARALLEL_SCHEDULER=NO
+BEFORE=HisseRobotu-0845-PreOpen|NEXT_RUN=08/28/2026 08:45:45
+BEFORE=HisseRobotu-0900-DailyDecision|NEXT_RUN=08/28/2026 09:00:00
+BEFORE=HisseRobotu-1020-PostOpen|NEXT_RUN=08/28/2026 10:20:20
+BEFORE=HisseRobotu-1720-PreClose|NEXT_RUN=08/28/2026 17:20:20
+BEFORE=HisseRobotu-1830-CanonicalClose|NEXT_RUN=08/28/2026 18:30:30
+TASK_XML_BACKUP=COMPLETE
+INSTALLER_SHA_BEFORE=09b603e533f47ebafe8ef89cc9c60e70fa65f852bab6a7e87ec7670541951869
+INSTALLER_SHA_AFTER=daaddb7b10e69a81779a322c137f21b6fca3136a3f2da1965cc15655ed91b484
+TRIGGER_TIME_PARSE=EXPLICIT_HH_MM
+TRIGGER_SECONDS=ZERO_BY_PARSEEXACT
+INSTALLER_PATCH=PASS
+POWERSHELL_INSTALLER_PARSE=PASS
+...F..............                                                       [100%]
+================================== FAILURES ===================================
+_______ test_legacy_morning_decision_is_preserved_as_compatibility_task _______
+
+    def test_legacy_morning_decision_is_preserved_as_compatibility_task():
+        text = source()
+        assert "backend.app.operations.daily_buy_decision_scheduled_runner" in text
+        assert '-Argument "-m $legacyModule --phase MORNING"' in text
+        assert '-TaskName "HisseRobotu-0900-DailyDecision"' in text
+>       assert '-At "09:00"' in text
+E       assert '-At "09:00"' in 'param(\n    [string]$ProjectRoot = "D:\\Projects\\Hisse-Robotu"\n)\n\n$ErrorActionPreference = "Stop"\nSet-StrictMode...PARALLEL_SCHEDULER=NO"\nWrite-Host "LEGACY_18_20_TASK=RETIRED"\nWrite-Host "LEGACY_09_00_MORNING_DECISION=PRESERVED"\n'
+
+backend\tests\test_windows_task_installer_morning_compatibility_v1.py:25: AssertionError
+=========================== short test summary info ===========================
+FAILED backend/tests/test_windows_task_installer_morning_compatibility_v1.py::test_legacy_morning_decision_is_preserved_as_compatibility_task
+1 failed, 17 passed in 11.88s
+NORMALIZATION_STATUS=FAILED
+ERROR=TARGET_TEST_FAILED
+ROLLBACK=STARTED
+ROLLBACK_INSTALLER=RESTORED
+ROLLBACK_TASK_RESTORED=HisseRobotu-0845-PreOpen
+ROLLBACK_TASK_RESTORED=HisseRobotu-0900-DailyDecision
+ROLLBACK_TASK_RESTORED=HisseRobotu-1020-PostOpen
+ROLLBACK_TASK_RESTORED=HisseRobotu-1720-PreClose
+ROLLBACK_TASK_RESTORED=HisseRobotu-1830-CanonicalClose
+ROLLBACK=COMPLETE

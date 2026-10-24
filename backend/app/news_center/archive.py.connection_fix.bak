@@ -1,0 +1,421 @@
+from __future__ import annotations
+
+from dataclasses import replace
+from datetime import datetime
+import json
+from pathlib import Path
+import sqlite3
+from typing import Iterable
+
+from .models import (
+    EventType,
+    ImportanceBreakdown,
+    MarketEvent,
+    MarketScope,
+    NewsRecord,
+    SourceTier,
+)
+
+
+class NewsArchiveError(RuntimeError):
+    """Haber arşivi okunamadığında veya yazılamadığında oluşur."""
+
+
+class DuplicateNewsError(NewsArchiveError):
+    """Aynı içerik özeti arşivde zaten bulunduğunda oluşur."""
+
+
+class EventNotFoundError(NewsArchiveError):
+    """İstenen olay arşivde bulunamadığında oluşur."""
+
+
+def default_archive_path() -> Path:
+    return (
+        Path.home()
+        / ".hisse_robotu"
+        / "news_center"
+        / "news_center.sqlite3"
+    )
+
+
+class NewsArchive:
+    def __init__(self, path: str | Path | None = None) -> None:
+        self.path = Path(path) if path is not None else default_archive_path()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._initialize()
+
+    def _connect(self) -> sqlite3.Connection:
+        connection = sqlite3.connect(self.path)
+        connection.row_factory = sqlite3.Row
+        connection.execute("PRAGMA foreign_keys = ON")
+        return connection
+
+    def _initialize(self) -> None:
+        try:
+            with self._connect() as connection:
+                connection.executescript(
+                    """
+                    CREATE TABLE IF NOT EXISTS events (
+                        event_id TEXT PRIMARY KEY,
+                        title TEXT NOT NULL,
+                        event_type TEXT NOT NULL,
+                        occurred_at TEXT NOT NULL,
+                        market_scope TEXT NOT NULL,
+                        sectors_json TEXT NOT NULL,
+                        symbols_json TEXT NOT NULL,
+                        importance_score INTEGER NOT NULL,
+                        source_reliability INTEGER NOT NULL,
+                        scope_score INTEGER NOT NULL,
+                        event_significance INTEGER NOT NULL,
+                        time_sensitivity INTEGER NOT NULL,
+                        created_at TEXT NOT NULL
+                    );
+
+                    CREATE TABLE IF NOT EXISTS news (
+                        news_id TEXT PRIMARY KEY,
+                        event_id TEXT NOT NULL,
+                        source_name TEXT NOT NULL,
+                        source_tier TEXT NOT NULL,
+                        headline TEXT NOT NULL,
+                        published_at TEXT NOT NULL,
+                        body TEXT NOT NULL,
+                        source_reference TEXT NOT NULL,
+                        content_hash TEXT NOT NULL UNIQUE,
+                        archived_at TEXT NOT NULL,
+                        FOREIGN KEY(event_id)
+                            REFERENCES events(event_id)
+                            ON DELETE RESTRICT
+                    );
+
+                    CREATE INDEX IF NOT EXISTS idx_news_event_id
+                        ON news(event_id);
+                    CREATE INDEX IF NOT EXISTS idx_news_published_at
+                        ON news(published_at DESC);
+                    CREATE INDEX IF NOT EXISTS idx_events_occurred_at
+                        ON events(occurred_at DESC);
+                    CREATE INDEX IF NOT EXISTS idx_events_importance
+                        ON events(importance_score DESC);
+                    """
+                )
+        except sqlite3.Error as exc:
+            raise NewsArchiveError(
+                f"Haber arşivi başlatılamadı: {exc}"
+            ) from exc
+
+    def archive_new_event(
+        self,
+        event: MarketEvent,
+        news: NewsRecord,
+        *,
+        created_at: datetime,
+    ) -> None:
+        if event.event_id != news.event_id:
+            raise NewsArchiveError(
+                "Haber kaydı ile olay kaydının event_id değeri eşleşmiyor."
+            )
+        if created_at.tzinfo is None or created_at.utcoffset() is None:
+            raise NewsArchiveError("Oluşturma zamanı saat dilimi içermelidir.")
+
+        try:
+            with self._connect() as connection:
+                connection.execute(
+                    """
+                    INSERT INTO events (
+                        event_id, title, event_type, occurred_at,
+                        market_scope, sectors_json, symbols_json,
+                        importance_score, source_reliability, scope_score,
+                        event_significance, time_sensitivity, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (
+                        event.event_id,
+                        event.title,
+                        event.event_type.value,
+                        event.occurred_at.isoformat(),
+                        event.market_scope.value,
+                        json.dumps(event.sectors, ensure_ascii=False),
+                        json.dumps(event.symbols, ensure_ascii=False),
+                        event.importance_score,
+                        event.importance_breakdown.source_reliability,
+                        event.importance_breakdown.market_scope,
+                        event.importance_breakdown.event_significance,
+                        event.importance_breakdown.time_sensitivity,
+                        created_at.isoformat(),
+                    ),
+                )
+                self._insert_news(connection, news)
+        except sqlite3.IntegrityError as exc:
+            if "content_hash" in str(exc).lower():
+                raise DuplicateNewsError(
+                    "Aynı haber içeriği arşivde zaten bulunuyor."
+                ) from exc
+            raise NewsArchiveError(
+                f"Haber/olay kaydı arşivlenemedi: {exc}"
+            ) from exc
+        except sqlite3.Error as exc:
+            raise NewsArchiveError(
+                f"Haber/olay kaydı arşivlenemedi: {exc}"
+            ) from exc
+
+    def attach_news(
+        self,
+        event_id: str,
+        news: NewsRecord,
+        *,
+        candidate_importance: ImportanceBreakdown | None = None,
+    ) -> MarketEvent:
+        if event_id != news.event_id:
+            raise NewsArchiveError(
+                "Bağlanacak haberin event_id değeri hedef olayla eşleşmiyor."
+            )
+
+        try:
+            with self._connect() as connection:
+                existing = connection.execute(
+                    "SELECT event_id FROM events WHERE event_id = ?",
+                    (event_id,),
+                ).fetchone()
+                if existing is None:
+                    raise EventNotFoundError(
+                        f"Olay arşivde bulunamadı: {event_id}"
+                    )
+
+                self._insert_news(connection, news)
+
+                if candidate_importance is not None:
+                    row = connection.execute(
+                        "SELECT importance_score FROM events WHERE event_id = ?",
+                        (event_id,),
+                    ).fetchone()
+                    if (
+                        row is not None
+                        and candidate_importance.total
+                        > int(row["importance_score"])
+                    ):
+                        connection.execute(
+                            """
+                            UPDATE events
+                            SET importance_score = ?,
+                                source_reliability = ?,
+                                scope_score = ?,
+                                event_significance = ?,
+                                time_sensitivity = ?
+                            WHERE event_id = ?
+                            """,
+                            (
+                                candidate_importance.total,
+                                candidate_importance.source_reliability,
+                                candidate_importance.market_scope,
+                                candidate_importance.event_significance,
+                                candidate_importance.time_sensitivity,
+                                event_id,
+                            ),
+                        )
+        except DuplicateNewsError:
+            raise
+        except EventNotFoundError:
+            raise
+        except sqlite3.IntegrityError as exc:
+            if "content_hash" in str(exc).lower():
+                raise DuplicateNewsError(
+                    "Aynı haber içeriği arşivde zaten bulunuyor."
+                ) from exc
+            raise NewsArchiveError(
+                f"Haber mevcut olaya bağlanamadı: {exc}"
+            ) from exc
+        except sqlite3.Error as exc:
+            raise NewsArchiveError(
+                f"Haber mevcut olaya bağlanamadı: {exc}"
+            ) from exc
+
+        return self.get_event(event_id)
+
+    @staticmethod
+    def _insert_news(
+        connection: sqlite3.Connection,
+        news: NewsRecord,
+    ) -> None:
+        connection.execute(
+            """
+            INSERT INTO news (
+                news_id, event_id, source_name, source_tier, headline,
+                published_at, body, source_reference, content_hash,
+                archived_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                news.news_id,
+                news.event_id,
+                news.source_name,
+                news.source_tier.value,
+                news.headline,
+                news.published_at.isoformat(),
+                news.body,
+                news.source_reference,
+                news.content_hash,
+                news.archived_at.isoformat(),
+            ),
+        )
+
+    def get_event(self, event_id: str) -> MarketEvent:
+        try:
+            with self._connect() as connection:
+                row = connection.execute(
+                    "SELECT * FROM events WHERE event_id = ?",
+                    (event_id,),
+                ).fetchone()
+                if row is None:
+                    raise EventNotFoundError(
+                        f"Olay arşivde bulunamadı: {event_id}"
+                    )
+                news_ids = tuple(
+                    item["news_id"]
+                    for item in connection.execute(
+                        """
+                        SELECT news_id
+                        FROM news
+                        WHERE event_id = ?
+                        ORDER BY published_at ASC, archived_at ASC
+                        """,
+                        (event_id,),
+                    ).fetchall()
+                )
+        except EventNotFoundError:
+            raise
+        except sqlite3.Error as exc:
+            raise NewsArchiveError(
+                f"Olay arşivden okunamadı: {exc}"
+            ) from exc
+
+        return self._event_from_row(row, news_ids=news_ids)
+
+    def list_events(self, *, limit: int = 250) -> tuple[MarketEvent, ...]:
+        if not 1 <= int(limit) <= 5000:
+            raise ValueError("Olay liste limiti 1-5000 aralığında olmalıdır.")
+
+        try:
+            with self._connect() as connection:
+                rows = connection.execute(
+                    """
+                    SELECT *
+                    FROM events
+                    ORDER BY occurred_at DESC, importance_score DESC
+                    LIMIT ?
+                    """,
+                    (int(limit),),
+                ).fetchall()
+                result: list[MarketEvent] = []
+                for row in rows:
+                    news_ids = tuple(
+                        item["news_id"]
+                        for item in connection.execute(
+                            """
+                            SELECT news_id
+                            FROM news
+                            WHERE event_id = ?
+                            ORDER BY published_at ASC, archived_at ASC
+                            """,
+                            (row["event_id"],),
+                        ).fetchall()
+                    )
+                    result.append(
+                        self._event_from_row(row, news_ids=news_ids)
+                    )
+                return tuple(result)
+        except sqlite3.Error as exc:
+            raise NewsArchiveError(
+                f"Olay arşivi listelenemedi: {exc}"
+            ) from exc
+
+    def list_news_for_event(
+        self,
+        event_id: str,
+        *,
+        limit: int = 500,
+    ) -> tuple[NewsRecord, ...]:
+        event_id = str(event_id or "").strip()
+        if not event_id:
+            raise ValueError("event_id boş olamaz.")
+        if not 1 <= int(limit) <= 10000:
+            raise ValueError("Haber liste limiti 1-10000 aralığında olmalıdır.")
+
+        try:
+            with self._connect() as connection:
+                rows = connection.execute(
+                    """
+                    SELECT *
+                    FROM news
+                    WHERE event_id = ?
+                    ORDER BY published_at ASC, archived_at ASC
+                    LIMIT ?
+                    """,
+                    (event_id, int(limit)),
+                ).fetchall()
+        except sqlite3.Error as exc:
+            raise NewsArchiveError(
+                f"Olaya bağlı haberler okunamadı: {exc}"
+            ) from exc
+
+        return tuple(self._news_from_row(row) for row in rows)
+
+    def list_news(self, *, limit: int = 500) -> tuple[NewsRecord, ...]:
+        if not 1 <= int(limit) <= 10000:
+            raise ValueError("Haber liste limiti 1-10000 aralığında olmalıdır.")
+
+        try:
+            with self._connect() as connection:
+                rows = connection.execute(
+                    """
+                    SELECT *
+                    FROM news
+                    ORDER BY published_at DESC, archived_at DESC
+                    LIMIT ?
+                    """,
+                    (int(limit),),
+                ).fetchall()
+        except sqlite3.Error as exc:
+            raise NewsArchiveError(
+                f"Haber arşivi listelenemedi: {exc}"
+            ) from exc
+
+        return tuple(self._news_from_row(row) for row in rows)
+
+    @staticmethod
+    def _event_from_row(
+        row: sqlite3.Row,
+        *,
+        news_ids: tuple[str, ...],
+    ) -> MarketEvent:
+        breakdown = ImportanceBreakdown(
+            source_reliability=int(row["source_reliability"]),
+            market_scope=int(row["scope_score"]),
+            event_significance=int(row["event_significance"]),
+            time_sensitivity=int(row["time_sensitivity"]),
+        )
+        return MarketEvent(
+            event_id=row["event_id"],
+            title=row["title"],
+            event_type=EventType(row["event_type"]),
+            occurred_at=datetime.fromisoformat(row["occurred_at"]),
+            market_scope=MarketScope(row["market_scope"]),
+            sectors=tuple(json.loads(row["sectors_json"])),
+            symbols=tuple(json.loads(row["symbols_json"])),
+            importance_score=int(row["importance_score"]),
+            importance_breakdown=breakdown,
+            news_ids=news_ids,
+        )
+
+    @staticmethod
+    def _news_from_row(row: sqlite3.Row) -> NewsRecord:
+        return NewsRecord(
+            news_id=row["news_id"],
+            event_id=row["event_id"],
+            source_name=row["source_name"],
+            source_tier=SourceTier(row["source_tier"]),
+            headline=row["headline"],
+            published_at=datetime.fromisoformat(row["published_at"]),
+            body=row["body"],
+            source_reference=row["source_reference"],
+            content_hash=row["content_hash"],
+            archived_at=datetime.fromisoformat(row["archived_at"]),
+        )

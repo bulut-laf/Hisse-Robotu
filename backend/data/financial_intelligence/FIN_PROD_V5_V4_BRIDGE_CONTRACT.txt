@@ -1,0 +1,2642 @@
+﻿FIN_PROD_V5_V4_BRIDGE_CONTRACT
+
+==========================================================================================
+PATTERN=SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=8
+00001: from __future__ import annotations
+00002: 
+00003: from dataclasses import dataclass, asdict
+00004: from pathlib import Path
+00005: from typing import Any
+00006: import json
+00007: 
+00008: SHORT_TERM_BLOCKER = "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"
+00009: LONG_TERM_BLOCKER = "LONG_TERM_CANONICAL_COVERAGE"
+00010: 
+00011: SHORT_TERM_FILE = "{symbol}_short_term_canonical_context.json"
+00012: LONG_TERM_FILE = "{symbol}_long_term_canonical_coverage.json"
+00013: 
+00014: PASS_STATUSES = {"PASS", "PRESENT", "VALID", "READY", "OK"}
+00015: 
+00016: 
+00017: @dataclass(frozen=True)
+00018: class CoverageArtifact:
+00019:     kind: str
+00020:     path: str
+00021:     status: str
+00022:     as_of_date: str | None
+00023:     warnings: tuple[str, ...]
+00024:     missing_fields: tuple[str, ...]
+00025: 
+00026: 
+00027: @dataclass(frozen=True)
+00028: class SymbolCoverage:
+00029:     symbol: str
+00030:     short_term: CoverageArtifact
+00031:     long_term: CoverageArtifact
+00032:     unresolved_blockers: tuple[str, ...]
+00033:     coverage_status: str
+00034: 
+00035: 
+00036: def _load_json(path: Path) -> dict[str, Any] | None:
+00037:     try:
+00038:         raw = json.loads(path.read_text(encoding="utf-8"))
+00039:     except Exception:
+00040:         return None
+00041:     return raw if isinstance(raw, dict) else None
+00042: 
+00043: 
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\investability_production_closure.py
+LINE=279
+00259:         as_of=as_of,
+00260:         financial_health_score=int(health) if health is not None else None,
+00261:         financial_health_grade=str(panel_base.get("financial_health_grade") or "UNKNOWN"),
+00262:         financial_risk=str(panel_base.get("financial_risk") or "UNKNOWN"),
+00263:         short_term=short,
+00264:         long_term=long,
+00265:         current_price=_D(panel_base.get("current_price")),
+00266:         bear_value=_D(panel_base.get("bear_value")),
+00267:         base_value=_D(panel_base.get("base_value")),
+00268:         bull_value=_D(panel_base.get("bull_value")),
+00269:         valuation_status=panel_base.get("valuation_status"),
+00270:         margin_of_safety_status=panel_base.get("margin_of_safety_status"),
+00271:         confidence=str(panel_base.get("confidence") or "LOW"),
+00272:         extra_strengths=tuple(panel_base.get("strengths") or ()),
+00273:         extra_risks=tuple(panel_base.get("risks") or ()),
+00274:         what_to_watch_next=tuple(panel_base.get("what_to_watch_next") or ()),
+00275:     )
+00276: 
+00277:     unresolved = []
+00278:     if short.locked:
+00279:         unresolved.append("SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT")
+00280:     if long.locked:
+00281:         unresolved.append("LONG_TERM_CANONICAL_COVERAGE")
+00282: 
+00283:     status = "PASS_UNLOCKED" if not unresolved else "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS"
+00284: 
+00285:     return _ser({
+00286:         "status": status,
+00287:         "mode": "READ_ONLY_INVESTABILITY_PRODUCTION_CLOSURE",
+00288:         "symbol": symbol,
+00289:         "as_of_date": as_of_date,
+00290:         "auto_discovery": {
+00291:             "rule": "EXACT_KEYS_ONLY_NUMERIC_0_100_NO_FUZZY_ALIAS_NO_TEXT_SCORING",
+00292:             "discovered_count": len(discovered),
+00293:             "accepted_count": len(accepted),
+00294:             "accepted": accepted,
+00295:         },
+00296:         "canonical_evidence": evidence,
+00297:         "long_term_coverage": coverage,
+00298:         "long_term_unlock_threshold": Decimal("0.70"),
+00299:         "short_term": short,
+00300:         "long_term": long,
+00301:         "panel": panel,
+00302:         "unresolved_blockers": unresolved,
+00303:         "closure_rules": [
+00304:             "No new investability scoring engine.",
+00305:             "No fuzzy field mapping.",
+00306:             "No text/category-to-score conversion.",
+00307:             "Missing evidence stays missing.",
+00308:             "Existing AL/SAT, scanner, ranking and portfolio engines are not mutated.",
+00309:             "A locked horizon is an explicit production blocker, not a synthetic unlock target.",
+00310:         ],
+00311:         "engine_version": "fin-prod-closure-v1",
+00312:     })
+00313: 
+00314: 
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v2_production_expansion.py
+LINE=40
+00020:     m = build_symbol_manifest(repo=repo, symbol="ABC", sector="INDUSTRIAL")
+00021:     assert m.decision_support_status == "BLOCKED_SOURCE"
+00022:     assert "FINANCIAL_CORE_MISSING" in m.blockers
+00023: 
+00024: 
+00025: def test_tuprs_like_manifest(tmp_path):
+00026:     repo = tmp_path
+00027:     data = repo / "backend" / "data"
+00028:     fi = data / "financial_intelligence"
+00029:     fi.mkdir(parents=True)
+00030: 
+00031:     (data / "financial_intelligence_acceptance_TUPRS_2026_2.json").write_text(
+00032:         json.dumps({"status": "PASS"}), encoding="utf-8"
+00033:     )
+00034:     (fi / "TUPRS_fair_value_acceptance.json").write_text(
+00035:         json.dumps({"status": "PASS"}), encoding="utf-8"
+00036:     )
+00037:     (fi / "TUPRS_investability_production_closure.json").write_text(
+00038:         json.dumps({
+00039:             "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS",
+00040:             "unresolved_blockers": ["SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"],
+00041:         }), encoding="utf-8"
+00042:     )
+00043: 
+00044:     m = build_symbol_manifest(repo=repo, symbol="TUPRS", sector="INDUSTRIAL")
+00045:     assert m.decision_support_status == "READY_FOR_DECISION_SUPPORT"
+00046:     assert "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT" in m.warnings
+00047: 
+00048: 
+00049: def test_batch(tmp_path):
+00050:     payload = build_batch_manifest(repo=tmp_path, symbols=["AAA", "BBB"], sector_map={"AAA":"BANK"})
+00051:     assert payload["status"] == "PASS"
+00052:     assert len(payload["symbols"]) == 2
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v2_production_expansion.py
+LINE=46
+00026:     repo = tmp_path
+00027:     data = repo / "backend" / "data"
+00028:     fi = data / "financial_intelligence"
+00029:     fi.mkdir(parents=True)
+00030: 
+00031:     (data / "financial_intelligence_acceptance_TUPRS_2026_2.json").write_text(
+00032:         json.dumps({"status": "PASS"}), encoding="utf-8"
+00033:     )
+00034:     (fi / "TUPRS_fair_value_acceptance.json").write_text(
+00035:         json.dumps({"status": "PASS"}), encoding="utf-8"
+00036:     )
+00037:     (fi / "TUPRS_investability_production_closure.json").write_text(
+00038:         json.dumps({
+00039:             "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS",
+00040:             "unresolved_blockers": ["SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"],
+00041:         }), encoding="utf-8"
+00042:     )
+00043: 
+00044:     m = build_symbol_manifest(repo=repo, symbol="TUPRS", sector="INDUSTRIAL")
+00045:     assert m.decision_support_status == "READY_FOR_DECISION_SUPPORT"
+00046:     assert "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT" in m.warnings
+00047: 
+00048: 
+00049: def test_batch(tmp_path):
+00050:     payload = build_batch_manifest(repo=tmp_path, symbols=["AAA", "BBB"], sector_map={"AAA":"BANK"})
+00051:     assert payload["status"] == "PASS"
+00052:     assert len(payload["symbols"]) == 2
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v3_live_pipeline.py
+LINE=59
+00039:     payload = build_live_batch(
+00040:         repo=tmp_path,
+00041:         symbols=("ZZZ",),
+00042:         sector_map={"ZZZ": "BANK"},
+00043:     )
+00044:     assert payload["symbol_source"] == "EXPLICIT"
+00045:     assert payload["symbols"][0]["sector_profile"] == "BANK"
+00046:     assert payload["symbols"][0]["decision_support_status"] == "BLOCKED_SOURCE"
+00047: 
+00048: 
+00049: def test_tuprs_ready_when_v2_artifacts_exist(tmp_path):
+00050:     _write_acceptance(tmp_path, "TUPRS")
+00051: 
+00052:     fi = tmp_path / "backend" / "data" / "financial_intelligence"
+00053:     fi.mkdir(parents=True, exist_ok=True)
+00054: 
+00055:     (fi / "TUPRS_investability_production_closure.json").write_text(
+00056:         json.dumps({
+00057:             "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS",
+00058:             "unresolved_blockers": [
+00059:                 "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT",
+00060:                 "LONG_TERM_CANONICAL_COVERAGE",
+00061:             ],
+00062:         }),
+00063:         encoding="utf-8",
+00064:     )
+00065: 
+00066:     payload = build_live_batch(
+00067:         repo=tmp_path,
+00068:         sector_map={"TUPRS": "INDUSTRIAL"},
+00069:     )
+00070:     assert payload["ready_symbols"] == ["TUPRS"]
+00071:     assert payload["summary"]["ready_for_decision_support"] == 1
+
+==========================================================================================
+PATTERN=technical_context
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=88
+00068:             missing_fields=("artifact",),
+00069:         )
+00070:     payload = _load_json(path)
+00071:     if payload is None:
+00072:         return CoverageArtifact(
+00073:             kind="SHORT_TERM",
+00074:             path=str(path),
+00075:             status="INVALID_JSON",
+00076:             as_of_date=None,
+00077:             warnings=("INVALID_JSON",),
+00078:             missing_fields=(),
+00079:         )
+00080: 
+00081:     missing: list[str] = []
+00082:     if not _symbol_ok(payload, symbol):
+00083:         missing.append("symbol")
+00084:     if not _canonical_ok(payload):
+00085:         missing.append("canonical")
+00086:     if not str(payload.get("as_of_date") or "").strip():
+00087:         missing.append("as_of_date")
+00088:     if not _status_pass(payload.get("technical_context")):
+00089:         missing.append("technical_context")
+00090:     if not _status_pass(payload.get("market_context")):
+00091:         missing.append("market_context")
+00092:     if not _status_pass(payload.get("data_quality")):
+00093:         missing.append("data_quality")
+00094: 
+00095:     return CoverageArtifact(
+00096:         kind="SHORT_TERM",
+00097:         path=str(path),
+00098:         status="PASS" if not missing else "BLOCKED",
+00099:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00100:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00101:         missing_fields=tuple(missing),
+00102:     )
+00103: 
+00104: 
+00105: def _validate_long_term(path: Path, symbol: str) -> CoverageArtifact:
+00106:     if not path.exists():
+00107:         return CoverageArtifact(
+00108:             kind="LONG_TERM",
+00109:             path=str(path),
+00110:             status="MISSING",
+00111:             as_of_date=None,
+00112:             warnings=(),
+00113:             missing_fields=("artifact",),
+00114:         )
+00115:     payload = _load_json(path)
+00116:     if payload is None:
+00117:         return CoverageArtifact(
+00118:             kind="LONG_TERM",
+00119:             path=str(path),
+00120:             status="INVALID_JSON",
+00121:             as_of_date=None,
+00122:             warnings=("INVALID_JSON",),
+00123:             missing_fields=(),
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=89
+00069:         )
+00070:     payload = _load_json(path)
+00071:     if payload is None:
+00072:         return CoverageArtifact(
+00073:             kind="SHORT_TERM",
+00074:             path=str(path),
+00075:             status="INVALID_JSON",
+00076:             as_of_date=None,
+00077:             warnings=("INVALID_JSON",),
+00078:             missing_fields=(),
+00079:         )
+00080: 
+00081:     missing: list[str] = []
+00082:     if not _symbol_ok(payload, symbol):
+00083:         missing.append("symbol")
+00084:     if not _canonical_ok(payload):
+00085:         missing.append("canonical")
+00086:     if not str(payload.get("as_of_date") or "").strip():
+00087:         missing.append("as_of_date")
+00088:     if not _status_pass(payload.get("technical_context")):
+00089:         missing.append("technical_context")
+00090:     if not _status_pass(payload.get("market_context")):
+00091:         missing.append("market_context")
+00092:     if not _status_pass(payload.get("data_quality")):
+00093:         missing.append("data_quality")
+00094: 
+00095:     return CoverageArtifact(
+00096:         kind="SHORT_TERM",
+00097:         path=str(path),
+00098:         status="PASS" if not missing else "BLOCKED",
+00099:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00100:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00101:         missing_fields=tuple(missing),
+00102:     )
+00103: 
+00104: 
+00105: def _validate_long_term(path: Path, symbol: str) -> CoverageArtifact:
+00106:     if not path.exists():
+00107:         return CoverageArtifact(
+00108:             kind="LONG_TERM",
+00109:             path=str(path),
+00110:             status="MISSING",
+00111:             as_of_date=None,
+00112:             warnings=(),
+00113:             missing_fields=("artifact",),
+00114:         )
+00115:     payload = _load_json(path)
+00116:     if payload is None:
+00117:         return CoverageArtifact(
+00118:             kind="LONG_TERM",
+00119:             path=str(path),
+00120:             status="INVALID_JSON",
+00121:             as_of_date=None,
+00122:             warnings=("INVALID_JSON",),
+00123:             missing_fields=(),
+00124:         )
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_006_evidence.py
+LINE=18
+00001: from decimal import Decimal
+00002: from app.analysis.canonical_investability_evidence import (
+00003:     valuation_score_from_fair_value,
+00004:     margin_of_safety_score_from_result,
+00005:     build_canonical_evidence,
+00006: )
+00007: 
+00008: def test_valuation_score_deterministic():
+00009:     assert valuation_score_from_fair_value(current_price=Decimal("100"), base_fair_value=Decimal("100")) == Decimal("50")
+00010:     assert valuation_score_from_fair_value(current_price=Decimal("50"), base_fair_value=Decimal("100")) == Decimal("100")
+00011:     assert valuation_score_from_fair_value(current_price=Decimal("150"), base_fair_value=Decimal("100")) == Decimal("0")
+00012: 
+00013: def test_mos_score_deterministic():
+00014:     assert margin_of_safety_score_from_result(current_margin_of_safety=Decimal("0")) == Decimal("50")
+00015:     assert margin_of_safety_score_from_result(current_margin_of_safety=Decimal("0.5")) == Decimal("100")
+00016:     assert margin_of_safety_score_from_result(current_margin_of_safety=Decimal("-0.5")) == Decimal("0")
+00017: 
+00018: def test_no_technical_context_is_invented():
+00019:     r = build_canonical_evidence(
+00020:         financial_acceptance={},
+00021:         fair_value_acceptance={
+00022:             "current_price":"385",
+00023:             "composite_fair_value":{"base_value":"239.6152784240735753418742541"},
+00024:             "margin_of_safety":{"current_margin_of_safety":"-0.606742285100130612308512974"}
+00025:         },
+00026:         market_ownership_acceptance=None,
+00027:     )
+00028:     assert all(v is None for v in r["market_context"].values())
+00029:     assert r["valuation_score"] is not None
+00030:     assert r["margin_of_safety_score"] == Decimal("0")
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v4_canonical_coverage.py
+LINE=23
+00003: 
+00004: from app.analysis.financial_intelligence_canonical_coverage_v4 import (
+00005:     SHORT_TERM_BLOCKER,
+00006:     LONG_TERM_BLOCKER,
+00007:     inspect_symbol_coverage,
+00008:     enrich_v3_batch,
+00009: )
+00010: 
+00011: 
+00012: def _root(repo: Path) -> Path:
+00013:     p = repo / "backend" / "data" / "financial_intelligence"
+00014:     p.mkdir(parents=True, exist_ok=True)
+00015:     return p
+00016: 
+00017: 
+00018: def _write_short(repo: Path, symbol="TUPRS", **overrides):
+00019:     payload = {
+00020:         "symbol": symbol,
+00021:         "as_of_date": "2026-09-04",
+00022:         "canonical": True,
+00023:         "technical_context": {"status": "PASS"},
+00024:         "market_context": {"status": "PASS"},
+00025:         "data_quality": {"status": "PASS"},
+00026:     }
+00027:     payload.update(overrides)
+00028:     (_root(repo) / f"{symbol}_short_term_canonical_context.json").write_text(
+00029:         json.dumps(payload), encoding="utf-8"
+00030:     )
+00031: 
+00032: 
+00033: def _write_long(repo: Path, symbol="TUPRS", **overrides):
+00034:     payload = {
+00035:         "symbol": symbol,
+00036:         "as_of_date": "2026-09-04",
+00037:         "canonical": True,
+00038:         "business_quality": {"status": "PASS"},
+00039:         "governance": {"status": "PASS"},
+00040:         "growth_context": {"status": "PASS"},
+00041:         "data_quality": {"status": "PASS"},
+00042:     }
+00043:     payload.update(overrides)
+00044:     (_root(repo) / f"{symbol}_long_term_canonical_coverage.json").write_text(
+00045:         json.dumps(payload), encoding="utf-8"
+00046:     )
+00047: 
+00048: 
+00049: def _v3(symbol="TUPRS", status="READY_FOR_DECISION_SUPPORT"):
+00050:     return {
+00051:         "status": "PASS",
+00052:         "schema_version": "fin-prod-v3-live-batch-v1",
+00053:         "symbols": [{
+00054:             "symbol": symbol,
+00055:             "sector_profile": "INDUSTRIAL",
+00056:             "decision_support_status": status,
+00057:         }],
+00058:     }
+
+==========================================================================================
+PATTERN=missing_fields
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=24
+00004: from pathlib import Path
+00005: from typing import Any
+00006: import json
+00007: 
+00008: SHORT_TERM_BLOCKER = "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"
+00009: LONG_TERM_BLOCKER = "LONG_TERM_CANONICAL_COVERAGE"
+00010: 
+00011: SHORT_TERM_FILE = "{symbol}_short_term_canonical_context.json"
+00012: LONG_TERM_FILE = "{symbol}_long_term_canonical_coverage.json"
+00013: 
+00014: PASS_STATUSES = {"PASS", "PRESENT", "VALID", "READY", "OK"}
+00015: 
+00016: 
+00017: @dataclass(frozen=True)
+00018: class CoverageArtifact:
+00019:     kind: str
+00020:     path: str
+00021:     status: str
+00022:     as_of_date: str | None
+00023:     warnings: tuple[str, ...]
+00024:     missing_fields: tuple[str, ...]
+00025: 
+00026: 
+00027: @dataclass(frozen=True)
+00028: class SymbolCoverage:
+00029:     symbol: str
+00030:     short_term: CoverageArtifact
+00031:     long_term: CoverageArtifact
+00032:     unresolved_blockers: tuple[str, ...]
+00033:     coverage_status: str
+00034: 
+00035: 
+00036: def _load_json(path: Path) -> dict[str, Any] | None:
+00037:     try:
+00038:         raw = json.loads(path.read_text(encoding="utf-8"))
+00039:     except Exception:
+00040:         return None
+00041:     return raw if isinstance(raw, dict) else None
+00042: 
+00043: 
+00044: def _status_pass(value: Any) -> bool:
+00045:     if isinstance(value, bool):
+00046:         return value
+00047:     if isinstance(value, dict):
+00048:         value = value.get("status")
+00049:     return str(value or "").upper().strip() in PASS_STATUSES
+00050: 
+00051: 
+00052: def _symbol_ok(payload: dict[str, Any], symbol: str) -> bool:
+00053:     return str(payload.get("symbol") or "").upper().strip() == symbol
+00054: 
+00055: 
+00056: def _canonical_ok(payload: dict[str, Any]) -> bool:
+00057:     return payload.get("canonical") is True or str(payload.get("source_mode") or "").upper() == "CANONICAL"
+00058: 
+00059: 
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=68
+00048:         value = value.get("status")
+00049:     return str(value or "").upper().strip() in PASS_STATUSES
+00050: 
+00051: 
+00052: def _symbol_ok(payload: dict[str, Any], symbol: str) -> bool:
+00053:     return str(payload.get("symbol") or "").upper().strip() == symbol
+00054: 
+00055: 
+00056: def _canonical_ok(payload: dict[str, Any]) -> bool:
+00057:     return payload.get("canonical") is True or str(payload.get("source_mode") or "").upper() == "CANONICAL"
+00058: 
+00059: 
+00060: def _validate_short_term(path: Path, symbol: str) -> CoverageArtifact:
+00061:     if not path.exists():
+00062:         return CoverageArtifact(
+00063:             kind="SHORT_TERM",
+00064:             path=str(path),
+00065:             status="MISSING",
+00066:             as_of_date=None,
+00067:             warnings=(),
+00068:             missing_fields=("artifact",),
+00069:         )
+00070:     payload = _load_json(path)
+00071:     if payload is None:
+00072:         return CoverageArtifact(
+00073:             kind="SHORT_TERM",
+00074:             path=str(path),
+00075:             status="INVALID_JSON",
+00076:             as_of_date=None,
+00077:             warnings=("INVALID_JSON",),
+00078:             missing_fields=(),
+00079:         )
+00080: 
+00081:     missing: list[str] = []
+00082:     if not _symbol_ok(payload, symbol):
+00083:         missing.append("symbol")
+00084:     if not _canonical_ok(payload):
+00085:         missing.append("canonical")
+00086:     if not str(payload.get("as_of_date") or "").strip():
+00087:         missing.append("as_of_date")
+00088:     if not _status_pass(payload.get("technical_context")):
+00089:         missing.append("technical_context")
+00090:     if not _status_pass(payload.get("market_context")):
+00091:         missing.append("market_context")
+00092:     if not _status_pass(payload.get("data_quality")):
+00093:         missing.append("data_quality")
+00094: 
+00095:     return CoverageArtifact(
+00096:         kind="SHORT_TERM",
+00097:         path=str(path),
+00098:         status="PASS" if not missing else "BLOCKED",
+00099:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00100:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00101:         missing_fields=tuple(missing),
+00102:     )
+00103: 
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=78
+00058: 
+00059: 
+00060: def _validate_short_term(path: Path, symbol: str) -> CoverageArtifact:
+00061:     if not path.exists():
+00062:         return CoverageArtifact(
+00063:             kind="SHORT_TERM",
+00064:             path=str(path),
+00065:             status="MISSING",
+00066:             as_of_date=None,
+00067:             warnings=(),
+00068:             missing_fields=("artifact",),
+00069:         )
+00070:     payload = _load_json(path)
+00071:     if payload is None:
+00072:         return CoverageArtifact(
+00073:             kind="SHORT_TERM",
+00074:             path=str(path),
+00075:             status="INVALID_JSON",
+00076:             as_of_date=None,
+00077:             warnings=("INVALID_JSON",),
+00078:             missing_fields=(),
+00079:         )
+00080: 
+00081:     missing: list[str] = []
+00082:     if not _symbol_ok(payload, symbol):
+00083:         missing.append("symbol")
+00084:     if not _canonical_ok(payload):
+00085:         missing.append("canonical")
+00086:     if not str(payload.get("as_of_date") or "").strip():
+00087:         missing.append("as_of_date")
+00088:     if not _status_pass(payload.get("technical_context")):
+00089:         missing.append("technical_context")
+00090:     if not _status_pass(payload.get("market_context")):
+00091:         missing.append("market_context")
+00092:     if not _status_pass(payload.get("data_quality")):
+00093:         missing.append("data_quality")
+00094: 
+00095:     return CoverageArtifact(
+00096:         kind="SHORT_TERM",
+00097:         path=str(path),
+00098:         status="PASS" if not missing else "BLOCKED",
+00099:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00100:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00101:         missing_fields=tuple(missing),
+00102:     )
+00103: 
+00104: 
+00105: def _validate_long_term(path: Path, symbol: str) -> CoverageArtifact:
+00106:     if not path.exists():
+00107:         return CoverageArtifact(
+00108:             kind="LONG_TERM",
+00109:             path=str(path),
+00110:             status="MISSING",
+00111:             as_of_date=None,
+00112:             warnings=(),
+00113:             missing_fields=("artifact",),
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=101
+00081:     missing: list[str] = []
+00082:     if not _symbol_ok(payload, symbol):
+00083:         missing.append("symbol")
+00084:     if not _canonical_ok(payload):
+00085:         missing.append("canonical")
+00086:     if not str(payload.get("as_of_date") or "").strip():
+00087:         missing.append("as_of_date")
+00088:     if not _status_pass(payload.get("technical_context")):
+00089:         missing.append("technical_context")
+00090:     if not _status_pass(payload.get("market_context")):
+00091:         missing.append("market_context")
+00092:     if not _status_pass(payload.get("data_quality")):
+00093:         missing.append("data_quality")
+00094: 
+00095:     return CoverageArtifact(
+00096:         kind="SHORT_TERM",
+00097:         path=str(path),
+00098:         status="PASS" if not missing else "BLOCKED",
+00099:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00100:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00101:         missing_fields=tuple(missing),
+00102:     )
+00103: 
+00104: 
+00105: def _validate_long_term(path: Path, symbol: str) -> CoverageArtifact:
+00106:     if not path.exists():
+00107:         return CoverageArtifact(
+00108:             kind="LONG_TERM",
+00109:             path=str(path),
+00110:             status="MISSING",
+00111:             as_of_date=None,
+00112:             warnings=(),
+00113:             missing_fields=("artifact",),
+00114:         )
+00115:     payload = _load_json(path)
+00116:     if payload is None:
+00117:         return CoverageArtifact(
+00118:             kind="LONG_TERM",
+00119:             path=str(path),
+00120:             status="INVALID_JSON",
+00121:             as_of_date=None,
+00122:             warnings=("INVALID_JSON",),
+00123:             missing_fields=(),
+00124:         )
+00125: 
+00126:     missing: list[str] = []
+00127:     if not _symbol_ok(payload, symbol):
+00128:         missing.append("symbol")
+00129:     if not _canonical_ok(payload):
+00130:         missing.append("canonical")
+00131:     if not str(payload.get("as_of_date") or "").strip():
+00132:         missing.append("as_of_date")
+00133:     if not _status_pass(payload.get("business_quality")):
+00134:         missing.append("business_quality")
+00135:     if not _status_pass(payload.get("governance")):
+00136:         missing.append("governance")
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=113
+00093:         missing.append("data_quality")
+00094: 
+00095:     return CoverageArtifact(
+00096:         kind="SHORT_TERM",
+00097:         path=str(path),
+00098:         status="PASS" if not missing else "BLOCKED",
+00099:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00100:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00101:         missing_fields=tuple(missing),
+00102:     )
+00103: 
+00104: 
+00105: def _validate_long_term(path: Path, symbol: str) -> CoverageArtifact:
+00106:     if not path.exists():
+00107:         return CoverageArtifact(
+00108:             kind="LONG_TERM",
+00109:             path=str(path),
+00110:             status="MISSING",
+00111:             as_of_date=None,
+00112:             warnings=(),
+00113:             missing_fields=("artifact",),
+00114:         )
+00115:     payload = _load_json(path)
+00116:     if payload is None:
+00117:         return CoverageArtifact(
+00118:             kind="LONG_TERM",
+00119:             path=str(path),
+00120:             status="INVALID_JSON",
+00121:             as_of_date=None,
+00122:             warnings=("INVALID_JSON",),
+00123:             missing_fields=(),
+00124:         )
+00125: 
+00126:     missing: list[str] = []
+00127:     if not _symbol_ok(payload, symbol):
+00128:         missing.append("symbol")
+00129:     if not _canonical_ok(payload):
+00130:         missing.append("canonical")
+00131:     if not str(payload.get("as_of_date") or "").strip():
+00132:         missing.append("as_of_date")
+00133:     if not _status_pass(payload.get("business_quality")):
+00134:         missing.append("business_quality")
+00135:     if not _status_pass(payload.get("governance")):
+00136:         missing.append("governance")
+00137:     if not _status_pass(payload.get("growth_context")):
+00138:         missing.append("growth_context")
+00139:     if not _status_pass(payload.get("data_quality")):
+00140:         missing.append("data_quality")
+00141: 
+00142:     return CoverageArtifact(
+00143:         kind="LONG_TERM",
+00144:         path=str(path),
+00145:         status="PASS" if not missing else "BLOCKED",
+00146:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00147:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00148:         missing_fields=tuple(missing),
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=123
+00103: 
+00104: 
+00105: def _validate_long_term(path: Path, symbol: str) -> CoverageArtifact:
+00106:     if not path.exists():
+00107:         return CoverageArtifact(
+00108:             kind="LONG_TERM",
+00109:             path=str(path),
+00110:             status="MISSING",
+00111:             as_of_date=None,
+00112:             warnings=(),
+00113:             missing_fields=("artifact",),
+00114:         )
+00115:     payload = _load_json(path)
+00116:     if payload is None:
+00117:         return CoverageArtifact(
+00118:             kind="LONG_TERM",
+00119:             path=str(path),
+00120:             status="INVALID_JSON",
+00121:             as_of_date=None,
+00122:             warnings=("INVALID_JSON",),
+00123:             missing_fields=(),
+00124:         )
+00125: 
+00126:     missing: list[str] = []
+00127:     if not _symbol_ok(payload, symbol):
+00128:         missing.append("symbol")
+00129:     if not _canonical_ok(payload):
+00130:         missing.append("canonical")
+00131:     if not str(payload.get("as_of_date") or "").strip():
+00132:         missing.append("as_of_date")
+00133:     if not _status_pass(payload.get("business_quality")):
+00134:         missing.append("business_quality")
+00135:     if not _status_pass(payload.get("governance")):
+00136:         missing.append("governance")
+00137:     if not _status_pass(payload.get("growth_context")):
+00138:         missing.append("growth_context")
+00139:     if not _status_pass(payload.get("data_quality")):
+00140:         missing.append("data_quality")
+00141: 
+00142:     return CoverageArtifact(
+00143:         kind="LONG_TERM",
+00144:         path=str(path),
+00145:         status="PASS" if not missing else "BLOCKED",
+00146:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00147:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00148:         missing_fields=tuple(missing),
+00149:     )
+00150: 
+00151: 
+00152: def inspect_symbol_coverage(*, repo: str | Path, symbol: str) -> SymbolCoverage:
+00153:     symbol = str(symbol).upper().strip()
+00154:     root = Path(repo) / "backend" / "data" / "financial_intelligence"
+00155:     short_term = _validate_short_term(root / SHORT_TERM_FILE.format(symbol=symbol), symbol)
+00156:     long_term = _validate_long_term(root / LONG_TERM_FILE.format(symbol=symbol), symbol)
+00157: 
+00158:     blockers: list[str] = []
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=148
+00128:         missing.append("symbol")
+00129:     if not _canonical_ok(payload):
+00130:         missing.append("canonical")
+00131:     if not str(payload.get("as_of_date") or "").strip():
+00132:         missing.append("as_of_date")
+00133:     if not _status_pass(payload.get("business_quality")):
+00134:         missing.append("business_quality")
+00135:     if not _status_pass(payload.get("governance")):
+00136:         missing.append("governance")
+00137:     if not _status_pass(payload.get("growth_context")):
+00138:         missing.append("growth_context")
+00139:     if not _status_pass(payload.get("data_quality")):
+00140:         missing.append("data_quality")
+00141: 
+00142:     return CoverageArtifact(
+00143:         kind="LONG_TERM",
+00144:         path=str(path),
+00145:         status="PASS" if not missing else "BLOCKED",
+00146:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00147:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00148:         missing_fields=tuple(missing),
+00149:     )
+00150: 
+00151: 
+00152: def inspect_symbol_coverage(*, repo: str | Path, symbol: str) -> SymbolCoverage:
+00153:     symbol = str(symbol).upper().strip()
+00154:     root = Path(repo) / "backend" / "data" / "financial_intelligence"
+00155:     short_term = _validate_short_term(root / SHORT_TERM_FILE.format(symbol=symbol), symbol)
+00156:     long_term = _validate_long_term(root / LONG_TERM_FILE.format(symbol=symbol), symbol)
+00157: 
+00158:     blockers: list[str] = []
+00159:     if short_term.status != "PASS":
+00160:         blockers.append(SHORT_TERM_BLOCKER)
+00161:     if long_term.status != "PASS":
+00162:         blockers.append(LONG_TERM_BLOCKER)
+00163: 
+00164:     status = "READY_FULL_CANONICAL_COVERAGE" if not blockers else "BLOCKED_CANONICAL_COVERAGE"
+00165:     return SymbolCoverage(
+00166:         symbol=symbol,
+00167:         short_term=short_term,
+00168:         long_term=long_term,
+00169:         unresolved_blockers=tuple(blockers),
+00170:         coverage_status=status,
+00171:     )
+00172: 
+00173: 
+00174: def enrich_v3_batch(*, repo: str | Path, v3_batch: dict[str, Any]) -> dict[str, Any]:
+00175:     symbols_out: list[dict[str, Any]] = []
+00176:     fully_ready: list[str] = []
+00177:     coverage_blocked: list[str] = []
+00178: 
+00179:     for raw in v3_batch.get("symbols") or ():
+00180:         if not isinstance(raw, dict):
+00181:             continue
+00182:         symbol = str(raw.get("symbol") or "").upper().strip()
+00183:         if not symbol:
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py
+LINE=46
+00026:             self.mode is not KapApiMode.UNCONFIGURED
+00027:             and bool(self.base_url)
+00028:             and bool(self.client_id)
+00029:             and bool(self.api_key)
+00030:         )
+00031: 
+00032:     @property
+00033:     def masked_client_id(self) -> str:
+00034:         if not self.client_id:
+00035:             return "TanД±mlД± deДџil"
+00036:         if len(self.client_id) <= 4:
+00037:             return "****"
+00038:         return self.client_id[:2] + "****" + self.client_id[-2:]
+00039: 
+00040: 
+00041: @dataclass(frozen=True)
+00042: class KapApiConfigurationStatus:
+00043:     configuration: KapApiConfiguration
+00044:     locked: bool
+00045:     explanation: str
+00046:     missing_fields: tuple[str, ...]
+00047: 
+00048: 
+00049: def _mode_from_environment(value: str) -> KapApiMode:
+00050:     normalized = value.strip().lower()
+00051: 
+00052:     if normalized in {"test", "sandbox"}:
+00053:         return KapApiMode.TEST
+00054:     if normalized in {"production", "prod", "Гјretim", "uretim"}:
+00055:         return KapApiMode.PRODUCTION
+00056:     return KapApiMode.UNCONFIGURED
+00057: 
+00058: 
+00059: def load_kap_api_configuration() -> KapApiConfiguration:
+00060:     timeout_raw = os.getenv("HISSE_ROBOTU_KAP_API_TIMEOUT", "30").strip()
+00061: 
+00062:     try:
+00063:         timeout = int(timeout_raw)
+00064:     except ValueError:
+00065:         timeout = 30
+00066: 
+00067:     timeout = min(max(timeout, 5), 120)
+00068: 
+00069:     return KapApiConfiguration(
+00070:         mode=_mode_from_environment(
+00071:             os.getenv("HISSE_ROBOTU_KAP_API_MODE", "")
+00072:         ),
+00073:         base_url=os.getenv(
+00074:             "HISSE_ROBOTU_KAP_API_BASE_URL",
+00075:             "",
+00076:         ).strip(),
+00077:         client_id=os.getenv(
+00078:             "HISSE_ROBOTU_KAP_API_CLIENT_ID",
+00079:             "",
+00080:         ).strip(),
+00081:         api_key=os.getenv(
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py
+LINE=112
+00092:     missing: list[str] = []
+00093: 
+00094:     if configuration.mode is KapApiMode.UNCONFIGURED:
+00095:         missing.append("eriЕџim modu")
+00096:     if not configuration.base_url:
+00097:         missing.append("API adresi")
+00098:     if not configuration.client_id:
+00099:         missing.append("istemci kimliДџi")
+00100:     if not configuration.api_key:
+00101:         missing.append("API anahtarД±")
+00102: 
+00103:     if configuration.base_url:
+00104:         parsed = urlparse(configuration.base_url)
+00105:         if parsed.scheme != "https" or not parsed.netloc:
+00106:             return KapApiConfigurationStatus(
+00107:                 configuration=configuration,
+00108:                 locked=True,
+00109:                 explanation=(
+00110:                     "KAP API adresi geГ§erli bir HTTPS adresi olmalД±dД±r."
+00111:                 ),
+00112:                 missing_fields=tuple(missing),
+00113:             )
+00114: 
+00115:     if missing:
+00116:         return KapApiConfigurationStatus(
+00117:             configuration=configuration,
+00118:             locked=True,
+00119:             explanation=(
+00120:                 "KAP API baДџlantД±sД± yapД±landД±rД±lmadД±. "
+00121:                 "CanlД± finansal veri gГјncellemesi kilitli; "
+00122:                 "manuel CSV/JSON yolu kullanД±labilir."
+00123:             ),
+00124:             missing_fields=tuple(missing),
+00125:         )
+00126: 
+00127:     return KapApiConfigurationStatus(
+00128:         configuration=configuration,
+00129:         locked=False,
+00130:         explanation=(
+00131:             f"KAP API yapД±landД±rmasД± {configuration.mode.value} "
+00132:             "modunda doДџrulandД±. Bu sprint baДџlantД± bilgilerini "
+00133:             "yalnД±zca kontrol eder; canlД± veri Г§ekmez."
+00134:         ),
+00135:         missing_fields=(),
+00136:     )
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py
+LINE=124
+00104:         parsed = urlparse(configuration.base_url)
+00105:         if parsed.scheme != "https" or not parsed.netloc:
+00106:             return KapApiConfigurationStatus(
+00107:                 configuration=configuration,
+00108:                 locked=True,
+00109:                 explanation=(
+00110:                     "KAP API adresi geГ§erli bir HTTPS adresi olmalД±dД±r."
+00111:                 ),
+00112:                 missing_fields=tuple(missing),
+00113:             )
+00114: 
+00115:     if missing:
+00116:         return KapApiConfigurationStatus(
+00117:             configuration=configuration,
+00118:             locked=True,
+00119:             explanation=(
+00120:                 "KAP API baДџlantД±sД± yapД±landД±rД±lmadД±. "
+00121:                 "CanlД± finansal veri gГјncellemesi kilitli; "
+00122:                 "manuel CSV/JSON yolu kullanД±labilir."
+00123:             ),
+00124:             missing_fields=tuple(missing),
+00125:         )
+00126: 
+00127:     return KapApiConfigurationStatus(
+00128:         configuration=configuration,
+00129:         locked=False,
+00130:         explanation=(
+00131:             f"KAP API yapД±landД±rmasД± {configuration.mode.value} "
+00132:             "modunda doДџrulandД±. Bu sprint baДџlantД± bilgilerini "
+00133:             "yalnД±zca kontrol eder; canlД± veri Г§ekmez."
+00134:         ),
+00135:         missing_fields=(),
+00136:     )
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\kap_api_config.py
+LINE=135
+00115:     if missing:
+00116:         return KapApiConfigurationStatus(
+00117:             configuration=configuration,
+00118:             locked=True,
+00119:             explanation=(
+00120:                 "KAP API baДџlantД±sД± yapД±landД±rД±lmadД±. "
+00121:                 "CanlД± finansal veri gГјncellemesi kilitli; "
+00122:                 "manuel CSV/JSON yolu kullanД±labilir."
+00123:             ),
+00124:             missing_fields=tuple(missing),
+00125:         )
+00126: 
+00127:     return KapApiConfigurationStatus(
+00128:         configuration=configuration,
+00129:         locked=False,
+00130:         explanation=(
+00131:             f"KAP API yapД±landД±rmasД± {configuration.mode.value} "
+00132:             "modunda doДџrulandД±. Bu sprint baДџlantД± bilgilerini "
+00133:             "yalnД±zca kontrol eder; canlД± veri Г§ekmez."
+00134:         ),
+00135:         missing_fields=(),
+00136:     )
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py
+LINE=40
+00020:     category_rank_percentile: Decimal | None
+00021:     category_rank_change: int | None
+00022:     return_1m: Decimal | None
+00023:     return_3m: Decimal | None
+00024:     return_6m: Decimal | None
+00025:     volatility_percentile: Decimal | None
+00026:     max_drawdown: Decimal | None
+00027:     fund_size_change: Decimal | None
+00028:     investor_change: Decimal | None
+00029:     net_flow_ratio: Decimal | None
+00030:     total_expense_ratio: Decimal | None
+00031:     regime_fit: Decimal | None
+00032:     allocation_known: bool
+00033: 
+00034: 
+00035: @dataclass(frozen=True, slots=True)
+00036: class FundEvidence:
+00037:     family: str
+00038:     state: EvidenceState
+00039:     facts: tuple[str, ...]
+00040:     missing_fields: tuple[str, ...] = ()
+00041: 
+00042: 
+00043: @dataclass(frozen=True, slots=True)
+00044: class FundEvidenceMap:
+00045:     canonical_fund_id: str
+00046:     category_id: str | None
+00047:     category_mapping_state: str
+00048:     evidence: tuple[FundEvidence, ...]
+00049: 
+00050:     @property
+00051:     def available_family_count(self) -> int:
+00052:         return sum(item.state is not EvidenceState.UNAVAILABLE for item in self.evidence)
+00053: 
+00054: 
+00055: def _fmt(value: Decimal) -> str:
+00056:     return format(value.normalize(), "f")
+00057: 
+00058: 
+00059: def _missing(family: str, *names: str) -> FundEvidence:
+00060:     return FundEvidence(family, EvidenceState.UNAVAILABLE, (), tuple(sorted(names)))
+00061: 
+00062: 
+00063: def _f1(value: FundEvidenceInput) -> FundEvidence:
+00064:     if value.category_id is None:
+00065:         return _missing("F1", "category_id")
+00066:     if value.category_rank_percentile is None or value.category_rank_change is None:
+00067:         missing = tuple(name for name, item in (
+00068:             ("category_rank_percentile", value.category_rank_percentile),
+00069:             ("category_rank_change", value.category_rank_change),
+00070:         ) if item is None)
+00071:         return _missing("F1", *missing)
+00072:     percentile = value.category_rank_percentile
+00073:     change = value.category_rank_change
+00074:     state = (
+00075:         EvidenceState.POSITIVE if percentile >= Decimal("0.70") and change > 0
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v4_canonical_coverage.py
+LINE=71
+00051:         "status": "PASS",
+00052:         "schema_version": "fin-prod-v3-live-batch-v1",
+00053:         "symbols": [{
+00054:             "symbol": symbol,
+00055:             "sector_profile": "INDUSTRIAL",
+00056:             "decision_support_status": status,
+00057:         }],
+00058:     }
+00059: 
+00060: 
+00061: def test_missing_artifacts_preserve_both_blockers(tmp_path):
+00062:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00063:     assert cov.unresolved_blockers == (SHORT_TERM_BLOCKER, LONG_TERM_BLOCKER)
+00064:     assert cov.coverage_status == "BLOCKED_CANONICAL_COVERAGE"
+00065: 
+00066: 
+00067: def test_short_term_partial_evidence_does_not_pass(tmp_path):
+00068:     _write_short(tmp_path, market_context={"status": "MISSING"})
+00069:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00070:     assert cov.short_term.status == "BLOCKED"
+00071:     assert "market_context" in cov.short_term.missing_fields
+00072:     assert SHORT_TERM_BLOCKER in cov.unresolved_blockers
+00073: 
+00074: 
+00075: def test_complete_canonical_coverage_unlocks_full_readiness(tmp_path):
+00076:     _write_short(tmp_path)
+00077:     _write_long(tmp_path)
+00078:     out = enrich_v3_batch(repo=tmp_path, v3_batch=_v3())
+00079:     assert out["ready_full_symbols"] == ["TUPRS"]
+00080:     assert out["symbols"][0]["decision_support_status_v4"] == "READY_FULL_DECISION_SUPPORT"
+00081:     assert out["symbols"][0]["canonical_coverage_v4"]["unresolved_blockers"] == ()
+00082: 
+00083: 
+00084: def test_upstream_source_block_cannot_be_overridden(tmp_path):
+00085:     _write_short(tmp_path)
+00086:     _write_long(tmp_path)
+00087:     out = enrich_v3_batch(repo=tmp_path, v3_batch=_v3(status="BLOCKED_SOURCE"))
+00088:     assert out["ready_full_symbols"] == []
+00089:     assert out["symbols"][0]["decision_support_status_v4"] == "BLOCKED_SOURCE"
+00090: 
+00091: 
+00092: def test_wrong_symbol_and_noncanonical_are_fail_closed(tmp_path):
+00093:     _write_short(tmp_path, symbol="AAA")
+00094:     # Rename artifact so TUPRS loader sees payload mismatch.
+00095:     src = _root(tmp_path) / "AAA_short_term_canonical_context.json"
+00096:     dst = _root(tmp_path) / "TUPRS_short_term_canonical_context.json"
+00097:     src.rename(dst)
+00098:     _write_long(tmp_path, canonical=False)
+00099:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00100:     assert "symbol" in cov.short_term.missing_fields
+00101:     assert "canonical" in cov.long_term.missing_fields
+00102:     assert cov.coverage_status == "BLOCKED_CANONICAL_COVERAGE"
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v4_canonical_coverage.py
+LINE=100
+00080:     assert out["symbols"][0]["decision_support_status_v4"] == "READY_FULL_DECISION_SUPPORT"
+00081:     assert out["symbols"][0]["canonical_coverage_v4"]["unresolved_blockers"] == ()
+00082: 
+00083: 
+00084: def test_upstream_source_block_cannot_be_overridden(tmp_path):
+00085:     _write_short(tmp_path)
+00086:     _write_long(tmp_path)
+00087:     out = enrich_v3_batch(repo=tmp_path, v3_batch=_v3(status="BLOCKED_SOURCE"))
+00088:     assert out["ready_full_symbols"] == []
+00089:     assert out["symbols"][0]["decision_support_status_v4"] == "BLOCKED_SOURCE"
+00090: 
+00091: 
+00092: def test_wrong_symbol_and_noncanonical_are_fail_closed(tmp_path):
+00093:     _write_short(tmp_path, symbol="AAA")
+00094:     # Rename artifact so TUPRS loader sees payload mismatch.
+00095:     src = _root(tmp_path) / "AAA_short_term_canonical_context.json"
+00096:     dst = _root(tmp_path) / "TUPRS_short_term_canonical_context.json"
+00097:     src.rename(dst)
+00098:     _write_long(tmp_path, canonical=False)
+00099:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00100:     assert "symbol" in cov.short_term.missing_fields
+00101:     assert "canonical" in cov.long_term.missing_fields
+00102:     assert cov.coverage_status == "BLOCKED_CANONICAL_COVERAGE"
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v4_canonical_coverage.py
+LINE=101
+00081:     assert out["symbols"][0]["canonical_coverage_v4"]["unresolved_blockers"] == ()
+00082: 
+00083: 
+00084: def test_upstream_source_block_cannot_be_overridden(tmp_path):
+00085:     _write_short(tmp_path)
+00086:     _write_long(tmp_path)
+00087:     out = enrich_v3_batch(repo=tmp_path, v3_batch=_v3(status="BLOCKED_SOURCE"))
+00088:     assert out["ready_full_symbols"] == []
+00089:     assert out["symbols"][0]["decision_support_status_v4"] == "BLOCKED_SOURCE"
+00090: 
+00091: 
+00092: def test_wrong_symbol_and_noncanonical_are_fail_closed(tmp_path):
+00093:     _write_short(tmp_path, symbol="AAA")
+00094:     # Rename artifact so TUPRS loader sees payload mismatch.
+00095:     src = _root(tmp_path) / "AAA_short_term_canonical_context.json"
+00096:     dst = _root(tmp_path) / "TUPRS_short_term_canonical_context.json"
+00097:     src.rename(dst)
+00098:     _write_long(tmp_path, canonical=False)
+00099:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00100:     assert "symbol" in cov.short_term.missing_fields
+00101:     assert "canonical" in cov.long_term.missing_fields
+00102:     assert cov.coverage_status == "BLOCKED_CANONICAL_COVERAGE"
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py
+LINE=35
+00015:     )
+00016:     return replace(value, **changes)
+00017: 
+00018: 
+00019: def test_all_five_independent_families_map_in_stable_order():
+00020:     result = map_fund_evidence(sample())
+00021:     assert tuple(item.family for item in result.evidence) == ("F1", "F2", "F3", "F4", "F5")
+00022:     assert all(item.state is EvidenceState.POSITIVE for item in result.evidence)
+00023:     assert result.available_family_count == 5
+00024: 
+00025: 
+00026: def test_unmapped_category_does_not_force_fill():
+00027:     result = map_fund_evidence(sample(category_id=None))
+00028:     assert result.category_mapping_state == "UNMAPPED"
+00029:     assert result.evidence[0].state is EvidenceState.UNAVAILABLE
+00030: 
+00031: 
+00032: def test_missing_values_are_not_neutral_or_zero():
+00033:     result = map_fund_evidence(sample(return_3m=None))
+00034:     assert result.evidence[1].state is EvidenceState.UNAVAILABLE
+00035:     assert result.evidence[1].missing_fields == ("return_3m",)
+00036: 
+00037: 
+00038: def test_f4_can_be_partial_but_requires_two_independent_facts():
+00039:     partial = map_fund_evidence(sample(net_flow_ratio=None)).evidence[3]
+00040:     unavailable = map_fund_evidence(sample(net_flow_ratio=None, investor_change=None)).evidence[3]
+00041:     assert partial.state is EvidenceState.POSITIVE and partial.missing_fields == ("net_flow_ratio",)
+00042:     assert unavailable.state is EvidenceState.UNAVAILABLE
+00043: 
+00044: 
+00045: def test_caution_paths_are_deterministic():
+00046:     result = map_fund_evidence(sample(
+00047:         category_rank_percentile=Decimal("0.2"), category_rank_change=-4,
+00048:         return_1m=Decimal("-0.02"), return_3m=Decimal("-0.03"),
+00049:         volatility_percentile=Decimal("0.9"), max_drawdown=Decimal("-0.25"),
+00050:         fund_size_change=Decimal("-0.1"), investor_change=Decimal("-0.1"),
+00051:         total_expense_ratio=Decimal("0.05"), regime_fit=Decimal("0.2"),
+00052:     ))
+00053:     assert all(item.state is EvidenceState.CAUTION for item in result.evidence)
+00054: 
+00055: 
+00056: def test_input_order_is_irrelevant_and_mapping_repeats_exactly():
+00057:     assert map_fund_evidence(sample()) == map_fund_evidence(sample())
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py
+LINE=41
+00021:     assert tuple(item.family for item in result.evidence) == ("F1", "F2", "F3", "F4", "F5")
+00022:     assert all(item.state is EvidenceState.POSITIVE for item in result.evidence)
+00023:     assert result.available_family_count == 5
+00024: 
+00025: 
+00026: def test_unmapped_category_does_not_force_fill():
+00027:     result = map_fund_evidence(sample(category_id=None))
+00028:     assert result.category_mapping_state == "UNMAPPED"
+00029:     assert result.evidence[0].state is EvidenceState.UNAVAILABLE
+00030: 
+00031: 
+00032: def test_missing_values_are_not_neutral_or_zero():
+00033:     result = map_fund_evidence(sample(return_3m=None))
+00034:     assert result.evidence[1].state is EvidenceState.UNAVAILABLE
+00035:     assert result.evidence[1].missing_fields == ("return_3m",)
+00036: 
+00037: 
+00038: def test_f4_can_be_partial_but_requires_two_independent_facts():
+00039:     partial = map_fund_evidence(sample(net_flow_ratio=None)).evidence[3]
+00040:     unavailable = map_fund_evidence(sample(net_flow_ratio=None, investor_change=None)).evidence[3]
+00041:     assert partial.state is EvidenceState.POSITIVE and partial.missing_fields == ("net_flow_ratio",)
+00042:     assert unavailable.state is EvidenceState.UNAVAILABLE
+00043: 
+00044: 
+00045: def test_caution_paths_are_deterministic():
+00046:     result = map_fund_evidence(sample(
+00047:         category_rank_percentile=Decimal("0.2"), category_rank_change=-4,
+00048:         return_1m=Decimal("-0.02"), return_3m=Decimal("-0.03"),
+00049:         volatility_percentile=Decimal("0.9"), max_drawdown=Decimal("-0.25"),
+00050:         fund_size_change=Decimal("-0.1"), investor_change=Decimal("-0.1"),
+00051:         total_expense_ratio=Decimal("0.05"), regime_fit=Decimal("0.2"),
+00052:     ))
+00053:     assert all(item.state is EvidenceState.CAUTION for item in result.evidence)
+00054: 
+00055: 
+00056: def test_input_order_is_irrelevant_and_mapping_repeats_exactly():
+00057:     assert map_fund_evidence(sample()) == map_fund_evidence(sample())
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f1_safe_unavailable_v1.py
+LINE=36
+00016:         category_id="example-category",
+00017:         category_rank_percentile=None,
+00018:         category_rank_change=None,
+00019:         return_1m=None,
+00020:         return_3m=None,
+00021:         return_6m=None,
+00022:         volatility_percentile=None,
+00023:         max_drawdown=None,
+00024:         fund_size_change=None,
+00025:         investor_change=None,
+00026:         net_flow_ratio=None,
+00027:         total_expense_ratio=None,
+00028:         regime_fit=None,
+00029:         allocation_known=False,
+00030:     )
+00031: 
+00032:     f1 = map_fund_evidence(value).evidence[0]
+00033: 
+00034:     assert f1.family == "F1"
+00035:     assert f1.state is EvidenceState.UNAVAILABLE
+00036:     assert "category_rank_percentile" in f1.missing_fields
+00037:     assert "category_rank_change" in f1.missing_fields
+00038: 
+00039: 
+00040: def test_tefas_category_fields_are_not_guessed_into_f1():
+00041:     rows = (
+00042:         {
+00043:             "fonkod": "AAA",
+00044:             "fonunvan": "TEST FONU",
+00045:             "fonKategori": "TEST KATEGORI",
+00046:             "kategoriDerece": 1,
+00047:             "kategoriFonSay": 20,
+00048:             "getiri1a": 1.0,
+00049:             "getiri3a": 2.0,
+00050:             "getiri6a": 3.0,
+00051:         },
+00052:     )
+00053: 
+00054:     mapped = evidence_from_tefas_rows(rows)
+00055: 
+00056:     assert len(mapped) == 1
+00057: 
+00058:     f1 = mapped[0].evidence[0]
+00059: 
+00060:     # kategoriDerece / kategoriFonSay semantics and temporal
+00061:     # rank-change contract are not proven; no inference allowed.
+00062:     assert f1.state is EvidenceState.UNAVAILABLE
+00063: 
+00064: 
+00065: def test_f1_does_not_block_f2():
+00066:     rows = (
+00067:         {
+00068:             "fonkod": "AAA",
+00069:             "fonunvan": "TEST FONU",
+00070:             "fonKategori": "TEST KATEGORI",
+00071:             "kategoriDerece": 1,
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f1_safe_unavailable_v1.py
+LINE=37
+00017:         category_rank_percentile=None,
+00018:         category_rank_change=None,
+00019:         return_1m=None,
+00020:         return_3m=None,
+00021:         return_6m=None,
+00022:         volatility_percentile=None,
+00023:         max_drawdown=None,
+00024:         fund_size_change=None,
+00025:         investor_change=None,
+00026:         net_flow_ratio=None,
+00027:         total_expense_ratio=None,
+00028:         regime_fit=None,
+00029:         allocation_known=False,
+00030:     )
+00031: 
+00032:     f1 = map_fund_evidence(value).evidence[0]
+00033: 
+00034:     assert f1.family == "F1"
+00035:     assert f1.state is EvidenceState.UNAVAILABLE
+00036:     assert "category_rank_percentile" in f1.missing_fields
+00037:     assert "category_rank_change" in f1.missing_fields
+00038: 
+00039: 
+00040: def test_tefas_category_fields_are_not_guessed_into_f1():
+00041:     rows = (
+00042:         {
+00043:             "fonkod": "AAA",
+00044:             "fonunvan": "TEST FONU",
+00045:             "fonKategori": "TEST KATEGORI",
+00046:             "kategoriDerece": 1,
+00047:             "kategoriFonSay": 20,
+00048:             "getiri1a": 1.0,
+00049:             "getiri3a": 2.0,
+00050:             "getiri6a": 3.0,
+00051:         },
+00052:     )
+00053: 
+00054:     mapped = evidence_from_tefas_rows(rows)
+00055: 
+00056:     assert len(mapped) == 1
+00057: 
+00058:     f1 = mapped[0].evidence[0]
+00059: 
+00060:     # kategoriDerece / kategoriFonSay semantics and temporal
+00061:     # rank-change contract are not proven; no inference allowed.
+00062:     assert f1.state is EvidenceState.UNAVAILABLE
+00063: 
+00064: 
+00065: def test_f1_does_not_block_f2():
+00066:     rows = (
+00067:         {
+00068:             "fonkod": "AAA",
+00069:             "fonunvan": "TEST FONU",
+00070:             "fonKategori": "TEST KATEGORI",
+00071:             "kategoriDerece": 1,
+00072:             "kategoriFonSay": 20,
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f4_money_flow_v1.py
+LINE=122
+00102:         (
+00103:             observation("AAA", D1, "100", 100),
+00104:             observation("AAA", D2, "110", 105),
+00105:         )
+00106:     )
+00107: 
+00108:     metric = flow_metrics_from_store(
+00109:         store
+00110:     )["fund:tefas:AAA"]
+00111: 
+00112:     assert metric.fund_size_change == Decimal("0.1")
+00113:     assert metric.investor_change == Decimal("0.05")
+00114:     assert metric.net_flow_ratio is None
+00115: 
+00116:     evidence = f4_evidence_from_store(
+00117:         store,
+00118:         canonical_fund_ids=("fund:tefas:AAA",),
+00119:     )["fund:tefas:AAA"]
+00120: 
+00121:     assert evidence.state is EvidenceState.POSITIVE
+00122:     assert evidence.missing_fields == ("net_flow_ratio",)
+00123: 
+00124: 
+00125: def test_two_negative_facts_produce_caution(tmp_path):
+00126:     store = FundObservationJsonStore(
+00127:         tmp_path / "observations.json"
+00128:     )
+00129: 
+00130:     store.upsert(
+00131:         (
+00132:             observation("AAA", D1, "100", 100),
+00133:             observation("AAA", D2, "90", 90),
+00134:         )
+00135:     )
+00136: 
+00137:     evidence = f4_evidence_from_store(
+00138:         store,
+00139:         canonical_fund_ids=("fund:tefas:AAA",),
+00140:     )["fund:tefas:AAA"]
+00141: 
+00142:     assert evidence.state is EvidenceState.CAUTION
+00143: 
+00144: 
+00145: def test_one_snapshot_keeps_f4_unavailable(tmp_path):
+00146:     store = FundObservationJsonStore(
+00147:         tmp_path / "observations.json"
+00148:     )
+00149: 
+00150:     store.upsert(
+00151:         (
+00152:             observation("AAA", D2, "100", 100),
+00153:         )
+00154:     )
+00155: 
+00156:     assert f4_evidence_from_store(
+00157:         store,
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=59
+00039: 
+00040: def f5(value):
+00041:     mapped = map_fund_evidence(
+00042:         value
+00043:     )
+00044: 
+00045:     return next(
+00046:         item
+00047:         for item in mapped.evidence
+00048:         if item.family == "F5"
+00049:     )
+00050: 
+00051: 
+00052: def test_missing_all_f5_sources_is_unavailable():
+00053:     item = f5(
+00054:         source()
+00055:     )
+00056: 
+00057:     assert item.state is EvidenceState.UNAVAILABLE
+00058: 
+00059:     assert item.missing_fields == (
+00060:         "allocation",
+00061:         "regime_fit",
+00062:         "total_expense_ratio",
+00063:     )
+00064: 
+00065: 
+00066: def test_cost_alone_cannot_activate_f5():
+00067:     item = f5(
+00068:         source(
+00069:             total_expense_ratio=Decimal(
+00070:                 "0.01"
+00071:             ),
+00072:         )
+00073:     )
+00074: 
+00075:     assert item.state is EvidenceState.UNAVAILABLE
+00076:     assert "regime_fit" in item.missing_fields
+00077:     assert "allocation" in item.missing_fields
+00078: 
+00079: 
+00080: def test_regime_alone_cannot_activate_f5():
+00081:     item = f5(
+00082:         source(
+00083:             regime_fit=Decimal(
+00084:                 "0.8"
+00085:             ),
+00086:         )
+00087:     )
+00088: 
+00089:     assert item.state is EvidenceState.UNAVAILABLE
+00090:     assert "total_expense_ratio" in item.missing_fields
+00091:     assert "allocation" in item.missing_fields
+00092: 
+00093: 
+00094: def test_allocation_alone_cannot_activate_f5():
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=76
+00056: 
+00057:     assert item.state is EvidenceState.UNAVAILABLE
+00058: 
+00059:     assert item.missing_fields == (
+00060:         "allocation",
+00061:         "regime_fit",
+00062:         "total_expense_ratio",
+00063:     )
+00064: 
+00065: 
+00066: def test_cost_alone_cannot_activate_f5():
+00067:     item = f5(
+00068:         source(
+00069:             total_expense_ratio=Decimal(
+00070:                 "0.01"
+00071:             ),
+00072:         )
+00073:     )
+00074: 
+00075:     assert item.state is EvidenceState.UNAVAILABLE
+00076:     assert "regime_fit" in item.missing_fields
+00077:     assert "allocation" in item.missing_fields
+00078: 
+00079: 
+00080: def test_regime_alone_cannot_activate_f5():
+00081:     item = f5(
+00082:         source(
+00083:             regime_fit=Decimal(
+00084:                 "0.8"
+00085:             ),
+00086:         )
+00087:     )
+00088: 
+00089:     assert item.state is EvidenceState.UNAVAILABLE
+00090:     assert "total_expense_ratio" in item.missing_fields
+00091:     assert "allocation" in item.missing_fields
+00092: 
+00093: 
+00094: def test_allocation_alone_cannot_activate_f5():
+00095:     item = f5(
+00096:         source(
+00097:             allocation_known=True,
+00098:         )
+00099:     )
+00100: 
+00101:     assert item.state is EvidenceState.UNAVAILABLE
+00102: 
+00103:     assert item.missing_fields == (
+00104:         "regime_fit",
+00105:         "total_expense_ratio",
+00106:     )
+00107: 
+00108: 
+00109: def test_two_of_three_still_cannot_activate_f5():
+00110:     item = f5(
+00111:         source(
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=77
+00057:     assert item.state is EvidenceState.UNAVAILABLE
+00058: 
+00059:     assert item.missing_fields == (
+00060:         "allocation",
+00061:         "regime_fit",
+00062:         "total_expense_ratio",
+00063:     )
+00064: 
+00065: 
+00066: def test_cost_alone_cannot_activate_f5():
+00067:     item = f5(
+00068:         source(
+00069:             total_expense_ratio=Decimal(
+00070:                 "0.01"
+00071:             ),
+00072:         )
+00073:     )
+00074: 
+00075:     assert item.state is EvidenceState.UNAVAILABLE
+00076:     assert "regime_fit" in item.missing_fields
+00077:     assert "allocation" in item.missing_fields
+00078: 
+00079: 
+00080: def test_regime_alone_cannot_activate_f5():
+00081:     item = f5(
+00082:         source(
+00083:             regime_fit=Decimal(
+00084:                 "0.8"
+00085:             ),
+00086:         )
+00087:     )
+00088: 
+00089:     assert item.state is EvidenceState.UNAVAILABLE
+00090:     assert "total_expense_ratio" in item.missing_fields
+00091:     assert "allocation" in item.missing_fields
+00092: 
+00093: 
+00094: def test_allocation_alone_cannot_activate_f5():
+00095:     item = f5(
+00096:         source(
+00097:             allocation_known=True,
+00098:         )
+00099:     )
+00100: 
+00101:     assert item.state is EvidenceState.UNAVAILABLE
+00102: 
+00103:     assert item.missing_fields == (
+00104:         "regime_fit",
+00105:         "total_expense_ratio",
+00106:     )
+00107: 
+00108: 
+00109: def test_two_of_three_still_cannot_activate_f5():
+00110:     item = f5(
+00111:         source(
+00112:             total_expense_ratio=Decimal(
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=90
+00070:                 "0.01"
+00071:             ),
+00072:         )
+00073:     )
+00074: 
+00075:     assert item.state is EvidenceState.UNAVAILABLE
+00076:     assert "regime_fit" in item.missing_fields
+00077:     assert "allocation" in item.missing_fields
+00078: 
+00079: 
+00080: def test_regime_alone_cannot_activate_f5():
+00081:     item = f5(
+00082:         source(
+00083:             regime_fit=Decimal(
+00084:                 "0.8"
+00085:             ),
+00086:         )
+00087:     )
+00088: 
+00089:     assert item.state is EvidenceState.UNAVAILABLE
+00090:     assert "total_expense_ratio" in item.missing_fields
+00091:     assert "allocation" in item.missing_fields
+00092: 
+00093: 
+00094: def test_allocation_alone_cannot_activate_f5():
+00095:     item = f5(
+00096:         source(
+00097:             allocation_known=True,
+00098:         )
+00099:     )
+00100: 
+00101:     assert item.state is EvidenceState.UNAVAILABLE
+00102: 
+00103:     assert item.missing_fields == (
+00104:         "regime_fit",
+00105:         "total_expense_ratio",
+00106:     )
+00107: 
+00108: 
+00109: def test_two_of_three_still_cannot_activate_f5():
+00110:     item = f5(
+00111:         source(
+00112:             total_expense_ratio=Decimal(
+00113:                 "0.01"
+00114:             ),
+00115:             regime_fit=Decimal(
+00116:                 "0.8"
+00117:             ),
+00118:             allocation_known=False,
+00119:         )
+00120:     )
+00121: 
+00122:     assert item.state is EvidenceState.UNAVAILABLE
+00123:     assert item.missing_fields == (
+00124:         "allocation",
+00125:     )
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=91
+00071:             ),
+00072:         )
+00073:     )
+00074: 
+00075:     assert item.state is EvidenceState.UNAVAILABLE
+00076:     assert "regime_fit" in item.missing_fields
+00077:     assert "allocation" in item.missing_fields
+00078: 
+00079: 
+00080: def test_regime_alone_cannot_activate_f5():
+00081:     item = f5(
+00082:         source(
+00083:             regime_fit=Decimal(
+00084:                 "0.8"
+00085:             ),
+00086:         )
+00087:     )
+00088: 
+00089:     assert item.state is EvidenceState.UNAVAILABLE
+00090:     assert "total_expense_ratio" in item.missing_fields
+00091:     assert "allocation" in item.missing_fields
+00092: 
+00093: 
+00094: def test_allocation_alone_cannot_activate_f5():
+00095:     item = f5(
+00096:         source(
+00097:             allocation_known=True,
+00098:         )
+00099:     )
+00100: 
+00101:     assert item.state is EvidenceState.UNAVAILABLE
+00102: 
+00103:     assert item.missing_fields == (
+00104:         "regime_fit",
+00105:         "total_expense_ratio",
+00106:     )
+00107: 
+00108: 
+00109: def test_two_of_three_still_cannot_activate_f5():
+00110:     item = f5(
+00111:         source(
+00112:             total_expense_ratio=Decimal(
+00113:                 "0.01"
+00114:             ),
+00115:             regime_fit=Decimal(
+00116:                 "0.8"
+00117:             ),
+00118:             allocation_known=False,
+00119:         )
+00120:     )
+00121: 
+00122:     assert item.state is EvidenceState.UNAVAILABLE
+00123:     assert item.missing_fields == (
+00124:         "allocation",
+00125:     )
+00126: 
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=103
+00083:             regime_fit=Decimal(
+00084:                 "0.8"
+00085:             ),
+00086:         )
+00087:     )
+00088: 
+00089:     assert item.state is EvidenceState.UNAVAILABLE
+00090:     assert "total_expense_ratio" in item.missing_fields
+00091:     assert "allocation" in item.missing_fields
+00092: 
+00093: 
+00094: def test_allocation_alone_cannot_activate_f5():
+00095:     item = f5(
+00096:         source(
+00097:             allocation_known=True,
+00098:         )
+00099:     )
+00100: 
+00101:     assert item.state is EvidenceState.UNAVAILABLE
+00102: 
+00103:     assert item.missing_fields == (
+00104:         "regime_fit",
+00105:         "total_expense_ratio",
+00106:     )
+00107: 
+00108: 
+00109: def test_two_of_three_still_cannot_activate_f5():
+00110:     item = f5(
+00111:         source(
+00112:             total_expense_ratio=Decimal(
+00113:                 "0.01"
+00114:             ),
+00115:             regime_fit=Decimal(
+00116:                 "0.8"
+00117:             ),
+00118:             allocation_known=False,
+00119:         )
+00120:     )
+00121: 
+00122:     assert item.state is EvidenceState.UNAVAILABLE
+00123:     assert item.missing_fields == (
+00124:         "allocation",
+00125:     )
+00126: 
+00127: 
+00128: def test_live_universe_mapping_does_not_invent_f5():
+00129:     rows = (
+00130:         {
+00131:             "fonkod": "AAA",
+00132:             "fonunvan": "TEST",
+00133:             "getiri1a": 1,
+00134:             "getiri3a": 2,
+00135:             "getiri6a": 3,
+00136:         },
+00137:     )
+00138: 
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=123
+00103:     assert item.missing_fields == (
+00104:         "regime_fit",
+00105:         "total_expense_ratio",
+00106:     )
+00107: 
+00108: 
+00109: def test_two_of_three_still_cannot_activate_f5():
+00110:     item = f5(
+00111:         source(
+00112:             total_expense_ratio=Decimal(
+00113:                 "0.01"
+00114:             ),
+00115:             regime_fit=Decimal(
+00116:                 "0.8"
+00117:             ),
+00118:             allocation_known=False,
+00119:         )
+00120:     )
+00121: 
+00122:     assert item.state is EvidenceState.UNAVAILABLE
+00123:     assert item.missing_fields == (
+00124:         "allocation",
+00125:     )
+00126: 
+00127: 
+00128: def test_live_universe_mapping_does_not_invent_f5():
+00129:     rows = (
+00130:         {
+00131:             "fonkod": "AAA",
+00132:             "fonunvan": "TEST",
+00133:             "getiri1a": 1,
+00134:             "getiri3a": 2,
+00135:             "getiri6a": 3,
+00136:         },
+00137:     )
+00138: 
+00139:     mapped = evidence_from_tefas_rows(
+00140:         rows
+00141:     )
+00142: 
+00143:     assert len(mapped) == 1
+00144: 
+00145:     item = next(
+00146:         evidence
+00147:         for evidence
+00148:         in mapped[0].evidence
+00149:         if evidence.family == "F5"
+00150:     )
+00151: 
+00152:     assert item.state is EvidenceState.UNAVAILABLE
+00153: 
+00154:     assert item.missing_fields == (
+00155:         "allocation",
+00156:         "regime_fit",
+00157:         "total_expense_ratio",
+00158:     )
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+LINE=154
+00134:             "getiri3a": 2,
+00135:             "getiri6a": 3,
+00136:         },
+00137:     )
+00138: 
+00139:     mapped = evidence_from_tefas_rows(
+00140:         rows
+00141:     )
+00142: 
+00143:     assert len(mapped) == 1
+00144: 
+00145:     item = next(
+00146:         evidence
+00147:         for evidence
+00148:         in mapped[0].evidence
+00149:         if evidence.family == "F5"
+00150:     )
+00151: 
+00152:     assert item.state is EvidenceState.UNAVAILABLE
+00153: 
+00154:     assert item.missing_fields == (
+00155:         "allocation",
+00156:         "regime_fit",
+00157:         "total_expense_ratio",
+00158:     )
+00159: 
+00160: 
+00161: def test_no_f5_source_adapter_has_been_silently_added():
+00162:     root = Path(
+00163:         "backend/app/funds"
+00164:     )
+00165: 
+00166:     provider_files = (
+00167:         "tefas_adapter.py",
+00168:         "f4_snapshot.py",
+00169:     )
+00170: 
+00171:     provider_text = "\n".join(
+00172:         (
+00173:             root / name
+00174:         ).read_text(
+00175:             encoding="utf-8-sig"
+00176:         )
+00177:         for name in provider_files
+00178:         if (
+00179:             root / name
+00180:         ).exists()
+00181:     )
+00182: 
+00183:     assert "total_expense_ratio=" not in provider_text
+00184:     assert "regime_fit=" not in provider_text
+00185:     assert "allocation_known=True" not in provider_text
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.backup_before_navigation_fix.py
+LINE=5983
+05963:                     or "TanД±mlД± deДџil"
+05964:                 ),
+05965:             ),
+05966:             (
+05967:                 "Д°stemci",
+05968:                 kap_api_durumu.configuration.masked_client_id,
+05969:             ),
+05970:             (
+05971:                 "CanlД± gГјncelleme",
+05972:                 (
+05973:                     "HazД±r"
+05974:                     if not kap_api_durumu.locked
+05975:                     else "Kilitli"
+05976:                 ),
+05977:             ),
+05978:         )
+05979:     )
+05980: 
+05981:     if kap_api_durumu.locked:
+05982:         st.warning(kap_api_durumu.explanation)
+05983:         if kap_api_durumu.missing_fields:
+05984:             st.caption(
+05985:                 "Eksik yapД±landД±rma: "
+05986:                 + ", ".join(kap_api_durumu.missing_fields)
+05987:             )
+05988:     else:
+05989:         st.success(kap_api_durumu.explanation)
+05990: 
+05991:     st.caption(
+05992:         "API anahtarД± ve istemci bilgileri ekranda gГ¶sterilmez "
+05993:         "ve proje dosyalarД±na kaydedilmez."
+05994:     )
+05995:     st.info(
+05996:         "CanlД± KAP veri Г§ekme bu aЕџamada devre dД±ЕџД±dД±r. "
+05997:         "Manuel CSV/JSON bilanГ§o yГјkleme yolu aktiftir."
+05998:     )
+05999: 
+06000:     yuklenen = st.file_uploader(
+06001:         "BilanГ§o dosyasД±",
+06002:         type=("csv", "json"),
+06003:         accept_multiple_files=False,
+06004:         key="temel_analiz_dosyasi",
+06005:         help=(
+06006:             "Sprint-54 bilanГ§o ЕџemasД±na uygun CSV veya JSON "
+06007:             "dosyasД± yГјkleyin."
+06008:         ),
+06009:     )
+06010: 
+06011:     if yuklenen is None:
+06012:         st.info(
+06013:             "Analiz iГ§in CSV veya JSON bilanГ§o dosyasД± yГјkleyin. "
+06014:             "Г–rnek dosya: backend/data/fundamental_sample.csv"
+06015:         )
+06016:         return
+06017: 
+06018:     try:
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.backup_before_navigation_fix.py
+LINE=5986
+05966:             (
+05967:                 "Д°stemci",
+05968:                 kap_api_durumu.configuration.masked_client_id,
+05969:             ),
+05970:             (
+05971:                 "CanlД± gГјncelleme",
+05972:                 (
+05973:                     "HazД±r"
+05974:                     if not kap_api_durumu.locked
+05975:                     else "Kilitli"
+05976:                 ),
+05977:             ),
+05978:         )
+05979:     )
+05980: 
+05981:     if kap_api_durumu.locked:
+05982:         st.warning(kap_api_durumu.explanation)
+05983:         if kap_api_durumu.missing_fields:
+05984:             st.caption(
+05985:                 "Eksik yapД±landД±rma: "
+05986:                 + ", ".join(kap_api_durumu.missing_fields)
+05987:             )
+05988:     else:
+05989:         st.success(kap_api_durumu.explanation)
+05990: 
+05991:     st.caption(
+05992:         "API anahtarД± ve istemci bilgileri ekranda gГ¶sterilmez "
+05993:         "ve proje dosyalarД±na kaydedilmez."
+05994:     )
+05995:     st.info(
+05996:         "CanlД± KAP veri Г§ekme bu aЕџamada devre dД±ЕџД±dД±r. "
+05997:         "Manuel CSV/JSON bilanГ§o yГјkleme yolu aktiftir."
+05998:     )
+05999: 
+06000:     yuklenen = st.file_uploader(
+06001:         "BilanГ§o dosyasД±",
+06002:         type=("csv", "json"),
+06003:         accept_multiple_files=False,
+06004:         key="temel_analiz_dosyasi",
+06005:         help=(
+06006:             "Sprint-54 bilanГ§o ЕџemasД±na uygun CSV veya JSON "
+06007:             "dosyasД± yГјkleyin."
+06008:         ),
+06009:     )
+06010: 
+06011:     if yuklenen is None:
+06012:         st.info(
+06013:             "Analiz iГ§in CSV veya JSON bilanГ§o dosyasД± yГјkleyin. "
+06014:             "Г–rnek dosya: backend/data/fundamental_sample.csv"
+06015:         )
+06016:         return
+06017: 
+06018:     try:
+06019:         uzanti = Path(yuklenen.name).suffix.lower()
+06020:         icerik = yuklenen.getvalue()
+06021: 
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py
+LINE=6165
+06145:                     or "TanД±mlД± deДџil"
+06146:                 ),
+06147:             ),
+06148:             (
+06149:                 "Д°stemci",
+06150:                 kap_api_durumu.configuration.masked_client_id,
+06151:             ),
+06152:             (
+06153:                 "CanlД± gГјncelleme",
+06154:                 (
+06155:                     "HazД±r"
+06156:                     if not kap_api_durumu.locked
+06157:                     else "Kilitli"
+06158:                 ),
+06159:             ),
+06160:         )
+06161:     )
+06162: 
+06163:     if kap_api_durumu.locked:
+06164:         st.warning(kap_api_durumu.explanation)
+06165:         if kap_api_durumu.missing_fields:
+06166:             st.caption(
+06167:                 "Eksik yapД±landД±rma: "
+06168:                 + ", ".join(kap_api_durumu.missing_fields)
+06169:             )
+06170:     else:
+06171:         st.success(kap_api_durumu.explanation)
+06172: 
+06173:     st.caption(
+06174:         "API anahtarД± ve istemci bilgileri ekranda gГ¶sterilmez "
+06175:         "ve proje dosyalarД±na kaydedilmez."
+06176:     )
+06177:     st.info(
+06178:         "CanlД± KAP veri Г§ekme bu aЕџamada devre dД±ЕџД±dД±r. "
+06179:         "Manuel CSV/JSON bilanГ§o yГјkleme yolu aktiftir."
+06180:     )
+06181: 
+06182:     yuklenen = st.file_uploader(
+06183:         "BilanГ§o dosyasД±",
+06184:         type=("csv", "json"),
+06185:         accept_multiple_files=False,
+06186:         key="temel_analiz_dosyasi",
+06187:         help=(
+06188:             "Sprint-54 bilanГ§o ЕџemasД±na uygun CSV veya JSON "
+06189:             "dosyasД± yГјkleyin."
+06190:         ),
+06191:     )
+06192: 
+06193:     if yuklenen is None:
+06194:         st.info(
+06195:             "Analiz iГ§in CSV veya JSON bilanГ§o dosyasД± yГјkleyin. "
+06196:             "Г–rnek dosya: backend/data/fundamental_sample.csv"
+06197:         )
+06198:         return
+06199: 
+06200:     try:
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py
+LINE=6168
+06148:             (
+06149:                 "Д°stemci",
+06150:                 kap_api_durumu.configuration.masked_client_id,
+06151:             ),
+06152:             (
+06153:                 "CanlД± gГјncelleme",
+06154:                 (
+06155:                     "HazД±r"
+06156:                     if not kap_api_durumu.locked
+06157:                     else "Kilitli"
+06158:                 ),
+06159:             ),
+06160:         )
+06161:     )
+06162: 
+06163:     if kap_api_durumu.locked:
+06164:         st.warning(kap_api_durumu.explanation)
+06165:         if kap_api_durumu.missing_fields:
+06166:             st.caption(
+06167:                 "Eksik yapД±landД±rma: "
+06168:                 + ", ".join(kap_api_durumu.missing_fields)
+06169:             )
+06170:     else:
+06171:         st.success(kap_api_durumu.explanation)
+06172: 
+06173:     st.caption(
+06174:         "API anahtarД± ve istemci bilgileri ekranda gГ¶sterilmez "
+06175:         "ve proje dosyalarД±na kaydedilmez."
+06176:     )
+06177:     st.info(
+06178:         "CanlД± KAP veri Г§ekme bu aЕџamada devre dД±ЕџД±dД±r. "
+06179:         "Manuel CSV/JSON bilanГ§o yГјkleme yolu aktiftir."
+06180:     )
+06181: 
+06182:     yuklenen = st.file_uploader(
+06183:         "BilanГ§o dosyasД±",
+06184:         type=("csv", "json"),
+06185:         accept_multiple_files=False,
+06186:         key="temel_analiz_dosyasi",
+06187:         help=(
+06188:             "Sprint-54 bilanГ§o ЕџemasД±na uygun CSV veya JSON "
+06189:             "dosyasД± yГјkleyin."
+06190:         ),
+06191:     )
+06192: 
+06193:     if yuklenen is None:
+06194:         st.info(
+06195:             "Analiz iГ§in CSV veya JSON bilanГ§o dosyasД± yГјkleyin. "
+06196:             "Г–rnek dosya: backend/data/fundamental_sample.csv"
+06197:         )
+06198:         return
+06199: 
+06200:     try:
+06201:         uzanti = Path(yuklenen.name).suffix.lower()
+06202:         icerik = yuklenen.getvalue()
+06203: 
+
+==========================================================================================
+PATTERN=canonical_coverage_v4
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=188
+00168:         long_term=long_term,
+00169:         unresolved_blockers=tuple(blockers),
+00170:         coverage_status=status,
+00171:     )
+00172: 
+00173: 
+00174: def enrich_v3_batch(*, repo: str | Path, v3_batch: dict[str, Any]) -> dict[str, Any]:
+00175:     symbols_out: list[dict[str, Any]] = []
+00176:     fully_ready: list[str] = []
+00177:     coverage_blocked: list[str] = []
+00178: 
+00179:     for raw in v3_batch.get("symbols") or ():
+00180:         if not isinstance(raw, dict):
+00181:             continue
+00182:         symbol = str(raw.get("symbol") or "").upper().strip()
+00183:         if not symbol:
+00184:             continue
+00185: 
+00186:         cov = inspect_symbol_coverage(repo=repo, symbol=symbol)
+00187:         item = dict(raw)
+00188:         item["canonical_coverage_v4"] = asdict(cov)
+00189: 
+00190:         upstream = str(raw.get("decision_support_status") or "")
+00191:         upstream_ready = upstream == "READY_FOR_DECISION_SUPPORT"
+00192:         if upstream_ready and not cov.unresolved_blockers:
+00193:             item["decision_support_status_v4"] = "READY_FULL_DECISION_SUPPORT"
+00194:             fully_ready.append(symbol)
+00195:         elif upstream == "BLOCKED_SOURCE":
+00196:             item["decision_support_status_v4"] = "BLOCKED_SOURCE"
+00197:             coverage_blocked.append(symbol)
+00198:         else:
+00199:             item["decision_support_status_v4"] = "BLOCKED_CANONICAL_COVERAGE"
+00200:             coverage_blocked.append(symbol)
+00201: 
+00202:         symbols_out.append(item)
+00203: 
+00204:     return {
+00205:         "status": "PASS",
+00206:         "mode": "READ_ONLY_CANONICAL_INVESTABILITY_COVERAGE_BRIDGE_V4",
+00207:         "upstream_schema_version": v3_batch.get("schema_version"),
+00208:         "symbols": symbols_out,
+00209:         "summary": {
+00210:             "total_symbols": len(symbols_out),
+00211:             "ready_full_decision_support": len(fully_ready),
+00212:             "blocked_or_incomplete": len(coverage_blocked),
+00213:         },
+00214:         "ready_full_symbols": fully_ready,
+00215:         "blocked_or_incomplete_symbols": coverage_blocked,
+00216:         "production_rules": [
+00217:             "V3 output is consumed read-only; V2/V3 code is not mutated.",
+00218:             "Short-term coverage requires explicit canonical technical and market context.",
+00219:             "Long-term coverage requires explicit canonical business quality, governance and growth context.",
+00220:             "Missing, invalid or partial evidence stays blocked; it never becomes zero or PASS.",
+00221:             "No score, forecast, AL/SAT, scanner, ranking or portfolio output is created or mutated.",
+00222:             "READY_FULL_DECISION_SUPPORT is a data-coverage state, not a trade recommendation.",
+00223:         ],
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\scripts\run_fin_prod_v4_canonical_coverage.py
+LINE=7
+00001: from __future__ import annotations
+00002: 
+00003: import argparse
+00004: import json
+00005: from pathlib import Path
+00006: 
+00007: from app.analysis.financial_intelligence_canonical_coverage_v4 import enrich_v3_batch, save_json
+00008: 
+00009: 
+00010: def main() -> int:
+00011:     ap = argparse.ArgumentParser()
+00012:     ap.add_argument("--repo", default=r"D:\Projects\Hisse-Robotu")
+00013:     ap.add_argument(
+00014:         "--v3-batch",
+00015:         default=r"backend\data\financial_intelligence\FIN_PROD_V3_LIVE_BATCH.json",
+00016:     )
+00017:     ap.add_argument(
+00018:         "--out",
+00019:         default=r"backend\data\financial_intelligence\FIN_PROD_V4_CANONICAL_COVERAGE.json",
+00020:     )
+00021:     args = ap.parse_args()
+00022: 
+00023:     repo = Path(args.repo)
+00024:     v3_path = Path(args.v3_batch)
+00025:     if not v3_path.is_absolute():
+00026:         v3_path = repo / v3_path
+00027:     out = Path(args.out)
+00028:     if not out.is_absolute():
+00029:         out = repo / out
+00030: 
+00031:     if not v3_path.exists():
+00032:         raise SystemExit("FIN-PROD-V4 BLOCKED: V3 live batch is missing: " + str(v3_path))
+00033: 
+00034:     try:
+00035:         v3 = json.loads(v3_path.read_text(encoding="utf-8"))
+00036:     except Exception as exc:
+00037:         raise SystemExit("FIN-PROD-V4 BLOCKED: invalid V3 batch: " + str(exc))
+00038: 
+00039:     if not isinstance(v3, dict) or v3.get("status") != "PASS":
+00040:         raise SystemExit("FIN-PROD-V4 BLOCKED: upstream V3 batch is not PASS")
+00041: 
+00042:     payload = enrich_v3_batch(repo=repo, v3_batch=v3)
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v4_canonical_coverage.py
+LINE=4
+00001: import json
+00002: from pathlib import Path
+00003: 
+00004: from app.analysis.financial_intelligence_canonical_coverage_v4 import (
+00005:     SHORT_TERM_BLOCKER,
+00006:     LONG_TERM_BLOCKER,
+00007:     inspect_symbol_coverage,
+00008:     enrich_v3_batch,
+00009: )
+00010: 
+00011: 
+00012: def _root(repo: Path) -> Path:
+00013:     p = repo / "backend" / "data" / "financial_intelligence"
+00014:     p.mkdir(parents=True, exist_ok=True)
+00015:     return p
+00016: 
+00017: 
+00018: def _write_short(repo: Path, symbol="TUPRS", **overrides):
+00019:     payload = {
+00020:         "symbol": symbol,
+00021:         "as_of_date": "2026-09-04",
+00022:         "canonical": True,
+00023:         "technical_context": {"status": "PASS"},
+00024:         "market_context": {"status": "PASS"},
+00025:         "data_quality": {"status": "PASS"},
+00026:     }
+00027:     payload.update(overrides)
+00028:     (_root(repo) / f"{symbol}_short_term_canonical_context.json").write_text(
+00029:         json.dumps(payload), encoding="utf-8"
+00030:     )
+00031: 
+00032: 
+00033: def _write_long(repo: Path, symbol="TUPRS", **overrides):
+00034:     payload = {
+00035:         "symbol": symbol,
+00036:         "as_of_date": "2026-09-04",
+00037:         "canonical": True,
+00038:         "business_quality": {"status": "PASS"},
+00039:         "governance": {"status": "PASS"},
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v4_canonical_coverage.py
+LINE=81
+00061: def test_missing_artifacts_preserve_both_blockers(tmp_path):
+00062:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00063:     assert cov.unresolved_blockers == (SHORT_TERM_BLOCKER, LONG_TERM_BLOCKER)
+00064:     assert cov.coverage_status == "BLOCKED_CANONICAL_COVERAGE"
+00065: 
+00066: 
+00067: def test_short_term_partial_evidence_does_not_pass(tmp_path):
+00068:     _write_short(tmp_path, market_context={"status": "MISSING"})
+00069:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00070:     assert cov.short_term.status == "BLOCKED"
+00071:     assert "market_context" in cov.short_term.missing_fields
+00072:     assert SHORT_TERM_BLOCKER in cov.unresolved_blockers
+00073: 
+00074: 
+00075: def test_complete_canonical_coverage_unlocks_full_readiness(tmp_path):
+00076:     _write_short(tmp_path)
+00077:     _write_long(tmp_path)
+00078:     out = enrich_v3_batch(repo=tmp_path, v3_batch=_v3())
+00079:     assert out["ready_full_symbols"] == ["TUPRS"]
+00080:     assert out["symbols"][0]["decision_support_status_v4"] == "READY_FULL_DECISION_SUPPORT"
+00081:     assert out["symbols"][0]["canonical_coverage_v4"]["unresolved_blockers"] == ()
+00082: 
+00083: 
+00084: def test_upstream_source_block_cannot_be_overridden(tmp_path):
+00085:     _write_short(tmp_path)
+00086:     _write_long(tmp_path)
+00087:     out = enrich_v3_batch(repo=tmp_path, v3_batch=_v3(status="BLOCKED_SOURCE"))
+00088:     assert out["ready_full_symbols"] == []
+00089:     assert out["symbols"][0]["decision_support_status_v4"] == "BLOCKED_SOURCE"
+00090: 
+00091: 
+00092: def test_wrong_symbol_and_noncanonical_are_fail_closed(tmp_path):
+00093:     _write_short(tmp_path, symbol="AAA")
+00094:     # Rename artifact so TUPRS loader sees payload mismatch.
+00095:     src = _root(tmp_path) / "AAA_short_term_canonical_context.json"
+00096:     dst = _root(tmp_path) / "TUPRS_short_term_canonical_context.json"
+00097:     src.rename(dst)
+00098:     _write_long(tmp_path, canonical=False)
+00099:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00100:     assert "symbol" in cov.short_term.missing_fields
+00101:     assert "canonical" in cov.long_term.missing_fields
+00102:     assert cov.coverage_status == "BLOCKED_CANONICAL_COVERAGE"
+
+==========================================================================================
+PATTERN=LONG_TERM_CANONICAL_COVERAGE
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=9
+00001: from __future__ import annotations
+00002: 
+00003: from dataclasses import dataclass, asdict
+00004: from pathlib import Path
+00005: from typing import Any
+00006: import json
+00007: 
+00008: SHORT_TERM_BLOCKER = "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"
+00009: LONG_TERM_BLOCKER = "LONG_TERM_CANONICAL_COVERAGE"
+00010: 
+00011: SHORT_TERM_FILE = "{symbol}_short_term_canonical_context.json"
+00012: LONG_TERM_FILE = "{symbol}_long_term_canonical_coverage.json"
+00013: 
+00014: PASS_STATUSES = {"PASS", "PRESENT", "VALID", "READY", "OK"}
+00015: 
+00016: 
+00017: @dataclass(frozen=True)
+00018: class CoverageArtifact:
+00019:     kind: str
+00020:     path: str
+00021:     status: str
+00022:     as_of_date: str | None
+00023:     warnings: tuple[str, ...]
+00024:     missing_fields: tuple[str, ...]
+00025: 
+00026: 
+00027: @dataclass(frozen=True)
+00028: class SymbolCoverage:
+00029:     symbol: str
+00030:     short_term: CoverageArtifact
+00031:     long_term: CoverageArtifact
+00032:     unresolved_blockers: tuple[str, ...]
+00033:     coverage_status: str
+00034: 
+00035: 
+00036: def _load_json(path: Path) -> dict[str, Any] | None:
+00037:     try:
+00038:         raw = json.loads(path.read_text(encoding="utf-8"))
+00039:     except Exception:
+00040:         return None
+00041:     return raw if isinstance(raw, dict) else None
+00042: 
+00043: 
+00044: def _status_pass(value: Any) -> bool:
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+LINE=12
+00001: from __future__ import annotations
+00002: 
+00003: from dataclasses import dataclass, asdict
+00004: from pathlib import Path
+00005: from typing import Any
+00006: import json
+00007: 
+00008: SHORT_TERM_BLOCKER = "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"
+00009: LONG_TERM_BLOCKER = "LONG_TERM_CANONICAL_COVERAGE"
+00010: 
+00011: SHORT_TERM_FILE = "{symbol}_short_term_canonical_context.json"
+00012: LONG_TERM_FILE = "{symbol}_long_term_canonical_coverage.json"
+00013: 
+00014: PASS_STATUSES = {"PASS", "PRESENT", "VALID", "READY", "OK"}
+00015: 
+00016: 
+00017: @dataclass(frozen=True)
+00018: class CoverageArtifact:
+00019:     kind: str
+00020:     path: str
+00021:     status: str
+00022:     as_of_date: str | None
+00023:     warnings: tuple[str, ...]
+00024:     missing_fields: tuple[str, ...]
+00025: 
+00026: 
+00027: @dataclass(frozen=True)
+00028: class SymbolCoverage:
+00029:     symbol: str
+00030:     short_term: CoverageArtifact
+00031:     long_term: CoverageArtifact
+00032:     unresolved_blockers: tuple[str, ...]
+00033:     coverage_status: str
+00034: 
+00035: 
+00036: def _load_json(path: Path) -> dict[str, Any] | None:
+00037:     try:
+00038:         raw = json.loads(path.read_text(encoding="utf-8"))
+00039:     except Exception:
+00040:         return None
+00041:     return raw if isinstance(raw, dict) else None
+00042: 
+00043: 
+00044: def _status_pass(value: Any) -> bool:
+00045:     if isinstance(value, bool):
+00046:         return value
+00047:     if isinstance(value, dict):
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\investability_production_closure.py
+LINE=281
+00261:         financial_health_grade=str(panel_base.get("financial_health_grade") or "UNKNOWN"),
+00262:         financial_risk=str(panel_base.get("financial_risk") or "UNKNOWN"),
+00263:         short_term=short,
+00264:         long_term=long,
+00265:         current_price=_D(panel_base.get("current_price")),
+00266:         bear_value=_D(panel_base.get("bear_value")),
+00267:         base_value=_D(panel_base.get("base_value")),
+00268:         bull_value=_D(panel_base.get("bull_value")),
+00269:         valuation_status=panel_base.get("valuation_status"),
+00270:         margin_of_safety_status=panel_base.get("margin_of_safety_status"),
+00271:         confidence=str(panel_base.get("confidence") or "LOW"),
+00272:         extra_strengths=tuple(panel_base.get("strengths") or ()),
+00273:         extra_risks=tuple(panel_base.get("risks") or ()),
+00274:         what_to_watch_next=tuple(panel_base.get("what_to_watch_next") or ()),
+00275:     )
+00276: 
+00277:     unresolved = []
+00278:     if short.locked:
+00279:         unresolved.append("SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT")
+00280:     if long.locked:
+00281:         unresolved.append("LONG_TERM_CANONICAL_COVERAGE")
+00282: 
+00283:     status = "PASS_UNLOCKED" if not unresolved else "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS"
+00284: 
+00285:     return _ser({
+00286:         "status": status,
+00287:         "mode": "READ_ONLY_INVESTABILITY_PRODUCTION_CLOSURE",
+00288:         "symbol": symbol,
+00289:         "as_of_date": as_of_date,
+00290:         "auto_discovery": {
+00291:             "rule": "EXACT_KEYS_ONLY_NUMERIC_0_100_NO_FUZZY_ALIAS_NO_TEXT_SCORING",
+00292:             "discovered_count": len(discovered),
+00293:             "accepted_count": len(accepted),
+00294:             "accepted": accepted,
+00295:         },
+00296:         "canonical_evidence": evidence,
+00297:         "long_term_coverage": coverage,
+00298:         "long_term_unlock_threshold": Decimal("0.70"),
+00299:         "short_term": short,
+00300:         "long_term": long,
+00301:         "panel": panel,
+00302:         "unresolved_blockers": unresolved,
+00303:         "closure_rules": [
+00304:             "No new investability scoring engine.",
+00305:             "No fuzzy field mapping.",
+00306:             "No text/category-to-score conversion.",
+00307:             "Missing evidence stays missing.",
+00308:             "Existing AL/SAT, scanner, ranking and portfolio engines are not mutated.",
+00309:             "A locked horizon is an explicit production blocker, not a synthetic unlock target.",
+00310:         ],
+00311:         "engine_version": "fin-prod-closure-v1",
+00312:     })
+00313: 
+00314: 
+00315: def save_json(path: str | Path, payload: dict[str, Any]) -> None:
+00316:     p = Path(path)
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\long_term_evidence_completion.py
+LINE=139
+00119: def complete_evidence(
+00120:     *,
+00121:     financial_acceptance: dict[str, Any],
+00122:     existing_evidence: dict[str, Any],
+00123: ) -> dict[str, Any]:
+00124:     growth_score, growth_flags = growth_evidence_score(financial_acceptance)
+00125:     fin_momentum = financial_momentum_score(financial_acceptance)
+00126: 
+00127:     out = dict(existing_evidence)
+00128:     lt = dict(out.get("long_term_context") or {})
+00129:     lt["growth_durability"] = str(growth_score) if growth_score is not None else None
+00130:     out["long_term_context"] = lt
+00131:     out["financial_momentum"] = str(fin_momentum) if fin_momentum is not None else out.get("financial_momentum")
+00132: 
+00133:     flags = list(out.get("flags") or [])
+00134:     flags = [x for x in flags if x != "GROWTH_DURABILITY_NOT_SYNTHESIZED"]
+00135:     flags.extend(growth_flags)
+00136: 
+00137:     # Explicitly preserve unresolved evidence instead of manufacturing unlock.
+00138:     if growth_score is not None:
+00139:         flags.append("LONG_TERM_CANONICAL_COVERAGE_EXPECTED_0_68")
+00140:         flags.append("LONG_TERM_STILL_BELOW_0_70_THRESHOLD")
+00141:     flags.append("BUSINESS_QUALITY_REMAINS_UNWIRED")
+00142:     flags.append("CAPITAL_EFFICIENCY_REMAINS_UNWIRED")
+00143:     flags.append("SECTOR_RISK_REMAINS_UNWIRED")
+00144: 
+00145:     out["flags"] = list(dict.fromkeys(flags))
+00146:     out["engine_version"] = "fin-prod-008-v1"
+00147:     out["coverage_assessment"] = {
+00148:         "before": "0.56",
+00149:         "growth_durability_weight": "0.12" if growth_score is not None else "0.00",
+00150:         "after_expected": "0.68" if growth_score is not None else "0.56",
+00151:         "unlock_threshold": "0.70",
+00152:         "expected_locked": True,
+00153:         "reason": (
+00154:             "Canonical single-period growth evidence adds 0.12, but no proven "
+00155:             "business-quality/capital-efficiency/sector-risk adapter is available yet."
+00156:         ),
+00157:     }
+00158:     return out
+00159: 
+00160: 
+00161: def load_json(path: str | Path) -> dict[str, Any]:
+00162:     return json.loads(Path(path).read_text(encoding="utf-8"))
+00163: 
+00164: 
+00165: def save_json(path: str | Path, payload: dict[str, Any]) -> None:
+00166:     p = Path(path)
+00167:     p.parent.mkdir(parents=True, exist_ok=True)
+00168:     p.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v3_live_pipeline.py
+LINE=60
+00040:         repo=tmp_path,
+00041:         symbols=("ZZZ",),
+00042:         sector_map={"ZZZ": "BANK"},
+00043:     )
+00044:     assert payload["symbol_source"] == "EXPLICIT"
+00045:     assert payload["symbols"][0]["sector_profile"] == "BANK"
+00046:     assert payload["symbols"][0]["decision_support_status"] == "BLOCKED_SOURCE"
+00047: 
+00048: 
+00049: def test_tuprs_ready_when_v2_artifacts_exist(tmp_path):
+00050:     _write_acceptance(tmp_path, "TUPRS")
+00051: 
+00052:     fi = tmp_path / "backend" / "data" / "financial_intelligence"
+00053:     fi.mkdir(parents=True, exist_ok=True)
+00054: 
+00055:     (fi / "TUPRS_investability_production_closure.json").write_text(
+00056:         json.dumps({
+00057:             "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS",
+00058:             "unresolved_blockers": [
+00059:                 "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT",
+00060:                 "LONG_TERM_CANONICAL_COVERAGE",
+00061:             ],
+00062:         }),
+00063:         encoding="utf-8",
+00064:     )
+00065: 
+00066:     payload = build_live_batch(
+00067:         repo=tmp_path,
+00068:         sector_map={"TUPRS": "INDUSTRIAL"},
+00069:     )
+00070:     assert payload["ready_symbols"] == ["TUPRS"]
+00071:     assert payload["summary"]["ready_for_decision_support"] == 1
+------------------------------------------------------------------------------------------
+FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v4_canonical_coverage.py
+LINE=44
+00024:         "market_context": {"status": "PASS"},
+00025:         "data_quality": {"status": "PASS"},
+00026:     }
+00027:     payload.update(overrides)
+00028:     (_root(repo) / f"{symbol}_short_term_canonical_context.json").write_text(
+00029:         json.dumps(payload), encoding="utf-8"
+00030:     )
+00031: 
+00032: 
+00033: def _write_long(repo: Path, symbol="TUPRS", **overrides):
+00034:     payload = {
+00035:         "symbol": symbol,
+00036:         "as_of_date": "2026-09-04",
+00037:         "canonical": True,
+00038:         "business_quality": {"status": "PASS"},
+00039:         "governance": {"status": "PASS"},
+00040:         "growth_context": {"status": "PASS"},
+00041:         "data_quality": {"status": "PASS"},
+00042:     }
+00043:     payload.update(overrides)
+00044:     (_root(repo) / f"{symbol}_long_term_canonical_coverage.json").write_text(
+00045:         json.dumps(payload), encoding="utf-8"
+00046:     )
+00047: 
+00048: 
+00049: def _v3(symbol="TUPRS", status="READY_FOR_DECISION_SUPPORT"):
+00050:     return {
+00051:         "status": "PASS",
+00052:         "schema_version": "fin-prod-v3-live-batch-v1",
+00053:         "symbols": [{
+00054:             "symbol": symbol,
+00055:             "sector_profile": "INDUSTRIAL",
+00056:             "decision_support_status": status,
+00057:         }],
+00058:     }
+00059: 
+00060: 
+00061: def test_missing_artifacts_preserve_both_blockers(tmp_path):
+00062:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00063:     assert cov.unresolved_blockers == (SHORT_TERM_BLOCKER, LONG_TERM_BLOCKER)
+00064:     assert cov.coverage_status == "BLOCKED_CANONICAL_COVERAGE"
+00065: 
+00066: 
+00067: def test_short_term_partial_evidence_does_not_pass(tmp_path):
+00068:     _write_short(tmp_path, market_context={"status": "MISSING"})
+00069:     cov = inspect_symbol_coverage(repo=tmp_path, symbol="TUPRS")
+00070:     assert cov.short_term.status == "BLOCKED"
+00071:     assert "market_context" in cov.short_term.missing_fields
+00072:     assert SHORT_TERM_BLOCKER in cov.unresolved_blockers
+00073: 
+00074: 
+00075: def test_complete_canonical_coverage_unlocks_full_readiness(tmp_path):
+00076:     _write_short(tmp_path)
+00077:     _write_long(tmp_path)
+00078:     out = enrich_v3_batch(repo=tmp_path, v3_batch=_v3())
+00079:     assert out["ready_full_symbols"] == ["TUPRS"]
+
+FIN_PROD_V5_V4_BRIDGE_CONTRACT=PASS

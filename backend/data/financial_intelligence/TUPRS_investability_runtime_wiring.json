@@ -1,0 +1,111 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "wired_evidence": {
+    "financial_momentum": null,
+    "valuation_score": "0",
+    "margin_of_safety_score": "0",
+    "governance_score": "45",
+    "market_context": {
+      "technical_trend": null,
+      "relative_strength": null,
+      "volume_liquidity": null,
+      "catalyst": null,
+      "entry_risk": null,
+      "earnings_surprise": null
+    },
+    "long_term_context": {
+      "business_quality": null,
+      "growth_durability": null,
+      "governance": "45",
+      "sector_risk": null
+    }
+  },
+  "short_term": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "score": null,
+    "label": "DATA_INSUFFICIENT",
+    "locked": true,
+    "components": [],
+    "strengths": [],
+    "risks": [
+      "Yeterli kanıt yok"
+    ],
+    "explanation": "Kısa dönem skoru üretilemedi.",
+    "confidence": "LOW",
+    "engine_version": "fin013-v1"
+  },
+  "long_term": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "score": null,
+    "label": "DATA_INSUFFICIENT",
+    "locked": true,
+    "components": [
+      {
+        "code": "GOVERNANCE",
+        "score": "45",
+        "weight": "0.08",
+        "reason": "Yönetişim"
+      },
+      {
+        "code": "VALUATION",
+        "score": "0",
+        "weight": "0.12",
+        "reason": "Değerleme"
+      },
+      {
+        "code": "MARGIN_OF_SAFETY",
+        "score": "0",
+        "weight": "0.09",
+        "reason": "Güvenlik marjı"
+      }
+    ],
+    "strengths": [],
+    "risks": [
+      "Uzun dönem için temel kanıt eksik"
+    ],
+    "explanation": "Skor fail-closed kilitlendi.",
+    "confidence": "LOW",
+    "engine_version": "fin014-v1"
+  },
+  "panel": {
+    "symbol": "TUPRS",
+    "as_of": "2026-08-04T23:59:59",
+    "financial_health_score": null,
+    "financial_health_grade": "UNKNOWN",
+    "financial_risk": "UNKNOWN",
+    "valuation_status": null,
+    "current_price": null,
+    "bear_value": null,
+    "base_value": null,
+    "bull_value": null,
+    "upside_downside_to_base": null,
+    "margin_of_safety_status": null,
+    "short_term_score": null,
+    "short_term_label": "DATA_INSUFFICIENT",
+    "long_term_score": null,
+    "long_term_label": "DATA_INSUFFICIENT",
+    "confidence": "LOW",
+    "strengths": [],
+    "risks": [
+      "Yeterli kanıt yok",
+      "Uzun dönem için temel kanıt eksik"
+    ],
+    "what_to_watch_next": [],
+    "read_only": true,
+    "schema_version": "fin015-v1"
+  },
+  "coverage_note": "FIN-014 requires >=0.70 component weight coverage. With current canonical TUPRS evidence, available long-term weights are FINANCIAL_HEALTH 0.15 + CASH_QUALITY 0.12 + GOVERNANCE 0.08 + VALUATION 0.12 + MARGIN_OF_SAFETY 0.09 = 0.56, so LOCKED is expected until additional canonical long-term evidence exists.",
+  "production_rules": [
+    "No missing score is synthesized merely to unlock a horizon.",
+    "valuation_score and margin_of_safety_score are wired only into FIN-014.",
+    "valuation_stretch is not inferred from valuation_score because the semantics are not proven equivalent.",
+    "Short-term remains fail-closed until canonical technical/market evidence exists.",
+    "Read-only: no AL/SAT, scanner, ranking, portfolio or score mutation."
+  ],
+  "engine_version": "fin-prod-007-v1"
+}

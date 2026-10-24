@@ -1,0 +1,3 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:12: def derive_f4_state(
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:33: def inject_f4_fields(
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:47: def derive_fund_size_change(

@@ -1,0 +1,90 @@
+=== HISSE ROBOTU - NEXT-DAY CONTINUE PHASE 5 -> PHASE 6 V1 ===
+AUTO_ADVANCE_ON_SUCCESS=YES
+PHASE5=START
+=== HISSE ROBOTU - NEXT-DAY PHASE 5 T+1 OUTCOME ACCOUNTABILITY V1 ===
+SELECTION_STRATEGY_FROZEN=YES
+MAIN_BENCHMARK=CANONICAL_UNIVERSE_MEDIAN_T1_RETURN
+NEW_STORE=NO
+NEW_SCANNER=NO
+AL_SAT_AUTHORITY=NONE
+
+PY_COMPILE=PASS
+...........................                                              [100%]
+27 passed in 10.55s
+TARGET_TESTS=PASS
+........................................................................ [ 79%]
+........................................................................ [ 81%]
+........................................................................ [ 83%]
+........................................................................ [ 85%]
+........................................................................ [ 87%]
+........................................................................ [ 89%]
+........................................................................ [ 91%]
+........................................................................ [ 94%]
+........................................................................ [ 96%]
+........................................................................ [ 98%]
+.............................................................            [100%]
+3445 passed in 434.10s (0:07:14)
+
+FULL_REGRESSION=PASS
+NEXT_DAY_PHASE5_T1_OUTCOME_ACCOUNTABILITY=SUCCESS
+CLOSE_TO_CLOSE_RETURN=YES
+RELATIVE_RETURN=YES
+MFE=YES
+MAE=YES
+CANDIDATE_HIT_VS_UNIVERSE_MEDIAN=YES
+PRIMARY_RESERVE_SEPARATE_MEASUREMENT=YES
+SELECTION_DIGEST_GUARD=YES
+MISSING_DATA_FAIL_CLOSED=PENDING
+NEW_STORE=NO
+SECOND_SCANNER=NO
+SECOND_UNIVERSE_TRAVERSAL=NO
+AL_SAT_AUTHORITY=NONE
+FULL_LOG=D:\Projects\Hisse-Robotu\_discovery\next-day-outcome-v1-full-20260829-133108.txt
+NEXT=PHASE6_20_SESSION_WALK_FORWARD_READINESS
+PHASE5_CHAIN=PASS
+PHASE6=AUTO_START
+=== HISSE ROBOTU - NEXT-DAY PHASE 6 20-SESSION WALK-FORWARD READINESS V1 ===
+REQUIRED_VALID_SESSIONS=20
+NO_FORCED_FILL=PRESERVED
+ACTUAL_OBSERVATION_COUNTS=REPORTED
+OUTCOME_TUNING=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+NEW_SCANNER=NO
+AL_SAT_AUTHORITY=NONE
+
+PY_COMPILE=PASS
+.......................................                                  [100%]
+39 passed in 3.50s
+TARGET_TESTS=PASS
+........................................................................ [ 81%]
+........................................................................ [ 83%]
+........................................................................ [ 85%]
+........................................................................ [ 87%]
+........................................................................ [ 89%]
+........................................................................ [ 91%]
+........................................................................ [ 93%]
+........................................................................ [ 95%]
+........................................................................ [ 97%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+3457 passed in 204.17s (0:03:24)
+
+FULL_REGRESSION=PASS
+NEXT_DAY_PHASE6_20_SESSION_WALK_FORWARD_READINESS=SUCCESS
+VALID_SESSION_GATE=20
+PENDING_SESSION=EXCLUDED_FAIL_CLOSED
+DUPLICATE_CANONICAL_DATE=EXCLUDED_FAIL_CLOSED
+PRIMARY_RESERVE_KPI=SEPARATE
+PRIMARY_3_OF_5_DENOMINATOR=FULL_PRIMARY_FIVE_SESSIONS_ONLY
+NO_FORCED_FILL=PRESERVED
+P0_ONLY_CHANGES=YES
+OUTCOME_TUNING=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+SECOND_SCANNER=NO
+SECOND_UNIVERSE_TRAVERSAL=NO
+AL_SAT_AUTHORITY=NONE
+FULL_LOG=D:\Projects\Hisse-Robotu\_discovery\next-day-walk-forward-v1-full-20260829-133853.txt
+NEXT=BEGIN_20_VALID_SESSION_OBSERVATION_PROGRAM
+PHASE5_PHASE6_CHAIN=SUCCESS

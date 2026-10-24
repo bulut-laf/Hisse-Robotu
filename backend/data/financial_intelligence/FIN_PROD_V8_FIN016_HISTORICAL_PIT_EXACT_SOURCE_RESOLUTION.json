@@ -1,0 +1,1896 @@
+{
+  "schema_version": "fin-prod-v8-fin016-historical-pit-exact-source-resolution-v1",
+  "mode": "READ_ONLY_EXACT_SOURCE_RESOLUTION",
+  "mutation": false,
+  "production_calibration": false,
+  "rules": [
+    "NO_SYNTHETIC_DATA_AS_PRODUCTION_CALIBRATION",
+    "NO_FUZZY_FIELD_MAPPING",
+    "NO_INVENTED_PUBLICATION_TIMESTAMP",
+    "NO_INVENTED_FORWARD_RETURN",
+    "NO_WEIGHT_OR_THRESHOLD_OPTIMIZATION"
+  ],
+  "resolution": {
+    "status": "EXACT_SINGLE_SOURCE_FOUND",
+    "primary": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_validation.py",
+    "bridge_required": false,
+    "reason": "One existing source contains score, observation time, publication time and forward outcome semantics."
+  },
+  "candidates": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_validation.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "_mean",
+        "calibrate_score_separation",
+        "filter_point_in_time",
+        "validate_point_in_time"
+      ],
+      "classes": [],
+      "hits": {
+        "score": [
+          "score"
+        ],
+        "observation_time": [
+          "observation_date",
+          "date"
+        ],
+        "publication_time": [
+          "publication_date"
+        ],
+        "forward_outcome": [
+          "forward_return",
+          "return"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": true,
+        "publication_time": true,
+        "forward_outcome": true
+      },
+      "coverage_count": 4,
+      "evidence_lines": [
+        {
+          "line": 8,
+          "text": "def validate_point_in_time(observation: PointInTimeObservation) -> bool:"
+        },
+        {
+          "line": 9,
+          "text": "\"\"\"True only when information was public by the observation date.\"\"\""
+        },
+        {
+          "line": 10,
+          "text": "return observation.publication_date <= observation.observation_date"
+        },
+        {
+          "line": 14,
+          "text": "return tuple(o for o in observations if validate_point_in_time(o))"
+        },
+        {
+          "line": 19,
+          "text": "return None"
+        },
+        {
+          "line": 20,
+          "text": "return sum(values, Decimal(\"0\")) / Decimal(len(values))"
+        },
+        {
+          "line": 23,
+          "text": "def calibrate_score_separation("
+        },
+        {
+          "line": 29,
+          "text": "valid = [o for o in observations if validate_point_in_time(o) and o.score is not None and o.forward_return is not None]"
+        },
+        {
+          "line": 30,
+          "text": "all_returns = [o.forward_return for o in valid if o.forward_return is not None]"
+        },
+        {
+          "line": 31,
+          "text": "high = [o.forward_return for o in valid if o.score is not None and o.score >= high_threshold and o.forward_return is not None]"
+        },
+        {
+          "line": 32,
+          "text": "low = [o.forward_return for o in valid if o.score is not None and o.score <= low_threshold and o.forward_return is not None]"
+        },
+        {
+          "line": 44,
+          "text": "return CalibrationSummary(len(observations), len(valid), _mean(all_returns), high_m, low_m, separation, status)"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\models\\investability_models.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [],
+      "classes": [
+        "CalibrationSummary",
+        "IntelligencePanelPayload",
+        "InvestabilityResult",
+        "LongTermContextInput",
+        "MarketContextInput",
+        "PointInTimeObservation",
+        "ScoreComponent"
+      ],
+      "hits": {
+        "score": [
+          "score"
+        ],
+        "observation_time": [
+          "observation_date",
+          "as_of",
+          "date"
+        ],
+        "publication_time": [
+          "publication_date"
+        ],
+        "forward_outcome": [
+          "forward_return",
+          "return"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": true,
+        "publication_time": true,
+        "forward_outcome": true
+      },
+      "coverage_count": 4,
+      "evidence_lines": [
+        {
+          "line": 4,
+          "text": "from datetime import date, datetime"
+        },
+        {
+          "line": 9,
+          "text": "class ScoreComponent:"
+        },
+        {
+          "line": 11,
+          "text": "score: Decimal"
+        },
+        {
+          "line": 19,
+          "text": "as_of_date: date"
+        },
+        {
+          "line": 20,
+          "text": "score: int | None"
+        },
+        {
+          "line": 23,
+          "text": "components: tuple[ScoreComponent, ...]"
+        },
+        {
+          "line": 52,
+          "text": "as_of: datetime"
+        },
+        {
+          "line": 53,
+          "text": "financial_health_score: int | None"
+        },
+        {
+          "line": 63,
+          "text": "short_term_score: int | None"
+        },
+        {
+          "line": 65,
+          "text": "long_term_score: int | None"
+        },
+        {
+          "line": 77,
+          "text": "observation_date: date"
+        },
+        {
+          "line": 78,
+          "text": "publication_date: date"
+        },
+        {
+          "line": 79,
+          "text": "score: int | None"
+        },
+        {
+          "line": 80,
+          "text": "forward_return: Decimal | None"
+        },
+        {
+          "line": 87,
+          "text": "mean_forward_return: Decimal | None"
+        },
+        {
+          "line": 88,
+          "text": "high_score_mean_return: Decimal | None"
+        },
+        {
+          "line": 89,
+          "text": "low_score_mean_return: Decimal | None"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\historical_research_replay.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "_analysis_date",
+        "build_cut_date_fetcher",
+        "fetch_at_cut_date",
+        "replay_canonical_research"
+      ],
+      "classes": [
+        "HistoricalResearchReplayResult"
+      ],
+      "hits": {
+        "score": [
+          "score",
+          "skor"
+        ],
+        "observation_time": [
+          "as_of",
+          "candidate_date",
+          "date"
+        ],
+        "publication_time": [],
+        "forward_outcome": [
+          "return",
+          "getiri"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": true,
+        "publication_time": false,
+        "forward_outcome": true
+      },
+      "coverage_count": 3,
+      "evidence_lines": [
+        {
+          "line": 3,
+          "text": "Bu katman yeni teknik skor, işlem sinyali veya AL/SAT kararı üretmez."
+        },
+        {
+          "line": 8,
+          "text": "- explicit cut-date price boundary;"
+        },
+        {
+          "line": 11,
+          "text": "- full filtered Research rows are returned, never the UI display slice;"
+        },
+        {
+          "line": 12,
+          "text": "- future-dated analysis is fail-closed;"
+        },
+        {
+          "line": 14,
+          "text": "- no new score, signal, trade decision, store, or ranking engine."
+        },
+        {
+          "line": 20,
+          "text": "from datetime import date"
+        },
+        {
+          "line": 42,
+          "text": "as_of: str"
+        },
+        {
+          "line": 55,
+          "text": "def build_cut_date_fetcher("
+        },
+        {
+          "line": 56,
+          "text": "as_of: date,"
+        },
+        {
+          "line": 60,
+          "text": "\"\"\"Bind the canonical batch-data seam to one historical completed date.\"\"\""
+        },
+        {
+          "line": 62,
+          "text": "if not isinstance(as_of, date):"
+        },
+        {
+          "line": 63,
+          "text": "raise TypeError(\"as_of must be datetime.date\")"
+        },
+        {
+          "line": 69,
+          "text": "\"'bugun' upper-date support.\""
+        },
+        {
+          "line": 76,
+          "text": "def fetch_at_cut_date(*args: object, **kwargs: object) -> BatchMarketDataResult:"
+        },
+        {
+          "line": 78,
+          "text": "call_kwargs[\"bugun\"] = as_of"
+        },
+        {
+          "line": 84,
+          "text": "return base_fetcher(*args, **call_kwargs)"
+        },
+        {
+          "line": 86,
+          "text": "return fetch_at_cut_date"
+        },
+        {
+          "line": 89,
+          "text": "def _analysis_date(value: object) -> date:"
+        },
+        {
+          "line": 92,
+          "text": "raise ValueError(\"Historical replay candidate has no analysis date.\")"
+        },
+        {
+          "line": 94,
+          "text": "return date.fromisoformat(raw[:10])"
+        },
+        {
+          "line": 97,
+          "text": "f\"Historical replay candidate has invalid analysis date: {raw}\""
+        },
+        {
+          "line": 103,
+          "text": "as_of: date,"
+        },
+        {
+          "line": 120,
+          "text": "cut_fetcher = build_cut_date_fetcher("
+        },
+        {
+          "line": 121,
+          "text": "as_of,"
+        },
+        {
+          "line": 125,
+          "text": "scanner = BatchStockScanner(veri_getirici=cut_fetcher)"
+        },
+        {
+          "line": 135,
+          "text": "candidates = tuple(filtered.adaylar)"
+        },
+        {
+          "line": 137,
+          "text": "future_dates: list[date] = []"
+        },
+        {
+          "line": 140,
+          "text": "for candidate in candidates:"
+        },
+        {
+          "line": 141,
+          "text": "candidate_date = _analysis_date(candidate.analiz_tarihi)"
+        },
+        {
+          "line": 142,
+          "text": "if candidate_date > as_of:"
+        },
+        {
+          "line": 143,
+          "text": "future_dates.append(candidate_date)"
+        },
+        {
+          "line": 144,
+          "text": "elif candidate_date < as_of:"
+        },
+        {
+          "line": 147,
+          "text": "if future_dates:"
+        },
+        {
+          "line": 148,
+          "text": "latest = max(future_dates)"
+        },
+        {
+          "line": 151,
+          "text": "f\"cut={as_of.isoformat()} latest_analysis={latest.isoformat()}\""
+        },
+        {
+          "line": 157,
+          "text": "\"Hisse\": candidate.sembol.removesuffix(\".IS\"),"
+        },
+        {
+          "line": 158,
+          "text": "\"Skor\": candidate.sinyal.skor,"
+        },
+        {
+          "line": 160,
+          "text": "for rank, candidate in enumerate(candidates, start=1)"
+        },
+        {
+          "line": 173,
+          "text": "as_of=as_of.isoformat(),"
+        },
+        {
+          "line": 184,
+          "text": "return HistoricalResearchReplayResult("
+        },
+        {
+          "line": 185,
+          "text": "as_of=as_of.isoformat(),"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\signal_outcome_tracking.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_normalize_price_frame",
+        "completed_horizons",
+        "evaluate_signal",
+        "list",
+        "outcome_rows",
+        "outcomes_to_csv",
+        "save",
+        "success_summary"
+      ],
+      "classes": [
+        "HorizonOutcome",
+        "SignalOutcome",
+        "SignalOutcomeError",
+        "SignalOutcomeJsonStore",
+        "SignalSnapshot"
+      ],
+      "hits": {
+        "score": [
+          "score",
+          "skor"
+        ],
+        "observation_time": [
+          "signal_date",
+          "date"
+        ],
+        "publication_time": [],
+        "forward_outcome": [
+          "return",
+          "outcome",
+          "getiri"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": true,
+        "publication_time": false,
+        "forward_outcome": true
+      },
+      "coverage_count": 3,
+      "evidence_lines": [
+        {
+          "line": 4,
+          "text": "from datetime import date, datetime, timezone"
+        },
+        {
+          "line": 18,
+          "text": "class SignalOutcomeError(ValueError):"
+        },
+        {
+          "line": 25,
+          "text": "signal_date: date"
+        },
+        {
+          "line": 28,
+          "text": "quality_score: int"
+        },
+        {
+          "line": 47,
+          "text": "raise SignalOutcomeError(\"Sembol boş olamaz.\")"
+        },
+        {
+          "line": 53,
+          "text": "raise SignalOutcomeError("
+        },
+        {
+          "line": 56,
+          "text": "if not 0 <= self.quality_score <= 100:"
+        },
+        {
+          "line": 57,
+          "text": "raise SignalOutcomeError(\"Kalite skoru 0–100 arasında olmalıdır.\")"
+        },
+        {
+          "line": 61,
+          "text": "(\"Risk/getiri oranı\", self.risk_reward_ratio),"
+        },
+        {
+          "line": 69,
+          "text": "raise SignalOutcomeError("
+        },
+        {
+          "line": 77,
+          "text": "self.signal_date.isoformat(),"
+        },
+        {
+          "line": 80,
+          "text": "str(self.quality_score),"
+        },
+        {
+          "line": 96,
+          "text": "datetime.now(timezone.utc).isoformat(timespec=\"seconds\"),"
+        },
+        {
+          "line": 101,
+          "text": "class HorizonOutcome:"
+        },
+        {
+          "line": 104,
+          "text": "end_date: date | None"
+        },
+        {
+          "line": 105,
+          "text": "close_return_percent: float | None"
+        },
+        {
+          "line": 114,
+          "text": "class SignalOutcome:"
+        },
+        {
+          "line": 116,
+          "text": "horizons: tuple[HorizonOutcome, ...]"
+        },
+        {
+          "line": 121,
+          "text": "return sum(item.available for item in self.horizons)"
+        },
+        {
+          "line": 128,
+          "text": "raise SignalOutcomeError("
+        },
+        {
+          "line": 134,
+          "text": "normalized.index = pd.to_datetime(normalized.index)"
+        },
+        {
+          "line": 138,
+          "text": "raise SignalOutcomeError("
+        },
+        {
+          "line": 142,
+          "text": "raise SignalOutcomeError(\"Fiyat verisi boş.\")"
+        },
+        {
+          "line": 144,
+          "text": "return normalized.astype(float)"
+        },
+        {
+          "line": 150,
+          "text": ") -> SignalOutcome:"
+        },
+        {
+          "line": 156,
+          "text": "signal_ts = pd.Timestamp(snapshot.signal_date)"
+        },
+        {
+          "line": 159,
+          "text": "outcomes: list[HorizonOutcome] = []"
+        },
+        {
+          "line": 163,
+          "text": "outcomes.append("
+        },
+        {
+          "line": 164,
+          "text": "HorizonOutcome("
+        },
+        {
+          "line": 167,
+          "text": "end_date=None,"
+        },
+        {
+          "line": 168,
+          "text": "close_return_percent=None,"
+        },
+        {
+          "line": 184,
+          "text": "outcomes.append("
+        },
+        {
+          "line": 185,
+          "text": "HorizonOutcome("
+        },
+        {
+          "line": 188,
+          "text": "end_date=pd.Timestamp(window.index[-1]).date(),"
+        },
+        {
+          "line": 189,
+          "text": "close_return_percent=round("
+        },
+        {
+          "line": 219,
+          "text": "return SignalOutcome("
+        },
+        {
+          "line": 221,
+          "text": "horizons=tuple(outcomes),"
+        },
+        {
+          "line": 222,
+          "text": "evaluated_at=datetime.now(timezone.utc).isoformat("
+        },
+        {
+          "line": 228,
+          "text": "class SignalOutcomeJsonStore:"
+        },
+        {
+          "line": 238,
+          "text": "outcome: SignalOutcome,"
+        },
+        {
+          "line": 241,
+          "text": "path = self.root / f\"{outcome.snapshot.record_id}.json\""
+        },
+        {
+          "line": 245,
+          "text": "\"snapshot\": asdict(outcome.snapshot),"
+        },
+        {
+          "line": 247,
+          "text": "asdict(item) for item in outcome.horizons"
+        },
+        {
+          "line": 249,
+          "text": "\"evaluated_at\": outcome.evaluated_at,"
+        },
+        {
+          "line": 257,
+          "text": "return path"
+        },
+        {
+          "line": 259,
+          "text": "def list(self) -> tuple[SignalOutcome, ...]:"
+        },
+        {
+          "line": 261,
+          "text": "return ()"
+        },
+        {
+          "line": 263,
+          "text": "records: list[SignalOutcome] = []"
+        },
+        {
+          "line": 268,
+          "text": "snapshot_raw[\"signal_date\"] = date.fromisoformat("
+        },
+        {
+          "line": 269,
+          "text": "snapshot_raw[\"signal_date\"]"
+        },
+        {
+          "line": 276,
+          "text": "if item.get(\"end_date\"):"
+        },
+        {
+          "line": 277,
+          "text": "item[\"end_date\"] = date.fromisoformat("
+        },
+        {
+          "line": 278,
+          "text": "item[\"end_date\"]"
+        },
+        {
+          "line": 280,
+          "text": "horizons.append(HorizonOutcome(**item))"
+        },
+        {
+          "line": 283,
+          "text": "SignalOutcome("
+        },
+        {
+          "line": 292,
+          "text": "return tuple(records)"
+        },
+        {
+          "line": 295,
+          "text": "def outcome_rows("
+        },
+        {
+          "line": 296,
+          "text": "outcomes: Iterable[SignalOutcome],"
+        },
+        {
+          "line": 299,
+          "text": "for outcome in outcomes:"
+        },
+        {
+          "line": 301,
+          "text": "\"Kayıt\": outcome.snapshot.record_id,"
+        },
+        {
+          "line": 302,
+          "text": "\"Sembol\": outcome.snapshot.symbol,"
+        },
+        {
+          "line": 303,
+          "text": "\"Sinyal tarihi\": outcome.snapshot.signal_date,"
+        },
+        {
+          "line": 304,
+          "text": "\"Referans fiyat\": outcome.snapshot.reference_price,"
+        },
+        {
+          "line": 305,
+          "text": "\"Karar sınıfı\": outcome.snapshot.decision_class,"
+        },
+        {
+          "line": 306,
+          "text": "\"Kalite skoru\": outcome.snapshot.quality_score,"
+        },
+        {
+          "line": 307,
+          "text": "\"Günlük yön\": outcome.snapshot.daily_direction,"
+        },
+        {
+          "line": 308,
+          "text": "\"Haftalık yön\": outcome.snapshot.weekly_direction,"
+        },
+        {
+          "line": 309,
+          "text": "\"Uyumsuzluk\": outcome.snapshot.divergence_type or \"—\","
+        },
+        {
+          "line": 310,
+          "text": "\"Piyasa rejimi\": outcome.snapshot.market_regime or \"—\","
+        },
+        {
+          "line": 311,
+          "text": "\"Sektör\": outcome.snapshot.sector or \"—\","
+        },
+        {
+          "line": 312,
+          "text": "\"Momentum\": outcome.snapshot.momentum_state or \"—\","
+        },
+        {
+          "line": 315,
+          "text": "if outcome.snapshot.volume_confirmation is None"
+        },
+        {
+          "line": 317,
+          "text": "if outcome.snapshot.volume_confirmation"
+        },
+        {
+          "line": 320,
+          "text": "\"ATR (%)\": outcome.snapshot.atr_percent,"
+        },
+        {
+          "line": 321,
+          "text": "\"Risk/getiri\": outcome.snapshot.risk_reward_ratio,"
+        },
+        {
+          "line": 323,
+          "text": "for item in outcome.horizons:"
+        },
+        {
+          "line": 325,
+          "text": "row.update("
+        },
+        {
+          "line": 329,
+          "text": "\"Bitiş tarihi\": item.end_date,"
+        },
+        {
+          "line": 330,
+          "text": "\"Kapanış getirisi (%)\": item.close_return_percent,"
+        },
+        {
+          "line": 357,
+          "text": "return rows"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\next_day_walk_forward.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "_aggregate",
+        "_finite",
+        "_issue",
+        "_session_reason",
+        "_valid_digest",
+        "build_walk_forward_readiness"
+      ],
+      "classes": [
+        "NextDayWalkForwardReadiness",
+        "WalkForwardSessionIssue",
+        "WalkForwardTierAggregate"
+      ],
+      "hits": {
+        "score": [
+          "score"
+        ],
+        "observation_time": [
+          "date"
+        ],
+        "publication_time": [],
+        "forward_outcome": [
+          "return",
+          "outcome"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": true,
+        "publication_time": false,
+        "forward_outcome": true
+      },
+      "coverage_count": 3,
+      "evidence_lines": [
+        {
+          "line": 8,
+          "text": "from .next_day_outcome import ("
+        },
+        {
+          "line": 9,
+          "text": "OUTCOME_CONTRACT_ID,"
+        },
+        {
+          "line": 10,
+          "text": "NextDayCandidateOutcome,"
+        },
+        {
+          "line": 11,
+          "text": "NextDayOutcomeResult,"
+        },
+        {
+          "line": 22,
+          "text": "canonical_date: str"
+        },
+        {
+          "line": 23,
+          "text": "t1_date: str"
+        },
+        {
+          "line": 35,
+          "text": "average_return: float | None"
+        },
+        {
+          "line": 36,
+          "text": "median_return: float | None"
+        },
+        {
+          "line": 37,
+          "text": "average_relative_return: float | None"
+        },
+        {
+          "line": 38,
+          "text": "median_relative_return: float | None"
+        },
+        {
+          "line": 51,
+          "text": "valid_canonical_dates: tuple[str, ...]"
+        },
+        {
+          "line": 61,
+          "text": "primary_average_negative_return_session_count: int"
+        },
+        {
+          "line": 63,
+          "text": "outcome_tuning: bool"
+        },
+        {
+          "line": 64,
+          "text": "new_score: bool"
+        },
+        {
+          "line": 72,
+          "text": "return len(text) == 64 and all(ch in \"0123456789abcdef\" for ch in text)"
+        },
+        {
+          "line": 79,
+          "text": "return None"
+        },
+        {
+          "line": 80,
+          "text": "return result if isfinite(result) else None"
+        },
+        {
+          "line": 83,
+          "text": "def _issue(session: NextDayOutcomeResult, reason: str) -> WalkForwardSessionIssue:"
+        },
+        {
+          "line": 84,
+          "text": "return WalkForwardSessionIssue("
+        },
+        {
+          "line": 85,
+          "text": "canonical_date=str(getattr(session, \"canonical_date\", \"\") or \"\"),"
+        },
+        {
+          "line": 86,
+          "text": "t1_date=str(getattr(session, \"t1_date\", \"\") or \"\"),"
+        },
+        {
+          "line": 92,
+          "text": "def _session_reason(session: NextDayOutcomeResult) -> str | None:"
+        },
+        {
+          "line": 93,
+          "text": "if session.contract_id != OUTCOME_CONTRACT_ID:"
+        },
+        {
+          "line": 94,
+          "text": "return \"OUTCOME_CONTRACT_MISMATCH\""
+        },
+        {
+          "line": 96,
+          "text": "return \"STRATEGY_MISMATCH\""
+        },
+        {
+          "line": 97,
+          "text": "if not str(session.canonical_date or \"\").strip():"
+        },
+        {
+          "line": 98,
+          "text": "return \"CANONICAL_DATE_MISSING\""
+        },
+        {
+          "line": 99,
+          "text": "if not str(session.t1_date or \"\").strip():"
+        },
+        {
+          "line": 100,
+          "text": "return \"T1_DATE_MISSING\""
+        },
+        {
+          "line": 102,
+          "text": "return \"SELECTION_DIGEST_INVALID\""
+        },
+        {
+          "line": 103,
+          "text": "if _finite(session.benchmark_return) is None:"
+        },
+        {
+          "line": 104,
+          "text": "return \"BENCHMARK_INVALID\""
+        },
+        {
+          "line": 106,
+          "text": "rows = tuple(session.outcomes)"
+        },
+        {
+          "line": 107,
+          "text": "expected_count = int(session.primary.candidate_count) + int(session.reserve.candidate_count)"
+        },
+        {
+          "line": 109,
+          "text": "return \"CANDIDATE_COUNT_MISMATCH\""
+        },
+        {
+          "line": 118,
+          "text": "if row.canonical_date != session.canonical_date or row.t1_date != session.t1_date:"
+        },
+        {
+          "line": 119,
+          "text": "return \"ROW_SESSION_IDENTITY_MISMATCH\""
+        },
+        {
+          "line": 121,
+          "text": "return \"ROW_ROLE_INVALID\""
+        },
+        {
+          "line": 123,
+          "text": "return \"PENDING_OR_INVALID_OUTCOME\""
+        },
+        {
+          "line": 125,
+          "text": "_finite(row.close_to_close_return) is None"
+        },
+        {
+          "line": 126,
+          "text": "or _finite(row.relative_return) is None"
+        },
+        {
+          "line": 129,
+          "text": "or _finite(row.benchmark_return) is None"
+        },
+        {
+          "line": 131,
+          "text": "return \"OUTCOME_METRIC_MISSING_OR_INVALID\""
+        },
+        {
+          "line": 132,
+          "text": "if abs(float(row.benchmark_return) - float(session.benchmark_return)) > 1e-12:"
+        },
+        {
+          "line": 133,
+          "text": "return \"BENCHMARK_MISMATCH\""
+        },
+        {
+          "line": 135,
+          "text": "return \"EVALUATION_IDENTITY_MISSING\""
+        },
+        {
+          "line": 137,
+          "text": "return \"DUPLICATE_EVALUATION_IDENTITY\""
+        },
+        {
+          "line": 141,
+          "text": "return \"SYMBOL_MISSING\""
+        },
+        {
+          "line": 143,
+          "text": "return \"DUPLICATE_SYMBOL\""
+        },
+        {
+          "line": 155,
+          "text": "if primary_count != int(session.primary.candidate_count):"
+        },
+        {
+          "line": 156,
+          "text": "return \"PRIMARY_COUNT_MISMATCH\""
+        },
+        {
+          "line": 157,
+          "text": "if reserve_count != int(session.reserve.candidate_count):"
+        },
+        {
+          "line": 158,
+          "text": "return \"RESERVE_COUNT_MISMATCH\""
+        },
+        {
+          "line": 160,
+          "text": "return \"PRIMARY_SUMMARY_NOT_FULLY_EVALUATED\""
+        },
+        {
+          "line": 162,
+          "text": "return \"RESERVE_SUMMARY_NOT_FULLY_EVALUATED\""
+        },
+        {
+          "line": 164,
+          "text": "return \"PRIMARY_HIT_MISS_MISMATCH\""
+        },
+        {
+          "line": 166,
+          "text": "return \"RESERVE_HIT_MISS_MISMATCH\""
+        },
+        {
+          "line": 167,
+          "text": "return None"
+        },
+        {
+          "line": 170,
+          "text": "def _aggregate(role: NextDayRole, rows: Iterable[NextDayCandidateOutcome]) -> WalkForwardTierAggregate:"
+        },
+        {
+          "line": 173,
+          "text": "return WalkForwardTierAggregate("
+        },
+        {
+          "line": 179,
+          "text": "average_return=None,"
+        },
+        {
+          "line": 180,
+          "text": "median_return=None,"
+        },
+        {
+          "line": 181,
+          "text": "average_relative_return=None,"
+        },
+        {
+          "line": 182,
+          "text": "median_relative_return=None,"
+        },
+        {
+          "line": 187,
+          "text": "returns = [float(row.close_to_close_return) for row in materialized if row.close_to_close_return is not None]"
+        },
+        {
+          "line": 188,
+          "text": "relatives = [float(row.relative_return) for row in materialized if row.relative_return is not None]"
+        },
+        {
+          "line": 194,
+          "text": "return WalkForwardTierAggregate("
+        },
+        {
+          "line": 200,
+          "text": "average_return=float(sum(returns) / len(returns)),"
+        },
+        {
+          "line": 201,
+          "text": "median_return=float(median(returns)),"
+        },
+        {
+          "line": 202,
+          "text": "average_relative_return=float(sum(relatives) / len(relatives)),"
+        },
+        {
+          "line": 203,
+          "text": "median_relative_return=float(median(relatives)),"
+        },
+        {
+          "line": 210,
+          "text": "sessions: Iterable[NextDayOutcomeResult],"
+        },
+        {
+          "line": 214,
+          "text": "\"\"\"Aggregate frozen T+1 outcomes without tuning, scoring, persistence, or AL/SAT authority."
+        },
+        {
+          "line": 216,
+          "text": "A valid session may legitimately contain fewer than five Primary/Reserve candidates because"
+        },
+        {
+          "line": 226,
+          "text": "by_date: dict[str, list[NextDayOutcomeResult]] = {}"
+        },
+        {
+          "line": 228,
+          "text": "by_date.setdefault(str(session.canonical_date or \"\"), []).append(session)"
+        },
+        {
+          "line": 231,
+          "text": "valid: list[NextDayOutcomeResult] = []"
+        },
+        {
+          "line": 233,
+          "text": "for canonical_date in sorted(by_date):"
+        },
+        {
+          "line": 234,
+          "text": "group = by_date[canonical_date]"
+        },
+        {
+          "line": 237,
+          "text": "issues.append(_issue(session, \"DUPLICATE_CANONICAL_DATE\"))"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\momentum_walk_forward.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "__init__",
+        "__post_init__",
+        "_gecmisle_zenginlestir",
+        "_kisa_sinif",
+        "_sinif_onceligi",
+        "_sinyal_gecmisi_olustur",
+        "_yuvarla",
+        "_yuzde",
+        "calistir",
+        "getiri",
+        "guclu_hareket_sayisi",
+        "sinyal_gecmisi_tablosu",
+        "walk_forward_izleme_disi_tablosu",
+        "walk_forward_tablosu"
+      ],
+      "classes": [
+        "MomentumSignalSnapshot",
+        "MomentumWalkForwardEngine",
+        "MomentumWalkForwardError",
+        "MomentumWalkForwardOutcome",
+        "MomentumWalkForwardRequest",
+        "MomentumWalkForwardResult",
+        "MomentumWalkForwardService"
+      ],
+      "hits": {
+        "score": [
+          "skor"
+        ],
+        "observation_time": [
+          "date"
+        ],
+        "publication_time": [],
+        "forward_outcome": [
+          "return",
+          "outcome",
+          "getiri"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": true,
+        "publication_time": false,
+        "forward_outcome": true
+      },
+      "coverage_count": 3,
+      "evidence_lines": [
+        {
+          "line": 4,
+          "text": "from datetime import date"
+        },
+        {
+          "line": 20,
+          "text": "MomentumCandidate,"
+        },
+        {
+          "line": 35,
+          "text": "minimum_skor: int = 50"
+        },
+        {
+          "line": 46,
+          "text": "date.fromisoformat(self.kesim_tarihi)"
+        },
+        {
+          "line": 51,
+          "text": "if not 0 <= self.minimum_skor <= 100:"
+        },
+        {
+          "line": 52,
+          "text": "raise ValueError(\"Minimum momentum skoru 0 ile 100 arasında olmalıdır.\")"
+        },
+        {
+          "line": 65,
+          "text": "momentum_skoru: int"
+        },
+        {
+          "line": 74,
+          "text": "class MomentumWalkForwardOutcome:"
+        },
+        {
+          "line": 75,
+          "text": "aday: MomentumCandidate"
+        },
+        {
+          "line": 76,
+          "text": "ileri_getiriler: tuple[tuple[int, float | None], ...]"
+        },
+        {
+          "line": 86,
+          "text": "def getiri(self, gun: int) -> float | None:"
+        },
+        {
+          "line": 87,
+          "text": "return dict(self.ileri_getiriler).get(gun)"
+        },
+        {
+          "line": 98,
+          "text": "sonuclar: tuple[MomentumWalkForwardOutcome, ...]"
+        },
+        {
+          "line": 99,
+          "text": "izleme_disi: tuple[MomentumWalkForwardOutcome, ...]"
+        },
+        {
+          "line": 105,
+          "text": "return sum("
+        },
+        {
+          "line": 130,
+          "text": ") -> tuple[tuple[MomentumWalkForwardOutcome, ...], tuple[MomentumFailure, ...]]:"
+        },
+        {
+          "line": 139,
+          "text": "tarih_indexi = pd.to_datetime(sirali.index)"
+        },
+        {
+          "line": 174,
+          "text": "sonuclar: list[MomentumWalkForwardOutcome] = []"
+        },
+        {
+          "line": 180,
+          "text": "ileri = tam.loc[pd.to_datetime(tam.index) > kesim].head(azami_ufuk)"
+        },
+        {
+          "line": 183,
+          "text": "getiriler: list[tuple[int, float | None]] = []"
+        },
+        {
+          "line": 190,
+          "text": "getiriler.append((gun, deger))"
+        },
+        {
+          "line": 213,
+          "text": "maksimum_tarih = str(pd.Timestamp(yuksekler.idxmax()).date())"
+        },
+        {
+          "line": 214,
+          "text": "minimum_tarih = str(pd.Timestamp(dusukler.idxmin()).date())"
+        },
+        {
+          "line": 217,
+          "text": "MomentumWalkForwardOutcome("
+        },
+        {
+          "line": 219,
+          "text": "ileri_getiriler=tuple(getiriler),"
+        },
+        {
+          "line": 234,
+          "text": "-sonuc.aday.momentum_skoru,"
+        },
+        {
+          "line": 238,
+          "text": "return tuple(sonuclar), tuple(hatalar)"
+        },
+        {
+          "line": 251,
+          "text": "for tarih in pd.to_datetime(veri.index)"
+        },
+        {
+          "line": 255,
+          "text": "return {}"
+        },
+        {
+          "line": 268,
+          "text": "sembol: veri.loc[pd.to_datetime(veri.index) <= tarih]"
+        },
+        {
+          "line": 270,
+          "text": "if len(veri.loc[pd.to_datetime(veri.index) <= tarih]) >= 80"
+        },
+        {
+          "line": 278,
+          "text": "momentum_skoru=aday.momentum_skoru,"
+        },
+        {
+          "line": 286,
+          "text": "return {sembol: tuple(kayitlar) for sembol, kayitlar in harita.items()}"
+        },
+        {
+          "line": 290,
+          "text": "aday: MomentumCandidate,"
+        },
+        {
+          "line": 292,
+          "text": ") -> MomentumCandidate:"
+        },
+        {
+          "line": 294,
+          "text": "return aday"
+        },
+        {
+          "line": 311,
+          "text": "return replace("
+        },
+        {
+          "line": 323,
+          "text": "return replace("
+        },
+        {
+          "line": 337,
+          "text": "veri_getirici: DataFetcher = toplu_fiyat_verisi_getir,"
+        },
+        {
+          "line": 343,
+          "text": "self._veri_getirici = veri_getirici"
+        },
+        {
+          "line": 363,
+          "text": "veri_sonucu = self._veri_getirici("
+        },
+        {
+          "line": 390,
+          "text": "sonuc.aday.momentum_skoru >= istek.minimum_skor"
+        },
+        {
+          "line": 401,
+          "text": "return MomentumWalkForwardResult("
+        },
+        {
+          "line": 426,
+          "text": "\"Momentum\": aday.momentum_skoru,"
+        },
+        {
+          "line": 431,
+          "text": "\"5G kapanış (%)\": _yuzde(item.getiri(5)),"
+        },
+        {
+          "line": 432,
+          "text": "\"10G kapanış (%)\": _yuzde(item.getiri(10)),"
+        },
+        {
+          "line": 433,
+          "text": "\"20G kapanış (%)\": _yuzde(item.getiri(20)),"
+        },
+        {
+          "line": 447,
+          "text": "return tuple(kayitlar)"
+        },
+        {
+          "line": 453,
+          "text": "return tuple("
+        },
+        {
+          "line": 456,
+          "text": "\"Momentum\": item.aday.momentum_skoru,"
+        },
+        {
+          "line": 470,
+          "text": "item: MomentumWalkForwardOutcome,"
+        },
+        {
+          "line": 472,
+          "text": "return tuple("
+        },
+        {
+          "line": 476,
+          "text": "\"Momentum\": kayit.momentum_skoru,"
+        },
+        {
+          "line": 488,
+          "text": "return sinif.split(\" — \", 1)[0]"
+        },
+        {
+          "line": 492,
+          "text": "return {"
+        },
+        {
+          "line": 502,
+          "text": "return round(deger * 100.0, 2) if deger is not None else None"
+        },
+        {
+          "line": 506,
+          "text": "return round(deger, 2) if deger is not None else None"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\fundamental_score_history.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "calculate_score_change",
+        "comparison_rows",
+        "history_rows",
+        "latest_score_change"
+      ],
+      "classes": [
+        "FundamentalScoreChange"
+      ],
+      "hits": {
+        "score": [
+          "score",
+          "skor"
+        ],
+        "observation_time": [],
+        "publication_time": [],
+        "forward_outcome": [
+          "return"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": false,
+        "publication_time": false,
+        "forward_outcome": true
+      },
+      "coverage_count": 2,
+      "evidence_lines": [
+        {
+          "line": 5,
+          "text": "from ..data.fundamental_score_store import StoredFundamentalScore"
+        },
+        {
+          "line": 9,
+          "text": "class FundamentalScoreChange:"
+        },
+        {
+          "line": 23,
+          "text": "def calculate_score_change("
+        },
+        {
+          "line": 24,
+          "text": "current: StoredFundamentalScore,"
+        },
+        {
+          "line": 25,
+          "text": "previous: StoredFundamentalScore,"
+        },
+        {
+          "line": 26,
+          "text": ") -> FundamentalScoreChange:"
+        },
+        {
+          "line": 29,
+          "text": "\"Skor değişimi aynı şirket için hesaplanmalıdır.\""
+        },
+        {
+          "line": 33,
+          "text": "\"Güncel skor dönemi önceki dönemden sonra olmalıdır.\""
+        },
+        {
+          "line": 36,
+          "text": "current_score = current.score"
+        },
+        {
+          "line": 37,
+          "text": "previous_score = previous.score"
+        },
+        {
+          "line": 40,
+          "text": "current_score.total_score is None"
+        },
+        {
+          "line": 41,
+          "text": "or previous_score.total_score is None"
+        },
+        {
+          "line": 44,
+          "text": "\"Hesaplanamayan temel skorlar karşılaştırılamaz.\""
+        },
+        {
+          "line": 49,
+          "text": "current_score.profitability.score"
+        },
+        {
+          "line": 50,
+          "text": "- previous_score.profitability.score"
+        },
+        {
+          "line": 53,
+          "text": "current_score.growth.score"
+        },
+        {
+          "line": 54,
+          "text": "- previous_score.growth.score"
+        },
+        {
+          "line": 57,
+          "text": "current_score.leverage.score"
+        },
+        {
+          "line": 58,
+          "text": "- previous_score.leverage.score"
+        },
+        {
+          "line": 61,
+          "text": "current_score.liquidity.score"
+        },
+        {
+          "line": 62,
+          "text": "- previous_score.liquidity.score"
+        },
+        {
+          "line": 65,
+          "text": "current_score.cash_flow.score"
+        },
+        {
+          "line": 66,
+          "text": "- previous_score.cash_flow.score"
+        },
+        {
+          "line": 70,
+          "text": "return FundamentalScoreChange("
+        },
+        {
+          "line": 75,
+          "text": "current_score.total_score"
+        },
+        {
+          "line": 76,
+          "text": "- previous_score.total_score"
+        },
+        {
+          "line": 92,
+          "text": "def latest_score_change("
+        },
+        {
+          "line": 93,
+          "text": "history: tuple[StoredFundamentalScore, ...],"
+        },
+        {
+          "line": 94,
+          "text": ") -> FundamentalScoreChange | None:"
+        },
+        {
+          "line": 96,
+          "text": "return None"
+        },
+        {
+          "line": 97,
+          "text": "return calculate_score_change(history[-1], history[-2])"
+        },
+        {
+          "line": 101,
+          "text": "history: tuple[StoredFundamentalScore, ...],"
+        },
+        {
+          "line": 103,
+          "text": "return ["
+        },
+        {
+          "line": 107,
+          "text": "\"Toplam skor\": item.score.total_score,"
+        },
+        {
+          "line": 108,
+          "text": "\"Kârlılık\": item.score.profitability.score,"
+        },
+        {
+          "line": 109,
+          "text": "\"Büyüme\": item.score.growth.score,"
+        },
+        {
+          "line": 110,
+          "text": "\"Borçluluk\": item.score.leverage.score,"
+        },
+        {
+          "line": 111,
+          "text": "\"Likidite\": item.score.liquidity.score,"
+        },
+        {
+          "line": 112,
+          "text": "\"Nakit akışı\": item.score.cash_flow.score,"
+        },
+        {
+          "line": 120,
+          "text": "scores: tuple[StoredFundamentalScore, ...],"
+        },
+        {
+          "line": 122,
+          "text": "return ["
+        },
+        {
+          "line": 127,
+          "text": "\"Temel skor\": item.score.total_score,"
+        },
+        {
+          "line": 128,
+          "text": "\"Kalite sınıfı\": item.score.grade,"
+        },
+        {
+          "line": 129,
+          "text": "\"Kârlılık\": item.score.profitability.score,"
+        },
+        {
+          "line": 130,
+          "text": "\"Büyüme\": item.score.growth.score,"
+        },
+        {
+          "line": 131,
+          "text": "\"Borçluluk\": item.score.leverage.score,"
+        },
+        {
+          "line": 132,
+          "text": "\"Likidite\": item.score.liquidity.score,"
+        },
+        {
+          "line": 133,
+          "text": "\"Nakit akışı\": item.score.cash_flow.score,"
+        },
+        {
+          "line": 135,
+          "text": "for item in scores"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\history\\scan_history.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "__init__",
+        "_baglanti_ac",
+        "_hisse_kaydi_ekle",
+        "_sema_olustur",
+        "son_taramalari_getir",
+        "taramayi_kaydet",
+        "veritabani_yolu"
+      ],
+      "classes": [
+        "ScanHistoryError",
+        "ScanHistoryRepository",
+        "ScanHistorySaveResult",
+        "ScanRunSummary"
+      ],
+      "hits": {
+        "score": [
+          "score",
+          "skor"
+        ],
+        "observation_time": [
+          "date"
+        ],
+        "publication_time": [],
+        "forward_outcome": [
+          "return",
+          "getiri"
+        ]
+      },
+      "coverage": {
+        "score": true,
+        "observation_time": true,
+        "publication_time": false,
+        "forward_outcome": true
+      },
+      "coverage_count": 3,
+      "evidence_lines": [
+        {
+          "line": 6,
+          "text": "from datetime import datetime"
+        },
+        {
+          "line": 77,
+          "text": "return str("
+        },
+        {
+          "line": 94,
+          "text": "else datetime.now("
+        },
+        {
+          "line": 111,
+          "text": "minimum_score,"
+        },
+        {
+          "line": 116,
+          "text": "candidate_count,"
+        },
+        {
+          "line": 125,
+          "text": "kriterler.minimum_skor,"
+        },
+        {
+          "line": 191,
+          "text": "return ScanHistorySaveResult("
+        },
+        {
+          "line": 201,
+          "text": "\"\"\"Son taramaları yeniden eskiye doğru getirir.\"\"\""
+        },
+        {
+          "line": 216,
+          "text": "candidate_count,"
+        },
+        {
+          "line": 231,
+          "text": "return tuple("
+        },
+        {
+          "line": 244,
+          "text": "satir[\"candidate_count\"]"
+        },
+        {
+          "line": 268,
+          "text": "return baglanti"
+        },
+        {
+          "line": 278,
+          "text": "minimum_score INTEGER NOT NULL,"
+        },
+        {
+          "line": 283,
+          "text": "candidate_count INTEGER NOT NULL,"
+        },
+        {
+          "line": 294,
+          "text": "analysis_date TEXT,"
+        },
+        {
+          "line": 295,
+          "text": "score INTEGER,"
+        },
+        {
+          "line": 359,
+          "text": "sinyal.skor,"
+        },
+        {
+          "line": 379,
+          "text": "analysis_date,"
+        },
+        {
+          "line": 380,
+          "text": "score,"
+        }
+      ]
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\history\\momentum_history.py",
+      "exists": true,
+      "ast_ok": true,
+      "functions": [
+        "__init__",
+        "_gecmis_kayitlari",
+        "_kalici_hazirlik_mi",
+        "_son_tarih",
+        "_tarih",
+        "_tarihe_gore_tekillestir",
+        "kaydet",
+        "zenginlestir"
+      ],
+      "classes": [
+        "CandidateLike",
+        "MomentumHistoryStore"
+      ],
+      "hits": {
+        "score": [],
+        "observation_time": [
+          "date"
+        ],
+        "publication_time": [],
+        "forward_outcome": [
+          "return",
+          "getiri"
+        ]
+      },
+      "coverage": {
+        "score": false,
+        "observation_time": true,
+        "publication_time": false,
+        "forward_outcome": true
+      },
+      "coverage_count": 2,
+      "evidence_lines": [
+        {
+          "line": 5,
+          "text": "from datetime import date, datetime, timedelta"
+        },
+        {
+          "line": 37,
+          "text": "class CandidateLike(Protocol):"
+        },
+        {
+          "line": 52,
+          "text": "def kaydet(self, adaylar: Iterable[CandidateLike]) -> Path:"
+        },
+        {
+          "line": 54,
+          "text": "zaman = datetime.now()"
+        },
+        {
+          "line": 61,
+          "text": "return yol"
+        },
+        {
+          "line": 129,
+          "text": "getiri = (kapanis / ilk_fiyat - 1.0) if ilk_fiyat else 0.0"
+        },
+        {
+          "line": 138,
+          "text": "ilk_gorulmeden_getiri=getiri,"
+        },
+        {
+          "line": 145,
+          "text": "return tuple(sonuc)"
+        },
+        {
+          "line": 155,
+          "text": "return False"
+        },
+        {
+          "line": 158,
+          "text": "return False"
+        },
+        {
+          "line": 160,
+          "text": "hazirliklar: list[date] = []"
+        },
+        {
+          "line": 168,
+          "text": "return False"
+        },
+        {
+          "line": 169,
+          "text": "return (bugun - max(hazirliklar)).days <= 10"
+        },
+        {
+          "line": 180,
+          "text": "return max(uygun) if uygun else \"\""
+        },
+        {
+          "line": 191,
+          "text": "return [harita[tarih] for tarih in sorted(harita)]"
+        },
+        {
+          "line": 195,
+          "text": "return []"
+        },
+        {
+          "line": 205,
+          "text": "return kayitlar"
+        },
+        {
+          "line": 208,
+          "text": "def _tarih(metin: str) -> date | None:"
+        },
+        {
+          "line": 210,
+          "text": "return date.fromisoformat(metin)"
+        },
+        {
+          "line": 212,
+          "text": "return None"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "record_count": 929,
+  "refetched_count": 4,
+  "risk_counts": {
+    "Magas": 526,
+    "Közepes": 345,
+    "Alacsony": 54
+  },
+  "missing_risk_count": 4,
+  "invalid_risk_count": 0,
+  "category_counts": {
+    "Részvény": 480,
+    "Kötvény": 217,
+    "Abszolút hozamú": 117,
+    "Vegyes": 92,
+    "Pénzpiac": 6,
+    "Nyersanyag": 6,
+    "Ingatlan": 4,
+    "Alapok alapja": 4,
+    "Származtatott": 3
+  }
+}

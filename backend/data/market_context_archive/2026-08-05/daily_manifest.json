@@ -1,0 +1,51 @@
+{
+  "date": "2026-08-05",
+  "document_count": 4,
+  "documents": [
+    {
+      "document_id": "471864c44a59468e96b291362fde3242",
+      "source": "whatsapp",
+      "document_date": "2026-08-05",
+      "input_type": "text",
+      "content_hash": "94bdb3063801a57dc30138f4622ab1528ddaf5acae07f97c50a43cbef7782ff2",
+      "processed_path": "market_context_processed\\2026-08-05\\471864c44a59468e96b291362fde3242.json",
+      "raw_path": "market_context_raw\\2026-08-05\\471864c44a59468e96b291362fde3242.txt"
+    },
+    {
+      "document_id": "89a439c087214a588a6660606b45ad59",
+      "source": "ykb",
+      "document_date": "2026-08-05",
+      "input_type": "text",
+      "content_hash": "fa0fb58e767122130c720c0f1fe540c33a3e615126cc1d77309388a362396456",
+      "processed_path": "market_context_processed\\2026-08-05\\89a439c087214a588a6660606b45ad59.json",
+      "raw_path": "market_context_raw\\2026-08-05\\89a439c087214a588a6660606b45ad59.txt"
+    },
+    {
+      "document_id": "e5f58041191d447196eb7c2006a94521",
+      "source": "ICBC",
+      "document_date": "2026-08-05",
+      "input_type": "text",
+      "content_hash": "985384d575d60894c1590383458b22d61aea5f773b01d18bad5d9760a7e276c6",
+      "processed_path": "market_context_processed\\2026-08-05\\e5f58041191d447196eb7c2006a94521.json",
+      "raw_path": "market_context_raw\\2026-08-05\\e5f58041191d447196eb7c2006a94521.txt"
+    },
+    {
+      "document_id": "871ffa0787e14f3091bce22c07b15820",
+      "source": "ICBC",
+      "document_date": "2026-08-05",
+      "input_type": "text",
+      "content_hash": "b6e59e7df4dc0099facdbdd4bdbdde971e3dee70e606172b42a1c86cae2475c0",
+      "processed_path": "market_context_processed\\2026-08-05\\871ffa0787e14f3091bce22c07b15820.json",
+      "raw_path": "market_context_raw\\2026-08-05\\871ffa0787e14f3091bce22c07b15820.txt"
+    }
+  ],
+  "sources": [
+    "ICBC",
+    "whatsapp",
+    "ykb"
+  ],
+  "created_at": "2026-08-05T13:58:57Z",
+  "updated_at": "2026-08-05T14:20:42Z",
+  "ai_review_status": "reviewed",
+  "ai_review_id": "af134b157cda4c439beeaf0d1a72cb13"
+}

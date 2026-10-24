@@ -1,0 +1,6 @@
+﻿Durum;Sira;Sembol;Analiz_Tarihi;Skor;Gorunum;Kapanis;RSI14;Hacim_Orani;Risk_Odul;Hedef;Risk_Filtresi;Aciklama
+Aday;1;BIMAS.IS;2026-07-22;61;Nötr Teknik Görünüm;399.75;60.72;0.95;1.28;422.80;Elendi;
+Aday;2;EREGL.IS;2026-07-22;56;Nötr Teknik Görünüm;42.24;55.95;0.72;0.19;42.68;Elendi;
+Aday;3;TUPRS.IS;2026-07-22;41;Nötr Teknik Görünüm;313.75;86.41;0.89;1.33;331.83;Elendi;
+Aday;4;ASELS.IS;2026-07-22;29;Negatif Teknik Görünüm;370.00;49.83;1.18;0.80;389.75;Elendi;
+Elendi;;THYAO.IS;2026-07-22;14;Negatif Teknik Görünüm;321.00;46.31;0.68;0.63;329.50;Elendi;"Sinyal skoru 14; minimum 20 gerekli."

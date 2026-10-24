@@ -1,0 +1,1128 @@
+{
+  "generated_at": "2026-08-04T12:17:50.568521+03:00",
+  "target_date": "2026-08-03",
+  "environment": {
+    "python": "3.14.6",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "pandas": "3.0.5",
+    "yfinance": "1.5.1"
+  },
+  "symbols": {
+    "THYAO.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 317.5,
+            "High": 318.25,
+            "Low": 310.5,
+            "Close": 313.25,
+            "Volume": 57023121.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 311.0,
+            "High": 315.5,
+            "Low": 305.25,
+            "Close": 308.25,
+            "Volume": 41895470.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 317.0,
+            "High": 319.25,
+            "Low": 314.5,
+            "Close": 316.25,
+            "Volume": 13957453.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    },
+    "ASELS.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 357.5,
+            "High": 362.75,
+            "Low": 352.0,
+            "Close": 354.5,
+            "Volume": 23389684.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 354.5,
+            "High": 356.0,
+            "Low": 335.5,
+            "Close": 337.5,
+            "Volume": 33703835.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 337.75,
+            "High": 348.25,
+            "Low": 336.5,
+            "Close": 345.75,
+            "Volume": 14676449.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    },
+    "TUPRS.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 297.5,
+            "High": 301.5,
+            "Low": 290.0,
+            "Close": 297.75,
+            "Volume": 25309047.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 303.0,
+            "High": 303.0,
+            "Low": 285.0,
+            "Close": 288.0,
+            "Volume": 22983322.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 293.25,
+            "High": 295.5,
+            "Low": 288.5,
+            "Close": 293.0,
+            "Volume": 9321482.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    },
+    "SAHOL.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 87.3499984741211,
+            "High": 88.25,
+            "Low": 84.30000305175781,
+            "Close": 84.80000305175781,
+            "Volume": 32972679.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 84.8499984741211,
+            "High": 85.1500015258789,
+            "Low": 82.0999984741211,
+            "Close": 82.30000305175781,
+            "Volume": 37704669.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 86.55000305175781,
+            "High": 86.6500015258789,
+            "Low": 85.5999984741211,
+            "Close": 86.19999694824219,
+            "Volume": 8577967.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    },
+    "KCHOL.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 195.39999389648438,
+            "High": 200.10000610351562,
+            "Low": 192.60000610351562,
+            "Close": 193.60000610351562,
+            "Volume": 21634068.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 193.1999969482422,
+            "High": 196.10000610351562,
+            "Low": 190.5,
+            "Close": 191.5,
+            "Volume": 15667099.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 196.8000030517578,
+            "High": 197.0,
+            "Low": 193.8000030517578,
+            "Close": 195.10000610351562,
+            "Volume": 7858481.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    },
+    "AKBNK.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 66.0,
+            "High": 66.3499984741211,
+            "Low": 62.900001525878906,
+            "Close": 63.29999923706055,
+            "Volume": 194948481.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 63.29999923706055,
+            "High": 63.54999923706055,
+            "Low": 61.29999923706055,
+            "Close": 61.599998474121094,
+            "Volume": 168767186.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 66.0,
+            "High": 67.05000305175781,
+            "Low": 65.3499984741211,
+            "Close": 66.19999694824219,
+            "Volume": 55080815.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    },
+    "GARAN.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 127.5,
+            "High": 128.89999389648438,
+            "Low": 124.5999984741211,
+            "Close": 126.30000305175781,
+            "Volume": 28841815.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 126.0,
+            "High": 126.80000305175781,
+            "Low": 123.0,
+            "Close": 123.0999984741211,
+            "Volume": 35463365.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 127.5,
+            "High": 128.6999969482422,
+            "Low": 126.0999984741211,
+            "Close": 128.0,
+            "Volume": 12915733.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    },
+    "BIMAS.IS": {
+      "raw_yahoo": {
+        "ok": true,
+        "http": 200,
+        "present": true,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": {
+          "Date": "2026-08-03",
+          "Open": null,
+          "High": null,
+          "Low": null,
+          "Close": null,
+          "Volume": null
+        },
+        "rows": [
+          {
+            "Date": "2026-07-29",
+            "Open": 388.75,
+            "High": 393.0,
+            "Low": 383.5,
+            "Close": 386.5,
+            "Volume": 8271235.0
+          },
+          {
+            "Date": "2026-07-30",
+            "Open": 386.5,
+            "High": 393.25,
+            "Low": 380.75,
+            "Close": 383.0,
+            "Volume": 10230556.0
+          },
+          {
+            "Date": "2026-07-31",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-03",
+            "Open": null,
+            "High": null,
+            "Low": null,
+            "Close": null,
+            "Volume": null
+          },
+          {
+            "Date": "2026-08-04",
+            "Open": 379.5,
+            "High": 384.5,
+            "Low": 377.5,
+            "Close": 383.5,
+            "Volume": 2846673.0
+          }
+        ]
+      },
+      "yf_download_auto_adjust_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_download_auto_adjust_true": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_false": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ],
+        "ok": true
+      },
+      "yf_history_repair_true": {
+        "ok": false,
+        "error": "ModuleNotFoundError(\"No module named 'scipy'\")",
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": null
+      }
+    }
+  },
+  "yf_batch_threads_false": {
+    "ok": true,
+    "symbols": {
+      "THYAO.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "ASELS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "TUPRS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "SAHOL.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "KCHOL.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "AKBNK.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "GARAN.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "BIMAS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      }
+    }
+  },
+  "yf_batch_threads_true": {
+    "ok": true,
+    "symbols": {
+      "THYAO.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "ASELS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "TUPRS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "SAHOL.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "KCHOL.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "AKBNK.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "GARAN.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      },
+      "BIMAS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-08-04",
+        "row": null,
+        "dates": [
+          "2026-07-29",
+          "2026-07-30",
+          "2026-08-04"
+        ]
+      }
+    }
+  },
+  "app_batch": {
+    "ok": true,
+    "symbols": {
+      "THYAO.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      },
+      "ASELS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      },
+      "TUPRS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      },
+      "SAHOL.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      },
+      "KCHOL.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      },
+      "AKBNK.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      },
+      "GARAN.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      },
+      "BIMAS.IS": {
+        "present": false,
+        "complete_ohlc": false,
+        "latest_valid": "2026-07-30",
+        "row": null,
+        "dates": [
+          "2026-07-24",
+          "2026-07-27",
+          "2026-07-28",
+          "2026-07-29",
+          "2026-07-30"
+        ]
+      }
+    },
+    "failures": []
+  },
+  "diagnosis": {
+    "classification": "UPSTREAM_YAHOO_OR_PROVIDER_GAP",
+    "reason": "Yahoo ham chart yanıtında 2026-08-03 OHLC yalnızca 0/8 sembolde tam."
+  }
+}

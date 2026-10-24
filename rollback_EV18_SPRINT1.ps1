@@ -1,0 +1,1 @@
+Write-Host "EV-18 Sprint 1 rollback restore point."

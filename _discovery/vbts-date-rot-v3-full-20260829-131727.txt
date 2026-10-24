@@ -1,0 +1,27 @@
+
+=================================== ERRORS ====================================
+___________ ERROR collecting backend/tests/test_fast_mover_watch.py ___________
+ImportError while importing test module 'D:\Projects\Hisse-Robotu\backend\tests\test_fast_mover_watch.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_fast_mover_watch.py:7: in <module>
+    from app.analysis import fast_mover_watch as fm
+E   ModuleNotFoundError: No module named 'app'
+__________ ERROR collecting backend/tests/test_next_day_selection.py __________
+ImportError while importing test module 'D:\Projects\Hisse-Robotu\backend\tests\test_next_day_selection.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_next_day_selection.py:5: in <module>
+    from app.analysis.next_day_selection import (
+E   ModuleNotFoundError: No module named 'app'
+=========================== short test summary info ===========================
+ERROR backend/tests/test_fast_mover_watch.py
+ERROR backend/tests/test_next_day_selection.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!
+2 errors in 32.80s

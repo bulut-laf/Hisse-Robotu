@@ -1,0 +1,1492 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818102159
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-TaskEngine-V1-LiveQualityBinding-ExactPreflight.ps1
+Process ID: 2336
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+=== TASK ENGINE V1 LIVE QUALITY BINDING EXACT PREFLIGHT ===
+READ_ONLY=YES
+PRODUCTION_MUTATION=NO
+PROJECT=D:\Projects\Hisse-Robotu
+ANALYSIS_SEAM=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py::build_daily_operation_summary
+UI_SEAM=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py::_render_daily_operations_hub
+
+=== GIT / WORKTREE ===
+GIT_STATUS=SKIPPED_NOT_GIT_OR_GIT_UNAVAILABLE
+
+=== ANALYSIS SEAM CURRENT STATE ===
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:61-75 ---
+   61:             if horizon.available:
+   62:                 completed += 1
+   63:             else:
+   64:                 pending += 1
+   65:     return len(records), pending, completed
+   66:
+   67:
+   68: def build_daily_operation_summary(
+   69:     *,
+   70:     pilot_records: Iterable[PilotLogRecord],
+   71:     signal_outcomes: Iterable[SignalOutcome],
+   72:     trade_records: Iterable[TradeRecord],
+   73:     shadow_positions: Iterable[ShadowPosition] = (),
+   74: ) -> DailyOperationSummary:
+   75:     latest = _latest_pilot(pilot_records)
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:26-40 ---
+   26:     target_module: str
+   27:
+   28:
+   29: @dataclass(frozen=True)
+   30: class DailyOperationSummary:
+   31:     delayed_data_status: str
+   32:     delayed_data_age_minutes: float | None
+   33:     delayed_data_locked: bool
+   34:     pending_signal_horizons: int
+   35:     completed_signal_horizons: int
+   36:     signal_record_count: int
+   37:     trade_record_count: int
+   38:     shadow_trade_count: int
+   39:     real_trade_count: int
+   40:     alerts: tuple[OperationAlert, ...]
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:84-98 ---
+   84:
+   85:     alerts: list[OperationAlert] = []
+   86:     tasks: list[OperationTask] = []
+   87:
+   88:     if latest is None:
+   89:         delayed_status = "Г–lГ§Гјm yok"
+   90:         delayed_age = None
+   91:         delayed_locked = True
+   92:         alerts.append(
+   93:             OperationAlert(
+   94:                 1,
+   95:                 "Kritik",
+   96:                 "Gecikmeli veri Г¶lГ§ГјmГј yok",
+   97:                 "GГјn iГ§i veri kalitesi ve gecikme durumu doДџrulanamadД±.",
+   98:             )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:104-118 ---
+  104:                 "Pilot ekranda en az bir Г¶lГ§Гјm alД±n.",
+  105:                 "Gecikmeli Veri Pilotu",
+  106:             )
+  107:         )
+  108:     else:
+  109:         delayed_status = latest.status
+  110:         delayed_age = float(latest.measured_delay_minutes)
+  111:         delayed_locked = bool(latest.locked)
+  112:         if latest.locked:
+  113:             alerts.append(
+  114:                 OperationAlert(
+  115:                     1,
+  116:                     "Kritik",
+  117:                     "Veri gГјvenlik kilidi aktif",
+  118:                     latest.status,
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:105-119 ---
+  105:                 "Gecikmeli Veri Pilotu",
+  106:             )
+  107:         )
+  108:     else:
+  109:         delayed_status = latest.status
+  110:         delayed_age = float(latest.measured_delay_minutes)
+  111:         delayed_locked = bool(latest.locked)
+  112:         if latest.locked:
+  113:             alerts.append(
+  114:                 OperationAlert(
+  115:                     1,
+  116:                     "Kritik",
+  117:                     "Veri gГјvenlik kilidi aktif",
+  118:                     latest.status,
+  119:                 )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:203-217 ---
+  203:
+  204:     alerts.sort(key=lambda item: item.priority)
+  205:     tasks.sort(key=lambda item: item.priority)
+  206:
+  207:     return DailyOperationSummary(
+  208:         delayed_data_status=delayed_status,
+  209:         delayed_data_age_minutes=delayed_age,
+  210:         delayed_data_locked=delayed_locked,
+  211:         pending_signal_horizons=pending,
+  212:         completed_signal_horizons=completed,
+  213:         signal_record_count=signals,
+  214:         trade_record_count=len(trades),
+  215:         shadow_trade_count=shadow_count,
+  216:         real_trade_count=real_count,
+  217:         alerts=tuple(alerts),
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:249-263 ---
+  249: # V11_TRACK1_OBSERVABILITY_ROWS
+  250: def observability_rows(summary: DailyOperationSummary) -> list[dict[str, object]]:
+  251:     """Mevcut gГјnlГјk operasyon kanД±tД±nД± yeni skor/sinyal Гјretmeden tek gГ¶rГјnГјmde Г¶zetler."""
+  252:     critical = sum(item.level.casefold() == "kritik" for item in summary.alerts)
+  253:     warning = sum(item.level.casefold() == "uyarД±" for item in summary.alerts)
+  254:     information = max(0, len(summary.alerts) - critical - warning)
+  255:     age = "Г–lГ§Гјm yok" if summary.delayed_data_age_minutes is None else f"{summary.delayed_data_age_minutes:.1f} dk"
+  256:     readiness = "BLOKE" if summary.delayed_data_locked or critical > 0 else "UYARI" if warning > 0 else "HAZIR"
+  257:     return [
+  258:         {"Alan": "Operasyon durumu", "DeДџer": readiness},
+  259:         {"Alan": "Veri durumu", "DeДџer": summary.delayed_data_status},
+  260:         {"Alan": "Veri yaЕџД±", "DeДџer": age},
+  261:         {"Alan": "Veri gГјvenlik kilidi", "DeДџer": "AKTД°F" if summary.delayed_data_locked else "KapalД±"},
+  262:         {"Alan": "Kritik uyarД±", "DeДџer": critical},
+  263:         {"Alan": "UyarД±", "DeДџer": warning},
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:254-268 ---
+  254:     information = max(0, len(summary.alerts) - critical - warning)
+  255:     age = "Г–lГ§Гјm yok" if summary.delayed_data_age_minutes is None else f"{summary.delayed_data_age_minutes:.1f} dk"
+  256:     readiness = "BLOKE" if summary.delayed_data_locked or critical > 0 else "UYARI" if warning > 0 else "HAZIR"
+  257:     return [
+  258:         {"Alan": "Operasyon durumu", "DeДџer": readiness},
+  259:         {"Alan": "Veri durumu", "DeДџer": summary.delayed_data_status},
+  260:         {"Alan": "Veri yaЕџД±", "DeДџer": age},
+  261:         {"Alan": "Veri gГјvenlik kilidi", "DeДџer": "AKTД°F" if summary.delayed_data_locked else "KapalД±"},
+  262:         {"Alan": "Kritik uyarД±", "DeДџer": critical},
+  263:         {"Alan": "UyarД±", "DeДџer": warning},
+  264:         {"Alan": "Bilgi", "DeДџer": information},
+  265:         {"Alan": "Bekleyen sinyal sonucu", "DeДџer": summary.pending_signal_horizons},
+  266:         {"Alan": "Operasyon gГ¶revi", "DeДџer": len(summary.tasks)},
+  267:     ]
+  268:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:29-43 ---
+   29: @dataclass(frozen=True)
+   30: class DailyOperationSummary:
+   31:     delayed_data_status: str
+   32:     delayed_data_age_minutes: float | None
+   33:     delayed_data_locked: bool
+   34:     pending_signal_horizons: int
+   35:     completed_signal_horizons: int
+   36:     signal_record_count: int
+   37:     trade_record_count: int
+   38:     shadow_trade_count: int
+   39:     real_trade_count: int
+   40:     alerts: tuple[OperationAlert, ...]
+   41:     tasks: tuple[OperationTask, ...]
+   42:
+   43:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:30-44 ---
+   30: class DailyOperationSummary:
+   31:     delayed_data_status: str
+   32:     delayed_data_age_minutes: float | None
+   33:     delayed_data_locked: bool
+   34:     pending_signal_horizons: int
+   35:     completed_signal_horizons: int
+   36:     signal_record_count: int
+   37:     trade_record_count: int
+   38:     shadow_trade_count: int
+   39:     real_trade_count: int
+   40:     alerts: tuple[OperationAlert, ...]
+   41:     tasks: tuple[OperationTask, ...]
+   42:
+   43:
+   44: def _latest_pilot(
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:31-45 ---
+   31:     delayed_data_status: str
+   32:     delayed_data_age_minutes: float | None
+   33:     delayed_data_locked: bool
+   34:     pending_signal_horizons: int
+   35:     completed_signal_horizons: int
+   36:     signal_record_count: int
+   37:     trade_record_count: int
+   38:     shadow_trade_count: int
+   39:     real_trade_count: int
+   40:     alerts: tuple[OperationAlert, ...]
+   41:     tasks: tuple[OperationTask, ...]
+   42:
+   43:
+   44: def _latest_pilot(
+   45:     records: Iterable[PilotLogRecord],
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:32-46 ---
+   32:     delayed_data_age_minutes: float | None
+   33:     delayed_data_locked: bool
+   34:     pending_signal_horizons: int
+   35:     completed_signal_horizons: int
+   36:     signal_record_count: int
+   37:     trade_record_count: int
+   38:     shadow_trade_count: int
+   39:     real_trade_count: int
+   40:     alerts: tuple[OperationAlert, ...]
+   41:     tasks: tuple[OperationTask, ...]
+   42:
+   43:
+   44: def _latest_pilot(
+   45:     records: Iterable[PilotLogRecord],
+   46: ) -> PilotLogRecord | None:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:46-60 ---
+   46: ) -> PilotLogRecord | None:
+   47:     items = tuple(records)
+   48:     if not items:
+   49:         return None
+   50:     return max(items, key=lambda item: item.received_time)
+   51:
+   52:
+   53: def _signal_counts(
+   54:     outcomes: Iterable[SignalOutcome],
+   55: ) -> tuple[int, int, int]:
+   56:     records = tuple(outcomes)
+   57:     pending = 0
+   58:     completed = 0
+   59:     for outcome in records:
+   60:         for horizon in outcome.horizons:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:69-83 ---
+   69:     *,
+   70:     pilot_records: Iterable[PilotLogRecord],
+   71:     signal_outcomes: Iterable[SignalOutcome],
+   72:     trade_records: Iterable[TradeRecord],
+   73:     shadow_positions: Iterable[ShadowPosition] = (),
+   74: ) -> DailyOperationSummary:
+   75:     latest = _latest_pilot(pilot_records)
+   76:     signals, pending, completed = _signal_counts(signal_outcomes)
+   77:     trades = tuple(trade_records)
+   78:
+   79:     shadow_count = sum(
+   80:         item.account_type.casefold().startswith("deneme")
+   81:         for item in trades
+   82:     ) + len(tuple(shadow_positions))
+   83:     real_count = len(trades) - shadow_count
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:72-86 ---
+   72:     trade_records: Iterable[TradeRecord],
+   73:     shadow_positions: Iterable[ShadowPosition] = (),
+   74: ) -> DailyOperationSummary:
+   75:     latest = _latest_pilot(pilot_records)
+   76:     signals, pending, completed = _signal_counts(signal_outcomes)
+   77:     trades = tuple(trade_records)
+   78:
+   79:     shadow_count = sum(
+   80:         item.account_type.casefold().startswith("deneme")
+   81:         for item in trades
+   82:     ) + len(tuple(shadow_positions))
+   83:     real_count = len(trades) - shadow_count
+   84:
+   85:     alerts: list[OperationAlert] = []
+   86:     tasks: list[OperationTask] = []
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:73-87 ---
+   73:     shadow_positions: Iterable[ShadowPosition] = (),
+   74: ) -> DailyOperationSummary:
+   75:     latest = _latest_pilot(pilot_records)
+   76:     signals, pending, completed = _signal_counts(signal_outcomes)
+   77:     trades = tuple(trade_records)
+   78:
+   79:     shadow_count = sum(
+   80:         item.account_type.casefold().startswith("deneme")
+   81:         for item in trades
+   82:     ) + len(tuple(shadow_positions))
+   83:     real_count = len(trades) - shadow_count
+   84:
+   85:     alerts: list[OperationAlert] = []
+   86:     tasks: list[OperationTask] = []
+   87:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:76-90 ---
+   76:     signals, pending, completed = _signal_counts(signal_outcomes)
+   77:     trades = tuple(trade_records)
+   78:
+   79:     shadow_count = sum(
+   80:         item.account_type.casefold().startswith("deneme")
+   81:         for item in trades
+   82:     ) + len(tuple(shadow_positions))
+   83:     real_count = len(trades) - shadow_count
+   84:
+   85:     alerts: list[OperationAlert] = []
+   86:     tasks: list[OperationTask] = []
+   87:
+   88:     if latest is None:
+   89:         delayed_status = "Г–lГ§Гјm yok"
+   90:         delayed_age = None
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:132-146 ---
+  132:                     3,
+  133:                     "Bilgi",
+  134:                     "GГјn iГ§i Г¶n izleme",
+  135:                     "Gecikmeli veri kesin iЕџlem sinyali deДџildir.",
+  136:                 )
+  137:             )
+  138:
+  139:         if latest.missing_bar_count > 0:
+  140:             alerts.append(
+  141:                 OperationAlert(
+  142:                     2,
+  143:                     "UyarД±",
+  144:                     "Eksik gГјn iГ§i bar",
+  145:                     f"{latest.missing_bar_count} bar eksik.",
+  146:                 )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:138-152 ---
+  138:
+  139:         if latest.missing_bar_count > 0:
+  140:             alerts.append(
+  141:                 OperationAlert(
+  142:                     2,
+  143:                     "UyarД±",
+  144:                     "Eksik gГјn iГ§i bar",
+  145:                     f"{latest.missing_bar_count} bar eksik.",
+  146:                 )
+  147:             )
+  148:
+  149:     if pending > 0:
+  150:         alerts.append(
+  151:             OperationAlert(
+  152:                 2,
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:170-184 ---
+  170:                 2,
+  171:                 "Д°lk sinyal kaydД±nД± oluЕџtur",
+  172:                 "Karar matrisi sonucu iГ§in referans kayД±t oluЕџturun.",
+  173:                 "Sinyal SonuГ§larД±",
+  174:             )
+  175:         )
+  176:
+  177:     if shadow_count == 0:
+  178:         tasks.append(
+  179:             OperationTask(
+  180:                 3,
+  181:                 "GГ¶lge iЕџlem kaydД± oluЕџtur",
+  182:                 "GerГ§ek para kullanmadan iЕџlem gГјnlГјДџГј verisi biriktirin.",
+  183:                 "Д°Еџlem KayД±p Analizi",
+  184:             )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:206-220 ---
+  206:
+  207:     return DailyOperationSummary(
+  208:         delayed_data_status=delayed_status,
+  209:         delayed_data_age_minutes=delayed_age,
+  210:         delayed_data_locked=delayed_locked,
+  211:         pending_signal_horizons=pending,
+  212:         completed_signal_horizons=completed,
+  213:         signal_record_count=signals,
+  214:         trade_record_count=len(trades),
+  215:         shadow_trade_count=shadow_count,
+  216:         real_trade_count=real_count,
+  217:         alerts=tuple(alerts),
+  218:         tasks=tuple(tasks),
+  219:     )
+  220:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:207-221 ---
+  207:     return DailyOperationSummary(
+  208:         delayed_data_status=delayed_status,
+  209:         delayed_data_age_minutes=delayed_age,
+  210:         delayed_data_locked=delayed_locked,
+  211:         pending_signal_horizons=pending,
+  212:         completed_signal_horizons=completed,
+  213:         signal_record_count=signals,
+  214:         trade_record_count=len(trades),
+  215:         shadow_trade_count=shadow_count,
+  216:         real_trade_count=real_count,
+  217:         alerts=tuple(alerts),
+  218:         tasks=tuple(tasks),
+  219:     )
+  220:
+  221:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:208-222 ---
+  208:         delayed_data_status=delayed_status,
+  209:         delayed_data_age_minutes=delayed_age,
+  210:         delayed_data_locked=delayed_locked,
+  211:         pending_signal_horizons=pending,
+  212:         completed_signal_horizons=completed,
+  213:         signal_record_count=signals,
+  214:         trade_record_count=len(trades),
+  215:         shadow_trade_count=shadow_count,
+  216:         real_trade_count=real_count,
+  217:         alerts=tuple(alerts),
+  218:         tasks=tuple(tasks),
+  219:     )
+  220:
+  221:
+  222: def alert_rows(
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:209-223 ---
+  209:         delayed_data_age_minutes=delayed_age,
+  210:         delayed_data_locked=delayed_locked,
+  211:         pending_signal_horizons=pending,
+  212:         completed_signal_horizons=completed,
+  213:         signal_record_count=signals,
+  214:         trade_record_count=len(trades),
+  215:         shadow_trade_count=shadow_count,
+  216:         real_trade_count=real_count,
+  217:         alerts=tuple(alerts),
+  218:         tasks=tuple(tasks),
+  219:     )
+  220:
+  221:
+  222: def alert_rows(
+  223:     alerts: Iterable[OperationAlert],
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:15-29 ---
+   15:     priority: int
+   16:     level: str
+   17:     title: str
+   18:     detail: str
+   19:
+   20:
+   21: @dataclass(frozen=True)
+   22: class OperationTask:
+   23:     priority: int
+   24:     title: str
+   25:     detail: str
+   26:     target_module: str
+   27:
+   28:
+   29: @dataclass(frozen=True)
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:34-48 ---
+   34:     pending_signal_horizons: int
+   35:     completed_signal_horizons: int
+   36:     signal_record_count: int
+   37:     trade_record_count: int
+   38:     shadow_trade_count: int
+   39:     real_trade_count: int
+   40:     alerts: tuple[OperationAlert, ...]
+   41:     tasks: tuple[OperationTask, ...]
+   42:
+   43:
+   44: def _latest_pilot(
+   45:     records: Iterable[PilotLogRecord],
+   46: ) -> PilotLogRecord | None:
+   47:     items = tuple(records)
+   48:     if not items:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:79-93 ---
+   79:     shadow_count = sum(
+   80:         item.account_type.casefold().startswith("deneme")
+   81:         for item in trades
+   82:     ) + len(tuple(shadow_positions))
+   83:     real_count = len(trades) - shadow_count
+   84:
+   85:     alerts: list[OperationAlert] = []
+   86:     tasks: list[OperationTask] = []
+   87:
+   88:     if latest is None:
+   89:         delayed_status = "Г–lГ§Гјm yok"
+   90:         delayed_age = None
+   91:         delayed_locked = True
+   92:         alerts.append(
+   93:             OperationAlert(
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:93-107 ---
+   93:             OperationAlert(
+   94:                 1,
+   95:                 "Kritik",
+   96:                 "Gecikmeli veri Г¶lГ§ГјmГј yok",
+   97:                 "GГјn iГ§i veri kalitesi ve gecikme durumu doДџrulanamadД±.",
+   98:             )
+   99:         )
+  100:         tasks.append(
+  101:             OperationTask(
+  102:                 1,
+  103:                 "Gecikmeli veriyi gГјncelle",
+  104:                 "Pilot ekranda en az bir Г¶lГ§Гјm alД±n.",
+  105:                 "Gecikmeli Veri Pilotu",
+  106:             )
+  107:         )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:94-108 ---
+   94:                 1,
+   95:                 "Kritik",
+   96:                 "Gecikmeli veri Г¶lГ§ГјmГј yok",
+   97:                 "GГјn iГ§i veri kalitesi ve gecikme durumu doДџrulanamadД±.",
+   98:             )
+   99:         )
+  100:         tasks.append(
+  101:             OperationTask(
+  102:                 1,
+  103:                 "Gecikmeli veriyi gГјncelle",
+  104:                 "Pilot ekranda en az bir Г¶lГ§Гјm alД±n.",
+  105:                 "Gecikmeli Veri Pilotu",
+  106:             )
+  107:         )
+  108:     else:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:114-128 ---
+  114:                 OperationAlert(
+  115:                     1,
+  116:                     "Kritik",
+  117:                     "Veri gГјvenlik kilidi aktif",
+  118:                     latest.status,
+  119:                 )
+  120:             )
+  121:             tasks.append(
+  122:                 OperationTask(
+  123:                     1,
+  124:                     "Veri kaynaДџД±nД± yeniden kontrol et",
+  125:                     "Yeni Г¶lГ§Гјm alД±p eksik bar ve gecikmeyi doДџrulayД±n.",
+  126:                     "Gecikmeli Veri Pilotu",
+  127:                 )
+  128:             )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:115-129 ---
+  115:                     1,
+  116:                     "Kritik",
+  117:                     "Veri gГјvenlik kilidi aktif",
+  118:                     latest.status,
+  119:                 )
+  120:             )
+  121:             tasks.append(
+  122:                 OperationTask(
+  123:                     1,
+  124:                     "Veri kaynaДџД±nД± yeniden kontrol et",
+  125:                     "Yeni Г¶lГ§Гјm alД±p eksik bar ve gecikmeyi doДџrulayД±n.",
+  126:                     "Gecikmeli Veri Pilotu",
+  127:                 )
+  128:             )
+  129:         elif latest.preview_only:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:151-165 ---
+  151:             OperationAlert(
+  152:                 2,
+  153:                 "UyarД±",
+  154:                 "Bekleyen sonuГ§ Г¶lГ§Гјmleri",
+  155:                 f"{pending} adet 5/10/20 gГјnlГјk Г¶lГ§Гјm henГјz tamamlanmadД±.",
+  156:             )
+  157:         )
+  158:         tasks.append(
+  159:             OperationTask(
+  160:                 2,
+  161:                 "Sinyal sonuГ§larД±nД± gГјncelle",
+  162:                 "Tamamlanan Г¶lГ§Гјm ufuklarД±nД± yeniden hesaplayД±n.",
+  163:                 "Sinyal SonuГ§larД±",
+  164:             )
+  165:         )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:152-166 ---
+  152:                 2,
+  153:                 "UyarД±",
+  154:                 "Bekleyen sonuГ§ Г¶lГ§Гјmleri",
+  155:                 f"{pending} adet 5/10/20 gГјnlГјk Г¶lГ§Гјm henГјz tamamlanmadД±.",
+  156:             )
+  157:         )
+  158:         tasks.append(
+  159:             OperationTask(
+  160:                 2,
+  161:                 "Sinyal sonuГ§larД±nД± gГјncelle",
+  162:                 "Tamamlanan Г¶lГ§Гјm ufuklarД±nД± yeniden hesaplayД±n.",
+  163:                 "Sinyal SonuГ§larД±",
+  164:             )
+  165:         )
+  166:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:161-175 ---
+  161:                 "Sinyal sonuГ§larД±nД± gГјncelle",
+  162:                 "Tamamlanan Г¶lГ§Гјm ufuklarД±nД± yeniden hesaplayД±n.",
+  163:                 "Sinyal SonuГ§larД±",
+  164:             )
+  165:         )
+  166:
+  167:     if signals == 0:
+  168:         tasks.append(
+  169:             OperationTask(
+  170:                 2,
+  171:                 "Д°lk sinyal kaydД±nД± oluЕџtur",
+  172:                 "Karar matrisi sonucu iГ§in referans kayД±t oluЕџturun.",
+  173:                 "Sinyal SonuГ§larД±",
+  174:             )
+  175:         )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:162-176 ---
+  162:                 "Tamamlanan Г¶lГ§Гјm ufuklarД±nД± yeniden hesaplayД±n.",
+  163:                 "Sinyal SonuГ§larД±",
+  164:             )
+  165:         )
+  166:
+  167:     if signals == 0:
+  168:         tasks.append(
+  169:             OperationTask(
+  170:                 2,
+  171:                 "Д°lk sinyal kaydД±nД± oluЕџtur",
+  172:                 "Karar matrisi sonucu iГ§in referans kayД±t oluЕџturun.",
+  173:                 "Sinyal SonuГ§larД±",
+  174:             )
+  175:         )
+  176:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:171-185 ---
+  171:                 "Д°lk sinyal kaydД±nД± oluЕџtur",
+  172:                 "Karar matrisi sonucu iГ§in referans kayД±t oluЕџturun.",
+  173:                 "Sinyal SonuГ§larД±",
+  174:             )
+  175:         )
+  176:
+  177:     if shadow_count == 0:
+  178:         tasks.append(
+  179:             OperationTask(
+  180:                 3,
+  181:                 "GГ¶lge iЕџlem kaydД± oluЕџtur",
+  182:                 "GerГ§ek para kullanmadan iЕџlem gГјnlГјДџГј verisi biriktirin.",
+  183:                 "Д°Еџlem KayД±p Analizi",
+  184:             )
+  185:         )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:172-186 ---
+  172:                 "Karar matrisi sonucu iГ§in referans kayД±t oluЕџturun.",
+  173:                 "Sinyal SonuГ§larД±",
+  174:             )
+  175:         )
+  176:
+  177:     if shadow_count == 0:
+  178:         tasks.append(
+  179:             OperationTask(
+  180:                 3,
+  181:                 "GГ¶lge iЕџlem kaydД± oluЕџtur",
+  182:                 "GerГ§ek para kullanmadan iЕџlem gГјnlГјДџГј verisi biriktirin.",
+  183:                 "Д°Еџlem KayД±p Analizi",
+  184:             )
+  185:         )
+  186:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:180-194 ---
+  180:                 3,
+  181:                 "GГ¶lge iЕџlem kaydД± oluЕџtur",
+  182:                 "GerГ§ek para kullanmadan iЕџlem gГјnlГјДџГј verisi biriktirin.",
+  183:                 "Д°Еџlem KayД±p Analizi",
+  184:             )
+  185:         )
+  186:
+  187:     tasks.append(
+  188:         OperationTask(
+  189:             4,
+  190:             "GГјnlГјk teknik taramayД± Г§alД±ЕџtД±r",
+  191:             "GГјnlГјk ve haftalД±k karar matrisi adaylarД±nД± gГ¶zden geГ§irin.",
+  192:             "BIST Toplu Tarama",
+  193:         )
+  194:     )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:181-195 ---
+  181:                 "GГ¶lge iЕџlem kaydД± oluЕџtur",
+  182:                 "GerГ§ek para kullanmadan iЕџlem gГјnlГјДџГј verisi biriktirin.",
+  183:                 "Д°Еџlem KayД±p Analizi",
+  184:             )
+  185:         )
+  186:
+  187:     tasks.append(
+  188:         OperationTask(
+  189:             4,
+  190:             "GГјnlГјk teknik taramayД± Г§alД±ЕџtД±r",
+  191:             "GГјnlГјk ve haftalД±k karar matrisi adaylarД±nД± gГ¶zden geГ§irin.",
+  192:             "BIST Toplu Tarama",
+  193:         )
+  194:     )
+  195:     tasks.append(
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:188-202 ---
+  188:         OperationTask(
+  189:             4,
+  190:             "GГјnlГјk teknik taramayД± Г§alД±ЕџtД±r",
+  191:             "GГјnlГјk ve haftalД±k karar matrisi adaylarД±nД± gГ¶zden geГ§irin.",
+  192:             "BIST Toplu Tarama",
+  193:         )
+  194:     )
+  195:     tasks.append(
+  196:         OperationTask(
+  197:             5,
+  198:             "Temel analiz baДџlamД±nД± kontrol et",
+  199:             "AdaylarД±n temel kalite ve sektГ¶r gГ¶rГјnГјmГјnГј inceleyin.",
+  200:             "Temel Analiz",
+  201:         )
+  202:     )
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:189-203 ---
+  189:             4,
+  190:             "GГјnlГјk teknik taramayД± Г§alД±ЕџtД±r",
+  191:             "GГјnlГјk ve haftalД±k karar matrisi adaylarД±nД± gГ¶zden geГ§irin.",
+  192:             "BIST Toplu Tarama",
+  193:         )
+  194:     )
+  195:     tasks.append(
+  196:         OperationTask(
+  197:             5,
+  198:             "Temel analiz baДџlamД±nД± kontrol et",
+  199:             "AdaylarД±n temel kalite ve sektГ¶r gГ¶rГјnГјmГјnГј inceleyin.",
+  200:             "Temel Analiz",
+  201:         )
+  202:     )
+  203:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:198-212 ---
+  198:             "Temel analiz baДџlamД±nД± kontrol et",
+  199:             "AdaylarД±n temel kalite ve sektГ¶r gГ¶rГјnГјmГјnГј inceleyin.",
+  200:             "Temel Analiz",
+  201:         )
+  202:     )
+  203:
+  204:     alerts.sort(key=lambda item: item.priority)
+  205:     tasks.sort(key=lambda item: item.priority)
+  206:
+  207:     return DailyOperationSummary(
+  208:         delayed_data_status=delayed_status,
+  209:         delayed_data_age_minutes=delayed_age,
+  210:         delayed_data_locked=delayed_locked,
+  211:         pending_signal_horizons=pending,
+  212:         completed_signal_horizons=completed,
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:211-225 ---
+  211:         pending_signal_horizons=pending,
+  212:         completed_signal_horizons=completed,
+  213:         signal_record_count=signals,
+  214:         trade_record_count=len(trades),
+  215:         shadow_trade_count=shadow_count,
+  216:         real_trade_count=real_count,
+  217:         alerts=tuple(alerts),
+  218:         tasks=tuple(tasks),
+  219:     )
+  220:
+  221:
+  222: def alert_rows(
+  223:     alerts: Iterable[OperationAlert],
+  224: ) -> list[dict[str, object]]:
+  225:     return [
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:229-243 ---
+  229:             "BaЕџlД±k": item.title,
+  230:             "AГ§Д±klama": item.detail,
+  231:         }
+  232:         for item in alerts
+  233:     ]
+  234:
+  235:
+  236: def task_rows(
+  237:     tasks: Iterable[OperationTask],
+  238: ) -> list[dict[str, object]]:
+  239:     return [
+  240:         {
+  241:             "Г–ncelik": item.priority,
+  242:             "YapД±lacak iЕџlem": item.title,
+  243:             "AГ§Д±klama": item.detail,
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:230-244 ---
+  230:             "AГ§Д±klama": item.detail,
+  231:         }
+  232:         for item in alerts
+  233:     ]
+  234:
+  235:
+  236: def task_rows(
+  237:     tasks: Iterable[OperationTask],
+  238: ) -> list[dict[str, object]]:
+  239:     return [
+  240:         {
+  241:             "Г–ncelik": item.priority,
+  242:             "YapД±lacak iЕџlem": item.title,
+  243:             "AГ§Д±klama": item.detail,
+  244:             "Д°lgili ekran": item.target_module,
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:239-253 ---
+  239:     return [
+  240:         {
+  241:             "Г–ncelik": item.priority,
+  242:             "YapД±lacak iЕџlem": item.title,
+  243:             "AГ§Д±klama": item.detail,
+  244:             "Д°lgili ekran": item.target_module,
+  245:         }
+  246:         for item in tasks
+  247:     ]
+  248:
+  249: # V11_TRACK1_OBSERVABILITY_ROWS
+  250: def observability_rows(summary: DailyOperationSummary) -> list[dict[str, object]]:
+  251:     """Mevcut gГјnlГјk operasyon kanД±tД±nД± yeni skor/sinyal Гјretmeden tek gГ¶rГјnГјmde Г¶zetler."""
+  252:     critical = sum(item.level.casefold() == "kritik" for item in summary.alerts)
+  253:     warning = sum(item.level.casefold() == "uyarД±" for item in summary.alerts)
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:259-268 ---
+  259:         {"Alan": "Veri durumu", "DeДџer": summary.delayed_data_status},
+  260:         {"Alan": "Veri yaЕџД±", "DeДџer": age},
+  261:         {"Alan": "Veri gГјvenlik kilidi", "DeДџer": "AKTД°F" if summary.delayed_data_locked else "KapalД±"},
+  262:         {"Alan": "Kritik uyarД±", "DeДџer": critical},
+  263:         {"Alan": "UyarД±", "DeДџer": warning},
+  264:         {"Alan": "Bilgi", "DeДџer": information},
+  265:         {"Alan": "Bekleyen sinyal sonucu", "DeДџer": summary.pending_signal_horizons},
+  266:         {"Alan": "Operasyon gГ¶revi", "DeДџer": len(summary.tasks)},
+  267:     ]
+  268:
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:3-17 ---
+    3: from dataclasses import dataclass
+    4: from datetime import date, datetime
+    5: from typing import Iterable
+    6:
+    7: from ..analysis.signal_outcome_tracking import SignalOutcome
+    8: from ..data.delayed_data_pilot import PilotLogRecord
+    9: from ..history.trade_journal import TradeRecord
+   10: from .shadow_portfolio import ShadowPosition
+   11:
+   12:
+   13: @dataclass(frozen=True)
+   14: class OperationAlert:
+   15:     priority: int
+   16:     level: str
+   17:     title: str
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:66-80 ---
+   66:
+   67:
+   68: def build_daily_operation_summary(
+   69:     *,
+   70:     pilot_records: Iterable[PilotLogRecord],
+   71:     signal_outcomes: Iterable[SignalOutcome],
+   72:     trade_records: Iterable[TradeRecord],
+   73:     shadow_positions: Iterable[ShadowPosition] = (),
+   74: ) -> DailyOperationSummary:
+   75:     latest = _latest_pilot(pilot_records)
+   76:     signals, pending, completed = _signal_counts(signal_outcomes)
+   77:     trades = tuple(trade_records)
+   78:
+   79:     shadow_count = sum(
+   80:         item.account_type.casefold().startswith("deneme")
+
+--- D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:75-89 ---
+   75:     latest = _latest_pilot(pilot_records)
+   76:     signals, pending, completed = _signal_counts(signal_outcomes)
+   77:     trades = tuple(trade_records)
+   78:
+   79:     shadow_count = sum(
+   80:         item.account_type.casefold().startswith("deneme")
+   81:         for item in trades
+   82:     ) + len(tuple(shadow_positions))
+   83:     real_count = len(trades) - shadow_count
+   84:
+   85:     alerts: list[OperationAlert] = []
+   86:     tasks: list[OperationTask] = []
+   87:
+   88:     if latest is None:
+   89:         delayed_status = "Г–lГ§Гјm yok"
+
+=== UI SEAM CURRENT STATE ===
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:806-820 ---
+  806:             key="prebreakout_detail",
+  807:         )
+  808:         _render_result_detail(options[selected])
+  809:
+  810:
+  811:
+  812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+  813: def _render_daily_operations_hub(signals) -> None:
+  814:     # TASK_ENGINE_V1_UI
+  815:     st.caption("GГјnlГјk / HaftalД±k GГ¶rev Motoru V1 В· mevcut sistemleri sД±raya koyar; yeni sinyal Гјretmez.")
+  816:     st.subheader("GГјnlГјk Operasyon Merkezi")
+  817:     st.caption(
+  818:         "CanlД± adaylar, aday yaЕџam dГ¶ngГјsГј, gerГ§ek sonuГ§lar, deneme portfГ¶yГј ve "
+  819:         "sistem saДџlД±ДџД± gГјnlГјk kullanД±m iГ§in tek bakД±Еџta Г¶zetlenir."
+  820:     )
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:805-819 ---
+  805:             options=tuple(options),
+  806:             key="prebreakout_detail",
+  807:         )
+  808:         _render_result_detail(options[selected])
+  809:
+  810:
+  811:
+  812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+  813: def _render_daily_operations_hub(signals) -> None:
+  814:     # TASK_ENGINE_V1_UI
+  815:     st.caption("GГјnlГјk / HaftalД±k GГ¶rev Motoru V1 В· mevcut sistemleri sД±raya koyar; yeni sinyal Гјretmez.")
+  816:     st.subheader("GГјnlГјk Operasyon Merkezi")
+  817:     st.caption(
+  818:         "CanlД± adaylar, aday yaЕџam dГ¶ngГјsГј, gerГ§ek sonuГ§lar, deneme portfГ¶yГј ve "
+  819:         "sistem saДџlД±ДџД± gГјnlГјk kullanД±m iГ§in tek bakД±Еџta Г¶zetlenir."
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:835-849 ---
+  835:     st.markdown("Tek tuЕџ gГјnlГјk operasyon")
+  836:     if operation_state is None:
+  837:         st.info("BugГјn iГ§in gГјnlГјk operasyon kaydД± henГјz yok.")
+  838:     elif operation_state.status is DailyOperationStatus.COMPLETED:
+  839:         st.success("GГјnlГјk operasyon tamamlandД±")
+  840:     elif operation_state.status is DailyOperationStatus.SKIPPED:
+  841:         st.info("GГјnlГјk operasyon zaten tamamlanmД±ЕџtД±")
+  842:     elif operation_state.status is DailyOperationStatus.BLOCKED:
+  843:         st.error("GГјnlГјk operasyon saДџlД±k kilidinde")
+  844:     else:
+  845:         st.warning("GГјnlГјk operasyon gГјvenli yeniden denemeye hazД±r")
+  846:     if operation_state is not None:
+  847:         st.caption(
+  848:             f"Durum: {operation_state.status.value} В· Deneme: {operation_state.attempt_count} В· "
+  849:             f"Son adД±m: {operation_state.completed_steps[-1] if operation_state.completed_steps else 'HenГјz yok'}"
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:491-505 ---
+  491:                     {
+  492:                         "Hisse": record.symbol.removesuffix(".IS"),
+  493:                         "Sinyal tarihi": record.signal_date,
+  494:                         "AЕџama": record.signal_stage,
+  495:                         "Durum": record.status.value,
+  496:                         "Durum tarihi": record.status_date,
+  497:                         "GeГ§en gГјn": record.elapsed_calendar_days,
+  498:                         "Д°Еџlem gГјnГј": record.observed_session_count,
+  499:                         "En yГјksek %": None if record.max_return_pct is None else round(record.max_return_pct, 2),
+  500:                         "En dГјЕџГјk %": None if record.min_return_pct is None else round(record.min_return_pct, 2),
+  501:                         "Not": record.note,
+  502:                     }
+  503:                     for record in lifecycle_records
+  504:                 ]
+  505:             )
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:545-559 ---
+  545:             performance_table_rows = []
+  546:             for record in performance_records:
+  547:                 row = {
+  548:                     "Hisse": record.symbol.removesuffix(".IS"),
+  549:                     "Sinyal tarihi": record.signal_date,
+  550:                     "AЕџama": record.signal_stage,
+  551:                     "SonuГ§ etiketi": record.label.value,
+  552:                     "Mevcut iЕџlem gГјnГј": record.available_session_count,
+  553:                     "GiriЕџ kapanД±ЕџД±": round(record.entry_close, 4),
+  554:                     "Not": record.note,
+  555:                 }
+  556:                 for horizon in record.horizons:
+  557:                     suffix = f"{horizon.horizon}G"
+  558:                     row[f"{suffix} kapanД±Еџ %"] = None if horizon.close_return_pct is None else round(horizon.close_return_pct, 2)
+  559:                     row[f"{suffix} en yГјksek %"] = None if horizon.max_return_pct is None else round(horizon.max_return_pct, 2)
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:603-617 ---
+  603:         summary = kalibrasyon_ozetini_hesapla(
+  604:             stage_rows,
+  605:             minimum_sample_size=int(minimum_sample_size),
+  606:         )
+  607:
+  608:         metric_left, metric_middle, metric_right = st.columns(3)
+  609:         metric_left.metric("Г–lГ§Гјm kapsamД±", f"%{summary.measurement_coverage_pct:.2f}")
+  610:         metric_middle.metric("Г–lГ§Гјlen aday", summary.measured_count)
+  611:         metric_right.metric("GГјvenilir aЕџama", summary.reliable_stage_count)
+  612:
+  613:         if summary.best_stage is None:
+  614:             st.warning(summary.note)
+  615:         else:
+  616:             st.success(
+  617:                 f"En yГјksek gГ¶zlemsel baЕџarД±: {summary.best_stage} В· "
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:604-618 ---
+  604:             stage_rows,
+  605:             minimum_sample_size=int(minimum_sample_size),
+  606:         )
+  607:
+  608:         metric_left, metric_middle, metric_right = st.columns(3)
+  609:         metric_left.metric("Г–lГ§Гјm kapsamД±", f"%{summary.measurement_coverage_pct:.2f}")
+  610:         metric_middle.metric("Г–lГ§Гјlen aday", summary.measured_count)
+  611:         metric_right.metric("GГјvenilir aЕџama", summary.reliable_stage_count)
+  612:
+  613:         if summary.best_stage is None:
+  614:             st.warning(summary.note)
+  615:         else:
+  616:             st.success(
+  617:                 f"En yГјksek gГ¶zlemsel baЕџarД±: {summary.best_stage} В· "
+  618:                 f"%{summary.best_stage_success_rate_pct:.2f}"
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:817-831 ---
+  817:     st.caption(
+  818:         "CanlД± adaylar, aday yaЕџam dГ¶ngГјsГј, gerГ§ek sonuГ§lar, deneme portfГ¶yГј ve "
+  819:         "sistem saДџlД±ДџД± gГјnlГјk kullanД±m iГ§in tek bakД±Еџta Г¶zetlenir."
+  820:     )
+  821:
+  822:     today = date.today().isoformat()
+  823:     todays_signals = [signal for signal in signals if signal.signal_date == today]
+  824:     e2_count = sum(1 for signal in signals if signal.stage == "E2")
+  825:     e3_count = sum(1 for signal in signals if signal.stage == "E3")
+  826:     e4_count = sum(1 for signal in signals if signal.stage == "E4")
+  827:
+  828:     col1, col2, col3, col4 = st.columns(4)
+  829:     col1.metric("Toplam canlД± aday", len(signals))
+  830:     col2.metric("BugГјnkГј yeni aday", len(todays_signals))
+  831:     col3.metric("E3вЂ“E4 gГјГ§lГј hazД±rlД±k", e3_count + e4_count)
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:818-832 ---
+  818:         "CanlД± adaylar, aday yaЕџam dГ¶ngГјsГј, gerГ§ek sonuГ§lar, deneme portfГ¶yГј ve "
+  819:         "sistem saДџlД±ДџД± gГјnlГјk kullanД±m iГ§in tek bakД±Еџta Г¶zetlenir."
+  820:     )
+  821:
+  822:     today = date.today().isoformat()
+  823:     todays_signals = [signal for signal in signals if signal.signal_date == today]
+  824:     e2_count = sum(1 for signal in signals if signal.stage == "E2")
+  825:     e3_count = sum(1 for signal in signals if signal.stage == "E3")
+  826:     e4_count = sum(1 for signal in signals if signal.stage == "E4")
+  827:
+  828:     col1, col2, col3, col4 = st.columns(4)
+  829:     col1.metric("Toplam canlД± aday", len(signals))
+  830:     col2.metric("BugГјnkГј yeni aday", len(todays_signals))
+  831:     col3.metric("E3вЂ“E4 gГјГ§lГј hazД±rlД±k", e3_count + e4_count)
+  832:     col4.metric("E2 izleme", e2_count)
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:819-833 ---
+  819:         "sistem saДџlД±ДџД± gГјnlГјk kullanД±m iГ§in tek bakД±Еџta Г¶zetlenir."
+  820:     )
+  821:
+  822:     today = date.today().isoformat()
+  823:     todays_signals = [signal for signal in signals if signal.signal_date == today]
+  824:     e2_count = sum(1 for signal in signals if signal.stage == "E2")
+  825:     e3_count = sum(1 for signal in signals if signal.stage == "E3")
+  826:     e4_count = sum(1 for signal in signals if signal.stage == "E4")
+  827:
+  828:     col1, col2, col3, col4 = st.columns(4)
+  829:     col1.metric("Toplam canlД± aday", len(signals))
+  830:     col2.metric("BugГјnkГј yeni aday", len(todays_signals))
+  831:     col3.metric("E3вЂ“E4 gГјГ§lГј hazД±rlД±k", e3_count + e4_count)
+  832:     col4.metric("E2 izleme", e2_count)
+  833:
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:824-838 ---
+  824:     e2_count = sum(1 for signal in signals if signal.stage == "E2")
+  825:     e3_count = sum(1 for signal in signals if signal.stage == "E3")
+  826:     e4_count = sum(1 for signal in signals if signal.stage == "E4")
+  827:
+  828:     col1, col2, col3, col4 = st.columns(4)
+  829:     col1.metric("Toplam canlД± aday", len(signals))
+  830:     col2.metric("BugГјnkГј yeni aday", len(todays_signals))
+  831:     col3.metric("E3вЂ“E4 gГјГ§lГј hazД±rlД±k", e3_count + e4_count)
+  832:     col4.metric("E2 izleme", e2_count)
+  833:
+  834:     operation_state = gunluk_operasyon_durumunu_yukle()
+  835:     st.markdown("Tek tuЕџ gГјnlГјk operasyon")
+  836:     if operation_state is None:
+  837:         st.info("BugГјn iГ§in gГјnlГјk operasyon kaydД± henГјz yok.")
+  838:     elif operation_state.status is DailyOperationStatus.COMPLETED:
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:825-839 ---
+  825:     e3_count = sum(1 for signal in signals if signal.stage == "E3")
+  826:     e4_count = sum(1 for signal in signals if signal.stage == "E4")
+  827:
+  828:     col1, col2, col3, col4 = st.columns(4)
+  829:     col1.metric("Toplam canlД± aday", len(signals))
+  830:     col2.metric("BugГјnkГј yeni aday", len(todays_signals))
+  831:     col3.metric("E3вЂ“E4 gГјГ§lГј hazД±rlД±k", e3_count + e4_count)
+  832:     col4.metric("E2 izleme", e2_count)
+  833:
+  834:     operation_state = gunluk_operasyon_durumunu_yukle()
+  835:     st.markdown("Tek tuЕџ gГјnlГјk operasyon")
+  836:     if operation_state is None:
+  837:         st.info("BugГјn iГ§in gГјnlГјk operasyon kaydД± henГјz yok.")
+  838:     elif operation_state.status is DailyOperationStatus.COMPLETED:
+  839:         st.success("GГјnlГјk operasyon tamamlandД±")
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:841-855 ---
+  841:         st.info("GГјnlГјk operasyon zaten tamamlanmД±ЕџtД±")
+  842:     elif operation_state.status is DailyOperationStatus.BLOCKED:
+  843:         st.error("GГјnlГјk operasyon saДџlД±k kilidinde")
+  844:     else:
+  845:         st.warning("GГјnlГјk operasyon gГјvenli yeniden denemeye hazД±r")
+  846:     if operation_state is not None:
+  847:         st.caption(
+  848:             f"Durum: {operation_state.status.value} В· Deneme: {operation_state.attempt_count} В· "
+  849:             f"Son adД±m: {operation_state.completed_steps[-1] if operation_state.completed_steps else 'HenГјz yok'}"
+  850:         )
+  851:
+  852:     st.markdown("GГјnlГјk iЕџlem sД±rasД±")
+  853:     st.write(
+  854:         "1. Tarama ve yeni E2вЂ“E4 kayД±tlarД± в†’ 2. YaЕџam dГ¶ngГјsГј в†’ "
+  855:         "3. 5/10/20 gГјnlГјk gerГ§ek sonuГ§lar в†’ 4. Deneme portfГ¶yГј в†’ "
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:987-1001 ---
+  987:             for index, row in price_data.iterrows()
+  988:             if index.date() > start_day
+  989:         )
+  990:         trades.append(deneme_islemini_hesapla(signal, observations, config=config))
+  991:
+  992:     summary = deneme_portfoyu_ozeti(trades, initial_capital=config.initial_capital)
+  993:     col1, col2, col3, col4 = st.columns(4)
+  994:     col1.metric("AГ§Д±k pozisyon", summary.open_trade_count)
+  995:     col2.metric("Kapanan pozisyon", summary.closed_trade_count)
+  996:     col3.metric("Net sonuГ§", f"{summary.total_net_pnl:,.2f} TL")
+  997:     col4.metric("PortfГ¶y getirisi", f"%{summary.portfolio_return_pct:.2f}")
+  998:     st.caption(
+  999:         f"Kazanma oranД±: {summary.win_rate_pct if summary.win_rate_pct is not None else 0:.2f}% В· "
+ 1000:         f"Maksimum dГјЕџГјЕџ: %{summary.maximum_drawdown_pct:.2f}"
+ 1001:     )
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:988-1002 ---
+  988:             if index.date() > start_day
+  989:         )
+  990:         trades.append(deneme_islemini_hesapla(signal, observations, config=config))
+  991:
+  992:     summary = deneme_portfoyu_ozeti(trades, initial_capital=config.initial_capital)
+  993:     col1, col2, col3, col4 = st.columns(4)
+  994:     col1.metric("AГ§Д±k pozisyon", summary.open_trade_count)
+  995:     col2.metric("Kapanan pozisyon", summary.closed_trade_count)
+  996:     col3.metric("Net sonuГ§", f"{summary.total_net_pnl:,.2f} TL")
+  997:     col4.metric("PortfГ¶y getirisi", f"%{summary.portfolio_return_pct:.2f}")
+  998:     st.caption(
+  999:         f"Kazanma oranД±: {summary.win_rate_pct if summary.win_rate_pct is not None else 0:.2f}% В· "
+ 1000:         f"Maksimum dГјЕџГјЕџ: %{summary.maximum_drawdown_pct:.2f}"
+ 1001:     )
+ 1002:     table = deneme_portfoyunu_tabloya_cevir(trades)
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1011-1025 ---
+ 1011:     )
+ 1012:
+ 1013:
+ 1014: def _render_operational_health(signals, lifecycle_records, performance_records) -> None:
+ 1015:     st.subheader("Operasyon ve Sistem SaДџlД±ДџД±")
+ 1016:
+ 1017:     class _PortfolioSummary:
+ 1018:         total_trade_count = len(signals)
+ 1019:
+ 1020:     class _DailyView:
+ 1021:         run_date = date.today().isoformat()
+ 1022:         total_signal_count = len(signals)
+ 1023:         missing_observation_symbols = tuple(
+ 1024:             record.symbol
+ 1025:             for record in performance_records
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1015-1029 ---
+ 1015:     st.subheader("Operasyon ve Sistem SaДџlД±ДџД±")
+ 1016:
+ 1017:     class _PortfolioSummary:
+ 1018:         total_trade_count = len(signals)
+ 1019:
+ 1020:     class _DailyView:
+ 1021:         run_date = date.today().isoformat()
+ 1022:         total_signal_count = len(signals)
+ 1023:         missing_observation_symbols = tuple(
+ 1024:             record.symbol
+ 1025:             for record in performance_records
+ 1026:             if int(getattr(record, "available_session_count", 0) or 0) == 0
+ 1027:         )
+ 1028:         portfolio_summary = _PortfolioSummary()
+ 1029:
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1019-1033 ---
+ 1019:
+ 1020:     class _DailyView:
+ 1021:         run_date = date.today().isoformat()
+ 1022:         total_signal_count = len(signals)
+ 1023:         missing_observation_symbols = tuple(
+ 1024:             record.symbol
+ 1025:             for record in performance_records
+ 1026:             if int(getattr(record, "available_session_count", 0) or 0) == 0
+ 1027:         )
+ 1028:         portfolio_summary = _PortfolioSummary()
+ 1029:
+ 1030:     daily_view = _DailyView()
+ 1031:     daily_view.lifecycle_records = tuple(lifecycle_records)
+ 1032:     daily_view.performance_records = tuple(performance_records)
+ 1033:     daily_view.paper_trades = tuple(signals)
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1032-1046 ---
+ 1032:     daily_view.performance_records = tuple(performance_records)
+ 1033:     daily_view.paper_trades = tuple(signals)
+ 1034:     report = operasyon_sagligini_degerlendir(
+ 1035:         daily_view,
+ 1036:         expected_run_date=date.today(),
+ 1037:     )
+ 1038:     if report.ready:
+ 1039:         if report.warning_count:
+ 1040:             st.warning(f"Sistem hazД±r В· {report.warning_count} uyarД±")
+ 1041:         else:
+ 1042:             st.success("Sistem hazД±r")
+ 1043:     else:
+ 1044:         st.error("Sistem hazД±r deДџil" + f" В· {report.error_count} hata")
+ 1045:     st.dataframe(
+ 1046:         pd.DataFrame(operasyon_sagligini_tabloya_cevir(report)),
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1033-1047 ---
+ 1033:     daily_view.paper_trades = tuple(signals)
+ 1034:     report = operasyon_sagligini_degerlendir(
+ 1035:         daily_view,
+ 1036:         expected_run_date=date.today(),
+ 1037:     )
+ 1038:     if report.ready:
+ 1039:         if report.warning_count:
+ 1040:             st.warning(f"Sistem hazД±r В· {report.warning_count} uyarД±")
+ 1041:         else:
+ 1042:             st.success("Sistem hazД±r")
+ 1043:     else:
+ 1044:         st.error("Sistem hazД±r deДџil" + f" В· {report.error_count} hata")
+ 1045:     st.dataframe(
+ 1046:         pd.DataFrame(operasyon_sagligini_tabloya_cevir(report)),
+ 1047:         hide_index=True,
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1037-1051 ---
+ 1037:     )
+ 1038:     if report.ready:
+ 1039:         if report.warning_count:
+ 1040:             st.warning(f"Sistem hazД±r В· {report.warning_count} uyarД±")
+ 1041:         else:
+ 1042:             st.success("Sistem hazД±r")
+ 1043:     else:
+ 1044:         st.error("Sistem hazД±r deДџil" + f" В· {report.error_count} hata")
+ 1045:     st.dataframe(
+ 1046:         pd.DataFrame(operasyon_sagligini_tabloya_cevir(report)),
+ 1047:         hide_index=True,
+ 1048:         width="stretch",
+ 1049:     )
+ 1050:
+ 1051:
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1068-1082 ---
+ 1068:         threshold_modes=threshold_modes, initial_capital=config.initial_capital,
+ 1069:     )
+ 1070:     if evaluation.sufficient_sample:
+ 1071:         st.success(evaluation.note)
+ 1072:     else:
+ 1073:         st.warning(evaluation.note)
+ 1074:     left, middle, right = st.columns(3)
+ 1075:     left.metric("Г–lГ§Гјlen sonuГ§", evaluation.measured_count)
+ 1076:     middle.metric("BaЕџarД±lД±", evaluation.successful_count)
+ 1077:     right.metric("Net portfГ¶y getirisi", f"%{evaluation.portfolio_summary.portfolio_return_pct:.2f}")
+ 1078:     st.dataframe(gercek_sonuc_asama_tablosu(evaluation), hide_index=True, width="stretch")
+ 1079:     threshold_table = gercek_sonuc_esik_tablosu(evaluation)
+ 1080:     if not threshold_table.empty:
+ 1081:         st.markdown("VarsayД±lan / kalibre eЕџik karЕџД±laЕџtД±rmasД±")
+ 1082:         st.dataframe(threshold_table, hide_index=True, width="stretch")
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1069-1082 ---
+ 1069:     )
+ 1070:     if evaluation.sufficient_sample:
+ 1071:         st.success(evaluation.note)
+ 1072:     else:
+ 1073:         st.warning(evaluation.note)
+ 1074:     left, middle, right = st.columns(3)
+ 1075:     left.metric("Г–lГ§Гјlen sonuГ§", evaluation.measured_count)
+ 1076:     middle.metric("BaЕџarД±lД±", evaluation.successful_count)
+ 1077:     right.metric("Net portfГ¶y getirisi", f"%{evaluation.portfolio_summary.portfolio_return_pct:.2f}")
+ 1078:     st.dataframe(gercek_sonuc_asama_tablosu(evaluation), hide_index=True, width="stretch")
+ 1079:     threshold_table = gercek_sonuc_esik_tablosu(evaluation)
+ 1080:     if not threshold_table.empty:
+ 1081:         st.markdown("VarsayД±lan / kalibre eЕџik karЕџД±laЕџtД±rmasД±")
+ 1082:         st.dataframe(threshold_table, hide_index=True, width="stretch")
+
+--- D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:807-821 ---
+  807:         )
+  808:         _render_result_detail(options[selected])
+  809:
+  810:
+  811:
+  812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+  813: def _render_daily_operations_hub(signals) -> None:
+  814:     # TASK_ENGINE_V1_UI
+  815:     st.caption("GГјnlГјk / HaftalД±k GГ¶rev Motoru V1 В· mevcut sistemleri sД±raya koyar; yeni sinyal Гјretmez.")
+  816:     st.subheader("GГјnlГјk Operasyon Merkezi")
+  817:     st.caption(
+  818:         "CanlД± adaylar, aday yaЕџam dГ¶ngГјsГј, gerГ§ek sonuГ§lar, deneme portfГ¶yГј ve "
+  819:         "sistem saДџlД±ДџД± gГјnlГјk kullanД±m iГ§in tek bakД±Еџta Г¶zetlenir."
+  820:     )
+  821:
+
+=== QUALITY / TASK CONTRACT SEARCH ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:236: def task_rows(
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:236: def task_rows(
+D:\Projects\Hisse-Robotu\backend\app\analysis\__pycache__\daily_operation_panel.cpython-314.pyc:93:    İlgili ekran)r   r   r   r!   )r/   r<   s   & r   �	task_rowsr�   �   sU   � � �� �D� 
+D:\Projects\Hisse-Robotu\backend\app\analysis\__pycache__\daily_operation_panel.cpython-314.pyc:93:    İlgili ekran)r   r   r   r!   )r/   r<   s   & r   �	task_rowsr�   �   sU   � � �� �D� 
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:61: maturity_min_sessions=6, maturity_move_pct=18.0, peak_score_drop=3.0):
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:93: if sessions >= maturity_min_sessions or move >= maturity_move_pct:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\__pycache__\prebreakout_movement_age.cpython-314.pyc:40:    �A:�A:�early_rank_low�early_rank_high�maturity_min_sessions�maturity_move_pctg      2@�peak_score_dropg      @c               �   � V ^8�  d   QhRR/# )rM   rH   ztuple[RankingSnapshot, ...]r   )�formats   "r   �__annotate__r]   <   s   � � @� @�"<� @r   c               �\  � V '       gB   \        R R R R ^ R R R R\        P                  \        P                  \
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:814: # TASK_ENGINE_V1_UI
+D:\Projects\Hisse-Robotu\backend\app\ui\__pycache__\prebreakout_dashboard.cpython-314.pyc:279: AX&�,AY�+#AY*�7CAY>�U#AAZ�W AW1	�W4AX#�W?AX�XAX#�X&AY	�X1AY	�YAY�YAY	�YAY�YAY'	�Y*AY;	)�QualityState�
+D:\Projects\Hisse-Robotu\backend\app\ui\__pycache__\prebreakout_dashboard.cpython-314.pyc:467:    r   r   r   r   r   r   r   r   r   r   r   r   r   �.backend.app.prebreakout.prebreakout_live_watchr   r   r   �7backend.app.prebreakout.prebreakout_candidate_lifecycler   r   r    r!   �4backend.app.prebreakout.prebreakout_live_performancer"   r#   �:backend.app.prebreakout.prebreakout_performance_comparisonr$   r%   �3backend.app.prebreakout.prebreakout_paper_portfolior&   r'   r(   r)   �5backend.app.prebreakout.prebreakout_release_readinessr*   r+   �6backend.app.prebreakout.prebreakout_operational_healthr,   r-   �:backend.app.prebreakout.prebreakout_real_result_evaluationr.   r/   r0   �4backend.app.prebreakout.prebreakout_threshold_policyr1   �3backend.app.prebreakout.prebreakout_daily_operationr2   r3   �5backend.app.prebreakout.prebreakout_operation_archiver4   r5   r6   r7   �4backend.app.prebreakout.prebreakout_operation_alertsr8   r9   r:   �1backend.app.prebreakout.prebreakout_alarm_journalr;   r<   r=   r>   �*backend.app.prebreakout.prebreakout_enginer?   �*backend.app.prebreakout.prebreakout_modelsr@   rA   �,backend.app.prebreakout.prebreakout_universerB   rC   rD   rE   rF   rG   r$  r   r�   r�   r�   r�  �#backend.app.workflow.task_engine_v1r�  r�  r�  rD  �LEGACY_MANAGER_SUMMARY_LABELr�  r�  rQ  rR  rS  rO   rS   rQ   �<module>r%     s"  �� "� $� � � � �� �� � � � �$� �
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:16: class QualityState:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:32: def block_reason(state: QualityState) -> str | None:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:45: quality: QualityState,
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:17: data_ready: bool = True
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:33: if not state.data_ready:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:18: freshness_ok: bool = True
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:35: if not state.freshness_ok:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:19: security_lock: bool = False
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:37: if state.security_lock:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:9: PRE_SESSION = "PRE_SESSION"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:52: if phase is WorkflowPhase.PRE_SESSION:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:57: Task("pre_session","Seans öncesi bağlamı incele","Seans Öncesi Bağlam",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:10: IN_SESSION = "IN_SESSION"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:61: if phase is WorkflowPhase.IN_SESSION:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:11: POST_SESSION = "POST_SESSION"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:69: if phase is WorkflowPhase.POST_SESSION:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:12: WEEKLY_REVIEW = "WEEKLY_REVIEW"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:77: if phase is WorkflowPhase.WEEKLY_REVIEW:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:1: # TASK_ENGINE_V1
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:10:    r   �__static_attributes__r   �    �?D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.pyr   r      s   � ��K��J�!�L�#�Mr   r   T)�frozenc                  �B   � ] tR t^t$ RtR]R&   RtR]R&   RtR]R&   RtR# )	�QualityStateT�bool�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:11: data_ready�freshness_okF�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:11: data_ready�freshness_okF�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:12: security_lockr   N)	r
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:6: WorkflowPhase�PRE_SESSION�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:28: Piyasa Rejimi�newsz Haber ve olay riskini kontrol etz"Piyasa Haber, Olay ve Etki Merkezi�pre_sessionu   Seans öncesi bağlamı inceleu   Seans Öncesi Bağlam�	shortlistu(   Bugünkü kısa listeyi gözden geçir (�)u   Momentum Keşif�	watchlistu    Kısa listedeki adayları izle (�	technicalu3   İşleme yaklaşan adayları teknik olarak doğrulau   Güncel Teknik Analiz�risku$   Yeni işlem risk kontrolünü uygulau   İşlem Kayıp Analizi�	positionsu   Açık pozisyonları yönet (u   Gölge Portföyu    Açık pozisyonları güncelle (�outcomesu   Sinyal sonuçlarını güncelleu   Sinyal Sonuçları�journalu2   İşlem günlüğü ve kayıp analizini kontrol et�tomorrowu#   Ertesi gün aday listesini hazırlau   Ön Yükseliş Hazırlıku"   Haftalık piyasa rejimini doğrula�radaru3   Fırsat Radarı haftalık taramasını çalıştıru   Fırsat Radarı�momentumu   Momentum adaylarını tara�prebreakoutu    Ön yükseliş adaylarını tara�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:7: IN_SESSION�POST_SESSION�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:7: IN_SESSION�POST_SESSION�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:8: WEEKLY_REVIEW� N)	�__name__�
+D:\Projects\Hisse-Robotu\backend\app\workflow\__pycache__\task_engine_v1.cpython-314.pyc:10:    r   �__static_attributes__r   �    �?D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.pyr   r      s   � ��K��J�!�L�#�Mr   r   T)�frozenc                  �B   � ] tR t^t$ RtR]R&   RtR]R&   RtR]R&   RtR# )	�QualityStateT�bool�
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:8: task_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:147: assert task_rows(result.tasks)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:148: assert "İlgili ekran" in task_rows(result.tasks)[0]
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:8: task_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:147: assert task_rows(result.tasks)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:148: assert "İlgili ekran" in task_rows(result.tasks)[0]
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:36: assert "task_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:36: assert "task_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:33: r=analyze_movement_age(h,maturity_min_sessions=5)
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:68: r=analyze_movement_age(h,maturity_min_sessions=3,peak_score_drop=3)
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:2: QualityState,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:9: quality=QualityState(freshness_ok=False)
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:25: quality=QualityState(),
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:38: quality=QualityState(security_lock=True),
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:9: quality=QualityState(freshness_ok=False)
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:38: quality=QualityState(security_lock=True),
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:35: def test_pre_session_quality_gate():
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:37: phase=WorkflowPhase.PRE_SESSION,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:11: phase=WorkflowPhase.IN_SESSION,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:24: phase=WorkflowPhase.WEEKLY_REVIEW,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:1: from backend.app.workflow.task_engine_v1 import (
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_daily_operation_panel.cpython-314-pytest-9.1.1.pyc:8: alert_rows�	task_rows)�HorizonOutcome�
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_daily_operation_panel.cpython-314-pytest-9.1.1.pyc:8: alert_rows�	task_rows)�HorizonOutcome�
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_daily_operation_panel_dashboard.cpython-314-pytest-9.1.1.pyc:34: alert_rows�	task_rowsr   r   r   r%   s        r
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_daily_operation_panel_dashboard.cpython-314-pytest-9.1.1.pyc:34: alert_rows�	task_rowsr   r   r   r%   s        r
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_prebreakout_movement_age.cpython-314-pytest-9.1.1.pyc:161: # )r0   )�maturity_min_sessionsr   r1   r   r   r]   r   r3   r   Nr   r   r_   )zL%(py2)s
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_pre_session_context_role_clarity_v11.cpython-314-pytest-9.1.1.pyc:3: R tR# )�    N)�Pathzdashboard.pyc                �$   � V ^8�  d   QhR\         /# )�   �return)�str)�formats   "�SD:\Projects\Hisse-Robotu\backend\tests\test_pre_session_context_role_clarity_v11.py�__annotate__r	      s   � � 1� 1�� 1�    c                  �.   � \         P                  R R7      # )zutf-8)�encoding)�	DASHBOARD�	read_text� r
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:3: R tR tR# )�    N)�QualityState�
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:14: # u upi )F)�freshness_ok)�phase�quality�shortlist_count�open_position_count�	technicalT�py1�py3�py6�assert %(py8)s�py8N�risk�	positions��is�z/%(py3)s
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:74: security_lock)r   r   r	   �data_qualityFr   r
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:75:    r   r   r   N�regime�	shortlistr   r   )r   r   �PRE_SESSIONr   r   r   r   r   r   r   r   )	r   r   r    r!   r"   r#   r$   r%   r&   s	            r'   �test_pre_session_quality_gater;   #   sx  � �
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:17: IN_SESSION�task_id�blocked�
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:58: WEEKLY_REVIEWr   �
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:20:              �=D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py�?test_stale_data_blocks_new_analysis_but_not_position_managementr(      s�  � ��e�,�G�
+D:\Projects\Hisse-Robotu\backend\tests\__pycache__\test_task_engine_v1.cpython-314-pytest-9.1.1.pyc:80: �builtinsr/   �_pytest.assertion.rewrite�	assertion�rewriter   �#backend.app.workflow.task_engine_v1r   r   r   r(   r4   r;   � �    r'   �<module>rC      s#   ��  � � � �/�
+
+=== TARGET TEST INVENTORY ===
+D:\Projects\Hisse-Robotu\backend\tests\prebreakout_test_helpers.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_shadow.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_prebreakout_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_prebreakout_validation_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_data_freshness_message_semantics.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_market_data_freshness_behavior.py
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_fail_fast.py
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_freshness_regime_merge.py
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_preflight_freshness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_fast_block_exact_v11.py
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_sources_fast_block_v11.py
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_ops_integrity_fast_block_v11.py
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_quality_core_fast_block_v11.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_alarm_journal.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_backtest.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_confidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_intervals.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_leader_stability.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_threshold_recommendations.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_threshold_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_lifecycle.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_controlled_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_monitor.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_archive_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_diagnosis_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_followup_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_recovery_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_rank_history.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_alarm_journal.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_calibration_confidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_calibration_intervals.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_daily_operation_control.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_daily_operations_hub.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_leader_stability.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_lifecycle.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_live_performance.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_live_watch.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_operation_alerts.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_operation_archive.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_operational_health.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_paper_portfolio.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_performance_comparison.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_performance_label.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_real_result_evaluation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_threshold_recommendations.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_threshold_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar_ui.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_engine.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_engine_threshold_policy.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_features.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_filters.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_historical_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_performance.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_watch.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_watch_cooldown.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_watch_session_state.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_missed_opportunity.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_models.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_momentum_gate.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_no_lookahead.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_action_summary.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_alerts.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_archive.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_closure.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_confidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_diagnosis.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_followup.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_recovery.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operational_health.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_paper_portfolio.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_performance_comparison.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_performance_label.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_real_result_evaluation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_regime_performance.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_report.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_report_performance_label.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_scan_radar_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_score.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_score_threshold_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_score_threshold_calibration_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_stage.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_threshold_policy.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_universe.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_calibration_gate.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_calibration_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_closure.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_decision_history.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_decision_stability.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_first_live_evaluation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_live_closure.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_observation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_sample_adequacy.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_evidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_no_lookahead.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_report.py
+D:\Projects\Hisse-Robotu\backend\tests\test_safety_lock.py
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_quality_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint177_daily_operations_ui_contract.py
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_v11_closeout_dashboard_lock.py
+
+=== TASK ENGINE / RETRY SAFETY CHECK ===
+
+**********************
+Windows PowerShell transcript end
+End time: 20260818102230
+**********************

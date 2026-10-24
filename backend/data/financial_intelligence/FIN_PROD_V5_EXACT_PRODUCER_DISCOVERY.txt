@@ -1,0 +1,164 @@
+﻿FIN_PROD_V5_EXACT_PRODUCER_DISCOVERY
+
+===== EXISTING_ARTIFACTS =====
+ARTIFACT_HITS=0
+
+===== EXACT_CODE_PRODUCERS =====
+FILE=backend\app\analysis\momentum_discovery.py
+FIELDS=goreceli_guc_puani
+FUNCTION=<module/class-body>
+LINES=102-108
+00102:     kapanis: float
+00103:     momentum_skoru: int
+00104:     sinif: str
+00105:     goreceli_guc_puani: int
+00106:     fiyat_ivmesi_puani: int
+00107:     hacim_birikimi_puani: int
+00108:     kirilim_hazirligi_puani: int
+---
+FILE=backend\app\analysis\momentum_discovery.py
+FIELDS=trend_puani
+FUNCTION=<module/class-body>
+LINES=106-112
+00106:     fiyat_ivmesi_puani: int
+00107:     hacim_birikimi_puani: int
+00108:     kirilim_hazirligi_puani: int
+00109:     trend_puani: int
+00110:     likidite_puani: int
+00111:     risk_kalitesi_puani: int
+00112:     getiri_5g: float
+---
+FILE=backend\app\analysis\momentum_discovery.py
+FIELDS=likidite_puani
+FUNCTION=<module/class-body>
+LINES=107-113
+00107:     hacim_birikimi_puani: int
+00108:     kirilim_hazirligi_puani: int
+00109:     trend_puani: int
+00110:     likidite_puani: int
+00111:     risk_kalitesi_puani: int
+00112:     getiri_5g: float
+00113:     getiri_20g: float
+---
+FILE=backend\app\analysis\momentum_discovery.py
+FIELDS=goreceli_guc_puani,likidite_puani,trend_puani
+FUNCTION=_adayi_olustur
+SIGNATURE=sembol: str, ham: dict[str, object], goreceli_yuzdelik: float, goreceli_egim_yuzdelik: float, teknik: object
+LINES=896-940
+00896:         trend=trend,
+00897:     )
+00898: 
+00899:     return MomentumCandidate(
+00900:         sembol=sembol,
+00901:         analiz_tarihi=str(ham["analiz_tarihi"]),
+00902:         kapanis=kapanis,
+00903:         momentum_skoru=toplam,
+00904:         sinif=sinif,
+00905:         goreceli_guc_puani=goreceli,
+00906:         fiyat_ivmesi_puani=fiyat,
+00907:         hacim_birikimi_puani=hacim,
+00908:         kirilim_hazirligi_puani=setup,
+00909:         trend_puani=trend,
+00910:         likidite_puani=likidite,
+00911:         risk_kalitesi_puani=risk_kalitesi,
+00912:         getiri_5g=g5,
+00913:         getiri_20g=g20,
+00914:         getiri_60g=g60,
+00915:         hacim_orani=hacim_orani,
+00916:         yirmi_gunluk_zirve_uzakligi=zirve,
+00917:         ortalama_tl_hacim=tl_hacim,
+00918:         rsi14=rsi,
+00919:         atr_yuzde=atr,
+00920:         teknik_skor=teknik_skor,
+00921:         teknik_gorunum=teknik_gorunum,
+00922:         risk_odul_orani=rr,
+00923:         risk_odul_uygun=rr_uygun,
+00924:         kirilim=bool(ham["kirilim"]),
+00925:         sikisma=bool(ham["sikisma"]),
+00926:         asiri_uzamis=asiri,
+00927:         pozitif_nedenler=tuple(dict.fromkeys(pozitif)),
+00928:         riskler=tuple(dict.fromkeys(riskler)),
+00929:         yakin_direnc=yakin_direnc,
+00930:         goreceli_guc_egimi=goreceli_egim,
+00931:         hacim_egimi=hacim_egimi,
+00932:         rsi_egimi=rsi_egimi,
+00933:         macd_histogram_egimi=macd_egimi,
+00934:         hazirlik_durumu=hazirlik,
+00935:         kirilim_tetik_seviyesi=kirilim_tetik_seviyesi,
+00936:         izleme_disi_nedeni=izleme_disi_nedeni,
+00937:     )
+00938: 
+00939: 
+00940: def _izleme_disi_nedeni(
+---
+FILE=backend\app\analysis\signal_engine.py
+FIELDS=trend_puani
+FUNCTION=<module/class-body>
+LINES=20-26
+00020:     skor: int
+00021:     karar: str
+00022: 
+00023:     trend_puani: int
+00024:     momentum_puani: int
+00025:     hacim_puani: int
+00026:     risk_puani: int
+---
+FILE=backend\app\analysis\signal_engine.py
+FIELDS=trend_puani
+FUNCTION=sinyal_uret
+SIGNATURE=veri: pd.DataFrame, risk_plani: RiskPlan
+LINES=86-96
+00086:     pozitif_nedenler: list[str] = []
+00087:     riskler: list[str] = []
+00088: 
+00089:     trend_puani = _trend_puani_hesapla(
+00090:         veri=gecerli_veri,
+00091:         pozitif_nedenler=pozitif_nedenler,
+00092:         riskler=riskler,
+00093:     )
+00094: 
+00095:     momentum_puani = _momentum_puani_hesapla(
+00096:         son=son,
+---
+FILE=backend\app\analysis\signal_engine.py
+FIELDS=trend_puani
+FUNCTION=sinyal_uret
+SIGNATURE=veri: pd.DataFrame, risk_plani: RiskPlan
+LINES=129-144
+00129:         risk_plani=risk_plani,
+00130:     )
+00131: 
+00132:     return SignalResult(
+00133:         skor=toplam_skor,
+00134:         karar=karar,
+00135:         trend_puani=trend_puani,
+00136:         momentum_puani=momentum_puani,
+00137:         hacim_puani=hacim_puani,
+00138:         risk_puani=risk_puani,
+00139:         pozitif_nedenler=tuple(pozitif_nedenler),
+00140:         riskler=tuple(riskler),
+00141:     )
+00142: 
+00143: 
+00144: def _trend_puani_hesapla(
+---
+FILE=backend\app\analysis\trend_scan_policy.py
+FIELDS=trend_puani
+FUNCTION=<module/class-body>
+LINES=11-17
+00011: 
+00012: class TrendCandidateLike(Protocol):
+00013:     momentum_skoru: int
+00014:     trend_puani: int
+00015:     yirmi_gunluk_zirve_uzakligi: float
+00016:     kirilim: bool
+00017:     sinif: str
+---
+PRODUCER_HITS=8
+
+===== MOMENTUM_EXECUTION_ENTRYPOINTS =====
+METHOD=MomentumDiscoveryEngine.analiz_et|ARGS=self, veriler: dict[str, pd.DataFrame], ilerleme_bildirimi: ProgressCallback | None=None|RET=tuple[tuple[MomentumCandidate, ...], tuple[MomentumFailure, ...]]
+FUNC=momentum_aday_tablosu|ARGS=sonuc: MomentumDiscoveryResult|RET=tuple[dict[str, object], ...]
+FUNC=_adayi_olustur|ARGS=sembol: str, ham: dict[str, object], goreceli_yuzdelik: float, goreceli_egim_yuzdelik: float, teknik: object|RET=MomentumCandidate
+
+FIN_PROD_V5_EXACT_PRODUCER_DISCOVERY=PASS

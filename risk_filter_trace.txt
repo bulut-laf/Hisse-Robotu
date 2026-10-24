@@ -1,0 +1,102 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py:339: aday.risk_plani.risk_odul_orani,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:122: risk_odul_orani: float
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:123: risk_odul_uygun: bool
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:604: "Risk/Getiri": round(aday.risk_odul_orani, 2),
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:838: rr = float(getattr(risk_plani, "risk_odul_orani"))
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:839: rr_uygun = bool(getattr(risk_plani, "filtreyi_gecti"))
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:922: risk_odul_orani=rr,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:923: risk_odul_uygun=rr_uygun,
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_export.py:33: "Risk_Odul",
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_export.py:99: if hisse.risk_plani.filtreyi_gecti
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_export.py:113: "Risk_Odul": (
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_export.py:114: f"{hisse.risk_plani.risk_odul_orani:.2f}"
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_export.py:139: "Risk_Odul": "",
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_filter.py:29: risk_odul_filtresi_gerekli: bool = False
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_filter.py:158: kriterler.risk_odul_filtresi_gerekli
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_filter.py:159: and not sonuc.risk_plani.filtreyi_gecti
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_profiles.py:32: risk_odul_filtresi_gerekli=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_profiles.py:45: risk_odul_filtresi_gerekli=True,
+D:\Projects\Hisse-Robotu\backend\app\analysis\scan_profiles.py:61: risk_odul_filtresi_gerekli=True,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_engine.py:333: if risk_plani.filtreyi_gecti:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_engine.py:389: and risk_plani.filtreyi_gecti
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_analyzer.py:245: minimum_risk_odul=2.00,
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_analyzer.py:256: minimum_risk_odul=2.00,
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_scanner.py:143: -sonuc.risk_plani.risk_odul_orani,
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_scanner.py:234: -sonuc.risk_plani.risk_odul_orani,
+D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py:145: for value in (plan.risk_odul_1, plan.risk_odul_2)
+D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py:161: for value in (plan.risk_odul_1, plan.risk_odul_2)
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:75: risk_odul_1: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:76: risk_odul_2: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:96: risk_odul_1: float
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:97: risk_odul_2: float
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:154: minimum_risk_odul: float = 2.00,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:168: minimum_risk_odul=minimum_risk_odul,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:215: minimum_risk_odul=minimum_risk_odul,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:274: risk_odul_1=seviyeler.risk_odul_1,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:275: risk_odul_2=seviyeler.risk_odul_2,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:363: minimum_risk_odul: float,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:434: asgari_hedef_2 = referans_giris + risk * minimum_risk_odul
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:448: hedef_2_kaynagi = f"{minimum_risk_odul:.2f}R ana hedef"
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:450: risk_odul_1 = (hedef_1 - referans_giris) / risk
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:451: risk_odul_2 = (hedef_2 - referans_giris) / risk
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:461: risk_odul_1=float(risk_odul_1),
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:462: risk_odul_2=float(risk_odul_2),
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:596: risk_odul_1=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:597: risk_odul_2=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:690: minimum_risk_odul: float,
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:702: if minimum_risk_odul <= 0:
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:20: minimum_risk_reward: float
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:123: or snapshot.risk_reward_ratio < parameters.minimum_risk_reward
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:250: minimum_risk_reward=risk_reward,
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:519: "Risk/getiri eşiği": item.parameters.minimum_risk_reward,
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:550: "Risk/getiri eşiği": item.parameters.minimum_risk_reward,
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:428: "risk_odul_1": plan.risk_odul_1,
+D:\Projects\Hisse-Robotu\backend\app\history\backtest_history.py:429: "risk_odul_2": plan.risk_odul_2,
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:128: kriterler.risk_odul_filtresi_gerekli
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:364: risk_plani.risk_odul_orani,
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:367: risk_plani.filtreyi_gecti
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:20: risk_odul_gerekli: bool
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:41: risk_odul_orani: float | None
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:188: risk_odul_gerekli=bool(
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history_reader.py:321: risk_odul_orani=(
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_engine.py:38: if features.risk_odul >= 1.5:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_engine.py:98: if features.risk_odul < active_config.minimum_risk_odul:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_features.py:199: risk_odul=float(risk_reward),
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_live_watch.py:86: "risk_odul": float(features.risk_odul),
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_models.py:26: minimum_risk_odul: float = 1.5
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_models.py:57: risk_odul: float
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_models.py:68: risk_odul: int
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_models.py:79: + self.risk_odul
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_score.py:73: if features.risk_odul >= 2.0:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_score.py:75: elif features.risk_odul >= 1.5:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_score.py:85: risk_odul=_clamp(risk_reward, 5),
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_report.py:41: None if features is None else features.risk_odul
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:25: risk_odul_orani: float
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:29: minimum_risk_odul: float
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:30: filtreyi_gecti: bool
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:38: minimum_risk_odul: float = 2.00,
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:63: minimum_risk_odul:
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:72: minimum_risk_odul=minimum_risk_odul,
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:95: risk_odul_orani = odul_tutari / risk_tutari
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:100: filtreyi_gecti = (
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:101: risk_odul_orani > minimum_risk_odul
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:103: risk_odul_orani,
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:104: minimum_risk_odul,
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:116: risk_odul_orani=float(risk_odul_orani),
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:120: minimum_risk_odul=float(minimum_risk_odul),
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:121: filtreyi_gecti=filtreyi_gecti,
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:155: minimum_risk_odul: float,
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:178: if minimum_risk_odul <= 0:
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:17: minimum_risk_odul: float = 2.00,
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:45: if minimum_risk_odul <= 0:
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:75: risk_odul_orani = (
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:83: filtreyi_gecti = (
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:84: risk_odul_orani > minimum_risk_odul
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:86: risk_odul_orani,
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:87: minimum_risk_odul,
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:99: risk_odul_orani=float(
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:100: risk_odul_orani
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:107: minimum_risk_odul=float(
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:108: minimum_risk_odul
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:110: filtreyi_gecti=filtreyi_gecti,
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:165: "Risk/ödül": None if features is None else round(features.risk_odul, 2),

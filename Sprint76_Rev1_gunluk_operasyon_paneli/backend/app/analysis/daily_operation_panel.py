@@ -1,0 +1,245 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import date, datetime
+from typing import Iterable
+
+from ..analysis.signal_outcome_tracking import SignalOutcome
+from ..data.delayed_data_pilot import PilotLogRecord
+from ..history.trade_journal import TradeRecord
+
+
+@dataclass(frozen=True)
+class OperationAlert:
+    priority: int
+    level: str
+    title: str
+    detail: str
+
+
+@dataclass(frozen=True)
+class OperationTask:
+    priority: int
+    title: str
+    detail: str
+    target_module: str
+
+
+@dataclass(frozen=True)
+class DailyOperationSummary:
+    delayed_data_status: str
+    delayed_data_age_minutes: float | None
+    delayed_data_locked: bool
+    pending_signal_horizons: int
+    completed_signal_horizons: int
+    signal_record_count: int
+    trade_record_count: int
+    shadow_trade_count: int
+    real_trade_count: int
+    alerts: tuple[OperationAlert, ...]
+    tasks: tuple[OperationTask, ...]
+
+
+def _latest_pilot(
+    records: Iterable[PilotLogRecord],
+) -> PilotLogRecord | None:
+    items = tuple(records)
+    if not items:
+        return None
+    return max(items, key=lambda item: item.received_time)
+
+
+def _signal_counts(
+    outcomes: Iterable[SignalOutcome],
+) -> tuple[int, int, int]:
+    records = tuple(outcomes)
+    pending = 0
+    completed = 0
+    for outcome in records:
+        for horizon in outcome.horizons:
+            if horizon.available:
+                completed += 1
+            else:
+                pending += 1
+    return len(records), pending, completed
+
+
+def build_daily_operation_summary(
+    *,
+    pilot_records: Iterable[PilotLogRecord],
+    signal_outcomes: Iterable[SignalOutcome],
+    trade_records: Iterable[TradeRecord],
+) -> DailyOperationSummary:
+    latest = _latest_pilot(pilot_records)
+    signals, pending, completed = _signal_counts(signal_outcomes)
+    trades = tuple(trade_records)
+
+    shadow_count = sum(
+        item.account_type.casefold().startswith("deneme")
+        for item in trades
+    )
+    real_count = len(trades) - shadow_count
+
+    alerts: list[OperationAlert] = []
+    tasks: list[OperationTask] = []
+
+    if latest is None:
+        delayed_status = "Ölçüm yok"
+        delayed_age = None
+        delayed_locked = True
+        alerts.append(
+            OperationAlert(
+                1,
+                "Kritik",
+                "Gecikmeli veri ölçümü yok",
+                "Gün içi veri kalitesi ve gecikme durumu doğrulanamadı.",
+            )
+        )
+        tasks.append(
+            OperationTask(
+                1,
+                "Gecikmeli veriyi güncelle",
+                "Pilot ekranda en az bir ölçüm alın.",
+                "Gecikmeli Veri Pilotu",
+            )
+        )
+    else:
+        delayed_status = latest.status
+        delayed_age = float(latest.measured_delay_minutes)
+        delayed_locked = bool(latest.locked)
+        if latest.locked:
+            alerts.append(
+                OperationAlert(
+                    1,
+                    "Kritik",
+                    "Veri güvenlik kilidi aktif",
+                    latest.status,
+                )
+            )
+            tasks.append(
+                OperationTask(
+                    1,
+                    "Veri kaynağını yeniden kontrol et",
+                    "Yeni ölçüm alıp eksik bar ve gecikmeyi doğrulayın.",
+                    "Gecikmeli Veri Pilotu",
+                )
+            )
+        elif latest.preview_only:
+            alerts.append(
+                OperationAlert(
+                    3,
+                    "Bilgi",
+                    "Gün içi ön izleme",
+                    "Gecikmeli veri kesin işlem sinyali değildir.",
+                )
+            )
+
+        if latest.missing_bar_count > 0:
+            alerts.append(
+                OperationAlert(
+                    2,
+                    "Uyarı",
+                    "Eksik gün içi bar",
+                    f"{latest.missing_bar_count} bar eksik.",
+                )
+            )
+
+    if pending > 0:
+        alerts.append(
+            OperationAlert(
+                2,
+                "Uyarı",
+                "Bekleyen sonuç ölçümleri",
+                f"{pending} adet 5/10/20 günlük ölçüm henüz tamamlanmadı.",
+            )
+        )
+        tasks.append(
+            OperationTask(
+                2,
+                "Sinyal sonuçlarını güncelle",
+                "Tamamlanan ölçüm ufuklarını yeniden hesaplayın.",
+                "Sinyal Sonuçları",
+            )
+        )
+
+    if signals == 0:
+        tasks.append(
+            OperationTask(
+                2,
+                "İlk sinyal kaydını oluştur",
+                "Karar matrisi sonucu için referans kayıt oluşturun.",
+                "Sinyal Sonuçları",
+            )
+        )
+
+    if shadow_count == 0:
+        tasks.append(
+            OperationTask(
+                3,
+                "Gölge işlem kaydı oluştur",
+                "Gerçek para kullanmadan işlem günlüğü verisi biriktirin.",
+                "İşlem Kayıp Analizi",
+            )
+        )
+
+    tasks.append(
+        OperationTask(
+            4,
+            "Günlük teknik taramayı çalıştır",
+            "Günlük ve haftalık karar matrisi adaylarını gözden geçirin.",
+            "BIST Toplu Tarama",
+        )
+    )
+    tasks.append(
+        OperationTask(
+            5,
+            "Temel analiz bağlamını kontrol et",
+            "Adayların temel kalite ve sektör görünümünü inceleyin.",
+            "Temel Analiz",
+        )
+    )
+
+    alerts.sort(key=lambda item: item.priority)
+    tasks.sort(key=lambda item: item.priority)
+
+    return DailyOperationSummary(
+        delayed_data_status=delayed_status,
+        delayed_data_age_minutes=delayed_age,
+        delayed_data_locked=delayed_locked,
+        pending_signal_horizons=pending,
+        completed_signal_horizons=completed,
+        signal_record_count=signals,
+        trade_record_count=len(trades),
+        shadow_trade_count=shadow_count,
+        real_trade_count=real_count,
+        alerts=tuple(alerts),
+        tasks=tuple(tasks),
+    )
+
+
+def alert_rows(
+    alerts: Iterable[OperationAlert],
+) -> list[dict[str, object]]:
+    return [
+        {
+            "Öncelik": item.priority,
+            "Seviye": item.level,
+            "Başlık": item.title,
+            "Açıklama": item.detail,
+        }
+        for item in alerts
+    ]
+
+
+def task_rows(
+    tasks: Iterable[OperationTask],
+) -> list[dict[str, object]]:
+    return [
+        {
+            "Öncelik": item.priority,
+            "Yapılacak işlem": item.title,
+            "Açıklama": item.detail,
+            "İlgili ekran": item.target_module,
+        }
+        for item in tasks
+    ]

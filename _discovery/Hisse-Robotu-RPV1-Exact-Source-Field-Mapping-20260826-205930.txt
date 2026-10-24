@@ -1,0 +1,433 @@
+=== HISSE ROBOTU тАФ RPV1 EXACT SOURCEтЖТFIELD MAPPING ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+MEMORY_MUTATION=NO
+SELF_REFERENCE_EXCLUDED=YES
+TESTS_EXCLUDED=YES
+ROLLBACK_DISCOVERY_EXCLUDED=YES
+
+PRODUCTION_PY_FILES_SCANNED=487
+
+=== 1. CANONICAL FUNDAMENTAL PIPELINE ===
+MODULE=backend.app.data.fundamental_data
+PATH=D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py
+SHA256=795de3f72814c5f4befd28d3530e7054fe5d965b8e0bf4b91fdbe0be9ecc7754
+CLASS=FundamentalDataError
+CLASS=FundamentalFreshnessPolicy
+DATACLASS_FIELDS=maximum_age_days|future_tolerance_days
+CLASS=FundamentalFreshnessResult
+DATACLASS_FIELDS=status|latest_period_end|age_days|locked|explanation
+FUNCTION=periods_from_records(records: 'Iterable[Mapping[str, object]]') -> 'list[FinancialPeriod]'
+FUNCTION=periods_from_csv_bytes(payload: 'bytes') -> 'list[FinancialPeriod]'
+FUNCTION=periods_from_json_bytes(payload: 'bytes') -> 'list[FinancialPeriod]'
+FUNCTION=load_fundamental_file(path: 'str | Path') -> 'list[FinancialPeriod]'
+FUNCTION=evaluate_fundamental_freshness(periods: 'Iterable[FinancialPeriod]', *, today: 'date | None' = None, policy: 'FundamentalFreshnessPolicy' = FundamentalFreshnessPolicy(maximum_age_days=190, future_tolerance_days=2)) -> 'FundamentalFreshnessResult'
+
+MODULE=backend.app.analysis.fundamental_analysis
+PATH=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py
+SHA256=4a031d0f283702ea659eaad2e6bd87cd311fa0676376c030023d5c8dd6cee4c4
+FUNCTION=calculate_ratios(period: 'FinancialPeriod') -> 'FundamentalRatios'
+FUNCTION=build_fundamental_snapshot(periods: 'list[FinancialPeriod]', *, source_metadata: 'dict[str, str] | None' = None) -> 'FundamentalSnapshot'
+
+MODULE=backend.app.analysis.fundamental_quality
+PATH=D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py
+SHA256=56d0961d1adf32b80668ace9df368c43cf834f0bd0f18c7704af624d2b835397
+CLASS=FundamentalQualityComponent
+DATACLASS_FIELDS=name|score|maximum_score|reasons|risks
+CLASS=FundamentalQualityScore
+DATACLASS_FIELDS=symbol|period_key|total_score|profitability|growth|leverage|liquidity|cash_flow|locked|explanation
+FUNCTION=calculate_fundamental_quality(snapshot: 'FundamentalSnapshot', freshness: 'FundamentalFreshnessResult') -> 'FundamentalQualityScore'
+CLASS=OptionalFundamentalFilterResult
+DATACLASS_FIELDS=accepted|rejected|missing
+FUNCTION=apply_optional_fundamental_filter(candidates: 'Iterable[T]', *, symbol_getter, scores: 'Mapping[str, FundamentalQualityScore]', enabled: 'bool', minimum_score: 'int') -> 'OptionalFundamentalFilterResult'
+
+=== 2. CORE FUNCTION SOURCE ===
+--- backend.app.data.fundamental_data.periods_from_csv_bytes ---
+def periods_from_csv_bytes(
+    payload: bytes,
+) -> list[FinancialPeriod]:
+    try:
+        text = payload.decode("utf-8-sig")
+    except UnicodeDecodeError as exc:
+        raise FundamentalDataError(
+            "Bilan├зo CSV dosyas─▒ UTF-8 olmal─▒d─▒r."
+        ) from exc
+    reader = csv.DictReader(io.StringIO(text))
+    if reader.fieldnames is None:
+        raise FundamentalDataError(
+            "Bilan├зo CSV ba┼Яl─▒─Я─▒ bulunamad─▒."
+        )
+    return periods_from_records(reader)
+--- backend.app.data.fundamental_data.periods_from_json_bytes ---
+def periods_from_json_bytes(
+    payload: bytes,
+) -> list[FinancialPeriod]:
+    try:
+        raw = json.loads(payload.decode("utf-8"))
+    except Exception as exc:
+        raise FundamentalDataError(
+            "Bilan├зo JSON dosyas─▒ okunamad─▒."
+        ) from exc
+    if not isinstance(raw, list):
+        raise FundamentalDataError(
+            "Bilan├зo JSON k├╢k de─Яeri liste olmal─▒d─▒r."
+        )
+    if not all(isinstance(item, dict) for item in raw):
+        raise FundamentalDataError(
+            "Bilan├зo JSON kay─▒tlar─▒ nesne olmal─▒d─▒r."
+        )
+    return periods_from_records(raw)
+--- backend.app.analysis.fundamental_analysis.build_fundamental_snapshot ---
+def build_fundamental_snapshot(
+    periods: list[FinancialPeriod],
+    *,
+    source_metadata: dict[str, str] | None = None,
+) -> FundamentalSnapshot:
+    if not periods:
+        raise ValueError(
+            "Temel analiz i├зin en az bir finansal d├╢nem gereklidir."
+        )
+
+    symbols = {period.symbol for period in periods}
+    currencies = {period.currency for period in periods}
+    if len(symbols) != 1:
+        raise ValueError(
+            "Tek bir temel analiz ├╢zeti yaln─▒zca bir sembol i├зerebilir."
+        )
+    if len(currencies) != 1:
+        raise ValueError(
+            "D├╢nemlerin para birimi ayn─▒ olmal─▒d─▒r."
+        )
+
+    ordered = sorted(
+        periods,
+        key=lambda item: (
+            item.period_end,
+            item.fiscal_year,
+            item.fiscal_quarter,
+        ),
+        reverse=True,
+    )
+    latest = ordered[0]
+
+    previous_quarter = next(
+        (
+            item
+            for item in ordered[1:]
+            if (
+                item.fiscal_year,
+                item.fiscal_quarter,
+            )
+            == _previous_quarter_key(
+                latest.fiscal_year,
+                latest.fiscal_quarter,
+            )
+        ),
+        None,
+    )
+    previous_year_same_quarter = next(
+        (
+            item
+            for item in ordered[1:]
+            if item.fiscal_year == latest.fiscal_year - 1
+            and item.fiscal_quarter == latest.fiscal_quarter
+        ),
+        None,
+    )
+
+    ratios = calculate_ratios(latest)
+
+    return FundamentalSnapshot(
+        latest=latest,
+        previous_quarter=previous_quarter,
+        previous_year_same_quarter=previous_year_same_quarter,
+        ratios=ratios,
+        quarter_growth=(
+            calculate_growth(latest, previous_quarter)
+            if previous_quarter is not None
+            else None
+        ),
+        annual_growth=(
+            calculate_growth(
+                latest,
+                previous_year_same_quarter,
+            )
+            if previous_year_same_quarter is not None
+            else None
+        ),
+        quality_flags=_quality_flags(latest, ratios),
+        source_metadata=source_metadata or {},
+    )
+
+=== 3. PRODUCTION-ONLY FIELD EVIDENCE ===
+MARKET_CAP_PRODUCTION_HITS=24
+MARKET_CAP_HIT=backend\dashboard.backup_before_navigation_fix.py:6284|market_cap|"F/K ve PD/DD i├зin iste─Яe ba─Яl─▒ market_cap "
+MARKET_CAP_HIT=backend\dashboard.backup_before_navigation_fix.py:6292|piyasa de─Яeri|"dosyas─▒ y├╝kleyin. Sekt├╢r veya piyasa de─Яeri "
+MARKET_CAP_HIT=backend\dashboard.backup_before_navigation_fix.py:6375|market_cap|"F/K ve PD/DD yaln─▒zca market_cap sa─Яland─▒─Я─▒nda "
+MARKET_CAP_HIT=backend\dashboard.py:6464|market_cap|"F/K ve PD/DD i├зin iste─Яe ba─Яl─▒ market_cap "
+MARKET_CAP_HIT=backend\dashboard.py:6472|piyasa de─Яeri|"dosyas─▒ y├╝kleyin. Sekt├╢r veya piyasa de─Яeri "
+MARKET_CAP_HIT=backend\dashboard.py:6555|market_cap|"F/K ve PD/DD yaln─▒zca market_cap sa─Яland─▒─Я─▒nda "
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:27|market_cap|market_cap: Decimal | None = None
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:38|market_cap|market_cap = self.market_cap
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:39|market_cap|if market_cap is not None:
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:41|market_cap|market_cap = Decimal(str(market_cap))
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:44|piyasa de─Яeri|"Piyasa de─Яeri say─▒sal olmal─▒d─▒r."
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:46|market_cap|if not market_cap.is_finite() or market_cap <= 0:
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:48|piyasa de─Яeri|"Piyasa de─Яeri s─▒f─▒rdan b├╝y├╝k olmal─▒d─▒r."
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:53|market_cap|object.__setattr__(self, "market_cap", market_cap)
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:91|market_cap|OPTIONAL_COLUMNS = ("market_cap",)
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:129|market_cap|market_cap_raw = str(row.get("market_cap", "")).strip()
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:133|market_cap|market_cap=(
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:134|market_cap|Decimal(market_cap_raw)
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:135|market_cap|if market_cap_raw
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:149|market_cap|market_cap: Decimal | None,
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:152|market_cap|if market_cap is None or denominator <= 0:
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:154|market_cap|return (market_cap / denominator).quantize(
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:205|market_cap|reference.market_cap,
+MARKET_CAP_HIT=backend\app\analysis\sector_reference.py:209|market_cap|reference.market_cap,
+
+FREE_FLOAT_PRODUCTION_HITS=0
+
+CFO_PRODUCTION_HITS=50
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:5733|nakit ak─▒┼Я|"G├╢sterge": "Faaliyet nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:5735|operating_cash_flow|buyume.operating_cash_flow_growth
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:5767|nakit ak─▒┼Я|"┼Юirketin bilan├зo kalitesi, b├╝y├╝me, k├вrl─▒l─▒k, bor├зluluk, likidite ve nakit ak─▒┼Я─▒ "
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:6151|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:6192|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:6670|nakit ak─▒┼Я|"G├╢sterge": "Serbest nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:6676|nakit ak─▒┼Я|"G├╢sterge": "Serbest nakit ak─▒┼Я─▒ marj─▒",
+CFO_HIT=backend\dashboard.backup_before_navigation_fix.py:6746|nakit ak─▒┼Я|("Nakit ak─▒┼Я─▒", kalite.cash_flow.score, kalite.cash_flow.maximum_score),
+CFO_HIT=backend\dashboard.py:5913|nakit ak─▒┼Я|"G├╢sterge": "Faaliyet nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.py:5915|operating_cash_flow|buyume.operating_cash_flow_growth
+CFO_HIT=backend\dashboard.py:5947|nakit ak─▒┼Я|"┼Юirketin bilan├зo kalitesi, b├╝y├╝me, k├вrl─▒l─▒k, bor├зluluk, likidite ve nakit ak─▒┼Я─▒ "
+CFO_HIT=backend\dashboard.py:6331|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.py:6372|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.py:6850|nakit ak─▒┼Я|"G├╢sterge": "Serbest nakit ak─▒┼Я─▒",
+CFO_HIT=backend\dashboard.py:6856|nakit ak─▒┼Я|"G├╢sterge": "Serbest nakit ak─▒┼Я─▒ marj─▒",
+CFO_HIT=backend\dashboard.py:6926|nakit ak─▒┼Я|("Nakit ak─▒┼Я─▒", kalite.cash_flow.score, kalite.cash_flow.maximum_score),
+CFO_HIT=backend\app\analysis\fundamental_analysis.py:46|operating_cash_flow|period.operating_cash_flow - period.capital_expenditure
+CFO_HIT=backend\app\analysis\fundamental_analysis.py:139|operating_cash_flow|operating_cash_flow_growth=_growth(
+CFO_HIT=backend\app\analysis\fundamental_analysis.py:140|operating_cash_flow|current.operating_cash_flow,
+CFO_HIT=backend\app\analysis\fundamental_analysis.py:141|operating_cash_flow|comparison.operating_cash_flow,
+CFO_HIT=backend\app\analysis\fundamental_analysis.py:154|operating_cash_flow|if latest.operating_cash_flow < 0:
+CFO_HIT=backend\app\analysis\fundamental_analysis.py:155|nakit ak─▒┼Я|flags.append("─░┼Яletme faaliyetlerinden nakit ak─▒┼Я─▒ negatif.")
+CFO_HIT=backend\app\analysis\fundamental_analysis.py:157|nakit ak─▒┼Я|flags.append("Serbest nakit ak─▒┼Я─▒ negatif.")
+CFO_HIT=backend\app\analysis\fundamental_quality.py:186|operating_cash_flow|and annual.operating_cash_flow_growth is not None
+CFO_HIT=backend\app\analysis\fundamental_quality.py:187|operating_cash_flow|and annual.operating_cash_flow_growth > Decimal("0"),
+CFO_HIT=backend\app\analysis\fundamental_quality.py:189|nakit ak─▒┼Я|"Faaliyet nakit ak─▒┼Я─▒ y─▒ll─▒k bazda b├╝y├╝yor.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:190|nakit ak─▒┼Я|"Faaliyet nakit ak─▒┼Я─▒ y─▒ll─▒k bazda b├╝y├╝m├╝yor veya eksik.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:240|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:244|operating_cash_flow|latest.operating_cash_flow > Decimal("0"),
+CFO_HIT=backend\app\analysis\fundamental_quality.py:246|nakit ak─▒┼Я|"Faaliyet nakit ak─▒┼Я─▒ pozitif.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:247|nakit ak─▒┼Я|"Faaliyet nakit ak─▒┼Я─▒ pozitif de─Яil.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:252|nakit ak─▒┼Я|"Serbest nakit ak─▒┼Я─▒ pozitif.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:253|nakit ak─▒┼Я|"Serbest nakit ak─▒┼Я─▒ pozitif de─Яil.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:258|nakit ak─▒┼Я|"Serbest nakit ak─▒┼Я─▒ marj─▒ en az %5.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:259|nakit ak─▒┼Я|"Serbest nakit ak─▒┼Я─▒ marj─▒ %5 alt─▒nda.",
+CFO_HIT=backend\app\analysis\fundamental_quality.py:287|nakit ak─▒┼Я|"likidite ve nakit ak─▒┼Я─▒ bile┼Яenlerinden ├╝retildi. "
+CFO_HIT=backend\app\analysis\fundamental_score_history.py:64|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒": (
+CFO_HIT=backend\app\analysis\fundamental_score_history.py:82|nakit ak─▒┼Я|cash_flow_change=components["Nakit ak─▒┼Я─▒"],
+CFO_HIT=backend\app\analysis\fundamental_score_history.py:112|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒": item.score.cash_flow.score,
+CFO_HIT=backend\app\analysis\fundamental_score_history.py:133|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒": item.score.cash_flow.score,
+CFO_HIT=backend\app\analysis\sector_reference.py:298|nakit ak─▒┼Я|"Serbest nakit ak─▒┼Я─▒ marj─▒ (%)",
+CFO_HIT=backend\app\analysis\sector_score_ranking.py:212|nakit ak─▒┼Я|"Nakit ak─▒┼Я─▒": item.cash_flow_score,
+CFO_HIT=backend\app\data\fundamental_data.py:32|operating_cash_flow|"operating_cash_flow",
+CFO_HIT=backend\app\data\fundamental_data.py:127|operating_cash_flow|operating_cash_flow=Decimal(
+CFO_HIT=backend\app\data\fundamental_data.py:128|operating_cash_flow|str(record["operating_cash_flow"])
+CFO_HIT=backend\app\data\kap_fundamental_source.py:92|operating_cash_flow|"operating_cash_flow": (
+CFO_HIT=backend\app\data\kap_fundamental_source.py:93|operating_cash_flow|"operating_cash_flow",
+CFO_HIT=backend\app\models\fundamental_models.py:47|operating_cash_flow|operating_cash_flow: Decimal
+CFO_HIT=backend\app\models\fundamental_models.py:85|operating_cash_flow|"operating_cash_flow",
+CFO_HIT=backend\app\models\fundamental_models.py:149|operating_cash_flow|operating_cash_flow_growth: Decimal | None
+
+OPERATING_PROFIT_PRODUCTION_HITS=8
+OPERATING_PROFIT_HIT=backend\app\analysis\fundamental_analysis.py:58|operating_profit|period.operating_profit,
+OPERATING_PROFIT_HIT=backend\app\data\fundamental_data.py:23|operating_profit|"operating_profit",
+OPERATING_PROFIT_HIT=backend\app\data\fundamental_data.py:110|operating_profit|operating_profit=Decimal(
+OPERATING_PROFIT_HIT=backend\app\data\fundamental_data.py:111|operating_profit|str(record["operating_profit"])
+OPERATING_PROFIT_HIT=backend\app\data\kap_fundamental_source.py:72|operating_profit|"operating_profit": (
+OPERATING_PROFIT_HIT=backend\app\data\kap_fundamental_source.py:73|operating_profit|"operating_profit",
+OPERATING_PROFIT_HIT=backend\app\models\fundamental_models.py:38|operating_profit|operating_profit: Decimal
+OPERATING_PROFIT_HIT=backend\app\models\fundamental_models.py:76|operating_profit|"operating_profit",
+
+EBITDA_PRODUCTION_HITS=43
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:5718|fav├╢k|"G├╢sterge": "FAV├ЦK",
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:5719|ebitda|"De─Яi┼Яim (%)": buyume.ebitda_growth,
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:5751|ebitda,fav├╢k|"FAV├ЦK": float(item.ebitda),
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:6614|ebitda,fav├╢k|("FAV├ЦK", _temel_deger_yaz(latest.ebitda)),
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:6634|fav├╢k|"G├╢sterge": "FAV├ЦK marj─▒",
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:6635|ebitda|"De─Яer": _temel_yuzde_yaz(ratios.ebitda_margin),
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:6664|fav├╢k|"G├╢sterge": "Net bor├з / FAV├ЦK",
+EBITDA_HIT=backend\dashboard.backup_before_navigation_fix.py:6666|ebitda|ratios.net_debt_to_ebitda
+EBITDA_HIT=backend\dashboard.py:5898|fav├╢k|"G├╢sterge": "FAV├ЦK",
+EBITDA_HIT=backend\dashboard.py:5899|ebitda|"De─Яi┼Яim (%)": buyume.ebitda_growth,
+EBITDA_HIT=backend\dashboard.py:5931|ebitda,fav├╢k|"FAV├ЦK": float(item.ebitda),
+EBITDA_HIT=backend\dashboard.py:6794|ebitda,fav├╢k|("FAV├ЦK", _temel_deger_yaz(latest.ebitda)),
+EBITDA_HIT=backend\dashboard.py:6814|fav├╢k|"G├╢sterge": "FAV├ЦK marj─▒",
+EBITDA_HIT=backend\dashboard.py:6815|ebitda|"De─Яer": _temel_yuzde_yaz(ratios.ebitda_margin),
+EBITDA_HIT=backend\dashboard.py:6844|fav├╢k|"G├╢sterge": "Net bor├з / FAV├ЦK",
+EBITDA_HIT=backend\dashboard.py:6846|ebitda|ratios.net_debt_to_ebitda
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py:62|ebitda|ebitda_margin=_safe_ratio(
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py:63|ebitda|period.ebitda,
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py:91|ebitda|net_debt_to_ebitda=_safe_ratio(
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py:93|ebitda|period.ebitda,
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py:127|ebitda|ebitda_growth=_growth(
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py:128|ebitda|current.ebitda,
+EBITDA_HIT=backend\app\analysis\fundamental_analysis.py:129|ebitda|comparison.ebitda,
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:102|ebitda|ratios.net_debt_to_ebitda,
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:146|ebitda|ratios.ebitda_margin is not None
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:147|ebitda|and ratios.ebitda_margin >= Decimal("15"),
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:149|fav├╢k|"FAV├ЦK marj─▒ en az %15.",
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:150|fav├╢k|"FAV├ЦK marj─▒ %15 alt─▒nda veya hesaplanamad─▒.",
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:170|ebitda|and annual.ebitda_growth is not None
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:171|ebitda|and annual.ebitda_growth >= Decimal("10"),
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:173|fav├╢k|"Y─▒ll─▒k FAV├ЦK b├╝y├╝mesi en az %10.",
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:174|fav├╢k|"Y─▒ll─▒k FAV├ЦK b├╝y├╝mesi %10 alt─▒nda veya eksik.",
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:206|ebitda|ratios.net_debt_to_ebitda <= Decimal("2"),
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:208|fav├╢k|"Net bor├з/FAV├ЦK 2 veya alt─▒nda.",
+EBITDA_HIT=backend\app\analysis\fundamental_quality.py:209|fav├╢k|"Net bor├з/FAV├ЦK 2 ├╝zerinde.",
+EBITDA_HIT=backend\app\data\fundamental_data.py:24|ebitda|"ebitda",
+EBITDA_HIT=backend\app\data\fundamental_data.py:113|ebitda|ebitda=Decimal(str(record["ebitda"])),
+EBITDA_HIT=backend\app\data\kap_fundamental_source.py:77|ebitda,favok|"ebitda": ("ebitda", "favok", "EBITDA"),
+EBITDA_HIT=backend\app\models\fundamental_models.py:39|ebitda|ebitda: Decimal
+EBITDA_HIT=backend\app\models\fundamental_models.py:77|ebitda|"ebitda",
+EBITDA_HIT=backend\app\models\fundamental_models.py:128|ebitda|ebitda_margin: Decimal | None
+EBITDA_HIT=backend\app\models\fundamental_models.py:135|ebitda|net_debt_to_ebitda: Decimal | None
+EBITDA_HIT=backend\app\models\fundamental_models.py:146|ebitda|ebitda_growth: Decimal | None
+
+NET_CASH_DEBT_PRODUCTION_HITS=20
+NET_CASH_DEBT_HIT=backend\dashboard.backup_before_navigation_fix.py:6660|net bor├з|"G├╢sterge": "Net bor├з",
+NET_CASH_DEBT_HIT=backend\dashboard.backup_before_navigation_fix.py:6661|net_debt|"De─Яer": _temel_deger_yaz(ratios.net_debt),
+NET_CASH_DEBT_HIT=backend\dashboard.backup_before_navigation_fix.py:6664|net bor├з|"G├╢sterge": "Net bor├з / FAV├ЦK",
+NET_CASH_DEBT_HIT=backend\dashboard.backup_before_navigation_fix.py:6666|net_debt|ratios.net_debt_to_ebitda
+NET_CASH_DEBT_HIT=backend\dashboard.py:6840|net bor├з|"G├╢sterge": "Net bor├з",
+NET_CASH_DEBT_HIT=backend\dashboard.py:6841|net_debt|"De─Яer": _temel_deger_yaz(ratios.net_debt),
+NET_CASH_DEBT_HIT=backend\dashboard.py:6844|net bor├з|"G├╢sterge": "Net bor├з / FAV├ЦK",
+NET_CASH_DEBT_HIT=backend\dashboard.py:6846|net_debt|ratios.net_debt_to_ebitda
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_analysis.py:44|net_debt|net_debt = period.total_debt - period.cash_and_equivalents
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_analysis.py:90|net_debt|net_debt=net_debt.quantize(Decimal("0.01")),
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_analysis.py:91|net_debt|net_debt_to_ebitda=_safe_ratio(
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_analysis.py:92|net_debt|net_debt,
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_quality.py:102|net_debt|ratios.net_debt_to_ebitda,
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_quality.py:206|net_debt|ratios.net_debt_to_ebitda <= Decimal("2"),
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_quality.py:208|net bor├з|"Net bor├з/FAV├ЦK 2 veya alt─▒nda.",
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_quality.py:209|net bor├з|"Net bor├з/FAV├ЦK 2 ├╝zerinde.",
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_quality.py:212|net_debt|ratios.net_debt <= Decimal("0"),
+NET_CASH_DEBT_HIT=backend\app\analysis\fundamental_quality.py:215|net bor├з|"┼Юirket net bor├з pozisyonunda.",
+NET_CASH_DEBT_HIT=backend\app\models\fundamental_models.py:134|net_debt|net_debt: Decimal
+NET_CASH_DEBT_HIT=backend\app\models\fundamental_models.py:135|net_debt|net_debt_to_ebitda: Decimal | None
+
+DEBT_EQUITY_PRODUCTION_HITS=0
+
+CAPEX_PRODUCTION_HITS=198
+CAPEX_HIT=backend\dashboard.backup_before_navigation_fix.py:6786|yat─▒r─▒m|"Rapor yat─▒r─▒m dan─▒┼Яmanl─▒─Я─▒ veya al─▒m/sat─▒m tavsiyesi "
+CAPEX_HIT=backend\dashboard.backup_before_navigation_fix.py:9436|yat─▒r─▒m|"Ki┼Яisel analiz ama├зl─▒d─▒r, yat─▒r─▒m tavsiyesi de─Яildir."
+CAPEX_HIT=backend\dashboard.py:6966|yat─▒r─▒m|"Rapor yat─▒r─▒m dan─▒┼Яmanl─▒─Я─▒ veya al─▒m/sat─▒m tavsiyesi "
+CAPEX_HIT=backend\dashboard.py:10356|yat─▒r─▒m|"Ki┼Яisel analiz ama├зl─▒d─▒r, yat─▒r─▒m tavsiyesi de─Яildir."
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:31|capacity|from app.backtest.portfolio_capacity_robustness import (
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:35|capacity|PortfolioCapacityRobustnessAnalyzer,
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:36|capacity|PortfolioCapacityRobustnessError,
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:38|capacity|from app.backtest.portfolio_capacity_sensitivity import (
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:39|capacity|PortfolioCapacitySensitivityError,
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:51|kapasite|"Portf├╢y kapasitesi 1/2/3 sonu├зlar─▒n─▒ kayan zaman pencereleri "
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:58|kapasite|"--kapasiteler",
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:144|kapasite|return ", ".join(f"K{kapasite}:{adet}" for kapasite, adet in sirali)
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:147|kapasite|def senaryo_kapasite_getirileri(senaryo) -> str:
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:149|kapasite|f"K{s.kapasite} {yuzde(s.rapor.toplam_getiri_orani)}"
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:150|kapasite|for s in senaryo.kapasite_raporu.senaryolar
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:195|kapasite|f"{'Kapasite':>9}{'Pencere':>10}{'Pozitif':>11}{'Getiri Lideri':>16}"
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:199|kapasite|for ozet in rapor.kapasite_ozetleri:
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:201|kapasite|f"{ozet.kapasite:>9}{ozet.pencere_sayisi:>10}"
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:230|kapasite|f"{senaryo_kapasite_getirileri(senaryo)}"
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:239|kapasite|"Kapasite otomatik olarak optimize edilmez."
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:266|kapasite|f"{len(semboller)} hisse i├зin portf├╢y kapasitesi "
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:317|capacity|rapor = PortfolioCapacityRobustnessAnalyzer().analiz_et(
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:320|kapasite|kapasiteler=argumanlar.kapasiteler,
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:341|capacity|PortfolioCapacitySensitivityError,
+CAPEX_HIT=backend\run_portfolio_capacity_robustness.py:342|capacity|PortfolioCapacityRobustnessError,
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:29|capacity|from app.backtest.portfolio_capacity_sensitivity import (
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:30|capacity|PortfolioCapacitySensitivityAnalyzer,
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:31|capacity|PortfolioCapacitySensitivityError,
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:45|kapasite|"kapasitelerinin getiri, d├╝┼Я├╝┼Я ve sermaye kullan─▒m─▒n─▒ "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:55|kapasite|"--kapasiteler",
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:119|kapasite|"Kar┼Я─▒la┼Яt─▒r─▒lan kapasite     : "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:120|kapasite|+ ", ".join(str(senaryo.kapasite) for senaryo in rapor.senaryolar)
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:127|kapasite|f"{'Kapasite':>10}"
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:144|kapasite|f"{senaryo.kapasite:>10}"
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:165|kapasite|f"Kapasite {en_yuksek.kapasite} "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:170|kapasite|f"Kapasite {en_dusuk.kapasite} "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:176|kapasite|f"Kapasite {en_iyi_oran.kapasite} "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:184|kapasite|"Not: Her kapasite ayn─▒ fiyat verisi, ayn─▒ sinyaller ve ayn─▒ "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:186|kapasite|"1 / kapasite se├зilir; kald─▒ra├з kullan─▒lmaz ve ge├зmi┼Яe g├╢re "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:187|kapasite|"kapasite optimizasyonu yap─▒lmaz."
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:217|kapasite|f"{len(semboller)} hisse i├зin portf├╢y kapasitesi "
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:222|kapasite|"t├╝m kapasiteler ayn─▒ aday havuzuyla kar┼Я─▒la┼Яt─▒r─▒lacak."
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:269|capacity|rapor = PortfolioCapacitySensitivityAnalyzer().analiz_et(
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:272|kapasite|kapasiteler=argumanlar.kapasiteler,
+CAPEX_HIT=backend\run_portfolio_capacity_sensitivity.py:290|capacity|PortfolioCapacitySensitivityError,
+CAPEX_HIT=backend\run_position_monitor.py:177|yat─▒r─▒m|"yat─▒r─▒m tavsiyesi de─Яildir.",
+CAPEX_HIT=backend\run_rolling_window_analysis.py:239|yat─▒r─▒m|"├╢l├зer. ├Цrt├╝┼Яen pencereler ba─Я─▒ms─▒z yat─▒r─▒m d├╢nemleri de─Яil, "
+CAPEX_HIT=backend\run_trade_plan.py:156|yat─▒r─▒m|"ama├зl─▒d─▒r, yat─▒r─▒m tavsiyesi de─Яildir."
+CAPEX_HIT=backend\app\analysis\weekly_performance_report.py:59|yat─▒r─▒m|"├╢l├з├╝m├╝ i├зindir; yat─▒r─▒m dan─▒┼Яmanl─▒─Я─▒ veya al─▒m/sat─▒m tavsiyesi de─Яildir."
+CAPEX_HIT=backend\app\backtest\portfolio_backtest.py:14|kapasite|PORTFOY_KAPASITE_NEDENI = "E┼Я zamanl─▒ pozisyon s─▒n─▒r─▒ dolu."
+CAPEX_HIT=backend\app\backtest\portfolio_backtest.py:33|kapasite|"""├Зoklu hisse portf├╢y├╝ i├зin sermaye, kapasite ve risk ayarlar─▒."""
+CAPEX_HIT=backend\app\backtest\portfolio_backtest.py:138|kapasite|"""Portf├╢y kapasitesi veya sermayesi nedeniyle al─▒nmayan i┼Яlem."""
+CAPEX_HIT=backend\app\backtest\portfolio_backtest.py:358|kapasite|neden=PORTFOY_KAPASITE_NEDENI,
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:12|capacity|from .portfolio_capacity_sensitivity import (
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:13|capacity|PortfolioCapacityScenario,
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:14|capacity|PortfolioCapacitySensitivityAnalyzer,
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:15|capacity|PortfolioCapacitySensitivityReport,
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:24|capacity|class PortfolioCapacityRobustnessError(ValueError):
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:25|kapasite|"""Portf├╢y kapasitesi sa─Яlaml─▒k analizi girdileri ge├зersizdir."""
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:29|capacity|class RollingCapacityWindow:
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:30|kapasite|"""Tek bir kayan zaman penceresindeki kapasite kar┼Я─▒la┼Яt─▒rmas─▒."""
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:37|capacity,kapasite|kapasite_raporu: PortfolioCapacitySensitivityReport
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:41|kapasite|senaryo = self.kapasite_raporu.en_yuksek_getiri_senaryosu
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:42|kapasite|return None if senaryo is None else senaryo.kapasite
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:46|kapasite|senaryo = self.kapasite_raporu.en_iyi_getiri_dusus_senaryosu
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:47|kapasite|return None if senaryo is None else senaryo.kapasite
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:51|capacity|class CapacityWindowSummary:
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:52|kapasite|"""Bir kapasitenin t├╝m yeterli kayan pencerelerdeki ├╢zeti."""
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:54|kapasite|kapasite: int
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:77|capacity,kapasite|kapasite_raporu: PortfolioCapacitySensitivityReport
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:81|kapasite|senaryo = self.kapasite_raporu.en_yuksek_getiri_senaryosu
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:82|kapasite|return None if senaryo is None else senaryo.kapasite
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:86|kapasite|senaryo = self.kapasite_raporu.en_iyi_getiri_dusus_senaryosu
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:87|kapasite|return None if senaryo is None else senaryo.kapasite
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:91|capacity|class PortfolioCapacityRobustnessReport:
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:94|capacity|pencereler: tuple[RollingCapacityWindow, ...]
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:95|capacity,kapasite|kapasite_ozetleri: tuple[CapacityWindowSummary, ...]
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:102|capacity,kapasite|def kapasite_ozeti(self, kapasite: int) -> CapacityWindowSummary | None:
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:106|kapasite|for ozet in self.kapasite_ozetleri
+CAPEX_HIT=backend\app\backtest\portfolio_capacity_robustness.py:107|kapasite|if ozet.kapasite == kapasite
+
+=== 4. EXISTING DATA SCHEMAS ===
+DATA_FILES=125
+CSV_SCHEMA=backend\data\fundamental_sample.csv|symbol|period_end|fiscal_year|fiscal_quarter|currency|revenue|gross_profit|operating_profit|ebitda|net_income|total_assets|total_equity|total_debt|cash_and_equivalents|current_assets|current_liabilities|operating_cash_flow|capital_expenditure|shares_outstanding|source|published_at
+CSV_SCHEMA=backend\data\sector_reference_sample.csv|symbol|sector|market_cap
+
+=== 5. FUNDAMENTAL SAMPLE ===
+SAMPLE_PATH=D:\Projects\Hisse-Robotu\backend\data\fundamental_sample.csv
+SAMPLE_EXISTS=YES
+SAMPLE_HEADER=symbol|period_end|fiscal_year|fiscal_quarter|currency|revenue|gross_profit|operating_profit|ebitda|net_income|total_assets|total_equity|total_debt|cash_and_equivalents|current_assets|current_liabilities|operating_cash_flow|capital_expenditure|shares_outstanding|source|published_at
+SAMPLE_ROW=THYAO|2026-06-30|2026|2|TRY|1000|300|180|220|120|2500|1000|700|200|900|600|160|40|100|KAP|2026-07-20
+SAMPLE_ROW=THYAO|2026-03-31|2026|1|TRY|900|260|150|190|95|2350|920|720|180|850|610|130|35|100|KAP|2026-05-10
+SAMPLE_ROW=THYAO|2025-06-30|2025|2|TRY|800|220|120|160|80|2100|800|650|150|760|580|110|30|100|KAP|2025-08-10
+
+=== 6. EXACT SOURCEтЖТFIELD DECISION ===
+FUNDAMENTAL_PERIOD_PIPELINE=YES
+MARKET_CAP_PRODUCTION_SOURCE=YES
+FREE_FLOAT_PRODUCTION_SOURCE=NO
+CFO_PRODUCTION_SOURCE=YES
+OPERATING_PROFIT_PRODUCTION_SOURCE=YES
+EBITDA_PRODUCTION_SOURCE=YES
+NET_CASH_DEBT_PRODUCTION_SOURCE=YES
+DEBT_EQUITY_PRODUCTION_SOURCE=NO
+CAPEX_PRODUCTION_SOURCE=YES
+DECISION=PARTIAL_CANONICAL_REUSE_ONLY
+UNPROVEN_FIELDS=FREE_FLOAT_PRODUCTION_SOURCE,DEBT_EQUITY_PRODUCTION_SOURCE
+NEXT=IMPLEMENT_ONLY_EXACTLY_MAPPED_FIELDS;UNPROVEN_FIELDS_REMAIN_INSUFFICIENT
+
+=== CAPTURE COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO

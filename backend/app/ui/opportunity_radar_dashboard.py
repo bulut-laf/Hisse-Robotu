@@ -1,0 +1,175 @@
+from __future__ import annotations
+
+import pandas as pd
+import streamlit as st
+
+from backend.app.opportunity_radar import OpportunityRadarResult, run_opportunity_radar
+from backend.app.analysis.common_final_candidate_adapters_v1 import build_common_final_candidates
+from backend.app.analysis.common_candidate_ai_review_v1 import evaluate_common_candidate_ai_review
+
+
+def _render_table(title: str, frame: pd.DataFrame, empty_message: str) -> None:
+    st.markdown(f"### {title}")
+    if frame.empty:
+        st.info(empty_message)
+        return
+    st.dataframe(frame, hide_index=True, width="stretch")
+
+
+def render_opportunity_radar() -> None:
+    st.header("Fırsat Radarı")
+    st.caption(
+        "Tek taramada Haftalık Ön Yükseliş, Aylık Güçlü Trend ve "
+        "Aylık Erken Trend adaylarını aynı BIST Tüm veri hattından üretir. "
+        "Haftalık Validated etiketi geçmiş out-of-sample profile dayanır. "
+        "Aylık katmanda kapanmış ay eşleşmesi Validated Profile Match, "
+        "açık ay eşleşmesi Ay İçi Geçici Match olarak gösterilir."
+    )
+
+    result_limit = st.selectbox(
+        "Her radar için gösterilecek azami aday",
+        options=(10, 25, 50),
+        index=1,
+        key="opportunity_radar_limit",
+    )
+    run_requested = st.button(
+        "Taramayı Başlat",
+        type="primary",
+        width="stretch",
+        key="opportunity_radar_run",
+    )
+
+    cache_key = "opportunity_radar_last_result"
+    if run_requested:
+        try:
+            with st.spinner("BIST Tüm tek veri hattı üzerinden Fırsat Radarı çalışıyor..."):
+                result = run_opportunity_radar(result_limit=int(result_limit))
+        except Exception as exc:
+            st.error(f"Fırsat Radarı çalıştırılamadı: {exc}")
+            return
+        st.session_state[cache_key] = result
+    else:
+        result = st.session_state.get(cache_key)
+        if result is None:
+            return
+
+    if not isinstance(result, OpportunityRadarResult):
+        st.session_state.pop(cache_key, None)
+        return
+
+    common_candidates = build_common_final_candidates(
+        opportunity_radar=result,
+        limit=int(result_limit),
+    )
+    st.subheader("Ortak Nihai Aday Listesi")
+    st.caption("Haftalık ve aylık radar sonuçlarının birleştirilmiş görünümü. Bu liste AL-SAT kararı üretmez.")
+    if common_candidates:
+        st.dataframe(
+            pd.DataFrame([
+                {
+                    "Hisse": candidate.symbol,
+                    "Kaynaklar": " | ".join(candidate.sources),
+                    "Zaman Dilimleri": " | ".join(candidate.horizons),
+                    "Kanıt Sayısı": len(candidate.evidence),
+                    "Veri Durumu": candidate.data_status,
+                    "Gerekçeler": " | ".join(candidate.reasons),
+                }
+                for candidate in common_candidates
+            ]),
+            hide_index=True,
+            width="stretch",
+        )
+    else:
+        st.info("Ortak aday listesi için uygun kayıt bulunamadı.")
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Evren", result.universe_name)
+    c2.metric("Evren sembolü", result.universe_count)
+    c3.metric("Verisi hazır", result.data_success_count)
+    c4.metric("Veri hatası", len(result.data_failures))
+    st.caption(
+        f"Evren kaynağı: {result.universe_source} · Evren tarihi: {result.universe_date}"
+    )
+
+    _render_table(
+        "Haftalık Ön Yükseliş",
+        result.weekly,
+        "Güncel W2/W3 adayı bulunamadı.",
+    )
+    _render_table(
+        "Aylık Güçlü Trend",
+        result.monthly_strong,
+        "Aylık güçlü trend koşullarını geçen aday bulunamadı.",
+    )
+    _render_table(
+        "Aylık Erken Trend",
+        result.monthly_early,
+        "Aylık erken trend koşullarını geçen aday bulunamadı.",
+    )
+
+    st.subheader("Gemini Aday Değerlendirmesi (isteğe bağlı)")
+    st.caption("Yalnızca seçilen adayın kanıtlarını yorumlar; sıralama ve AL-SAT kararları değişmez.")
+    if common_candidates:
+        ai_symbols = [candidate.symbol for candidate in common_candidates]
+        selected_symbol = st.selectbox(
+            "Değerlendirilecek aday",
+            ai_symbols,
+            key="common_candidate_ai_review_symbol",
+        )
+        selected_candidate = next(
+            candidate for candidate in common_candidates
+            if candidate.symbol == selected_symbol
+        )
+        if st.button("Gemini ile de\u011ferlendir", key="common_candidate_ai_review_run"):
+            with st.spinner("Gemini aday kanıtlarını değerlendiriyor..."):
+                ai_result = evaluate_common_candidate_ai_review(selected_candidate)
+            if ai_result["status"] == "accepted":
+                st.markdown("**Değerlendirme özeti**")
+                st.write(ai_result["review"]["summary"])
+                for field, title in (
+                    ("positive_factors", "Olumlu faktörler"),
+                    ("risk_factors", "Risk faktörleri"),
+                    ("stock_specific_risks", "Hisseye özgü riskler"),
+                    ("aligned_points", "Uyumlu kanıtlar"),
+                    ("conflicting_points", "Çelişen kanıtlar"),
+                    ("watch_items", "İzlenecekler"),
+                ):
+                    values = ai_result["review"][field]
+                    if values:
+                        st.markdown(f"**{title}**")
+                        st.write(values)
+                st.caption(
+                    f"Sağlayıcı: {ai_result['provider']} \u00b7 Model: {ai_result['model']} "
+                    "\u00b7 Otomatik i\u015flem yetkisi: NONE"
+                )
+            elif ai_result["status"] == "provider_error":
+                st.warning("Gemini sa\u011flay\u0131c\u0131s\u0131 de\u011ferlendirme yapamad\u0131: " + ai_result["reason"])
+            else:
+                st.warning("Gemini sonucu doğrulanamadı: " + ai_result.get("reason", "Bilinmeyen hata"))
+    else:
+        st.info("Gemini de\u011ferlendirmesi için uygun ortak aday bulunamadı.")
+
+    with st.expander("Audit / Export", expanded=False):
+        if not result.weekly.empty:
+            st.download_button(
+                "Haftalık radar CSV",
+                data=result.weekly.to_csv(index=False).encode("utf-8-sig"),
+                file_name="firsat_radari_haftalik.csv",
+                mime="text/csv",
+                key="opportunity_radar_weekly_csv",
+            )
+        if not result.monthly_strong.empty:
+            st.download_button(
+                "Aylık güçlü trend CSV",
+                data=result.monthly_strong.to_csv(index=False).encode("utf-8-sig"),
+                file_name="firsat_radari_aylik_guclu_trend.csv",
+                mime="text/csv",
+                key="opportunity_radar_monthly_strong_csv",
+            )
+        if not result.monthly_early.empty:
+            st.download_button(
+                "Aylık erken trend CSV",
+                data=result.monthly_early.to_csv(index=False).encode("utf-8-sig"),
+                file_name="firsat_radari_aylik_erken_trend.csv",
+                mime="text/csv",
+                key="opportunity_radar_monthly_early_csv",
+            )

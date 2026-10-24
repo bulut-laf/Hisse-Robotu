@@ -1,0 +1,508 @@
+﻿FIN-PROD-V8 FIN-016 HISTORICAL PIT OBSERVATION BRIDGE PREFLIGHT
+MODE=READ_ONLY_DISCOVERY
+MUTATION=NO
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:5: from ..models.investability_models import CalibrationSummary, PointInTimeObservation
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:8: def validate_point_in_time(observation: PointInTimeObservation) -> bool:
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:10: return observation.publication_date <= observation.observation_date
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:13: def filter_point_in_time(observations: tuple[PointInTimeObservation, ...]) -> tuple[PointInTimeObservation, ...]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:14: return tuple(o for o in observations if validate_point_in_time(o))
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:19: return None
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:20: return sum(values, Decimal("0")) / Decimal(len(values))
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:23: def calibrate_score_separation(
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:24: observations: tuple[PointInTimeObservation, ...],
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:29: valid = [o for o in observations if validate_point_in_time(o) and o.score is not None and o.forward_return is not None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:30: all_returns = [o.forward_return for o in valid if o.forward_return is not None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:31: high = [o.forward_return for o in valid if o.score is not None and o.score >= high_threshold and o.forward_return is not None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:32: low = [o.forward_return for o in valid if o.score is not None and o.score <= low_threshold and o.forward_return is not None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation.py:44: return CalibrationSummary(len(observations), len(valid), _mean(all_returns), high_m, low_m, separation, status)
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py ===
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:9: class ScoreComponent:
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:11: score: Decimal
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:19: as_of_date: date
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:20: score: int | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:23: components: tuple[ScoreComponent, ...]
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:52: as_of: datetime
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:53: financial_health_score: int | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:63: short_term_score: int | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:65: long_term_score: int | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:76: class PointInTimeObservation:
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:77: observation_date: date
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:78: publication_date: date
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:79: score: int | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:80: forward_return: Decimal | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:87: mean_forward_return: Decimal | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:88: high_score_mean_return: Decimal | None
+D:\Projects\Hisse-Robotu\backend\app\models\investability_models.py:89: low_score_mean_return: Decimal | None
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:11: - full filtered Research rows are returned, never the UI display slice;
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:12: - future-dated analysis is fail-closed;
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:14: - no new score, signal, trade decision, store, or ranking engine.
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:17: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:42: as_of: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:56: as_of: date,
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:62: if not isinstance(as_of, date):
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:63: raise TypeError("as_of must be datetime.date")
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:78: call_kwargs["bugun"] = as_of
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:84: return base_fetcher(*args, **call_kwargs)
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:86: return fetch_at_cut_date
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:94: return date.fromisoformat(raw[:10])
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:103: as_of: date,
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:121: as_of,
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:137: future_dates: list[date] = []
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:141: candidate_date = _analysis_date(candidate.analiz_tarihi)
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:142: if candidate_date > as_of:
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:143: future_dates.append(candidate_date)
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:144: elif candidate_date < as_of:
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:147: if future_dates:
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:148: latest = max(future_dates)
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:150: "Historical replay future leakage detected: "
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:151: f"cut={as_of.isoformat()} latest_analysis={latest.isoformat()}"
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:173: as_of=as_of.isoformat(),
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:184: return HistoricalResearchReplayResult(
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:185: as_of=as_of.isoformat(),
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:18: class SignalOutcomeError(ValueError):
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:28: quality_score: int
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:47: raise SignalOutcomeError("Sembol boş olamaz.")
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:53: raise SignalOutcomeError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:56: if not 0 <= self.quality_score <= 100:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:57: raise SignalOutcomeError("Kalite skoru 0–100 arasında olmalıdır.")
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:69: raise SignalOutcomeError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:80: str(self.quality_score),
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:101: class HorizonOutcome:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:105: close_return_percent: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:114: class SignalOutcome:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:116: horizons: tuple[HorizonOutcome, ...]
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:121: return sum(item.available for item in self.horizons)
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:128: raise SignalOutcomeError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:138: raise SignalOutcomeError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:142: raise SignalOutcomeError("Fiyat verisi boş.")
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:144: return normalized.astype(float)
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:150: ) -> SignalOutcome:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:158: future = frame.loc[frame.index > signal_ts]
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:159: outcomes: list[HorizonOutcome] = []
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:162: if len(future) < horizon:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:163: outcomes.append(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:164: HorizonOutcome(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:168: close_return_percent=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:178: window = future.iloc[:horizon]
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:184: outcomes.append(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:185: HorizonOutcome(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:189: close_return_percent=round(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:219: return SignalOutcome(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:221: horizons=tuple(outcomes),
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:228: class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:238: outcome: SignalOutcome,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:241: path = self.root / f"{outcome.snapshot.record_id}.json"
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:245: "snapshot": asdict(outcome.snapshot),
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:247: asdict(item) for item in outcome.horizons
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:249: "evaluated_at": outcome.evaluated_at,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:257: return path
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:259: def list(self) -> tuple[SignalOutcome, ...]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:261: return ()
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:263: records: list[SignalOutcome] = []
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:280: horizons.append(HorizonOutcome(**item))
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:283: SignalOutcome(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:292: return tuple(records)
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:295: def outcome_rows(
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:296: outcomes: Iterable[SignalOutcome],
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:299: for outcome in outcomes:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:301: "Kayıt": outcome.snapshot.record_id,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:302: "Sembol": outcome.snapshot.symbol,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:303: "Sinyal tarihi": outcome.snapshot.signal_date,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:304: "Referans fiyat": outcome.snapshot.reference_price,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:305: "Karar sınıfı": outcome.snapshot.decision_class,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:306: "Kalite skoru": outcome.snapshot.quality_score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:307: "Günlük yön": outcome.snapshot.daily_direction,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:308: "Haftalık yön": outcome.snapshot.weekly_direction,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:309: "Uyumsuzluk": outcome.snapshot.divergence_type or "—",
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:310: "Piyasa rejimi": outcome.snapshot.market_regime or "—",
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:311: "Sektör": outcome.snapshot.sector or "—",
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:312: "Momentum": outcome.snapshot.momentum_state or "—",
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:315: if outcome.snapshot.volume_confirmation is None
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:317: if outcome.snapshot.volume_confirmation
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:320: "ATR (%)": outcome.snapshot.atr_percent,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:321: "Risk/getiri": outcome.snapshot.risk_reward_ratio,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:323: for item in outcome.horizons:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:330: "Kapanış getirisi (%)": item.close_return_percent,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:357: return rows
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:361: outcomes: Iterable[SignalOutcome],
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:366: for outcome in outcomes:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:370: for candidate in outcome.horizons
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:376: selected.append((outcome, item))
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:379: return {
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:388: returns = [item.close_return_percent for _, item in selected]
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:398: return {
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:402: sum(value > 0 for value in returns) / len(returns) * 100,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:405: "Ortalama getiri (%)": round(sum(returns) / len(returns), 2),
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:411: def outcomes_to_csv(outcomes: Iterable[SignalOutcome]) -> bytes:
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:412: rows = outcome_rows(outcomes)
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:424: return ("\ufeff" + output.getvalue()).encode("utf-8")
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:8: from .next_day_outcome import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:9: OUTCOME_CONTRACT_ID,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:10: NextDayCandidateOutcome,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:11: NextDayOutcomeResult,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:35: average_return: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:36: median_return: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:37: average_relative_return: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:38: median_relative_return: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:61: primary_average_negative_return_session_count: int
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:63: outcome_tuning: bool
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:64: new_score: bool
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:72: return len(text) == 64 and all(ch in "0123456789abcdef" for ch in text)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:79: return None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:80: return result if isfinite(result) else None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:83: def _issue(session: NextDayOutcomeResult, reason: str) -> WalkForwardSessionIssue:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:84: return WalkForwardSessionIssue(
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:92: def _session_reason(session: NextDayOutcomeResult) -> str | None:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:93: if session.contract_id != OUTCOME_CONTRACT_ID:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:94: return "OUTCOME_CONTRACT_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:96: return "STRATEGY_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:98: return "CANONICAL_DATE_MISSING"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:100: return "T1_DATE_MISSING"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:102: return "SELECTION_DIGEST_INVALID"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:103: if _finite(session.benchmark_return) is None:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:104: return "BENCHMARK_INVALID"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:106: rows = tuple(session.outcomes)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:109: return "CANDIDATE_COUNT_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:119: return "ROW_SESSION_IDENTITY_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:121: return "ROW_ROLE_INVALID"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:123: return "PENDING_OR_INVALID_OUTCOME"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:125: _finite(row.close_to_close_return) is None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:126: or _finite(row.relative_return) is None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:129: or _finite(row.benchmark_return) is None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:131: return "OUTCOME_METRIC_MISSING_OR_INVALID"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:132: if abs(float(row.benchmark_return) - float(session.benchmark_return)) > 1e-12:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:133: return "BENCHMARK_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:135: return "EVALUATION_IDENTITY_MISSING"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:137: return "DUPLICATE_EVALUATION_IDENTITY"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:141: return "SYMBOL_MISSING"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:143: return "DUPLICATE_SYMBOL"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:156: return "PRIMARY_COUNT_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:158: return "RESERVE_COUNT_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:160: return "PRIMARY_SUMMARY_NOT_FULLY_EVALUATED"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:162: return "RESERVE_SUMMARY_NOT_FULLY_EVALUATED"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:164: return "PRIMARY_HIT_MISS_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:166: return "RESERVE_HIT_MISS_MISMATCH"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:167: return None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:170: def _aggregate(role: NextDayRole, rows: Iterable[NextDayCandidateOutcome]) -> WalkForwardTierAggregate:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:173: return WalkForwardTierAggregate(
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:179: average_return=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:180: median_return=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:181: average_relative_return=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:182: median_relative_return=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:187: returns = [float(row.close_to_close_return) for row in materialized if row.close_to_close_return is not None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:188: relatives = [float(row.relative_return) for row in materialized if row.relative_return is not None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:194: return WalkForwardTierAggregate(
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:200: average_return=float(sum(returns) / len(returns)),
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:201: median_return=float(median(returns)),
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:202: average_relative_return=float(sum(relatives) / len(relatives)),
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:203: median_relative_return=float(median(relatives)),
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:210: sessions: Iterable[NextDayOutcomeResult],
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:214: """Aggregate frozen T+1 outcomes without tuning, scoring, persistence, or AL/SAT authority.
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:226: by_date: dict[str, list[NextDayOutcomeResult]] = {}
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:231: valid: list[NextDayOutcomeResult] = []
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:247: all_rows = tuple(row for session in valid for row in session.outcomes)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:252: primary.median_relative_return is not None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:253: and reserve.median_relative_return is not None
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:255: spread = primary.median_relative_return - reserve.median_relative_return
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:262: primary_negative_return = 0
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:265: primary_rows = tuple(row for row in session.outcomes if row.role is NextDayRole.PRIMARY)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:271: avg_relative = sum(float(row.relative_return) for row in primary_rows) / len(primary_rows)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:272: avg_return = sum(float(row.close_to_close_return) for row in primary_rows) / len(primary_rows)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:275: if avg_return < 0:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:276: primary_negative_return += 1
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:279: return NextDayWalkForwardReadiness(
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:296: primary_average_negative_return_session_count=primary_negative_return,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:298: outcome_tuning=False,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_walk_forward.py:299: new_score=False,
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:74: class MomentumWalkForwardOutcome:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:87: return dict(self.ileri_getiriler).get(gun)
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:98: sonuclar: tuple[MomentumWalkForwardOutcome, ...]
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:99: izleme_disi: tuple[MomentumWalkForwardOutcome, ...]
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:105: return sum(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:130: ) -> tuple[tuple[MomentumWalkForwardOutcome, ...], tuple[MomentumFailure, ...]]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:174: sonuclar: list[MomentumWalkForwardOutcome] = []
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:217: MomentumWalkForwardOutcome(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:238: return tuple(sonuclar), tuple(hatalar)
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:255: return {}
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:286: return {sembol: tuple(kayitlar) for sembol, kayitlar in harita.items()}
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:294: return aday
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:311: return replace(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:323: return replace(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:401: return MomentumWalkForwardResult(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:447: return tuple(kayitlar)
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:453: return tuple(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:470: item: MomentumWalkForwardOutcome,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:472: return tuple(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:488: return sinif.split(" — ", 1)[0]
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:492: return {
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:502: return round(deger * 100.0, 2) if deger is not None else None
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py:506: return round(deger, 2) if deger is not None else None
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:5: from ..data.fundamental_score_store import StoredFundamentalScore
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:9: class FundamentalScoreChange:
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:23: def calculate_score_change(
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:24: current: StoredFundamentalScore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:25: previous: StoredFundamentalScore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:26: ) -> FundamentalScoreChange:
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:36: current_score = current.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:37: previous_score = previous.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:40: current_score.total_score is None
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:41: or previous_score.total_score is None
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:49: current_score.profitability.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:50: - previous_score.profitability.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:53: current_score.growth.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:54: - previous_score.growth.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:57: current_score.leverage.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:58: - previous_score.leverage.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:61: current_score.liquidity.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:62: - previous_score.liquidity.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:65: current_score.cash_flow.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:66: - previous_score.cash_flow.score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:70: return FundamentalScoreChange(
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:75: current_score.total_score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:76: - previous_score.total_score
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:92: def latest_score_change(
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:93: history: tuple[StoredFundamentalScore, ...],
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:94: ) -> FundamentalScoreChange | None:
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:96: return None
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:97: return calculate_score_change(history[-1], history[-2])
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:101: history: tuple[StoredFundamentalScore, ...],
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:103: return [
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:107: "Toplam skor": item.score.total_score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:108: "Kârlılık": item.score.profitability.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:109: "Büyüme": item.score.growth.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:110: "Borçluluk": item.score.leverage.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:111: "Likidite": item.score.liquidity.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:112: "Nakit akışı": item.score.cash_flow.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:120: scores: tuple[StoredFundamentalScore, ...],
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:122: return [
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:127: "Temel skor": item.score.total_score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:128: "Kalite sınıfı": item.score.grade,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:129: "Kârlılık": item.score.profitability.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:130: "Büyüme": item.score.growth.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:131: "Borçluluk": item.score.leverage.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:132: "Likidite": item.score.liquidity.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:133: "Nakit akışı": item.score.cash_flow.score,
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py:135: for item in scores
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py ===
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:77: return str(
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:111: minimum_score,
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:191: return ScanHistorySaveResult(
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:231: return tuple(
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:268: return baglanti
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:278: minimum_score INTEGER NOT NULL,
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:295: score INTEGER,
+D:\Projects\Hisse-Robotu\backend\app\history\scan_history.py:380: score,
+
+=== FILE D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py ===
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:1: from __future__ import annotations
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:61: return yol
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:145: return tuple(sonuc)
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:155: return False
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:158: return False
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:168: return False
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:169: return (bugun - max(hazirliklar)).days <= 10
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:180: return max(uygun) if uygun else ""
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:191: return [harita[tarih] for tarih in sorted(harita)]
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:195: return []
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:205: return kayitlar
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:210: return date.fromisoformat(metin)
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:212: return None
+
+=== TEST REFERENCES ===
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:13: from backend.app.analysis.signal_outcome_tracking import (
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_outcomes.py:48: records = apply_session_prices(records, {"AAA": price}, observation_date=day)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_outcomes.py:55: def test_same_observation_date_is_not_counted_twice():
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_outcomes.py:58: records = apply_session_prices(records, {"AAA": 101.0}, observation_date=date(2026, 8, 25))
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_outcomes.py:59: records = apply_session_prices(records, {"AAA": 103.0}, observation_date=date(2026, 8, 25))
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_outcomes.py:74: observation_date=date(2026, 8, 25),
+D:\Projects\Hisse-Robotu\backend\tests\test_fin013_016_investability_intelligence.py:8: from app.models.investability_models import MarketContextInput, LongTermContextInput, PointInTimeObservation
+D:\Projects\Hisse-Robotu\backend\tests\test_fin013_016_investability_intelligence.py:48: o = PointInTimeObservation(date(2026, 8, 1), date(2026, 8, 4), 80, D("0.10"))
+D:\Projects\Hisse-Robotu\backend\tests\test_fin013_016_investability_intelligence.py:53: o = PointInTimeObservation(date(2026, 8, 5), date(2026, 8, 4), 80, D("0.10"))
+D:\Projects\Hisse-Robotu\backend\tests\test_fin013_016_investability_intelligence.py:58: obs = tuple(PointInTimeObservation(date(2026, 8, 5), date(2026, 8, 4), 80 if i % 2 == 0 else 40, D("0.03") if i % 2 == 0 else D("-0.01")) for i in range(10))
+D:\Projects\Hisse-Robotu\backend\tests\test_fin013_016_investability_intelligence.py:65: obs = tuple(PointInTimeObservation(date(2026, 8, 5), date(2026, 8, 4), 80 if i % 2 == 0 else 40, D("0.05") if i % 2 == 0 else D("-0.01")) for i in range(20))
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_tefas_history_f3_v1.py:68: item.observation_date.isoformat()
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_tefas_history_population_v1.py:52: assert first.observation_date.isoformat() == "2026-08-03"
+D:\Projects\Hisse-Robotu\backend\tests\test_historical_research_replay_v1.py:9: import backend.app.analysis.historical_research_replay as replay
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_batch_history_integration.py:20: "walk_forward_tablosu",
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:10: from backend.app.analysis.momentum_walk_forward import (
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:14: walk_forward_tablosu,
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:50: def test_walk_forward_gelecek_veriyi_gizler_ve_performansi_olcer() -> None:
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:77: def test_walk_forward_yetersiz_kesim_gecmisini_hata_yapar() -> None:
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:91: def test_walk_forward_istegi_gecersiz_tarihi_reddeder() -> None:
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:96: def test_walk_forward_tablosu_ileri_ufuklari_gosterir() -> None:
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:105: tablo = walk_forward_tablosu(sonuc)  # type: ignore[arg-type]
+D:\Projects\Hisse-Robotu\backend\tests\test_momentum_walk_forward.py:115: def test_walk_forward_sinyal_gecmisini_haftalik_adimlarla_uretir() -> None:
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:14: from app.analysis.next_day_walk_forward import (
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:16: WALK_FORWARD_CONTRACT_ID,
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:17: build_walk_forward_readiness,
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:97: result = build_walk_forward_readiness(session(i) for i in range(19))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:98: assert result.contract_id == WALK_FORWARD_CONTRACT_ID
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:106: result = build_walk_forward_readiness(session(i) for i in range(20))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:115: result = build_walk_forward_readiness((sparse, empty), required_valid_sessions=2)
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:127: result = build_walk_forward_readiness((s,))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:136: result = build_walk_forward_readiness((s, duplicate), required_valid_sessions=1)
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:144: result = build_walk_forward_readiness((s,))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:151: result = build_walk_forward_readiness((a, b))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:156: result = build_walk_forward_readiness((session(0),))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:171: result = build_walk_forward_readiness((full, sparse))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:177: result = build_walk_forward_readiness((session(0),))
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:184: result = build_walk_forward_readiness(sessions)
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_walk_forward.py:189: result = build_walk_forward_readiness((session(0),))
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_historical_validation.py:10: forward_return_pct,
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_historical_validation.py:144: assert forward_return_pct(100, 110) == pytest.approx(10.0)
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:9: from backend.app.analysis.signal_outcome_tracking import (
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:7: from backend.app.analysis.signal_outcome_tracking import (
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:12: from backend.app.analysis.walk_forward_calibration import (
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:17: run_walk_forward_calibration,
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:105: result = run_walk_forward_calibration(
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:125: result = run_walk_forward_calibration(
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:143: result = run_walk_forward_calibration(
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:162: run_walk_forward_calibration(
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:172: result = run_walk_forward_calibration(
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:196: result = run_walk_forward_calibration(
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:212: def test_walk_forward_gelecek_performansi_garanti_etmez():
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration.py:213: result = run_walk_forward_calibration(
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration_dashboard.py:14: def test_walk_forward_sekmesi_vardir():
+D:\Projects\Hisse-Robotu\backend\tests\test_walk_forward_calibration_dashboard.py:18: assert "run_walk_forward_calibration" in text
+
+=== JSON/ARTIFACT CANDIDATES ===
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_business_quality_canonical_adapter.json
+  5: "as_of_date": "2026-08-04",
+  57: "published_at": "2026-08-04T18:24:32",
+  66: "published_at": "2026-08-04T18:24:32",
+  75: "published_at": "2026-08-04T18:24:32",
+  84: "published_at": "2026-08-04T18:24:32",
+  93: "published_at": "2026-08-04T18:24:32",
+  102: "published_at": "2026-08-04T18:24:32",
+  111: "published_at": "2026-08-04T18:24:32",
+  120: "published_at": "2026-08-04T18:24:32",
+  129: "published_at": "2026-08-04T18:24:32",
+  138: "published_at": "2026-08-04T18:24:32",
+  147: "published_at": "2026-08-04T18:24:32",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_business_quality_canonical_adapter_rev2.json
+  5: "as_of_date": "2026-08-04",
+  11: "published_at": "2026-08-04T18:24:32"
+  17: "published_at": "2026-08-04T18:24:32"
+  23: "published_at": "2026-08-04T18:24:32"
+  29: "published_at": "2026-08-04T18:24:32"
+  35: "published_at": "2026-08-04T18:24:32"
+  41: "published_at": "2026-08-04T18:24:32"
+  47: "published_at": "2026-08-04T18:24:32"
+  53: "published_at": "2026-08-04T18:24:32"
+  59: "published_at": "2026-08-04T18:24:32"
+  65: "published_at": "2026-08-04T18:24:32"
+  71: "published_at": "2026-08-04T18:24:32"
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_business_quality_canonical_adapter_rev3.json
+  5: "as_of_date": "2026-08-04",
+  12: "published_at": "2026-08-04T18:24:32",
+  20: "published_at": "2026-08-04T18:24:32",
+  28: "published_at": "2026-08-04T18:24:32",
+  36: "published_at": "2026-08-04T18:24:32",
+  44: "published_at": "2026-08-04T18:24:32",
+  52: "published_at": "2026-08-04T18:24:32",
+  60: "published_at": "2026-08-04T18:24:32",
+  68: "published_at": "2026-08-04T18:24:32",
+  76: "published_at": "2026-08-04T18:24:32",
+  84: "published_at": "2026-08-04T18:24:32",
+  92: "published_at": "2026-08-04T18:24:32",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_business_quality_canonical_adapter_rev4.json
+  5: "as_of_date": "2026-08-04",
+  20: "published_at": "2026-08-04T18:24:32",
+  30: "published_at": "2026-08-04T18:24:32",
+  40: "published_at": "2026-08-04T18:24:32",
+  50: "published_at": "2026-08-04T18:24:32",
+  60: "published_at": "2026-08-04T18:24:32",
+  70: "published_at": "2026-08-04T18:24:32",
+  80: "published_at": "2026-08-04T18:24:32",
+  90: "published_at": "2026-08-04T18:24:32",
+  100: "published_at": "2026-08-04T18:24:32",
+  110: "published_at": "2026-08-04T18:24:32",
+  120: "published_at": "2026-08-04T18:24:32",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_canonical_investability_evidence.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_fair_value_acceptance.json
+  5: "as_of_date": "2026-08-04",
+  27: "as_of_date": "2026-08-04",
+  361: "as_of_date": "2026-08-04",
+  385: "as_of_date": "2026-08-04",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_financial_intelligence_panel.json
+  9: "score": 94,
+  25: "as_of_date": "2026-08-04",
+  37: "as_of_date": "2026-08-04",
+  72: "as_of_date": "2026-08-04",
+  82: "as_of_date": "2026-08-04",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_acceptance.json
+  5: "as_of_date": "2026-08-04",
+  8: "as_of_date": "2026-08-04",
+  9: "score": null,
+  15: "score": "94",
+  30: "as_of_date": "2026-08-04",
+  31: "score": null,
+  37: "score": "94",
+  43: "score": "100",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_production_closure.json
+  5: "as_of_date": "2026-08-04",
+  61: "as_of_date": "2026-08-04",
+  62: "score": null,
+  68: "score": "94",
+  74: "score": "100",
+  89: "as_of_date": "2026-08-04",
+  90: "score": null,
+  96: "score": "94",
+  102: "score": "100",
+  108: "score": "70",
+  114: "score": "45",
+  120: "score": "0",
+  126: "score": "0",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_runtime_wiring.json
+  5: "as_of_date": "2026-08-04",
+  28: "as_of_date": "2026-08-04",
+  29: "score": null,
+  43: "as_of_date": "2026-08-04",
+  44: "score": null,
+  50: "score": "45",
+  56: "score": "0",
+  62: "score": "0",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_long_term_canonical_coverage.json
+  6: "as_of_date": "2026-08-04",
+  16: "as_of_date": "2026-08-04"
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_long_term_evidence_completion.json
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_market_ownership_2026-08-04.json
+  3: "as_of_date": "2026-08-04",
+  4: "published_at": "2026-08-04T18:24:32",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_market_ownership_acceptance.json
+  40: "as_of_date": "2026-08-04",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_momentum_candidate_2026-08-04.json
+  5: "as_of_date": "2026-08-04",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_short_term_canonical_context.json
+  5: "as_of_date": "2026-08-04",
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_ttm_acceptance.json
+  28: "as_of_date": "2026-08-04",
+
+RULE=NO_SYNTHETIC_DATA_AS_PRODUCTION_CALIBRATION
+RULE=EXACT_SOURCE_FIELDS_ONLY
+RULE=PUBLICATION_DATE_LTE_OBSERVATION_DATE
+RULE=FORWARD_RETURN_MUST_COME_FROM_POST_OBSERVATION_OUTCOME
+RULE=NO_WEIGHT_OR_THRESHOLD_OPTIMIZATION
+FIN_PROD_V8_FIN016_HISTORICAL_PIT_BRIDGE_PREFLIGHT=PASS

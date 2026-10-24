@@ -1,0 +1,163 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Callable, Iterable
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+from backend.app.data.delayed_data_pilot import (
+    DelayedDataPilotConfig,
+    DelayedDataPilotError,
+    DelayedDataSnapshot,
+    fetch_delayed_snapshot,
+    normalize_symbol,
+)
+
+ISTANBUL = ZoneInfo("Europe/Istanbul")
+
+
+@dataclass(frozen=True)
+class ScheduledIntradayBatchFailure:
+    symbol: str
+    error: str
+
+
+@dataclass(frozen=True)
+class ScheduledIntradayBatchResult:
+    snapshots: dict[str, DelayedDataSnapshot]
+    failures: tuple[ScheduledIntradayBatchFailure, ...]
+    requested_count: int
+
+    @property
+    def successful_count(self) -> int:
+        return len(self.snapshots)
+
+
+def _symbols(values: Iterable[str]) -> tuple[str, ...]:
+    ordered: list[str] = []
+    seen: set[str] = set()
+    for value in values:
+        symbol = normalize_symbol(str(value))
+        if symbol not in seen:
+            seen.add(symbol)
+            ordered.append(symbol)
+    if not ordered:
+        raise ValueError("Scheduled intraday batch için en az bir sembol gereklidir.")
+    return tuple(ordered)
+
+
+def _extract_symbol_frame(
+    raw: pd.DataFrame,
+    symbol: str,
+    *,
+    chunk_size: int,
+) -> pd.DataFrame:
+    if raw is None or raw.empty:
+        raise DelayedDataPilotError("Toplu gün içi veri boş.")
+
+    if not isinstance(raw.columns, pd.MultiIndex):
+        if chunk_size != 1:
+            raise DelayedDataPilotError(
+                "Çoklu sembol indirmesinde MultiIndex sütunları bekleniyordu."
+            )
+        return raw.copy()
+
+    for level in range(raw.columns.nlevels):
+        values = {str(value) for value in raw.columns.get_level_values(level)}
+        if symbol in values:
+            frame = raw.xs(symbol, axis=1, level=level, drop_level=True)
+            if isinstance(frame, pd.Series):
+                frame = frame.to_frame()
+            return frame.copy()
+
+    raise DelayedDataPilotError(
+        f"{symbol} toplu gün içi indirme sonucunda bulunamadı."
+    )
+
+
+def fetch_scheduled_intraday_batch(
+    symbols: Iterable[str],
+    *,
+    now: datetime | None = None,
+    config: DelayedDataPilotConfig = DelayedDataPilotConfig(),
+    chunk_size: int = 40,
+    downloader: Callable[..., pd.DataFrame] = yf.download,
+) -> ScheduledIntradayBatchResult:
+    """Fetch delayed intraday snapshots in chunks using the existing pilot semantics.
+
+    This is a data adapter only. It has no ranking, profile, scanner, signal,
+    AL/SAT, or persistence authority.
+    """
+
+    normalized = _symbols(symbols)
+    if chunk_size < 1:
+        raise ValueError("chunk_size en az 1 olmalıdır.")
+
+    received_at = now or datetime.now(ISTANBUL)
+    if received_at.tzinfo is None:
+        received_at = received_at.replace(tzinfo=ISTANBUL)
+    else:
+        received_at = received_at.astimezone(ISTANBUL)
+
+    snapshots: dict[str, DelayedDataSnapshot] = {}
+    failures: list[ScheduledIntradayBatchFailure] = []
+
+    for start in range(0, len(normalized), chunk_size):
+        chunk = normalized[start : start + chunk_size]
+
+        try:
+            raw = downloader(
+                tickers=list(chunk),
+                period=config.period,
+                interval=config.interval,
+                auto_adjust=True,
+                progress=False,
+                threads=True,
+                prepost=False,
+                timeout=45,
+                group_by="ticker",
+            )
+        except Exception as error:
+            failures.extend(
+                ScheduledIntradayBatchFailure(
+                    symbol=symbol,
+                    error=f"Toplu gün içi indirme hatası: {error}",
+                )
+                for symbol in chunk
+            )
+            continue
+
+        for symbol in chunk:
+            try:
+                frame = _extract_symbol_frame(
+                    raw,
+                    symbol,
+                    chunk_size=len(chunk),
+                )
+
+                def cached_downloader(**_: object) -> pd.DataFrame:
+                    return frame
+
+                snapshot = fetch_delayed_snapshot(
+                    symbol,
+                    config=config,
+                    now=received_at,
+                    downloader=cached_downloader,
+                )
+                snapshots[symbol] = snapshot
+            except (DelayedDataPilotError, KeyError, TypeError, ValueError) as error:
+                failures.append(
+                    ScheduledIntradayBatchFailure(
+                        symbol=symbol,
+                        error=str(error),
+                    )
+                )
+
+    return ScheduledIntradayBatchResult(
+        snapshots=snapshots,
+        failures=tuple(failures),
+        requested_count=len(normalized),
+    )

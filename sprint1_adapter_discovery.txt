@@ -1,0 +1,77 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:15: PROFILE_DIR = Path(__file__).resolve().parents[1] / "data" / "opportunity_radar"
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:612: def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+D:\Projects\Hisse-Robotu\backend\app\analysis\candidate_decision_card.py:7: class CandidateDecisionCard:
+D:\Projects\Hisse-Robotu\backend\app\analysis\candidate_tracking_result.py:7: class CandidateTrackingResult:
+D:\Projects\Hisse-Robotu\backend\app\analysis\common_final_candidate_selection_v1.py:34: class CandidateEvidence:
+D:\Projects\Hisse-Robotu\backend\app\analysis\common_final_candidate_selection_v1.py:42: class CommonFinalCandidate:
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_buy_decision_cycle.py:15: class DailyBuyDecisionCandidate:
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_early_trajectory.py:15: class DailyEarlyTrajectoryCandidate:
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_candidate_output.py:7: class EodCandidateOutput:
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_candidate_output_archive.py:13: class EodCandidateOutputJsonStore:
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_candidate_performance.py:59: class EodCandidatePerformanceJsonStore:
+D:\Projects\Hisse-Robotu\backend\app\analysis\high_conviction_buy_gate.py:24: class HighConvictionDecision:
+D:\Projects\Hisse-Robotu\backend\app\analysis\high_conviction_buy_gate.py:174: ) -> tuple[HighConvictionDecision, ...]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\high_conviction_buy_gate.py:184: result: list[HighConvictionDecision] = []
+D:\Projects\Hisse-Robotu\backend\app\analysis\high_conviction_buy_gate.py:251: HighConvictionDecision(
+D:\Projects\Hisse-Robotu\backend\app\analysis\high_conviction_buy_gate.py:272: decisions: Iterable[HighConvictionDecision],
+D:\Projects\Hisse-Robotu\backend\app\analysis\intraday_candidate_validation.py:15: class IntradayCandidateValidation:
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:7: evaluate_jump_candidate_quality,
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:18: class JumpCandidateEntryReadinessPolicy:
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:27: class JumpCandidateEntryReadinessResult:
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:53: def evaluate_jump_candidate_entry_readiness(
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:73: quality = evaluate_jump_candidate_quality(
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:11: evaluate_jump_candidate_entry_readiness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:13: from backend.app.analysis.jump_candidate_quality import evaluate_jump_candidate_quality
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:17: class PriorityMergeCandidate:
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:96: quality = evaluate_jump_candidate_quality(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:97: readiness = evaluate_jump_candidate_entry_readiness(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:127: quality = evaluate_jump_candidate_quality(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:131: readiness = evaluate_jump_candidate_entry_readiness(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_quality.py:7: class JumpCandidateQualityPolicy:
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_quality.py:15: class JumpCandidateQualityResult:
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_quality.py:44: def evaluate_jump_candidate_quality(
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:99: class MomentumCandidate:
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_feedback.py:8: class MorningCandidateFeedback:
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:7: evaluate_jump_candidate_quality,
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:10: evaluate_jump_candidate_entry_readiness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:18: class MorningCandidateCard:
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:101: def _candidate_selection(
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:177: _jump_quality = evaluate_jump_candidate_quality(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:178: _entry_readiness = evaluate_jump_candidate_entry_readiness(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_outcome.py:8: class MorningCandidateOutcome:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_outcome.py:29: class NextDayCandidateOutcome:
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_runtime_observer.py:8: evaluate_jump_candidate_entry_readiness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_runtime_observer.py:232: readiness = evaluate_jump_candidate_entry_readiness(item)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_selection.py:38: class NextDayCandidateEvidence:
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:7: class TodaysFiveCandidatesView:
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:13: def build_todays_five_candidates_view(
+D:\Projects\Hisse-Robotu\backend\app\analysis\trend_scan_policy.py:12: class TrendCandidateLike(Protocol):
+D:\Projects\Hisse-Robotu\backend\app\analysis\v1_release_candidate_gate.py:7: class V1ReleaseCandidateGate:
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_opportunity.py:85: class WeeklyOpportunityCandidate:
+D:\Projects\Hisse-Robotu\backend\app\funds\kap_portfolio_auto_ingestion.py:31: class KapPortfolioDiscoveryCandidate:
+D:\Projects\Hisse-Robotu\backend\app\history\momentum_history.py:37: class CandidateLike(Protocol):
+D:\Projects\Hisse-Robotu\backend\app\operations\daily_buy_decision_scheduled_runner.py:36: def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object: ...
+D:\Projects\Hisse-Robotu\backend\app\operations\daily_buy_decision_scheduled_runner.py:199: def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:15: class CandidateLifecycleStatus(str, Enum):
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:23: class CandidatePriceObservation:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:31: class CandidateLifecycleConfig:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py:49: class CandidateLifecycleRecord:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py:19: class CandidateQualityStageRow:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py:38: class CandidateQualityReport:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_historical_validation.py:10: class HistoricalCandidateObservation:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_missed_opportunity.py:44: class HistoricalCandidateDecision:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_regime_performance.py:36: class RegimeCandidateResult:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_scan_radar_integration.py:17: class ScanCandidateSnapshot:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_scan_radar_integration.py:41: def candidate_to_radar_input(candidate: ScanCandidateSnapshot) -> EarlyRadarInput:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_scan_radar_integration.py:56: def candidate_to_card(candidate: ScanCandidateSnapshot) -> EarlyRadarCard:
+D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_candidate_context.py:20: class CandidateSectorContext:
+D:\Projects\Hisse-Robotu\backend\app\sector_analysis\sector_candidate_context.py:34: class CandidateSectorContextBundle:
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:6: from backend.app.opportunity_radar import OpportunityRadarResult, run_opportunity_radar
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:17: def render_opportunity_radar() -> None:
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:31: key="opportunity_radar_limit",
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:37: key="opportunity_radar_run",
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:40: cache_key = "opportunity_radar_last_result"
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:44: result = run_opportunity_radar(result_limit=int(result_limit))
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:90: key="opportunity_radar_weekly_csv",
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:98: key="opportunity_radar_monthly_strong_csv",
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:106: key="opportunity_radar_monthly_early_csv",

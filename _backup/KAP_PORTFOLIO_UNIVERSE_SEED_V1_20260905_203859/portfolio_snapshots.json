@@ -1,0 +1,109 @@
+{
+  "fund:tefas:370001|2026-06-30|KAP": {
+    "_digest": "e5168580c7de1ac0a04affc132c6880292aa46ef622dd1c5f8e8a268d7fa4320",
+    "canonical_fund_id": "fund:tefas:370001",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:09:25.222900+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [],
+    "provider": "KAP",
+    "publication_date": "2026-07-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "f175722dd9a5dd9ad639d4b112092831694af5435d12e345550fc2dec2c5ee36",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1628517"
+  },
+  "fund:tefas:370001|2026-07-31|KAP": {
+    "_digest": "ea063f2d76e0850f22f0d1adfb7f2a2a293abb3a7736c9491254c110c5e6a6d8",
+    "canonical_fund_id": "fund:tefas:370001",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:09:03.869123+00:00",
+    "portfolio_date": "2026-07-31",
+    "positions": [],
+    "provider": "KAP",
+    "publication_date": "2026-08-10",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "24730b1d2207496320dc19585d66aeb6d3e33a44d6d7d5e44fb8e572327f47d5",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1646743"
+  },
+  "fund:tefas:AP5|2026-05-31|KAP": {
+    "_digest": "783833b15d546067eba45810bd13be28f459ae855b19410a259137e8527f3bc0",
+    "canonical_fund_id": "fund:tefas:AP5",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-04T10:47:52.007936+00:00",
+    "portfolio_date": "2026-05-31",
+    "positions": [
+      {
+        "asset_name": "SABANCI HOLDING A.Ş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "441600.00",
+        "portfolio_date": "2026-05-31",
+        "portfolio_weight": "0.4566",
+        "shares_held": "4800.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "525525.00",
+        "portfolio_date": "2026-05-31",
+        "portfolio_weight": "0.5434",
+        "shares_held": "8580.00",
+        "symbol": "TTKOM"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-06-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "575504f4075852d4fef3e7f5d29a130e6aa508da6cffb4f16bb86bb469fd5cce",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1614366"
+  },
+  "fund:tefas:AP5|2026-06-30|KAP": {
+    "_digest": "9a636157f45f34c0dfd0b093e83b45130295828cd3b8b5f7a2962b5ba52b04cd",
+    "canonical_fund_id": "fund:tefas:AP5",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-04T11:35:27.308218+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "SABANCI HOLDING A.Ş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "468000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.4757",
+        "shares_held": "4800.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "515760.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.5243",
+        "shares_held": "8400.00",
+        "symbol": "TTKOM"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "741291e5607c1d09c50f7cc98f0e0c6d0f4356bd72e9b6325747f5dc6cb3fd05",
+    "source_reference": "manual-upload:AP5_FON_HAZIRAN_2026_PORTFOY_DAGILIM_RAPORU_CLEAN.pdf"
+  },
+  "fund:tefas:PUH|2026-07-31|KAP": {
+    "_digest": "9852ee67ce145b9cb802f0b9700f53a1459acab3ddda3eed67381d8cd4efee62",
+    "canonical_fund_id": "fund:tefas:PUH",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:09:11.262958+00:00",
+    "portfolio_date": "2026-07-31",
+    "positions": [],
+    "provider": "KAP",
+    "publication_date": "2026-08-05",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "ab5f15f8fb064420a7d3c95bd10a3ab08f7f270e8fb8174f25f656531436c6aa",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1643356"
+  }
+}

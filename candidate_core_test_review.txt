@@ -1,0 +1,523 @@
+
+========== .\backend\tests\test_jump_candidate_priority_merge_v1.py ==========
+   1: from types import SimpleNamespace
+   2: 
+   3: from backend.app.analysis.jump_candidate_priority_merge import (
+   4:     merge_jump_and_scan_candidates,
+   5: )
+   6: from backend.app.analysis.morning_candidate_flow import (
+   7:     build_morning_candidate_cards,
+   8:     morning_candidate_rows,
+   9: )
+  10: 
+  11: 
+  12: def candidate(symbol, *, score=76, volume=1.35, rr=2.0, close=100.0, ema9=99.0, atr=2.0):
+  13:     return SimpleNamespace(
+  14:         sembol=symbol,
+  15:         kapanis=close,
+  16:         ema9=ema9,
+  17:         atr14=atr,
+  18:         hacim_orani=volume,
+  19:         sinyal=SimpleNamespace(
+  20:             skor=score,
+  21:             karar="Pozitif Teknik Görünüm" if score >= 70 else "Nötr Teknik Görünüm",
+  22:             pozitif_nedenler=(),
+  23:             riskler=(),
+  24:         ),
+  25:         risk_plani=SimpleNamespace(risk_odul_orani=rr),
+  26:     )
+  27: 
+  28: 
+  29: def vis(symbol, change):
+  30:     return SimpleNamespace(
+  31:         symbol=symbol,
+  32:         research_priority="NORMAL",
+  33:         visibility_state="IMPROVING",
+  34:         rank_change=change,
+  35:         data_blocked=False,
+  36:     )
+  37: 
+  38: 
+  39: def test_ready_jump_challenger_can_replace_weaker_waiting_scan_candidate():
+  40:     candidates = (
+  41:         candidate("A.IS", score=80),
+  42:         candidate("B.IS", score=79),
+  43:         candidate("C.IS", score=78),
+  44:         candidate("D.IS", score=66, volume=1.05),
+  45:         candidate("E.IS", score=65, volume=1.05),
+  46:         candidate("JUMP.IS", score=82, volume=1.5),
+  47:     )
+  48:     visibility = {"JUMP": vis("JUMP", 40)}
+  49:     merged = merge_jump_and_scan_candidates(candidates, visibility, limit=5)
+  50:     symbols = [item.candidate.sembol for item in merged]
+  51:     assert "JUMP.IS" in symbols
+  52:     jump = next(item for item in merged if item.candidate.sembol == "JUMP.IS")
+  53:     assert jump.source == "SICRAMA"
+  54:     assert "GİRİŞE HAZIR" in jump.priority_reason
+  55: 
+  56: 
+  57: def test_same_readiness_keeps_original_scan_order_without_jump_bonus():
+  58:     candidates = tuple(candidate(f"S{i}.IS", score=80) for i in range(1, 7))
+  59:     visibility = {"S6": vis("S6", 100)}
+  60:     merged = merge_jump_and_scan_candidates(candidates, visibility, limit=5)
+  61:     assert [item.candidate.sembol for item in merged] == [
+  62:         "S1.IS", "S2.IS", "S3.IS", "S4.IS", "S5.IS"
+  63:     ]
+  64: 
+  65: 
+  66: def test_overextended_jump_does_not_displace_scan_core():
+  67:     candidates = (
+  68:         candidate("A.IS"), candidate("B.IS"), candidate("C.IS"),
+  69:         candidate("D.IS"), candidate("E.IS"),
+  70:         candidate("FAR.IS", close=110.0, ema9=100.0, atr=2.0),
+  71:     )
+  72:     merged = merge_jump_and_scan_candidates(
+  73:         candidates, {"FAR": vis("FAR", 80)}, limit=5
+  74:     )
+  75:     assert "FAR.IS" not in [item.candidate.sembol for item in merged]
+  76: 
+  77: 
+  78: def test_morning_cards_expose_priority_reason():
+  79:     candidates = tuple(candidate(f"S{i}.IS", score=80) for i in range(1, 7))
+  80:     cards = build_morning_candidate_cards(
+  81:         SimpleNamespace(adaylar=candidates),
+  82:         visibility_contexts=(vis("S6", 50),),
+  83:         limit=5,
+  84:         include_movement_pool=True,
+  85:     )
+  86:     assert all(card.priority_reason for card in cards)
+  87:     rows = morning_candidate_rows(cards)
+  88:     assert "Top-5 öncelik nedeni" in rows[0]
+
+========== .\backend\tests\test_jump_candidate_priority_merge_r1.py ==========
+   1: from dataclasses import dataclass
+   2: from types import SimpleNamespace
+   3: 
+   4: from backend.app.analysis.morning_candidate_flow import build_morning_candidate_cards
+   5: 
+   6: 
+   7: @dataclass
+   8: class Signal:
+   9:     skor: int = 70
+  10:     karar: str = "Nötr Teknik Görünüm"
+  11:     pozitif_nedenler: tuple[str, ...] = ()
+  12:     riskler: tuple[str, ...] = ()
+  13: 
+  14: 
+  15: @dataclass
+  16: class Risk:
+  17:     risk_odul_orani: float = 1.5
+  18: 
+  19: 
+  20: @dataclass
+  21: class Candidate:
+  22:     sembol: str
+  23:     hacim_orani: float = 1.2
+  24:     sinyal: Signal | None = None
+  25:     risk_plani: Risk | None = None
+  26: 
+  27:     def __post_init__(self):
+  28:         self.sinyal = self.sinyal or Signal()
+  29:         self.risk_plani = self.risk_plani or Risk()
+  30: 
+  31: 
+  32: @dataclass
+  33: class Visibility:
+  34:     symbol: str
+  35:     rank_change: int
+  36:     research_priority: str = "NORMAL"
+  37:     visibility_state: str = "IMPROVING"
+  38:     data_blocked: bool = False
+  39: 
+  40: 
+  41: def test_waiting_pool_preserves_three_scan_two_jump_contract():
+  42:     scan = SimpleNamespace(adaylar=tuple(Candidate(f"S{i}") for i in range(1, 11)))
+  43:     visibility = (
+  44:         Visibility("S8", 90),
+  45:         Visibility("S9", 80),
+  46:         Visibility("S10", 70),
+  47:     )
+  48:     cards = build_morning_candidate_cards(
+  49:         scan,
+  50:         visibility_contexts=visibility,
+  51:         limit=5,
+  52:         include_movement_pool=True,
+  53:     )
+  54:     assert [card.symbol for card in cards] == ["S1", "S2", "S3", "S8", "S9"]
+  55:     assert [card.selection_source for card in cards] == [
+  56:         "TARAMA", "TARAMA", "TARAMA", "SICRAMA", "SICRAMA"
+  57:     ]
+
+========== .\backend\tests\test_jump_candidate_quality_filter_v1.py ==========
+   1: from types import SimpleNamespace
+   2: 
+   3: from backend.app.analysis.jump_candidate_quality import evaluate_jump_candidate_quality
+   4: from backend.app.analysis.morning_candidate_flow import build_morning_candidate_cards
+   5: 
+   6: 
+   7: def _candidate(symbol, score=75, volume=1.3, rr=2.0, close=100.0, ema9=98.0, atr14=2.0):
+   8:     return SimpleNamespace(
+   9:         sembol=symbol,
+  10:         kapanis=close,
+  11:         ema9=ema9,
+  12:         atr14=atr14,
+  13:         hacim_orani=volume,
+  14:         sinyal=SimpleNamespace(
+  15:             skor=score,
+  16:             karar="Pozitif Teknik Görünüm",
+  17:             pozitif_nedenler=(),
+  18:             riskler=(),
+  19:         ),
+  20:         risk_plani=SimpleNamespace(risk_odul_orani=rr),
+  21:     )
+  22: 
+  23: 
+  24: def _visibility(symbol, change):
+  25:     return SimpleNamespace(
+  26:         symbol=symbol,
+  27:         research_priority="NORMAL",
+  28:         visibility_state="IMPROVING",
+  29:         rank_change=change,
+  30:         data_blocked=False,
+  31:     )
+  32: 
+  33: 
+  34: def test_jump_quality_gate_accepts_balanced_candidate():
+  35:     result = evaluate_jump_candidate_quality(_candidate("AAA.IS"))
+  36:     assert result.eligible is True
+  37:     assert result.technical_ok is True
+  38:     assert result.volume_ok is True
+  39:     assert result.risk_reward_ok is True
+  40:     assert result.entry_ok is True
+  41: 
+  42: 
+  43: def test_jump_quality_gate_rejects_overextended_candidate():
+  44:     result = evaluate_jump_candidate_quality(
+  45:         _candidate("AAA.IS", close=110.0, ema9=100.0, atr14=2.0)
+  46:     )
+  47:     assert result.eligible is False
+  48:     assert result.entry_ok is False
+  49:     assert result.extension_atr == 5.0
+  50: 
+  51: 
+  52: def test_movement_pool_skips_low_quality_jump_and_uses_next_eligible_mover():
+  53:     candidates = (
+  54:         _candidate("A.IS", score=90),
+  55:         _candidate("B.IS", score=88),
+  56:         _candidate("C.IS", score=86),
+  57:         _candidate("BAD.IS", score=55, volume=0.7, rr=1.1),
+  58:         _candidate("GOOD.IS", score=74, volume=1.4, rr=2.2),
+  59:         _candidate("F.IS", score=72),
+  60:     )
+  61:     scan_result = SimpleNamespace(adaylar=candidates)
+  62:     contexts = (
+  63:         _visibility("BAD", 80),
+  64:         _visibility("GOOD", 45),
+  65:     )
+  66: 
+  67:     cards = build_morning_candidate_cards(
+  68:         scan_result,
+  69:         visibility_contexts=contexts,
+  70:         limit=5,
+  71:         include_movement_pool=True,
+  72:     )
+  73: 
+  74:     symbols = [card.symbol for card in cards]
+  75:     assert "GOOD" in symbols
+  76:     good = next(card for card in cards if card.symbol == "GOOD")
+  77:     assert good.selection_source == "SICRAMA"
+  78:     assert good.jump_quality == "UYGUN"
+  79:     bad = next((card for card in cards if card.symbol == "BAD"), None)
+  80:     if bad is not None:
+  81:         assert bad.selection_source == "TARAMA"
+  82:         assert bad.jump_quality == "FİLTRE DIŞI"
+  83: 
+  84: 
+  85: def test_missing_extension_inputs_do_not_block_backward_compatible_candidates():
+  86:     candidate = SimpleNamespace(
+  87:         sembol="OLD.IS",
+  88:         hacim_orani=1.2,
+  89:         sinyal=SimpleNamespace(
+  90:             skor=70,
+  91:             karar="Pozitif Teknik Görünüm",
+  92:             pozitif_nedenler=(),
+  93:             riskler=(),
+  94:         ),
+  95:         risk_plani=SimpleNamespace(risk_odul_orani=2.0),
+  96:     )
+  97:     result = evaluate_jump_candidate_quality(candidate)
+  98:     assert result.eligible is True
+  99:     assert result.extension_atr is None
+ 100: 
+ 101: 
+ 102: def test_dashboard_exposes_jump_quality_gate():
+ 103:     from pathlib import Path
+ 104:     source = Path("backend/dashboard.py").read_text(encoding="utf-8")
+ 105:     assert "Sıçrama kalite kapısı" in source
+ 106:     assert "jump_quality_reason" in source
+
+========== .\backend\tests\test_high_conviction_buy_gate_v1.py ==========
+   1: from dataclasses import dataclass
+   2: 
+   3: from backend.app.analysis.high_conviction_buy_gate import (
+   4:     HIGH_CONFIDENCE,
+   5:     NORMAL_CONFIDENCE,
+   6:     WAIT,
+   7:     build_high_conviction_buy_gate,
+   8:     evaluate_historical_support,
+   9: )
+  10: 
+  11: 
+  12: @dataclass
+  13: class Card:
+  14:     symbol: str
+  15:     selection_source: str = "TARAMA"
+  16:     jump_quality: str = "-"
+  17:     entry_readiness: str = "-"
+  18: 
+  19: 
+  20: @dataclass
+  21: class Decision:
+  22:     priority: int = 1
+  23:     symbol: str = "AAA"
+  24:     decision: str = "AL"
+  25:     technical_score: int = 84
+  26:     technical_view: str = "Pozitif Teknik Görünüm"
+  27:     rank_change: int | None = 8
+  28:     research_priority: str = "HIGH"
+  29:     visibility_state: str | None = "IMPROVING"
+  30:     volume_ratio: float = 1.45
+  31:     risk_reward: float = 2.3
+  32:     data_status: str = "UYGUN"
+  33: 
+  34: 
+  35: @dataclass
+  36: class Slice:
+  37:     dimension: str
+  38:     segment: str
+  39:     horizon: str
+  40:     sample_size: int = 12
+  41:     hit_rate: float | None = 66.7
+  42:     average_return: float | None = 1.4
+  43:     status: str = "DESTEKLEYİCİ"
+  44: 
+  45: 
+  46: def supportive_history():
+  47:     return (
+  48:         Slice("Teknik skor", "80+", "3S"),
+  49:         Slice("Hacim", ">=1.3", "5S"),
+  50:         Slice("Risk/Getiri", ">=2", "3S"),
+  51:     )
+  52: 
+  53: 
+  54: def test_high_confidence_requires_all_strict_gates_and_history():
+  55:     result = build_high_conviction_buy_gate(
+  56:         (Card("AAA"),),
+  57:         (Decision(),),
+  58:         calibration_slices=supportive_history(),
+  59:     )[0]
+  60:     assert result.conviction == HIGH_CONFIDENCE
+  61:     assert not result.blockers
+  62: 
+  63: 
+  64: def test_al_without_history_remains_normal_confidence():
+  65:     result = build_high_conviction_buy_gate((Card("AAA"),), (Decision(),))[0]
+  66:     assert result.conviction == NORMAL_CONFIDENCE
+  67:     assert "Outcome geçmişi" in " ".join(result.blockers)
+  68: 
+  69: 
+  70: def test_base_wait_can_never_be_upgraded_to_buy():
+  71:     result = build_high_conviction_buy_gate(
+  72:         (Card("AAA"),),
+  73:         (Decision(decision="BEKLE"),),
+  74:         calibration_slices=supportive_history(),
+  75:     )[0]
+  76:     assert result.conviction == WAIT
+  77: 
+  78: 
+  79: def test_jump_candidate_requires_quality_and_entry_readiness():
+  80:     card = Card("AAA", selection_source="SICRAMA", jump_quality="UYGUN", entry_readiness="TEYİT BEKLİYOR")
+  81:     result = build_high_conviction_buy_gate(
+  82:         (card,),
+  83:         (Decision(),),
+  84:         calibration_slices=supportive_history(),
+  85:     )[0]
+  86:     assert result.conviction == NORMAL_CONFIDENCE
+  87:     assert result.entry_gate == "KALDI"
+  88: 
+  89: 
+  90: def test_history_support_uses_existing_calibration_not_new_score():
+  91:     support = evaluate_historical_support(Decision(), supportive_history())
+  92:     assert support.status == "DESTEKLEYİCİ"
+  93:     assert support.supportive_slices == 3
+
+========== .\backend\tests\test_morning_candidate_flow.py ==========
+   1: from types import SimpleNamespace
+   2: 
+   3: from backend.app.analysis.morning_candidate_flow import (
+   4:     build_morning_candidate_cards,
+   5:     morning_candidate_rows,
+   6: )
+   7: 
+   8: 
+   9: def _candidate(symbol, score, view, volume=1.5, rr=2.0):
+  10:     return SimpleNamespace(
+  11:         sembol=symbol,
+  12:         hacim_orani=volume,
+  13:         sinyal=SimpleNamespace(
+  14:             skor=score,
+  15:             karar=view,
+  16:             pozitif_nedenler=("Momentum güçlü.", "Hacim destekliyor."),
+  17:             riskler=("Stop disiplini gerekli.",),
+  18:         ),
+  19:         risk_plani=SimpleNamespace(
+  20:             risk_odul_orani=rr,
+  21:         ),
+  22:     )
+  23: 
+  24: 
+  25: def _visibility(symbol, priority, change, blocked=False):
+  26:     return SimpleNamespace(
+  27:         symbol=symbol,
+  28:         research_priority=priority,
+  29:         visibility_state="IMPROVING",
+  30:         rank_change=change,
+  31:         data_blocked=blocked,
+  32:     )
+  33: 
+  34: 
+  35: def test_morning_candidate_flow_preserves_existing_scan_order_and_limits_to_five():
+  36:     scan_result = SimpleNamespace(
+  37:         adaylar=tuple(
+  38:             _candidate(f"S{i}.IS", 100 - i, "Pozitif Teknik Görünüm")
+  39:             for i in range(1, 8)
+  40:         )
+  41:     )
+  42: 
+  43:     cards = build_morning_candidate_cards(scan_result, limit=5)
+  44: 
+  45:     assert [item.symbol for item in cards] == ["S1", "S2", "S3", "S4", "S5"]
+  46:     assert [item.rank for item in cards] == [1, 2, 3, 4, 5]
+  47: 
+  48: 
+  49: def test_morning_candidate_flow_attaches_early_visibility_without_new_score():
+  50:     scan_result = SimpleNamespace(
+  51:         adaylar=(
+  52:             _candidate("TUPRS.IS", 82, "Pozitif Teknik Görünüm", 1.8, 2.4),
+  53:         )
+  54:     )
+  55: 
+  56:     cards = build_morning_candidate_cards(
+  57:         scan_result,
+  58:         visibility_contexts=(
+  59:             _visibility("TUPRS", "HIGH", 34),
+  60:         ),
+  61:     )
+  62: 
+  63:     card = cards[0]
+  64:     assert card.symbol == "TUPRS"
+  65:     assert card.technical_score == 82
+  66:     assert card.research_priority == "HIGH"
+  67:     assert card.rank_change == 34
+  68:     assert card.operational_status == "ARAŞTIRMA ÖNCELİĞİ YÜKSEK"
+  69: 
+  70: 
+  71: def test_morning_candidate_flow_marks_data_blocked_candidate():
+  72:     scan_result = SimpleNamespace(
+  73:         adaylar=(
+  74:             _candidate("AAA.IS", 79, "Pozitif Teknik Görünüm"),
+  75:         )
+  76:     )
+  77: 
+  78:     cards = build_morning_candidate_cards(
+  79:         scan_result,
+  80:         visibility_contexts=(
+  81:             _visibility("AAA", "HIGH", 25, blocked=True),
+  82:         ),
+  83:     )
+  84: 
+  85:     assert cards[0].data_blocked is True
+  86:     assert cards[0].operational_status == "KISMİ VERİ — İNCELEMEYE DEVAM"
+  87: 
+  88: 
+  89: def test_morning_candidate_rows_exposes_decision_card_fields():
+  90:     scan_result = SimpleNamespace(
+  91:         adaylar=(
+  92:             _candidate("TUPRS.IS", 82, "Pozitif Teknik Görünüm", 1.8, 2.4),
+  93:         )
+  94:     )
+  95:     cards = build_morning_candidate_cards(scan_result)
+  96:     rows = morning_candidate_rows(cards)
+  97: 
+  98:     assert rows[0]["Hisse"] == "TUPRS"
+  99:     assert rows[0]["Skor"] == 82
+ 100:     assert rows[0]["Hacim oranı"] == 1.8
+ 101:     assert rows[0]["Risk/Getiri"] == 2.4
+ 102:     assert "Momentum güçlü." in rows[0]["Nedenler"]
+ 103:     assert "Stop disiplini gerekli." in rows[0]["Riskler"]
+
+========== .\backend\tests\test_jump_candidate_entry_readiness_v1.py ==========
+   1: from types import SimpleNamespace
+   2: 
+   3: from backend.app.analysis.jump_candidate_entry_readiness import (
+   4:     EARLY,
+   5:     OVEREXTENDED,
+   6:     READY,
+   7:     WAIT_CONFIRMATION,
+   8:     evaluate_jump_candidate_entry_readiness,
+   9: )
+  10: from backend.app.analysis.morning_candidate_flow import (
+  11:     build_morning_candidate_cards,
+  12:     morning_candidate_rows,
+  13: )
+  14: 
+  15: 
+  16: def candidate(*, score=76, view="Pozitif Teknik Görünüm", volume=1.35, rr=2.0, close=100.0, ema9=99.0, atr=2.0, resistance=2.5):
+  17:     return SimpleNamespace(
+  18:         sembol="TEST.IS",
+  19:         kapanis=close,
+  20:         ema9=ema9,
+  21:         atr14=atr,
+  22:         hacim_orani=volume,
+  23:         sinyal=SimpleNamespace(
+  24:             skor=score,
+  25:             karar=view,
+  26:             pozitif_nedenler=("trend",),
+  27:             riskler=(),
+  28:         ),
+  29:         risk_plani=SimpleNamespace(risk_odul_orani=rr),
+  30:         destek_direnc=SimpleNamespace(direnc_uzaklik_yuzde=resistance),
+  31:     )
+  32: 
+  33: 
+  34: def test_entry_readiness_ready():
+  35:     result = evaluate_jump_candidate_entry_readiness(candidate())
+  36:     assert result.state == READY
+  37:     assert result.ready is True
+  38:     assert result.extension_atr == 0.5
+  39: 
+  40: 
+  41: def test_entry_readiness_waits_for_confirmation():
+  42:     result = evaluate_jump_candidate_entry_readiness(candidate(score=66, volume=1.05))
+  43:     assert result.state == WAIT_CONFIRMATION
+  44:     assert result.ready is False
+  45: 
+  46: 
+  47: def test_entry_readiness_marks_early_when_quality_not_complete():
+  48:     result = evaluate_jump_candidate_entry_readiness(candidate(score=55, volume=0.8))
+  49:     assert result.state == EARLY
+  50: 
+  51: 
+  52: def test_entry_readiness_marks_overextended():
+  53:     result = evaluate_jump_candidate_entry_readiness(candidate(close=106.0, ema9=100.0, atr=2.0))
+  54:     assert result.state == OVEREXTENDED
+  55:     assert result.extension_atr == 3.0
+  56: 
+  57: 
+  58: def test_morning_card_exposes_entry_readiness():
+  59:     scan = SimpleNamespace(adaylar=(candidate(),))
+  60:     cards = build_morning_candidate_cards(scan, limit=1)
+  61:     assert cards[0].entry_readiness == READY
+  62:     rows = morning_candidate_rows(cards)
+  63:     assert rows[0]["Giriş hazırlığı"] == READY
+  64:     assert rows[0]["Uzama (ATR)"] == 0.5

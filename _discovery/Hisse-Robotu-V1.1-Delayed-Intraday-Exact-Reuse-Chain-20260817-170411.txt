@@ -1,0 +1,138 @@
+﻿FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=yfinance LINE=14 TEXT=import yfinance as yf
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=yfinance LINE=78 TEXT=source: str = "yfinance"
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=yf. LINE=257 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=26 TEXT=class DelayedDataPilotError(ValueError):
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=31 TEXT=class DelayedDataPilotConfig:
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=43 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=47 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=51 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=55 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=61 TEXT=class DelayedDataSnapshot:
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=114 TEXT=raise DelayedDataPilotError("Sembol boş olamaz.")
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=122 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=133 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=152 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=199 TEXT=config: DelayedDataPilotConfig,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=252 TEXT=def fetch_delayed_snapshot(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=255 TEXT=config: DelayedDataPilotConfig = DelayedDataPilotConfig(),
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=258 TEXT=) -> DelayedDataSnapshot:
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=278 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=301 TEXT=snapshot = DelayedDataSnapshot(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=332 TEXT=raise DelayedDataPilotError(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=340 TEXT=snapshot: DelayedDataSnapshot,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=362 TEXT=class DelayedDataPilotStore:
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=delayed LINE=371 TEXT=def append(self, snapshot: DelayedDataSnapshot) -> Path:
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=gecikmeli LINE=19 TEXT=GECIKMELI_GUNCEL = "Gecikmeli — Güncel"
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=gecikmeli LINE=27 TEXT="""Gecikmeli veri pilotu ölçümü üretilemedi."""
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=gecikmeli LINE=123 TEXT="Gecikmeli gün içi veri bulunamadı."
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=gecikmeli LINE=247 TEXT=return GECIKMELI_GUNCEL, False, True, False
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=gecikmeli LINE=279 TEXT=f"{normalized_symbol} gecikmeli verisi alınamadı: {error}"
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=gecikmeli LINE=333 TEXT="Gecikmeli veri geçersiz sayısal değer içeriyor."
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=gecikmeli LINE=367 TEXT=else Path.home() / ".hisse_robotu" / "gecikmeli_veri_pilotu"
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=last_price LINE=70 TEXT=last_price: float
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=last_price LINE=86 TEXT=(self.last_price / self.day_open - 1.0) * 100.0,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=last_price LINE=102 TEXT=last_price: float
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=last_price LINE=310 TEXT=last_price=float(latest["Close"]),
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=last_price LINE=324 TEXT=snapshot.last_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=last_price LINE=352 TEXT=last_price=snapshot.last_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=last_price LINE=421 TEXT="Son fiyat": item.last_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=70 TEXT=last_price: float
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=82 TEXT=def price_change_percent(self) -> float:
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=86 TEXT=(self.last_price / self.day_open - 1.0) * 100.0,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=102 TEXT=last_price: float
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=107 TEXT=price_change_percent: float
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=310 TEXT=last_price=float(latest["Close"]),
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=324 TEXT=snapshot.last_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=352 TEXT=last_price=snapshot.last_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=357 TEXT=price_change_percent=snapshot.price_change_percent,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=421 TEXT="Son fiyat": item.last_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=price LINE=428 TEXT="Fiyat değişimi (%)": item.price_change_percent,
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=fresh LINE=34 TEXT=refresh_interval_minutes: int = 5
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py TERM=fresh LINE=50 TEXT=if self.refresh_interval_minutes not in (1, 2, 5, 10, 15):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=yfinance LINE=13 TEXT=import yfinance as yf
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=yf. LINE=462 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=updated_at LINE=56 TEXT=updated_at: str = ""
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=updated_at LINE=105 TEXT=object.__setattr__(self, "updated_at", self.updated_at or now)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=updated_at LINE=372 TEXT=updated_at=datetime.now(timezone.utc).isoformat(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=updated_at LINE=452 TEXT=updated_at=datetime.now(timezone.utc).isoformat(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=43 TEXT=last_price: float | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=44 TEXT=last_price_date: date | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=83 TEXT=("Son fiyat", self.last_price),
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=132 TEXT=return self.last_price or self.entry_price
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=160 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=168 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=317 TEXT=last_price=entry_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=318 TEXT=last_price_date=entry_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=368 TEXT=last_price=exit_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=369 TEXT=last_price_date=exit_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=436 TEXT=last_price=float(last["Close"]),
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=437 TEXT=last_price_date=last_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=30 TEXT=entry_price: float
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=43 TEXT=last_price: float | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=44 TEXT=last_price_date: date | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=46 TEXT=exit_price: float | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=68 TEXT=if not math.isfinite(self.entry_price) or self.entry_price <= 0:
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=83 TEXT=("Son fiyat", self.last_price),
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=84 TEXT=("Çıkış fiyatı", self.exit_price),
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=94 TEXT=if self.exit_date is None or self.exit_price is None:
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=113 TEXT=f"{self.entry_price:.8f}",
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=126 TEXT=return self.entry_price * self.quantity
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=129 TEXT=def current_price(self) -> float:
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=130 TEXT=if self.status == CLOSED_STATUS and self.exit_price is not None:
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=131 TEXT=return self.exit_price
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=132 TEXT=return self.last_price or self.entry_price
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=138 TEXT=return (self.current_price - self.entry_price) * self.quantity
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=142 TEXT=if self.status != CLOSED_STATUS or self.exit_price is None:
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=145 TEXT=(self.exit_price - self.entry_price) * self.quantity
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=160 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=168 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=283 TEXT=entry_price: float,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=305 TEXT=entry_price=entry_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=317 TEXT=last_price=entry_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=318 TEXT=last_price_date=entry_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=336 TEXT=entry_price=snapshot.reference_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=356 TEXT=exit_price: float,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=367 TEXT=exit_price=exit_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=368 TEXT=last_price=exit_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=369 TEXT=last_price_date=exit_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=428 TEXT=float(relevant["High"].max()) / position.entry_price - 1.0
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=431 TEXT=float(relevant["Low"].min()) / position.entry_price - 1.0
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=436 TEXT=last_price=float(last["Close"]),
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=437 TEXT=last_price_date=last_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=506 TEXT="Giriş fiyatı": item.entry_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=price LINE=507 TEXT="Son/çıkış fiyatı": item.current_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=fresh LINE=408 TEXT=def refresh_position(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=fresh LINE=459 TEXT=def refresh_all_open_positions(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=fresh LINE=484 TEXT=refresh_position(position, raw, store=store)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=yfinance LINE=8 TEXT=import yfinance as yf
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=yf. LINE=92 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=yf. LINE=198 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=yf. LINE=237 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=51 TEXT=def _normalize_price_frame(frame: pd.DataFrame) -> pd.DataFrame:
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=87 TEXT=def fetch_signal_price_history(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=114 TEXT=return _normalize_price_frame(raw)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=138 TEXT=price_frame: pd.DataFrame,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=142 TEXT=frame = _normalize_price_frame(price_frame)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=182 TEXT=reference_price: float,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=204 TEXT=reference_price=reference_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=221 TEXT=frame = fetch_signal_price_history(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=price LINE=248 TEXT=frame = fetch_signal_price_history(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=156 TEXT=refreshed = evaluate_signal(preserved_snapshot, frame)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=159 TEXT=refreshed_completed = _completed_count(refreshed)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=161 TEXT=if refreshed_completed <= current_completed:
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=169 TEXT=path = store.save(refreshed)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=171 TEXT=outcome=refreshed,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=254 TEXT=refreshed = evaluate_signal(outcome.snapshot, frame)
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=255 TEXT=if _completed_count(refreshed) > _completed_count(outcome):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py TERM=fresh LINE=256 TEXT=store.save(refreshed)
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=205 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=285 TEXT=last_daily = pd.Timestamp(d.index.max()).normalize()
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=286 TEXT=current_end = last_daily.to_period("M").to_timestamp(how="end").normalize()
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=461 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\data\delayed_data_pilot.py PROVIDER=True DELAYED=True TIMESTAMP=False STALE=True LAST_PRICE=True
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py PROVIDER=True DELAYED=False TIMESTAMP=True STALE=True LAST_PRICE=True
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py PROVIDER=True DELAYED=False TIMESTAMP=False STALE=True LAST_PRICE=True
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py PROVIDER=False DELAYED=False TIMESTAMP=True STALE=False LAST_PRICE=False
+DECISION=PILOT_CHAIN_PARTIAL
+NEXT=Do not mutate. Inspect delayed_data_pilot exact provider/timestamp semantics.
+PRODUCTION_MUTATION=YOK

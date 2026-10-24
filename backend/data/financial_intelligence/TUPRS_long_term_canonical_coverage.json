@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_EXACT_LONG_TERM_CANONICAL_PRODUCTION_V6",
+  "schema_version": "fin-prod-v6-long-term-canonical-coverage-v1",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "canonical": true,
+  "business_quality": {
+    "status": "PASS",
+    "value": "45",
+    "evidence": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_business_quality_canonical_adapter_rev4.json",
+      "field": "business_quality",
+      "adapter_mode": "READ_ONLY_CANONICAL_BUSINESS_QUALITY_ADAPTER_V6_REV4",
+      "point_in_time_valid": true,
+      "as_of_date": "2026-08-04"
+    }
+  },
+  "governance": {
+    "status": "PASS",
+    "value": "45",
+    "evidence": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_long_term_evidence_completion.json",
+      "field": "long_term_context.governance",
+      "point_in_time_valid": true
+    }
+  },
+  "growth_context": {
+    "status": "PASS",
+    "growth_durability": "70",
+    "evidence": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_long_term_evidence_completion.json",
+      "field": "long_term_context.growth_durability",
+      "point_in_time_valid": true
+    }
+  },
+  "capital_efficiency": {
+    "status": "PASS",
+    "value": "15",
+    "evidence": {
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+      "field": "financial_health.components[CAPITAL_EFFICIENCY].score",
+      "point_in_time_valid": true,
+      "note": "Existing Financial Health component; no new score formula."
+    }
+  },
+  "coverage": {
+    "value": "0.95",
+    "unlock_threshold": "0.70",
+    "threshold_pass": true,
+    "weights_counted": {
+      "financial_health": "0.15",
+      "cash_quality": "0.12",
+      "capital_efficiency": "0.12",
+      "growth_durability": "0.12",
+      "governance": "0.08",
+      "valuation": "0.12",
+      "margin_of_safety": "0.09",
+      "business_quality": "0.15"
+    }
+  },
+  "data_quality": {
+    "status": "PASS",
+    "point_in_time": "PASS",
+    "missing_is_not_zero": true
+  },
+  "blockers": [],
+  "warnings": [
+    "BUSINESS_QUALITY_FROM_EXISTING_FUNDAMENTAL_QUALITY_ENGINE"
+  ],
+  "production_rules": [
+    "Read-only.",
+    "No new AL/SAT, scanner, ranking or portfolio mutation.",
+    "No missing value is converted to zero.",
+    "Capital efficiency reuses the existing Financial Health component.",
+    "Business quality must come from an existing canonical fundamental-quality score; it is not synthesized.",
+    "Point-in-time evidence must be dated on or before as_of_date."
+  ],
+  "closure": {
+    "status": "PASS",
+    "mode": "FIN_PROD_V6_LONG_TERM_CANONICAL_CLOSURE_V1",
+    "business_quality_score": "45",
+    "coverage_after_business_quality": "0.95",
+    "unlock_threshold": "0.70"
+  }
+}

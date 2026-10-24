@@ -1,0 +1,264 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import date
+from pathlib import Path
+from typing import Any, Final, Mapping
+
+from app.analysis.financial_intelligence_bank_canonical_adapter import (
+    adapt_bank_canonical_input,
+)
+from app.analysis.financial_intelligence_bank_scoring_engine import (
+    score_bank_model,
+)
+
+
+BANK_PRODUCTION_SOURCE_ONBOARDING_VERSION: Final[str] = (
+    "BANK_PRODUCTION_SOURCE_ONBOARDING_CONTRACT_V1"
+)
+
+DISALLOWED_SOURCE_TYPES: Final[frozenset[str]] = frozenset({
+    "SYNTHETIC",
+    "CONTRACT",
+    "TEST",
+    "FIXTURE",
+    "MOCK",
+})
+
+REQUIRED_TOP_LEVEL_FIELDS: Final[tuple[str, ...]] = (
+    "source_type",
+    "source_uri",
+    "symbol",
+    "sector_model",
+    "as_of",
+    "publication_date",
+    "canonical_facts",
+    "evidence_hash",
+)
+
+
+@dataclass(frozen=True)
+class BankProductionSourceOnboardingResult:
+    status: str
+    symbol: str | None
+    source_type: str | None
+    source_uri: str | None
+    as_of: str | None
+    publication_date: str | None
+    canonical_input_ready: bool
+    scoring_ready: bool
+    production_evidence: bool
+    activation_ready: bool
+    blocker: str | None
+
+
+def _clean(value: object) -> str:
+    return str(value or "").strip()
+
+
+def _iso(value: object, field: str) -> str:
+    text = _clean(value)
+    if not text:
+        raise ValueError(f"{field}_MISSING")
+    try:
+        parsed = date.fromisoformat(text)
+    except ValueError as exc:
+        raise ValueError(f"{field}_INVALID:{text}") from exc
+    return parsed.isoformat()
+
+
+def evaluate_bank_production_source(
+    record: Mapping[str, Any],
+) -> BankProductionSourceOnboardingResult:
+
+    for field in REQUIRED_TOP_LEVEL_FIELDS:
+        if field not in record:
+            return BankProductionSourceOnboardingResult(
+                status="BLOCKED",
+                symbol=None,
+                source_type=None,
+                source_uri=None,
+                as_of=None,
+                publication_date=None,
+                canonical_input_ready=False,
+                scoring_ready=False,
+                production_evidence=False,
+                activation_ready=False,
+                blocker=f"REQUIRED_FIELD_MISSING:{field}",
+            )
+
+    source_type = _clean(
+        record.get("source_type")
+    ).upper()
+
+    source_uri = _clean(
+        record.get("source_uri")
+    )
+
+    symbol = _clean(
+        record.get("symbol")
+    ).upper()
+
+    evidence_hash = _clean(
+        record.get("evidence_hash")
+    )
+
+    if source_type in DISALLOWED_SOURCE_TYPES:
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=symbol or None,
+            source_type=source_type or None,
+            source_uri=source_uri or None,
+            as_of=None,
+            publication_date=None,
+            canonical_input_ready=False,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker=f"NON_PRODUCTION_SOURCE_TYPE:{source_type}",
+        )
+
+    if not source_type:
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=symbol or None,
+            source_type=None,
+            source_uri=source_uri or None,
+            as_of=None,
+            publication_date=None,
+            canonical_input_ready=False,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker="SOURCE_TYPE_MISSING",
+        )
+
+    if not source_uri:
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=symbol or None,
+            source_type=source_type,
+            source_uri=None,
+            as_of=None,
+            publication_date=None,
+            canonical_input_ready=False,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker="SOURCE_URI_MISSING",
+        )
+
+    if not evidence_hash:
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=symbol or None,
+            source_type=source_type,
+            source_uri=source_uri,
+            as_of=None,
+            publication_date=None,
+            canonical_input_ready=False,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker="EVIDENCE_HASH_MISSING",
+        )
+
+    try:
+        as_of = _iso(
+            record.get("as_of"),
+            "AS_OF",
+        )
+        publication_date = _iso(
+            record.get("publication_date"),
+            "PUBLICATION_DATE",
+        )
+    except ValueError as exc:
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=symbol or None,
+            source_type=source_type,
+            source_uri=source_uri,
+            as_of=None,
+            publication_date=None,
+            canonical_input_ready=False,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker=str(exc),
+        )
+
+    canonical = adapt_bank_canonical_input(
+        record
+    )
+
+    if canonical.status != "PASS":
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=canonical.symbol,
+            source_type=source_type,
+            source_uri=source_uri,
+            as_of=canonical.as_of or as_of,
+            publication_date=canonical.publication_date or publication_date,
+            canonical_input_ready=False,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker=canonical.blocker,
+        )
+
+    if canonical.payload is None:
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=canonical.symbol,
+            source_type=source_type,
+            source_uri=source_uri,
+            as_of=canonical.as_of,
+            publication_date=canonical.publication_date,
+            canonical_input_ready=False,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker="BANK_CANONICAL_PAYLOAD_MISSING",
+        )
+
+    scored = score_bank_model(
+        canonical.payload
+    )
+
+    if scored.status != "PASS":
+        return BankProductionSourceOnboardingResult(
+            status="BLOCKED",
+            symbol=canonical.symbol,
+            source_type=source_type,
+            source_uri=source_uri,
+            as_of=canonical.as_of,
+            publication_date=canonical.publication_date,
+            canonical_input_ready=True,
+            scoring_ready=False,
+            production_evidence=False,
+            activation_ready=False,
+            blocker=scored.blocker,
+        )
+
+    return BankProductionSourceOnboardingResult(
+        status="PASS",
+        symbol=canonical.symbol,
+        source_type=source_type,
+        source_uri=source_uri,
+        as_of=canonical.as_of,
+        publication_date=canonical.publication_date,
+        canonical_input_ready=True,
+        scoring_ready=True,
+        production_evidence=True,
+        activation_ready=True,
+        blocker=None,
+    )
+
+
+__all__ = [
+    "BANK_PRODUCTION_SOURCE_ONBOARDING_VERSION",
+    "DISALLOWED_SOURCE_TYPES",
+    "REQUIRED_TOP_LEVEL_FIELDS",
+    "BankProductionSourceOnboardingResult",
+    "evaluate_bank_production_source",
+]

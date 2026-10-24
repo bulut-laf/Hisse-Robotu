@@ -1,0 +1,16 @@
+{
+  "bridge_version": "erste-hungary-f1-evidence-bridge-v1",
+  "date_1": "2026-09-24",
+  "date_2": "2026-09-25",
+  "evidence_count": 929,
+  "positive_rank_change_count": 385,
+  "negative_rank_change_count": 295,
+  "zero_rank_change_count": 249,
+  "f1_state_counts": {
+    "EvidenceState.CAUTION": 423,
+    "EvidenceState.NEUTRAL": 390,
+    "EvidenceState.POSITIVE": 116
+  },
+  "trade_authority": "NONE",
+  "f1_store_mutation": false
+}

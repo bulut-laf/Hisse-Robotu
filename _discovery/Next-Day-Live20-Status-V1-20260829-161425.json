@@ -1,0 +1,65 @@
+{
+  "status_contract": "NEXT_DAY_LIVE20_OPERATIONAL_STATUS_V1",
+  "generated_at": "2026-08-29T16:14:25+03:00",
+  "runtime_wiring": {
+    "phase7c_selection": true,
+    "phase8_adapter": true,
+    "phase8_observer_hook": true
+  },
+  "sessions": {
+    "frozen_selection_dates": [],
+    "final_outcome_dates": [],
+    "pending_frozen_dates": []
+  },
+  "readiness": {
+    "contract_id": "NEXT_DAY_20_SESSION_WALK_FORWARD_READINESS_V1",
+    "strategy_id": "NEXT_DAY_SELECTION_STRATEGY_V1",
+    "required_valid_sessions": 20,
+    "input_session_count": 0,
+    "valid_session_count": 0,
+    "invalid_session_count": 0,
+    "remaining_valid_sessions": 20,
+    "status": "COLLECTING",
+    "ready_for_review": false,
+    "valid_canonical_dates": [],
+    "primary": {
+      "observation_count": 0,
+      "hit_count": 0,
+      "miss_count": 0,
+      "hit_rate": null,
+      "average_return": null,
+      "median_return": null,
+      "average_relative_return": null,
+      "median_relative_return": null,
+      "median_mfe": null,
+      "median_mae": null
+    },
+    "reserve": {
+      "observation_count": 0,
+      "hit_count": 0,
+      "miss_count": 0,
+      "hit_rate": null,
+      "average_return": null,
+      "median_return": null,
+      "average_relative_return": null,
+      "median_relative_return": null,
+      "median_mfe": null,
+      "median_mae": null
+    },
+    "primary_reserve_median_relative_spread": null,
+    "full_primary_five_session_count": 0,
+    "primary_three_of_five_hit_session_count": 0,
+    "primary_average_above_benchmark_session_count": 0,
+    "primary_average_negative_return_session_count": 0,
+    "issues": []
+  },
+  "preservation": {
+    "no_forced_fill": true,
+    "p0_only_changes": true,
+    "outcome_tuning": false,
+    "new_score": false,
+    "new_store": false,
+    "new_scanner": false,
+    "al_sat_authority": false
+  }
+}

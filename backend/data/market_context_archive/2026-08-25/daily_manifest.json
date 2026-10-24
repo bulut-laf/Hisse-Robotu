@@ -1,0 +1,41 @@
+{
+  "date": "2026-08-25",
+  "document_count": 3,
+  "documents": [
+    {
+      "document_id": "197d6dc690ff4e71b62fd6c8c39af1a3",
+      "source": "YATIRIM FİNANSMAN",
+      "document_date": "2026-08-25",
+      "input_type": "text",
+      "content_hash": "d1fabc041def0d1cfa2d3953c7b589382541b71ecfd135cdfde9bece6d74ac8a",
+      "processed_path": "market_context_processed\\2026-08-25\\197d6dc690ff4e71b62fd6c8c39af1a3.json",
+      "raw_path": "market_context_raw\\2026-08-25\\197d6dc690ff4e71b62fd6c8c39af1a3.txt"
+    },
+    {
+      "document_id": "cb3c3d00dc1c437ea3861a1909255a83",
+      "source": "YATIRIM FİNANSMAN",
+      "document_date": "2026-08-25",
+      "input_type": "text",
+      "content_hash": "f69eed959b26b33b70a67317dc6f3aadb11d8bd5ce95c30ba4e60e846d9201dd",
+      "processed_path": "market_context_processed\\2026-08-25\\cb3c3d00dc1c437ea3861a1909255a83.json",
+      "raw_path": "market_context_raw\\2026-08-25\\cb3c3d00dc1c437ea3861a1909255a83.txt"
+    },
+    {
+      "document_id": "8be84fd590f84efeb921077ff773b097",
+      "source": "ICBC GÜNLÜK BÜLTEN",
+      "document_date": "2026-08-25",
+      "input_type": "pdf",
+      "content_hash": "e681211ec3d93555b89a4668570fe8572c19d5e0da0657e9dd04330a5d3125cf",
+      "processed_path": "market_context_processed\\2026-08-25\\8be84fd590f84efeb921077ff773b097.json",
+      "raw_path": "market_context_raw\\2026-08-25\\8be84fd590f84efeb921077ff773b097.txt"
+    }
+  ],
+  "sources": [
+    "ICBC GÜNLÜK BÜLTEN",
+    "YATIRIM FİNANSMAN"
+  ],
+  "created_at": "2026-08-25T06:54:43Z",
+  "updated_at": "2026-08-25T12:10:00Z",
+  "ai_review_status": "reviewed",
+  "ai_review_id": "e7a6dd21cd974649ad8f4166113dfb35"
+}

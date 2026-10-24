@@ -1,0 +1,233 @@
+from __future__ import annotations
+
+import inspect
+
+import pytest
+
+from app.analysis import fast_mover_watch as fm
+from app.analysis.fast_mover_watch import (
+    FastMoverObservation,
+    FastMoverState,
+    FastMoverVisibilityPolicy,
+    FastMoverWarning,
+    evaluate_fast_mover,
+    order_fast_movers,
+)
+
+
+@pytest.fixture()
+def policy() -> FastMoverVisibilityPolicy:
+    # Test-only calibration. Production thresholds are intentionally not
+    # defined in the implementation module.
+    return FastMoverVisibilityPolicy(
+        min_rank_gain=20,
+        min_percentile_gain=0.03,
+        min_support_families=2,
+        max_contradiction_families_for_main=0,
+    )
+
+
+def obs(symbol: str = "TEST", **changes) -> FastMoverObservation:
+    values = dict(
+        symbol=symbol,
+        current_rank=20,
+        previous_canonical_rank=60,
+        current_universe_size=548,
+        previous_universe_size=548,
+        data_usable=True,
+        baseline_comparable=True,
+        support_families=("momentum", "volume"),
+    )
+    values.update(changes)
+    return FastMoverObservation(**values)
+
+
+def test_policy_has_no_production_defaults():
+    with pytest.raises(TypeError):
+        FastMoverVisibilityPolicy()
+
+
+def test_sudden_mover_is_visible_without_persistent_requirement(policy):
+    row = evaluate_fast_mover(obs("BAHKM_CASE"), policy)
+
+    assert row.visible is True
+    assert row.main_list_eligible is True
+    assert row.state is FastMoverState.ANI_GUCLENME
+    assert row.rank_gain == 40
+    assert row.percentile_gain is not None
+    assert row.percentile_gain > 0
+
+
+def test_technical_strength_context_is_label_not_score(policy):
+    row = evaluate_fast_mover(
+        obs(
+            "TGSAS_CASE",
+            support_families=("technical_strength", "volume", "technical_strength"),
+        ),
+        policy,
+    )
+
+    assert row.state is FastMoverState.TEKNIK_GUC_DESTEKLI
+    assert row.support_families == ("technical_strength", "volume")
+    assert not hasattr(row, "fast_mover_score")
+
+
+def test_early_visibility_overlap_is_context_only(policy):
+    row = evaluate_fast_mover(
+        obs(
+            "MRGYO_CASE",
+            early_visibility_overlap=True,
+            support_families=("momentum", "volume"),
+        ),
+        policy,
+    )
+
+    assert row.main_list_eligible is True
+    assert row.state is FastMoverState.PERSISTENT_OVERLAP
+    assert "EARLY_VISIBILITY_OVERLAP" in row.reasons
+
+
+def test_negative_control_does_not_enter_main_fast_mover_list(policy):
+    row = evaluate_fast_mover(
+        obs(
+            "NEGATIVE_CONTROL",
+            previous_canonical_rank=90,
+            support_families=("volume",),
+            contradiction_families=("trend",),
+        ),
+        policy,
+    )
+
+    assert row.visible is True
+    assert row.main_list_eligible is False
+    assert row.state is FastMoverState.DIKKAT_DAR_TEYIT
+    assert "QUALITY_SUPPORT_TOO_NARROW" in row.reasons
+    assert "QUALITY_CONTRADICTION" in row.reasons
+
+
+def test_ticker_name_does_not_change_outcome(policy):
+    a = evaluate_fast_mover(obs("BRKVY"), policy)
+    b = evaluate_fast_mover(obs("SAME_FACTS_DIFFERENT_SYMBOL"), policy)
+
+    assert a.state == b.state
+    assert a.visible == b.visible
+    assert a.main_list_eligible == b.main_list_eligible
+
+
+@pytest.mark.parametrize(
+    "changes,reason",
+    [
+        ({"data_usable": False}, "DATA_NOT_USABLE"),
+        ({"baseline_comparable": False}, "BASELINE_NOT_COMPARABLE"),
+        ({"security_or_data_lock": True}, "SECURITY_OR_DATA_LOCK"),
+        ({"proven_data_artifact": True}, "PROVEN_DATA_ARTIFACT"),
+        ({"previous_canonical_rank": None}, "BASELINE_MISSING"),
+    ],
+)
+def test_hard_blocks_are_fail_closed(policy, changes, reason):
+    row = evaluate_fast_mover(obs(**changes), policy)
+
+    assert row.visible is False
+    assert row.main_list_eligible is False
+    assert row.state is FastMoverState.BLOCKED
+    assert reason in row.reasons
+
+
+def test_non_material_movement_is_not_promoted(policy):
+    row = evaluate_fast_mover(
+        obs(
+            current_rank=50,
+            previous_canonical_rank=55,
+            support_families=("momentum", "volume"),
+        ),
+        policy,
+    )
+
+    assert row.visible is False
+    assert row.main_list_eligible is False
+    assert row.state is None
+    assert row.reasons == ("MATERIAL_SINGLE_SESSION_IMPROVEMENT_NOT_PROVEN",)
+
+
+def test_positive_existing_state_transition_can_establish_materiality(policy):
+    row = evaluate_fast_mover(
+        obs(
+            current_rank=50,
+            previous_canonical_rank=55,
+            positive_state_transition=True,
+        ),
+        policy,
+    )
+
+    assert row.visible is True
+    assert row.main_list_eligible is True
+
+
+def test_warning_does_not_become_automatic_hard_block(policy):
+    row = evaluate_fast_mover(
+        obs(
+            warnings=(FastMoverWarning.OVEREXTENDED,),
+        ),
+        policy,
+    )
+
+    assert row.visible is True
+    assert row.main_list_eligible is True
+    assert row.warnings == (FastMoverWarning.OVEREXTENDED,)
+
+
+def test_universe_normalization_handles_different_universe_sizes(policy):
+    row = evaluate_fast_mover(
+        obs(
+            current_rank=25,
+            previous_canonical_rank=70,
+            current_universe_size=500,
+            previous_universe_size=600,
+        ),
+        policy,
+    )
+
+    assert row.current_percentile_position is not None
+    assert row.previous_percentile_position is not None
+    assert row.percentile_gain is not None
+    assert 0 <= row.current_percentile_position <= 1
+    assert 0 <= row.previous_percentile_position <= 1
+
+
+def test_presentation_ordering_is_not_a_new_research_rank(policy):
+    strong = evaluate_fast_mover(obs("STRONG", previous_canonical_rank=120), policy)
+    weaker = evaluate_fast_mover(obs("WEAKER", previous_canonical_rank=50), policy)
+    caution = evaluate_fast_mover(
+        obs(
+            "CAUTION",
+            previous_canonical_rank=140,
+            support_families=("volume",),
+            contradiction_families=("trend",),
+        ),
+        policy,
+    )
+
+    ordered = order_fast_movers((weaker, caution, strong), by="rank_gain")
+
+    assert [x.symbol for x in ordered] == ["STRONG", "WEAKER", "CAUTION"]
+    assert strong.current_rank == 20
+    assert weaker.current_rank == 20
+
+
+def test_module_has_no_persistence_or_external_io_authority():
+    source = inspect.getsource(fm).lower()
+
+    forbidden = (
+        "requests.",
+        "httpx.",
+        "subprocess.",
+        "sqlite3",
+        "pathlib",
+        "open(",
+        ".write_text(",
+        ".write_bytes(",
+        "save_snapshot(",
+        "rank_observations.jsonl",
+    )
+    for token in forbidden:
+        assert token not in source

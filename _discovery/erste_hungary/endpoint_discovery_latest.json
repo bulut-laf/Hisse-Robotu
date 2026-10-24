@@ -1,0 +1,26 @@
+{
+  "source_url": "https://www.erstemarket.hu/min-js?f=js/modules/funds.js&v=1.104",
+  "bundle_length": 12354,
+  "string_candidate_count": 16,
+  "absolute_url_candidate_count": 0,
+  "call_snippet_count": 1,
+  "string_candidates": [
+    "#FundSearch li .counter",
+    ".fundParam",
+    ".fundParam-",
+    ".fundSearchForm",
+    ".fundToggle",
+    ".fundToggle[toggle-key=\"focus\"]",
+    ".fundToggle[toggle-key=\"starred\"]",
+    ".fundlist",
+    "fundKeyword",
+    "fundParams",
+    "fundSliders",
+    "fundToggles",
+    "funds/search_results/count",
+    "funds/search_results/list",
+    "th.fund-sort a",
+    "ul.funds-paging li a.page-link"
+  ],
+  "absolute_url_candidates": []
+}

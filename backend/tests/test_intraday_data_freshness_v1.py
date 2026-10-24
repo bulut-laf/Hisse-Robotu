@@ -1,0 +1,113 @@
+from __future__ import annotations
+
+from datetime import datetime
+from zoneinfo import ZoneInfo
+
+from app.analysis.intraday_data_freshness import (
+    evaluate_intraday_data_freshness,
+)
+from app.data.delayed_data_pilot import DelayedDataSnapshot
+
+
+ISTANBUL = ZoneInfo("Europe/Istanbul")
+
+
+def _snapshot(
+    *,
+    delay: float | None = 10.0,
+    missing: int = 0,
+    completed: bool = True,
+    locked: bool = False,
+    preview: bool = False,
+) -> DelayedDataSnapshot:
+    now = datetime(
+        2026,
+        10,
+        8,
+        15,
+        30,
+        tzinfo=ISTANBUL,
+    )
+
+    return DelayedDataSnapshot(
+        symbol="THYAO.IS",
+        exchange_time=now,
+        received_time=now,
+        measured_delay_minutes=delay,
+        expected_delay_minutes=15.0,
+        status="GECIKMELI_GUNCEL",
+        locked=locked,
+        preview_only=preview,
+        last_price=284.25,
+        day_open=280.0,
+        day_high=285.0,
+        day_low=278.0,
+        cumulative_volume=1000000.0,
+        latest_bar_volume=50000.0,
+        latest_bar_completed=completed,
+        missing_bar_count=missing,
+        source="yfinance",
+        error_message=None,
+    )
+
+
+def test_fresh_data_is_accepted():
+    result = evaluate_intraday_data_freshness(
+        _snapshot()
+    )
+
+    assert result.state == "DATA_GUNCEL"
+    assert result.locked is False
+    assert result.missing_bar_count == 0
+
+
+def test_preview_data_is_delayed():
+    result = evaluate_intraday_data_freshness(
+        _snapshot(preview=True)
+    )
+
+    assert result.state == "DATA_GECIKMELI"
+    assert result.preview_only is True
+
+
+def test_missing_bar_blocks_data():
+    result = evaluate_intraday_data_freshness(
+        _snapshot(missing=1)
+    )
+
+    assert result.state == "DATA_YETERSIZ"
+    assert result.missing_bar_count == 1
+
+
+def test_locked_data_is_rejected():
+    result = evaluate_intraday_data_freshness(
+        _snapshot(locked=True)
+    )
+
+    assert result.state == "DATA_KILITLI"
+    assert result.locked is True
+
+
+def test_missing_delay_is_insufficient():
+    result = evaluate_intraday_data_freshness(
+        _snapshot(delay=None)
+    )
+
+    assert result.state == "DATA_YETERSIZ"
+    assert result.measured_delay_minutes is None
+
+def test_delay_over_acceptable_limit_is_not_fresh():
+    result = evaluate_intraday_data_freshness(
+        _snapshot(delay=40.0)
+    )
+
+    assert result.state != "DATA_GUNCEL"
+
+
+def test_preview_is_never_marked_fresh_when_override_is_false():
+    result = evaluate_intraday_data_freshness(
+        _snapshot(preview=True),
+        preview_counts_as_delayed=False,
+    )
+
+    assert result.state != "DATA_GUNCEL"

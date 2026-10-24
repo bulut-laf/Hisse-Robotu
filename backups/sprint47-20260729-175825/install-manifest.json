@@ -1,0 +1,34 @@
+﻿[
+    {
+        "relative_path":  "PROJECT_NOTES.md",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "pytest.ini",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\dashboard.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\analysis\\market_regime.py",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\app\\analysis\\__init__.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\ui\\market_regime_dashboard.py",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\tests\\test_market_regime_dashboard.py",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\tests\\test_market_regime_live.py",
+        "existed_before":  false
+    }
+]

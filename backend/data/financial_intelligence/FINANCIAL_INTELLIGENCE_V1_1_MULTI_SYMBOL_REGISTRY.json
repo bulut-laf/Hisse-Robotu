@@ -1,0 +1,34 @@
+{
+  "schema_version": "financial-intelligence-v1-1-multi-symbol-registry-v1",
+  "status": "PASS",
+  "mode": "READ_ONLY_REGISTRY",
+  "symbol_count": 1,
+  "release_ready_symbol_count": 1,
+  "not_ready_symbol_count": 0,
+  "symbols": [
+    {
+      "symbol": "TUPRS",
+      "panel_status": "PASS",
+      "coverage_status": "READY_FULL_CANONICAL_COVERAGE",
+      "decision_support_status": "READY_FULL_DECISION_SUPPORT",
+      "financial_health": 94,
+      "cash_quality": "0.12",
+      "release_ready": true,
+      "panel_artifact": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_financial_intelligence_panel.json"
+    }
+  ],
+  "release_ready_symbols": [
+    "TUPRS"
+  ],
+  "not_ready_symbols": [],
+  "rejected_artifacts": [],
+  "rules": [
+    "REGISTRY_IS_READ_ONLY",
+    "NO_SYNTHETIC_SYMBOLS",
+    "PANEL_ARTIFACT_REQUIRED",
+    "RELEASE_READY_REQUIRES_PANEL_PASS",
+    "RELEASE_READY_REQUIRES_FULL_CANONICAL_COVERAGE",
+    "RELEASE_READY_REQUIRES_FULL_DECISION_SUPPORT",
+    "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION"
+  ]
+}

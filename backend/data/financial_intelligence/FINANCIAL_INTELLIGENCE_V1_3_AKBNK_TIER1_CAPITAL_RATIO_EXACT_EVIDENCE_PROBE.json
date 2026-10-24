@@ -1,0 +1,272 @@
+{
+  "status": "PASS",
+  "symbol": "AKBNK",
+  "notification_id": "1637884",
+  "target_metric": "CAPITAL_ADEQUACY.tier1_capital_ratio",
+  "source_text": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.txt",
+  "candidate_context_count": 17,
+  "candidate_contexts": [
+    {
+      "label": "ANA_SERMAYE_YETERLILIK",
+      "match_text": "Ana Sermaye Yeter",
+      "start": 143775,
+      "percentages_in_context": [
+        "11,28%",
+        "14,26%",
+        "13,33%",
+        "15,45%",
+        "16,38%",
+        "19,03%",
+        "4,02%",
+        "4,01%",
+        "2,50%",
+        "2,50%",
+        "0,02%",
+        "0,01%",
+        "1,50%",
+        "1,50%",
+        "3,28%",
+        "6,26%",
+        "%10"
+      ],
+      "context": "iştir.) 29 Cari Dönem 30 Haziran 2026 Önceki Dönem 31 Aralık 2025 ÖZKAYNAK Toplam Özkaynak (Ana sermaye ve katkı sermaye toplamı) 446.694 409.726 Toplam Risk Ağırlıklı Tutarlar 2.726.728 2.153.295 SERMAYE YETERLİLİĞİ ORANLARI Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% TAMPONLAR Toplam ilave çekirdek sermaye gereksinim oranı (a+b+c) 4,02% 4,01% a) Sermaye koruma tamponu oranı (%) 2,50% 2,50% b) Bankaya özgü döngüsel sermaye tamponu oranı (%) 0,02% 0,01% c) Sistemik önemli banka tampon oranı (%) 1,50% 1,50% Sermaye Koruma ve Döngüsel Sermaye Tamponlarına İlişkin Yönetmeliğin 4 üncü maddesinin birinci fıkrası uyarınca hesaplanacak ilave çekirdek sermaye tutarının risk ağırlıklı varlıklar tutarına oranı (%) 3,28% 6,26% Uygulanacak İndirim Esaslarında Aşım Tutarının Altında Kalan Tutarlar Ortaklık paylarının %10 veya daha azına sahip olunan ve konsolide"
+    },
+    {
+      "label": "CEKIRDEK_SERMAYE_YETERLILIK",
+      "match_text": "çekirdek sermayeden indirilmeyen kısmı (-) - - Yeter",
+      "start": 139102,
+      "percentages_in_context": [],
+      "context": "ve bunlara ilişkin ertelenmiş vergi yükümlülüklerinin Bankaların Özkaynaklarına İlişkin Yönetmeliğin Geçici 2nci maddesinin birinci fıkrası uyarınca çekirdek sermayeden indirilmeyen kısmı(-) - - Net ertelenmiş vergi varlığı/vergi borcunun Bankaların Özkaynaklarına İlişkin Yönetmeliğin Geçici 2 nci maddesinin birinci fıkrası uyarınca çekirdek sermayeden indirilmeyen kısmı (-) - - Yeterli katkı sermaye bulunmaması halinde ilave ana sermayeden indirim yapılacak tutar (-) - - İlave ana sermayeden yapılan indirimler toplamı - - İlave Ana Sermaye Toplamı 55.858 25.695 Ana Sermaye Toplamı (Ana Sermaye= Çekirdek Sermaye + İlave Ana Sermaye) 363.495 332.780 KATKI SERMAYE Kurumca uygun görülen borçlanma araçları ve bunlara ilişkin ihraç primleri 60.399 55.399 Kurumca uygun görülen borçlanma araçları ve bunlara ilişkin ihraç primleri (Geçici Madde 4 kapsamında olanlar) - - Üçüncü Kişilerin katkı sermayedeki payları - - Üçüncü kişilerin katkı sermayedeki payları (Geçici Madde 3 kapsamında olanlar) - - Ka"
+    },
+    {
+      "label": "CEKIRDEK_SERMAYE_YETERLILIK",
+      "match_text": "Çekirdek Sermaye Yeter",
+      "start": 143711,
+      "percentages_in_context": [
+        "11,28%",
+        "14,26%",
+        "13,33%",
+        "15,45%",
+        "16,38%",
+        "19,03%",
+        "4,02%",
+        "4,01%",
+        "2,50%",
+        "2,50%",
+        "0,02%",
+        "0,01%",
+        "1,50%",
+        "1,50%",
+        "3,28%",
+        "6,26%"
+      ],
+      "context": "ksi belirtilmedikçe milyon Türk Lirası (“TL”) olarak ifade edilmiştir.) 29 Cari Dönem 30 Haziran 2026 Önceki Dönem 31 Aralık 2025 ÖZKAYNAK Toplam Özkaynak (Ana sermaye ve katkı sermaye toplamı) 446.694 409.726 Toplam Risk Ağırlıklı Tutarlar 2.726.728 2.153.295 SERMAYE YETERLİLİĞİ ORANLARI Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% TAMPONLAR Toplam ilave çekirdek sermaye gereksinim oranı (a+b+c) 4,02% 4,01% a) Sermaye koruma tamponu oranı (%) 2,50% 2,50% b) Bankaya özgü döngüsel sermaye tamponu oranı (%) 0,02% 0,01% c) Sistemik önemli banka tampon oranı (%) 1,50% 1,50% Sermaye Koruma ve Döngüsel Sermaye Tamponlarına İlişkin Yönetmeliğin 4 üncü maddesinin birinci fıkrası uyarınca hesaplanacak ilave çekirdek sermaye tutarının risk ağırlıklı varlıklar tutarına oranı (%) 3,28% 6,26% Uygulanacak İndirim Esaslarında Aşım Tutarının Altında Kalan Tutarlar Ortaklı"
+    },
+    {
+      "label": "CEKIRDEK_SERMAYE_YETERLILIK",
+      "match_text": "Çekirdek sermaye yeter",
+      "start": 170826,
+      "percentages_in_context": [
+        "%5,125",
+        "%5,125"
+      ],
+      "context": "tasfiye edilmesi veya (2) Banka’nın hissedarlarının (temettü hariç) ortaklık hakları ile Banka’nın yönetim ve denetiminin, zararın mevcut ortakların sermayesinden indirilmesi kaydıyla TMSF’ye devredilmesi hallerinin ya da bu hallere ilişkin ihtimallerin varlığı halinde BDDK’nın bu yönde alacağı karara istinaden kayıtlardan silinebilecektir. Çekirdek sermaye yeterlilik oranının BDDK’nın belirlediği %5,125’in altına düşmesi halinde değer azaltımına tabi tutulacaktır. Değer azaltma özelliğine sahipse, tamamen ya da kısmen değer azaltımı özelliği Kısmen veya tamamen Değer azaltma özelliğine sahipse, sürekli ya da geçici olma özelliği Geçici Değeri geçici olarak azaltılabiliyorsa, değer artırım mekanizması Var ise tasfiye halinin ortadan kalkması ve çekirdek sermaye yeterliliğinin %5,125’ten yüksek olması. Tasfiye halinde alacak hakkı açısından hangi sırada olduğu (Bu aracın hemen üstünde yer alan araç) Alacak sıralamasında borçlanma araçlarından ve katkı sermayeden sonra gelmektedir. Bankaların Özkaynaklarına İlişkin Yönetmeliğin 7 nci ve 8 i"
+    },
+    {
+      "label": "CEKIRDEK_SERMAYE_YETERLILIK",
+      "match_text": "çekirdek sermaye yeter",
+      "start": 171243,
+      "percentages_in_context": [
+        "%5,125"
+      ],
+      "context": "altına düşmesi halinde değer azaltımına tabi tutulacaktır. Değer azaltma özelliğine sahipse, tamamen ya da kısmen değer azaltımı özelliği Kısmen veya tamamen Değer azaltma özelliğine sahipse, sürekli ya da geçici olma özelliği Geçici Değeri geçici olarak azaltılabiliyorsa, değer artırım mekanizması Var ise tasfiye halinin ortadan kalkması ve çekirdek sermaye yeterliliğinin %5,125’ten yüksek olması. Tasfiye halinde alacak hakkı açısından hangi sırada olduğu (Bu aracın hemen üstünde yer alan araç) Alacak sıralamasında borçlanma araçlarından ve katkı sermayeden sonra gelmektedir. Bankaların Özkaynaklarına İlişkin Yönetmeliğin 7 nci ve 8 inci maddelerinde yer alan şartlardan haiz olunmayan olup olmadığı 7. maddedeki şartlara haizdir. Bankaların Özkaynaklarına İlişkin Yönetmeliğin 7 nci ve 8 inci maddelerinde yer alan şartlardan hangilerini haiz olunmadığı 8. maddedeki şartlara haiz değildir. AKBANK T.A.Ş. 30 HAZİRAN 2026 TARİHİ İTİBARIYLA KONSOLİDE FİNANSAL TABLOLARA İLİŞKİN AÇIKLAMA VE DİPNOTLAR (Tutarlar aksi belirtilmedikçe mi"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "sermaye yeterlili",
+      "start": 131999,
+      "percentages_in_context": [
+        "%16,38",
+        "%19,03"
+      ],
+      "context": "AKBANK T.A.Ş. 30 HAZİRAN 2026 TARİHİ İTİBARIYLA KONSOLİDE FİNANSAL TABLOLARA İLİŞKİN AÇIKLAMA VE DİPNOTLAR (Tutarlar aksi belirtilmedikçe milyon Türk Lirası (“TL”) olarak ifade edilmiştir.) 27 DÖRDÜNCÜ BÖLÜM GRUBUN MALİ BÜNYESİNE VE RİSK YÖNETİMİNE İLİŞKİN BİLGİLER I. ÖZKAYNAK KALEMLERİNE İLİŞKİN AÇIKLAMALAR: Özkaynak tutarı ve sermaye yeterliliği standart oranı “Bankala rın Özkaynaklarına İlişkin Yönetmelik” ile “Bankaların Sermaye Yeterliliğinin Ölçülmesine ve Değerlendi rilmesine İlişkin Yönetmelik” çerçevesinde hesaplanmıştır. Ayrıca, BDDK’nın 13 Aralık 2025 tarih 11286 sayılı kurul kararı uyarınca daha önce uygulanmakta olan ilave düzenlemeler yürürlükten kaldırılmıştır. Grubun 30 Haziran 2026 tarihi itibarıyla, cari dönem özkaynak tu tarı 446.694 TL (31 Aralık 2025: 409.726), sermaye yeterliliği standart oranı ise %16,38’dir (31 Aralık 2025: %19,03). Grubun se rmaye yeterliliği standart oran ı ilgili mevzuat ile belirlenen asgari oranın üzerindedir. a. Konsolide özkaynak kaleml erine ilişkin bilgiler: Car"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "Sermaye Yeterlili",
+      "start": 132098,
+      "percentages_in_context": [
+        "%16,38",
+        "%19,03"
+      ],
+      "context": "A VE DİPNOTLAR (Tutarlar aksi belirtilmedikçe milyon Türk Lirası (“TL”) olarak ifade edilmiştir.) 27 DÖRDÜNCÜ BÖLÜM GRUBUN MALİ BÜNYESİNE VE RİSK YÖNETİMİNE İLİŞKİN BİLGİLER I. ÖZKAYNAK KALEMLERİNE İLİŞKİN AÇIKLAMALAR: Özkaynak tutarı ve sermaye yeterliliği standart oranı “Bankala rın Özkaynaklarına İlişkin Yönetmelik” ile “Bankaların Sermaye Yeterliliğinin Ölçülmesine ve Değerlendi rilmesine İlişkin Yönetmelik” çerçevesinde hesaplanmıştır. Ayrıca, BDDK’nın 13 Aralık 2025 tarih 11286 sayılı kurul kararı uyarınca daha önce uygulanmakta olan ilave düzenlemeler yürürlükten kaldırılmıştır. Grubun 30 Haziran 2026 tarihi itibarıyla, cari dönem özkaynak tu tarı 446.694 TL (31 Aralık 2025: 409.726), sermaye yeterliliği standart oranı ise %16,38’dir (31 Aralık 2025: %19,03). Grubun se rmaye yeterliliği standart oran ı ilgili mevzuat ile belirlenen asgari oranın üzerindedir. a. Konsolide özkaynak kaleml erine ilişkin bilgiler: Cari Dönem 30 Haziran 2026 Önceki Dönem 31 Aralık 2025 ÇEKİRDEK SERMAYE Bankanın tasfiyesi halin"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "sermaye yeterlili",
+      "start": 132472,
+      "percentages_in_context": [
+        "%16,38",
+        "%19,03"
+      ],
+      "context": "Ölçülmesine ve Değerlendi rilmesine İlişkin Yönetmelik” çerçevesinde hesaplanmıştır. Ayrıca, BDDK’nın 13 Aralık 2025 tarih 11286 sayılı kurul kararı uyarınca daha önce uygulanmakta olan ilave düzenlemeler yürürlükten kaldırılmıştır. Grubun 30 Haziran 2026 tarihi itibarıyla, cari dönem özkaynak tu tarı 446.694 TL (31 Aralık 2025: 409.726), sermaye yeterliliği standart oranı ise %16,38’dir (31 Aralık 2025: %19,03). Grubun se rmaye yeterliliği standart oran ı ilgili mevzuat ile belirlenen asgari oranın üzerindedir. a. Konsolide özkaynak kaleml erine ilişkin bilgiler: Cari Dönem 30 Haziran 2026 Önceki Dönem 31 Aralık 2025 ÇEKİRDEK SERMAYE Bankanın tasfiyesi halinde alacak hakkı açısından diğer tüm alacaklardan sonra gelen ödenmiş sermaye 7.015 7.015 Hisse senedi ihraç primleri 3.506 3.506 Yedek akçeler 246.785 200.905 Türkiye Muhasebe Standartları (TMS) uyarınca özkaynaklara yansıtılan kazançlar 83.706 79.758 Kâr 34.361 57.433 Net Dönem Kârı 34.3"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "SERMAYE YETERLİLİ",
+      "start": 143669,
+      "percentages_in_context": [
+        "11,28%",
+        "14,26%",
+        "13,33%",
+        "15,45%",
+        "16,38%",
+        "19,03%",
+        "4,02%",
+        "4,01%",
+        "2,50%",
+        "2,50%",
+        "0,02%",
+        "0,01%",
+        "1,50%",
+        "1,50%",
+        "3,28%",
+        "6,26%"
+      ],
+      "context": "İLİŞKİN AÇIKLAMA VE DİPNOTLAR (Tutarlar aksi belirtilmedikçe milyon Türk Lirası (“TL”) olarak ifade edilmiştir.) 29 Cari Dönem 30 Haziran 2026 Önceki Dönem 31 Aralık 2025 ÖZKAYNAK Toplam Özkaynak (Ana sermaye ve katkı sermaye toplamı) 446.694 409.726 Toplam Risk Ağırlıklı Tutarlar 2.726.728 2.153.295 SERMAYE YETERLİLİĞİ ORANLARI Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% TAMPONLAR Toplam ilave çekirdek sermaye gereksinim oranı (a+b+c) 4,02% 4,01% a) Sermaye koruma tamponu oranı (%) 2,50% 2,50% b) Bankaya özgü döngüsel sermaye tamponu oranı (%) 0,02% 0,01% c) Sistemik önemli banka tampon oranı (%) 1,50% 1,50% Sermaye Koruma ve Döngüsel Sermaye Tamponlarına İlişkin Yönetmeliğin 4 üncü maddesinin birinci fıkrası uyarınca hesaplanacak ilave çekirdek sermaye tutarının risk ağırlıklı varlıklar tutarına oranı (%) 3,28% 6,26% Uygulanacak İndirim Esaslarında A"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "Sermaye Yeterlili",
+      "start": 143720,
+      "percentages_in_context": [
+        "11,28%",
+        "14,26%",
+        "13,33%",
+        "15,45%",
+        "16,38%",
+        "19,03%",
+        "4,02%",
+        "4,01%",
+        "2,50%",
+        "2,50%",
+        "0,02%",
+        "0,01%",
+        "1,50%",
+        "1,50%",
+        "3,28%",
+        "6,26%"
+      ],
+      "context": "tilmedikçe milyon Türk Lirası (“TL”) olarak ifade edilmiştir.) 29 Cari Dönem 30 Haziran 2026 Önceki Dönem 31 Aralık 2025 ÖZKAYNAK Toplam Özkaynak (Ana sermaye ve katkı sermaye toplamı) 446.694 409.726 Toplam Risk Ağırlıklı Tutarlar 2.726.728 2.153.295 SERMAYE YETERLİLİĞİ ORANLARI Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% TAMPONLAR Toplam ilave çekirdek sermaye gereksinim oranı (a+b+c) 4,02% 4,01% a) Sermaye koruma tamponu oranı (%) 2,50% 2,50% b) Bankaya özgü döngüsel sermaye tamponu oranı (%) 0,02% 0,01% c) Sistemik önemli banka tampon oranı (%) 1,50% 1,50% Sermaye Koruma ve Döngüsel Sermaye Tamponlarına İlişkin Yönetmeliğin 4 üncü maddesinin birinci fıkrası uyarınca hesaplanacak ilave çekirdek sermaye tutarının risk ağırlıklı varlıklar tutarına oranı (%) 3,28% 6,26% Uygulanacak İndirim Esaslarında Aşım Tutarının Altında Kalan Tutarlar Ortaklık pa"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "Sermaye Yeterlili",
+      "start": 143779,
+      "percentages_in_context": [
+        "11,28%",
+        "14,26%",
+        "13,33%",
+        "15,45%",
+        "16,38%",
+        "19,03%",
+        "4,02%",
+        "4,01%",
+        "2,50%",
+        "2,50%",
+        "0,02%",
+        "0,01%",
+        "1,50%",
+        "1,50%",
+        "3,28%",
+        "6,26%",
+        "%10"
+      ],
+      "context": "r.) 29 Cari Dönem 30 Haziran 2026 Önceki Dönem 31 Aralık 2025 ÖZKAYNAK Toplam Özkaynak (Ana sermaye ve katkı sermaye toplamı) 446.694 409.726 Toplam Risk Ağırlıklı Tutarlar 2.726.728 2.153.295 SERMAYE YETERLİLİĞİ ORANLARI Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% TAMPONLAR Toplam ilave çekirdek sermaye gereksinim oranı (a+b+c) 4,02% 4,01% a) Sermaye koruma tamponu oranı (%) 2,50% 2,50% b) Bankaya özgü döngüsel sermaye tamponu oranı (%) 0,02% 0,01% c) Sistemik önemli banka tampon oranı (%) 1,50% 1,50% Sermaye Koruma ve Döngüsel Sermaye Tamponlarına İlişkin Yönetmeliğin 4 üncü maddesinin birinci fıkrası uyarınca hesaplanacak ilave çekirdek sermaye tutarının risk ağırlıklı varlıklar tutarına oranı (%) 3,28% 6,26% Uygulanacak İndirim Esaslarında Aşım Tutarının Altında Kalan Tutarlar Ortaklık paylarının %10 veya daha azına sahip olunan ve konsolide edil"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "Sermaye Yeterlili",
+      "start": 143834,
+      "percentages_in_context": [
+        "11,28%",
+        "14,26%",
+        "13,33%",
+        "15,45%",
+        "16,38%",
+        "19,03%",
+        "4,02%",
+        "4,01%",
+        "2,50%",
+        "2,50%",
+        "0,02%",
+        "0,01%",
+        "1,50%",
+        "1,50%",
+        "3,28%",
+        "6,26%",
+        "%10"
+      ],
+      "context": "Dönem 31 Aralık 2025 ÖZKAYNAK Toplam Özkaynak (Ana sermaye ve katkı sermaye toplamı) 446.694 409.726 Toplam Risk Ağırlıklı Tutarlar 2.726.728 2.153.295 SERMAYE YETERLİLİĞİ ORANLARI Konsolide Çekirdek Sermaye Yeterliliği Oranı (%) 11,28% 14,26% Konsolide Ana Sermaye Yeterliliği Oranı (%) 13,33% 15,45% Konsolide Sermaye Yeterliliği Oranı (%) 16,38% 19,03% TAMPONLAR Toplam ilave çekirdek sermaye gereksinim oranı (a+b+c) 4,02% 4,01% a) Sermaye koruma tamponu oranı (%) 2,50% 2,50% b) Bankaya özgü döngüsel sermaye tamponu oranı (%) 0,02% 0,01% c) Sistemik önemli banka tampon oranı (%) 1,50% 1,50% Sermaye Koruma ve Döngüsel Sermaye Tamponlarına İlişkin Yönetmeliğin 4 üncü maddesinin birinci fıkrası uyarınca hesaplanacak ilave çekirdek sermaye tutarının risk ağırlıklı varlıklar tutarına oranı (%) 3,28% 6,26% Uygulanacak İndirim Esaslarında Aşım Tutarının Altında Kalan Tutarlar Ortaklık paylarının %10 veya daha azına sahip olunan ve konsolide edilmeyen bankalar ve finansal kuruluşların özkaynak unsur"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "sermaye yeterlili",
+      "start": 170835,
+      "percentages_in_context": [
+        "%5,125",
+        "%5,125"
+      ],
+      "context": "dilmesi veya (2) Banka’nın hissedarlarının (temettü hariç) ortaklık hakları ile Banka’nın yönetim ve denetiminin, zararın mevcut ortakların sermayesinden indirilmesi kaydıyla TMSF’ye devredilmesi hallerinin ya da bu hallere ilişkin ihtimallerin varlığı halinde BDDK’nın bu yönde alacağı karara istinaden kayıtlardan silinebilecektir. Çekirdek sermaye yeterlilik oranının BDDK’nın belirlediği %5,125’in altına düşmesi halinde değer azaltımına tabi tutulacaktır. Değer azaltma özelliğine sahipse, tamamen ya da kısmen değer azaltımı özelliği Kısmen veya tamamen Değer azaltma özelliğine sahipse, sürekli ya da geçici olma özelliği Geçici Değeri geçici olarak azaltılabiliyorsa, değer artırım mekanizması Var ise tasfiye halinin ortadan kalkması ve çekirdek sermaye yeterliliğinin %5,125’ten yüksek olması. Tasfiye halinde alacak hakkı açısından hangi sırada olduğu (Bu aracın hemen üstünde yer alan araç) Alacak sıralamasında borçlanma araçlarından ve katkı sermayeden sonra gelmektedir. Bankaların Özkaynaklarına İlişkin Yönetmeliğin 7 nci ve 8 inci"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "sermaye yeterlili",
+      "start": 171252,
+      "percentages_in_context": [
+        "%5,125"
+      ],
+      "context": "düşmesi halinde değer azaltımına tabi tutulacaktır. Değer azaltma özelliğine sahipse, tamamen ya da kısmen değer azaltımı özelliği Kısmen veya tamamen Değer azaltma özelliğine sahipse, sürekli ya da geçici olma özelliği Geçici Değeri geçici olarak azaltılabiliyorsa, değer artırım mekanizması Var ise tasfiye halinin ortadan kalkması ve çekirdek sermaye yeterliliğinin %5,125’ten yüksek olması. Tasfiye halinde alacak hakkı açısından hangi sırada olduğu (Bu aracın hemen üstünde yer alan araç) Alacak sıralamasında borçlanma araçlarından ve katkı sermayeden sonra gelmektedir. Bankaların Özkaynaklarına İlişkin Yönetmeliğin 7 nci ve 8 inci maddelerinde yer alan şartlardan haiz olunmayan olup olmadığı 7. maddedeki şartlara haizdir. Bankaların Özkaynaklarına İlişkin Yönetmeliğin 7 nci ve 8 inci maddelerinde yer alan şartlardan hangilerini haiz olunmadığı 8. maddedeki şartlara haiz değildir. AKBANK T.A.Ş. 30 HAZİRAN 2026 TARİHİ İTİBARIYLA KONSOLİDE FİNANSAL TABLOLARA İLİŞKİN AÇIKLAMA VE DİPNOTLAR (Tutarlar aksi belirtilmedikçe milyon"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "sermaye yeterlili",
+      "start": 227082,
+      "percentages_in_context": [],
+      "context": "imi ve risk ağırlıklı tu tarlara ilişkin genel açıklamalar: 23 Ekim 2015 tarihinde 29511 sayılı Resmi Gazete'de yayımlan an ve 31 Mart 2016 tarihi itibarıyla yürürlüğe giren “Bankalarca Risk Yönetimine İlişkin Kamuya Yapılacak Açıklamalar Hakkında Tebliğ” uy arınca hazırlanan dipnotlar ve ilgili açıklamalar bu bölümde verilmektedir. Ba nka’nın sermaye yeterliliği hesaplamasında kredi riski için standart yaklaşım kullanıldığından, İçsel Derecelendirmeye Dayalı Yaklaşım (“İDD“) kapsamında hazırlanması gereken tablolar verilmemiştir. Beklenmedik olumsuz ekonomik koşulların oluşması durumund a kur ve faiz şokları ile kredi portföyün kötüleşmesinin farklı stres oranlarında gerçekleşmesi göz önüne alınarak stres testleri düzenli olarak gerçekleştirilmektedir. Risk ağırlıklı tutarlara genel bakış: Risk Ağırlıklı Tutarlar Asgari sermaye yükümlülüğü Cari Dönem Önceki Dönem Cari Dönem 30 Haziran 2026 31 Aralık 2025 30 Haziran 2026 1 Kredi riski (karşı taraf kredi riski hariç) 2.222.708 1.763.701 177.817 2 Standart yaklaşım 2.222.708"
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "sermaye yeterlili",
+      "start": 251470,
+      "percentages_in_context": [
+        "%0",
+        "%10",
+        "%20",
+        "%50",
+        "%75",
+        "%100",
+        "%150"
+      ],
+      "context": "954 Diğer alacaklar (**) - - - - - - - 13.770 - Toplam 684 - 78.873 24.435 1.272 54.673 - 13.770 83.619 (*) Toplam kredi riski: KRA uygulandıktan sonra sermaye yeterliliği hesaplamasında dikkate alınan tutarı ifade etmektedir. (**) Diğer alacaklar: KKR8’de raporlanan karşı taraf kredi riski içinde yer almayan tutarları içerir. Önceki Dönem - 31.12.2025 Risk Ağırlıkları %0 %10 %20 %50 %75 %100 %150 Diğer Toplam kredi riski (*) Risk Sınıfları: Merkezi yönetimlerden ve merkez bankalarından alacaklar 1.167 - - - - - - - - Bölgesel veya yerel yönetimlerden alacaklar - - - - - - - - - İdari birimlerden ve ticari olmayan girişimlerden alacaklar - - - - - 1 - - 1 Çok taraflı kalkınma bankalarından alacaklar - - - - - - - - - Uluslararası teşkilatlardan alacaklar - - - - - - - - - Bankalar ve aracı kurumlardan alacaklar - - 46."
+    },
+    {
+      "label": "SERMAYE_YETERLILIGI",
+      "match_text": "sermaye yeterlili",
+      "start": 252455,
+      "percentages_in_context": [],
+      "context": "ardan alacaklar - - - - - - - - - Bankalar ve aracı kurumlardan alacaklar - - 46.585 29.226 - - - - 23.930 Kurumsal alacaklar - - 1.865 855 - 48.933 - - 49.734 Perakende alacaklar - - - - 1.254 - - - 940 Diğer alacaklar (**) - - - - - - 2 - 4 Toplam 1.167 - 48.450 30.081 1.254 48.934 2 - 74.609 (*) Toplam kredi riski: KRA uygulandıktan sonra sermaye yeterliliği hesaplamasında dikkate alınan tutarı ifade etmektedir. (**) Diğer alacaklar: KKR8’de raporlanan karşı taraf kredi riski içinde yer almayan tutarları içerir. AKBANK T.A.Ş. 30 HAZİRAN 2026 TARİHİ İTİBARIYLA KONSOLİDE FİNANSAL TABLOLARA İLİŞKİN AÇIKLAMA VE DİPNOTLAR (Tutarlar aksi belirtilmedikçe milyon Türk Lirası (“TL”) olarak ifade edilmiştir.) 56 4. Karşı taraf kredi riski için kullanılan teminatlar: Sermaye yeterliliği hesaplamasında dikkate alınan türev teminatları bulunmadığından ilgili tablo verilmemiştir. 5. Kredi türevleri: Cari Dönem - 30.06.2026 Önceki Dönem - 31.12.2025 Alınan koruma Satılan koruma Alınan koruma Satılan koruma Nominal"
+    }
+  ],
+  "metric_value_selected": null,
+  "selection_ready": false,
+  "production_evidence": true,
+  "canonical_production_ready": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "missing_to_zero": false,
+  "blockers": [],
+  "production_mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

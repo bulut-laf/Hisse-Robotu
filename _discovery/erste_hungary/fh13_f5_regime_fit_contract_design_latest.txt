@@ -1,0 +1,440 @@
+FH13 F5 REGIME_FIT CONTRACT DESIGN AUDIT
+DATE=2026-10-07 19:26:52
+MODE=RESEARCH_ONLY
+PRODUCTION_MUTATION=NO
+SEMANTIC_PROXY=NO
+FORCED_FILL=NO
+
+=== SOURCE INVENTORY ===
+SOURCE_FILE_COUNT=3328
+
+=== FUND_PRODUCERS ===
+
+PATTERN=regime_fit
+  backend\app\funds\evidence_mapper.py:31 | regime_fit: Decimal | None
+  backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  backend\app\funds\evidence_mapper.py:127 | ("total_expense_ratio", value.total_expense_ratio), ("regime_fit", value.regime_fit)
+  backend\app\funds\evidence_mapper.py:132 | cost, fit = value.total_expense_ratio, value.regime_fit
+  backend\app\funds\evidence_mapper.py:138 | return FundEvidence("F5", state, (f"total_expense_ratio={_fmt(cost)}", f"regime_fit={_fmt(fit)}"))
+  backend\app\funds\f3_store_read_model.py:168 | regime_fit=None,
+  backend\app\funds\f4_store_read_model.py:197 | regime_fit=None,
+  backend\app\funds\live_pipeline.py:123 | regime_fit=None,
+  backend\app\funds\international\erste_hungary_evidence_bridge.py:45 | regime_fit=None,
+  backend\app\funds\international\erste_hungary_f2_bridge.py:114 | regime_fit=None,
+  backend\app\funds\international\erste_hungary_f3_bridge.py:73 | regime_fit=None,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1023 | 00031: regime_fit: Decimal | None
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1213 | 00051: total_expense_ratio=Decimal("0.05"), regime_fit=Decimal("0.2"),
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1253 | 00051: total_expense_ratio=Decimal("0.05"), regime_fit=Decimal("0.2"),
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1275 | 00028: regime_fit=None,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1333 | 00028: regime_fit=None,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1462 | 00061: "regime_fit",
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1477 | 00076: assert "regime_fit" in item.missing_fields
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1484 | 00083: regime_fit=Decimal(
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1504 | 00061: "regime_fit",
+
+PATTERN=total_expense_ratio
+  backend\app\funds\contracts.py:114 | total_expense_ratio: Decimal | None
+  backend\app\funds\evidence_mapper.py:30 | total_expense_ratio: Decimal | None
+  backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  backend\app\funds\evidence_mapper.py:127 | ("total_expense_ratio", value.total_expense_ratio), ("regime_fit", value.regime_fit)
+  backend\app\funds\evidence_mapper.py:132 | cost, fit = value.total_expense_ratio, value.regime_fit
+  backend\app\funds\evidence_mapper.py:138 | return FundEvidence("F5", state, (f"total_expense_ratio={_fmt(cost)}", f"regime_fit={_fmt(fit)}"))
+  backend\app\funds\f3_store_read_model.py:167 | total_expense_ratio=None,
+  backend\app\funds\f4_store_read_model.py:196 | total_expense_ratio=None,
+  backend\app\funds\f5_metadata_store.py:39 | total_expense_ratio=Decimal(str(row["total_expense_ratio"])) if row.get("total_expense_ratio") is not None else None,
+  backend\app\funds\f5_metadata_store.py:65 | "total_expense_ratio": str(record.total_expense_ratio) if record.total_expense_ratio is not None else None,
+  backend\app\funds\f5_metadata_store.py:101 | total_expense_ratio=metrics.current_period_realized_expense_ratio,
+  backend\app\funds\live_pipeline.py:122 | total_expense_ratio=None,
+  backend\app\funds\international\contract.py:63 | total_expense_ratio: Decimal | None
+  backend\app\funds\international\erste_hungary_adapter.py:199 | total_expense_ratio=_decimal(
+  backend\app\funds\international\erste_hungary_adapter.py:200 | _pick(row, "total_expense_ratio", "ter", "koltseghanyad"),
+  backend\app\funds\international\erste_hungary_comparison.py:379 | total_expense_ratio=None,
+  backend\app\funds\international\erste_hungary_evidence_bridge.py:44 | total_expense_ratio=None,
+  backend\app\funds\international\erste_hungary_f2_bridge.py:113 | total_expense_ratio=None,
+  backend\app\funds\international\erste_hungary_f3_bridge.py:72 | total_expense_ratio=None,
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:4536 | "total_expense_ratio":
+
+PATTERN=management_fee
+  backend\app\funds\contracts.py:113 | management_fee: Decimal | None
+  backend\app\funds\f5_metadata_store.py:38 | management_fee=Decimal(str(row["management_fee"])) if row.get("management_fee") is not None else None,
+  backend\app\funds\f5_metadata_store.py:64 | "management_fee": str(record.management_fee) if record.management_fee is not None else None,
+  backend\app\funds\f5_metadata_store.py:100 | management_fee=None,
+  backend\app\funds\kap_fund_cost.py:35 | annual_management_fee_values: tuple[Decimal, ...]
+  backend\app\funds\kap_fund_cost.py:206 | "annual_management_fee_values":
+  backend\data\funds\f5_cost_metadata.json:4 | "management_fee": null,
+  backend\tests\test_f5_metadata_store_v1.py:13 | management_fee=None,
+  backend\tests\test_kap_fund_cost_v1.py:35 | assert result.annual_management_fee_values == (
+  _backups\F1_TEFAS_DETAIL_PERSISTENCE_V1_REV1_20260908_224357\contracts.py:103 | management_fee: Decimal | None
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:38 | management_fee=Decimal(str(row["management_fee"])) if row.get("management_fee") is not None else None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:65 | "management_fee": str(record.management_fee) if record.management_fee is not None else None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:102 | management_fee=None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\test_f5_metadata_store_v1.py:12 | management_fee=None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\f5_metadata_store.py:38 | management_fee=Decimal(str(row["management_fee"])) if row.get("management_fee") is not None else None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\f5_metadata_store.py:65 | "management_fee": str(record.management_fee) if record.management_fee is not None else None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\f5_metadata_store.py:102 | management_fee=None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\test_f5_metadata_store_v1.py:12 | management_fee=None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV3_20260923_161330\f5_metadata_store.py:38 | management_fee=Decimal(str(row["management_fee"])) if row.get("management_fee") is not None else None,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV3_20260923_161330\f5_metadata_store.py:64 | "management_fee": str(record.management_fee) if record.management_fee is not None else None,
+
+PATTERN=realized_expense_ratio
+  backend\app\funds\f5_metadata_store.py:95 | if metrics.current_period_realized_expense_ratio is None:
+  backend\app\funds\f5_metadata_store.py:96 | raise FundCostMetadataStoreError("KAP_COST_CURRENT_REALIZED_EXPENSE_RATIO_UNAVAILABLE")
+  backend\app\funds\f5_metadata_store.py:101 | total_expense_ratio=metrics.current_period_realized_expense_ratio,
+  backend\app\funds\kap_fund_cost.py:33 | realized_expense_ratio_values: tuple[Decimal, ...]
+  backend\app\funds\kap_fund_cost.py:36 | current_period_realized_expense_ratio: Decimal | None
+  backend\app\funds\kap_fund_cost.py:37 | current_period_net_realized_expense_ratio: Decimal | None
+  backend\app\funds\kap_fund_cost.py:202 | "realized_expense_ratio_values":
+  backend\app\funds\kap_fund_cost.py:226 | if not parsed["realized_expense_ratio_values"]:
+  backend\app\funds\kap_fund_cost.py:227 | raise ValueError("KAP_COST_REALIZED_EXPENSE_RATIO_MISSING")
+  backend\app\funds\kap_fund_cost.py:232 | current_period_realized_expense_ratio=current_realized,
+  backend\app\funds\kap_fund_cost.py:233 | current_period_net_realized_expense_ratio=current_net_realized,
+  backend\tests\test_kap_fund_cost_v1.py:29 | assert result.realized_expense_ratio_values == (
+  backend\tests\test_kap_fund_cost_v1.py:70 | assert result.current_period_realized_expense_ratio == Decimal("0.014")
+  backend\tests\test_kap_fund_cost_v1.py:71 | assert result.current_period_net_realized_expense_ratio == Decimal("0.014")
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:97 | if metrics.current_period_realized_expense_ratio is None:
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:98 | raise FundCostMetadataStoreError("KAP_COST_CURRENT_REALIZED_EXPENSE_RATIO_UNAVAILABLE")
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:103 | total_expense_ratio=metrics.current_period_realized_expense_ratio,
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\f5_metadata_store.py:97 | if metrics.current_period_realized_expense_ratio is None:
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\f5_metadata_store.py:98 | raise FundCostMetadataStoreError("KAP_COST_CURRENT_REALIZED_EXPENSE_RATIO_UNAVAILABLE")
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\f5_metadata_store.py:103 | total_expense_ratio=metrics.current_period_realized_expense_ratio,
+
+PATTERN=allocation_known
+  backend\app\funds\evidence_mapper.py:32 | allocation_known: bool
+  backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  backend\app\funds\evidence_mapper.py:129 | if not value.allocation_known:
+  backend\app\funds\f3_store_read_model.py:169 | allocation_known=False,
+  backend\app\funds\f4_store_read_model.py:198 | allocation_known=False,
+  backend\app\funds\f5_allocation_read_model.py:12 | def allocation_known_by_fund() -> dict[str, bool]:
+  backend\app\funds\live_pipeline.py:124 | allocation_known=False,
+  backend\app\funds\international\contract.py:64 | allocation_known: bool
+  backend\app\funds\international\erste_hungary_adapter.py:203 | allocation_known=bool(
+  backend\app\funds\international\erste_hungary_adapter.py:204 | _pick(row, "allocation_known", "allocation")
+  backend\app\funds\international\erste_hungary_comparison.py:380 | allocation_known=False,
+  backend\app\funds\international\erste_hungary_evidence_bridge.py:46 | allocation_known=False,
+  backend\app\funds\international\erste_hungary_f2_bridge.py:115 | allocation_known=False,
+  backend\app\funds\international\erste_hungary_f3_bridge.py:74 | allocation_known=False,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1024 | 00032: allocation_known: bool
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1276 | 00029: allocation_known=False,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1334 | 00029: allocation_known=False,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1540 | 00097: allocation_known=True,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1598 | 00097: allocation_known=True,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1644 | 00097: allocation_known=True,
+
+PATTERN=portfolio_snapshot
+  backend\dashboard.py:10385 | from backend.app.funds.portfolio_tracking import fund_portfolio_snapshot_store
+  backend\dashboard.py:10494 | portfolio_store=fund_portfolio_snapshot_store(),
+  backend\mobile_dashboard.py:171 | from backend.app.funds.portfolio_tracking import fund_portfolio_snapshot_store
+  backend\mobile_dashboard.py:423 | portfolio_store=fund_portfolio_snapshot_store(),
+  backend\app\funds\f5_allocation_read_model.py:3 | from .portfolio_tracking import fund_portfolio_snapshot_store
+  backend\app\funds\f5_allocation_read_model.py:13 | store = fund_portfolio_snapshot_store()
+  backend\app\funds\fund_auto_refresh.py:16 | fund_portfolio_snapshot_store,
+  backend\app\funds\fund_auto_refresh.py:124 | portfolios = portfolio_store or fund_portfolio_snapshot_store()
+  backend\app\funds\portfolio_tracking.py:204 | def compare_portfolio_snapshots(
+  backend\app\funds\portfolio_tracking.py:421 | raise PortfolioSnapshotStoreError(f"PORTFOLIO_SNAPSHOT_CONFLICT:{key}")
+  backend\app\funds\portfolio_tracking.py:478 | DEFAULT_FUND_PORTFOLIO_SNAPSHOT_PATH = (
+  backend\app\funds\portfolio_tracking.py:479 | Path(__file__).resolve().parents[2] / "data" / "funds" / "portfolio_snapshots.json"
+  backend\app\funds\portfolio_tracking.py:483 | def fund_portfolio_snapshot_store(path: str | Path | None = None) -> FundPortfolioSnapshotJsonStore:
+  backend\app\funds\portfolio_tracking.py:485 | DEFAULT_FUND_PORTFOLIO_SNAPSHOT_PATH if path is None else path
+  backend\app\funds\pressure_read_model.py:19 | compare_portfolio_snapshots,
+  backend\app\funds\pressure_read_model.py:73 | changes.append(compare_portfolio_snapshots(comparable[-2], comparable[-1]))
+  backend\app\ui\fund_analysis_center.py:43 | compare_portfolio_snapshots,
+  backend\app\ui\fund_analysis_center.py:136 | changes_by_fund[fund_id] = compare_portfolio_snapshots(
+  backend\app\ui\fund_analysis_center.py:424 | change_set = compare_portfolio_snapshots(comparable[-2], comparable[-1])
+  backend\data\financial_intelligence\FINANCIAL_INTELLIGENCE_V1_1_NEXT_REAL_SYMBOL_SELECTION.json:73 | "D:\\Projects\\Hisse-Robotu\\backend\\data\\funds\\portfolio_snapshots.json"
+
+PATTERN=portfolio_composition
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:145 | PATTERN=portfolio_composition
+
+PATTERN=investment_objective
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:148 | PATTERN=investment_objective
+
+PATTERN=investment_policy
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:151 | PATTERN=investment_policy
+
+PATTERN=investment_strategy
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:154 | PATTERN=investment_strategy
+
+PATTERN=benchmark
+  backend\run_backtest.py:862 | benchmark: object,
+  backend\run_backtest.py:864 | al_tut = benchmark.al_tut
+  backend\run_backtest.py:971 | benchmark: object,
+  backend\run_backtest.py:973 | karsilastirma = benchmark.karsilastirma
+  backend\run_backtest.py:1037 | def benchmark_karsilastirmasini_yazdir(
+  backend\run_backtest.py:1041 | rapor.benchmark_karsilastirmasi
+  backend\run_backtest.py:1046 | .hizalanmis_benchmark_karsilastirmasi
+  backend\run_backtest.py:1055 | benchmark=tam_donem,
+  backend\run_backtest.py:1074 | benchmark=hizalanmis,
+  backend\run_backtest.py:1367 | benchmark_karsilastirmasini_yazdir(
+  backend\app\opportunity_radar.py:465 | def _monthly_metrics(daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> dict[str, object] | None:
+  backend\app\opportunity_radar.py:483 | benchmark_available = False
+  backend\app\opportunity_radar.py:484 | if benchmark is not None:
+  backend\app\opportunity_radar.py:485 | bm = _monthly(benchmark)
+  backend\app\opportunity_radar.py:490 | benchmark_available = True
+  backend\app\opportunity_radar.py:512 | "excess3": ret3 - bench3 if benchmark_available else np.nan,
+  backend\app\opportunity_radar.py:513 | "excess6": ret6 - bench6 if benchmark_available else np.nan,
+  backend\app\opportunity_radar.py:514 | "benchmark_available": benchmark_available,
+  backend\app\opportunity_radar.py:521 | def _monthly_rows(symbol: str, daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> tuple[dict[str, object] | None, dict[str, object] | None]:
+  backend\app\opportunity_radar.py:522 | x = _monthly_metrics(daily, benchmark)
+
+PATTERN=risk_value
+  backend\app\funds\contracts.py:115 | risk_value: str | None
+  backend\app\funds\f5_metadata_store.py:40 | risk_value=row.get("risk_value"),
+  backend\app\funds\f5_metadata_store.py:66 | "risk_value": record.risk_value,
+  backend\app\funds\f5_metadata_store.py:102 | risk_value=None,
+  backend\app\funds\international\erste_hungary_comparison.py:35 | VALID_RISK_VALUES = {
+  backend\app\funds\international\erste_hungary_comparison.py:85 | def _normalize_risk_value(value: str | None) -> str | None:
+  backend\app\funds\international\erste_hungary_comparison.py:87 | if value in VALID_RISK_VALUES:
+  backend\app\funds\international\erste_hungary_comparison.py:313 | risk_raw=_normalize_risk_value(
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:4480 | backend\app\funds\contracts.py:107: risk_value: str
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:4505 | risk_value=row.get("risk_value"),
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:4540 | "risk_value": record.risk_value,
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:4566 | risk_value=None,
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:12158 | risk_value=None,
+  backend\data\financial_intelligence\FIN_PROD_V5_SHORT_TERM_SOURCE_PREFLIGHT.json:2858 | "_normalize_risk_value",
+  backend\data\funds\f5_cost_metadata.json:6 | "risk_value": null,
+  backend\tests\test_erste_hungary_comparison_v1.py:133 | def test_valid_risk_values_are_preserved():
+  backend\tests\test_f5_metadata_store_v1.py:15 | risk_value=None,
+  _backups\F1_TEFAS_DETAIL_PERSISTENCE_V1_REV1_20260908_224357\contracts.py:105 | risk_value: str | None
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:40 | risk_value=row.get("risk_value"),
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:67 | "risk_value": record.risk_value,
+
+PATTERN=risk_level
+  backend\app\analysis\financial_intelligence_panel_read_model.py:131 | _pick(financial_core, "financial_risk", "risk_level"),
+  backend\app\analysis\financial_risk_flags.py:33 | risk_level: str
+  backend\app\analysis\financial_risk_flags.py:350 | risk_level = "UNKNOWN"
+  backend\app\analysis\financial_risk_flags.py:353 | risk_level = (
+  backend\app\analysis\financial_risk_flags.py:390 | risk_level=risk_level,
+  backend\app\ui\financial_intelligence_renderer_payload.py:314 | ("risk_level", "financial_risk_level", "deterioration_risk_level"),
+  backend\app\ui\financial_intelligence_renderer_payload.py:319 | ("risk_level", "financial_risk_level", "deterioration_risk_level"),
+  backend\data\financial_intelligence_acceptance_TUPRS_2026_2.json:417 | "risk_level": "LOW",
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:450 | risk_level = "UNKNOWN"
+  backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:457 | risk_level = (
+  backend\tests\test_fin005_financial_risk_flags.py:57 | assert a.risk_level == "LOW"
+  backend\tests\test_fin005_financial_risk_flags.py:96 | assert a.risk_level == "UNKNOWN"
+  _backup\FINPRODV7_FIN015_API_COLLISION_20260905_222241\financial_intelligence_panel.py:131 | _pick(financial_core, "financial_risk", "risk_level"),
+  _backup\FIN_INTEL_V1_1_REGRESSION_RECONCILIATION\financial_intelligence_renderer_payload.py:270 | ("risk_level", "financial_risk_level", "deterioration_risk_level"),
+  _backup\FIN_INTEL_V1_1_REGRESSION_RECONCILIATION\financial_intelligence_renderer_payload.py:275 | ("risk_level", "financial_risk_level", "deterioration_risk_level"),
+  _backup\FIN_INTEL_V1_1_RENDERER_CONSUMPTION_V2_20260907_114951\financial_intelligence_renderer_payload.py:84 | "risk": first("risk", "risk_level"),
+  _backup\FIN_INTEL_V1_1_RENDERER_CONSUMPTION_V3_20260907_122921\financial_intelligence_renderer_payload.py:91 | "risk": _first_exact(panel, "risk", "risk_level"),
+  _backup\FIN_INTEL_V1_1_RENDERER_CONSUMPTION_V4_20260907_123136\financial_intelligence_renderer_payload.py:143 | "risk_level",
+  _backup\FIN_INTEL_V1_1_RENDERER_CONSUMPTION_V4_20260907_123136\financial_intelligence_renderer_payload.py:144 | "financial_risk_level",
+  _backup\FIN_INTEL_V1_1_RENDERER_CONSUMPTION_V4_20260907_123136\financial_intelligence_renderer_payload.py:145 | "deterioration_risk_level",
+
+PATTERN=recommended.*horizon
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:223 | PATTERN=recommended.*horizon
+
+PATTERN=fund.*allocation
+  backend\app\funds\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  backend\data\financial_intelligence\FINANCIAL_INTELLIGENCE_V1_3_BANK_OFFICIAL_KAP_FINANCIAL_ACQUISITION_PREFLIGHT.json:391 | "snippet": "def ingest_kap_portfolio_pdf_upload(\n raw_pdf: bytes,\n *,\n filename: str,\n report_year: int,\n report_month: int,\n publication_date: date,\n store: FundPortfolioSnapshotJsonStore,\n notification_id: str | None = None,\n source_reference: str | None = None,\n ingested_at: datetime | None = None,\n pdf_text_extractor: PdfTextExtractor | None = None,\n) -> KapPortfolioIngestionResult:\n \"\"\"Ingest an explicitly uploaded KAP portfolio-allocation PDF without network access.\n\n The user must provide the report period and publication date because those\n facts are not reliably encoded inside every attachment PDF. The canonical\n holdings parser and append-only snapshot store are reused unchanged.\n \"\"\"\n if not isinstance(raw_pdf, (bytes, bytearray)) or not raw_pdf:\n raise KapFundPortfolioError(\"KAP_MANUAL_UPLOAD_EMPTY\")\n raw = bytes(raw_pdf)\n if len(raw) > MAX_KAP_PORTFOLIO_PDF_BYTES:\n raise KapFundPortfolioError(\"KAP_PORTFOLIO_PDF_TOO_LARGE\")\n\n safe_name = Path(str(filename or \"\")).name.strip()\n if not safe_name or not safe_name.casefold().endswith(\".pdf\"):\n raise KapFundPortfolioError(\"KAP_MANUAL_UPLOAD_FILENAME_INVALID\")\n if not 2000 <= int(report_year) <= 2100:\n raise ValueError(\"report_year 2000-2100 aral?g?nda olmal?d?r.\")\n if not 1 <= int(report_month) <= 12:\n raise ValueError(\"report_month 1-12 aral?g?nda olmal?d?r.\")\n\n report_year = int(report_year)\n report_month = int(report_month)",
+  backend\tests\test_f5_allocation_read_model_v1.py:1 | from backend.app.funds import f5_allocation_read_model
+  backend\tests\test_fund_data_contract_v1.py:7 | from backend.app.funds.normalization import parse_decimal_tr, validate_allocation
+  _backup\KAP_ACC_IDENTITY_REPAIR_V1_20260905_214449\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  _backup\KAP_GENERIC_HEADER_TOKEN_REPAIR_V1_20260905_220144\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  _backup\KAP_ORANI_AND_REGRESSION_REPAIR_V1_20260905_215913\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  _backup\KAP_REAL_FORMATS_V2_20260905_203242\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  _backup\KAP_REAL_FORMATS_V2_COMPAT_20260905_203749\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  _backup\KAP_REPO_HEADER_REPAIR_V1_20260905_215144\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  _backup\KAP_SPLIT_CONTINUATION_REPAIR_V1_20260905_213843\kap_portfolio_ingestion.py:186 | raise KapFundPortfolioError("KAP_NOT_PORTFOLIO_ALLOCATION_REPORT")
+  _backups\F5_ALLOCATION_READ_MODEL_V2_20260923_162521\test_f5_allocation_read_model_v1.py:6 | from backend.app.funds import f5_allocation_read_model
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\test_f5_allocation_read_model_v1.py:10 | from backend.app.funds import f5_allocation_read_model
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV2_20260923_160809\test_f5_allocation_read_model_v1.py:10 | from backend.app.funds import f5_allocation_read_model
+  _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV3_20260923_161330\test_f5_allocation_read_model_v1.py:10 | from backend.app.funds import f5_allocation_read_model
+  _discovery\tefas_migration_source_contract_20260901-202225.txt:83 | 007: from backend.app.funds.normalization import parse_decimal_tr, validate_allocation
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:15 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:38 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:102 | backend\app\funds\evidence_mapper.py:32 | allocation_known: bool
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:103 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+
+=== MARKET_REGIME ===
+
+PATTERN=market.?regime
+  .recovery\fund-live-final-20260901-234659\dashboard.py:398 | from backend.app.ui.market_regime_dashboard import (
+  .recovery\fund-live-final-20260901-234659\dashboard.py:399 | MarketRegimeContext,
+  .recovery\fund-live-final-20260901-234659\dashboard.py:400 | MarketRegimeDashboardError,
+  .recovery\fund-live-final-20260901-234659\dashboard.py:401 | MarketRegimeDashboardService,
+  .recovery\fund-live-final-20260901-234659\dashboard.py:5714 | sonuc = MarketRegimeDashboardService().calistir()
+  .recovery\fund-live-final-20260901-234659\dashboard.py:5715 | except MarketRegimeDashboardError as hata:
+  .recovery\fund-live-final-20260901-234659\dashboard.py:7443 | market_regime=auto_regime,
+  .recovery\fund-live-final-20260901-234659\dashboard.py:7558 | market_regime = st.text_input(
+  .recovery\fund-live-final-20260901-234659\dashboard.py:7652 | market_regime=market_regime,
+  .recovery\fund-live-final-20260901-234905\dashboard.py:398 | from backend.app.ui.market_regime_dashboard import (
+  .recovery\fund-live-final-20260901-234905\dashboard.py:399 | MarketRegimeContext,
+  .recovery\fund-live-final-20260901-234905\dashboard.py:400 | MarketRegimeDashboardError,
+  .recovery\fund-live-final-20260901-234905\dashboard.py:401 | MarketRegimeDashboardService,
+  .recovery\fund-live-final-20260901-234905\dashboard.py:5714 | sonuc = MarketRegimeDashboardService().calistir()
+  .recovery\fund-live-final-20260901-234905\dashboard.py:5715 | except MarketRegimeDashboardError as hata:
+  .recovery\fund-live-final-20260901-234905\dashboard.py:7443 | market_regime=auto_regime,
+  .recovery\fund-live-final-20260901-234905\dashboard.py:7558 | market_regime = st.text_input(
+  .recovery\fund-live-final-20260901-234905\dashboard.py:7652 | market_regime=market_regime,
+  .recovery\fund-live-wiring-20260901-233444\dashboard.py:398 | from backend.app.ui.market_regime_dashboard import (
+  .recovery\fund-live-wiring-20260901-233444\dashboard.py:399 | MarketRegimeContext,
+
+PATTERN=regime.*state
+  backend\data\financial_intelligence\FIN_PROD_V6_LONG_TERM_PREFLIGHT.txt:79 | ARGS=*, symbol: str, signal_date: date, reference_price: float, decision_class: str, quality_score: int, daily_direction: str, weekly_direction: str, store: SignalOutcomeJsonStore, divergence_type: str='', market_regime: str='', sector: str='', momentum_state: str='', volume_confirmation: bool | None=None, atr_percent: float | None=None, risk_reward_ratio: float | None=None, stop_loss: float | None=None, target_1: float | None=None, target_2: float | None=None, downloader: Callable[..., pd.DataFrame]=yf.download, today: date | None=None
+  _discovery\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json:709 | "backend/app/analysis/automatic_signal_tracking.py:178|automatic_record_from_values|args=symbol;signal_date;reference_price;decision_class;quality_score;daily_direction;weekly_direction;store;divergence_type;market_regime;sector;momentum_state;volume_confirmation;atr_percent;risk_reward_ratio;stop_loss;target_1;target_2;downloader;today",
+  _discovery\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json:810 | "backend/app/analysis/automatic_signal_tracking.py:178|automatic_record_from_values|args=symbol;signal_date;reference_price;decision_class;quality_score;daily_direction;weekly_direction;store;divergence_type;market_regime;sector;momentum_state;volume_confirmation;atr_percent;risk_reward_ratio;stop_loss;target_1;target_2;downloader;today",
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:272 | PATTERN=regime.*state
+
+PATTERN=regime.*label
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:278 | PATTERN=regime.*label
+
+PATTERN=regime.*score
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:281 | PATTERN=regime.*score
+
+PATTERN=regime.*classification
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:284 | PATTERN=regime.*classification
+
+PATTERN=bull.*bear
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:287 | PATTERN=bull.*bear
+
+PATTERN=risk.?on
+  backend\tests\test_prebreakout_candidate_lifecycle.py:56 | def test_ayni_barda_risk_once_degerlendirilir() -> None:
+
+PATTERN=risk.?off
+  NONE
+
+PATTERN=trend.*regime
+  backend\app\analysis\market_regime.py:70 | trend: RegimeComponent
+  backend\app\analysis\market_regime.py:275 | def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+  backend\app\backtest\market_regime_analysis.py:154 | trend_gun_dagilimi: tuple[RegimeDayCount, ...]
+  backend\app\backtest\market_regime_analysis.py:156 | trend_performanslari: tuple[RegimePerformance, ...]
+  backend\scripts\run_fin_prod_v5_short_term_source_preflight.py:33 | "trend":4,"momentum":4,"atr":3,"regime":3,"liquidity":3,"volatility":3}
+  Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:69 | trend: RegimeComponent
+  Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:273 | def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+  Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:70 | trend: RegimeComponent
+  Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:275 | def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+  Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:70 | trend: RegimeComponent
+  Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:280 | def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+  Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:70 | trend: RegimeComponent
+  Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:279 | def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+  Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:70 | trend: RegimeComponent
+  Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:280 | def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+  _backup\FINPRODV5_PREFLIGHT_REV1_20260905_144039\run_fin_prod_v5_short_term_source_preflight.py:33 | "trend":4,"momentum":4,"atr":3,"regime":3,"liquidity":3,"volatility":3}
+  _discovery\Hisse-Robotu-Fast-Mover-Watch-Development-Preflight-V1-20260827-235441.txt:482 | QUALITY_REF=backend\app\analysis\market_regime.py:70| trend: RegimeComponent
+  _discovery\Hisse-Robotu-Fast-Mover-Watch-Development-Preflight-V1-20260827-235441.txt:488 | QUALITY_REF=backend\app\analysis\market_regime.py:275|def _trend_bileseni(gunluk: pd.DataFrame, haftalik: pd.DataFrame) -> RegimeComponent:
+  _discovery\Hisse-Robotu-Next-Day-Discovery-Development-Preflight-V1-20260828-211824.txt:31 | TREND=backend\app\analysis\divergence_analysis.py;backend\app\analysis\indicator_contribution.py;backend\app\analysis\market_regime.py;backend\app\analysis\momentum_discovery.py;backend\app\analysis\multi_timeframe_analysis.py;backend\app\analysis\position_monitor.py;backend\app\analysis\ranking_quality_context.py;backend\app\analysis\signal_engine.py;backend\app\analysis\technical_confirmation.py;backend\app\analysis\technical_decision_matrix.py;backend\app\analysis\trade_plan.py;backend\app\analysis\trend_scan_policy.py
+  _discovery\Hisse-Robotu-Next-Day-Strategy-Preflight-V1-20260828-224253.txt:103 | trend: RegimeComponent
+
+PATTERN=volatility.*regime
+  backend\scripts\run_fin_prod_v5_short_term_source_preflight.py:63 | "volume_liquidity_context","volatility_context","market_regime_context",
+  _backup\FINPRODV5_PREFLIGHT_REV1_20260905_144039\run_fin_prod_v5_short_term_source_preflight.py:61 | "volume_liquidity_context","volatility_context","market_regime_context",
+  _discovery\Hisse-Robotu-Next-Day-Discovery-Development-Preflight-V1-20260828-211824.txt:35 | VOLATILITY=backend\app\analysis\fast_mover_watch.py;backend\app\analysis\signal_engine.py;backend\app\analysis\technical_decision_matrix.py;backend\app\backtest\market_regime_analysis.py;backend\app\compliance\kap_vbts_client.py;backend\app\decision_support\risk_integration.py;backend\app\indicators\technical_indicators.py;backend\app\prebreakout\prebreakout_engine.py;backend\app\risk\risk_engine.py;backend\app\risk\structural_risk.py;backend\run_market_regime_analysis.py;backend\tests\test_ai_provider.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:318 | PATTERN=volatility.*regime
+
+=== GUARDRAILS ===
+
+PATTERN=must have an explicit fund-level definition
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:326 | PATTERN=must have an explicit fund-level definition
+
+PATTERN=benchmark/risk/strategy/allocation
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:329 | PATTERN=benchmark/risk/strategy/allocation
+
+PATTERN=market regime must be explicit
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:332 | PATTERN=market regime must be explicit
+
+PATTERN=no score may be invented
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:335 | PATTERN=no score may be invented
+
+PATTERN=no silent.*adapter
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:338 | PATTERN=no silent.*adapter
+
+PATTERN=regime_fit is None
+  backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  backend\tests\test_erste_hungary_evidence_bridge_v1.py:41 | assert value.regime_fit is None
+  _discovery\fund_live_exact_wiring_source_20260901-230458.txt:387 | 0125: if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:15 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:38 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:103 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:243 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:15 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:244 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:38 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:246 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:103 | backend\app\funds\evidence_mapper.py:125 | if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:341 | PATTERN=regime_fit is None
+
+PATTERN=regime_fit=None
+  backend\app\funds\f3_store_read_model.py:168 | regime_fit=None,
+  backend\app\funds\f4_store_read_model.py:197 | regime_fit=None,
+  backend\app\funds\live_pipeline.py:123 | regime_fit=None,
+  backend\app\funds\international\erste_hungary_evidence_bridge.py:45 | regime_fit=None,
+  backend\app\funds\international\erste_hungary_f2_bridge.py:114 | regime_fit=None,
+  backend\app\funds\international\erste_hungary_f3_bridge.py:73 | regime_fit=None,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1275 | 00028: regime_fit=None,
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1333 | 00028: regime_fit=None,
+  backend\tests\test_erste_hungary_f4_bridge_v1.py:61 | regime_fit=None,
+  backend\tests\test_fund_f1_safe_unavailable_v1.py:28 | regime_fit=None,
+  backend\tests\test_fund_f5_safe_unavailable_v1.py:29 | regime_fit=None,
+  backend\tests\test_fund_tefas_history_f3_v1.py:35 | regime_fit=None,
+  _backup\FUND_IDENTITY_CATEGORY_UI_V1_20260907_101951\live_pipeline.py:82 | regime_fit=None,
+  _backup\FUND_IDENTITY_CATEGORY_UI_V3_20260907_103135\live_pipeline.py:113 | regime_fit=None,
+  _backup\FUND_IDENTITY_CATEGORY_UI_V4_20260907_103702\live_pipeline.py:112 | regime_fit=None,
+  _backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_20260923_164701\live_pipeline.py:111 | regime_fit=None,
+  _backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_REV1_20260923_164912\live_pipeline.py:111 | regime_fit=None,
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:19 | backend\app\funds\f3_store_read_model.py:168 | regime_fit=None,
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:20 | backend\app\funds\f4_store_read_model.py:197 | regime_fit=None,
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:21 | backend\app\funds\live_pipeline.py:123 | regime_fit=None,
+
+PATTERN=F5.*unavailable
+  backend\app\funds\live_pipeline.py:121 | # F5 = UNAVAILABLE
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1438 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1453 | 00052: def test_missing_all_f5_sources_is_unavailable():
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1497 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1556 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1615 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1674 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1733 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1792 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1851 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:10 | F5=SAFE_UNAVAILABLE
+  backend\tests\test_fund_f5_safe_unavailable_v1.py:52 | def test_missing_all_f5_sources_is_unavailable():
+  backend\tests\test_fund_live_pipeline_v1.py:27 | assert "F5" in result.unavailable_families
+  _backup\FUND_IDENTITY_CATEGORY_UI_V1_20260907_101951\live_pipeline.py:80 | # F5 = UNAVAILABLE
+  _backup\FUND_IDENTITY_CATEGORY_UI_V3_20260907_103135\live_pipeline.py:111 | # F5 = UNAVAILABLE
+  _backup\FUND_IDENTITY_CATEGORY_UI_V4_20260907_103702\live_pipeline.py:110 | # F5 = UNAVAILABLE
+  _backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_20260923_164701\live_pipeline.py:109 | # F5 = UNAVAILABLE
+  _backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_REV1_20260923_164912\live_pipeline.py:109 | # F5 = UNAVAILABLE
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:81 | backend\app\funds\f5_metadata_store.py:96 | raise FundCostMetadataStoreError("KAP_COST_CURRENT_REALIZED_EXPENSE_RATIO_UNAVAILABLE")
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:95 | _backups\F5_COST_METADATA_AND_ALLOCATION_AUTHORITY_V1_REV1_20260923_160526\f5_metadata_store.py:98 | raise FundCostMetadataStoreError("KAP_COST_CURRENT_REALIZED_EXPENSE_RATIO_UNAVAILABLE")
+
+PATTERN=F5.*safe
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1438 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1497 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1556 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1615 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1674 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1733 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1792 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1851 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:10 | F5=SAFE_UNAVAILABLE
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:364 | backend\tests\test_fund_f5_safe_unavailable_v1.py:29 | regime_fit=None,
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:377 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1438 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:379 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1497 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:380 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1556 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:381 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1615 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:382 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1674 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:383 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1733 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:384 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1792 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:385 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1851 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:386 | backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:10 | F5=SAFE_UNAVAILABLE
+  _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:387 | backend\tests\test_fund_f5_safe_unavailable_v1.py:52 | def test_missing_all_f5_sources_is_unavailable():
+
+=== FH13 CONTRACT DECISION GATE ===
+G1=Fund-level definition explicit and documented
+G2=Inputs identifiable with provenance
+G3=Market-regime producer and time-alignment explicit if used
+G4=Mapping deterministic and independently testable
+G5=Unavailable conditions explicit; no fallback score
+G6=F1-F4/classification not silently mutated
+
+C1=Benchmark-only compatibility
+C2=Strategy/objective + benchmark compatibility
+C3=Strategy/objective + actual allocation + independent market regime
+C4=External/model-derived regime_fit
+
+REJECTION_RULE=Matching fields alone do not constitute a production contract.
+F5_RULE=If G1-G6 are not all satisfied, F5 remains UNAVAILABLE.
+
+F1_F2_F3_F4_MUTATION=NO
+CLASSIFICATION_MUTATION=NO
+TRADE_AUTHORITY=NONE
+FORCED_FILL=NO
+STATUS=RESEARCH_CONTRACT_DESIGN
+FH13_CONTRACT_DESIGN_COMPLETE=YES

@@ -1,0 +1,248 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Iterable, Mapping
+
+from .f3_store_read_model import price_histories_from_store
+from .normalization import normalize_fund_code
+from .store import (
+    FundObservationJsonStore,
+    fund_observation_store,
+)
+from .tefas_adapter import (
+    canonical_tefas_fund_id,
+    fetch_tefas_universe_rows,
+)
+from .tefas_history_population import (
+    populate_tefas_history_batch,
+)
+
+
+MAXIMUM_PRODUCTION_BATCH_SIZE = 50
+
+
+@dataclass(frozen=True, slots=True)
+class F3ProductionPopulationResult:
+    selected_funds: tuple[str, ...]
+    succeeded_funds: tuple[str, ...]
+    failed_funds: tuple[str, ...]
+    observation_count: int
+    inserted: int
+    updated: int
+    unchanged: int
+    total_records: int
+
+    @property
+    def status(self) -> str:
+        if not self.selected_funds:
+            return "ALREADY_COMPLETE"
+
+        if not self.succeeded_funds:
+            return "NO_PROGRESS"
+
+        if self.failed_funds:
+            return "PARTIAL"
+
+        return "COMPLETE"
+
+
+def _pick_code(
+    row: Mapping[str, object],
+) -> str:
+    lookup = {
+        str(key).casefold(): value
+        for key, value in row.items()
+    }
+
+    for name in (
+        "fonkod",
+        "fonkodu",
+        "fund_code",
+        "provider_fund_id",
+        "code",
+    ):
+        value = lookup.get(
+            name.casefold()
+        )
+
+        if value not in (None, ""):
+            return normalize_fund_code(
+                value
+            )
+
+    raise ValueError(
+        "F3_UNIVERSE_FUND_CODE_MISSING"
+    )
+
+
+def universe_codes(
+    rows: Iterable[Mapping[str, object]],
+) -> tuple[str, ...]:
+    return tuple(
+        sorted(
+            {
+                _pick_code(row)
+                for row in rows
+            }
+        )
+    )
+
+
+def completed_f3_codes(
+    store: FundObservationJsonStore,
+) -> frozenset[str]:
+    histories = price_histories_from_store(
+        store
+    )
+
+    result: set[str] = set()
+
+    for canonical_id, prices in histories.items():
+        if len(prices) < 3:
+            continue
+
+        prefix = "fund:tefas:"
+
+        if not canonical_id.startswith(
+            prefix
+        ):
+            continue
+
+        result.add(
+            canonical_id[
+                len(prefix):
+            ]
+        )
+
+    return frozenset(result)
+
+
+def select_next_f3_batch(
+    rows: Iterable[Mapping[str, object]],
+    *,
+    store: FundObservationJsonStore,
+    batch_size: int = MAXIMUM_PRODUCTION_BATCH_SIZE,
+    excluded_fund_codes: Iterable[object] = (),
+) -> tuple[str, ...]:
+    if (
+        batch_size < 1
+        or batch_size > MAXIMUM_PRODUCTION_BATCH_SIZE
+    ):
+        raise ValueError(
+            f"F3_PRODUCTION_BATCH_SIZE_INVALID:"
+            f"{batch_size}"
+        )
+
+    completed = completed_f3_codes(
+        store
+    )
+
+    excluded = frozenset(
+        normalize_fund_code(code)
+        for code in excluded_fund_codes
+    )
+
+    missing = tuple(
+        code
+        for code in universe_codes(rows)
+        if (
+            code not in completed
+            and code not in excluded
+        )
+    )
+
+    return missing[:batch_size]
+
+
+def populate_next_f3_production_batch(
+    *,
+    batch_size: int = MAXIMUM_PRODUCTION_BATCH_SIZE,
+    timeout_seconds: int = 10,
+    store: FundObservationJsonStore | None = None,
+    excluded_fund_codes: Iterable[object] = (),
+) -> F3ProductionPopulationResult:
+    """
+    Explicit operational population.
+
+    Not called by dashboard.
+    No scheduler mutation.
+    No parallel state store.
+
+    excluded_fund_codes is execution-local retry protection.
+    """
+    target_store = (
+        store
+        if store is not None
+        else fund_observation_store()
+    )
+
+    rows = fetch_tefas_universe_rows()
+
+    selected = select_next_f3_batch(
+        rows,
+        store=target_store,
+        batch_size=batch_size,
+        excluded_fund_codes=excluded_fund_codes,
+    )
+
+    if not selected:
+        return F3ProductionPopulationResult(
+            selected_funds=(),
+            succeeded_funds=(),
+            failed_funds=(),
+            observation_count=0,
+            inserted=0,
+            updated=0,
+            unchanged=0,
+            total_records=len(
+                target_store.list_records()
+            ),
+        )
+
+    succeeded: list[str] = []
+    failed: list[str] = []
+
+    observations = 0
+    inserted = 0
+    updated = 0
+    unchanged = 0
+
+    total_records = len(
+        target_store.list_records()
+    )
+
+    for code in selected:
+        try:
+            result = populate_tefas_history_batch(
+                (code,),
+                store=target_store,
+                period=1,
+                timeout_seconds=timeout_seconds,
+                maximum_funds=1,
+            )
+        except Exception as exc:
+            failed.append(
+                f"{code}:"
+                f"{type(exc).__name__}:"
+                f"{exc}"
+            )
+            continue
+
+        succeeded.append(code)
+
+        observations += result.observation_count
+        inserted += result.inserted
+        updated += result.updated
+        unchanged += result.unchanged
+        total_records = result.total_records
+
+    return F3ProductionPopulationResult(
+        selected_funds=selected,
+        succeeded_funds=tuple(succeeded),
+        failed_funds=tuple(failed),
+        observation_count=observations,
+        inserted=inserted,
+        updated=updated,
+        unchanged=unchanged,
+        total_records=total_records,
+    )

@@ -1,0 +1,260 @@
+﻿
+  backend\app\funds\international\erste_hungary_f4_bridge.py:12:def derive_f4_state(
+  backend\app\funds\international\erste_hungary_f4_bridge.py:13:    *,
+> backend\app\funds\international\erste_hungary_f4_bridge.py:14:    fund_size_change: 
+Decimal | None,
+> backend\app\funds\international\erste_hungary_f4_bridge.py:15:    net_flow_ratio: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:16:) -> EvidenceState:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:17:    values = 
+[fund_size_change, net_flow_ratio]
+  backend\app\funds\international\erste_hungary_f4_bridge.py:18:    available = [v for 
+v in values if v is not None]
+  backend\app\funds\international\erste_hungary_f4_bridge.py:19:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:20:    if len(available) 
+< 2:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:21:        return 
+EvidenceState.UNAVAILABLE
+  backend\app\funds\international\erste_hungary_f4_bridge.py:22:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:23:    positive = sum(1 
+for value in available if value > 0)
+  backend\app\funds\international\erste_hungary_f4_bridge.py:24:    caution = sum(1 
+for value in available if value < 0)
+  backend\app\funds\international\erste_hungary_f4_bridge.py:25:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:26:    if positive >= 2:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:27:        return 
+EvidenceState.POSITIVE
+  backend\app\funds\international\erste_hungary_f4_bridge.py:28:    if caution >= 2:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:29:        return 
+EvidenceState.CAUTION
+> backend\app\funds\international\erste_hungary_f4_bridge.py:30:    return 
+EvidenceState.NEUTRAL
+  backend\app\funds\international\erste_hungary_f4_bridge.py:31:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:32:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:33:def inject_f4_fields(
+  backend\app\funds\international\erste_hungary_f4_bridge.py:34:    base: 
+FundEvidenceInput,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:35:    *,
+> backend\app\funds\international\erste_hungary_f4_bridge.py:36:    fund_size_change: 
+Decimal | None,
+> backend\app\funds\international\erste_hungary_f4_bridge.py:37:    net_flow_ratio: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:38:) -> FundEvidenceInput:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:39:    return replace(
+  backend\app\funds\international\erste_hungary_f4_bridge.py:40:        base,
+> backend\app\funds\international\erste_hungary_f4_bridge.py:41:        
+fund_size_change=fund_size_change,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:42:        
+investor_change=None,
+> backend\app\funds\international\erste_hungary_f4_bridge.py:43:        
+net_flow_ratio=net_flow_ratio,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:44:    )
+  backend\app\funds\international\erste_hungary_f4_bridge.py:45:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:46:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:47:def 
+derive_fund_size_change(
+  backend\app\funds\international\erste_hungary_f4_bridge.py:48:    previous_nav: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:49:    latest_nav: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:50:) -> Decimal | None:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:51:    if previous_nav is 
+None or latest_nav is None:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:52:        return None
+  backend\app\funds\international\erste_hungary_f4_bridge.py:53:    if previous_nav <= 
+0 or latest_nav <= 0:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:54:        return None
+> backend\app\funds\international\erste_hungary_f4_bridge.py:55:    return (latest_nav 
+/ previous_nav) - Decimal("1")
+  backend\app\funds\f4_snapshot.py:24:        or parsed <= 0
+  backend\app\funds\f4_snapshot.py:25:    ):
+> backend\app\funds\f4_snapshot.py:26:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:27:            f"F4_DETAIL_INVALID_{field}:{value}"
+  backend\app\funds\f4_snapshot.py:28:        )
+  backend\app\funds\f4_snapshot.py:29:
+> backend\app\funds\f4_snapshot.py:30:    return parsed
+  backend\app\funds\f4_snapshot.py:31:
+  backend\app\funds\f4_snapshot.py:32:
+  backend\app\funds\f4_snapshot.py:33:def _investor_count(value: object) -> int:
+  backend\app\funds\f4_snapshot.py:40:        or parsed != parsed.to_integral_value()
+  backend\app\funds\f4_snapshot.py:41:    ):
+> backend\app\funds\f4_snapshot.py:42:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:43:            
+f"F4_DETAIL_INVALID_INVESTOR_COUNT:{value}"
+  backend\app\funds\f4_snapshot.py:44:        )
+  backend\app\funds\f4_snapshot.py:45:
+> backend\app\funds\f4_snapshot.py:46:    return int(parsed)
+  backend\app\funds\f4_snapshot.py:47:
+  backend\app\funds\f4_snapshot.py:48:
+  backend\app\funds\f4_snapshot.py:49:def _detail_row(payload: object) -> Mapping[str, 
+object]:
+  backend\app\funds\f4_snapshot.py:50:    if isinstance(payload, Mapping):
+> backend\app\funds\f4_snapshot.py:51:        return payload
+  backend\app\funds\f4_snapshot.py:52:
+  backend\app\funds\f4_snapshot.py:53:    rows = tuple(payload)
+  backend\app\funds\f4_snapshot.py:54:
+  backend\app\funds\f4_snapshot.py:55:    if len(rows) != 1:
+> backend\app\funds\f4_snapshot.py:56:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:57:            f"F4_DETAIL_ROW_COUNT:{len(rows)}"
+  backend\app\funds\f4_snapshot.py:58:        )
+  backend\app\funds\f4_snapshot.py:59:
+  backend\app\funds\f4_snapshot.py:61:
+  backend\app\funds\f4_snapshot.py:62:    if not isinstance(row, Mapping):
+> backend\app\funds\f4_snapshot.py:63:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:64:            "F4_DETAIL_ROW_INVALID"
+  backend\app\funds\f4_snapshot.py:65:        )
+  backend\app\funds\f4_snapshot.py:66:
+> backend\app\funds\f4_snapshot.py:67:    return row
+  backend\app\funds\f4_snapshot.py:68:
+  backend\app\funds\f4_snapshot.py:69:
+  backend\app\funds\f4_snapshot.py:70:def detail_row_to_observation(
+  backend\app\funds\f4_snapshot.py:76:) -> FundDailyObservation:
+  backend\app\funds\f4_snapshot.py:77:    if fetched_at.tzinfo is None:
+> backend\app\funds\f4_snapshot.py:78:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:79:            "F4_FETCHED_AT_TIMEZONE_REQUIRED"
+  backend\app\funds\f4_snapshot.py:80:        )
+  backend\app\funds\f4_snapshot.py:81:
+  backend\app\funds\f4_snapshot.py:89:
+  backend\app\funds\f4_snapshot.py:90:    if actual != expected:
+> backend\app\funds\f4_snapshot.py:91:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:92:            f"F4_DETAIL_FUND_MISMATCH:"
+  backend\app\funds\f4_snapshot.py:93:            f"{expected}:{actual}"
+  backend\app\funds\f4_snapshot.py:94:        )
+  backend\app\funds\f4_snapshot.py:132:        )
+  backend\app\funds\f4_snapshot.py:133:    ):
+> backend\app\funds\f4_snapshot.py:134:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:135:            "F4_DETAIL_INVALID_PAY_ADET"
+  backend\app\funds\f4_snapshot.py:136:        )
+  backend\app\funds\f4_snapshot.py:137:
+> backend\app\funds\f4_snapshot.py:138:    daily_return = parse_decimal_tr(
+  backend\app\funds\f4_snapshot.py:139:        row.get("gunlukGetiri"),
+  backend\app\funds\f4_snapshot.py:140:        percent=True,
+  backend\app\funds\f4_snapshot.py:141:    )
+  backend\app\funds\f4_snapshot.py:153:    )
+  backend\app\funds\f4_snapshot.py:154:
+> backend\app\funds\f4_snapshot.py:155:    return FundDailyObservation(
+  backend\app\funds\f4_snapshot.py:156:        canonical_fund_id=(
+  backend\app\funds\f4_snapshot.py:157:            canonical_tefas_fund_id(expected)
+  backend\app\funds\f4_snapshot.py:158:        ),
+  backend\app\funds\f4_snapshot.py:175:    parsed = parse_decimal_tr(value)
+  backend\app\funds\f4_snapshot.py:176:    if parsed is None or not parsed.is_finite() 
+or parsed <= 0:
+> backend\app\funds\f4_snapshot.py:177:        return None
+  backend\app\funds\f4_snapshot.py:178:    integral = int(parsed)
+  backend\app\funds\f4_snapshot.py:179:    if parsed != integral:
+> backend\app\funds\f4_snapshot.py:180:        return None
+> backend\app\funds\f4_snapshot.py:181:    return integral
+  backend\app\funds\f4_snapshot.py:182:
+  backend\app\funds\f4_snapshot.py:183:def fetch_tefas_detail_observation(
+  backend\app\funds\f4_snapshot.py:184:    fund_code: object,
+  backend\app\funds\f4_snapshot.py:201:    )
+  backend\app\funds\f4_snapshot.py:202:
+> backend\app\funds\f4_snapshot.py:203:    return detail_row_to_observation(
+  backend\app\funds\f4_snapshot.py:204:        _detail_row(payload),
+  backend\app\funds\f4_snapshot.py:205:        expected_fund_code=code,
+  backend\app\funds\f4_snapshot.py:206:        fetched_at=stamp,
+  backend\app\funds\f4_snapshot.py:227:
+  backend\app\funds\f4_snapshot.py:228:    if not codes:
+> backend\app\funds\f4_snapshot.py:229:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:230:            "F4_DETAIL_BATCH_EMPTY"
+  backend\app\funds\f4_snapshot.py:231:        )
+  backend\app\funds\f4_snapshot.py:232:
+  backend\app\funds\f4_snapshot.py:233:    if len(codes) > maximum_funds:
+> backend\app\funds\f4_snapshot.py:234:        raise ValueError(
+  backend\app\funds\f4_snapshot.py:235:            f"F4_DETAIL_BATCH_LIMIT:"
+  backend\app\funds\f4_snapshot.py:236:            f"{len(codes)}>{maximum_funds}"
+  backend\app\funds\f4_snapshot.py:237:        )
+  backend\app\funds\f4_snapshot.py:254:    )
+  backend\app\funds\f4_snapshot.py:255:
+> backend\app\funds\f4_snapshot.py:256:    return store.upsert(
+  backend\app\funds\f4_snapshot.py:257:        observations
+  backend\app\funds\f4_snapshot.py:258:    )
+  backend\app\funds\f4_store_read_model.py:19:    previous_date: date
+  backend\app\funds\f4_store_read_model.py:20:    latest_date: date
+> backend\app\funds\f4_store_read_model.py:21:    fund_size_change: Decimal
+  backend\app\funds\f4_store_read_model.py:22:    investor_change: Decimal | None
+> backend\app\funds\f4_store_read_model.py:23:    net_flow_ratio: Decimal | None = None
+  backend\app\funds\f4_store_read_model.py:24:
+  backend\app\funds\f4_store_read_model.py:25:
+  backend\app\funds\f4_store_read_model.py:26:def _decimal(value: object, field: str) 
+-> Decimal:
+  backend\app\funds\f4_store_read_model.py:31:        ValueError,
+  backend\app\funds\f4_store_read_model.py:32:    ) as exc:
+> backend\app\funds\f4_store_read_model.py:33:        raise ValueError(
+  backend\app\funds\f4_store_read_model.py:34:            
+f"F4_STORE_INVALID_{field}:{value}"
+  backend\app\funds\f4_store_read_model.py:35:        ) from exc
+  backend\app\funds\f4_store_read_model.py:36:
+  backend\app\funds\f4_store_read_model.py:37:    if not parsed.is_finite():
+> backend\app\funds\f4_store_read_model.py:38:        raise ValueError(
+  backend\app\funds\f4_store_read_model.py:39:            
+f"F4_STORE_INVALID_{field}:{value}"
+  backend\app\funds\f4_store_read_model.py:40:        )
+  backend\app\funds\f4_store_read_model.py:41:
+> backend\app\funds\f4_store_read_model.py:42:    return parsed
+  backend\app\funds\f4_store_read_model.py:43:
+  backend\app\funds\f4_store_read_model.py:44:
+  backend\app\funds\f4_store_read_model.py:45:def flow_metrics_from_store(
+  backend\app\funds\f4_store_read_model.py:68:
+  backend\app\funds\f4_store_read_model.py:69:        if not fund_id:
+> backend\app\funds\f4_store_read_model.py:70:            raise ValueError(
+  backend\app\funds\f4_store_read_model.py:71:                
+"F4_STORE_CANONICAL_ID_EMPTY"
+  backend\app\funds\f4_store_read_model.py:72:            )
+  backend\app\funds\f4_store_read_model.py:73:
+  backend\app\funds\f4_store_read_model.py:87:            )
+  backend\app\funds\f4_store_read_model.py:88:        except Exception as exc:
+> backend\app\funds\f4_store_read_model.py:89:            raise ValueError(
+  backend\app\funds\f4_store_read_model.py:90:                "F4_STORE_INVALID_DATE"
+  backend\app\funds\f4_store_read_model.py:91:            ) from exc
+  backend\app\funds\f4_store_read_model.py:92:
+  backend\app\funds\f4_store_read_model.py:102:
+  backend\app\funds\f4_store_read_model.py:103:        if size <= 0:
+> backend\app\funds\f4_store_read_model.py:104:            raise ValueError(
+  backend\app\funds\f4_store_read_model.py:105:                
+"F4_STORE_NONPOSITIVE_FUND_SIZE"
+  backend\app\funds\f4_store_read_model.py:106:            )
+  backend\app\funds\f4_store_read_model.py:107:
+  backend\app\funds\f4_store_read_model.py:108:        if investors < 0:
+> backend\app\funds\f4_store_read_model.py:109:            raise ValueError(
+  backend\app\funds\f4_store_read_model.py:110:                
+"F4_STORE_NEGATIVE_INVESTOR_COUNT"
+  backend\app\funds\f4_store_read_model.py:111:            )
+  backend\app\funds\f4_store_read_model.py:112:
+  backend\app\funds\f4_store_read_model.py:152:            previous_date=prev_date,
+  backend\app\funds\f4_store_read_model.py:153:            latest_date=last_date,
+> backend\app\funds\f4_store_read_model.py:154:            
+fund_size_change=size_change,
+  backend\app\funds\f4_store_read_model.py:155:            
+investor_change=investor_change,
+> backend\app\funds\f4_store_read_model.py:156:            # Deliberately unavailable.
+> backend\app\funds\f4_store_read_model.py:157:            net_flow_ratio=None,
+  backend\app\funds\f4_store_read_model.py:158:        )
+  backend\app\funds\f4_store_read_model.py:159:
+> backend\app\funds\f4_store_read_model.py:160:    return result
+  backend\app\funds\f4_store_read_model.py:161:
+  backend\app\funds\f4_store_read_model.py:162:
+  backend\app\funds\f4_store_read_model.py:163:def f4_evidence_from_store(
+  backend\app\funds\f4_store_read_model.py:191:                
+volatility_percentile=None,
+  backend\app\funds\f4_store_read_model.py:192:                max_drawdown=None,
+> backend\app\funds\f4_store_read_model.py:193:                
+fund_size_change=metric.fund_size_change,
+  backend\app\funds\f4_store_read_model.py:194:                
+investor_change=metric.investor_change,
+> backend\app\funds\f4_store_read_model.py:195:                net_flow_ratio=None,
+  backend\app\funds\f4_store_read_model.py:196:                
+total_expense_ratio=None,
+  backend\app\funds\f4_store_read_model.py:197:                regime_fit=None,
+  backend\app\funds\f4_store_read_model.py:198:                allocation_known=False,
+  backend\app\funds\f4_store_read_model.py:206:        )
+  backend\app\funds\f4_store_read_model.py:207:
+> backend\app\funds\f4_store_read_model.py:208:    return result
+  backend\app\funds\f4_store_read_model.py:209:
+  backend\app\funds\f4_store_read_model.py:210:
+  backend\app\funds\f4_store_read_model.py:211:def enrich_evidence_maps_with_f4_store(
+  backend\app\funds\f4_store_read_model.py:247:        )
+  backend\app\funds\f4_store_read_model.py:248:
+> backend\app\funds\f4_store_read_model.py:249:    return tuple(output)
+
+

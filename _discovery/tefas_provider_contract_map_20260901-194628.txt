@@ -1,0 +1,423 @@
+﻿TEFAS_PROVIDER_CONTRACT_MAP
+REPORT=D:\Projects\Hisse-Robotu\_discovery\tefas_live_contract_v3_20260901-185204.json
+NETWORK_CALL=NO
+
+[LIVE_A_UNIVERSE]
+A_HTTP_STATUS=200
+A_TOP_LEVEL_KEYS=errorCode,errorMessage,resultList
+A_SHAPE=RESULT_LIST
+A_ROW_COUNT=2137
+A_FIRST_ROW_KEYS=fonKodu,fonUnvan,fonTurAciklama,tefasDurum,getiri1a,getiri3a,getiri6a,getiri1y,getiriyb,getiri3y,getiri5y,getiriOrani,riskDegeri
+
+[LIVE_B_DETAIL]
+B_HTTP_STATUS=200
+B_TOP_LEVEL_KEYS=errorCode,errorMessage,resultList
+B_SHAPE=RESULT_LIST
+B_ROW_COUNT=1
+B_FIRST_ROW_KEYS=fonKodu,fonUnvan,sonFiyat,gunlukGetiri,payAdet,portBuyukluk,fonKategori,kategoriDerece,kategoriFonSay,yatirimciSayi,pazarPayi
+
+[LIVE_C_HISTORY]
+C_HTTP_STATUS=200
+C_TOP_LEVEL_KEYS=errorCode,errorMessage,resultList
+C_SHAPE=RESULT_LIST
+C_ROW_COUNT=22
+C_FIRST_ROW_KEYS=fonKodu,fonUnvan,kategoriDerece,kategoriFonSay,tarih,fiyat
+
+[TEFAS_ADAPTER]
+FILE=D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py
+EXISTS=True
+7: from backend.app.news_center.official_source_http import fetch_official_source_bytes
+10: from .normalization import normalize_fund_code, normalize_text, parse_decimal_tr
+13: class TefasProviderError(RuntimeError):
+17: def canonical_tefas_fund_id(provider_fund_id: object) -> str:
+18: return f"fund:tefas:{normalize_fund_code(provider_fund_id)}"
+21: def fetch_tefas_bytes(url: str, timeout_seconds: int = 10) -> bytes:
+24: error_type=TefasProviderError, source_label="TEFAS",
+29: def map_tefas_rows(
+36: for row in sorted(rows, key=lambda x: normalize_fund_code(x.get("fund_code"))):
+37: code = normalize_fund_code(row.get("fund_code"))
+41: raise TefasProviderError(f"DUPLICATE_FUND_OBSERVATION:{code}:{observed}")
+43: canonical_id = canonical_tefas_fund_id(row.get("provider_fund_id", code))
+47: row.get(name) in (None, "") for name in ("unit_price", "fund_size", "investor_count")
+50: fund_code=code, fund_name=normalize_text(row.get("fund_name")),
+52: category_name=category_name, provider="TEFAS",
+53: provider_fund_id=normalize_fund_code(row.get("provider_fund_id", code)),
+54: currency=normalize_fund_code(row.get("currency", "TRY")),
+60: unit_price=parse_decimal_tr(row.get("unit_price")),
+65: provider="TEFAS", fetched_at=fetched_at, source_as_of=source_as_of,
+
+[FUND_ANALYSIS_CENTER]
+FILE=D:\Projects\Hisse-Robotu\backend\app\funds\fund_analysis_center.py
+EXISTS=False
+
+[FUND_TESTS]
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_etf_context.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_models.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_store.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:6: return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.A, "GL / NCELKL",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:26: assert row["Sınıf"] == "A" and "AL" not in row and "SAT" not in row
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:32: assert empty.info_messages and full.frames
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:12: canonical_fund_id="fund:tefas:AAA", category_id="equity",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:28: assert item.classification is FundAnalysisClass.A
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:29: assert item.automatic_trade_authority == "NONE" and not item.forced_fill
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:35: assert item.classification is FundAnalysisClass.B
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:44: assert item.classification is FundAnalysisClass.C
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:50: assert item.classification is FundAnalysisClass.D
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:54: assert result(category_id=None).classification is FundAnalysisClass.X
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:55: assert result(return_1m=None, volatility_percentile=None, fund_size_change=None,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:60: first = map_fund_evidence(source(canonical_fund_id="fund:tefas:BBB"))
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:61: second = map_fund_evidence(source(canonical_fund_id="fund:tefas:AAA"))
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:63: assert tuple(item.canonical_fund_id for item in output) == ("fund:tefas:AAA", "fund:tefas:BBB")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:64: assert all(not item.forced_fill for item in output)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:9: from backend.app.funds.tefas_adapter import TefasProviderError, map_tefas_rows
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:16: value = {"fund_code": " tst ", "fund_name": "  Türkçe   Fon ", "provider_fund_id": "tst",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:25: return map_tefas_rows([row(**changes)], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:29: assert parse_decimal_tr("0") == Decimal("0")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:30: assert parse_decimal_tr("") is None
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:31: assert parse_decimal_tr("1.234,50") == Decimal("1234.50")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:32: assert parse_decimal_tr("0,50%", percent=True) == Decimal("0.005")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:39: assert identity.fund_code == "TST" and identity.fund_name == "Türkçe Fon"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:40: assert observation.unit_price == Decimal("1.2500")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:41: assert observation.investor_count == 1005
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:42: assert observation.data_quality_state is DataQualityState.VALID
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:43: assert mapped() == mapped()
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:48: assert observation.unit_price is None
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:49: assert observation.data_quality_state is DataQualityState.PARTIAL
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:53: with pytest.raises(TefasProviderError, match="DUPLICATE"):
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:54: map_tefas_rows([row(), row()], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:77: assert (first.inserted, second.unchanged, second.total_records) == (1, 1, 1)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:79: assert saved["provider"] == "TEFAS"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:80: assert saved["canonical_fund_id"].startswith("fund:tefas:")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:85: assert payload["unit_price"] == "1.2500"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:86: assert payload["observation_date"] == "2026-08-31"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:87: assert payload["record_type"] == "FundDailyObservation"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_etf_context.py:11: assert data["report_type"] == "fund_etf_commentary"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_etf_context.py:12: assert "S&P500 ETF" in data["equity_etfs"]
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_etf_context.py:13: assert "Gold ETF" in data["commodity_funds"]
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_etf_context.py:19: assert "signal" not in data
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_etf_context.py:20: assert "technical_score" not in data
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:9: canonical_fund_id="fund:tefas:TST", category_id="debt",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:21: assert tuple(item.family for item in result.evidence) == ("F1", "F2", "F3", "F4", "F5")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:22: assert all(item.state is EvidenceState.POSITIVE for item in result.evidence)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:23: assert result.available_family_count == 5
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:28: assert result.category_mapping_state == "UNMAPPED"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:29: assert result.evidence[0].state is EvidenceState.UNAVAILABLE
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:34: assert result.evidence[1].state is EvidenceState.UNAVAILABLE
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:35: assert result.evidence[1].missing_fields == ("return_3m",)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:41: assert partial.state is EvidenceState.POSITIVE and partial.missing_fields == ("net_flow_ratio",)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:42: assert unavailable.state is EvidenceState.UNAVAILABLE
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:53: assert all(item.state is EvidenceState.CAUTION for item in result.evidence)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:57: assert map_fund_evidence(sample()) == map_fund_evidence(sample())
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:9: return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.B, "GELŞEN", ("F1", "F2"), ("F3",), (), (), "DEV", "x")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:13: prices = (FundPricePoint("fund:tefas:AAA", date(2026, 1, 8), Decimal("110")),)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:15: assert tuple(x.horizon.value for x in rows) == ("1H", "1A", "3A")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:16: assert rows[0].status == "OBSERVED" and rows[0].absolute_return == Decimal("0.1")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:17: assert rows[1].status == rows[2].status == "PENDING"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:18: assert all(x.tuning_authority == "NONE" for x in rows)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:23: assert all(x.status == "MISSING" and x.end_price is None for x in rows)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:10: return FundAnalysisResult(f"fund:tefas:{code}", "equity", cls, cls.value, ("F1", "F2"), (), (), (), "TEST", "x")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:16: assert tuple(x.canonical_fund_id for x in snapshot.results) == ("fund:tefas:AAA", "fund:tefas:BBB")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:17: assert snapshot.scheduler_authority == "NONE"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:18: assert store.append(snapshot) == "APPENDED" and store.append(snapshot) == "ALREADY_PRESENT"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:47: assert result.gross_margin == Decimal("30.00")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:48: assert result.ebitda_margin == Decimal("20.00")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:49: assert result.roe == Decimal("10.00")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:50: assert result.current_ratio == Decimal("1.50")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:51: assert result.net_debt == Decimal("500.00")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:52: assert result.free_cash_flow == Decimal("120.00")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:73: assert growth.revenue_growth == Decimal("25.00")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:74: assert growth.net_income_growth == Decimal("25.00")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:94: source_metadata={"provider": "test"},
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:97: assert snapshot.latest.period_key == "2026Q2"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:98: assert snapshot.previous_quarter == previous_quarter
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:99: assert snapshot.previous_year_same_quarter == previous_year
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:100: assert snapshot.quarter_growth is not None
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:101: assert snapshot.annual_growth is not None
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:102: assert snapshot.source_metadata["provider"] == "test"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:116: assert (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py:120: assert (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:17: assert '"Temel Analiz"' in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:18: assert 'analiz_modu == "Temel Analiz"' in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:19: assert "temel_analiz_formu()" in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:25: assert "periods_from_csv_bytes" in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:26: assert "periods_from_json_bytes" in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:27: assert 'type=("csv", "json")' in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:33: assert "evaluate_fundamental_freshness" in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:34: assert "if tazelik.locked:" in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:35: assert (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py:56: assert expected in source
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:45: assert len(periods) == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:46: assert periods[0].symbol == "THYAO"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:47: assert periods[0].source == "KAP"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:48: assert periods[0].published_at == date(2026, 7, 20)
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:83: assert result.status == CURRENT
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:84: assert result.locked is False
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:106: assert result.status == STALE
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:107: assert result.locked is True
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:126: assert result.status == FUTURE
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py:127: assert result.locked is True
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_models.py:43: assert result.symbol == "THYAO"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_models.py:44: assert result.currency == "TRY"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_models.py:45: assert result.revenue == Decimal("1000")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_models.py:46: assert result.period_key == "2026Q2"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:76: assert score.locked is False
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:77: assert score.total_score is not None
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:78: assert 0 <= score.total_score <= 100
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:79: assert score.total_score >= 65
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:92: assert score.locked is True
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:93: assert score.total_score is None
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:107: assert result.accepted == candidates
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:108: assert result.rejected == ()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:109: assert result.missing == ()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:134: assert result.accepted == ("AAA.IS",)
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py:135: assert result.missing == ("BBB.IS",)
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:17: assert "Temel kalite skoru" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:18: assert "calculate_fundamental_quality" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:19: assert "Toplam kalite skoru" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:20: assert "Kârlılık" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:21: assert "Büyüme" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:22: assert "Borçluluk" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:23: assert "Likidite" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:24: assert "Nakit akışı" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:30: assert '"Temel kalite filtresini kullan"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:31: assert "value=False" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:32: assert '"Minimum temel kalite skoru"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:38: assert '"Skor"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py:39: assert '"Temel skor"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:48: assert "THYAO" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:49: assert "Temel kalite skoru,76/100" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:50: assert "Sektör oran karşılaştırması" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:51: assert "yatırım danışmanlığı" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:56: assert content.startswith(b"%PDF-")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:57: assert len(content) > 1000
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:62: assert csv_name == "THYAO_2026Q2_temel_analiz_ozeti.csv"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:63: assert pdf_name == "THYAO_2026Q2_temel_analiz_ozeti.pdf"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py:78: assert "Sektör sıralaması üretilemedi" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:60: assert result.inserted == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:61: assert result.unchanged == 0
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:62: assert result.archived.symbol == "AAA"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:75: assert result.inserted == 0
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:76: assert result.unchanged == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:77: assert len(archive.list_symbol("AAA")) == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:88: assert len(archive.list_symbol("AAA")) == 2
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:108: assert tuple(item.period_key for item in items) == (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:131: assert items == ()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:155: assert comparison.total_score_change == 6
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:156: assert comparison.ratio_changes == (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:159: assert report_comparison_rows(comparison)[0]["Değişim"] == 6
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:184: assert rows[0]["Rapor kimliği"] == archived.report_id
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py:185: assert rows[0]["Temel skor"] == 76
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:17: assert "Temel analiz rapor arşivi" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:18: assert "FundamentalReportJsonArchive" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:19: assert "rapor_arsivi.save" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:20: assert "report_archive_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:26: assert "eklenen" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:27: assert "değişmeyen" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:33: assert "Önceki temel rapor" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:34: assert "Güncel temel rapor" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:35: assert "compare_archived_reports" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:36: assert "report_comparison_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:42: assert "Alım/satım tavsiyesi" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py:43: assert "üretmez" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:66: assert len(result) == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:67: assert result[0].period_key == "2026Q2"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:68: assert result[0].report.total_score == 80
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:83: assert len(result) == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:84: assert result[0].symbol == "AAA"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:85: assert result[0].report.source == "kap.json"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:107: assert len(result) == 3
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:122: assert descending[0].report.total_score == 80
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:123: assert ascending[0].report.total_score == 55
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:153: assert content.startswith(b"\xef\xbb\xbf")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:154: assert b"report_id" in content
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:155: assert b"AAA" in content
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:163: assert content.startswith(b"%PDF")
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py:164: assert len(content) > 1000
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:17: assert "Arşiv arama ve filtreleme" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:18: assert "FundamentalReportArchiveFilter" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:19: assert "search_archived_reports" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:20: assert "Şirket sembolü" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:34: assert label in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:40: assert "Dönem · yeni → eski" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:41: assert "Oluşturulma · yeni → eski" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:42: assert "Temel skor · yüksek → düşük" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:48: assert "Filtrelenmiş arşivi CSV indir" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:49: assert "Seçilen raporları PDF indir" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:50: assert "archived_reports_csv_bytes" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:51: assert "archived_reports_pdf_bytes" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:57: assert "Arama, filtreleme ve dışa aktarım" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py:58: assert "tavsiyesi üretmez" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:15: assert "Temel analiz özet raporu" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:16: assert "FundamentalReport" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:17: assert "fundamental_report_csv_bytes" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:18: assert "fundamental_report_pdf_bytes" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:23: assert "Temel analiz CSV indir" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:24: assert "Temel analiz PDF indir" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:25: assert 'mime="text/csv"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:26: assert 'mime="application/pdf"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:31: assert "freshness_status=tazelik.status" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:32: assert "period_end=latest.period_end" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:33: assert "source=latest.source" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:38: assert "yatırım danışmanlığı veya alım/satım tavsiyesi" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py:39: assert "değildir" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py:13: assert "TEMEL_ANALIZ_V11_ROLE_CLARITY" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py:14: assert '"Temel Analiz — Finansal Sağlık ve Kalite İncelemesi"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py:15: assert "bilanço kalitesi, büyüme, kârlılık, borçluluk, likidite ve nakit akışı" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py:16: assert "teknik giriş zamanlaması veya AL/SAT kararı üretmez" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py:17: assert "Fırsat Radarı aday bulur" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py:18: assert "Güncel Teknik Analiz teknik teyidi derinleştirir" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py:41: assert expected in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:9: from backend.app.analysis.fundamental_score_history import (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:12: history_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:69: assert change.total_change == 6
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:70: assert change.profitability_change == 6
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:71: assert change.improving_components == ("Kârlılık",)
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:72: assert change.weakening_components == ()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:83: assert latest_score_change((item,)) is None
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:94: assert history_rows((item,))[0]["Toplam skor"] == 76
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py:95: assert comparison_rows((item,))[0]["Temel skor"] == 76
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:17: assert "Temel skor geçmişi" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:18: assert "load_history" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:19: assert "history_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:20: assert "latest_score_change" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:34: assert title in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:35: assert "st.line_chart" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:41: assert "Şirket bazlı temel skor karşılaştırması" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:42: assert "load_comparable_latest" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:43: assert "comparison_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:44: assert "aynı güncel bilanço" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:50: assert "alım/satım sinyali" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py:51: assert "üretmez" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_store.py:124: history = store.load_history(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_store.py:129: assert tuple(item.period_key for item in history) == (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_store.py:145: history = store.load_history(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_store.py:151: assert history == ()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_store.py:184: assert tuple(item.symbol for item in comparable) == (
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:77: assert first.inserted == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:78: assert second.unchanged == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:79: assert financial_periods_identity(periods)
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:112: assert result.updated == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:135: assert "THYAO" in loaded
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:136: assert loaded["THYAO"].total_score is not None
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py:164: assert loaded == {}
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:17: assert "FundamentalScoreJsonStore" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:18: assert "temel_skor_deposu().save" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:19: assert "Temel skor yerel depoya kaydedildi" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:25: assert "kayitli_temel_skorlari_yukle" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:26: assert "load_latest_scores" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:27: assert "Dosya yüklenmezse yerel depodaki" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:28: assert "güncel temel kalite skorları kullanılır." in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:34: assert '"Temel kalite filtresini kullan"' in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:35: assert "value=False" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py:41: assert "options=temel_filtre_sonucu.accepted" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:18: assert settings.strong_threshold == 80
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:19: assert settings.balanced_threshold == 65
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:20: assert settings.watch_threshold == 50
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:21: assert settings.minimum_sector_company_count == 3
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:22: assert settings.sector_change_threshold == 3.0
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:35: score_history_maximum_age_days=600,
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:42: assert store.load() == settings
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:50: assert store.load() == DEFAULT_FUNDAMENTAL_SETTINGS
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:67: assert result == DEFAULT_FUNDAMENTAL_SETTINGS
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:68: assert store.load() == DEFAULT_FUNDAMENTAL_SETTINGS
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py:86: {"score_history_maximum_age_days": 10},
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:17: assert "Temel analiz ayarları" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:18: assert "FundamentalSettingsJsonStore" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:19: assert "Temel analiz ayarlarını kaydet" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:20: assert "Varsayılan ayarlara dön" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:31: assert label in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:37: assert "minimum_sector_company_count" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:38: assert "sector_change_threshold" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:39: assert "score_history_maximum_age_days" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:40: assert "report_archive_maximum_age_days" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:46: assert "Varsayılan arşiv sıralaması" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:47: assert "default_archive_sort" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:53: assert "Bu ayarlar yalnızca temel analiz, sektör" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py:54: assert "karşılaştırması ve temel rapor arşivini etkiler." in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:54: assert quality_class(82) == "Güçlü"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:55: assert quality_class(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:82: assert tuple(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:88: assert sector_direction(4.0) == "Güçleniyor"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:89: assert sector_direction(
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:121: assert item.strong_count == 0
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:122: assert item.balanced_count == 2
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:123: assert item.watch_count == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py:124: assert item.direction == "Yatay"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py:42: assert result.inserted == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py:43: assert result.total_records == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py:52: assert result.unchanged == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py:53: assert result.inserted == 0
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py:62: assert result.updated == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py:63: assert result.total_records == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:26: APP / "analysis" / "fundamental_score_history.py",
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:36: assert missing == []
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:56: assert label in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:71: assert token in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:80: assert "yatırım tavsiyesi değildir" in dashboard.lower()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:81: assert "alım/satım tavsiyesi" in dashboard
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:82: assert "yatırım danışmanlığı" in report.lower()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:88: assert "Temel kalite filtresini kullan" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:89: assert "value=False" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:95: assert "VBTS" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:96: assert "vbts" in text.lower()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:97: assert "güvenlik" in text.lower() or "kilit" in text.lower()
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:103: assert "Bu ayarlar yalnızca temel analiz, sektör" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:104: assert "karşılaştırması ve temel rapor arşivini etkiler." in text
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:118: assert all(path.exists() for path in expected)
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:134: assert token in script
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:141: assert manifest["module"] == "Temel Analiz"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:142: assert manifest["version"] == "V1"
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:143: assert manifest["baseline_tests"] == 1023
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py:144: assert manifest["status"] == "VALIDATION_PENDING"
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:54: assert result.locked is False
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:55: assert result.snapshot is not None
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:56: assert result.snapshot.latest.period_key == "2026Q2"
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:57: assert result.store_result is not None
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:58: assert result.store_result.inserted == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:83: assert result.locked is True
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:84: assert result.snapshot is None
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_service.py:85: assert result.store_result is None
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:44: assert result["symbol"] == "THYAO"
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:45: assert result["period_end"] == "2026-06-30"
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:46: assert result["revenue"] == 1000
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:47: assert result["ebitda"] == 220
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:48: assert result["published_at"] == "2026-07-20"
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:60: assert result["fiscal_quarter"] == 2
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:72: assert len(package.periods) == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:73: assert package.status.locked is False
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:74: assert package.status.accepted_count == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:75: assert package.status.data_identity
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:87: assert package.periods == ()
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:88: assert package.status.locked is True
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:89: assert package.status.rejected_count == 1
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:101: assert package.status.locked is True
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_fundamental_source.py:102: assert "eşleşmiyor" in package.rejected_records[0]

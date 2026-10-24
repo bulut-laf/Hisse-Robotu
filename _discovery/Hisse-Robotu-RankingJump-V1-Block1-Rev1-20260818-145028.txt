@@ -1,0 +1,53 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818145028
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-RankingJump-V1-Block1-RankingMemory-Rev1-Kur.ps1
+Process ID: 27864
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== HISSE ROBOTU — RANKING JUMP V1 — BLOCK 1 REV1 ===
+BLOCK=RANKING_MEMORY_FOUNDATION
+NEW_SCORING_ENGINE=NO
+NEW_RANKING_ENGINE=NO
+ORPHAN_CLEANUP=ranking_memory.py
+ORPHAN_CLEANUP=test_ranking_memory.py
+MUTATION=APPLIED
+AUTHORITATIVE_SOURCE=aday_tablosu_kayitlari(sonuc)
+OBSERVATION_DATE=sonuc.evren_tarihi
+UNIVERSE_SIZE=ranked_universe_size(len full research rows)
+OBSERVATION_POINT=BEFORE_VISIBLE_FILTER
+STORE=APPEND_ONLY_JSONL
+RANKING_AUTHORITY=NONE
+SCORING_AUTHORITY=NONE
+
+=== PY COMPILE ===
+
+
+=== TARGET TEST ===
+
+
+=== ONE FULL REGRESSION ===
+
+
+=== FINAL DECISION ===
+TARGET_TEST=PASS
+FULL_REGRESSION=PASS
+BLOCK1=RANKING_MEMORY_FOUNDATION_COMPLETE
+NEXT=BLOCK2_TRAJECTORY_EARLY_VISIBILITY
+ROLLBACK=NO
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-RankingJump-V1-Block1-Rev1-20260818-145028.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818145410
+**********************

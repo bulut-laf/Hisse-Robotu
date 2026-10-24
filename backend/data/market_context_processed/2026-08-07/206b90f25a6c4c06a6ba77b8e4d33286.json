@@ -1,0 +1,25 @@
+{
+  "document_id": "206b90f25a6c4c06a6ba77b8e4d33286",
+  "source": "Yatırım Finansman",
+  "document_date": "2026-08-07",
+  "imported_at": "2026-08-10T06:21:45Z",
+  "input_type": "text",
+  "raw_text": "Hizmete Özel / KV İçermez\nYatırım\nFinansman 50.YIL TÜRKİYE'NİN İLK BORSA\nARACI KURUMU\nVeri Takvimi (10 - 14 Ağustos)\n07.08.2026\n10 Ağustos 2026 Pazartesi\nSaat Ülke Açıklanacak Veri Beklenti Önceki\n10:00 Türkiye Sanayi Üretimi Aylık (Haz.) -15.20%\n10:00 Türkiye Sanayi Üretimi Yıllık (Haz.) 0.00%\nCCOLA 2Ç Finansal Sonuç\n11 Ağustos 2026 Salı\nSaat Ülke Açıklanacak Veri Beklenti Önceki\n10:00 Türkiye Perakende Satışlar Aylık (Haz.) 2.40%\n10:00 Türkiye Perakende Satışlar Yıllık (Haz.) 13.70%\n15:15 ABD Haftalık ADP İstihdam Değişimi 15 bin\n17:00 ABD İkinci El Konut Satışları (Tem.) 4.06 mln 4.09 mln\n17:00 ABD Mevcut Konut Satışları Aylık (Tem.) -2.40%\n20:00 ABD 3 Yıllık Tahvil İhalesi 4.18%\nMGROS, AEFES, DOHOL 2Ç Finansal Sonuç\n12 Ağustos 2026 Çarşamba\nSaat Ülke Açıklanacak Veri Beklenti Önceki\n09:00 Almanya TÜFE Aylık (Tem.) 0.80% 0.80%\n09:00 Almanya TÜFE Yıllık (Tem.) 2.80% 2.80%\n15:30 ABD TÜFE Aylık (Tem.) 0.10% -0.40%\n15:30 ABD TÜFE Yıllık (Tem.) 3.40% 3.50%\n15:30 ABD Çekirdek TÜFE Yıllık (Tem.) 2.50% 2.60%\n17:30 ABD Enerji Bilgi İdaresi Ham Petrol Stokları 2.479 mln\nPGSUS, SAHOL 2Ç Finansal Sonuç\n13 Ağustos 2026 Perşembe\nSaat Ülke Açıklanacak Veri Beklenti Önceki\n10:30 Türkiye TCMB Enflasyon Raporu\n12:00 Eur B. Sanayi Üretimi Aylık (Haz.) 0.20% -0.20%\n12:00 Eur B. Sanayi Üretimi Yıllık (Haz.) -1.20%\n15:30 ABD ÜFE Aylık (Tem.) 0.20% -0.30%\n15:30 ABD İşsizlik Haklarından Yararlanma Başv. 199 bin\n15:30 ABD ÜFE Yıllık (Tem.) 5.50%\nTCELL 2Ç Finansal Sonuç\n14 Ağustos 2026 Cuma\nSaat Ülke Açıklanacak Veri Beklenti Önceki\n10:00 Türkiye Yıl Sonu TÜFE Tahmini (Ağu.) 29.21%\n12:00 Eur B. GSYİH Yıllık 2Ç Öncü 1.00% 1.00%\n12:00 Eur B. Ticaret Dengesi (Haz.) -7.8 mlr\n12:00 Eur B. GSYİH Çeyreklik 2Ç Öncü 0.40% 0.40%\n15:30 ABD Çekirdek Perakende Satışlar Aylık (Tem.) 0.20% -0.20%\n15:30 ABD Perakende Satışlar Aylık (Tem.) 0.20% 0.20%\n17:00 ABD Michigan Enflasyon Beklentisi (Ağu.) Öncü 4.20%\n* Kaynak: Bloomberg\nTSKB TÜRKİYE $ BANKASI Hizmete Özel / KV İçermez",
+  "content_hash": "8e426bfeb89e433b5be0f6d81b125a7dc8e718caec68fdd70c70dc5499bfbfc1",
+  "index_outlook": null,
+  "supports": [],
+  "resistances": [],
+  "external_market_outlook": null,
+  "futures_outlook": null,
+  "macro_risks": [
+    "10:30 Türkiye TCMB Enflasyon Raporu",
+    "17:00 ABD Michigan Enflasyon Beklentisi (Ağu.) Öncü 4.20%"
+  ],
+  "sector_impacts": [],
+  "stock_news": [],
+  "notes": [],
+  "archive_date": "2026-08-07",
+  "archive_status": "archived",
+  "ai_eligible": true,
+  "ai_review_status": "not_reviewed"
+}

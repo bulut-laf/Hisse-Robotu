@@ -1,0 +1,730 @@
+diff --git a/backend/app/funds/kap_free_float_auto_population.py b/backend/app/funds/kap_free_float_auto_population.py
+new file mode 100644
+index 0000000..11c3a2d
+--- /dev/null
++++ b/backend/app/funds/kap_free_float_auto_population.py
+@@ -0,0 +1,410 @@
++from __future__ import annotations
++
++import re
++from dataclasses import dataclass
++from datetime import date, datetime, timezone
++from html.parser import HTMLParser
++from typing import Callable, Iterable, Mapping
++from urllib.parse import urljoin, urlparse
++
++from .free_float_store import (
++    FreeFloatJsonStore,
++    FreeFloatRecord,
++    FreeFloatStoreResult,
++)
++from .kap_portfolio_ingestion import (
++    DEFAULT_TIMEOUT_SECONDS,
++    KAP_ALLOWED_HOSTS,
++    KapFundPortfolioError,
++    _default_fetch,
++)
++
++
++KAP_BIST_COMPANIES_URL = "https://www.kap.org.tr/tr/bist-sirketler"
++KAP_COMPANY_SUMMARY_PATH = re.compile(
++    r"^/tr/sirket-bilgileri/ozet/([^/?#]+)$",
++    re.IGNORECASE,
++)
++KAP_COMPANY_GENERAL_PATH = re.compile(
++    r"^/tr/sirket-bilgileri/genel/([^/?#]+)$",
++    re.IGNORECASE,
++)
++MAX_COMPANY_DIRECTORY_BYTES = 8 * 1024 * 1024
++MAX_COMPANY_GENERAL_BYTES = 4 * 1024 * 1024
++MAX_FDO_SYMBOLS_PER_REFRESH = 100
++
++
++FetchBytes = Callable[[str, int], tuple[bytes, str, str]]
++
++
++class KapFreeFloatError(RuntimeError):
++    """Official KAP free-float discovery / parsing error."""
++
++
++@dataclass(frozen=True, slots=True)
++class KapCompanyReference:
++    symbol: str
++    general_url: str
++
++
++@dataclass(frozen=True, slots=True)
++class KapFreeFloatPopulationFailure:
++    symbol: str
++    source_ref: str | None
++    error: str
++
++
++@dataclass(frozen=True, slots=True)
++class KapFreeFloatPopulationSummary:
++    requested: int
++    discovered: int
++    attempted: int
++    inserted: int
++    unchanged: int
++    failures: tuple[KapFreeFloatPopulationFailure, ...]
++    records: tuple[FreeFloatRecord, ...]
++
++
++class _VisibleLinksParser(HTMLParser):
++    def __init__(self) -> None:
++        super().__init__(convert_charrefs=True)
++        self.text_parts: list[str] = []
++        self.links: list[tuple[str, str]] = []
++        self._skip_depth = 0
++        self._anchor_href: str | None = None
++        self._anchor_parts: list[str] = []
++
++    def handle_starttag(self, tag: str, attrs) -> None:
++        lowered = tag.lower()
++        if lowered in {"script", "style", "noscript", "svg"}:
++            self._skip_depth += 1
++            return
++        if lowered == "a" and self._skip_depth == 0:
++            attrs_map = {str(key).lower(): str(value or "") for key, value in attrs}
++            self._anchor_href = attrs_map.get("href") or None
++            self._anchor_parts = []
++
++    def handle_endtag(self, tag: str) -> None:
++        lowered = tag.lower()
++        if lowered in {"script", "style", "noscript", "svg"}:
++            if self._skip_depth:
++                self._skip_depth -= 1
++            return
++        if lowered == "a" and self._anchor_href is not None:
++            text = " ".join(self._anchor_parts).strip()
++            self.links.append((self._anchor_href, text))
++            self._anchor_href = None
++            self._anchor_parts = []
++
++    def handle_data(self, data: str) -> None:
++        if self._skip_depth:
++            return
++        clean = " ".join(str(data or "").split())
++        if not clean:
++            return
++        self.text_parts.append(clean)
++        if self._anchor_href is not None:
++            self._anchor_parts.append(clean)
++
++
++def _clean_symbol(value: object) -> str:
++    symbol = str(value or "").strip().upper()
++    if symbol.endswith(".IS"):
++        symbol = symbol[:-3]
++    if not re.fullmatch(r"[A-Z0-9]{2,12}", symbol):
++        raise ValueError("FDO_SYMBOL_INVALID")
++    return symbol
++
++
++def _validate_kap_url(
++    url: str,
++    *,
++    expected_path: str | re.Pattern[str],
++    label: str,
++) -> str:
++    value = str(url or "").strip()
++    parsed = urlparse(value)
++    if parsed.scheme.lower() != "https":
++        raise KapFreeFloatError(f"{label}_HTTPS_REQUIRED")
++    if (parsed.hostname or "").lower() not in KAP_ALLOWED_HOSTS:
++        raise KapFreeFloatError(f"{label}_HOST_NOT_ALLOWED")
++    if parsed.username or parsed.password or parsed.port not in (None, 443):
++        raise KapFreeFloatError(f"{label}_AUTH_OR_PORT_NOT_ALLOWED")
++    path = parsed.path or ""
++    if isinstance(expected_path, str):
++        ok = path.rstrip("/").casefold() == expected_path.rstrip("/").casefold()
++    else:
++        ok = expected_path.fullmatch(path) is not None
++    if not ok or parsed.query or parsed.fragment:
++        raise KapFreeFloatError(f"{label}_PATH_INVALID")
++    return value
++
++
++def validate_kap_bist_companies_url(url: str) -> str:
++    return _validate_kap_url(
++        url,
++        expected_path="/tr/bist-sirketler",
++        label="KAP_BIST_COMPANIES",
++    )
++
++
++def validate_kap_company_general_url(url: str) -> str:
++    return _validate_kap_url(
++        url,
++        expected_path=KAP_COMPANY_GENERAL_PATH,
++        label="KAP_COMPANY_GENERAL",
++    )
++
++
++def _decode_html(raw: bytes, content_type: str, *, max_bytes: int, label: str) -> str:
++    if len(raw) > max_bytes:
++        raise KapFreeFloatError(f"{label}_RESPONSE_TOO_LARGE")
++    lowered = str(content_type or "").casefold()
++    if "html" not in lowered and not raw.lstrip().startswith(b"<"):
++        raise KapFreeFloatError(f"{label}_NOT_HTML")
++    for encoding in ("utf-8", "windows-1254", "iso-8859-9"):
++        try:
++            return raw.decode(encoding)
++        except UnicodeDecodeError:
++            continue
++    raise KapFreeFloatError(f"{label}_ENCODING_UNSUPPORTED")
++
++
++def parse_kap_bist_company_directory(
++    raw_html: str,
++    *,
++    symbols: Iterable[str],
++) -> Mapping[str, KapCompanyReference]:
++    targets = {_clean_symbol(item) for item in symbols}
++    if not targets:
++        return {}
++
++    parser = _VisibleLinksParser()
++    parser.feed(str(raw_html or ""))
++    parser.close()
++
++    found: dict[str, KapCompanyReference] = {}
++    for href, anchor_text in parser.links:
++        absolute = urljoin(KAP_BIST_COMPANIES_URL, href)
++        parsed = urlparse(absolute)
++        match = KAP_COMPANY_SUMMARY_PATH.fullmatch(parsed.path or "")
++        if (
++            match is None
++            or parsed.scheme.lower() != "https"
++            or (parsed.hostname or "").lower() not in KAP_ALLOWED_HOSTS
++        ):
++            continue
++        upper_text = re.sub(r"\s+", " ", anchor_text).upper()
++        matches = [
++            symbol
++            for symbol in targets
++            if re.search(rf"(?<![A-Z0-9]){re.escape(symbol)}(?![A-Z0-9])", upper_text)
++        ]
++        if len(matches) != 1:
++            continue
++        symbol = matches[0]
++        general_path = f"/tr/sirket-bilgileri/genel/{match.group(1)}"
++        general_url = urljoin(KAP_BIST_COMPANIES_URL, general_path)
++        found[symbol] = KapCompanyReference(symbol=symbol, general_url=general_url)
++    return found
++
++
++def _parse_decimal_tr(value: str) -> str:
++    raw = str(value).strip().replace("\u00a0", "").replace(" ", "")
++    if "," in raw and "." in raw:
++        raw = raw.replace(".", "").replace(",", ".")
++    elif "," in raw:
++        raw = raw.replace(",", ".")
++    return raw
++
++
++def parse_kap_free_float_general_page(
++    raw_html: str,
++    *,
++    source_url: str,
++    expected_symbol: str,
++    observed_on: date,
++    ingested_at: datetime | None = None,
++) -> FreeFloatRecord:
++    validated_url = validate_kap_company_general_url(source_url)
++    symbol = _clean_symbol(expected_symbol)
++
++    parser = _VisibleLinksParser()
++    parser.feed(str(raw_html or ""))
++    parser.close()
++    visible = re.sub(r"\s+", " ", " ".join(parser.text_parts)).strip()
++    if not visible:
++        raise KapFreeFloatError("KAP_FDO_GENERAL_PAGE_EMPTY")
++
++    folded = visible.casefold()
++    marker = "fiili dolaşımdaki paylar"
++    start = folded.find(marker)
++    if start < 0:
++        raise KapFreeFloatError("KAP_FDO_SECTION_MISSING")
++    section = visible[start:]
++    end_match = re.search(
++        r"Sermayeyi\s+Temsil\s+Eden\s+Paylara\s+İlişkin\s+Bilgi",
++        section,
++        re.IGNORECASE,
++    )
++    if end_match is not None:
++        section = section[: end_match.start()]
++
++    row = re.search(
++        rf"(?<![A-Z0-9]){re.escape(symbol)}(?![A-Z0-9])\s+"
++        r"([0-9][0-9.\s]*,[0-9]+)\s+"
++        r"([0-9]+(?:[.,][0-9]+)?)",
++        section,
++        re.IGNORECASE,
++    )
++    if row is None:
++        raise KapFreeFloatError(f"KAP_FDO_SYMBOL_ROW_MISSING:{symbol}")
++
++    from decimal import Decimal, InvalidOperation
++    try:
++        free_float_amount = Decimal(_parse_decimal_tr(row.group(1)))
++        free_float_ratio_pct = Decimal(_parse_decimal_tr(row.group(2)))
++    except InvalidOperation as exc:
++        raise KapFreeFloatError(f"KAP_FDO_NUMERIC_INVALID:{symbol}") from exc
++
++    if (
++        not free_float_amount.is_finite()
++        or free_float_amount <= 0
++        or not free_float_ratio_pct.is_finite()
++        or free_float_ratio_pct <= 0
++        or free_float_ratio_pct > 100
++    ):
++        raise KapFreeFloatError(f"KAP_FDO_NUMERIC_RANGE_INVALID:{symbol}")
++
++    now = ingested_at or datetime.now(timezone.utc)
++    if now.tzinfo is None or now.utcoffset() is None:
++        raise ValueError("ingested_at timezone-aware olmalıdır.")
++
++    # KAP's "Fiili Dolaşımdaki Pay Tutarı (TL)" is the matching nominal unit
++    # for the KAP fund report's equity "Nominal Değeri". The legacy field name
++    # free_float_shares is retained to preserve the existing read-model contract.
++    return FreeFloatRecord(
++        symbol=symbol,
++        free_float_shares=free_float_amount,
++        as_of=observed_on,
++        source="KAP",
++        source_ref=validated_url,
++        ingested_at=now,
++    )
++
++
++def discover_kap_company_general_urls(
++    *,
++    symbols: Iterable[str],
++    network_enabled: bool = False,
++    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
++    fetcher: FetchBytes | None = None,
++    directory_url: str = KAP_BIST_COMPANIES_URL,
++) -> Mapping[str, KapCompanyReference]:
++    targets = tuple(sorted({_clean_symbol(item) for item in symbols}))
++    if not network_enabled:
++        raise KapFreeFloatError("KAP_FDO_NETWORK_DISABLED")
++    if not targets:
++        return {}
++    if len(targets) > MAX_FDO_SYMBOLS_PER_REFRESH:
++        raise KapFreeFloatError("KAP_FDO_SYMBOL_LIMIT_EXCEEDED")
++    if timeout_seconds <= 0 or timeout_seconds > 30:
++        raise ValueError("timeout_seconds 1-30 aralığında olmalıdır.")
++
++    validated = validate_kap_bist_companies_url(directory_url)
++    fetch = fetcher or _default_fetch
++    raw, final_url, content_type = fetch(validated, timeout_seconds)
++    if validate_kap_bist_companies_url(final_url) != validated:
++        raise KapFreeFloatError("KAP_BIST_COMPANIES_REDIRECT_MISMATCH")
++    html = _decode_html(
++        raw,
++        content_type,
++        max_bytes=MAX_COMPANY_DIRECTORY_BYTES,
++        label="KAP_BIST_COMPANIES",
++    )
++    return parse_kap_bist_company_directory(html, symbols=targets)
++
++
++def populate_kap_free_float_for_symbols(
++    *,
++    store: FreeFloatJsonStore,
++    symbols: Iterable[str],
++    network_enabled: bool = False,
++    observed_on: date | None = None,
++    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
++    directory_fetcher: FetchBytes | None = None,
++    general_fetcher: FetchBytes | None = None,
++) -> KapFreeFloatPopulationSummary:
++    targets = tuple(sorted({_clean_symbol(item) for item in symbols}))
++    if not network_enabled:
++        raise KapFreeFloatError("KAP_FDO_NETWORK_DISABLED")
++    if not targets:
++        return KapFreeFloatPopulationSummary(0, 0, 0, 0, 0, (), ())
++    if len(targets) > MAX_FDO_SYMBOLS_PER_REFRESH:
++        raise KapFreeFloatError("KAP_FDO_SYMBOL_LIMIT_EXCEEDED")
++
++    references = discover_kap_company_general_urls(
++        symbols=targets,
++        network_enabled=True,
++        timeout_seconds=timeout_seconds,
++        fetcher=directory_fetcher,
++    )
++    failures: list[KapFreeFloatPopulationFailure] = []
++    records: list[FreeFloatRecord] = []
++    observed = observed_on or date.today()
++    fetch = general_fetcher or _default_fetch
++
++    for symbol in targets:
++        reference = references.get(symbol)
++        if reference is None:
++            failures.append(
++                KapFreeFloatPopulationFailure(
++                    symbol=symbol,
++                    source_ref=None,
++                    error="KAP_FDO_COMPANY_REFERENCE_MISSING",
++                )
++            )
++            continue
++        try:
++            raw, final_url, content_type = fetch(reference.general_url, timeout_seconds)
++            if validate_kap_company_general_url(final_url) != reference.general_url:
++                raise KapFreeFloatError("KAP_COMPANY_GENERAL_REDIRECT_MISMATCH")
++            html = _decode_html(
++                raw,
++                content_type,
++                max_bytes=MAX_COMPANY_GENERAL_BYTES,
++                label="KAP_COMPANY_GENERAL",
++            )
++            records.append(
++                parse_kap_free_float_general_page(
++                    html,
++                    source_url=reference.general_url,
++                    expected_symbol=symbol,
++                    observed_on=observed,
++                )
++            )
++        except (KapFreeFloatError, KapFundPortfolioError, ValueError) as exc:
++            failures.append(
++                KapFreeFloatPopulationFailure(
++                    symbol=symbol,
++                    source_ref=reference.general_url,
++                    error=str(exc),
++                )
++            )
++
++    if records:
++        store_result: FreeFloatStoreResult = store.upsert(records)
++        inserted = store_result.inserted
++        unchanged = store_result.unchanged
++    else:
++        inserted = unchanged = 0
++
++    return KapFreeFloatPopulationSummary(
++        requested=len(targets),
++        discovered=len(references),
++        attempted=len(references),
++        inserted=inserted,
++        unchanged=unchanged,
++        failures=tuple(failures),
++        records=tuple(records),
++    )
+diff --git a/backend/app/ui/fund_analysis_center.py b/backend/app/ui/fund_analysis_center.py
+index 0351426..57a39b7 100644
+--- a/backend/app/ui/fund_analysis_center.py
++++ b/backend/app/ui/fund_analysis_center.py
+@@ -15,6 +15,11 @@ from backend.app.funds.free_float_store import (
+ from backend.app.funds.kap_portfolio_auto_ingestion import (
+     auto_ingest_kap_portfolio_reports,
+ )
++from backend.app.funds.kap_free_float_auto_population import (
++    KapFreeFloatError,
++    MAX_FDO_SYMBOLS_PER_REFRESH,
++    populate_kap_free_float_for_symbols,
++)
+ from backend.app.funds.kap_portfolio_ingestion import (
+     KapFundPortfolioError,
+     ingest_kap_portfolio_pdf_upload,
+@@ -438,6 +443,72 @@ def _render_portfolio_tracking(
+             st.info("Hisse bazlı birikim/dağıtım için karşılaştırılabilir snapshot henüz yok.")
+ 
+     st.markdown("#### Fon/FDO & Baskı Riski")
++    if hasattr(st, "button"):
++        held_symbols = tuple(sorted({
++            position.symbol
++            for snapshot in model.latest_by_fund.values()
++            for position in snapshot.positions
++            if position.asset_type == "EQUITY"
++        }))
++        st.caption(
++            "Tam production güncellemesi yalnız açık düğme isteğiyle çalışır: "
++            "portföydeki hisselerin KAP şirket sayfalarından fiili dolaşım tutarını "
++            "canonical store'a alır, ardından piyasa likiditesi ve üç gözlemsel baskı skorunu yeniler. "
++            "KAP/MKK dışı FDO tahmin edilmez."
++        )
++        if len(held_symbols) > MAX_FDO_SYMBOLS_PER_REFRESH:
++            st.warning(
++                f"Bu çalıştırmada en fazla {MAX_FDO_SYMBOLS_PER_REFRESH} hisse FDO'su güncellenebilir; "
++                f"mevcut portföy evreni {len(held_symbols)} hisse."
++            )
++        production_symbols = held_symbols[:MAX_FDO_SYMBOLS_PER_REFRESH]
++        if st.button(
++            "KAP FDO + Baskı Riskini Tam Güncelle",
++            key="fund_pressure_full_production_refresh_button",
++            disabled=not bool(production_symbols),
++        ):
++            try:
++                with st.spinner("KAP fiili dolaşım ve piyasa baskı verileri güncelleniyor..."):
++                    fdo_summary = populate_kap_free_float_for_symbols(
++                        store=default_free_float_store(),
++                        symbols=production_symbols,
++                        network_enabled=True,
++                    )
++                    pressure_model = build_fund_pressure_read_model(store)
++            except (
++                KapFreeFloatError,
++                FreeFloatSourceError,
++                PortfolioSnapshotStoreError,
++                ValueError,
++            ) as exc:
++                st.error(f"Fon baskı riski production güncellemesi tamamlanamadı: {exc}")
++            else:
++                live_profiles = dict(pressure_model.profiles)
++                live_inputs = dict(pressure_model.inputs)
++                if hasattr(st, "session_state"):
++                    st.session_state["fund_pressure_profiles"] = live_profiles
++                    st.session_state["fund_pressure_inputs"] = live_inputs
++                st.success(
++                    "Production baskı verisi güncellendi: "
++                    f"KAP FDO {fdo_summary.inserted} yeni/değişen, "
++                    f"{fdo_summary.unchanged} aynı; "
++                    f"{len(live_inputs)} hisse read model; "
++                    f"FDO durumu {pressure_model.free_float_source_state}."
++                )
++                if fdo_summary.failures and hasattr(st, "warning"):
++                    st.warning(
++                        "KAP FDO alınamayan hisseler izole edildi: "
++                        + " | ".join(
++                            f"{item.symbol}:{item.error}"
++                            for item in fdo_summary.failures[:5]
++                        )
++                    )
++                if pressure_model.warnings and hasattr(st, "warning"):
++                    st.warning(
++                        "Read model uyarıları: "
++                        + " | ".join(pressure_model.warnings[:5])
++                    )
++
+     if hasattr(st, "file_uploader"):
+         st.caption(
+             "Canonical FDO kaynağı KAP/MKK olarak işaretlenmiş, tarihli ve kaynak referanslı "
+@@ -471,7 +542,7 @@ def _render_portfolio_tracking(
+         st.caption(
+             "Piyasa fiyat/hacim verisi yalnız bu düğmeyle açıkça güncellenir. "
+             "Fon pozisyonları mevcut append-only KAP snapshot deposundan okunur. "
+-            "Repo içinde doğrulanmış canonical fiili dolaşım kaynağı bulunmadığında Fon/FDO tahmin edilmez."
++            "Canonical KAP/MKK fiili dolaşım kaynağı bulunmadığında Fon/FDO tahmin edilmez."
+         )
+         if st.button(
+             "Baskı Riski Verisini Güncelle",
+diff --git a/backend/tests/test_fund_analysis_center_ui_v1.py b/backend/tests/test_fund_analysis_center_ui_v1.py
+index 99e7574..c542eb8 100644
+--- a/backend/tests/test_fund_analysis_center_ui_v1.py
++++ b/backend/tests/test_fund_analysis_center_ui_v1.py
+@@ -150,3 +150,11 @@ def test_pressure_rows_expose_raw_fdo_liquidation_and_keep_trade_authority_none(
+     assert row["Likidasyon Normal (gün)"] == 20.0
+     assert row["Aktif Satış Baskısı"] == 80.0
+     assert row["Trade Authority"] == "NONE"
++
++
++def test_full_production_refresh_ui_contract_is_explicit_and_non_trading():
++    from pathlib import Path
++    source = (Path(__file__).resolve().parents[1] / "app" / "ui" / "fund_analysis_center.py").read_text(encoding="utf-8")
++    assert "KAP FDO + Baskı Riskini Tam Güncelle" in source
++    assert "network_enabled=True" in source
++    assert "KAP/MKK dışı FDO tahmin edilmez" in source
+diff --git a/backend/tests/test_fund_kap_free_float_auto_population_v1.py b/backend/tests/test_fund_kap_free_float_auto_population_v1.py
+new file mode 100644
+index 0000000..0b0cb25
+--- /dev/null
++++ b/backend/tests/test_fund_kap_free_float_auto_population_v1.py
+@@ -0,0 +1,194 @@
++from datetime import date
++from decimal import Decimal
++
++import pytest
++
++from backend.app.funds.free_float_store import FreeFloatJsonStore
++from backend.app.funds.kap_free_float_auto_population import (
++    KAP_BIST_COMPANIES_URL,
++    KapFreeFloatError,
++    discover_kap_company_general_urls,
++    parse_kap_bist_company_directory,
++    parse_kap_free_float_general_page,
++    populate_kap_free_float_for_symbols,
++)
++
++
++def _directory_html():
++    return """
++    <html><body>
++      <a href="/tr/sirket-bilgileri/ozet/858-anadolu-efes-biracilik-ve-malt-sanayii-a-s">AEFES</a>
++      <a href="/tr/sirket-bilgileri/ozet/999-sabanci-holding-a-s">SAHOL</a>
++      <a href="https://evil.example/tr/sirket-bilgileri/ozet/1-x">TTKOM</a>
++    </body></html>
++    """
++
++
++def _general_html(symbol="AEFES", amount="1.911.232.452,75", ratio="32,28"):
++    return f"""
++    <html><body>
++      <h2>Fiili Dolaşımdaki Paylar</h2>
++      <table>
++        <tr><th>Borsa Kodu</th><th>Fiili Dolaşımdaki Pay Tutarı(TL)</th><th>Fiili Dolaşımdaki Pay Oranı(%)</th></tr>
++        <tr><td>{symbol}</td><td>{amount}</td><td>{ratio}</td></tr>
++      </table>
++      <h2>Sermayeyi Temsil Eden Paylara İlişkin Bilgi</h2>
++    </body></html>
++    """
++
++
++def test_directory_discovers_only_requested_symbols_and_converts_summary_to_general():
++    refs = parse_kap_bist_company_directory(
++        _directory_html(),
++        symbols=("AEFES", "SAHOL"),
++    )
++    assert set(refs) == {"AEFES", "SAHOL"}
++    assert refs["AEFES"].general_url == (
++        "https://www.kap.org.tr/tr/sirket-bilgileri/genel/"
++        "858-anadolu-efes-biracilik-ve-malt-sanayii-a-s"
++    )
++
++
++def test_general_page_parses_official_free_float_amount_in_nominal_tl_unit():
++    record = parse_kap_free_float_general_page(
++        _general_html(),
++        source_url=(
++            "https://www.kap.org.tr/tr/sirket-bilgileri/genel/"
++            "858-anadolu-efes-biracilik-ve-malt-sanayii-a-s"
++        ),
++        expected_symbol="AEFES",
++        observed_on=date(2026, 9, 4),
++    )
++    assert record.symbol == "AEFES"
++    assert record.free_float_shares == Decimal("1911232452.75")
++    assert record.as_of == date(2026, 9, 4)
++    assert record.source == "KAP"
++
++
++def test_general_page_requires_expected_symbol_row():
++    with pytest.raises(KapFreeFloatError, match="SYMBOL_ROW_MISSING"):
++        parse_kap_free_float_general_page(
++            _general_html(symbol="SAHOL"),
++            source_url="https://www.kap.org.tr/tr/sirket-bilgileri/genel/999-sabanci-holding-a-s",
++            expected_symbol="AEFES",
++            observed_on=date(2026, 9, 4),
++        )
++
++
++def test_discovery_never_calls_network_without_explicit_enablement():
++    calls = []
++
++    def forbidden(url, timeout):
++        calls.append((url, timeout))
++        raise AssertionError("NETWORK_CALLED")
++
++    with pytest.raises(KapFreeFloatError, match="NETWORK_DISABLED"):
++        discover_kap_company_general_urls(
++            symbols=("AEFES",),
++            fetcher=forbidden,
++        )
++    assert calls == []
++
++
++def test_population_fetches_directory_then_general_pages_and_persists_canonical_records(tmp_path):
++    store = FreeFloatJsonStore(tmp_path / "fdo.json")
++
++    def directory_fetcher(url, timeout):
++        assert url == KAP_BIST_COMPANIES_URL
++        return _directory_html().encode(), url, "text/html; charset=utf-8"
++
++    def general_fetcher(url, timeout):
++        symbol = "AEFES" if "858-" in url else "SAHOL"
++        amount = "1.911.232.452,75" if symbol == "AEFES" else "1.250.000.000,00"
++        return _general_html(symbol, amount, "40,00").encode(), url, "text/html"
++
++    summary = populate_kap_free_float_for_symbols(
++        store=store,
++        symbols=("AEFES", "SAHOL"),
++        network_enabled=True,
++        observed_on=date(2026, 9, 4),
++        directory_fetcher=directory_fetcher,
++        general_fetcher=general_fetcher,
++    )
++
++    assert summary.requested == 2
++    assert summary.discovered == 2
++    assert summary.attempted == 2
++    assert summary.inserted == 2
++    assert summary.failures == ()
++    assert {item.symbol for item in store.list_records()} == {"AEFES", "SAHOL"}
++
++
++def test_population_is_idempotent_for_same_observation_and_source(tmp_path):
++    store = FreeFloatJsonStore(tmp_path / "fdo.json")
++
++    def directory_fetcher(url, timeout):
++        return _directory_html().encode(), url, "text/html"
++
++    def general_fetcher(url, timeout):
++        return _general_html("AEFES").encode(), url, "text/html"
++
++    first = populate_kap_free_float_for_symbols(
++        store=store,
++        symbols=("AEFES",),
++        network_enabled=True,
++        observed_on=date(2026, 9, 4),
++        directory_fetcher=directory_fetcher,
++        general_fetcher=general_fetcher,
++    )
++    second = populate_kap_free_float_for_symbols(
++        store=store,
++        symbols=("AEFES",),
++        network_enabled=True,
++        observed_on=date(2026, 9, 4),
++        directory_fetcher=directory_fetcher,
++        general_fetcher=general_fetcher,
++    )
++    assert first.inserted == 1
++    assert second.inserted == 0
++    assert second.unchanged == 1
++
++
++def test_population_isolates_missing_company_reference_and_keeps_valid_records(tmp_path):
++    store = FreeFloatJsonStore(tmp_path / "fdo.json")
++
++    def directory_fetcher(url, timeout):
++        return _directory_html().encode(), url, "text/html"
++
++    def general_fetcher(url, timeout):
++        return _general_html("AEFES").encode(), url, "text/html"
++
++    summary = populate_kap_free_float_for_symbols(
++        store=store,
++        symbols=("AEFES", "TTKOM"),
++        network_enabled=True,
++        observed_on=date(2026, 9, 4),
++        directory_fetcher=directory_fetcher,
++        general_fetcher=general_fetcher,
++    )
++    assert summary.inserted == 1
++    assert len(summary.failures) == 1
++    assert summary.failures[0].symbol == "TTKOM"
++    assert summary.failures[0].error == "KAP_FDO_COMPANY_REFERENCE_MISSING"
++
++
++def test_population_rejects_non_kap_redirect_without_mutating_store(tmp_path):
++    store = FreeFloatJsonStore(tmp_path / "fdo.json")
++
++    def directory_fetcher(url, timeout):
++        return _directory_html().encode(), url, "text/html"
++
++    def general_fetcher(url, timeout):
++        return _general_html("AEFES").encode(), "https://evil.example/general", "text/html"
++
++    summary = populate_kap_free_float_for_symbols(
++        store=store,
++        symbols=("AEFES",),
++        network_enabled=True,
++        observed_on=date(2026, 9, 4),
++        directory_fetcher=directory_fetcher,
++        general_fetcher=general_fetcher,
++    )
++    assert summary.inserted == 0
++    assert len(summary.failures) == 1
++    assert store.list_records() == ()

@@ -1,0 +1,26 @@
+{
+  "schema_version": "fin-prod-v4-canonical-artifact-contract-v1",
+  "short_term": {
+    "filename": "<SYMBOL>_short_term_canonical_context.json",
+    "required": [
+      "symbol",
+      "as_of_date",
+      "canonical=true",
+      "technical_context.status=PASS|PRESENT|VALID|READY|OK",
+      "market_context.status=PASS|PRESENT|VALID|READY|OK",
+      "data_quality.status=PASS|PRESENT|VALID|READY|OK"
+    ]
+  },
+  "long_term": {
+    "filename": "<SYMBOL>_long_term_canonical_coverage.json",
+    "required": [
+      "symbol",
+      "as_of_date",
+      "canonical=true",
+      "business_quality.status=PASS|PRESENT|VALID|READY|OK",
+      "governance.status=PASS|PRESENT|VALID|READY|OK",
+      "growth_context.status=PASS|PRESENT|VALID|READY|OK",
+      "data_quality.status=PASS|PRESENT|VALID|READY|OK"
+    ]
+  }
+}

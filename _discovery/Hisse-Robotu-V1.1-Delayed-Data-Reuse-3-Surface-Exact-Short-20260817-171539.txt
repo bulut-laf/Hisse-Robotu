@@ -1,0 +1,98 @@
+﻿FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=205 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=285 TEXT=last_daily = pd.Timestamp(d.index.max()).normalize()
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=286 TEXT=current_end = last_daily.to_period("M").to_timestamp(how="end").normalize()
+FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py TERM=timestamp LINE=461 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py TERM=fresh LINE=24 TEXT=from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py TERM=fresh LINE=60 TEXT=veri_tazeligi: DataFreshnessResult | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=43 TEXT=last_price: float | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=44 TEXT=last_price_date: date | None = None
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=83 TEXT=("Son fiyat", self.last_price),
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=132 TEXT=return self.last_price or self.entry_price
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=160 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=168 TEXT=for field_name in ("entry_date", "last_price_date", "exit_date"):
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=317 TEXT=last_price=entry_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=318 TEXT=last_price_date=entry_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=368 TEXT=last_price=exit_price,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=369 TEXT=last_price_date=exit_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=436 TEXT=last_price=float(last["Close"]),
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=last_price LINE=437 TEXT=last_price_date=last_date,
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=fresh LINE=408 TEXT=def refresh_position(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=fresh LINE=459 TEXT=def refresh_all_open_positions(
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py TERM=fresh LINE=484 TEXT=refresh_position(position, raw, store=store)
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fetch_delayed_snapshot LINE=127 TEXT=fetch_delayed_snapshot,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fetch_delayed_snapshot LINE=7609 TEXT=snapshot = fetch_delayed_snapshot(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed_data_pilot LINE=123 TEXT=from backend.app.data.delayed_data_pilot import (
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=422 TEXT="Gecikmeli Veri Pilotu",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7567 TEXT=def gecikmeli_veri_pilotu_formu() -> None:
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7570 TEXT="Gecikmeli Veri Pilotu · yfinance gün içi verisi yalnızca veri kalitesi, "
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7572 TEXT="Gün içi gecikmeli veri kesin işlem sinyali değildir. "
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7670 TEXT="Gün içi ön izleme: Veri gecikmelidir ve kesin "
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7687 TEXT="Gecikmeli veriyi şimdi güncelle",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7708 TEXT=file_name="gecikmeli_veri_pilotu.csv",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7715 TEXT="~/.hisse_robotu/gecikmeli_veri_pilotu/"
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=7830 TEXT="Veri sorunu → Gecikmeli Veri Pilotu · tarama ihtiyacı → BIST Toplu Tarama / "
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=8205 TEXT="Gecikmeli fiyatı getir",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=8227 TEXT=st.warning("Gecikmeli fiyat güvenlik kilidinde; manuel fiyat değiştirilmedi.")
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=9002 TEXT="Minimum gecikmeli veri ölçümü",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=9168 TEXT=elif analiz_modu == "Gecikmeli Veri Pilotu":
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=gecikmeli LINE=9169 TEXT=gecikmeli_veri_pilotu_formu()
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=123 TEXT=from backend.app.data.delayed_data_pilot import (
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=124 TEXT=DelayedDataPilotConfig,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=125 TEXT=DelayedDataPilotError,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=126 TEXT=DelayedDataPilotStore,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=127 TEXT=fetch_delayed_snapshot,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7585 TEXT=key="delayed_pilot_symbol",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7593 TEXT=key="delayed_pilot_refresh",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7599 TEXT=key="delayed_pilot_auto",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7602 TEXT=config = DelayedDataPilotConfig(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7605 TEXT=store = DelayedDataPilotStore()
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7607 TEXT=def render_delayed_snapshot() -> None:
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7609 TEXT=snapshot = fetch_delayed_snapshot(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7614 TEXT=except DelayedDataPilotError as error:
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7682 TEXT=def delayed_auto_fragment() -> None:
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7683 TEXT=render_delayed_snapshot()
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7685 TEXT=delayed_auto_fragment()
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7689 TEXT=key="delayed_pilot_refresh_now",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7692 TEXT=render_delayed_snapshot()
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7710 TEXT=key="delayed_pilot_csv",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7733 TEXT=pilot_store = DelayedDataPilotStore()
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7772 TEXT=("Veri durumu", summary.delayed_data_status),
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7776 TEXT=if summary.delayed_data_age_minutes is None
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7777 TEXT=else f"{summary.delayed_data_age_minutes:.1f} dk",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=7801 TEXT="Aktif" if summary.delayed_data_locked else "Kapalı",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=8195 TEXT=_price_meta_key = "_shadow_trader_delayed_price_meta"
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=8206 TEXT=key="shadow_trader_fetch_delayed_price",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=8211 TEXT=except DelayedDataPilotError as error:
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=delayed LINE=8997 TEXT=pilot_store = DelayedDataPilotStore()
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=last_price LINE=7621 TEXT=("Son fiyat", f"{snapshot.last_price:.2f}"),
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=Gün içi ön izleme LINE=7670 TEXT="Gün içi ön izleme: Veri gecikmelidir ve kesin "
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=timestamp LINE=3739 TEXT=modified_at = datetime.fromtimestamp(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=timestamp LINE=8831 TEXT="Değiştirilme": datetime.fromtimestamp(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=72 TEXT=refresh_all_open_positions,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=204 TEXT=evaluate_fundamental_freshness,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=289 TEXT=from backend.app.data.data_freshness import BatchDataFreshnessResult, DataFreshnessResult
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=1928 TEXT=def veri_tazeligi_kilidi_goster(sonuc: DataFreshnessResult | BatchDataFreshnessResult | None) -> bool:
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=1934 TEXT=if isinstance(sonuc, BatchDataFreshnessResult):
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=4334 TEXT=evaluate_fundamental_freshness(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=5836 TEXT=tazelik = evaluate_fundamental_freshness(sirket_donemleri)
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=6524 TEXT=freshness_status=tazelik.status,
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=6687 TEXT=item.report.freshness_status
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=6737 TEXT=freshness_statuses=tuple(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=7588 TEXT=refresh_minutes = st.selectbox(
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=7593 TEXT=key="delayed_pilot_refresh",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=7603 TEXT=refresh_interval_minutes=int(refresh_minutes),
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=7680 TEXT=run_every=timedelta(minutes=int(refresh_minutes))
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=7689 TEXT=key="delayed_pilot_refresh_now",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=7837 TEXT=key="daily_operation_refresh",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=8101 TEXT=key="shadow_refresh_all",
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py TERM=fresh LINE=8116 TEXT=updated, failed, errors = refresh_all_open_positions(
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py DIRECT_FETCH=False PILOT_IMPORT=False PRICE=False TIME=True STALE=False VISIBLE_DELAYED=False
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py DIRECT_FETCH=False PILOT_IMPORT=False PRICE=False TIME=False STALE=True VISIBLE_DELAYED=False
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py DIRECT_FETCH=False PILOT_IMPORT=False PRICE=True TIME=True STALE=True VISIBLE_DELAYED=False
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py DIRECT_FETCH=True PILOT_IMPORT=True PRICE=True TIME=True STALE=True VISIBLE_DELAYED=True
+SURFACE=OPPORTUNITY_RADAR STATE=NO_DELAYED_REUSE_PROVEN
+SURFACE=LIVE_ANALYSIS STATE=NO_DELAYED_REUSE_PROVEN
+SURFACE=SHADOW_PORTFOLIO STATE=INDIRECT_PRICE_CONTEXT_PRESENT
+DECISION=SELECTIVE_REUSE_GAP_CANDIDATE
+NEXT=Inspect only surfaces with NO_DELAYED_REUSE_PROVEN; do not patch until exact UI/runtime need is proven.
+PRODUCTION_MUTATION=YOK

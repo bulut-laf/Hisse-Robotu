@@ -1,0 +1,42 @@
+﻿PRODUCTION_CANDIDATE_FILES=12
+CANDIDATE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|SCORE=6
+CANDIDATE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|SCORE=6
+CANDIDATE_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_report.py|SCORE=6
+CANDIDATE_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|SCORE=6
+CANDIDATE_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|SCORE=6
+FORMULA_HITS=69
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=24 SRC=successful_count: int
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=27 SRC=success_rate_pct: float
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=45 SRC=successful_count: int
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=46 SRC=success_rate_pct: float
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=58 SRC=best_stage_success_rate_pct: float
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=67 SRC=successful_count: int
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=68 SRC=success_rate_pct: float
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=112 SRC=baseline_success_rate_pct: float
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=114 SRC=candidate_success_rate_pct: float
+FORMULA FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=115 SRC=success_rate_delta_pct: float
+DATE_BOUNDARY_HITS=22
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=649 SRC=minimum_candidate_sample_size < 1
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=675 SRC=candidate_count < minimum_candidate_sample_size
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py LINE=679 SRC=candidate_rate > baseline_rate
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py LINE=29 SRC=self.start_date > self.end_date
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py LINE=31 SRC=self.cutoff_step < 1
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py LINE=82 SRC=normalized.index.date >= config.start_date
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py LINE=83 SRC=normalized.index.date <= config.end_date
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py LINE=262 SRC=mode == "Tarihsel yeniden oynatma"
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py LINE=587 SRC=mode == "Tarihsel yeniden oynatma"
+BOUNDARY FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py LINE=291 SRC=cutoff_date is None
+RELEVANT_TEST_FILES=50
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_backtest.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_confidence.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_integration.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_intervals.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_leader_stability.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_threshold_recommendations.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_threshold_validation.py
+SAVED_VALIDATION_ARTIFACTS=0
+DECISION=FORMULA_AND_DATE_BOUNDARY_EVIDENCE_FOUND
+NEXT=Reconcile denominator formulas and cutoff slicing before any threshold change.
+PRODUCTION_MUTATION=YOK
+EXIT_CODE=0

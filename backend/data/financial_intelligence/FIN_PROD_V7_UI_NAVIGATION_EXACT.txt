@@ -1,0 +1,265 @@
+﻿FIN_PROD_V7_UI_NAVIGATION_EXACT
+TARGET=D:\Projects\Hisse-Robotu\backend\dashboard.py
+TOTAL_LINES=10561
+10301:             shadow_positions=positions,
+10302:             comparison_report=comparison,
+10303:             minimum_pilot_measurements=int(minimum_pilot),
+10304:             minimum_completed_horizons=int(minimum_horizon),
+10305:             minimum_closed_positions=int(minimum_closed),
+10306:             minimum_sufficient_comparisons=int(minimum_comparison),
+10307:         )
+10308:     except (
+10309:         ShadowPortfolioError,
+10310:         SignalOutcomeError,
+10311:         SuccessComparisonError,
+10312:         ValueError,
+10313:         OSError,
+10314:     ) as error:
+10315:         st.error(str(error))
+10316:         return
+10317: 
+10318:     if decision.decision == DEVAM:
+10319:         st.success("V1.3 kalibrasyon kararı: Devam")
+10320:     elif decision.decision == TEMKINLI_DEVAM:
+10321:         st.warning("V1.3 kalibrasyon kararı: Temkinli Devam")
+10322:     else:
+10323:         st.error("V1.3 kalibrasyon kararı: Kalibrasyon Gerekli")
+10324: 
+10325:     st.dataframe(
+10326:         pd.DataFrame(decision_summary_rows(decision)),
+10327:         width="stretch",
+10328:         hide_index=True,
+10329:     )
+10330: 
+10331:     st.markdown("#### Kapanış kriterleri")
+10332:     st.dataframe(
+10333:         pd.DataFrame(criterion_rows(decision)),
+10334:         width="stretch",
+10335:         hide_index=True,
+10336:     )
+10337: 
+10338:     st.info(
+10339:         "Snapshot yalnızca hedef testler, tam regresyon ve sistem kontrolü "
+10340:         "başarılı olduktan sonra Kur-Sprint81.ps1 ile birlikte gelen "
+10341:         "Olustur-V13-Snapshot.ps1 komutuyla oluşturulmalıdır."
+10342:     )
+10343: 
+10344: 
+10345: 
+10346: def main() -> None:
+10347:     st.set_page_config(
+10348:         page_title="Hisse Robotu",
+10349:         page_icon="📈",
+10350:         layout="wide",
+10351:     )
+10352: 
+10353:     arayuz_stili_uygula()
+10354: 
+10355:     st.title("Hisse Robotu")
+10356:     st.caption(
+10357:         "Gerçek veri backtest paneli · "
+10358:         "Kişisel analiz amaçlıdır, yatırım tavsiyesi değildir."
+10359:     )
+10360: 
+10361:     with st.sidebar:
+10362:         st.link_button(
+10363:             "Teknik Grafik Terminali",
+10364:             "http://localhost:8502",
+10365:             width="stretch",
+10366:         )
+10367:         st.divider()
+10368: 
+10369:         akis_adimi = st.radio(
+10370:             "Kullanım akışı",
+10371:             options=KULLANIM_AKISI,
+10372:             index=0,
+10373:         )
+10374:         analiz_modu = st.selectbox(
+10375:             "Modül",
+10376:             options=AKIS_MODULLERI[akis_adimi],
+10377:             index=0,
+10378:         )
+10379: 
+10380:     if analiz_modu == "Tek Hisse":
+10381:         tek_hisse_formu()
+10382:     elif analiz_modu == "Fon Analiz Merkezi":
+10383:         from backend.app.funds.portfolio_tracking import fund_portfolio_snapshot_store
+10384:         from backend.app.funds.ui_live_refresh import refresh_fund_analysis_if_requested
+10385:         from backend.app.funds.canonical_result_store import (
+10386:             FundCanonicalResultStoreError,
+10387:             load_last_good_fund_analysis_results,
+10388:             save_last_good_fund_analysis_results,
+10389:         )
+10390:         from backend.app.funds.tefas_universe_nonblocking_refresh import (
+10391:             queue_tefas_universe_refresh,
+10392:         )
+10393:         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+10394: 
+10395:         live_results_key = "fund_analysis_live_results"
+10396:         current_live_results = tuple(st.session_state.get(live_results_key, ()))
+10397:         if not current_live_results:
+10398:             try:
+10399:                 rehydrated_results = load_last_good_fund_analysis_results()
+10400:             except FundCanonicalResultStoreError:
+10401:                 rehydrated_results = ()
+10402:             if rehydrated_results:
+10403:                 current_live_results = rehydrated_results
+10404:                 st.session_state[live_results_key] = rehydrated_results
+10405:                 st.session_state["fund_analysis_rehydrated_from_snapshot"] = True
+10406: 
+10407:         st.caption(
+10408:             "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+10409:             "Başarısız kaynak çağrısında son iyi veri korunur; aşağıdaki düğme manuel yeniden denemedir."
+10410:         )
+10411:         refresh_requested = st.button(
+10412:             "TEFAS Verisini Şimdi Güncelle",
+10413:             key="fund_analysis_live_refresh_button",
+10414:         )
+10415: 
+10416:         refresh_outcome = refresh_fund_analysis_if_requested(
+10417:             requested=False,
+10418:             current_results=current_live_results,
+10419:         )
+10420: 
+10421:         now_utc = datetime.now(timezone.utc)
+10422:         last_attempt = st.session_state.get("fund_analysis_auto_refresh_attempt_at")
+10423:         auto_due = not current_live_results
+10424:         if isinstance(last_attempt, datetime) and last_attempt.tzinfo is not None:
+10425:             auto_due = auto_due or (now_utc - last_attempt >= timedelta(hours=6))
+10426:         elif current_live_results:
+10427:             auto_due = True
+10428: 
+10429:         if auto_due and not refresh_requested:
+10430:             refresh_state = queue_tefas_universe_refresh(
+10431:                 loader=lambda: refresh_fund_analysis_if_requested(
+10432:                     requested=True,
+10433:                     current_results=current_live_results,
+10434:                 ),
+10435:                 timeout_seconds=20.0,
+10436:             )
+10437:             if refresh_state.status == "STARTED":
+10438:                 st.session_state["fund_analysis_auto_refresh_attempt_at"] = now_utc
+10439:                 st.caption(
+10440:                     "TEFAS fon evreni arka planda güncelleniyor; son iyi veri gösteriliyor."
+10441:                 )
+10442:             elif refresh_state.status == "RUNNING":
+10443:                 st.caption(
+10444:                     "TEFAS fon evreni arka planda güncelleniyor; son iyi veri gösteriliyor."
+10445:                 )
+10446:             elif refresh_state.status == "DONE" and refresh_state.result is not None:
+10447:                 refresh_outcome = refresh_state.result
+10448:                 if refresh_outcome.refreshed:
+10449:                     save_last_good_fund_analysis_results(refresh_outcome.results)
+10450:                     st.session_state[live_results_key] = refresh_outcome.results
+10451:                     current_live_results = refresh_outcome.results
+10452:                     st.session_state["fund_analysis_auto_refresh_success_at"] = now_utc
+10453:                 elif refresh_outcome.error_message:
+10454:                     st.caption(
+10455:                         "Otomatik TEFAS yenilemesi şu anda kullanılamadı; son iyi veri korunuyor."
+10456:                     )
+10457:             elif refresh_state.status == "FAILED":
+10458:                 st.caption(
+10459:                     "Otomatik TEFAS yenilemesi izole edildi; son iyi veri korunuyor."
+10460:                 )
+10461:             elif refresh_state.status == "TIMEOUT":
+10462:                 st.caption(
+10463:                     "Otomatik TEFAS yenilemesi zaman sınırını aştı; son iyi veri korunuyor."
+10464:                 )
+10465: 
+10466:         if refresh_requested:
+10467:             st.session_state["fund_analysis_auto_refresh_attempt_at"] = now_utc
+10468:             with st.spinner("TEFAS canlı fon verisi güncelleniyor..."):
+10469:                 refresh_outcome = refresh_fund_analysis_if_requested(
+10470:                     requested=True,
+10471:                     current_results=current_live_results,
+10472:                 )
+10473:             if refresh_outcome.error_message:
+10474:                 st.error(
+10475:                     "TEFAS canlı fon verisi güncellenemedi; "
+10476:                     f"mevcut ekran korunuyor. {refresh_outcome.error_message}"
+10477:                 )
+10478:             elif refresh_outcome.refreshed:
+10479:                 save_last_good_fund_analysis_results(refresh_outcome.results)
+10480:                 st.session_state[live_results_key] = refresh_outcome.results
+10481:                 current_live_results = refresh_outcome.results
+10482:                 st.session_state["fund_analysis_auto_refresh_success_at"] = now_utc
+10483:                 st.success(
+10484:                     f"TEFAS canlı fon analizi güncellendi: "
+10485:                     f"{len(refresh_outcome.results)} fon."
+10486:                 )
+10487: 
+10488:         render_fund_analysis_center(
+10489:             st,
+10490:             current_live_results,
+10491:             portfolio_store=fund_portfolio_snapshot_store(),
+10492:         )
+10493:     elif analiz_modu == "Seans Öncesi Bağlam":
+10494:         # SEANS_ONCESI_BAGLAM_V11_ROLE_CLARITY
+10495:         st.markdown("## Seans Öncesi Bağlam — Günlük Piyasa Hazırlığı")
+10496:         st.caption(
+10497:             "Seans öncesinde işlenmiş günlük piyasa raporlarını ve arşivlenmiş AI değerlendirmesini "
+10498:             "tek hazırlık bağlamında inceler."
+10499:         )
+10500:         st.info(
+10501:             "Bu ekran Haber Merkezi'nin Bugünün Önemli Gelişmeleri veya Ekonomik Takvim sekmelerinin yerine geçmez; "
+10502:             "onlar haber/olay ve takvim kayıtlarını yönetir. Seans Öncesi Bağlam ise market-context raporlarını "
+10503:             "hazırlık amacıyla toplar. Yeni teknik skor, fiyat yönü, işlem sinyali veya AL/SAT kararı üretmez."
+10504:         )
+10505:         render_market_context_dashboard(
+10506:             st,
+10507:             project_root=Path(__file__).resolve().parents[1],
+10508:         )
+10509:     elif analiz_modu == "Güncel Teknik Analiz":
+10510:         guncel_teknik_analiz_formu()
+10511:         st.caption(
+10512:             "AI hisse sohbeti mevcut teknik analiz bağlamını açıklamaya yardımcı olur; "
+10513:             "teknik teyit skorunu, işlem planını veya AL/SAT kararını değiştirmez."
+10514:         )
+10515:         render_stock_ai_chat(st)
+10516:     elif analiz_modu == "Temel Analiz":
+10517:         temel_analiz_formu()
+10518:     elif analiz_modu == "Piyasa Haber, Olay ve Etki Merkezi":
+10519:         render_news_center_dashboard(st)
+10520:     elif analiz_modu == "Piyasa Rejimi":
+10521:         piyasa_rejimi_formu()
+10522:     elif analiz_modu == "BIST Günlük Piyasa":
+10523:         render_bist_daily_market()
+10524:     elif analiz_modu == "Fırsat Radarı":
+10525:         render_opportunity_radar()
+10526:     elif analiz_modu == "Momentum Keşif":
+10527:         momentum_kesif_formu()
+10528:     elif analiz_modu == "Ön Yükseliş Hazırlık":
+10529:         on_yukselis_hazirlik_formu()
+10530:     elif analiz_modu == "Ön Yükseliş Toplu Doğrulama":
+10531:         on_yukselis_toplu_dogrulama_formu()
+10532:     elif analiz_modu == "BIST Toplu Tarama":
+10533:         bist_toplu_tarama_formu()
+10534:     elif analiz_modu == "Açık Pozisyon İzleme":
+10535:         acik_pozisyon_izleme_formu()
+10536:     elif analiz_modu == "İşlem Kayıp Analizi":
+10537:         islem_kayip_analizi_formu()
+10538:     elif analiz_modu == "Sinyal Sonuçları":
+10539:         sinyal_sonuclari_formu()
+10540:     elif analiz_modu == "Gecikmeli Veri Pilotu":
+10541:         gecikmeli_veri_pilotu_formu()
+10542:     elif analiz_modu == "Günlük Operasyon Paneli":
+10543:         gunluk_operasyon_paneli_formu()
+10544:     elif analiz_modu == "Gölge Portföy":
+10545:         golge_portfoy_formu()
+10546:     elif analiz_modu == "Haftalık Performans Raporu":
+10547:         haftalik_performans_raporu_formu()
+10548:     elif analiz_modu == "Başarı Karşılaştırması":
+10549:         basari_karsilastirmasi_formu()
+10550:     elif analiz_modu == "V1.3 Kalibrasyon Kararı":
+10551:         v13_kalibrasyon_karari_formu()
+10552:     elif analiz_modu == "Aynı Veri Karşılaştırması":
+10553:         ayni_veri_karsilastirma_formu()
+10554:     elif analiz_modu == "Çoklu Hisse Portföyü":
+10555:         portfoy_formu()
+10556:     else:
+10557:         analiz_gecmisi_goster()
+10558: 
+10559: 
+10560: if __name__ == "__main__":
+10561:     main()
+FIN_PROD_V7_UI_NAVIGATION_EXACT=PASS

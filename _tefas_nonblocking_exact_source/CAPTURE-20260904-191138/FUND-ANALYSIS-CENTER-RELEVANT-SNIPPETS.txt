@@ -1,0 +1,439 @@
+﻿TARGET=D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py
+SHA256=431B0757E28F53D8D274FD0DE49F652BF2F5530F0D7FEE45CDB093DC4F4F4E56
+MATCH_COUNT=37
+EXACT_BLOCK_1_BEGIN lines=1-43
+     1: from __future__ import annotations
+     2: 
+     3: from dataclasses import dataclass
+     4: from datetime import date
+     5: from decimal import Decimal
+     6: from pathlib import Path
+     7: from typing import Any, Iterable, Mapping
+     8: 
+     9: from backend.app.funds.analysis_engine import FundAnalysisResult
+    10: from backend.app.funds.fund_auto_refresh import auto_refresh_selected_fund_if_due
+    11: from backend.app.funds.fund_profile import build_fund_profile_read_model
+    12: from backend.app.funds.store import fund_observation_store
+    13: from backend.app.funds.free_float_store import (
+    14:     FreeFloatSourceError,
+    15:     default_free_float_store,
+    16:     free_float_records_from_bytes,
+    17: )
+    18: from backend.app.funds.kap_portfolio_auto_ingestion import (
+    19:     auto_ingest_kap_portfolio_reports,
+    20: )
+    21: from backend.app.funds.kap_free_float_auto_population import (
+    22:     KapFreeFloatError,
+    23:     MAX_FDO_SYMBOLS_PER_REFRESH,
+    24:     populate_kap_free_float_for_symbols,
+    25: )
+    26: from backend.app.funds.kap_portfolio_ingestion import (
+    27:     KapFundPortfolioError,
+    28:     ingest_kap_portfolio_pdf_upload,
+    29:     ingest_kap_portfolio_report_url,
+    30: )
+    31: from backend.app.funds.portfolio_tracking import (
+    32:     FundPortfolioChangeSet,
+    33:     FundPortfolioSnapshot,
+    34:     FundPortfolioSnapshotJsonStore,
+    35:     PortfolioPositionChange,
+    36:     PortfolioSnapshotStoreError,
+    37:     PositionChangeKind,
+    38:     StockFundActivity,
+    39:     aggregate_stock_fund_activity,
+    40:     compare_portfolio_snapshots,
+    41: )
+    42: from backend.app.funds.pressure_risk import StockFundPressureInput, StockFundPressureProfile
+    43: from backend.app.funds.pressure_read_model import build_fund_pressure_read_model
+EXACT_BLOCK_1_END
+EXACT_BLOCK_2_BEGIN lines=206-320
+   206: 
+   207: def _profile_percent(value: Decimal | None) -> str:
+   208:     if value is None:
+   209:         return "-"
+   210:     return f"{float(value) * 100:.2f}%"
+   211: 
+   212: 
+   213: def _profile_number(value: Decimal | None, *, digits: int = 4) -> str:
+   214:     if value is None:
+   215:         return "-"
+   216:     return f"{float(value):,.{digits}f}"
+   217: 
+   218: 
+   219: def _render_selected_fund_profile(
+   220:     st: Any,
+   221:     *,
+   222:     fund_ids: tuple[str, ...],
+   223:     portfolio_store: FundPortfolioSnapshotJsonStore,
+   224: ) -> str | None:
+   225:     if not fund_ids:
+   226:         st.info("Fon profili iГ§in TEFAS evreni veya kayД±tlД± fon snapshot'Д± bekleniyor.")
+   227:         return None
+   228: 
+   229:     st.markdown("### Fon Profili")
+   230:     st.caption(
+   231:         "Fintables benzeri tek-fon gГ¶rГјnГјmГјdГјr. SeГ§ilen fonun TEFAS fiyat/genel durum verisi "
+   232:         "ve KAP portfГ¶yГј yerel canonical depolardan okunur; veri zamanД± dolduДџunda sistem "
+   233:         "seГ§ili fonu otomatik ve bounded olarak yeniler."
+   234:     )
+   235:     selected = st.selectbox(
+   236:         "Fon seГ§",
+   237:         options=fund_ids,
+   238:         index=0,
+   239:         key="fund_profile_selected_fund",
+   240:     )
+   241:     code = selected.rsplit(":", 1)[-1]
+   242: 
+   243:     if hasattr(st, "session_state"):
+   244:         try:
+   245:             refresh = auto_refresh_selected_fund_if_due(
+   246:                 code,
+   247:                 observation_store=fund_observation_store(),
+   248:                 portfolio_store=portfolio_store,
+   249:                 network_enabled=True,
+   250:             )
+   251:         except Exception as exc:
+   252:             if hasattr(st, "warning"):
+   253:                 st.warning(
+   254:                     f"Otomatik fon yenilemesi izole edildi; son iyi veri gГ¶steriliyor. {exc}"
+   255:                 )
+   256:         else:
+   257:             if refresh.attempted and refresh.refreshed:
+   258:                 st.caption(
+   259:                     "Otomatik gГјncelleme tamamlandД± В· "
+   260:                     f"TEFAS detay={'вњ“' if refresh.detail_written else '-'} В· "
+   261:                     f"fiyat geГ§miЕџi={'вњ“' if refresh.history_written else '-'} В· "
+   262:                     f"KAP portfГ¶y={'вњ“' if refresh.portfolio_checked else '-'} В· "
+   263:                     f"FDO={'вњ“' if refresh.fdo_checked else '-'}"
+   264:                 )
+   265:             if refresh.warnings and hasattr(st, "warning"):
+   266:                 st.warning(
+   267:                     "BazД± otomatik kaynaklar izole edildi: "
+   268:                     + " | ".join(refresh.warnings[:4])
+   269:                 )
+   270: 
+   271:     try:
+   272:         profile = build_fund_profile_read_model(
+   273:             selected,
+   274:             observation_store=fund_observation_store(),
+   275:             portfolio_store=portfolio_store,
+   276:         )
+   277:     except Exception as exc:
+   278:         st.error(f"Fon profili read model Гјretilemedi: {exc}")
+   279:         return selected
+   280: 
+   281:     cols = st.columns(5)
+   282:     cols[0].metric("Fon", profile.fund_code)
+   283:     cols[1].metric("Fiyat", _profile_number(profile.unit_price, digits=6))
+   284:     cols[2].metric("GГјnlГјk", _profile_percent(profile.daily_return))
+   285:     cols[3].metric(
+   286:         "Fon toplam deДџeri",
+   287:         "-" if profile.fund_size is None else f"{float(profile.fund_size):,.0f} TL",
+   288:     )
+   289:     cols[4].metric(
+   290:         "YatД±rД±mcД±",
+   291:         "-" if profile.investor_count is None else f"{profile.investor_count:,}",
+   292:     )
+   293: 
+   294:     return_cols = st.columns(6)
+   295:     for column, horizon in zip(return_cols, ("1H", "1A", "3A", "6A", "YTD", "1Y")):
+   296:         column.metric(horizon, _profile_percent(profile.returns.get(horizon)))
+   297: 
+   298:     if profile.observation_date is not None:
+   299:         st.caption(
+   300:             f"TEFAS son gГ¶zlem: {profile.observation_date.isoformat()} В· "
+   301:             f"kayД±tlД± fiyat gГ¶zlemi: {profile.observation_count}"
+   302:         )
+   303: 
+   304:     if hasattr(st, "line_chart") and profile.price_history:
+   305:         st.markdown("#### Fiyat & BГјyГјklГјk GeГ§miЕџi")
+   306:         st.line_chart(
+   307:             [{"Tarih": day.isoformat(), "Fiyat": float(value)} for day, value in profile.price_history],
+   308:             x="Tarih",
+   309:             y="Fiyat",
+   310:         )
+   311:         if profile.fund_size_history:
+   312:             st.line_chart(
+   313:                 [{"Tarih": day.isoformat(), "Fon Toplam DeДџeri": float(value)} for day, value in profile.fund_size_history],
+   314:                 x="Tarih",
+   315:                 y="Fon Toplam DeДџeri",
+   316:             )
+   317:         if profile.investor_history:
+   318:             st.line_chart(
+   319:                 [{"Tarih": day.isoformat(), "YatД±rД±mcД±": value} for day, value in profile.investor_history],
+   320:                 x="Tarih",
+EXACT_BLOCK_2_END
+EXACT_BLOCK_3_BEGIN lines=344-425
+   344:         if len(comparable) >= 2:
+   345:             change_set = compare_portfolio_snapshots(comparable[-2], comparable[-1])
+   346:             st.markdown("#### Son PortfГ¶y DeДџiЕџimi")
+   347:             counts = {
+   348:                 kind: sum(1 for item in change_set.changes if item.kind == kind)
+   349:                 for kind in PositionChangeKind
+   350:             }
+   351:             change_cols = st.columns(5)
+   352:             change_cols[0].metric("Yeni giriЕџ", counts[PositionChangeKind.NEW_ENTRY])
+   353:             change_cols[1].metric("ArtД±rД±lan", counts[PositionChangeKind.INCREASED])
+   354:             change_cols[2].metric("AzaltД±lan", counts[PositionChangeKind.REDUCED])
+   355:             change_cols[3].metric("Tam Г§Д±kД±Еџ", counts[PositionChangeKind.FULL_EXIT])
+   356:             change_cols[4].metric("Belirsiz", counts[PositionChangeKind.UNKNOWN])
+   357:             change_rows = portfolio_change_rows(change_set)
+   358:             if change_rows:
+   359:                 st.dataframe(change_rows, width="stretch", hide_index=True)
+   360: 
+   361:     st.markdown("#### Veri TazeliДџi")
+   362:     freshness_cols = st.columns(3)
+   363:     freshness_cols[0].metric(
+   364:         "TEFAS",
+   365:         "-" if profile.observation_date is None else profile.observation_date.isoformat(),
+   366:     )
+   367:     freshness_cols[1].metric(
+   368:         "KAP PortfГ¶y",
+   369:         "-" if profile.latest_portfolio is None else profile.latest_portfolio.portfolio_date.isoformat(),
+   370:     )
+   371:     freshness_cols[2].metric("Otomatik yenileme", "6 saat")
+   372: 
+   373:     return selected
+   374: 
+   375: def _render_portfolio_tracking(
+   376:     st: Any,
+   377:     store: FundPortfolioSnapshotJsonStore,
+   378:     pressure_profiles: Mapping[str, StockFundPressureProfile],
+   379:     pressure_inputs: Mapping[str, StockFundPressureInput],
+   380:     *,
+   381:     fund_codes: Iterable[str] = (),
+   382: ) -> None:
+   383:     known_codes = {
+   384:         str(code or "").strip().upper()
+   385:         for code in fund_codes
+   386:         if str(code or "").strip()
+   387:     }
+   388:     try:
+   389:         for snapshot in store.list_snapshots():
+   390:             if snapshot.canonical_fund_id.startswith("fund:tefas:"):
+   391:                 known_codes.add(snapshot.canonical_fund_id.rsplit(":", 1)[-1].strip().upper())
+   392:     except PortfolioSnapshotStoreError:
+   393:         pass
+   394: 
+   395:     if hasattr(st, "button"):
+   396:         st.markdown("#### Otomatik KAP PortfГ¶y GГјncelleme")
+   397:         st.caption(
+   398:             "Fon Analiz Merkezi aГ§Д±lД±Еџta aДџ Г§aДџrД±sД± yapmaz. Bu dГјДџme, bilinen fon kodlarД± iГ§in "
+   399:             "resmГ® KAP bildirim listesini tarar; PortfГ¶y DaДџД±lД±m Raporu bildirimini, ekini ve "
+   400:             "snapshot iГ§e aktarД±mД±nД± otomatik yГјrГјtГјr. Manuel PDF yalnД±z fallback olarak kalД±r."
+   401:         )
+   402:         if known_codes:
+   403:             st.caption(f"Otomatik tarama evreni: {len(known_codes)} fon kodu.")
+   404:         else:
+   405:             st.caption("Otomatik tarama iГ§in Г¶nce TEFAS fon evreni veya kayД±tlД± bir fon snapshot'Д± gerekir.")
+   406: 
+   407:         if st.button(
+   408:             "Yeni KAP PortfГ¶y RaporlarД±nД± Otomatik Tara",
+   409:             key="fund_portfolio_kap_auto_ingest_button",
+   410:             disabled=not known_codes,
+   411:         ):
+   412:             try:
+   413:                 summary = auto_ingest_kap_portfolio_reports(
+   414:                     store=store,
+   415:                     fund_codes=tuple(sorted(known_codes)),
+   416:                     network_enabled=True,
+   417:                 )
+   418:             except (KapFundPortfolioError, PortfolioSnapshotStoreError, ValueError) as exc:
+   419:                 st.error(f"Otomatik KAP portfГ¶y gГјncellemesi Г§alД±ЕџmadД±: {exc}")
+   420:             else:
+   421:                 if hasattr(st, "success"):
+   422:                     st.success(
+   423:                         "Otomatik KAP taramasД± tamamlandД± В· "
+   424:                         f"bulunan={summary.discovered} В· "
+   425:                         f"yeni={summary.inserted} В· "
+EXACT_BLOCK_3_END
+EXACT_BLOCK_4_BEGIN lines=611-682
+   611:         activity_rows = stock_fund_activity_rows(model.stock_activity)
+   612:         if activity_rows:
+   613:             st.dataframe(activity_rows, width="stretch", hide_index=True)
+   614:         else:
+   615:             st.info("Hisse bazlД± birikim/daДџД±tД±m iГ§in karЕџД±laЕџtД±rД±labilir snapshot henГјz yok.")
+   616: 
+   617:     st.markdown("#### Fon/FDO & BaskД± Riski")
+   618:     if hasattr(st, "button"):
+   619:         held_symbols = tuple(sorted({
+   620:             position.symbol
+   621:             for snapshot in model.latest_by_fund.values()
+   622:             for position in snapshot.positions
+   623:             if position.asset_type == "EQUITY"
+   624:         }))
+   625:         st.caption(
+   626:             "Tam production gГјncellemesi yalnД±z aГ§Д±k dГјДџme isteДџiyle Г§alД±ЕџД±r: "
+   627:             "portfГ¶ydeki hisselerin KAP Еџirket sayfalarД±ndan fiili dolaЕџД±m tutarД±nД± "
+   628:             "canonical store'a alД±r, ardД±ndan piyasa likiditesi ve ГјГ§ gГ¶zlemsel baskД± skorunu yeniler. "
+   629:             "KAP/MKK dД±ЕџД± FDO tahmin edilmez."
+   630:         )
+   631:         if len(held_symbols) > MAX_FDO_SYMBOLS_PER_REFRESH:
+   632:             st.warning(
+   633:                 f"Bu Г§alД±ЕџtД±rmada en fazla {MAX_FDO_SYMBOLS_PER_REFRESH} hisse FDO'su gГјncellenebilir; "
+   634:                 f"mevcut portfГ¶y evreni {len(held_symbols)} hisse."
+   635:             )
+   636:         production_symbols = held_symbols[:MAX_FDO_SYMBOLS_PER_REFRESH]
+   637:         if st.button(
+   638:             "KAP FDO + BaskД± Riskini Tam GГјncelle",
+   639:             key="fund_pressure_full_production_refresh_button",
+   640:             disabled=not bool(production_symbols),
+   641:         ):
+   642:             try:
+   643:                 with st.spinner("KAP fiili dolaЕџД±m ve piyasa baskД± verileri gГјncelleniyor..."):
+   644:                     fdo_summary = populate_kap_free_float_for_symbols(
+   645:                         store=default_free_float_store(),
+   646:                         symbols=production_symbols,
+   647:                         network_enabled=True,
+   648:                     )
+   649:                     pressure_model = build_fund_pressure_read_model(store)
+   650:             except (
+   651:                 KapFreeFloatError,
+   652:                 FreeFloatSourceError,
+   653:                 PortfolioSnapshotStoreError,
+   654:                 ValueError,
+   655:             ) as exc:
+   656:                 st.error(f"Fon baskД± riski production gГјncellemesi tamamlanamadД±: {exc}")
+   657:             else:
+   658:                 live_profiles = dict(pressure_model.profiles)
+   659:                 live_inputs = dict(pressure_model.inputs)
+   660:                 if hasattr(st, "session_state"):
+   661:                     st.session_state["fund_pressure_profiles"] = live_profiles
+   662:                     st.session_state["fund_pressure_inputs"] = live_inputs
+   663:                 st.success(
+   664:                     "Production baskД± verisi gГјncellendi: "
+   665:                     f"KAP FDO {fdo_summary.inserted} yeni/deДџiЕџen, "
+   666:                     f"{fdo_summary.unchanged} aynД±; "
+   667:                     f"{len(live_inputs)} hisse read model; "
+   668:                     f"FDO durumu {pressure_model.free_float_source_state}."
+   669:                 )
+   670:                 if fdo_summary.failures and hasattr(st, "warning"):
+   671:                     st.warning(
+   672:                         "KAP FDO alД±namayan hisseler izole edildi: "
+   673:                         + " | ".join(
+   674:                             f"{item.symbol}:{item.error}"
+   675:                             for item in fdo_summary.failures[:5]
+   676:                         )
+   677:                     )
+   678:                 if pressure_model.warnings and hasattr(st, "warning"):
+   679:                     st.warning(
+   680:                         "Read model uyarД±larД±: "
+   681:                         + " | ".join(pressure_model.warnings[:5])
+   682:                     )
+EXACT_BLOCK_4_END
+EXACT_BLOCK_5_BEGIN lines=701-814
+   701:                     suffix=Path(fdo_file.name).suffix.lower(),
+   702:                 )
+   703:                 result = default_free_float_store().upsert(records)
+   704:             except (FreeFloatSourceError, ValueError, TypeError, UnicodeError) as exc:
+   705:                 st.error(f"Canonical FDO verisi iГ§eri alД±namadД±: {exc}")
+   706:             else:
+   707:                 st.success(
+   708:                     f"Canonical FDO kaynaДџД± gГјncellendi: {result.inserted} yeni/deДџiЕџen, "
+   709:                     f"{result.unchanged} aynД± kayД±t."
+   710:                 )
+   711:     live_profiles = dict(pressure_profiles)
+   712:     live_inputs = dict(pressure_inputs)
+   713:     if hasattr(st, "button"):
+   714:         st.caption(
+   715:             "Piyasa fiyat/hacim verisi yalnД±z bu dГјДџmeyle aГ§Д±kГ§a gГјncellenir. "
+   716:             "Fon pozisyonlarД± mevcut append-only KAP snapshot deposundan okunur. "
+   717:             "Canonical KAP/MKK fiili dolaЕџД±m kaynaДџД± bulunmadД±ДџД±nda Fon/FDO tahmin edilmez."
+   718:         )
+   719:         if st.button(
+   720:             "BaskД± Riski Verisini GГјncelle",
+   721:             key="fund_pressure_read_model_refresh_button",
+   722:             disabled=not bool(model.latest_by_fund),
+   723:         ):
+   724:             try:
+   725:                 pressure_model = build_fund_pressure_read_model(store)
+   726:             except (PortfolioSnapshotStoreError, ValueError) as exc:
+   727:                 st.error(f"Fon baskД± riski read model Гјretilemedi: {exc}")
+   728:             else:
+   729:                 live_profiles = dict(pressure_model.profiles)
+   730:                 live_inputs = dict(pressure_model.inputs)
+   731:                 if hasattr(st, "session_state"):
+   732:                     st.session_state["fund_pressure_profiles"] = live_profiles
+   733:                     st.session_state["fund_pressure_inputs"] = live_inputs
+   734:                 if hasattr(st, "success"):
+   735:                     st.success(
+   736:                         f"BaskД± riski read model gГјncellendi: {len(live_inputs)} hisse. "
+   737:                         f"FDO kaynaДџД±: {pressure_model.free_float_source_state}."
+   738:                     )
+   739:                 if pressure_model.warnings and hasattr(st, "warning"):
+   740:                     st.warning(
+   741:                         "Piyasa verisi alД±namayan hisseler izole edildi: "
+   742:                         + " | ".join(pressure_model.warnings[:5])
+   743:                     )
+   744: 
+   745:     if hasattr(st, "session_state"):
+   746:         live_profiles = dict(st.session_state.get("fund_pressure_profiles", live_profiles))
+   747:         live_inputs = dict(st.session_state.get("fund_pressure_inputs", live_inputs))
+   748: 
+   749:     risk_rows = fund_pressure_rows(live_profiles, live_inputs)
+   750:     if risk_rows:
+   751:         st.dataframe(risk_rows, width="stretch", hide_index=True)
+   752:     else:
+   753:         st.info(
+   754:             "BaskД± riski read model henГјz gГјncellenmedi. "
+   755:             "Fon/FDO yalnД±z doДџrulanmД±Еџ fiili dolaЕџД±m verisi baДџlandД±ДџД±nda gГ¶sterilir."
+   756:         )
+   757: 
+   758: 
+   759: def render_fund_analysis_center(
+   760:     st: Any,
+   761:     results: Iterable[FundAnalysisResult] = (),
+   762:     *,
+   763:     portfolio_store: FundPortfolioSnapshotJsonStore | None = None,
+   764:     pressure_profiles: Mapping[str, StockFundPressureProfile] | None = None,
+   765:     pressure_inputs: Mapping[str, StockFundPressureInput] | None = None,
+   766: ) -> None:
+   767:     items = tuple(results)
+   768:     st.subheader("Fon Analiz Merkezi")
+   769:     st.caption("TEFAS/fon araЕџtД±rma dikeyidir. BIST taramasД± Г§alД±ЕџtД±rmaz; otomatik AL/SAT Гјretmez.")
+   770:     counts = {key: sum(item.classification.value == key for item in items) for key in "ABCDX"}
+   771:     for column, key in zip(st.columns(5), "ABCDX"):
+   772:         column.metric(key, counts[key])
+   773:     selected = st.multiselect("Fon sД±nД±fД±", options=tuple("ABCDX"), default=tuple("ABCDX"), key="fund_analysis_class_filter")
+   774:     rows = [row for row in fund_analysis_rows(items) if row["SД±nД±f"] in selected]
+   775:     if rows:
+   776:         st.dataframe(rows, width="stretch", hide_index=True)
+   777:     else:
+   778:         st.info("HenГјz gГ¶sterilecek canonical fon analiz sonucu yok.")
+   779:     st.caption("Forward takip: 1H / 1A / 3A В· outcome tuning kapalД± В· AL/SAT authority: NONE")
+   780: 
+   781:     if portfolio_store is not None or pressure_profiles:
+   782:         effective_portfolio_store = (
+   783:             portfolio_store if portfolio_store is not None else _EmptyPortfolioStore()
+   784:         )
+   785:         known_fund_ids = {
+   786:             item.canonical_fund_id
+   787:             for item in items
+   788:             if item.canonical_fund_id.startswith("fund:tefas:")
+   789:         }
+   790:         try:
+   791:             known_fund_ids.update(
+   792:                 snapshot.canonical_fund_id
+   793:                 for snapshot in effective_portfolio_store.list_snapshots()
+   794:                 if snapshot.canonical_fund_id.startswith("fund:tefas:")
+   795:             )
+   796:         except PortfolioSnapshotStoreError:
+   797:             pass
+   798: 
+   799:         _render_selected_fund_profile(
+   800:             st,
+   801:             fund_ids=tuple(sorted(known_fund_ids)),
+   802:             portfolio_store=effective_portfolio_store,
+   803:         )
+   804: 
+   805:         known_fund_codes = tuple(
+   806:             sorted(fund_id.rsplit(":", 1)[-1] for fund_id in known_fund_ids)
+   807:         )
+   808:         _render_portfolio_tracking(
+   809:             st,
+   810:             effective_portfolio_store,
+   811:             pressure_profiles or {},
+   812:             pressure_inputs or {},
+   813:             fund_codes=known_fund_codes,
+   814:         )
+EXACT_BLOCK_5_END

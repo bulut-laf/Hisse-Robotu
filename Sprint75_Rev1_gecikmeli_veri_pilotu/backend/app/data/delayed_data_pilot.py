@@ -1,0 +1,450 @@
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+from datetime import datetime, time, timedelta
+import csv
+import io
+import json
+import math
+from pathlib import Path
+from typing import Callable
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import yfinance as yf
+
+
+ISTANBUL = ZoneInfo("Europe/Istanbul")
+
+GECIKMELI_GUNCEL = "Gecikmeli — Güncel"
+GUN_ICI_ON_IZLEME = "Gün içi ön izleme"
+GUNLUK_BAR_TAMAMLANDI = "Günlük bar tamamlandı"
+ESKI_VERI_KILITLI = "Eski veri — Analiz kilitli"
+VERI_HATASI = "Veri kaynağı hatası"
+
+
+class DelayedDataPilotError(ValueError):
+    """Gecikmeli veri pilotu ölçümü üretilemedi."""
+
+
+@dataclass(frozen=True)
+class DelayedDataPilotConfig:
+    expected_delay_minutes: int = 15
+    delay_tolerance_minutes: int = 12
+    refresh_interval_minutes: int = 5
+    session_open: time = time(10, 0)
+    session_close: time = time(18, 10)
+    finalization_wait_minutes: int = 20
+    interval: str = "5m"
+    period: str = "1d"
+
+    def __post_init__(self) -> None:
+        if self.expected_delay_minutes < 0:
+            raise DelayedDataPilotError(
+                "Beklenen gecikme negatif olamaz."
+            )
+        if self.delay_tolerance_minutes < 0:
+            raise DelayedDataPilotError(
+                "Gecikme toleransı negatif olamaz."
+            )
+        if self.refresh_interval_minutes not in (1, 2, 5, 10, 15):
+            raise DelayedDataPilotError(
+                "Yenileme aralığı 1, 2, 5, 10 veya 15 dakika olmalıdır."
+            )
+        if self.finalization_wait_minutes < 0:
+            raise DelayedDataPilotError(
+                "Kapanış bekleme süresi negatif olamaz."
+            )
+
+
+@dataclass(frozen=True)
+class DelayedDataSnapshot:
+    symbol: str
+    exchange_time: datetime
+    received_time: datetime
+    measured_delay_minutes: float
+    expected_delay_minutes: int
+    status: str
+    locked: bool
+    preview_only: bool
+    last_price: float
+    day_open: float
+    day_high: float
+    day_low: float
+    cumulative_volume: float
+    latest_bar_volume: float
+    latest_bar_completed: bool
+    missing_bar_count: int
+    source: str = "yfinance"
+    error_message: str = ""
+
+    @property
+    def price_change_percent(self) -> float:
+        if self.day_open <= 0:
+            return 0.0
+        return round(
+            (self.last_price / self.day_open - 1.0) * 100.0,
+            4,
+        )
+
+
+@dataclass(frozen=True)
+class PilotLogRecord:
+    symbol: str
+    source: str
+    exchange_time: str
+    received_time: str
+    measured_delay_minutes: float
+    expected_delay_minutes: int
+    status: str
+    locked: bool
+    preview_only: bool
+    last_price: float
+    cumulative_volume: float
+    latest_bar_volume: float
+    latest_bar_completed: bool
+    missing_bar_count: int
+    price_change_percent: float
+    error_message: str
+
+
+def normalize_symbol(symbol: str) -> str:
+    cleaned = symbol.strip().upper().removeprefix("﻿")
+    if not cleaned:
+        raise DelayedDataPilotError("Sembol boş olamaz.")
+    if not cleaned.endswith(".IS"):
+        cleaned += ".IS"
+    return cleaned
+
+
+def _normalize_intraday_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    if frame is None or frame.empty:
+        raise DelayedDataPilotError(
+            "Gecikmeli gün içi veri bulunamadı."
+        )
+
+    normalized = frame.copy()
+    if isinstance(normalized.columns, pd.MultiIndex):
+        normalized.columns = normalized.columns.get_level_values(0)
+
+    required = {"Open", "High", "Low", "Close", "Volume"}
+    missing = required - set(normalized.columns)
+    if missing:
+        raise DelayedDataPilotError(
+            "Eksik gün içi veri sütunları: "
+            + ", ".join(sorted(missing))
+        )
+
+    normalized = normalized[
+        ["Open", "High", "Low", "Close", "Volume"]
+    ].copy()
+
+    for column in normalized.columns:
+        normalized[column] = pd.to_numeric(
+            normalized[column],
+            errors="coerce",
+        )
+
+    normalized = normalized.dropna(
+        subset=["Open", "High", "Low", "Close", "Volume"]
+    )
+    if normalized.empty:
+        raise DelayedDataPilotError(
+            "Gün içi veri sayısal fiyat içermiyor."
+        )
+
+    index = pd.to_datetime(normalized.index)
+    if index.tz is None:
+        index = index.tz_localize(ISTANBUL)
+    else:
+        index = index.tz_convert(ISTANBUL)
+
+    normalized.index = index
+    normalized = normalized.sort_index()
+
+    if normalized.index.has_duplicates:
+        normalized = normalized[
+            ~normalized.index.duplicated(keep="last")
+        ]
+
+    return normalized
+
+
+def _missing_bar_count(
+    frame: pd.DataFrame,
+    *,
+    interval_minutes: int,
+) -> int:
+    if len(frame) < 2:
+        return 0
+
+    gaps = frame.index.to_series().diff().dropna()
+    missing = 0
+    expected = timedelta(minutes=interval_minutes)
+
+    for gap in gaps:
+        if gap > expected:
+            missing += max(
+                0,
+                int(gap.total_seconds() // expected.total_seconds()) - 1,
+            )
+    return missing
+
+
+def _status_for(
+    *,
+    exchange_time: datetime,
+    received_time: datetime,
+    measured_delay_minutes: float,
+    config: DelayedDataPilotConfig,
+) -> tuple[str, bool, bool, bool]:
+    local_received = received_time.astimezone(ISTANBUL)
+    local_exchange = exchange_time.astimezone(ISTANBUL)
+
+    session_start = datetime.combine(
+        local_received.date(),
+        config.session_open,
+        tzinfo=ISTANBUL,
+    )
+    session_close = datetime.combine(
+        local_received.date(),
+        config.session_close,
+        tzinfo=ISTANBUL,
+    )
+    finalization_time = session_close + timedelta(
+        minutes=config.finalization_wait_minutes
+    )
+    maximum_acceptable_delay = (
+        config.expected_delay_minutes
+        + config.delay_tolerance_minutes
+    )
+
+    same_day = local_exchange.date() == local_received.date()
+
+    if session_start <= local_received < finalization_time:
+        if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+            return GUN_ICI_ON_IZLEME, False, True, False
+        return ESKI_VERI_KILITLI, True, True, False
+
+    if local_received >= finalization_time:
+        completed = (
+            same_day
+            and local_exchange.time()
+            >= (
+                datetime.combine(
+                    local_received.date(),
+                    config.session_close,
+                    tzinfo=ISTANBUL,
+                )
+                - timedelta(minutes=config.expected_delay_minutes)
+            ).time()
+        )
+        if completed:
+            return GUNLUK_BAR_TAMAMLANDI, False, False, True
+        return ESKI_VERI_KILITLI, True, False, False
+
+    if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+        return GECIKMELI_GUNCEL, False, True, False
+
+    return ESKI_VERI_KILITLI, True, True, False
+
+
+def fetch_delayed_snapshot(
+    symbol: str,
+    *,
+    config: DelayedDataPilotConfig = DelayedDataPilotConfig(),
+    now: datetime | None = None,
+    downloader: Callable[..., pd.DataFrame] = yf.download,
+) -> DelayedDataSnapshot:
+    normalized_symbol = normalize_symbol(symbol)
+    received_time = now or datetime.now(ISTANBUL)
+    if received_time.tzinfo is None:
+        received_time = received_time.replace(tzinfo=ISTANBUL)
+    else:
+        received_time = received_time.astimezone(ISTANBUL)
+
+    try:
+        raw = downloader(
+            tickers=normalized_symbol,
+            period=config.period,
+            interval=config.interval,
+            auto_adjust=True,
+            progress=False,
+            threads=False,
+            prepost=False,
+            timeout=30,
+        )
+    except Exception as error:
+        raise DelayedDataPilotError(
+            f"{normalized_symbol} gecikmeli verisi alınamadı: {error}"
+        ) from error
+
+    frame = _normalize_intraday_frame(raw)
+    exchange_time = frame.index[-1].to_pydatetime()
+    measured_delay = max(
+        0.0,
+        (
+            received_time.astimezone(ISTANBUL)
+            - exchange_time.astimezone(ISTANBUL)
+        ).total_seconds()
+        / 60.0,
+    )
+
+    status, locked, preview_only, completed = _status_for(
+        exchange_time=exchange_time,
+        received_time=received_time,
+        measured_delay_minutes=measured_delay,
+        config=config,
+    )
+
+    latest = frame.iloc[-1]
+    snapshot = DelayedDataSnapshot(
+        symbol=normalized_symbol,
+        exchange_time=exchange_time,
+        received_time=received_time,
+        measured_delay_minutes=round(measured_delay, 2),
+        expected_delay_minutes=config.expected_delay_minutes,
+        status=status,
+        locked=locked,
+        preview_only=preview_only,
+        last_price=float(latest["Close"]),
+        day_open=float(frame["Open"].iloc[0]),
+        day_high=float(frame["High"].max()),
+        day_low=float(frame["Low"].min()),
+        cumulative_volume=float(frame["Volume"].sum()),
+        latest_bar_volume=float(latest["Volume"]),
+        latest_bar_completed=completed,
+        missing_bar_count=_missing_bar_count(
+            frame,
+            interval_minutes=int(config.interval.removesuffix("m")),
+        ),
+    )
+
+    for value in (
+        snapshot.last_price,
+        snapshot.day_open,
+        snapshot.day_high,
+        snapshot.day_low,
+        snapshot.cumulative_volume,
+        snapshot.latest_bar_volume,
+    ):
+        if not math.isfinite(value):
+            raise DelayedDataPilotError(
+                "Gecikmeli veri geçersiz sayısal değer içeriyor."
+            )
+
+    return snapshot
+
+
+def snapshot_to_record(
+    snapshot: DelayedDataSnapshot,
+) -> PilotLogRecord:
+    return PilotLogRecord(
+        symbol=snapshot.symbol,
+        source=snapshot.source,
+        exchange_time=snapshot.exchange_time.isoformat(),
+        received_time=snapshot.received_time.isoformat(),
+        measured_delay_minutes=snapshot.measured_delay_minutes,
+        expected_delay_minutes=snapshot.expected_delay_minutes,
+        status=snapshot.status,
+        locked=snapshot.locked,
+        preview_only=snapshot.preview_only,
+        last_price=snapshot.last_price,
+        cumulative_volume=snapshot.cumulative_volume,
+        latest_bar_volume=snapshot.latest_bar_volume,
+        latest_bar_completed=snapshot.latest_bar_completed,
+        missing_bar_count=snapshot.missing_bar_count,
+        price_change_percent=snapshot.price_change_percent,
+        error_message=snapshot.error_message,
+    )
+
+
+class DelayedDataPilotStore:
+    def __init__(self, root: str | Path | None = None) -> None:
+        self.root = (
+            Path(root).expanduser()
+            if root is not None
+            else Path.home() / ".hisse_robotu" / "gecikmeli_veri_pilotu"
+        )
+        self.jsonl_path = self.root / "pilot_olcumleri.jsonl"
+
+    def append(self, snapshot: DelayedDataSnapshot) -> Path:
+        self.root.mkdir(parents=True, exist_ok=True)
+        record = snapshot_to_record(snapshot)
+        with self.jsonl_path.open("a", encoding="utf-8") as stream:
+            stream.write(
+                json.dumps(
+                    asdict(record),
+                    ensure_ascii=False,
+                )
+                + "\n"
+            )
+        return self.jsonl_path
+
+    def list(self) -> tuple[PilotLogRecord, ...]:
+        if not self.jsonl_path.exists():
+            return ()
+
+        records = []
+        for line in self.jsonl_path.read_text(
+            encoding="utf-8"
+        ).splitlines():
+            if not line.strip():
+                continue
+            try:
+                records.append(
+                    PilotLogRecord(**json.loads(line))
+                )
+            except (
+                TypeError,
+                ValueError,
+                json.JSONDecodeError,
+            ):
+                continue
+        return tuple(records)
+
+
+def pilot_rows(
+    records: tuple[PilotLogRecord, ...],
+) -> list[dict[str, object]]:
+    return [
+        {
+            "Sembol": item.symbol,
+            "Kaynak": item.source,
+            "Borsa zamanı": item.exchange_time,
+            "Sisteme alınma zamanı": item.received_time,
+            "Ölçülen gecikme (dk)": item.measured_delay_minutes,
+            "Beklenen gecikme (dk)": item.expected_delay_minutes,
+            "Durum": item.status,
+            "Kilit": "Evet" if item.locked else "Hayır",
+            "Ön izleme": "Evet" if item.preview_only else "Hayır",
+            "Son fiyat": item.last_price,
+            "Kümülatif hacim": item.cumulative_volume,
+            "Son bar hacmi": item.latest_bar_volume,
+            "Tamamlanmış son bar": (
+                "Evet" if item.latest_bar_completed else "Hayır"
+            ),
+            "Eksik bar": item.missing_bar_count,
+            "Fiyat değişimi (%)": item.price_change_percent,
+            "Hata": item.error_message,
+        }
+        for item in records
+    ]
+
+
+def pilot_to_csv(
+    records: tuple[PilotLogRecord, ...],
+) -> bytes:
+    rows = pilot_rows(records)
+    output = io.StringIO()
+    fieldnames = list(rows[0]) if rows else [
+        "Sembol",
+        "Kaynak",
+        "Borsa zamanı",
+        "Sisteme alınma zamanı",
+        "Durum",
+    ]
+    writer = csv.DictWriter(output, fieldnames=fieldnames)
+    writer.writeheader()
+    writer.writerows(rows)
+    return ("\ufeff" + output.getvalue()).encode("utf-8")

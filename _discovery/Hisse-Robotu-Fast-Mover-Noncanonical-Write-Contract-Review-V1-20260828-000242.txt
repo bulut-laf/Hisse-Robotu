@@ -1,0 +1,109 @@
+=== HISSE ROBOTU — FAST MOVER NONCANONICAL WRITE CONTRACT REVIEW V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+PURPOSE=CLASSIFY_PREFLIGHT_POTENTIAL_WRITE_RISK
+
+FILE=backend\app\operations\preclose_partial_daily_preview.py
+SHA256=1316f83f8b77cca5ecbcf5bd2876cc6c9c14e78e5dd72c9dbcaba18f25ce2115
+FILE=backend\app\operations\scheduled_intraday_batch.py
+SHA256=6e8fcb3407146a97c49c86608cbd86c6a66d37bdc61211837405afc68978ff5c
+FILE=backend\app\operations\scheduled_operation_phase_runner.py
+SHA256=7cfa17a8017529dd82cdbb692e11ada052986a6721fd404b8661049c65035a19
+
+=== SCOPE backend\app\operations\preclose_partial_daily_preview.py::run_preclose_partial_preview ===
+SCOPE_FOUND=YES
+LOCAL_COLLECTION_APPENDS=0
+DIRECT_PERSISTENCE_SINKS=0
+UNRESOLVED_APPEND_CALLS=0
+RELEVANT_EXTERNAL_CALLS=5
+EXTERNAL_CALL=backend\app\operations\preclose_partial_daily_preview.py:267|build_preclose_overlay_fetcher
+EXTERNAL_CALL=backend\app\operations\preclose_partial_daily_preview.py:272|BatchStockScanner
+EXTERNAL_CALL=backend\app\operations\preclose_partial_daily_preview.py:274|build_dashboard_market_scanner
+EXTERNAL_CALL=backend\app\operations\preclose_partial_daily_preview.py:316|PreclosePreviewResult
+EXTERNAL_CALL=backend\app\operations\preclose_partial_daily_preview.py:263|PreclosePartialDailyPreviewError
+
+=== SCOPE backend\app\operations\preclose_partial_daily_preview.py::preclose_preview_rows ===
+SCOPE_FOUND=YES
+LOCAL_COLLECTION_APPENDS=1
+LOCAL_APPEND=backend\app\operations\preclose_partial_daily_preview.py:333|rows.append|CLASS=IN_MEMORY_ONLY
+DIRECT_PERSISTENCE_SINKS=0
+UNRESOLVED_APPEND_CALLS=0
+RELEVANT_EXTERNAL_CALLS=0
+
+=== SCOPE backend\app\operations\scheduled_intraday_batch.py::fetch_scheduled_intraday_batch ===
+SCOPE_FOUND=YES
+LOCAL_COLLECTION_APPENDS=1
+LOCAL_APPEND=backend\app\operations\scheduled_intraday_batch.py:152|failures.append|CLASS=IN_MEMORY_ONLY
+DIRECT_PERSISTENCE_SINKS=0
+UNRESOLVED_APPEND_CALLS=0
+RELEVANT_EXTERNAL_CALLS=6
+EXTERNAL_CALL=backend\app\operations\scheduled_intraday_batch.py:159|ScheduledIntradayBatchResult
+EXTERNAL_CALL=backend\app\operations\scheduled_intraday_batch.py:101|received_at.replace
+EXTERNAL_CALL=backend\app\operations\scheduled_intraday_batch.py:112|downloader
+EXTERNAL_CALL=backend\app\operations\scheduled_intraday_batch.py:144|fetch_delayed_snapshot
+EXTERNAL_CALL=backend\app\operations\scheduled_intraday_batch.py:125|ScheduledIntradayBatchFailure
+EXTERNAL_CALL=backend\app\operations\scheduled_intraday_batch.py:153|ScheduledIntradayBatchFailure
+
+=== SCOPE backend\app\operations\scheduled_operation_phase_runner.py::ProductionScheduledOperationRuntime.preclose_preview ===
+SCOPE_FOUND=YES
+LOCAL_COLLECTION_APPENDS=0
+DIRECT_PERSISTENCE_SINKS=0
+UNRESOLVED_APPEND_CALLS=0
+RELEVANT_EXTERNAL_CALLS=2
+EXTERNAL_CALL=backend\app\operations\scheduled_operation_phase_runner.py:342|run_preclose_partial_preview
+EXTERNAL_CALL=backend\app\operations\scheduled_operation_phase_runner.py:343|preclose_preview_rows
+
+=== FILE-LEVEL WRITE-LIKE REFERENCES ===
+REF=backend\app\operations\preclose_partial_daily_preview.py:34|# Non-canonical read-only preview. No persistence authority.
+REF=backend\app\operations\preclose_partial_daily_preview.py:49|    ranking_write_allowed: bool = False
+REF=backend\app\operations\preclose_partial_daily_preview.py:50|    profile_write_allowed: bool = False
+REF=backend\app\operations\preclose_partial_daily_preview.py:204|                failures.append(
+REF=backend\app\operations\preclose_partial_daily_preview.py:225|                failures.append(
+REF=backend\app\operations\preclose_partial_daily_preview.py:255|    reused. The result is PREVIEW / NOT CANONICAL and is not persisted by this
+REF=backend\app\operations\preclose_partial_daily_preview.py:333|        rows.append(
+REF=backend\app\operations\scheduled_intraday_batch.py:46|            ordered.append(symbol)
+REF=backend\app\operations\scheduled_intraday_batch.py:92|    AL/SAT, or persistence authority.
+REF=backend\app\operations\scheduled_intraday_batch.py:152|                failures.append(
+REF=backend\app\operations\scheduled_operation_phase_runner.py:11|    DecisionOutputArchiveJsonStore,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:48|# Preview phases are read-only and never call decision-output persistence.
+REF=backend\app\operations\scheduled_operation_phase_runner.py:66|    ranking_write_allowed: bool = False
+REF=backend\app\operations\scheduled_operation_phase_runner.py:67|    profile_write_allowed: bool = False
+REF=backend\app\operations\scheduled_operation_phase_runner.py:173|                        found.append(text)
+REF=backend\app\operations\scheduled_operation_phase_runner.py:187|            ordered.append(symbol)
+REF=backend\app\operations\scheduled_operation_phase_runner.py:215|        return DecisionOutputArchiveJsonStore().latest("EVENING")
+REF=backend\app\operations\scheduled_operation_phase_runner.py:309|            rows.append(
+REF=backend\app\operations\scheduled_operation_phase_runner.py:377|            ranking_write_allowed=True,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:378|            profile_write_allowed=True,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:415|        or result.ranking_write_allowed
+REF=backend\app\operations\scheduled_operation_phase_runner.py:416|        or result.profile_write_allowed
+REF=backend\app\operations\scheduled_operation_phase_runner.py:443|        "ranking_write_allowed": result.ranking_write_allowed,
+REF=backend\app\operations\scheduled_operation_phase_runner.py:444|        "profile_write_allowed": result.profile_write_allowed,
+
+=== DECISION ===
+DECISION=READY_FOR_FAST_MOVER_READ_MODEL_IMPLEMENTATION
+NONCANONICAL_DIRECT_PERSISTENCE=NO
+POTENTIAL_WRITE_RISK_CLASSIFIED_AS_DIRECTLY_SAFE=YES
+NEXT_SCOPE=ONE_LIMITED_READ_MODEL_PLUS_VISIBILITY_POLICY_BLOCK
+NEW_ENGINE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+SECOND_UNIVERSE_TRAVERSAL=NO
+RANKING_MEMORY_WRITE=NO
+PROFILE_MEMORY_WRITE=NO
+EARLY_VISIBILITY_MUTATION=NO
+MAIN_TOP5_MUTATION=NO
+AL_SAT_MUTATION=NO
+
+=== SAFETY ===
+READ_ONLY=YES
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+REPORT_ONLY=YES

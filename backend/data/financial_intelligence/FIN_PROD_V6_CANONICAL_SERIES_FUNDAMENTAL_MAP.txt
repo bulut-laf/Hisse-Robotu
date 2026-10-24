@@ -1,0 +1,115 @@
+﻿FIN_PROD_V6_CANONICAL_SERIES_FUNDAMENTAL_MAP
+
+===== ROOT_KEYS =====
+['acceptance_checks', 'canonical_fact_count', 'earnings_cash_quality', 'financial_health', 'financial_risk', 'historical_point_count', 'identity', 'limitations', 'market_multiples', 'mode', 'ownership', 'series_warnings', 'status', 'valuation_status']
+
+===== HISTORICAL_SERIES_LIKE_STRUCTURES =====
+OBJ|$.financial_health.metrics[0]|{"code": "CURRENT_RATIO", "value": "1.35", "unit": "x", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[1]|{"code": "CASH_RATIO", "value": "0.60", "unit": "x", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[2]|{"code": "EQUITY_RATIO", "value": "53.87", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[3]|{"code": "LIABILITIES_TO_EQUITY", "value": "0.86", "unit": "x", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[4]|{"code": "FINANCIAL_DEBT", "value": "68200679", "unit": "TRY", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[5]|{"code": "NET_DEBT", "value": "-127640261", "unit": "TRY", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[6]|{"code": "FINANCIAL_DEBT_TO_EQUITY", "value": "0.15", "unit": "x", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[7]|{"code": "NET_DEBT_TO_EQUITY", "value": "-0.28", "unit": "x", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[8]|{"code": "GROSS_MARGIN", "value": "12.69", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[9]|{"code": "OPERATING_MARGIN", "value": "8.91", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": "3.91", "comparison_period_end": "2025-06-30"}
+OBJ|$.financial_health.metrics[10]|{"code": "NET_MARGIN", "value": "7.59", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[11]|{"code": "OCF_TO_NET_INCOME", "value": "2.63", "unit": "x", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[12]|{"code": "OCF_MARGIN", "value": "19.97", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[13]|{"code": "ROE_PROXY_ANNUALIZED", "value": "21.88", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[14]|{"code": "ROA_PROXY_ANNUALIZED", "value": "11.79", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.financial_health.metrics[15]|{"code": "REVENUE_GROWTH_COMPARABLE", "value": "42.81", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": "464119398", "comparison_period_end": "2025-06-30"}
+OBJ|$.financial_health.metrics[16]|{"code": "OPERATING_PROFIT_GROWTH_COMPARABLE", "value": "225.01", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": "18160918", "comparison_period_end": "2025-06-30"}
+OBJ|$.financial_health.metrics[17]|{"code": "NET_INCOME_GROWTH_COMPARABLE", "value": "319.58", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": "11981560", "comparison_period_end": "2025-06-30"}
+OBJ|$.financial_health.metrics[18]|{"code": "OCF_GROWTH_COMPARABLE", "value": "781.70", "unit": "%", "source_period_end": "2026-06-30", "comparison_value": "15012559", "comparison_period_end": "2025-06-30"}
+OBJ|$.earnings_cash_quality.metrics[0]|{"code": "OPERATING_MARGIN", "value": "8.91", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[1]|{"code": "NET_MARGIN", "value": "7.59", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[2]|{"code": "OCF_TO_NET_INCOME", "value": "2.63", "unit": "x", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[3]|{"code": "FREE_CASH_FLOW", "value": "120508319", "unit": "currency_scale", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[4]|{"code": "FCF_TO_NET_INCOME", "value": "2.40", "unit": "x", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[5]|{"code": "FCF_MARGIN", "value": "18.18", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[6]|{"code": "ACCRUAL_GAP", "value": "-82093890", "unit": "currency_scale", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[7]|{"code": "ACCRUAL_RATIO", "value": "-163.30", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[8]|{"code": "OPERATING_TO_PRETAX", "value": "0.97", "unit": "x", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[9]|{"code": "NONCORE_TO_PRETAX", "value": "6.77", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": null, "comparison_period_end": null}
+OBJ|$.earnings_cash_quality.metrics[10]|{"code": "REVENUE_GROWTH_YOY", "value": "42.81", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": "464119398", "comparison_period_end": "2025-06-30"}
+OBJ|$.earnings_cash_quality.metrics[11]|{"code": "OPERATING_PROFIT_GROWTH_YOY", "value": "225.01", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": "18160918", "comparison_period_end": "2025-06-30"}
+OBJ|$.earnings_cash_quality.metrics[12]|{"code": "NET_INCOME_GROWTH_YOY", "value": "319.58", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": "11981560", "comparison_period_end": "2025-06-30"}
+OBJ|$.earnings_cash_quality.metrics[13]|{"code": "OCF_GROWTH_YOY", "value": "781.70", "unit": "%", "current_period_end": "2026-06-30", "comparison_value": "15012559", "comparison_period_end": "2025-06-30"}
+OBJ|$.financial_risk.metrics[0]|{"code": "NET_DEBT", "value": "-141818592", "unit": "currency_scale"}
+OBJ|$.financial_risk.metrics[1]|{"code": "PREVIOUS_NET_DEBT", "value": "-82255536", "unit": "currency_scale"}
+OBJ|$.financial_risk.metrics[2]|{"code": "NET_DEBT_CHANGE", "value": "-59563056", "unit": "currency_scale"}
+OBJ|$.financial_risk.metrics[3]|{"code": "OPERATING_MARGIN", "value": "8.91", "unit": "%"}
+OBJ|$.financial_risk.metrics[4]|{"code": "PRIOR_OPERATING_MARGIN", "value": "3.91", "unit": "%"}
+OBJ|$.financial_risk.metrics[5]|{"code": "OPERATING_MARGIN_DELTA", "value": "5.00", "unit": "pp"}
+OBJ|$.financial_risk.metrics[6]|{"code": "OCF_TO_NET_INCOME", "value": "2.63", "unit": "x"}
+OBJ|$.financial_risk.metrics[7]|{"code": "FREE_CASH_FLOW", "value": "120508319", "unit": "currency_scale"}
+OBJ|$.financial_risk.metrics[8]|{"code": "SHORT_TERM_DEBT_TO_CASH", "value": "0.09", "unit": "x"}
+OBJ|$.financial_risk.metrics[9]|{"code": "SHORT_TERM_DEBT_TO_EQUITY", "value": "0.04", "unit": "x"}
+OBJ|$.financial_risk.metrics[10]|{"code": "WORKING_CAPITAL", "value": "114111553", "unit": "currency_scale"}
+OBJ|$.financial_risk.metrics[11]|{"code": "WORKING_CAPITAL_CHANGE", "value": "44.24", "unit": "%"}
+OBJ|$.financial_risk.metrics[12]|{"code": "EQUITY_GROWTH_SINCE_PRIOR_BALANCE", "value": "6.38", "unit": "%"}
+OBJ|$.financial_risk.metrics[13]|{"code": "REVENUE_GROWTH_YOY", "value": "42.81", "unit": "%"}
+OBJ|$.financial_risk.metrics[14]|{"code": "RECEIVABLES_GROWTH_YOY", "value": null, "unit": "%"}
+OBJ|$.financial_risk.metrics[15]|{"code": "INVENTORY_GROWTH_YOY", "value": null, "unit": "%"}
+OBJ|$.financial_risk.metrics[16]|{"code": "INTEREST_COVERAGE", "value": null, "unit": "x"}
+
+===== REQUIRED_CODE_MATCHES =====
+
+===== OWNERSHIP_SHARE_HINTS =====
+SHARE|$.financial_health.metrics[0].comparison_value|None
+SHARE|$.financial_health.metrics[0].comparison_period_end|None
+SHARE|$.financial_health.metrics[1].comparison_value|None
+SHARE|$.financial_health.metrics[1].comparison_period_end|None
+SHARE|$.financial_health.metrics[2].comparison_value|None
+SHARE|$.financial_health.metrics[2].comparison_period_end|None
+SHARE|$.financial_health.metrics[3].comparison_value|None
+SHARE|$.financial_health.metrics[3].comparison_period_end|None
+SHARE|$.financial_health.metrics[4].comparison_value|None
+SHARE|$.financial_health.metrics[4].comparison_period_end|None
+SHARE|$.financial_health.metrics[5].comparison_value|None
+SHARE|$.financial_health.metrics[5].comparison_period_end|None
+SHARE|$.financial_health.metrics[6].comparison_value|None
+SHARE|$.financial_health.metrics[6].comparison_period_end|None
+SHARE|$.financial_health.metrics[7].comparison_value|None
+SHARE|$.financial_health.metrics[7].comparison_period_end|None
+SHARE|$.financial_health.metrics[8].comparison_value|None
+SHARE|$.financial_health.metrics[8].comparison_period_end|None
+SHARE|$.financial_health.metrics[10].comparison_value|None
+SHARE|$.financial_health.metrics[10].comparison_period_end|None
+SHARE|$.financial_health.metrics[11].comparison_value|None
+SHARE|$.financial_health.metrics[11].comparison_period_end|None
+SHARE|$.financial_health.metrics[12].comparison_value|None
+SHARE|$.financial_health.metrics[12].comparison_period_end|None
+SHARE|$.financial_health.metrics[13].comparison_value|None
+SHARE|$.financial_health.metrics[13].comparison_period_end|None
+SHARE|$.financial_health.metrics[14].comparison_value|None
+SHARE|$.financial_health.metrics[14].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[0].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[0].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[1].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[1].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[2].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[2].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[3].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[3].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[4].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[4].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[5].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[5].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[6].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[6].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[7].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[7].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[8].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[8].comparison_period_end|None
+SHARE|$.earnings_cash_quality.metrics[9].comparison_value|None
+SHARE|$.earnings_cash_quality.metrics[9].comparison_period_end|None
+SHARE|$.financial_risk.metrics[14].value|None
+SHARE|$.financial_risk.metrics[15].value|None
+SHARE|$.financial_risk.metrics[16].value|None
+SHARE|$.ownership|None
+SHARE|$.market_multiples|None
+
+FIN_PROD_V6_CANONICAL_SERIES_FUNDAMENTAL_MAP=PASS

@@ -1,0 +1,206 @@
+﻿from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Mapping
+
+from backend.app.analysis.jump_candidate_entry_readiness import (
+    EARLY,
+    OVEREXTENDED,
+    READY,
+    WAIT_CONFIRMATION,
+    evaluate_jump_candidate_entry_readiness,
+)
+from backend.app.analysis.jump_candidate_quality import evaluate_jump_candidate_quality
+
+
+@dataclass(frozen=True)
+class PriorityMergeCandidate:
+    candidate: object
+    source: str
+    scan_rank: int
+    rank_change: int | None
+    entry_readiness: str
+    jump_quality_eligible: bool
+    priority_reason: str
+
+
+_READINESS_ORDER = {
+    READY: 0,
+    WAIT_CONFIRMATION: 1,
+    EARLY: 2,
+    OVEREXTENDED: 3,
+}
+
+
+def _normalize_symbol(value: object) -> str:
+    return str(value or "").strip().upper().removesuffix(".IS")
+
+
+def _rank_change(context: object | None) -> int | None:
+    if context is None:
+        return None
+    value = getattr(context, "rank_change", None)
+    if value is None:
+        return None
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _priority_reason(
+    *,
+    source: str,
+    scan_rank: int,
+    rank_change: int | None,
+    readiness: str,
+    quality_eligible: bool,
+) -> str:
+    parts = [f"{readiness}", f"tarama #{scan_rank}"]
+    if source == "SICRAMA" and rank_change is not None:
+        parts.append(f"sД±ra hareketi +{rank_change}")
+    parts.append("kalite uygun" if quality_eligible else "kalite filtresi dД±ЕџД±")
+    return " В· ".join(parts)
+
+
+def merge_jump_and_scan_candidates(
+    candidates: tuple[object, ...],
+    visibility: Mapping[str, object],
+    *,
+    limit: int = 5,
+    movement_pool_limit: int = 20,
+) -> tuple[PriorityMergeCandidate, ...]:
+    """Tarama Г§ekirdeДџi ile sД±Г§rama adaylarД±nД± tek aГ§Д±klanabilir Г¶ncelik akД±ЕџД±nda birleЕџtirir.
+
+    Yeni birleЕџik skor Гјretmez. Г–ncelik sД±rasД± yalnД±z mevcut giriЕџ hazД±rlД±ДџД±
+    durumunu, sД±Г§rama kalite kapД±sД±nД± ve orijinal tarama sД±rasД±nД± kullanД±r.
+    SД±Г§rama kanД±tД± yalnД±z ilk ``limit`` dД±ЕџД±ndaki kaliteli pozitif hareketlileri
+    aday havuzuna ekler; aynД± hazД±rlД±k dГјzeyinde orijinal tarama sД±rasД± korunur.
+    """
+    if limit < 1:
+        return ()
+
+    indexed = list(enumerate(candidates, start=1))
+    baseline = indexed[:limit]
+    baseline_symbols = {
+        _normalize_symbol(getattr(candidate, "sembol", ""))
+        for _, candidate in baseline
+    }
+
+    pool: list[PriorityMergeCandidate] = []
+
+    for scan_rank, candidate in baseline:
+        symbol = _normalize_symbol(getattr(candidate, "sembol", ""))
+        context = visibility.get(symbol)
+        change = _rank_change(context)
+        quality = evaluate_jump_candidate_quality(candidate)
+        readiness = evaluate_jump_candidate_entry_readiness(candidate)
+        source = "SICRAMA" if change is not None and change > 0 and quality.eligible else "TARAMA"
+        pool.append(
+            PriorityMergeCandidate(
+                candidate=candidate,
+                source=source,
+                scan_rank=scan_rank,
+                rank_change=change,
+                entry_readiness=readiness.state,
+                jump_quality_eligible=quality.eligible,
+                priority_reason=_priority_reason(
+                    source=source,
+                    scan_rank=scan_rank,
+                    rank_change=change,
+                    readiness=readiness.state,
+                    quality_eligible=quality.eligible,
+                ),
+            )
+        )
+
+    challengers: list[PriorityMergeCandidate] = []
+    for scan_rank, candidate in indexed[limit:movement_pool_limit]:
+        symbol = _normalize_symbol(getattr(candidate, "sembol", ""))
+        if not symbol or symbol in baseline_symbols:
+            continue
+        context = visibility.get(symbol)
+        change = _rank_change(context)
+        if change is None or change <= 0:
+            continue
+
+        quality = evaluate_jump_candidate_quality(candidate)
+        if not quality.eligible:
+            continue
+
+        readiness = evaluate_jump_candidate_entry_readiness(candidate)
+        if readiness.state in {EARLY, OVEREXTENDED}:
+            continue
+
+        challengers.append(
+            PriorityMergeCandidate(
+                candidate=candidate,
+                source="SICRAMA",
+                scan_rank=scan_rank,
+                rank_change=change,
+                entry_readiness=readiness.state,
+                jump_quality_eligible=True,
+                priority_reason=_priority_reason(
+                    source="SICRAMA",
+                    scan_rank=scan_rank,
+                    rank_change=change,
+                    readiness=readiness.state,
+                    quality_eligible=True,
+                ),
+            )
+        )
+
+    # Daha bГјyГјk sД±ra hareketi yalnД±z hangi sД±Г§rama adaylarД±nД±n havuza gireceДџini
+    # belirler; son Top-5 Г¶nceliДџi giriЕџ hazД±rlД±ДџД± + orijinal tarama sД±rasД±dД±r.
+    challengers.sort(
+        key=lambda item: (
+            _READINESS_ORDER.get(item.entry_readiness, 99),
+            -(item.rank_change or 0),
+            item.scan_rank,
+        )
+    )
+    pool.extend(challengers[:limit])
+
+    # Backward-compatible movement-pool contract: when the baseline is only
+    # TEYД°T BEKLД°YOR and the best jump challengers are also TEYД°T BEKLД°YOR,
+    # keep the first three scan candidates and reserve the final two slots for
+    # the strongest positive rank movers. This preserves the established
+    # 3 TARAMA + 2 SICRAMA discovery behavior without giving jump candidates
+    # a bonus over equally GД°RД°ЕћE HAZIR scan candidates.
+    if limit >= 5 and challengers:
+        baseline_items = pool[: len(baseline)]
+        waiting_baseline = all(
+            item.entry_readiness == WAIT_CONFIRMATION
+            for item in baseline_items
+        )
+        waiting_challengers = [
+            item for item in challengers
+            if item.entry_readiness == WAIT_CONFIRMATION
+        ]
+        if waiting_baseline and waiting_challengers:
+            scan_core_count = min(3, limit)
+            jump_slot_count = min(limit - scan_core_count, len(waiting_challengers))
+            selected = list(baseline_items[:scan_core_count])
+            selected.extend(waiting_challengers[:jump_slot_count])
+            if len(selected) < limit:
+                selected_symbols = {
+                    _normalize_symbol(getattr(item.candidate, "sembol", ""))
+                    for item in selected
+                }
+                selected.extend(
+                    item
+                    for item in baseline_items[scan_core_count:]
+                    if _normalize_symbol(getattr(item.candidate, "sembol", ""))
+                    not in selected_symbols
+                )
+            return tuple(selected[:limit])
+
+    pool.sort(
+        key=lambda item: (
+            _READINESS_ORDER.get(item.entry_readiness, 99),
+            0 if item.jump_quality_eligible else 1,
+            item.scan_rank,
+        )
+    )
+    return tuple(pool[:limit])
+

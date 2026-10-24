@@ -1,0 +1,27 @@
+{
+  "module": "Temel Analiz",
+  "version": "V1",
+  "status": "VALIDATION_PENDING",
+  "baseline_tests": 1023,
+  "sprint": 68,
+  "scope": [
+    "financial_period_model",
+    "freshness_lock",
+    "fundamental_ratios",
+    "quality_score",
+    "score_history",
+    "sector_reference",
+    "sector_ranking",
+    "sector_strength_map",
+    "csv_pdf_reporting",
+    "report_archive",
+    "archive_search_export",
+    "user_settings"
+  ],
+  "security": {
+    "investment_advice": false,
+    "technical_score_separate": true,
+    "fundamental_filter_default_enabled": false,
+    "vbts_lock_preserved": true
+  }
+}

@@ -1,0 +1,11 @@
+﻿SYMBOLS=prepare_document_metadata
+TEST SYMBOL=prepare_document_metadata FILE=D:\Projects\Hisse-Robotu\backend\tests\test_market_context_report_type_integration.py COUNT=3
+TEST SYMBOL=prepare_document_metadata FILE=D:\Projects\Hisse-Robotu\backend\tests\test_market_context_report_type_integration_rev1.py COUNT=2
+HAS_PLACEHOLDER=False
+HAS_UI=False
+HAS_PERSISTENCE=False
+HAS_REPORT_MAPPING=True
+HAS_INTEGRATION_HINT=False
+DECISION=ISOLATED_INTEGRATION_UTILITY_LIKELY_INTENTIONAL
+NEXT=No V1.1 wiring gap proven. Keep unchanged.
+PRODUCTION_MUTATION=YOK

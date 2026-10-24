@@ -1,0 +1,76 @@
+{
+  "source": "_discovery\\erste_hungary\\f4_price_momentum_evidence_20261022.json",
+  "computed_funds": 81,
+  "daily_change_count": 81,
+  "daily_positive": 54,
+  "daily_negative": 27,
+  "daily_flat": 0,
+  "five_observation_change_count": 81,
+  "twenty_observation_change_count": 81,
+  "top_10_by_20_observation_change": [
+    {
+      "isin": "LU0509951272",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 4.193659,
+      "daily_change_pct": 1.152499
+    },
+    {
+      "isin": "LU0332193340",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 4.105922,
+      "daily_change_pct": 0.743888
+    },
+    {
+      "isin": "LU0509951199",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 3.024142,
+      "daily_change_pct": 1.447869
+    },
+    {
+      "isin": "LU0332192888",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 2.936855,
+      "daily_change_pct": 1.038473
+    },
+    {
+      "isin": "LU0121204431",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 2.690276,
+      "daily_change_pct": 0.816366
+    },
+    {
+      "isin": "LU0121175821",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 2.486113,
+      "daily_change_pct": 0.551558
+    },
+    {
+      "isin": "LU0214495557",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 2.282313,
+      "daily_change_pct": 0.570348
+    },
+    {
+      "isin": "LU0347711466",
+      "last_date_utc": "2026-10-20",
+      "change_20_observations_pct": 2.256234,
+      "daily_change_pct": -0.236857
+    },
+    {
+      "isin": "AT0000A00GA2",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 1.940108,
+      "daily_change_pct": 0.165066
+    },
+    {
+      "isin": "AT0000673322",
+      "last_date_utc": "2026-10-21",
+      "change_20_observations_pct": 1.544402,
+      "daily_change_pct": 0.047551
+    }
+  ],
+  "f4_surface_updated": false,
+  "production_mutation": false,
+  "automatic_trade_authority": "NONE",
+  "forced_fill": false
+}

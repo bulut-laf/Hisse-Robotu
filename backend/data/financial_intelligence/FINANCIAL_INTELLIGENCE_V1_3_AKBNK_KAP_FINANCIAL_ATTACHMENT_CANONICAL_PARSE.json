@@ -1,0 +1,32 @@
+{
+  "schema_version": "financial-intelligence-v1-3-akbnk-kap-financial-attachment-canonical-parse-v1",
+  "status": "PASS_FAIL_CLOSED",
+  "symbol": "AKBNK",
+  "notification_id": "1637884",
+  "source_type": "KAP",
+  "source_uri": "https://www.kap.org.tr/tr/api/file/download/4028328c9f52dc40019fa90343905e35",
+  "source_name": "AKBNK_1637884_2026_2.xls",
+  "network_fetch": true,
+  "final_url": "https://www.kap.org.tr/tr/api/file/download/4028328c9f52dc40019fa90343905e35",
+  "content_type": "application/pdf",
+  "content_disposition": "inline; filename*=UTF-8''30062026%20Akbank%20Konsolide%20Finansal%20Tablolar%20ve%20Dipnotlar.pdf",
+  "attachment_bytes": 2138243,
+  "evidence_hash": "sha256:48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5",
+  "parser_status": "BLOCKED",
+  "parser_error": "KapFinancialXlsError:KAP XLS UTF-8 HTML olarak okunamadı.",
+  "identity": null,
+  "canonical_fact_count": 0,
+  "unmapped_count": 0,
+  "production_evidence": false,
+  "canonical_import_ready": false,
+  "bank_metric_mapping_ready": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "blockers": [
+    "KAP_ATTACHMENT_CANONICAL_PARSE_FAILED"
+  ],
+  "raw_attachment_persisted": true,
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO",
+  "raw_attachment_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.xls"
+}

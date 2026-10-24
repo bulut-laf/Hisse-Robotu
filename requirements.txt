@@ -1,0 +1,7 @@
+numpy>=2.0,<3
+pandas>=2.2,<3
+yfinance>=0.2.54,<1
+streamlit>=1.60,<2
+reportlab>=4.4,<5
+pytest>=8,<10
+pypdf>=5,<7

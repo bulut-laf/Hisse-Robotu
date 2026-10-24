@@ -1,0 +1,46 @@
+﻿
+  backend\app\funds\international\erste_hungary_f4_bridge.py:9:BRIDGE_VERSION = 
+"erste-hungary-f4-evidence-bridge-v1"
+  backend\app\funds\international\erste_hungary_f4_bridge.py:10:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:11:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:12:def derive_f4_state(
+  backend\app\funds\international\erste_hungary_f4_bridge.py:13:    *,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:14:    fund_size_change: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:15:    net_flow_ratio: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:16:) -> EvidenceState:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:17:    values = 
+[fund_size_change, net_flow_ratio]
+  backend\app\funds\international\erste_hungary_f4_bridge.py:30:    return 
+EvidenceState.NEUTRAL
+  backend\app\funds\international\erste_hungary_f4_bridge.py:31:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:32:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:33:def inject_f4_fields(
+  backend\app\funds\international\erste_hungary_f4_bridge.py:34:    base: 
+FundEvidenceInput,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:35:    *,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:36:    fund_size_change: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:37:    net_flow_ratio: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:38:) -> FundEvidenceInput:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:45:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:46:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:47:def 
+derive_fund_size_change(
+> backend\app\funds\international\erste_hungary_f4_bridge.py:48:    previous_nav: 
+Decimal | None,
+> backend\app\funds\international\erste_hungary_f4_bridge.py:49:    latest_nav: 
+Decimal | None,
+  backend\app\funds\international\erste_hungary_f4_bridge.py:50:) -> Decimal | None:
+> backend\app\funds\international\erste_hungary_f4_bridge.py:51:    if previous_nav is 
+None or latest_nav is None:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:52:        return None
+> backend\app\funds\international\erste_hungary_f4_bridge.py:53:    if previous_nav <= 
+0 or latest_nav <= 0:
+  backend\app\funds\international\erste_hungary_f4_bridge.py:54:        return None
+> backend\app\funds\international\erste_hungary_f4_bridge.py:55:    return (latest_nav 
+/ previous_nav) - Decimal("1")
+
+

@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "source_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.xls",
+  "normalized_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\evidence\\AKBNK\\AKBNK_1637884_2026_2.pdf",
+  "expected_sha256": "48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5",
+  "actual_sha256": "48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5",
+  "hash_match": true,
+  "header_hex_64": "aced0005757200025b42acf317f8060854e002000078700020a068255044462d312e370a25e2e3cfd30a312030206f626a0a3c3c2f547970652f4d6574616461",
+  "pdf_magic_offset_4096": 27,
+  "pdf_signature_present": true,
+  "normalized_copy_written": true,
+  "normalized_sha256": "48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5",
+  "extraction_engine": "PYPDF",
+  "page_count": 99,
+  "text_char_count": 374651,
+  "financial_term_hits": {
+    "sermaye yeterlilik": 5,
+    "ana sermaye": 32,
+    "çekirdek sermaye": 32,
+    "krediler": 198,
+    "mevduat": 133,
+    "takipteki": 9,
+    "özkaynak": 137,
+    "toplam aktif": 4,
+    "faiz gelirleri": 7,
+    "faiz giderleri": 4,
+    "net dönem karı": 0,
+    "net dönem kârı": 3
+  },
+  "financial_term_present_count": 11,
+  "financial_text_ready": true,
+  "bank_metric_mapping_ready": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "errors": [
+    "PYMUPDF:ModuleNotFoundError:No module named 'fitz'"
+  ],
+  "blockers": [],
+  "source_bytes_mutated": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

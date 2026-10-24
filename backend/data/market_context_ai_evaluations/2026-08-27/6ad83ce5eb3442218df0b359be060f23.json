@@ -1,0 +1,50 @@
+{
+  "review_id": "6ad83ce5eb3442218df0b359be060f23",
+  "date": "2026-08-27",
+  "created_at": "2026-08-27T08:34:08Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 3.953,
+  "report_count": 3,
+  "sources": [
+    "ICBC",
+    "Yatırım Finansman"
+  ],
+  "document_ids": [
+    "53efc82cc1e14e40bcb13825539842da",
+    "3b8e6d3e74e4492f851e2cc3cae2b8ed",
+    "20dfd07ef59246f4aa5defdd8cd9cc25"
+  ],
+  "output": {
+    "summary": "27 Ağustos 2026 tarihinde BIST 100 endeksi günü %0,95 yükselişle 14.611 seviyesinden tamamladı. Günün strateji planında risk modu kontrollü pozitif olarak değerlendirilirken, Nvidia'nın güçlü bilançosu ve petrol fiyatlarının 86 dolar seviyelerine gerilemesi pozitif temalar olarak öne çıktı. Makro tarafta ABD'de kalıcı enflasyon endişeleri ve Fed'e yönelik beklentiler takip edilirken, içeride ise büyüme, işsizlik, imalat PMI ve önümüzdeki hafta açıklanacak Ağustos ayı TÜFE verileri gündemde yer alıyor. Borsa İstanbul'da bankacılık ve sınai sektörleri öncülüğünde alımlar görülürken, MSCI endeks değişiklikleri ve KAP'ta yayımlanan sermaye artırımı, pay alım teklifleri ve geri alım işlemleri izlendi.",
+    "positive_factors": [
+      "Nvidia'nın ikinci çeyrekte beklentileri aşan güçlü bilançosu ve yapay zeka altyapı talebinin hızlanması",
+      "Brent petrol fiyatlarının 86 dolar seviyelerine gerilemesi",
+      "BIST 100 endeksinin %0,95 artışla 14.611 puandan kapanması ve başta bankacılık olmak üzere risk iştahındaki kuvvetlenme",
+      "Türkiye'nin 5 yıllık CDS priminin 219 baz puan seviyesinde seyretmesi",
+      "Katar'ın arabuluculuk faaliyetlerine yeniden başlaması"
+    ],
+    "risk_factors": [
+      "ABD'de kalıcı enflasyon baskıları ve Fed'in faiz artırım ihtimallerine yönelik piyasa fiyatlamaları",
+      "Kevin Warsh'ın Jackson Hole toplantısında yapacağı açıklamaların şahin olma ihtimali",
+      "SPK fon düzenlemesi belirsizliği",
+      "Yurt içinde açıklanacak Ağustos ayı TÜFE ve yıl sonu enflasyon beklentileri ile TCMB faiz patikasına ilişkin belirsizlikler"
+    ],
+    "stock_specific_risks": [
+      "FON yoğun küçük hisselerde düzenleme netleşene kadar temkinli olunması gerekliliği"
+    ],
+    "aligned_points": [
+      "BIST 100 endeksinin güne pozitif başlangıç beklentisi ve günün yükselişle tamamlanması",
+      "Nvidia'nın güçlü bilançosunun küresel risk iştahını ve teknoloji temasını desteklemesi",
+      "Petrol fiyatlarındaki gerilemenin ve Orta Doğu'daki gelişmelerin yakından izlenmesi"
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "ABD'de Jackson Hole Sempozyumu ve Fed Başkanı Kevin Warsh'ın konuşması",
+      "Türkiye'nin 2Ç26 GSYH ve Temmuz ayı İşsizlik Oranı verileri",
+      "Ağustos ayı İmalat PMI ve TÜFE verileri",
+      "MSCI endeks değişikliklerinin 1 Eylül'de yürürlüğe girecek olması",
+      "KAP'ta duyurulan ATSYH, EKGYO, MTRKS, SMRTG, TRALT ve diğer şirket gelişmeleri"
+    ]
+  }
+}

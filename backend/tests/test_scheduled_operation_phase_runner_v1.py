@@ -1,0 +1,296 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime
+from types import SimpleNamespace
+from zoneinfo import ZoneInfo
+
+import pandas as pd
+import pytest
+
+import backend.app.operations.scheduled_operation_phase_runner as runner
+from backend.app.operations.scheduled_operation_phase_runner import (
+    CANONICAL_CLOSE,
+    POSTOPEN,
+    PRECLOSE,
+    PREOPEN,
+    ProductionScheduledOperationRuntime,
+    ScheduledOperationPhaseError,
+    ScheduledOperationPhaseResult,
+    execute_operation_phase,
+)
+
+ISTANBUL = ZoneInfo("Europe/Istanbul")
+
+
+class Runtime:
+    def __init__(self):
+        self.calls = []
+
+    def _result(self, phase, now, *, canonical=False):
+        self.calls.append(phase)
+        return ScheduledOperationPhaseResult(
+            phase=phase,
+            run_date=now.date().isoformat(),
+            observed_at=now.isoformat(),
+            status="OK",
+            candidate_count=1,
+            detail_rows=({"Hisse": "AAA"},),
+            preview_only=not canonical,
+            canonical=canonical,
+            ranking_write_allowed=canonical,
+            profile_write_allowed=canonical,
+            al_sat_decision_allowed=canonical,
+        )
+
+    def preopen_context(self, *, now):
+        return self._result(PREOPEN, now)
+
+    def postopen_gap_entry(self, *, now):
+        return self._result(POSTOPEN, now)
+
+    def preclose_preview(self, *, now):
+        return self._result(PRECLOSE, now)
+
+    def canonical_close(self, *, now):
+        return self._result(CANONICAL_CLOSE, now, canonical=True)
+
+
+@pytest.mark.parametrize(
+    ("phase", "when"),
+    (
+        (PREOPEN, datetime(2026, 8, 28, 8, 45, tzinfo=ISTANBUL)),
+        (POSTOPEN, datetime(2026, 8, 28, 10, 20, tzinfo=ISTANBUL)),
+        (PRECLOSE, datetime(2026, 8, 28, 17, 20, tzinfo=ISTANBUL)),
+        (CANONICAL_CLOSE, datetime(2026, 8, 28, 18, 30, tzinfo=ISTANBUL)),
+    ),
+)
+def test_exact_four_phase_dispatch(phase, when):
+    runtime = Runtime()
+    result = execute_operation_phase(
+        phase,
+        now=when,
+        runtime=runtime,
+    )
+    assert result.phase == phase
+    assert runtime.calls == [phase]
+
+
+def test_postopen_1019_is_blocked():
+    with pytest.raises(ScheduledOperationPhaseError, match="10:20"):
+        execute_operation_phase(
+            POSTOPEN,
+            now=datetime(2026, 8, 28, 10, 19, tzinfo=ISTANBUL),
+            runtime=Runtime(),
+        )
+
+
+def test_canonical_close_before_1830_is_blocked():
+    with pytest.raises(ScheduledOperationPhaseError, match="18:30"):
+        execute_operation_phase(
+            CANONICAL_CLOSE,
+            now=datetime(2026, 8, 28, 18, 29, tzinfo=ISTANBUL),
+            runtime=Runtime(),
+        )
+
+
+def test_preview_phase_cannot_expose_write_authority():
+    class Unsafe(Runtime):
+        def preclose_preview(self, *, now):
+            return ScheduledOperationPhaseResult(
+                phase=PRECLOSE,
+                run_date=now.date().isoformat(),
+                observed_at=now.isoformat(),
+                status="BAD",
+                candidate_count=1,
+                detail_rows=(),
+                ranking_write_allowed=True,
+            )
+
+    with pytest.raises(ScheduledOperationPhaseError, match="yetkisi"):
+        execute_operation_phase(
+            PRECLOSE,
+            now=datetime(2026, 8, 28, 17, 20, tzinfo=ISTANBUL),
+            runtime=Unsafe(),
+        )
+
+
+def test_preopen_reuses_latest_evening_archive_without_writing(monkeypatch):
+    class Archive:
+        def latest(self, phase):
+            assert phase == "EVENING"
+            return {
+                "candidate_count": 2,
+                "rows": [
+                    {"symbol": "AAA"},
+                    {"symbol": "BBB.IS"},
+                ],
+            }
+
+    monkeypatch.setattr(
+        runner,
+        "DecisionOutputArchiveJsonStore",
+        lambda: Archive(),
+    )
+
+    result = ProductionScheduledOperationRuntime().preopen_context(
+        now=datetime(2026, 8, 28, 8, 45, tzinfo=ISTANBUL),
+    )
+
+    assert result.status == "PREOPEN_CONTEXT_READY"
+    assert result.candidate_count == 2
+    assert [row["Hisse"] for row in result.detail_rows] == ["AAA", "BBB"]
+    assert result.canonical is False
+    assert result.ranking_write_allowed is False
+
+
+def test_postopen_uses_prior_close_plus_existing_intraday_batch(monkeypatch):
+    class Archive:
+        def latest(self, phase):
+            return {
+                "rows": [
+                    {"symbol": "AAA"},
+                ],
+            }
+
+    daily = pd.DataFrame(
+        {
+            "Open": [98.0, 99.0],
+            "High": [101.0, 102.0],
+            "Low": [97.0, 98.0],
+            "Close": [100.0, 100.0],
+            "Volume": [1000.0, 1200.0],
+        },
+        index=pd.to_datetime(["2026-08-26", "2026-08-27"]),
+    )
+
+    snapshot = SimpleNamespace(
+        locked=False,
+        day_open=102.0,
+        last_price=103.0,
+        measured_delay_minutes=15.0,
+    )
+
+    monkeypatch.setattr(
+        runner,
+        "DecisionOutputArchiveJsonStore",
+        lambda: Archive(),
+    )
+    monkeypatch.setattr(
+        runner,
+        "toplu_fiyat_verisi_getir",
+        lambda *args, **kwargs: SimpleNamespace(
+            veriler={"AAA.IS": daily},
+            hatalar=(),
+        ),
+    )
+    monkeypatch.setattr(
+        runner,
+        "fetch_scheduled_intraday_batch",
+        lambda *args, **kwargs: SimpleNamespace(
+            snapshots={"AAA.IS": snapshot},
+            failures=(),
+        ),
+    )
+
+    result = ProductionScheduledOperationRuntime().postopen_gap_entry(
+        now=datetime(2026, 8, 28, 10, 20, tzinfo=ISTANBUL),
+    )
+
+    assert result.status == "POSTOPEN_GAP_ENTRY_EVIDENCE_READY"
+    assert result.candidate_count == 1
+    assert result.detail_rows[0]["Gap %"] == 2.0
+    assert result.al_sat_decision_allowed is False
+
+
+def test_preclose_delegates_only_to_existing_partial_preview(monkeypatch):
+    preview = SimpleNamespace(
+        scan_result=SimpleNamespace(adaylar=(1, 2)),
+    )
+
+    monkeypatch.setattr(
+        runner,
+        "run_preclose_partial_preview",
+        lambda *, now: preview,
+    )
+    monkeypatch.setattr(
+        runner,
+        "preclose_preview_rows",
+        lambda value: (
+            {"Hisse": "AAA"},
+            {"Hisse": "BBB"},
+        ),
+    )
+
+    result = ProductionScheduledOperationRuntime().preclose_preview(
+        now=datetime(2026, 8, 28, 17, 20, tzinfo=ISTANBUL),
+    )
+
+    assert result.candidate_count == 2
+    assert result.preview_only is True
+    assert result.canonical is False
+
+
+def test_canonical_close_delegates_existing_evening_runner(monkeypatch):
+    calls = []
+    momentum_calls = []
+
+    def legacy(phase, *, now):
+        calls.append((phase, now.hour, now.minute))
+        return SimpleNamespace(status="SUCCESS", candidate_count=5)
+
+    class FakeMomentumService:
+        def calistir(self, request):
+            momentum_calls.append(request)
+            return SimpleNamespace(toplu_tarama_baslatildi=True)
+
+    monkeypatch.setattr(runner, "execute_scheduled_run", legacy)
+    monkeypatch.setattr(runner, "MomentumDiscoveryService", FakeMomentumService)
+
+    result = ProductionScheduledOperationRuntime().canonical_close(
+        now=datetime(2026, 8, 28, 18, 30, tzinfo=ISTANBUL),
+    )
+
+    assert calls == [("EVENING", 18, 30)]
+    assert result.delegated_legacy_phase == "EVENING"
+    assert result.canonical is True
+    assert result.candidate_count == 5
+    assert len(momentum_calls) == 1
+    assert momentum_calls[0].evren == runner.TARAMA_EVRENLERI[4]
+    assert momentum_calls[0].internetten_evren_guncelle is False
+
+
+def test_canonical_close_momentum_error_does_not_change_legacy_result(monkeypatch):
+    def legacy(phase, *, now):
+        return SimpleNamespace(status="SUCCESS", candidate_count=7)
+
+    class BrokenMomentumService:
+        def calistir(self, request):
+            raise RuntimeError("momentum test failure")
+
+    monkeypatch.setattr(runner, "execute_scheduled_run", legacy)
+    monkeypatch.setattr(runner, "MomentumDiscoveryService", BrokenMomentumService)
+
+    result = ProductionScheduledOperationRuntime().canonical_close(
+        now=datetime(2026, 8, 28, 18, 30, tzinfo=ISTANBUL),
+    )
+
+    assert result.status == "SUCCESS"
+    assert result.candidate_count == 7
+    assert result.delegated_legacy_phase == "EVENING"
+
+
+def test_module_is_not_a_parallel_scheduler_or_new_store():
+    import inspect
+
+    source = inspect.getsource(runner)
+    forbidden = (
+        "Register-ScheduledTask",
+        "New-ScheduledTaskTrigger",
+        "schtasks",
+        "class ScheduledOperationJsonStore",
+        "class ScheduledOperationStore",
+        "RankObservationJsonlStore",
+        "ResearchProfileMemory",
+    )
+    assert all(token not in source for token in forbidden)

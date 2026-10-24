@@ -1,0 +1,58 @@
+from __future__ import annotations
+
+import ast
+from pathlib import Path
+
+
+DASHBOARD_PATH = Path("backend/dashboard.py")
+
+
+def _dashboard_ast() -> ast.Module:
+    source = DASHBOARD_PATH.read_text(encoding="utf-8")
+    return ast.parse(source)
+
+
+def test_dashboard_korumali_tarama_fabrikasini_import_eder() -> None:
+    tree = _dashboard_ast()
+
+    imported_names: set[str] = set()
+
+    for node in ast.walk(tree):
+        if not isinstance(node, ast.ImportFrom):
+            continue
+
+        if (
+            node.module
+            == "backend.app.compliance.dashboard_market_scanner_factory"
+        ):
+            imported_names.update(alias.name for alias in node.names)
+
+    assert "build_protected_market_scanner" in imported_names
+
+
+def test_dashboard_toplu_taramada_dogrudan_servis_olusturmaz() -> None:
+    tree = _dashboard_ast()
+
+    direct_calls = [
+        node
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == "BistMarketScannerService"
+    ]
+
+    assert direct_calls == []
+
+
+def test_dashboard_toplu_taramada_korumali_fabrikayi_kullanir() -> None:
+    tree = _dashboard_ast()
+
+    protected_factory_calls = [
+        node
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id == "build_protected_market_scanner"
+    ]
+
+    assert len(protected_factory_calls) >= 1

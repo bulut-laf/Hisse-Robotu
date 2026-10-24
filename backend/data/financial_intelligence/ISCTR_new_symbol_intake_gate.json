@@ -1,0 +1,29 @@
+{
+  "schema_version": "financial-intelligence-v1.1-new-symbol-intake-gate-v1",
+  "status": "BLOCKED",
+  "mode": "READ_ONLY_INTAKE_GATE",
+  "symbol": "ISCTR",
+  "sector_model": "BANK",
+  "period": "2026_2",
+  "source_file": "C:\\Users\\user\\AppData\\Local\\Temp\\pytest-of-user\\pytest-421\\test_intake_gate_blocks_missin0\\missing.xls",
+  "source_exists": false,
+  "source_extension": ".xls",
+  "dedicated_model_ready": false,
+  "existing_acceptance_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_ISCTR_2026_2.json",
+  "existing_acceptance_found": false,
+  "blockers": [
+    "SOURCE_FILE_MISSING",
+    "DEDICATED_BANK_MODEL_REQUIRED"
+  ],
+  "next_stage": null,
+  "rules": [
+    "REAL_SOURCE_FILE_REQUIRED",
+    "EXPLICIT_SYMBOL_REQUIRED",
+    "EXPLICIT_PERIOD_REQUIRED",
+    "EXPLICIT_SECTOR_MODEL_REQUIRED",
+    "NON_INDUSTRIAL_MUST_NOT_USE_INDUSTRIAL_THRESHOLDS",
+    "NO_SYNTHETIC_ACCEPTANCE",
+    "NO_NEW_SCORE",
+    "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION"
+  ]
+}

@@ -1,0 +1,95 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_LIVE_MULTI_SYMBOL_PIPELINE_V3",
+  "symbol_source": "CANONICAL_FINANCIAL_ACCEPTANCE_DISCOVERY",
+  "symbols": [
+    {
+      "symbol": "TUPRS",
+      "sector_profile": "INDUSTRIAL",
+      "sector_routing": {
+        "valuation_models": [
+          "DCF_FCFF",
+          "EV_SALES",
+          "P_E",
+          "P_B"
+        ],
+        "required_focus": [
+          "margins",
+          "cash_conversion",
+          "capital_efficiency",
+          "cyclicality"
+        ],
+        "cyclicality_default": "MEDIUM"
+      },
+      "stages": [
+        {
+          "stage": "financial_core",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+          "status": "PASS",
+          "blocker": null
+        },
+        {
+          "stage": "market_ownership",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_acceptance.json",
+          "status": "PASS",
+          "blocker": null
+        },
+        {
+          "stage": "fair_value",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_fair_value_acceptance.json",
+          "status": "PASS",
+          "blocker": null
+        },
+        {
+          "stage": "investability",
+          "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_production_closure.json",
+          "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS",
+          "blocker": null
+        }
+      ],
+      "decision_support_status": "READY_FOR_DECISION_SUPPORT",
+      "blockers": [],
+      "warnings": [
+        "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT",
+        "LONG_TERM_CANONICAL_COVERAGE"
+      ],
+      "read_only": true,
+      "schema_version": "fin-prod-v2-manifest-v1",
+      "artifact_health": {
+        "present_or_pass": 4,
+        "missing": 0,
+        "invalid": 0,
+        "other": 0
+      }
+    }
+  ],
+  "summary": {
+    "total_symbols": 1,
+    "ready_for_decision_support": 1,
+    "blocked_source": 0,
+    "readiness": {
+      "READY_FOR_DECISION_SUPPORT": 1
+    },
+    "sector_profiles": {
+      "INDUSTRIAL": 1
+    },
+    "warnings": {
+      "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT": 1,
+      "LONG_TERM_CANONICAL_COVERAGE": 1
+    },
+    "blockers": {}
+  },
+  "ready_symbols": [
+    "TUPRS"
+  ],
+  "blocked_symbols": [],
+  "production_rules": [
+    "Canonical financial acceptance files are the only automatic symbol discovery source.",
+    "Existing FIN-PROD-V2 manifests are reused through the V2 orchestrator API.",
+    "No scanner/ranking/watchlist output is used to invent symbols.",
+    "No missing artifact becomes zero.",
+    "No AL/SAT, scanner, ranking or portfolio mutation.",
+    "This pipeline reports production readiness; it does not generate trade recommendations."
+  ],
+  "schema_version": "fin-prod-v3-live-batch-v1"
+}

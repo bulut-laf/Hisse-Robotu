@@ -1,0 +1,974 @@
+{
+  "generated_at": "2026-10-21",
+  "reference_date": "2026-10-21",
+  "target_count": 96,
+  "status_counts": {
+    "CSV_HEADER_NOT_FOUND": 96
+  },
+  "results": [
+    {
+      "isin": "AT0000627476",
+      "name": "Erste Responsible Stock America",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 225552
+    },
+    {
+      "isin": "AT0000605324",
+      "name": "ERSTE BOND DOLLAR USD R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 193330
+    },
+    {
+      "isin": "AT0000605332",
+      "name": "ERSTE BOND DOLLAR-CORPORATE",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 193930
+    },
+    {
+      "isin": "AT0000639067",
+      "name": "ERSTE RESPONSIBLE STOCK JAPAN EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 197472
+    },
+    {
+      "isin": "AT0000658968",
+      "name": "ERSTE BOND EURO-CORPORATE EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 197655
+    },
+    {
+      "isin": "AT0000673199",
+      "name": "ERSTE Bond Danubia EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 199276
+    },
+    {
+      "isin": "AT0000673181",
+      "name": "ERSTE STOCK EUROPE EMERGING EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 202984
+    },
+    {
+      "isin": "AT0000673249",
+      "name": "ERSTE RESERVE DOLLAR USD R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 191821
+    },
+    {
+      "isin": "AT0000673306",
+      "name": "ERSTE BOND EM GOVERNMENT EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 199411
+    },
+    {
+      "isin": "AT0000673322",
+      "name": "ERSTE BOND INTERNATIONAL EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 195641
+    },
+    {
+      "isin": "AT0000673355",
+      "name": "ERSTE RESERVE EURO PLUS EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 197829
+    },
+    {
+      "isin": "AT0000673371",
+      "name": "ERSTE RESPONSIBLE STOCK AMERICA USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 210936
+    },
+    {
+      "isin": "AT0000A00G88",
+      "name": "ERSTE STOCK EUROPE EMERGING HUF R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 210328
+    },
+    {
+      "isin": "AT0000A00GA2",
+      "name": "ERSTE BOND INTERNATIONAL HUF R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 205030
+    },
+    {
+      "isin": "AT0000A00G96",
+      "name": "ERSTE RESERVE CORPORATE HUF R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 197043
+    },
+    {
+      "isin": "AT0000A00GC8",
+      "name": "ERSTE BOND EM GOVERNMENT HUF R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 208357
+    },
+    {
+      "isin": "AT0000A00GE4",
+      "name": "ERSTE STOCK EM GLOBAL HUF R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 201587
+    },
+    {
+      "isin": "AT0000A00GK1",
+      "name": "ERSTE STOCK EM GLOBAL EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 188811
+    },
+    {
+      "isin": "AT0000A00GF1",
+      "name": "ERSTE RESPONSIBLE STOCK JAPAN HUF R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 207593
+    },
+    {
+      "isin": "AT0000A00GL9",
+      "name": "ERSTE RESERVE CORPORATE EUR R01",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 182779
+    },
+    {
+      "isin": "LU0012181748",
+      "name": "BNP PARIBAS FUNDS JAPAN EQUITY JPY",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 173096
+    },
+    {
+      "isin": "LU0012182399",
+      "name": "BNP PARIBAS FUNDS US SHORT DURATION BOND USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 178014
+    },
+    {
+      "isin": "LU0051128774",
+      "name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - P CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 3970
+    },
+    {
+      "isin": "LU0069970746",
+      "name": "BNP PARIBAS FUNDS JAPAN SMALL CAP JPY",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 170021
+    },
+    {
+      "isin": "LU0075938133",
+      "name": "BNP PARIBAS FUNDS EURO BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 179307
+    },
+    {
+      "isin": "LU0086913042",
+      "name": "BNP PARIBAS FUNDS EUROPE CONVERTIBLE EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 180406
+    },
+    {
+      "isin": "LU0086914362",
+      "name": "BNP PARIBAS FUNDS EURO MEDIUM TERM BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 179037
+    },
+    {
+      "isin": "LU0089276934",
+      "name": "BNP PARIBAS FUNDS EMERGING BOND USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 177669
+    },
+    {
+      "isin": "LU0089291651",
+      "name": "BNP PARIBAS FUNDS TARGET RISK BALANCED EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 176647
+    },
+    {
+      "isin": "LU0099625146",
+      "name": "BNP PARIBAS FUNDS EURO SHORT TERM CORPORATE BOND OPP. EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 179859
+    },
+    {
+      "isin": "LU0111491469",
+      "name": "BNP PARIBAS FUNDS EUROPE DIVIDEND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 178685
+    },
+    {
+      "isin": "LU0111549480",
+      "name": "BNP PARIBAS FUNDS US HIGH YIELD BOND USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 176481
+    },
+    {
+      "isin": "LU0111548326",
+      "name": "BNP PARIBAS FUNDS EURO GOVERNMENT BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 178678
+    },
+    {
+      "isin": "LU0113304017",
+      "name": "GOLDMAN SACHS EUROPE EQUITY - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 56190
+    },
+    {
+      "isin": "LU0113303043",
+      "name": "GOLDMAN SACHS ASIA EQUITY INCOME - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 57498
+    },
+    {
+      "isin": "LU0113305253",
+      "name": "GOLDMAN SACHS US ENHANCED EQUITY - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 56209
+    },
+    {
+      "isin": "LU0113302664",
+      "name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 58473
+    },
+    {
+      "isin": "LU0113311731",
+      "name": "GOLDMAN SACHS EMERGING EUROPE EQUITY X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 56615
+    },
+    {
+      "isin": "LU0119216801",
+      "name": "GOLDMAN SACHS GREATER CHINA EQUITY - P CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 3833
+    },
+    {
+      "isin": "LU0121174428",
+      "name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 56109
+    },
+    {
+      "isin": "LU0121175821",
+      "name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 58475
+    },
+    {
+      "isin": "LU0121204431",
+      "name": "GOLDMAN SACHS GLOBAL SUSTAINABLE EQUITY - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 56035
+    },
+    {
+      "isin": "LU0121204944",
+      "name": "GOLDMAN SACHS GREATER CHINA EQUITY - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 58132
+    },
+    {
+      "isin": "LU0127786860",
+      "name": "GOLDMAN SACHS EUROZONE EQUITY INCOME - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 57948
+    },
+    {
+      "isin": "LU0131210360",
+      "name": "BNP PARIBAS FUNDS EURO CORPORATE BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 178264
+    },
+    {
+      "isin": "LU0146259923",
+      "name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 57812
+    },
+    {
+      "isin": "LU0154245756",
+      "name": "BNP PARIBAS FUNDS US MID CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 176444
+    },
+    {
+      "isin": "LU0177332227",
+      "name": "BNP PARIBAS FUNDS EUROPE VALUE EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 181218
+    },
+    {
+      "isin": "LU0190304583",
+      "name": "BNP PARIBAS FUNDS EURO INFLATION-LINKED BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 176554
+    },
+    {
+      "isin": "LU0205352882",
+      "name": "GOLDMAN SACHS EUROPE EQUITY INCOME - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 57624
+    },
+    {
+      "isin": "LU0205423220",
+      "name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 55722
+    },
+    {
+      "isin": "LU0212178916",
+      "name": "BNP PARIBAS FUNDS EUROPE SMALL CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 120746
+    },
+    {
+      "isin": "LU0214495557",
+      "name": "GOLDMAN SACHS US EQUITY INCOME - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 55860
+    },
+    {
+      "isin": "LU0250170304",
+      "name": "GOLDMAN SACHS GLOBAL EQUITY IMPACT OPPORTUNITIES - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 55145
+    },
+    {
+      "isin": "LU0249332619",
+      "name": "BNP PARIBAS FUNDS GLOBAL INFLATION-LINKED BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 177316
+    },
+    {
+      "isin": "LU0250183208",
+      "name": "GOLDMAN SACHS GLOBAL REAL ESTATE EQUITY- X CAP EUR (Former NN)",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 53161
+    },
+    {
+      "isin": "LU0265288877",
+      "name": "BNP PARIBAS FUNDS SUSTAINABLE EURO CORPORATE BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 131519
+    },
+    {
+      "isin": "LU0265266980",
+      "name": "BNP PARIBAS FUNDS BRAZIL EQUITY USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 129653
+    },
+    {
+      "isin": "LU0265291665",
+      "name": "BNP PARIBAS FUNDS EUROPE SMALL CAP CONVERTIBLE EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 127804
+    },
+    {
+      "isin": "LU0265293521",
+      "name": "BNP PARIBAS FUNDS TURKEY EQUITY EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 125110
+    },
+    {
+      "isin": "LU0282388437",
+      "name": "BNP PARIBAS FUNDS SUSTAINABLE GLOBAL CORPORATE BOND USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 155465
+    },
+    {
+      "isin": "LU0325598166",
+      "name": "BNP PARIBAS FUNDS ENHANCED BOND 6M EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 167658
+    },
+    {
+      "isin": "LU0332192888",
+      "name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 3820
+    },
+    {
+      "isin": "LU0332193340",
+      "name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 3692
+    },
+    {
+      "isin": "LU0347711466",
+      "name": "BNP PARIBAS FUNDS GLOBAL ENVIRONMENT EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 156667
+    },
+    {
+      "isin": "LU0370038597",
+      "name": "GOLDMAN SACHS ALTERNATIVE BETA - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 34609
+    },
+    {
+      "isin": "LU0370038670",
+      "name": "GOLDMAN SACHS ALTERNATIVE BETA - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 3509
+    },
+    {
+      "isin": "LU0509951272",
+      "name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP HUF",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 764
+    },
+    {
+      "isin": "LU0509951199",
+      "name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP HUF",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 759
+    },
+    {
+      "isin": "LU0509951355",
+      "name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP HUF",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 786
+    },
+    {
+      "isin": "LU0509951603",
+      "name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - X CAP HUF",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 771
+    },
+    {
+      "isin": "LU0509951439",
+      "name": "GOLDMAN SACHS GLOBAL EQUITY IMPACT OPPORTUNITIES - X CAP HUF",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 777
+    },
+    {
+      "isin": "LU0509951512",
+      "name": "GOLDMAN SACHS GREATER CHINA EQUITY - X CAP HUF",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 762
+    },
+    {
+      "isin": "LU0546915215",
+      "name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP EUR (HEDGED I)",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 791
+    },
+    {
+      "isin": "LU0546914242",
+      "name": "GOLDMAN SACHS ASIAN DEBT (HARD CURRENCY) - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 762
+    },
+    {
+      "isin": "LU0546915488",
+      "name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP HUF",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 784
+    },
+    {
+      "isin": "LU0546916882",
+      "name": "GOLDMAN SACHS EUROMIX BOND - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 763
+    },
+    {
+      "isin": "LU0546918151",
+      "name": "GOLDMAN SACHS EURO BOND - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 760
+    },
+    {
+      "isin": "LU0546918409",
+      "name": "GOLDMAN SACHS EURO CREDIT - X CAP EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 770
+    },
+    {
+      "isin": "LU0546920561",
+      "name": "GOLDMAN SACHS US DOLLAR CREDIT - X CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 769
+    },
+    {
+      "isin": "LU0548664886",
+      "name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP EUR (HEDGED III) (Former NN)",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 783
+    },
+    {
+      "isin": "LU0546919555",
+      "name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP HUF (Former NN)",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 776
+    },
+    {
+      "isin": "LU0823380802",
+      "name": "BNP PARIBAS FUNDS EURO HIGH YIELD BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 29531
+    },
+    {
+      "isin": "LU0823386163",
+      "name": "BNP PARIBAS FUNDS LOCAL EMERGING BOND USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 30017
+    },
+    {
+      "isin": "LU0823388615",
+      "name": "BNP PARIBAS FUNDS GLOBAL HIGH YIELD BOND EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 28315
+    },
+    {
+      "isin": "LU0823397368",
+      "name": "BNP PARIBAS FUNDS ASIA EX-JAPAN EQUITY H EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 29617
+    },
+    {
+      "isin": "LU0823399810",
+      "name": "BNP PARIBAS FUNDS EUROPE EQUITY EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 30565
+    },
+    {
+      "isin": "LU0823401574",
+      "name": "BNP PARIBAS FUNDS EURO EQUITY EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 30327
+    },
+    {
+      "isin": "LU0823403356",
+      "name": "BNP PARIBAS FUNDS EUROPE EMERGING EQUITY EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 30235
+    },
+    {
+      "isin": "LU0823410997",
+      "name": "BNP PARIBAS FUNDS US SMALL CAP USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 29221
+    },
+    {
+      "isin": "LU0823404248",
+      "name": "BNP PARIBAS FUNDS EUROPE GROWTH EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 29966
+    },
+    {
+      "isin": "LU0823413587",
+      "name": "BNP PARIBAS FUNDS EMERGING EQUITY USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 30540
+    },
+    {
+      "isin": "LU0823416762",
+      "name": "BNP PARIBAS FUNDS HEALTH CARE INNOVATORS EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 29236
+    },
+    {
+      "isin": "LU0823428932",
+      "name": "BNP PARIBAS FUNDS INDIA EQUITY USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 28481
+    },
+    {
+      "isin": "LU0823426308",
+      "name": "BNP PARIBAS FUNDS CHINA EQUITY USD",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 29279
+    },
+    {
+      "isin": "LU0823414635",
+      "name": "BNP PARIBAS FUNDS CLEAN ENERGY SOLUTIONS EUR",
+      "status": "CSV_HEADER_NOT_FOUND",
+      "source": "BAMOSZ_CSV_DOWNLOAD",
+      "series": [],
+      "http_status": 200,
+      "content_type": "application/vnd.ms-excel;;charset=ISO-8859-2",
+      "bytes": 29464
+    }
+  ],
+  "production_mutation": false,
+  "rank_history_mutation": false,
+  "automatic_trade_authority": "NONE",
+  "forced_fill": false
+}

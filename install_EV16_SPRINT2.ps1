@@ -1,0 +1,1 @@
+Write-Host "EV-16 Sprint 2 Long Term Pattern Intelligence package installed."

@@ -1,0 +1,215 @@
+﻿SYMBOL=class DelayedDataPilotError LINE=26
+SYMBOL=class DelayedDataPilotConfig LINE=31
+SYMBOL=class DelayedDataSnapshot LINE=61
+SYMBOL=def price_change_percent LINE=82
+SYMBOL=class PilotLogRecord LINE=92
+SYMBOL=def normalize_symbol LINE=111
+SYMBOL=def fetch_delayed_snapshot LINE=252
+SYMBOL=def snapshot_to_record LINE=339
+SYMBOL=class DelayedDataPilotStore LINE=362
+SYMBOL=def append LINE=371
+SYMBOL=def list LINE=384
+SYMBOL=def pilot_rows LINE=407
+SYMBOL=def pilot_to_csv LINE=435
+TERM=time LINE=4 TEXT=from datetime import datetime, time, timedelta
+TERM=time LINE=35 TEXT=session_open: time = time(10, 0)
+TERM=time LINE=36 TEXT=session_close: time = time(18, 10)
+TERM=time LINE=63 TEXT=exchange_time: datetime
+TERM=time LINE=64 TEXT=received_time: datetime
+TERM=time LINE=95 TEXT=exchange_time: str
+TERM=time LINE=96 TEXT=received_time: str
+TERM=time LINE=156 TEXT=index = pd.to_datetime(normalized.index)
+TERM=time LINE=183 TEXT=expected = timedelta(minutes=interval_minutes)
+TERM=time LINE=196 TEXT=exchange_time: datetime,
+TERM=time LINE=197 TEXT=received_time: datetime,
+TERM=time LINE=201 TEXT=local_received = received_time.astimezone(ISTANBUL)
+TERM=time LINE=202 TEXT=local_exchange = exchange_time.astimezone(ISTANBUL)
+TERM=time LINE=204 TEXT=session_start = datetime.combine(
+TERM=time LINE=209 TEXT=session_close = datetime.combine(
+TERM=time LINE=214 TEXT=finalization_time = session_close + timedelta(
+TERM=time LINE=224 TEXT=if session_start <= local_received < finalization_time:
+TERM=time LINE=229 TEXT=if local_received >= finalization_time:
+TERM=time LINE=232 TEXT=and local_exchange.time()
+TERM=time LINE=234 TEXT=datetime.combine(
+TERM=time LINE=239 TEXT=- timedelta(minutes=config.expected_delay_minutes)
+TERM=time LINE=240 TEXT=).time()
+TERM=time LINE=256 TEXT=now: datetime | None = None,
+TERM=time LINE=260 TEXT=received_time = now or datetime.now(ISTANBUL)
+TERM=time LINE=261 TEXT=if received_time.tzinfo is None:
+TERM=time LINE=262 TEXT=received_time = received_time.replace(tzinfo=ISTANBUL)
+TERM=time LINE=264 TEXT=received_time = received_time.astimezone(ISTANBUL)
+TERM=time LINE=275 TEXT=timeout=30,
+TERM=time LINE=283 TEXT=exchange_time = frame.index[-1].to_pydatetime()
+TERM=time LINE=287 TEXT=received_time.astimezone(ISTANBUL)
+TERM=time LINE=288 TEXT=- exchange_time.astimezone(ISTANBUL)
+TERM=time LINE=294 TEXT=exchange_time=exchange_time,
+TERM=time LINE=295 TEXT=received_time=received_time,
+TERM=time LINE=303 TEXT=exchange_time=exchange_time,
+TERM=time LINE=304 TEXT=received_time=received_time,
+TERM=time LINE=345 TEXT=exchange_time=snapshot.exchange_time.isoformat(),
+TERM=time LINE=346 TEXT=received_time=snapshot.received_time.isoformat(),
+TERM=time LINE=414 TEXT="Borsa zamanı": item.exchange_time,
+TERM=time LINE=415 TEXT="Sisteme alınma zamanı": item.received_time,
+TERM=date LINE=4 TEXT=from datetime import datetime, time, timedelta
+TERM=date LINE=63 TEXT=exchange_time: datetime
+TERM=date LINE=64 TEXT=received_time: datetime
+TERM=date LINE=156 TEXT=index = pd.to_datetime(normalized.index)
+TERM=date LINE=196 TEXT=exchange_time: datetime,
+TERM=date LINE=197 TEXT=received_time: datetime,
+TERM=date LINE=204 TEXT=session_start = datetime.combine(
+TERM=date LINE=205 TEXT=local_received.date(),
+TERM=date LINE=209 TEXT=session_close = datetime.combine(
+TERM=date LINE=210 TEXT=local_received.date(),
+TERM=date LINE=222 TEXT=same_day = local_exchange.date() == local_received.date()
+TERM=date LINE=234 TEXT=datetime.combine(
+TERM=date LINE=235 TEXT=local_received.date(),
+TERM=date LINE=256 TEXT=now: datetime | None = None,
+TERM=date LINE=260 TEXT=received_time = now or datetime.now(ISTANBUL)
+TERM=date LINE=283 TEXT=exchange_time = frame.index[-1].to_pydatetime()
+TERM=datetime LINE=4 TEXT=from datetime import datetime, time, timedelta
+TERM=datetime LINE=63 TEXT=exchange_time: datetime
+TERM=datetime LINE=64 TEXT=received_time: datetime
+TERM=datetime LINE=156 TEXT=index = pd.to_datetime(normalized.index)
+TERM=datetime LINE=196 TEXT=exchange_time: datetime,
+TERM=datetime LINE=197 TEXT=received_time: datetime,
+TERM=datetime LINE=204 TEXT=session_start = datetime.combine(
+TERM=datetime LINE=209 TEXT=session_close = datetime.combine(
+TERM=datetime LINE=234 TEXT=datetime.combine(
+TERM=datetime LINE=256 TEXT=now: datetime | None = None,
+TERM=datetime LINE=260 TEXT=received_time = now or datetime.now(ISTANBUL)
+TERM=datetime LINE=283 TEXT=exchange_time = frame.index[-1].to_pydatetime()
+TERM=received LINE=64 TEXT=received_time: datetime
+TERM=received LINE=96 TEXT=received_time: str
+TERM=received LINE=197 TEXT=received_time: datetime,
+TERM=received LINE=201 TEXT=local_received = received_time.astimezone(ISTANBUL)
+TERM=received LINE=205 TEXT=local_received.date(),
+TERM=received LINE=210 TEXT=local_received.date(),
+TERM=received LINE=222 TEXT=same_day = local_exchange.date() == local_received.date()
+TERM=received LINE=224 TEXT=if session_start <= local_received < finalization_time:
+TERM=received LINE=229 TEXT=if local_received >= finalization_time:
+TERM=received LINE=235 TEXT=local_received.date(),
+TERM=received LINE=260 TEXT=received_time = now or datetime.now(ISTANBUL)
+TERM=received LINE=261 TEXT=if received_time.tzinfo is None:
+TERM=received LINE=262 TEXT=received_time = received_time.replace(tzinfo=ISTANBUL)
+TERM=received LINE=264 TEXT=received_time = received_time.astimezone(ISTANBUL)
+TERM=received LINE=287 TEXT=received_time.astimezone(ISTANBUL)
+TERM=received LINE=295 TEXT=received_time=received_time,
+TERM=received LINE=304 TEXT=received_time=received_time,
+TERM=received LINE=346 TEXT=received_time=snapshot.received_time.isoformat(),
+TERM=received LINE=415 TEXT="Sisteme alınma zamanı": item.received_time,
+TERM=age LINE=79 TEXT=error_message: str = ""
+TERM=age LINE=108 TEXT=error_message: str
+TERM=age LINE=358 TEXT=error_message=snapshot.error_message,
+TERM=age LINE=429 TEXT="Hata": item.error_message,
+TERM=minutes LINE=32 TEXT=expected_delay_minutes: int = 15
+TERM=minutes LINE=33 TEXT=delay_tolerance_minutes: int = 12
+TERM=minutes LINE=34 TEXT=refresh_interval_minutes: int = 5
+TERM=minutes LINE=37 TEXT=finalization_wait_minutes: int = 20
+TERM=minutes LINE=42 TEXT=if self.expected_delay_minutes < 0:
+TERM=minutes LINE=46 TEXT=if self.delay_tolerance_minutes < 0:
+TERM=minutes LINE=50 TEXT=if self.refresh_interval_minutes not in (1, 2, 5, 10, 15):
+TERM=minutes LINE=54 TEXT=if self.finalization_wait_minutes < 0:
+TERM=minutes LINE=65 TEXT=measured_delay_minutes: float
+TERM=minutes LINE=66 TEXT=expected_delay_minutes: int
+TERM=minutes LINE=97 TEXT=measured_delay_minutes: float
+TERM=minutes LINE=98 TEXT=expected_delay_minutes: int
+TERM=minutes LINE=176 TEXT=interval_minutes: int,
+TERM=minutes LINE=183 TEXT=expected = timedelta(minutes=interval_minutes)
+TERM=minutes LINE=198 TEXT=measured_delay_minutes: float,
+TERM=minutes LINE=215 TEXT=minutes=config.finalization_wait_minutes
+TERM=minutes LINE=218 TEXT=config.expected_delay_minutes
+TERM=minutes LINE=219 TEXT=+ config.delay_tolerance_minutes
+TERM=minutes LINE=225 TEXT=if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+TERM=minutes LINE=239 TEXT=- timedelta(minutes=config.expected_delay_minutes)
+TERM=minutes LINE=246 TEXT=if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+TERM=minutes LINE=296 TEXT=measured_delay_minutes=measured_delay,
+TERM=minutes LINE=305 TEXT=measured_delay_minutes=round(measured_delay, 2),
+TERM=minutes LINE=306 TEXT=expected_delay_minutes=config.expected_delay_minutes,
+TERM=minutes LINE=319 TEXT=interval_minutes=int(config.interval.removesuffix("m")),
+TERM=minutes LINE=347 TEXT=measured_delay_minutes=snapshot.measured_delay_minutes,
+TERM=minutes LINE=348 TEXT=expected_delay_minutes=snapshot.expected_delay_minutes,
+TERM=minutes LINE=416 TEXT="Ölçülen gecikme (dk)": item.measured_delay_minutes,
+TERM=minutes LINE=417 TEXT="Beklenen gecikme (dk)": item.expected_delay_minutes,
+TERM=fresh LINE=34 TEXT=refresh_interval_minutes: int = 5
+TERM=fresh LINE=50 TEXT=if self.refresh_interval_minutes not in (1, 2, 5, 10, 15):
+FIELD LINE=32 TEXT=expected_delay_minutes: int = 15
+FIELD LINE=33 TEXT=delay_tolerance_minutes: int = 12
+FIELD LINE=34 TEXT=refresh_interval_minutes: int = 5
+FIELD LINE=35 TEXT=session_open: time = time(10, 0)
+FIELD LINE=36 TEXT=session_close: time = time(18, 10)
+FIELD LINE=37 TEXT=finalization_wait_minutes: int = 20
+FIELD LINE=38 TEXT=interval: str = "5m"
+FIELD LINE=39 TEXT=period: str = "1d"
+FIELD LINE=62 TEXT=symbol: str
+FIELD LINE=63 TEXT=exchange_time: datetime
+FIELD LINE=64 TEXT=received_time: datetime
+FIELD LINE=65 TEXT=measured_delay_minutes: float
+FIELD LINE=66 TEXT=expected_delay_minutes: int
+FIELD LINE=67 TEXT=status: str
+FIELD LINE=68 TEXT=locked: bool
+FIELD LINE=69 TEXT=preview_only: bool
+FIELD LINE=70 TEXT=last_price: float
+FIELD LINE=71 TEXT=day_open: float
+FIELD LINE=72 TEXT=day_high: float
+FIELD LINE=73 TEXT=day_low: float
+FIELD LINE=74 TEXT=cumulative_volume: float
+FIELD LINE=75 TEXT=latest_bar_volume: float
+FIELD LINE=76 TEXT=latest_bar_completed: bool
+FIELD LINE=77 TEXT=missing_bar_count: int
+FIELD LINE=78 TEXT=source: str = "yfinance"
+FIELD LINE=79 TEXT=error_message: str = ""
+FIELD LINE=93 TEXT=symbol: str
+FIELD LINE=94 TEXT=source: str
+FIELD LINE=95 TEXT=exchange_time: str
+FIELD LINE=96 TEXT=received_time: str
+FIELD LINE=97 TEXT=measured_delay_minutes: float
+FIELD LINE=98 TEXT=expected_delay_minutes: int
+FIELD LINE=99 TEXT=status: str
+FIELD LINE=100 TEXT=locked: bool
+FIELD LINE=101 TEXT=preview_only: bool
+FIELD LINE=102 TEXT=last_price: float
+FIELD LINE=103 TEXT=cumulative_volume: float
+FIELD LINE=104 TEXT=latest_bar_volume: float
+FIELD LINE=105 TEXT=latest_bar_completed: bool
+FIELD LINE=106 TEXT=missing_bar_count: int
+FIELD LINE=107 TEXT=price_change_percent: float
+FIELD LINE=108 TEXT=error_message: str
+FIELD LINE=159 TEXT=else:
+FIELD LINE=174 TEXT=frame: pd.DataFrame,
+FIELD LINE=176 TEXT=interval_minutes: int,
+FIELD LINE=196 TEXT=exchange_time: datetime,
+FIELD LINE=197 TEXT=received_time: datetime,
+FIELD LINE=198 TEXT=measured_delay_minutes: float,
+FIELD LINE=199 TEXT=config: DelayedDataPilotConfig,
+FIELD LINE=253 TEXT=symbol: str,
+FIELD LINE=255 TEXT=config: DelayedDataPilotConfig = DelayedDataPilotConfig(),
+FIELD LINE=256 TEXT=now: datetime | None = None,
+FIELD LINE=257 TEXT=downloader: Callable[..., pd.DataFrame] = yf.download,
+FIELD LINE=263 TEXT=else:
+FIELD LINE=266 TEXT=try:
+FIELD LINE=340 TEXT=snapshot: DelayedDataSnapshot,
+FIELD LINE=394 TEXT=try:
+FIELD LINE=408 TEXT=records: tuple[PilotLogRecord, ...],
+FIELD LINE=436 TEXT=records: tuple[PilotLogRecord, ...],
+RETURN LINE=84 TEXT=return 0.0
+RETURN LINE=85 TEXT=return round(
+RETURN LINE=117 TEXT=return cleaned
+RETURN LINE=170 TEXT=return normalized
+RETURN LINE=179 TEXT=return 0
+RETURN LINE=191 TEXT=return missing
+RETURN LINE=226 TEXT=return GUN_ICI_ON_IZLEME, False, True, False
+RETURN LINE=227 TEXT=return ESKI_VERI_KILITLI, True, True, False
+RETURN LINE=243 TEXT=return GUNLUK_BAR_TAMAMLANDI, False, False, True
+RETURN LINE=244 TEXT=return ESKI_VERI_KILITLI, True, False, False
+RETURN LINE=247 TEXT=return GECIKMELI_GUNCEL, False, True, False
+RETURN LINE=249 TEXT=return ESKI_VERI_KILITLI, True, True, False
+RETURN LINE=336 TEXT=return snapshot
+RETURN LINE=342 TEXT=return PilotLogRecord(
+RETURN LINE=382 TEXT=return self.jsonl_path
+RETURN LINE=386 TEXT=return ()
+RETURN LINE=404 TEXT=return tuple(records)
+RETURN LINE=410 TEXT=return [
+RETURN LINE=450 TEXT=return ("\ufeff" + output.getvalue()).encode("utf-8")
+DECISION=TIME_AND_STALE_SEMANTICS_PRESENT
+NEXT=Closure-only candidate; delayed pilot already carries timing/freshness semantics under existing contract.
+PRODUCTION_MUTATION=YOK

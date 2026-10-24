@@ -1,0 +1,12 @@
+PHASE=PRECLOSE
+STARTED_AT=2026-10-20T16:06:53.0028865+03:00
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+PYTHON=D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+COMMAND=-m backend.app.operations.scheduled_operation_phase_runner --phase PRECLOSE
+USER=user-Bilgisayar\user
+MACHINE=USER-BILGISAYAR
+FINISHED_AT=2026-10-20T16:12:17.8099737+03:00
+DURATION_SECONDS=324.81
+EXIT_CODE=-1073741510
+STDOUT_FILE=D:\Projects\Hisse-Robotu\backend\logs\scheduled-task-diagnostics\PRECLOSE-20261020-160652.stdout.txt
+STDERR_FILE=D:\Projects\Hisse-Robotu\backend\logs\scheduled-task-diagnostics\PRECLOSE-20261020-160652.stderr.txt

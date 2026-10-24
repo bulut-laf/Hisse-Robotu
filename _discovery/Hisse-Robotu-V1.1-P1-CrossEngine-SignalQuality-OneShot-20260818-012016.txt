@@ -1,0 +1,90 @@
+﻿=== P1 CROSS-ENGINE SIGNAL QUALITY ===
+MOMENTUM_FILES=33
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\signal_engine.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_confirmation.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py
+MOMENTUM_FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\trend_scan_policy.py
+PREBREAKOUT_FILES=58
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_alarm_journal.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_backtest.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_lifecycle.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_candidate_quality.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_controlled_calibration.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_monitor.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_operation.py
+PREBREAKOUT_FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py
+OPPORTUNITY_RADAR_FILES=2
+OPPORTUNITY_RADAR_FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py
+OPPORTUNITY_RADAR_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py
+GATE_CONTRACTS=1207
+THRESHOLD_CONTRACTS=401
+FEATURE_MATRIX|MOMENTUM|{"distance": 26, "liquidity": 2, "momentum": 181, "regime": 28, "relative_strength": 2, "resistance": 123, "risk_reward": 212, "trend": 168, "volatility": 52, "volume": 105}
+FEATURE_MATRIX|PREBREAKOUT|{"distance": 22, "liquidity": 2, "momentum": 100, "regime": 29, "relative_strength": 1, "resistance": 70, "risk_reward": 200, "trend": 65, "volatility": 8, "volume": 24}
+FEATURE_MATRIX|OPPORTUNITY_RADAR|{"momentum": 15, "resistance": 3, "risk_reward": 15, "trend": 30, "volatility": 3, "volume": 4}
+CROSS_ENGINE_OVERLAP={"distance": ["MOMENTUM", "PREBREAKOUT"], "liquidity": ["MOMENTUM", "PREBREAKOUT"], "momentum": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "regime": ["MOMENTUM", "PREBREAKOUT"], "relative_strength": ["MOMENTUM", "PREBREAKOUT"], "resistance": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "risk_reward": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "trend": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "volatility": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"], "volume": ["MOMENTUM", "PREBREAKOUT", "OPPORTUNITY_RADAR"]}
+TRIPLE_OVERLAP=momentum,resistance,risk_reward,trend,volatility,volume
+DOUBLE_OVERLAP=distance,liquidity,regime,relative_strength
+SINGLE_ENGINE_FEATURES=
+REGIME_GATES=57
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=142|if veri is None or veri.empty: raise MarketRegimeError(f"{ticker} için {interval} veri bulunamadı.")
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=145|if interval == "1d": try: veri = fiyat_verisini_duzelt( veri, yalnizca_tamamlanmis_gunler=True, ) except Exception as hata: raise MarketRegimeError( f"{ticker} günlük veri düzeltilemedi: {hata}" ) from hata
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=164|if eksik: raise MarketRegimeError("Eksik piyasa verisi sütunları: " + ", ".join(eksik))
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=245|if len(veri) < 55: raise MarketRegimeError( f"Piyasa rejimi için en az 55 bar gerekir; bulunan: {len(veri)}." )
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=316|if hacim <= 0 or ort <= 0: return RegimeComponent("Hacim",0,15,"Veri yok",(),("Endeks hacim verisi kullanılamıyor.",),False)
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=369|if downloader is None: try: import yfinance as yf except ImportError as hata: raise MarketRegimeError("yfinance paketi bulunamadı.") from hata downloader = yf.download
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=384|if len(gunluk_ham)<220: raise MarketRegimeError(f"{kod} için SMA200 dahil günlük analizde en az 220 bar gerekir; bulunan: {len(gunluk_ham)}.")
+REGIME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=387|if tazelik.kilitli: raise MarketRegimeError(tazelik.aciklama)
+RISK_REWARD_GATES=427
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=42|if missing: raise ValueError("Eksik OHLC kolonlari: " + ", ".join(missing))
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=157|if not QUANTILE_FILE.exists() or not PASSED_PROFILE_FILE.exists(): raise RuntimeError( "Validated profil dosyalari kurulu degil. " "Firsat Radari kurucusunu Rev3 research ciktilari mevcutken tekrar calistirin." )
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=170|if not required_edges.issubset(edges.columns): raise RuntimeError("Validated quantile dosyasi beklenen kolonlari tasimiyor.")
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=172|if not required_profiles.issubset(profiles.columns): raise RuntimeError("Validated profil dosyasi beklenen kolonlari tasimiyor.")
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=179|if not MONTHLY_QUANTILE_FILE.exists() or not MONTHLY_PASSED_PROFILE_FILE.exists(): raise RuntimeError("Aylik validated profil dosyalari kurulu degil.")
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=189|if not required_edges.issubset(edges.columns): raise RuntimeError("Aylik quantile dosyasi beklenen kolonlari tasimiyor.")
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=191|if not required_profiles.issubset(profiles.columns): raise RuntimeError("Aylik profil dosyasi beklenen kolonlari tasimiyor.")
+RISK_REWARD_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=282|if z.empty: return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+VOLUME_GATES=133
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=546|if pd.notna(x["vol_ratio"]) and x["vol_ratio"] >= 1.0: strong_score += 5 strong_reasons.append("Aylık hacim 6 aylık ortalamanın üzerinde.")
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=551|if strong_score >= 65: strong = { "Hisse": symbol.removesuffix(".IS"), "Aylık Sınıf": "Güçlü Trend" if strong_score >= 80 else "Trend Devamı", "Aylık Skor": strong_score, "Durum": "Henüz Validate Değil", "3A Excess %": round(100 * x["excess3"], 2) if pd.notna(x["excess3"]) else np.nan, "6A Excess %": round(100 * x["excess6"], 2) if pd.notna(x["excess6"]) else np.nan, "Direnç Uzaklığı %": round(x["dist"], 2) if pd.notna(x["dist"]) else np.nan, "RSI": round(x["rsi"], 2), "Hacim Oranı": round(x["vol_ratio"], 2) if pd.notna(x["vol_ratio"]) else np.nan, "ATR %": round(x["atr_pct"], 2) if pd.notna(x["atr_pct"]) else np.nan, "Ay": x["month"], "Neden seçildi?": " ".join(strong_reasons), }
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=585|if pd.notna(x["vol_ratio"]) and x["vol_ratio"] >= 0.9: early_score += 10 early_reasons.append("Aylık hacim davranışı zayıf değil.")
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=594|if early_score >= 60 and not already_strong: early = { "Hisse": symbol.removesuffix(".IS"), "Aylık Sınıf": "Yeni Trend Adayı" if early_score >= 75 else "Erken Dönüş / Birikim", "Aylık Skor": early_score, "Durum": "Henüz Validate Değil", "3A Excess %": round(100 * x["excess3"], 2) if pd.notna(x["excess3"]) else np.nan, "6A Excess %": round(100 * x["excess6"], 2) if pd.notna(x["excess6"]) else np.nan, "Direnç Uzaklığı %": round(x["dist"], 2) if pd.notna(x["dist"]) else np.nan, "RSI": round(x["rsi"], 2), "Hacim Oranı": round(x["vol_ratio"], 2) if pd.notna(x["vol_ratio"]) else np.nan, "ATR %": round(x["atr_pct"], 2) if pd.notna(x["atr_pct"]) else np.nan, "Ay": x["month"], "Neden seçildi?": " ".join(early_reasons), }
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=316|if hacim <= 0 or ort <= 0: return RegimeComponent("Hacim",0,15,"Veri yok",(),("Endeks hacim verisi kullanılamıyor.",),False)
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=319|if oran>=1.2: skor+=8; art.append(f"Hacim 20 günlük ortalamanın {oran:.2f} katı.") elif oran>=1.0: skor+=5; art.append("Hacim 20 günlük ortalamanın üzerinde.") else: risk.append(f"Hacim 20 günlük ortalamanın {oran:.2f} katında.")
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=329|if pd.notna(hacim_egimi) and hacim_egimi>0: skor+=3; art.append("Kısa dönem hacim eğilimi artıyor.") else: risk.append("Kısa dönem hacim eğilimi artmıyor.")
+VOLUME_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=320|elif oran>=1.0: skor+=5; art.append("Hacim 20 günlük ortalamanın üzerinde.") else: risk.append(f"Hacim 20 günlük ortalamanın {oran:.2f} katında.")
+RESISTANCE_GATES=196
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=551|if strong_score >= 65: strong = { "Hisse": symbol.removesuffix(".IS"), "Aylık Sınıf": "Güçlü Trend" if strong_score >= 80 else "Trend Devamı", "Aylık Skor": strong_score, "Durum": "Henüz Validate Değil", "3A Excess %": round(100 * x["excess3"], 2) if pd.notna(x["excess3"]) else np.nan, "6A Excess %": round(100 * x["excess6"], 2) if pd.notna(x["excess6"]) else np.nan, "Direnç Uzaklığı %": round(x["dist"], 2) if pd.notna(x["dist"]) else np.nan, "RSI": round(x["rsi"], 2), "Hacim Oranı": round(x["vol_ratio"], 2) if pd.notna(x["vol_ratio"]) else np.nan, "ATR %": round(x["atr_pct"], 2) if pd.notna(x["atr_pct"]) else np.nan, "Ay": x["month"], "Neden seçildi?": " ".join(strong_reasons), }
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=579|if pd.notna(x["dist"]) and 0 <= x["dist"] <= 12: early_score += 20 early_reasons.append("Ana aylık dirence %12 içinde.")
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=594|if early_score >= 60 and not already_strong: early = { "Hisse": symbol.removesuffix(".IS"), "Aylık Sınıf": "Yeni Trend Adayı" if early_score >= 75 else "Erken Dönüş / Birikim", "Aylık Skor": early_score, "Durum": "Henüz Validate Değil", "3A Excess %": round(100 * x["excess3"], 2) if pd.notna(x["excess3"]) else np.nan, "6A Excess %": round(100 * x["excess6"], 2) if pd.notna(x["excess6"]) else np.nan, "Direnç Uzaklığı %": round(x["dist"], 2) if pd.notna(x["dist"]) else np.nan, "RSI": round(x["rsi"], 2), "Hacim Oranı": round(x["vol_ratio"], 2) if pd.notna(x["vol_ratio"]) else np.nan, "ATR %": round(x["atr_pct"], 2) if pd.notna(x["atr_pct"]) else np.nan, "Ay": x["month"], "Neden seçildi?": " ".join(early_reasons), }
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=340|if z20 and close>=z20: skor+=8; art.append("Kapanış önceki 20 bar zirvesi üzerinde.") elif z20 and close>=z20*0.98: skor+=4; art.append("Kapanış 20 bar zirvesine yakın.") else: risk.append("20 bar zirve kırılımı yok.")
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=343|if z55 and close>=z55: skor+=7; art.append("Kapanış önceki 55 bar zirvesi üzerinde.") elif z55 and close>=z55*0.98: skor+=3; art.append("Kapanış 55 bar zirvesine yakın.") else: risk.append("55 bar zirve kırılımı yok.")
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=341|elif z20 and close>=z20*0.98: skor+=4; art.append("Kapanış 20 bar zirvesine yakın.") else: risk.append("20 bar zirve kırılımı yok.")
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py|LINE=344|elif z55 and close>=z55*0.98: skor+=3; art.append("Kapanış 55 bar zirvesine yakın.") else: risk.append("55 bar zirve kırılımı yok.")
+RESISTANCE_GATE|ENGINE=MOMENTUM|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py|LINE=792|if bool(ham["kirilim"]): pozitif.append("20 günlük direnç üzerinde kırılım oluştu.") elif zirve <= 0.03: pozitif.append("Fiyat 20 günlük dirence en fazla %3 uzakta.")
+QUALITY_TEST_FILES=137
+QUALITY_ASSERTIONS=236
+P1_DECISION=CROSS_ENGINE_CONFIRMATION_CORRELATION_RISK_FOUND
+P1_FLAGS=HIGH_SHARED_FEATURE_OVERLAP
+NEXT=Use the mapped independent gates to design one shared quality funnel; do not count duplicate momentum/trend/volume evidence as independent confirmations.
+PRODUCTION_MUTATION=YOK
+STATIC_EXIT_CODE=0
+
+=== TARGET TESTS ===
+........................................................................ [ 13%]
+........................................................................ [ 26%]
+........................................................................ [ 40%]
+........................................................................ [ 53%]
+........................................................................ [ 67%]
+........................................................................ [ 80%]
+........................................................................ [ 93%]
+.................................                                        [100%]
+537 passed, 2485 deselected in 35.16s
+PYTEST_EXIT_CODE=0

@@ -1,0 +1,40 @@
+﻿{
+  "artifact": "official_fund_status_review_v1",
+  "review_date": "2026-10-17",
+  "scope": "_discovery/erste_hungary",
+  "records": [
+    {
+      "isin": "LU0011850392",
+      "status": "STALE_NAV_DORMANT_SHARE",
+      "last_nav_date": "2022-02-28",
+      "ranking_eligible": false,
+      "source": "https://www.blackrock.com/lu/individual/products/229564/blackrock-emerging-europe-fund"
+    },
+    {
+      "isin": "LU0113311731",
+      "status": "NAV_SUSPENDED_LIQUIDATION_WIND_DOWN",
+      "last_nav_date": "2022-07-01",
+      "ranking_eligible": false,
+      "source": "https://www.fundsquare.net/security/information?idInstr=3850"
+    },
+    {
+      "isin": "LU0117895796",
+      "status": "OFFICIAL_NAV_SUSPENDED_INDICATIVE_NAV_ONLY",
+      "last_official_nav_date": "2025-03-24",
+      "ranking_eligible": false,
+      "source": "https://am.jpmorgan.com/content/dam/jpm-am-aem/emea/regional/en/supplemental/notice-to-shareholders/jpm-indicative-prices-31-03-26-en.pdf"
+    },
+    {
+      "isin": "LU0823403356",
+      "status": "LIQUIDATED_SUBFUND",
+      "liquidation_effective_date": "2023-07-03",
+      "ranking_eligible": false,
+      "source": "https://docfinder.bnpparibas-am.com/api/files/5E8974E4-A974-48BD-9C6C-075FFE8C216C"
+    }
+  ],
+  "automatic_trade_authority": "NONE",
+  "trade_authority": "NONE",
+  "forced_fill": false,
+  "production_decisions_modified": false,
+  "rank_history_modified": false
+}

@@ -1,0 +1,56 @@
+﻿DOC_REF=_cache_paths FILE=D:\Projects\Hisse-Robotu\sprint144c_integration_context.txt COUNT=3
+PROD_REF=_cache_paths FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py COUNT=3
+PROD_REF=_cache_paths FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py COUNT=3
+PROD_REF=_cache_paths FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=3
+PROD_REF=_cache_paths FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=3
+DOC_REF=alpha_vantage_daily_loader FILE=D:\Projects\Hisse-Robotu\sprint144c_integration_context.txt COUNT=2
+PROD_REF=alpha_vantage_daily_loader FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py COUNT=2
+PROD_REF=alpha_vantage_daily_loader FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py COUNT=2
+PROD_REF=alpha_vantage_daily_loader FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=2
+PROD_REF=alpha_vantage_daily_loader FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=2
+DOC_REF=cache_read FILE=D:\Projects\Hisse-Robotu\sprint144c_integration_context.txt COUNT=2
+PROD_REF=cache_read FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py COUNT=2
+PROD_REF=cache_read FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py COUNT=2
+PROD_REF=cache_read FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=2
+PROD_REF=cache_read FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=2
+DOC_REF=cache_write FILE=D:\Projects\Hisse-Robotu\sprint144c_integration_context.txt COUNT=3
+PROD_REF=cache_write FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py COUNT=3
+PROD_REF=cache_write FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py COUNT=3
+PROD_REF=cache_write FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=3
+PROD_REF=cache_write FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=3
+DOC_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\batch_market_data_current.txt COUNT=2
+DOC_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\sprint144c_integration_context.txt COUNT=1
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py.s143bak COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py COUNT=2
+TEST_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\tests\test_market_data.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\batch_market_data.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py COUNT=1
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\market_data.py COUNT=2
+TEST_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\tests\test_market_data.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py COUNT=1
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=1
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py COUNT=1
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Veri_Tazelik_Rev1_toplu_end_tarihi_duzeltmesi\backend\app\data\batch_market_data.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\batch_market_data.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\market_data.py COUNT=2
+TEST_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\tests\test_market_data.py COUNT=2
+PROD_REF=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py COUNT=2
+INTENT_TERM=cache COUNT=12
+INTENT_TERM=recovery COUNT=12
+INTENT_TERM=secondary COUNT=3
+INTENT_TERM=ikincil COUNT=4
+INTENT_TERM=önbellek COUNT=8
+MODULE_TEST_FILES=D:\Projects\Hisse-Robotu\backend\tests\test_batch_market_data.py,D:\Projects\Hisse-Robotu\backend\tests\test_market_data.py
+PRODUCTION_REFS=72
+TEST_REFS=6
+DOC_REFS=13
+INTENT_HINTS=39
+DECISION=RUNTIME_WIRING_EXISTS_SOMEWHERE
+NEXT=Inspect exact consumer before any closure or mutation.
+PRODUCTION_MUTATION=YOK

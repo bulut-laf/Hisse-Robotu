@@ -1,0 +1,191 @@
+{
+  "status": "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS",
+  "mode": "READ_ONLY_INVESTABILITY_PRODUCTION_CLOSURE",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "auto_discovery": {
+    "rule": "EXACT_KEYS_ONLY_NUMERIC_0_100_NO_FUZZY_ALIAS_NO_TEXT_SCORING",
+    "discovered_count": 0,
+    "accepted_count": 0,
+    "accepted": []
+  },
+  "canonical_evidence": {
+    "financial_momentum": "100",
+    "valuation_score": "0",
+    "margin_of_safety_score": "0",
+    "governance_score": "45",
+    "market_context": {
+      "technical_trend": null,
+      "relative_strength": null,
+      "volume_liquidity": null,
+      "catalyst": null,
+      "entry_risk": null,
+      "earnings_surprise": null
+    },
+    "long_term_context": {
+      "business_quality": null,
+      "growth_durability": "70",
+      "governance": "45",
+      "sector_risk": null
+    },
+    "flags": [
+      "TECHNICAL_MARKET_CONTEXT_NOT_SYNTHESIZED",
+      "BUSINESS_QUALITY_NOT_SYNTHESIZED",
+      "SECTOR_RISK_NOT_SYNTHESIZED",
+      "CAPITAL_EFFICIENCY_NOT_SYNTHESIZED",
+      "GROWTH_METRICS_AVAILABLE_4",
+      "GROWTH_METRICS_POSITIVE_4",
+      "GROWTH_METRICS_NEGATIVE_0",
+      "SINGLE_PERIOD_GROWTH_EVIDENCE_CAPPED_AT_70",
+      "NOT_MULTI_YEAR_DURABILITY_PROOF",
+      "LONG_TERM_CANONICAL_COVERAGE_EXPECTED_0_68",
+      "LONG_TERM_STILL_BELOW_0_70_THRESHOLD",
+      "BUSINESS_QUALITY_REMAINS_UNWIRED",
+      "CAPITAL_EFFICIENCY_REMAINS_UNWIRED",
+      "SECTOR_RISK_REMAINS_UNWIRED"
+    ],
+    "engine_version": "fin-prod-008-v1",
+    "coverage_assessment": {
+      "before": "0.56",
+      "growth_durability_weight": "0.12",
+      "after_expected": "0.68",
+      "unlock_threshold": "0.70",
+      "expected_locked": true,
+      "reason": "Canonical single-period growth evidence adds 0.12, but no proven business-quality/capital-efficiency/sector-risk adapter is available yet."
+    }
+  },
+  "long_term_coverage": "0.68",
+  "long_term_unlock_threshold": "0.70",
+  "short_term": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "score": null,
+    "label": "DATA_INSUFFICIENT",
+    "locked": true,
+    "components": [
+      {
+        "code": "FINANCIAL_HEALTH",
+        "score": "94",
+        "weight": "0.10",
+        "reason": "Finansal sağlık tabanı"
+      },
+      {
+        "code": "FINANCIAL_MOMENTUM",
+        "score": "100",
+        "weight": "0.20",
+        "reason": "Son finansal momentum"
+      }
+    ],
+    "strengths": [],
+    "risks": [
+      "Kısa dönem için piyasa/teknik kanıt eksik"
+    ],
+    "explanation": "Skor fail-closed kilitlendi.",
+    "confidence": "LOW",
+    "engine_version": "fin013-v1"
+  },
+  "long_term": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "score": null,
+    "label": "DATA_INSUFFICIENT",
+    "locked": true,
+    "components": [
+      {
+        "code": "FINANCIAL_HEALTH",
+        "score": "94",
+        "weight": "0.15",
+        "reason": "Finansal sağlık"
+      },
+      {
+        "code": "CASH_QUALITY",
+        "score": "100",
+        "weight": "0.12",
+        "reason": "Nakit üretim kalitesi"
+      },
+      {
+        "code": "GROWTH_DURABILITY",
+        "score": "70",
+        "weight": "0.12",
+        "reason": "Büyüme sürekliliği"
+      },
+      {
+        "code": "GOVERNANCE",
+        "score": "45",
+        "weight": "0.08",
+        "reason": "Yönetişim"
+      },
+      {
+        "code": "VALUATION",
+        "score": "0",
+        "weight": "0.12",
+        "reason": "Değerleme"
+      },
+      {
+        "code": "MARGIN_OF_SAFETY",
+        "score": "0",
+        "weight": "0.09",
+        "reason": "Güvenlik marjı"
+      }
+    ],
+    "strengths": [],
+    "risks": [
+      "Uzun dönem için temel kanıt eksik"
+    ],
+    "explanation": "Skor fail-closed kilitlendi.",
+    "confidence": "LOW",
+    "engine_version": "fin014-v1"
+  },
+  "panel": {
+    "symbol": "TUPRS",
+    "as_of": "2026-08-04T18:24:32",
+    "financial_health_score": 94,
+    "financial_health_grade": "VERY_STRONG",
+    "financial_risk": "LOW",
+    "valuation_status": "BASE_BELOW_MARKET",
+    "current_price": "385",
+    "bear_value": "168.5025404092570726539180712",
+    "base_value": "239.6152784240735753418742541",
+    "bull_value": "340.9882160178062191946897823",
+    "upside_downside_to_base": "-0.3776226534439647393717551842",
+    "margin_of_safety_status": "VERY_EXPENSIVE",
+    "short_term_score": null,
+    "short_term_label": "DATA_INSUFFICIENT",
+    "long_term_score": null,
+    "long_term_label": "DATA_INSUFFICIENT",
+    "confidence": "MEDIUM",
+    "strengths": [
+      "FINANCIAL_HEALTH_VERY_STRONG",
+      "CASH_QUALITY_VERY_HIGH",
+      "LOW_FINANCIAL_RISK"
+    ],
+    "risks": [
+      "Kısa dönem için piyasa/teknik kanıt eksik",
+      "Uzun dönem için temel kanıt eksik",
+      "CURRENT_PRICE_ABOVE_BASE_FAIR_VALUE",
+      "CURRENT_PRICE_ABOVE_BULL_FAIR_VALUE",
+      "HIGH_CYCLICALITY",
+      "MODEL_DISPERSION"
+    ],
+    "what_to_watch_next": [
+      "TECHNICAL_MARKET_CONTEXT_REQUIRED_FOR_SHORT_TERM",
+      "CAPITAL_EFFICIENCY_AND_GROWTH_DURABILITY_REQUIRED_FOR_LONG_TERM",
+      "VALUATION_AND_MARGIN_OF_SAFETY_SCORE_ADAPTER_REQUIRED"
+    ],
+    "read_only": true,
+    "schema_version": "fin015-v1"
+  },
+  "unresolved_blockers": [
+    "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT",
+    "LONG_TERM_CANONICAL_COVERAGE"
+  ],
+  "closure_rules": [
+    "No new investability scoring engine.",
+    "No fuzzy field mapping.",
+    "No text/category-to-score conversion.",
+    "Missing evidence stays missing.",
+    "Existing AL/SAT, scanner, ranking and portfolio engines are not mutated.",
+    "A locked horizon is an explicit production blocker, not a synthetic unlock target."
+  ],
+  "engine_version": "fin-prod-closure-v1"
+}

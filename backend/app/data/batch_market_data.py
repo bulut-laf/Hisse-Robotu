@@ -1,0 +1,336 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import date, timedelta
+from pathlib import Path
+from typing import Callable, Iterable
+
+import pandas as pd
+import yfinance as yf
+
+from .bist_official_batch_bridge import (
+    OfficialDailyLoader,
+    load_latest_official_daily,
+    merge_official_daily_bar,
+)
+from .market_data import MarketDataError, fiyat_verisini_duzelt
+
+
+class BatchMarketDataError(Exception):
+    """Toplu piyasa verisi indirme işlemi bütünüyle başarısız olduğunda kullanılır."""
+
+
+@dataclass(frozen=True)
+class BatchMarketDataFailure:
+    """Tek bir sembol için alınamayan piyasa verisini temsil eder."""
+
+    sembol: str
+    hata: str
+
+
+@dataclass(frozen=True)
+class BatchMarketDataResult:
+    """Toplu indirme sonucundaki başarılı veriler ve sembol bazlı hatalar."""
+
+    veriler: dict[str, pd.DataFrame]
+    hatalar: tuple[BatchMarketDataFailure, ...]
+    kaynak_sirasi: tuple[str, ...] = ("birincil",)
+    kaynak_hatalari: tuple[str, ...] = ()
+
+
+Downloader = Callable[..., pd.DataFrame]
+
+
+def referans_fiyat_verisi_getir(
+    sembol: str,
+    *,
+    islem_gunu: int = 5,
+    indirme_donemi: str = "1mo",
+    indirici: Downloader = yf.download,
+    bugun: date | None = None,
+    resmi_gunluk_yukleyici: OfficialDailyLoader | None = None,
+    resmi_veriyi_birlestir: bool | None = None,
+    resmi_arsiv_klasoru: str | Path = "data/bist_official_daily",
+) -> BatchMarketDataResult:
+    return toplu_fiyat_verisi_getir(
+        (sembol,),
+        islem_gunu=islem_gunu,
+        indirme_donemi=indirme_donemi,
+        parca_boyutu=1,
+        indirici=indirici,
+        bugun=bugun,
+        resmi_gunluk_yukleyici=resmi_gunluk_yukleyici,
+        resmi_veriyi_birlestir=resmi_veriyi_birlestir,
+        resmi_arsiv_klasoru=resmi_arsiv_klasoru,
+    )
+
+
+def toplu_fiyat_verisi_getir(
+    semboller: Iterable[str],
+    islem_gunu: int = 160,
+    indirme_donemi: str = "1y",
+    parca_boyutu: int = 40,
+    indirici: Downloader = yf.download,
+    bugun: date | None = None,
+    resmi_gunluk_yukleyici: OfficialDailyLoader | None = None,
+    resmi_veriyi_birlestir: bool | None = None,
+    resmi_arsiv_klasoru: str | Path = "data/bist_official_daily",
+) -> BatchMarketDataResult:
+    """
+    Yahoo tarihsel günlük OHLCV serisini toplu indirir ve en son tamamlanmış
+    resmî Borsa İstanbul günlük barını seriyle birleştirir.
+
+    Aynı tarih iki kaynakta da varsa resmî bar kazanır.
+    """
+    temiz_semboller = _sembolleri_hazirla(semboller)
+
+    if not temiz_semboller:
+        raise ValueError("Toplu veri için en az bir hisse sembolü gereklidir.")
+    if islem_gunu < 1:
+        raise ValueError("İşlem günü sayısı en az 1 olmalıdır.")
+    if parca_boyutu < 1:
+        raise ValueError("Parça boyutu en az 1 olmalıdır.")
+
+    if resmi_veriyi_birlestir is None:
+        resmi_veriyi_birlestir = indirici is yf.download
+
+    veriler: dict[str, pd.DataFrame] = {}
+    hatalar: list[BatchMarketDataFailure] = []
+    kaynak_sirasi: list[str] = ["yahoo"]
+    kaynak_hatalari: list[str] = []
+
+    resmi_veriler: dict[str, pd.DataFrame] = {}
+
+    if resmi_veriyi_birlestir:
+        loader = resmi_gunluk_yukleyici or (
+            lambda symbols, today: load_latest_official_daily(
+                symbols,
+                today,
+                archive_root=Path(resmi_arsiv_klasoru),
+            )
+        )
+        try:
+            official = loader(temiz_semboller, bugun)
+            resmi_veriler = dict(official.veriler)
+            if official.kaynak != "bist_resmi_yok":
+                kaynak_sirasi.append(official.kaynak)
+            kaynak_hatalari.extend(official.hatalar)
+            if official.islem_tarihi is None:
+                kaynak_hatalari.append(
+                    "Borsa İstanbul tamamlanmış günlük snapshot bulunamadı."
+                )
+        except Exception as exc:
+            kaynak_hatalari.append(
+                f"Borsa İstanbul resmî günlük veri: {exc}"
+            )
+
+    sorgu_baslangici, sorgu_bitisi = _sorgu_tarih_araligi(
+        islem_gunu=islem_gunu,
+        indirme_donemi=indirme_donemi,
+        bugun=bugun,
+    )
+
+    for baslangic in range(0, len(temiz_semboller), parca_boyutu):
+        parca = temiz_semboller[baslangic : baslangic + parca_boyutu]
+
+        try:
+            ham_veri = indirici(
+                tickers=parca,
+                start=sorgu_baslangici.isoformat(),
+                end=sorgu_bitisi.isoformat(),
+                interval="1d",
+                auto_adjust=True,
+                progress=False,
+                threads=True,
+                timeout=45,
+                group_by="ticker",
+            )
+        except Exception as hata:
+            mesaj = f"Toplu veri indirme hatası: {hata}"
+            hatalar.extend(
+                BatchMarketDataFailure(sembol=sembol, hata=mesaj)
+                for sembol in parca
+            )
+            continue
+
+        if ham_veri is None or ham_veri.empty:
+            hatalar.extend(
+                BatchMarketDataFailure(
+                    sembol=sembol,
+                    hata="Piyasa verisi bulunamadı.",
+                )
+                for sembol in parca
+            )
+            continue
+
+        for sembol in parca:
+            try:
+                sembol_verisi = _sembol_verisini_ayir(
+                    ham_veri=ham_veri,
+                    sembol=sembol,
+                    parca_uzunlugu=len(parca),
+                )
+                temiz_veri = fiyat_verisini_duzelt(
+                    sembol_verisi,
+                    yalnizca_tamamlanmis_gunler=True,
+                )
+
+                temiz_veri = merge_official_daily_bar(
+                    temiz_veri,
+                    resmi_veriler.get(sembol),
+                )
+
+                if len(temiz_veri) < islem_gunu:
+                    raise MarketDataError(
+                        f"Yalnızca {len(temiz_veri)} işlem günü "
+                        f"bulundu. İstenen: {islem_gunu}"
+                    )
+
+                veriler[sembol] = temiz_veri.tail(islem_gunu).copy()
+
+            except (KeyError, ValueError, MarketDataError) as hata:
+                hatalar.append(
+                    BatchMarketDataFailure(
+                        sembol=sembol,
+                        hata=str(hata),
+                    )
+                )
+
+    if not veriler and hatalar:
+        return BatchMarketDataResult(
+            veriler={},
+            hatalar=tuple(hatalar),
+            kaynak_sirasi=tuple(kaynak_sirasi),
+            kaynak_hatalari=tuple(kaynak_hatalari),
+        )
+
+    return BatchMarketDataResult(
+        veriler=veriler,
+        hatalar=tuple(hatalar),
+        kaynak_sirasi=tuple(kaynak_sirasi),
+        kaynak_hatalari=tuple(kaynak_hatalari),
+    )
+
+
+def _sorgu_tarih_araligi(
+    *,
+    islem_gunu: int,
+    indirme_donemi: str,
+    bugun: date | None,
+) -> tuple[date, date]:
+    referans_gun = bugun or date.today()
+    sorgu_bitisi = referans_gun + timedelta(days=1)
+
+    donem_gunleri = {
+        "5d": 14,
+        "1mo": 45,
+        "3mo": 120,
+        "6mo": 240,
+        "1y": 400,
+        "2y": 800,
+        "5y": 2000,
+        "10y": 4000,
+        "max": 12000,
+    }
+    donem = indirme_donemi.strip().casefold()
+    gerekli_takvim_gunu = max(
+        30,
+        int(islem_gunu * 1.8) + 15,
+        donem_gunleri.get(donem, 400),
+    )
+    sorgu_baslangici = sorgu_bitisi - timedelta(
+        days=gerekli_takvim_gunu
+    )
+    return sorgu_baslangici, sorgu_bitisi
+
+
+def _sembolleri_hazirla(semboller: Iterable[str]) -> list[str]:
+    sonuc: list[str] = []
+    gorulenler: set[str] = set()
+
+    for ham in semboller:
+        sembol = str(ham).strip().upper()
+        if not sembol:
+            continue
+        if "." not in sembol:
+            sembol = f"{sembol}.IS"
+        if sembol in gorulenler:
+            continue
+        gorulenler.add(sembol)
+        sonuc.append(sembol)
+
+    return sonuc
+
+
+def _sembol_verisini_ayir(
+    ham_veri: pd.DataFrame,
+    sembol: str,
+    parca_uzunlugu: int,
+) -> pd.DataFrame:
+    if not isinstance(ham_veri.columns, pd.MultiIndex):
+        if parca_uzunlugu == 1:
+            return ham_veri.copy()
+        raise MarketDataError(f"{sembol} sütunları toplu veride bulunamadı.")
+
+    ilk_seviye = set(map(str, ham_veri.columns.get_level_values(0)))
+    ikinci_seviye = set(map(str, ham_veri.columns.get_level_values(1)))
+
+    if sembol in ilk_seviye:
+        return ham_veri[sembol].copy()
+
+    if sembol in ikinci_seviye:
+        return ham_veri.xs(sembol, axis=1, level=1).copy()
+
+    raise MarketDataError(f"{sembol} için toplu piyasa verisi bulunamadı.")
+
+
+def guvenli_referans_fiyat_verisi_getir(
+    sembol: str,
+    *,
+    islem_gunu: int = 5,
+    indirme_donemi: str = "1mo",
+    birincil_indirici: Downloader = yf.download,
+    ikincil_yukleyici=None,
+    onbellek_klasoru=None,
+) -> BatchMarketDataResult:
+    from .data_source_recovery import recover_daily_market_data
+
+    temiz = _sembolleri_hazirla((sembol,))[0]
+
+    def primary() -> pd.DataFrame:
+        result = referans_fiyat_verisi_getir(
+            temiz,
+            islem_gunu=islem_gunu,
+            indirme_donemi=indirme_donemi,
+            indirici=birincil_indirici,
+        )
+        if temiz not in result.veriler:
+            raise BatchMarketDataError(
+                " | ".join(x.hata for x in result.hatalar)
+                or "Birincil referans veri yok."
+            )
+        return result.veriler[temiz]
+
+    try:
+        recovered = recover_daily_market_data(
+            temiz,
+            primary_loader=primary,
+            secondary_loader=ikincil_yukleyici,
+            cache_root=Path(onbellek_klasoru)
+            if onbellek_klasoru is not None
+            else None,
+        )
+    except Exception as exc:
+        return BatchMarketDataResult(
+            veriler={},
+            hatalar=(BatchMarketDataFailure(sembol=temiz, hata=str(exc)),),
+            kaynak_sirasi=("birincil", "ikincil", "önbellek"),
+            kaynak_hatalari=(str(exc),),
+        )
+
+    return BatchMarketDataResult(
+        veriler={temiz: recovered.veri.tail(islem_gunu).copy()},
+        hatalar=(),
+        kaynak_sirasi=recovered.kaynak_sirasi,
+        kaynak_hatalari=recovered.kaynak_hatalari,
+    )

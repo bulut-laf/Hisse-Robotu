@@ -1,0 +1,22 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\funds\erste_shadow_portfolio.py:171: nav = _decimal(getattr(snapshot, "nav", None), "nav")
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_shadow_portfolio.py:174: nav_date = getattr(snapshot, "nav_date", None)
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:29: net_flow_ratio: Decimal | None
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:112: values = (value.fund_size_change, value.investor_change, value.net_flow_ratio)
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:113: names = ("fund_size_change", "investor_change", "net_flow_ratio")
+D:\Projects\Hisse-Robotu\backend\app\funds\f3_store_read_model.py:165: net_flow_ratio=None,
+D:\Projects\Hisse-Robotu\backend\app\funds\f4_store_read_model.py:23: net_flow_ratio: Decimal | None = None
+D:\Projects\Hisse-Robotu\backend\app\funds\f4_store_read_model.py:157: net_flow_ratio=None,
+D:\Projects\Hisse-Robotu\backend\app\funds\f4_store_read_model.py:195: net_flow_ratio=None,
+D:\Projects\Hisse-Robotu\backend\app\funds\fund_store_read_model.py:9: from .f4_store_read_model import (
+D:\Projects\Hisse-Robotu\backend\app\funds\live_pipeline.py:119: net_flow_ratio=None,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_evidence_bridge.py:43: net_flow_ratio=None,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f2_bridge.py:112: net_flow_ratio=None,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f3_bridge.py:71: net_flow_ratio=None,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:15: net_flow_ratio: Decimal | None,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:17: values = [fund_size_change, net_flow_ratio]
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:37: net_flow_ratio: Decimal | None,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:43: net_flow_ratio=net_flow_ratio,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:48: previous_nav: Decimal | None,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:51: if previous_nav is None or latest_nav is None:
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:53: if previous_nav <= 0 or latest_nav <= 0:
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:55: return (latest_nav / previous_nav) - Decimal("1")

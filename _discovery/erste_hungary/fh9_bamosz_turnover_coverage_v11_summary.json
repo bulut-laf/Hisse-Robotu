@@ -1,0 +1,31 @@
+{
+  "diagnostic": "FH9_BAMOSZ_BULK_TURNOVER_COVERAGE",
+  "project_root": "D:\\Projects\\Hisse-Robotu",
+  "universe_count": 929,
+  "result_count": 929,
+  "table_found_count": 374,
+  "table_missing_or_fetch_fail_count": 555,
+  "latest_turnover_count": 278,
+  "net_flow_ratio_count": 278,
+  "net_flow_ratio_positive_count": 116,
+  "net_flow_ratio_negative_count": 114,
+  "net_flow_ratio_zero_count": 48,
+  "at_least_2_daily_rows_count": 278,
+  "one_daily_row_count": 0,
+  "zero_daily_rows_count": 651,
+  "http_status_counts": {
+    "200": 929
+  },
+  "reason_counts": {
+    "TURNOVER_TABLE_NOT_FOUND": 555,
+    "NO_VALID_DAILY_ROWS": 96,
+    "SUCCESS": 278
+  },
+  "formula_abs_diff_max": 1.2242854009796038,
+  "formula_abs_diff_median": 0.27905306769650856,
+  "source_metric": "BAMOSZ_NAPI_BEF_JEGY_FORGALOM",
+  "net_flow_ratio_definition": "BAMOSZ_DAILY_TURNOVER_DIVIDED_BY_PREVIOUS_DAY_NET_ASSET_VALUE",
+  "net_flow_ratio_semantic_proxy": false,
+  "mutation": false,
+  "production_mutation": false
+}

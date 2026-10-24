@@ -1,0 +1,105 @@
+﻿TEFAS_EXACT_ADAPTER_CONTRACT
+ADAPTER=D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py
+
+[FULL_TEFAS_ADAPTER]
+0001: from __future__ import annotations
+0002: 
+0003: from datetime import date, datetime
+0004: from decimal import Decimal
+0005: from typing import Iterable, Mapping
+0006: 
+0007: from backend.app.news_center.official_source_http import fetch_official_source_bytes
+0008: 
+0009: from .contracts import DataQualityState, FundDailyObservation, FundIdentity
+0010: from .normalization import normalize_fund_code, normalize_text, parse_decimal_tr
+0011: 
+0012: 
+0013: class TefasProviderError(RuntimeError):
+0014:     pass
+0015: 
+0016: 
+0017: def canonical_tefas_fund_id(provider_fund_id: object) -> str:
+0018:     return f"fund:tefas:{normalize_fund_code(provider_fund_id)}"
+0019: 
+0020: 
+0021: def fetch_tefas_bytes(url: str, timeout_seconds: int = 10) -> bytes:
+0022:     response = fetch_official_source_bytes(
+0023:         url, timeout_seconds, user_agent="Hisse-Robotu/Fund-Research-V1",
+0024:         error_type=TefasProviderError, source_label="TEFAS",
+0025:     )
+0026:     return response.body
+0027: 
+0028: 
+0029: def map_tefas_rows(
+0030:     rows: Iterable[Mapping[str, object]], *, requested_at: datetime,
+0031:     fetched_at: datetime, source_as_of: datetime,
+0032: ) -> tuple[FundIdentity | FundDailyObservation, ...]:
+0033:     """Doğrulanmış adapter sınırı. Canlı payload alanları doğrulanana dek fixture mapping."""
+0034:     result: list[FundIdentity | FundDailyObservation] = []
+0035:     seen: set[tuple[str, date]] = set()
+0036:     for row in sorted(rows, key=lambda x: normalize_fund_code(x.get("fund_code"))):
+0037:         code = normalize_fund_code(row.get("fund_code"))
+0038:         observed = date.fromisoformat(str(row["observation_date"]))
+0039:         key = (code, observed)
+0040:         if key in seen:
+0041:             raise TefasProviderError(f"DUPLICATE_FUND_OBSERVATION:{code}:{observed}")
+0042:         seen.add(key)
+0043:         canonical_id = canonical_tefas_fund_id(row.get("provider_fund_id", code))
+0044:         category_id = normalize_text(row.get("category_id")) or None
+0045:         category_name = normalize_text(row.get("category_name")) or None
+0046:         quality = DataQualityState.PARTIAL if any(
+0047:             row.get(name) in (None, "") for name in ("unit_price", "fund_size", "investor_count")
+0048:         ) else DataQualityState.VALID
+0049:         result.append(FundIdentity(
+0050:             fund_code=code, fund_name=normalize_text(row.get("fund_name")),
+0051:             canonical_fund_id=canonical_id, category_id=category_id,
+0052:             category_name=category_name, provider="TEFAS",
+0053:             provider_fund_id=normalize_fund_code(row.get("provider_fund_id", code)),
+0054:             currency=normalize_fund_code(row.get("currency", "TRY")),
+0055:             is_active=bool(row.get("is_active", True)), as_of_date=observed,
+0056:         ))
+0057:         investor_raw = parse_decimal_tr(row.get("investor_count"))
+0058:         result.append(FundDailyObservation(
+0059:             canonical_fund_id=canonical_id, observation_date=observed,
+0060:             unit_price=parse_decimal_tr(row.get("unit_price")),
+0061:             fund_size=parse_decimal_tr(row.get("fund_size")),
+0062:             investor_count=int(investor_raw) if investor_raw is not None else None,
+0063:             shares_outstanding=parse_decimal_tr(row.get("shares_outstanding")),
+0064:             daily_return=parse_decimal_tr(row.get("daily_return"), percent=True),
+0065:             provider="TEFAS", fetched_at=fetched_at, source_as_of=source_as_of,
+0066:             data_quality_state=quality,
+0067:         ))
+0068:     return tuple(result)
+
+[DEFINITIONS]
+L13 class TefasProviderError | class TefasProviderError(RuntimeError):
+L17 def canonical_tefas_fund_id | def canonical_tefas_fund_id(provider_fund_id: object) -> str:
+L21 def fetch_tefas_bytes | def fetch_tefas_bytes(url: str, timeout_seconds: int = 10) -> bytes:
+L29 def map_tefas_rows | def map_tefas_rows(
+
+[CALLERS]
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:23 | st.caption("TEFAS/fon araştırma dikeyidir. BIST taraması çalıştırmaz; otomatik AL/SAT üretmez.")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:6 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.A, "GL / NCELKL",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:12 | canonical_fund_id="fund:tefas:AAA", category_id="equity",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:60 | first = map_fund_evidence(source(canonical_fund_id="fund:tefas:BBB"))
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:61 | second = map_fund_evidence(source(canonical_fund_id="fund:tefas:AAA"))
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:63 | assert tuple(item.canonical_fund_id for item in output) == ("fund:tefas:AAA", "fund:tefas:BBB")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:9 | from backend.app.funds.tefas_adapter import TefasProviderError, map_tefas_rows
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:25 | return map_tefas_rows([row(**changes)], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:53 | with pytest.raises(TefasProviderError, match="DUPLICATE"):
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:54 | map_tefas_rows([row(), row()], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:79 | assert saved["provider"] == "TEFAS"
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:80 | assert saved["canonical_fund_id"].startswith("fund:tefas:")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:9 | canonical_fund_id="fund:tefas:TST", category_id="debt",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:9 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.B, "GELŞEN", ("F1", "F2"), ("F3",), (), (), "DEV", "x")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:13 | prices = (FundPricePoint("fund:tefas:AAA", date(2026, 1, 8), Decimal("110")),)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:10 | return FundAnalysisResult(f"fund:tefas:{code}", "equity", cls, cls.value, ("F1", "F2"), (), (), (), "TEST", "x")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:16 | assert tuple(x.canonical_fund_id for x in snapshot.results) == ("fund:tefas:AAA", "fund:tefas:BBB")
+
+[LEGACY_REFS]
+
+[NETWORK_REFS]
+L7 fetch_official_source_bytes | from backend.app.news_center.official_source_http import fetch_official_source_bytes
+L7 http | from backend.app.news_center.official_source_http import fetch_official_source_bytes
+L22 fetch_official_source_bytes | response = fetch_official_source_bytes(
+L33 payload | """Doğrulanmış adapter sınırı. Canlı payload alanları doğrulanana dek fixture mapping."""

@@ -1,0 +1,28 @@
+{
+  "financial_momentum": null,
+  "valuation_score": "0",
+  "margin_of_safety_score": "0",
+  "governance_score": "45",
+  "market_context": {
+    "technical_trend": null,
+    "relative_strength": null,
+    "volume_liquidity": null,
+    "catalyst": null,
+    "entry_risk": null,
+    "earnings_surprise": null
+  },
+  "long_term_context": {
+    "business_quality": null,
+    "growth_durability": null,
+    "governance": "45",
+    "sector_risk": null
+  },
+  "flags": [
+    "TECHNICAL_MARKET_CONTEXT_NOT_SYNTHESIZED",
+    "BUSINESS_QUALITY_NOT_SYNTHESIZED",
+    "GROWTH_DURABILITY_NOT_SYNTHESIZED",
+    "SECTOR_RISK_NOT_SYNTHESIZED",
+    "CAPITAL_EFFICIENCY_NOT_SYNTHESIZED"
+  ],
+  "engine_version": "fin-prod-006-v1"
+}

@@ -1,0 +1,85 @@
+﻿=== BASELINE ===
+........................................................................ [ 48%]
+........................................................................ [ 97%]
+....                                                                     [100%]
+148 passed, 2872 deselected in 10.05s
+BASELINE_EXIT_CODE=0
+
+=== PREFLIGHT/PATCH ===
+ORCHESTRATION_CANDIDATES=3
+CANDIDATE|SCORE=13|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|FUNCTION=on_yukselis_toplu_dogrulama_formu|LINE=85
+CANDIDATE|SCORE=11|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=on_yukselis_hazirlik_formu|LINE=210
+CANDIDATE|SCORE=4|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_v2_calibration_validation.py|FUNCTION=kontrollu_kalibrasyonu_dogrula|LINE=52
+SELECTED_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py
+SELECTED_FUNCTION=on_yukselis_toplu_dogrulama_formu|LINE=85|SCORE=13
+RESULT_VAR_CANDIDATES=13
+RESULT_VAR|LINE=224|VAR=validation_config|CALL=PreBreakoutValidationConfig( start_date=start_date, end_date=end_date, cutoff_step=int(cutoff_step), minimum_score=min(calibration_thresholds(calibration_config)), )
+RESULT_VAR|LINE=237|VAR=all_records_table|CALL=dogrulama_kayitlarini_tabloya_cevir(records)
+RESULT_VAR|LINE=246|VAR=summary|CALL=dogrulama_ozeti(current_records)
+RESULT_VAR|LINE=247|VAR=records_table|CALL=dogrulama_kayitlarini_tabloya_cevir(current_records)
+RESULT_VAR|LINE=248|VAR=summary_table|CALL=dogrulama_ozetini_tabloya_cevir(summary)
+RESULT_VAR|LINE=96|VAR=universe_name|CALL=st.selectbox( "Evren", options=ON_YUKSELIS_EVRENLERI, index=ON_YUKSELIS_EVRENLERI.index(OZEL_LISTE), key="prebreakout_validation_universe", )
+RESULT_VAR|LINE=110|VAR=result_limit|CALL=st.selectbox( "Her kesimde gösterilecek sonuç", options=SONUC_LIMITLERI, index=1, key="prebreakout_validation_result_limit", )
+RESULT_VAR|LINE=120|VAR=start_date|CALL=st.date_input( "Başlangıç tarihi", value=default_start, max_value=date.today(), key="prebreakout_validation_start", )
+RESULT_VAR|LINE=126|VAR=end_date|CALL=st.date_input( "Bitiş tarihi", value=default_end, max_value=date.today(), key="prebreakout_validation_end", )
+RESULT_VAR|LINE=132|VAR=cutoff_step|CALL=st.number_input( "Kesim adımı (işlem günü)", min_value=1, max_value=20, value=5, step=1, key="prebreakout_validation_step", )
+SELECTED_RESULT_VAR=summary_table|LINE=248
+INSERT_BEFORE_LINE=262
+DECISION=ORCHESTRATION_EVIDENCE_WIRING_APPLIED
+TARGET_FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py
+EVIDENCE_MODULE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_evidence.py
+TEST_FILE=D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_evidence.py
+PRODUCTION_MUTATION=YES
+
+=== TARGET TESTS ===
+........................................................................ [ 48%]
+........................................................................ [ 96%]
+......                                                                   [100%]
+150 passed, 2872 deselected in 8.88s
+TARGET_EXIT_CODE=0
+
+=== FULL REGRESSION ===
+........................................................................ [  2%]
+........................................................................ [  4%]
+........................................................................ [  7%]
+........................................................................ [  9%]
+........................................................................ [ 11%]
+........................................................................ [ 14%]
+........................................................................ [ 16%]
+........................................................................ [ 19%]
+........................................................................ [ 21%]
+........................................................................ [ 23%]
+........................................................................ [ 26%]
+........................................................................ [ 28%]
+........................................................................ [ 30%]
+........................................................................ [ 33%]
+........................................................................ [ 35%]
+........................................................................ [ 38%]
+........................................................................ [ 40%]
+........................................................................ [ 42%]
+........................................................................ [ 45%]
+........................................................................ [ 47%]
+........................................................................ [ 50%]
+........................................................................ [ 52%]
+........................................................................ [ 54%]
+........................................................................ [ 57%]
+........................................................................ [ 59%]
+........................................................................ [ 61%]
+........................................................................ [ 64%]
+........................................................................ [ 66%]
+........................................................................ [ 69%]
+........................................................................ [ 71%]
+........................................................................ [ 73%]
+........................................................................ [ 76%]
+........................................................................ [ 78%]
+........................................................................ [ 81%]
+........................................................................ [ 83%]
+........................................................................ [ 85%]
+........................................................................ [ 88%]
+........................................................................ [ 90%]
+........................................................................ [ 92%]
+........................................................................ [ 95%]
+........................................................................ [ 97%]
+......................................................................   [100%]
+3022 passed in 198.31s (0:03:18)
+FULL_EXIT_CODE=0

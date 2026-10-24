@@ -1,0 +1,60 @@
+﻿CONSUMER=D:\Projects\Hisse-Robotu\_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py.s143bak
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\batch_market_data_current.txt
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\sprint144c_integration_context.txt
+  CALLABLE=_cache_paths COUNT=3
+  CALLABLE=alpha_vantage_daily_loader COUNT=2
+  CALLABLE=cache_read COUNT=2
+  CALLABLE=cache_write COUNT=3
+  CALLABLE=recover_daily_market_data COUNT=1
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\batch_market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py
+  CALLABLE=_cache_paths COUNT=3
+  CALLABLE=alpha_vantage_daily_loader COUNT=2
+  CALLABLE=cache_read COUNT=2
+  CALLABLE=cache_write COUNT=3
+  CALLABLE=recover_daily_market_data COUNT=1
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py
+  CALLABLE=_cache_paths COUNT=3
+  CALLABLE=alpha_vantage_daily_loader COUNT=2
+  CALLABLE=cache_read COUNT=2
+  CALLABLE=cache_write COUNT=3
+  CALLABLE=recover_daily_market_data COUNT=1
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py
+  CALLABLE=_cache_paths COUNT=3
+  CALLABLE=alpha_vantage_daily_loader COUNT=2
+  CALLABLE=cache_read COUNT=2
+  CALLABLE=cache_write COUNT=3
+  CALLABLE=recover_daily_market_data COUNT=1
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py
+  CALLABLE=_cache_paths COUNT=3
+  CALLABLE=alpha_vantage_daily_loader COUNT=2
+  CALLABLE=cache_read COUNT=2
+  CALLABLE=cache_write COUNT=3
+  CALLABLE=recover_daily_market_data COUNT=1
+CONSUMER=D:\Projects\Hisse-Robotu\Veri_Tazelik_Rev1_toplu_end_tarihi_duzeltmesi\backend\app\data\batch_market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\batch_market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2
+CONSUMER=D:\Projects\Hisse-Robotu\Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\market_data.py
+  CALLABLE=recover_daily_market_data COUNT=2

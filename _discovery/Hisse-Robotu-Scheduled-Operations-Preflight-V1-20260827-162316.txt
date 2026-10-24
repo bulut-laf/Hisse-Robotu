@@ -1,0 +1,462 @@
+=== HISSE ROBOTU тАФ SCHEDULED OPERATIONS PREFLIGHT V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+MEMORY_MUTATION=NO
+SCHEDULER_MUTATION=NO
+NETWORK_CALL=NO
+STREAMLIT_START=NO
+PYTHONDONTWRITEBYTECODE=YES
+
+PRODUCTION_PY_FILES=491
+
+=== 1. CANONICAL CLOSE SCAN тАФ 18:20 ===
+SCAN_DEF=backend\app\analysis\market_scanner.py:111|CLASS|BistMarketScannerService
+SCAN_DEF=backend\app\compliance\dashboard_market_scanner_factory.py:22|FUNCTION|build_protected_market_scanner
+SCAN_DEF=backend\app\compliance\dashboard_market_scanner_source_factory.py:26|FUNCTION|build_dashboard_market_scanner
+SCAN_DEF=backend\app\diagnostics\system_check.py:697|FUNCTION|_toplu_tarama_zinciri_kontrolu
+SCAN_DEF=backend\dashboard.backup_before_navigation_fix.py:3894|FUNCTION|bist_toplu_tarama_sonucu_goster
+SCAN_DEF=backend\dashboard.backup_before_navigation_fix.py:4368|FUNCTION|bist_toplu_tarama_formu
+SCAN_DEF=backend\dashboard.py:4037|FUNCTION|bist_toplu_tarama_sonucu_goster
+SCAN_DEF=backend\dashboard.py:4493|FUNCTION|bist_toplu_tarama_formu
+SCAN_DEFS_TOTAL=8
+CANONICAL_SCAN_BACKEND_SEAM=YES
+
+=== 2. PRE-CLOSE EARLY DISCOVERY тАФ 17:20 ===
+PRECLOSE_DEF=backend\app\data\delayed_data_pilot.py:120|FUNCTION|_normalize_intraday_frame
+PRECLOSE_DEF=backend\app\opportunity_radar.py:612|FUNCTION|run_opportunity_radar
+PRECLOSE_DEF=backend\app\prebreakout\prebreakout_engine.py:43|FUNCTION|on_yukselis_hazirligini_analiz_et
+PRECLOSE_DEF=backend\app\prebreakout\prebreakout_release_readiness.py:31|FUNCTION|on_yukselis_surum_hazirligini_degerlendir
+PRECLOSE_DEF=backend\app\prebreakout\prebreakout_universe.py:56|FUNCTION|on_yukselis_evrenini_yukle
+PRECLOSE_DEF=backend\app\ui\opportunity_radar_dashboard.py:17|FUNCTION|render_opportunity_radar
+PRECLOSE_DEF=backend\app\ui\prebreakout_dashboard.py:210|FUNCTION|on_yukselis_hazirlik_formu
+PRECLOSE_DEF=backend\app\ui\prebreakout_validation_dashboard.py:85|FUNCTION|on_yukselis_toplu_dogrulama_formu
+PRECLOSE_REF=backend\app\analysis\momentum_walk_forward.py:13|from .momentum_discovery import (
+PRECLOSE_REF=backend\app\data\delayed_data_pilot.py:120|def _normalize_intraday_frame(frame: pd.DataFrame) -> pd.DataFrame:
+PRECLOSE_REF=backend\app\data\delayed_data_pilot.py:287|frame = _normalize_intraday_frame(raw)
+PRECLOSE_REF=backend\app\diagnostics\system_check.py:25|from ..analysis.momentum_discovery import MomentumDiscoveryEngine
+PRECLOSE_REF=backend\app\diagnostics\system_check.py:153|"backend/app/analysis/momentum_discovery.py",
+PRECLOSE_REF=backend\app\opportunity_radar.py:12|from backend.app.prebreakout.prebreakout_universe import on_yukselis_evrenini_yukle
+PRECLOSE_REF=backend\app\opportunity_radar.py:15|PROFILE_DIR = Path(__file__).resolve().parents[1] / "data" / "opportunity_radar"
+PRECLOSE_REF=backend\app\opportunity_radar.py:612|def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+PRECLOSE_REF=backend\app\opportunity_radar.py:615|universe = on_yukselis_evrenini_yukle(
+PRECLOSE_REF=backend\app\prebreakout\__init__.py:2|on_yukselis_hazirligini_analiz_et,
+PRECLOSE_REF=backend\app\prebreakout\__init__.py:16|"on_yukselis_hazirligini_analiz_et",
+PRECLOSE_REF=backend\app\prebreakout\prebreakout_backtest.py:10|on_yukselis_hazirligini_analiz_et,
+PRECLOSE_REF=backend\app\prebreakout\prebreakout_backtest.py:229|analysis = on_yukselis_hazirligini_analiz_et(
+PRECLOSE_REF=backend\app\prebreakout\prebreakout_engine.py:43|def on_yukselis_hazirligini_analiz_et(
+PRECLOSE_REF=backend\app\prebreakout\prebreakout_release_readiness.py:31|def on_yukselis_surum_hazirligini_degerlendir(
+PRECLOSE_REF=backend\app\prebreakout\prebreakout_universe.py:12|ON_YUKSELIS_EVRENLERI = (
+PRECLOSE_REF=backend\app\prebreakout\prebreakout_universe.py:56|def on_yukselis_evrenini_yukle(
+PRECLOSE_REF=backend\app\prebreakout\prebreakout_universe.py:74|if evren_adi not in ON_YUKSELIS_EVRENLERI:
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:6|from backend.app.opportunity_radar import OpportunityRadarResult, run_opportunity_radar
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:17|def render_opportunity_radar() -> None:
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:31|key="opportunity_radar_limit",
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:37|key="opportunity_radar_run",
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:40|cache_key = "opportunity_radar_last_result"
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:44|result = run_opportunity_radar(result_limit=int(result_limit))
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:90|key="opportunity_radar_weekly_csv",
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:98|key="opportunity_radar_monthly_strong_csv",
+PRECLOSE_REF=backend\app\ui\opportunity_radar_dashboard.py:106|key="opportunity_radar_monthly_early_csv",
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:60|on_yukselis_surum_hazirligini_degerlendir,
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:95|on_yukselis_hazirligini_analiz_et,
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:102|ON_YUKSELIS_EVRENLERI,
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:105|on_yukselis_evrenini_yukle,
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:210|def on_yukselis_hazirlik_formu() -> None:
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:227|options=ON_YUKSELIS_EVRENLERI,
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:228|index=ON_YUKSELIS_EVRENLERI.index(OZEL_LISTE),
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:312|universe = on_yukselis_evrenini_yukle(
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:364|result = on_yukselis_hazirligini_analiz_et(
+PRECLOSE_REF=backend\app\ui\prebreakout_dashboard.py:777|release_readiness = on_yukselis_surum_hazirligini_degerlendir(
+PRECLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:26|ON_YUKSELIS_EVRENLERI,
+PRECLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:29|on_yukselis_evrenini_yukle,
+PRECLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:85|def on_yukselis_toplu_dogrulama_formu() -> None:
+PRECLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:98|options=ON_YUKSELIS_EVRENLERI,
+PRECLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:99|index=ON_YUKSELIS_EVRENLERI.index(OZEL_LISTE),
+PRECLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:166|universe = on_yukselis_evrenini_yukle(
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:29|from backend.app.ui.prebreakout_dashboard import on_yukselis_hazirlik_formu
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:30|from backend.app.ui.prebreakout_validation_dashboard import on_yukselis_toplu_dogrulama_formu
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:32|from backend.app.ui.opportunity_radar_dashboard import render_opportunity_radar
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:364|from backend.app.analysis.momentum_discovery import (
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:2995|MOMENTUM_DISCOVERY_RESULT_KEY = "momentum_kesif_sonucu"
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:2996|MOMENTUM_DISCOVERY_SIGNATURE_KEY = "momentum_kesif_imzasi"
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3219|MOMENTUM_DISCOVERY_RESULT_KEY
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3222|MOMENTUM_DISCOVERY_SIGNATURE_KEY
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3236|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3237|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3252|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3253|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3323|st.session_state[MOMENTUM_DISCOVERY_RESULT_KEY] = sonuc
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3324|st.session_state[MOMENTUM_DISCOVERY_SIGNATURE_KEY] = discovery_imzasi
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:5548|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:5549|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:9487|render_opportunity_radar()
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:9491|on_yukselis_hazirlik_formu()
+PRECLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:9493|on_yukselis_toplu_dogrulama_formu()
+PRECLOSE_REF=backend\dashboard.py:43|from backend.app.ui.prebreakout_dashboard import on_yukselis_hazirlik_formu
+PRECLOSE_REF=backend\dashboard.py:44|from backend.app.ui.prebreakout_validation_dashboard import on_yukselis_toplu_dogrulama_formu
+PRECLOSE_REF=backend\dashboard.py:46|from backend.app.ui.opportunity_radar_dashboard import render_opportunity_radar
+PRECLOSE_REF=backend\dashboard.py:459|from backend.app.analysis.momentum_discovery import (
+PRECLOSE_REF=backend\dashboard.py:3138|MOMENTUM_DISCOVERY_RESULT_KEY = "momentum_kesif_sonucu"
+PRECLOSE_REF=backend\dashboard.py:3139|MOMENTUM_DISCOVERY_SIGNATURE_KEY = "momentum_kesif_imzasi"
+PRECLOSE_REF=backend\dashboard.py:3362|MOMENTUM_DISCOVERY_RESULT_KEY
+PRECLOSE_REF=backend\dashboard.py:3365|MOMENTUM_DISCOVERY_SIGNATURE_KEY
+PRECLOSE_REF=backend\dashboard.py:3379|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+PRECLOSE_REF=backend\dashboard.py:3380|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+PRECLOSE_REF=backend\dashboard.py:3395|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+PRECLOSE_REF=backend\dashboard.py:3396|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+PRECLOSE_REF=backend\dashboard.py:3466|st.session_state[MOMENTUM_DISCOVERY_RESULT_KEY] = sonuc
+PRECLOSE_REF=backend\dashboard.py:3467|st.session_state[MOMENTUM_DISCOVERY_SIGNATURE_KEY] = discovery_imzasi
+PRECLOSE_REF=backend\dashboard.py:5728|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+PRECLOSE_REF=backend\dashboard.py:5729|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+PRECLOSE_REF=backend\dashboard.py:10412|render_opportunity_radar()
+PRECLOSE_REF=backend\dashboard.py:10416|on_yukselis_hazirlik_formu()
+PRECLOSE_REF=backend\dashboard.py:10418|on_yukselis_toplu_dogrulama_formu()
+PRECLOSE_DEFS_TOTAL=8
+PRECLOSE_REFS_TOTAL=81
+DEDICATED_PRECLOSE_BACKEND_SEAM=NO
+GENERIC_PRECLOSE_RELATED_BACKEND_SEAM=YES
+
+=== 3. MORNING GAP / ENTRY CHECK тАФ 08:45 ===
+MORNING_DEF=backend\app\analysis\jump_candidate_entry_readiness.py:53|FUNCTION|evaluate_jump_candidate_entry_readiness
+MORNING_DEF=backend\app\analysis\morning_candidate_feedback.py:15|FUNCTION|build_morning_candidate_feedback
+MORNING_DEF=backend\app\analysis\morning_candidate_flow.py:117|FUNCTION|build_morning_candidate_cards
+MORNING_DEF=backend\app\analysis\morning_candidate_flow.py:221|FUNCTION|morning_candidate_rows
+MORNING_DEF=backend\app\analysis\morning_candidate_outcome.py:17|FUNCTION|build_morning_candidate_outcomes
+MORNING_DEF=backend\app\analysis\morning_operation_snapshot.py:28|FUNCTION|build_morning_operation_snapshot
+MORNING_DEF=backend\app\news_center\grouping.py:116|FUNCTION|_time_gap_minutes
+MORNING_DEFS_TOTAL=7
+MORNING_SNAPSHOT_BACKEND_SEAM=YES
+GAP_ENTRY_BACKEND_SEAM=YES
+
+=== 4. STREAMLIT / SESSION_STATE COUPLING ===
+SESSION_STATE_REFS=199
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:179|st.session_state.get(
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:191|st.session_state["_hisse_robotu_ai_stock_contexts"] = contexts
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:192|st.session_state["_hisse_robotu_ai_current_symbol"] = symbol
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:528|contexts = st.session_state.get(
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:532|current_symbol = st.session_state.get(
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:559|messages = list(st.session_state.get(history_key, []))
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:572|st.session_state[history_key] = []
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:596|st.session_state[history_key] = messages
+SESSION_STATE_HIT=backend\app\market_context\ai_stock_chat.py:642|st.session_state[history_key] = messages[-20:]
+SESSION_STATE_HIT=backend\app\ui\bist_daily_market_dashboard.py:181|st.session_state[cache_key] = result
+SESSION_STATE_HIT=backend\app\ui\bist_daily_market_dashboard.py:183|result = st.session_state.get(cache_key)
+SESSION_STATE_HIT=backend\app\ui\bist_daily_market_dashboard.py:238|st.session_state[cache_key] = result
+SESSION_STATE_HIT=backend\app\ui\bist_daily_market_dashboard.py:240|result = st.session_state.get(cache_key)
+SESSION_STATE_HIT=backend\app\ui\daily_market_briefing_panel.py:16|return st.session_state.get("market_context_date", date.today())
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:69|self._st.session_state.get(FILE_UPLOAD_GENERATION_KEY, 0) or 0
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:80|self._st.session_state.pop(original_key, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:82|self._st.session_state[original_key] = uploaded
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:88|self._st.session_state[RESET_AFTER_SAVE_KEY] = True
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:106|digest = str(st.session_state.get(IMAGE_APPROVED_DIGEST_KEY, "") or "")
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:119|if st.session_state.get(IMAGE_TRANSFER_TOKEN_KEY) == token:
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:123|st.session_state["market_context_input_mode"] = "Metin Yap─▒┼Яt─▒r"
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:124|st.session_state["market_context_manual_text"] = clean_text
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:125|st.session_state[IMAGE_TRANSFER_TOKEN_KEY] = token
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:138|st.session_state.get(IMAGE_UPLOAD_GENERATION_KEY, 0) or 0
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:144|st.session_state.get(FILE_UPLOAD_GENERATION_KEY, 0) or 0
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:149|for key in list(st.session_state.keys()):
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:157|st.session_state.pop(key, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:159|st.session_state[IMAGE_UPLOAD_GENERATION_KEY] = max(image_generation, 0) + 1
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:160|st.session_state[FILE_UPLOAD_GENERATION_KEY] = max(file_generation, 0) + 1
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:164|if not bool(st.session_state.pop(RESET_AFTER_SAVE_KEY, False)):
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:168|st.session_state[POST_SAVE_NOTICE_KEY] = (
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:185|notice = st.session_state.pop(POST_SAVE_NOTICE_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s157.py:214|if st.session_state.get(RESET_AFTER_SAVE_KEY):
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s182.py:19|if st.session_state.get(RESET_AFTER_SAVE_KEY):
+SESSION_STATE_HIT=backend\app\ui\market_context_dashboard_s182.py:20|_clear_pdf_fallback_state(st.session_state)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:27|generation = int(st.session_state.get(IMAGE_UPLOAD_GENERATION_KEY, 0) or 0)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:65|previous_digest = str(st.session_state.get(IMAGE_CURRENT_DIGEST_KEY, "") or "")
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:67|st.session_state[IMAGE_CURRENT_DIGEST_KEY] = image.sha256
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:68|st.session_state.pop(IMAGE_APPROVED_TEXT_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:69|st.session_state.pop(IMAGE_APPROVED_DIGEST_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:70|st.session_state.pop(IMAGE_TRANSFER_TOKEN_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:89|if text_key not in st.session_state:
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:90|st.session_state[text_key] = ""
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:104|st.session_state[text_key] = extraction.text
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:105|st.session_state[approval_key] = False
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:106|st.session_state.pop(IMAGE_APPROVED_TEXT_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:107|st.session_state.pop(IMAGE_APPROVED_DIGEST_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:108|st.session_state.pop(IMAGE_TRANSFER_TOKEN_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:129|corrected_text = str(st.session_state.get(text_key, "")).strip()
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:142|st.session_state[IMAGE_APPROVED_TEXT_KEY] = corrected_text
+SESSION_STATE_HIT=backend\app\ui\market_context_image_input.py:143|st.session_state[IMAGE_APPROVED_DIGEST_KEY] = image.sha256
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:24|return st.session_state
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:27|def _clear_pdf_fallback_state(session_state: MutableMapping[str, Any]) -> None:
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:28|generation = int(session_state.get(PDF_FALLBACK_UPLOAD_GENERATION_KEY, 0)) + 1
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:38|session_state.pop(key, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:39|for key in tuple(session_state.keys()):
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:41|session_state.pop(key, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:42|session_state[PDF_FALLBACK_UPLOAD_GENERATION_KEY] = generation
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:45|def _transfer_approved_pdf_text(session_state: MutableMapping[str, Any]) -> bool:
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:46|text = str(session_state.get(PDF_FALLBACK_TEXT_KEY, "") or "").strip()
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:47|digest = str(session_state.get(PDF_FALLBACK_DIGEST_KEY, "") or "").strip()
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:51|if session_state.get(PDF_FALLBACK_TRANSFER_TOKEN_KEY) == token:
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:53|session_state["market_context_input_mode"] = "Metin Yap─▒┼Яt─▒r"
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:54|session_state["market_context_manual_text"] = text
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:55|session_state[PDF_FALLBACK_TRANSFER_TOKEN_KEY] = token
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:59|def _reset_result_for_new_digest(session_state: MutableMapping[str, Any], digest: str) -> None:
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:60|if session_state.get(PDF_FALLBACK_DIGEST_KEY) == digest:
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:62|session_state[PDF_FALLBACK_DIGEST_KEY] = digest
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:63|session_state.pop(PDF_FALLBACK_TEXT_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:64|session_state.pop(PDF_FALLBACK_PROVIDER_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:65|session_state.pop(PDF_FALLBACK_MODEL_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\market_context_pdf_fallback.py:66|session_state.pop(PDF_FALLBACK_ELAPSED_KEY, None)
+SESSION_STATE_HIT=backend\app\ui\official_source_feed_renderer.py:440|st.session_state[spec.preview_state_key] = (
+SESSION_STATE_HIT=backend\app\ui\official_source_feed_renderer.py:446|stored_preview = st.session_state.get(spec.preview_state_key)
+SESSION_STATE_HIT=backend\app\ui\official_source_feed_renderer.py:497|st.session_state.pop(spec.preview_state_key, None)
+SESSION_STATE_HIT=backend\app\ui\official_source_feed_renderer.py:511|st.session_state.pop(spec.preview_state_key, None)
+SESSION_STATE_HIT=backend\app\ui\opportunity_radar_dashboard.py:48|st.session_state[cache_key] = result
+SESSION_STATE_HIT=backend\app\ui\opportunity_radar_dashboard.py:50|result = st.session_state.get(cache_key)
+SESSION_STATE_HIT=backend\app\ui\opportunity_radar_dashboard.py:55|st.session_state.pop(cache_key, None)
+SESSION_STATE_HIT=backend\app\ui\prebreakout_dashboard.py:294|cached_run = st.session_state.get(cache_key)
+SESSION_STATE_HIT=backend\app\ui\prebreakout_dashboard.py:375|st.session_state[cache_key] = {
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:176|st.session_state[_SUMMARY_KEY] = None
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:177|st.session_state[_SUMMARY_SOURCE_ROWS_KEY] = []
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:213|st.session_state[_PREVIEW_KEY] = previews
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:226|previews = st.session_state.get(_PREVIEW_KEY, [])
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:254|st.session_state[_SUMMARY_KEY] = summary_result
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:255|st.session_state[_SUMMARY_SOURCE_ROWS_KEY] = source_rows
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:257|st.session_state[_SUMMARY_KEY] = None
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:258|st.session_state[_SUMMARY_SOURCE_ROWS_KEY] = []
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:261|summary_result = st.session_state.get(_SUMMARY_KEY)
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:266|st.session_state.get(_SUMMARY_SOURCE_ROWS_KEY, []),
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:299|st.session_state[_PREVIEW_KEY] = []
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:300|st.session_state[_SUMMARY_KEY] = None
+SESSION_STATE_HIT=backend\app\ui\public_news_feed_panel.py:301|st.session_state[_SUMMARY_SOURCE_ROWS_KEY] = []
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:872|st.session_state["gecmis_silme_bildirimi"] = (
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:990|st.session_state["gecmis_geri_yukleme_bildirimi"] = (
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:1216|silme_bildirimi = st.session_state.pop(
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:1223|geri_yukleme_bildirimi = st.session_state.pop(
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:2809|st.session_state[canli_key] = guncel_seans_ozeti_getir(
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:2813|st.session_state.pop(canli_key, None)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:2816|canli = st.session_state.get(canli_key)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3054|_eski_rejim_uyumluluk = st.session_state.get("aktif_piyasa_rejimi")
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3057|st.session_state.get(PIYASA_REJIMI_BAGLAMI_KEY)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3206|kayitli_replay = st.session_state.get(MOMENTUM_REPLAY_RESULT_KEY)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3207|kayitli_imza = st.session_state.get(MOMENTUM_REPLAY_SIGNATURE_KEY)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3218|kayitli_sonuc = st.session_state.get(
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3221|kayitli_discovery_imzasi = st.session_state.get(
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3236|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3237|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3252|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3253|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3271|st.session_state[MOMENTUM_REPLAY_RESULT_KEY] = replay_sonucu
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3272|st.session_state[MOMENTUM_REPLAY_SIGNATURE_KEY] = replay_imzasi
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3276|st.session_state.pop(MOMENTUM_REPLAY_RESULT_KEY, None)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3277|st.session_state.pop(MOMENTUM_REPLAY_SIGNATURE_KEY, None)
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3323|st.session_state[MOMENTUM_DISCOVERY_RESULT_KEY] = sonuc
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3324|st.session_state[MOMENTUM_DISCOVERY_SIGNATURE_KEY] = discovery_imzasi
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3438|st.session_state["vbts_yonetim_bildirimi"] = (
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3548|st.session_state["vbts_yonetim_bildirimi"] = (
+SESSION_STATE_HIT=backend\dashboard.backup_before_navigation_fix.py:3609|st.session_state["vbts_yonetim_bildirimi"] = (
+STREAMLIT_IMPORT_REFS=6
+STREAMLIT_HIT=backend\app\ui\bist_daily_market_dashboard.py:4|import streamlit as st
+STREAMLIT_HIT=backend\app\ui\opportunity_radar_dashboard.py:4|import streamlit as st
+STREAMLIT_HIT=backend\app\ui\prebreakout_dashboard.py:7|import streamlit as st
+STREAMLIT_HIT=backend\app\ui\prebreakout_validation_dashboard.py:6|import streamlit as st
+STREAMLIT_HIT=backend\dashboard.backup_before_navigation_fix.py:18|import streamlit as st
+STREAMLIT_HIT=backend\dashboard.py:18|import streamlit as st
+
+=== 5. MEMORY / WRITE AUTHORITY LOCATION ===
+WRITE_REF=backend\app\analysis\active_shadow_trader.py:317|self.observation_path = self.root / "observations.jsonl"
+WRITE_REF=backend\app\analysis\active_shadow_trader.py:347|def append_observation(self, assessment: TraderAssessment, *, observed_at: datetime | None = None) -> None:
+WRITE_REF=backend\app\analysis\active_shadow_trader.py:384|self.append_observation(assessment, observed_at=stamp)
+WRITE_REF=backend\app\analysis\historical_research_replay.py:25|from .ranking_memory import RankObservation, observations_from_research_rows
+WRITE_REF=backend\app\analysis\ranking_memory.py:75|class ResearchProfileObservation:
+WRITE_REF=backend\app\analysis\ranking_memory.py:88|class RankObservationJsonlStore:
+WRITE_REF=backend\app\analysis\ranking_memory.py:97|path = project_root / "data" / "ranking_memory" / "rank_observations.jsonl"
+WRITE_REF=backend\app\analysis\ranking_memory.py:166|ResearchProfileObservation(
+WRITE_REF=backend\app\analysis\ranking_memory.py:207|def append_profile_snapshot(self, observations, *, activation_date):
+WRITE_REF=backend\app\analysis\ranking_movement_visibility.py:6|from backend.app.analysis.ranking_memory import RankObservation
+WRITE_REF=backend\app\analysis\ranking_snapshot_adapter.py:5|from backend.app.analysis.ranking_memory import (
+WRITE_REF=backend\app\analysis\ranking_snapshot_adapter.py:7|RankObservationJsonlStore,
+WRITE_REF=backend\app\analysis\ranking_snapshot_adapter.py:26|return (store or RankObservationJsonlStore()).append_snapshot(
+WRITE_REF=backend\app\analysis\ranking_trajectory.py:7|from backend.app.analysis.ranking_memory import RankObservation
+WRITE_REF=backend\app\analysis\ranking_validation.py:6|from backend.app.analysis.ranking_memory import RankObservation
+WRITE_REF=backend\app\analysis\ranking_visibility_context.py:6|from backend.app.analysis.ranking_memory import RankObservation
+WRITE_REF=backend\app\analysis\ranking_visibility_service.py:3|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+WRITE_REF=backend\app\analysis\ranking_visibility_service.py:11|store: RankObservationJsonlStore | None = None,
+WRITE_REF=backend\app\analysis\ranking_visibility_service.py:13|memory = store or RankObservationJsonlStore()
+WRITE_REF=backend\app\analysis\research_profile_memory.py:8|from .ranking_memory import RankObservationJsonlStore, ResearchProfileObservation
+WRITE_REF=backend\app\analysis\research_profile_memory.py:77|) -> tuple[ResearchProfileObservation, ...]:
+WRITE_REF=backend\app\analysis\research_profile_memory.py:83|ResearchProfileObservation(
+WRITE_REF=backend\app\analysis\research_profile_memory.py:103|store: RankObservationJsonlStore | None = None,
+WRITE_REF=backend\app\analysis\research_profile_memory.py:121|target = store or RankObservationJsonlStore()
+WRITE_REF=backend\app\analysis\research_profile_memory.py:122|appended = target.append_profile_snapshot(
+WRITE_REF=backend\app\analysis\research_profile_memory.py:134|observations: Iterable[ResearchProfileObservation],
+WRITE_REF=backend\app\analysis\research_profile_memory.py:138|) -> tuple[ResearchProfileObservation, ...]:
+WRITE_REF=backend\app\analysis\research_profile_memory.py:151|observations: Iterable[ResearchProfileObservation],
+WRITE_REF=backend\app\analysis\research_profile_memory.py:248|target = store or RankObservationJsonlStore()
+WRITE_REF=backend\app\analysis\research_profile_memory.py:256|target = store or RankObservationJsonlStore()
+WRITE_REF=backend\app\compliance\dashboard_vbts_manager.py:399|return csv_path.with_name("vbts_denetim.jsonl")
+WRITE_REF=backend\app\data\delayed_data_pilot.py:374|self.jsonl_path = self.root / "pilot_olcumleri.jsonl"
+WRITE_REF=backend\app\data\delayed_data_pilot.py:379|with self.jsonl_path.open("a", encoding="utf-8") as stream:
+WRITE_REF=backend\app\data\delayed_data_pilot.py:387|return self.jsonl_path
+WRITE_REF=backend\app\data\delayed_data_pilot.py:390|if not self.jsonl_path.exists():
+WRITE_REF=backend\app\data\delayed_data_pilot.py:394|for line in self.jsonl_path.read_text(
+WRITE_REF=backend\app\news_center\official_source_operations.py:68|/ "official_source_operations.jsonl"
+WRITE_REF=backend\app\news_center\official_source_operations.py:175|Kullan─▒c─▒n─▒n a├з─▒k kaynak-besleme i┼Яlemlerini ayr─▒ JSONL audit g├╝nl├╝─Я├╝nde tutar.
+WRITE_REF=backend\app\prebreakout\prebreakout_alarm_journal.py:12|DEFAULT_ALARM_HISTORY_PATH = Path("backend/data/prebreakout_alarm_history.jsonl")
+WRITE_REF=backend\app\prebreakout\prebreakout_alarm_journal.py:13|DEFAULT_DECISION_JOURNAL_PATH = Path("backend/data/prebreakout_decision_journal.jsonl")
+WRITE_REF=backend\app\prebreakout\prebreakout_alarm_journal.py:46|def _atomic_write_jsonl(path: Path, rows: Iterable[dict]) -> None:
+WRITE_REF=backend\app\prebreakout\prebreakout_alarm_journal.py:101|_atomic_write_jsonl(target, (asdict(item) for item in rows))
+WRITE_REF=backend\app\prebreakout\prebreakout_alarm_journal.py:129|_atomic_write_jsonl(target, (asdict(item) for item in rows))
+WRITE_REF=backend\app\prebreakout\prebreakout_alarm_journal.py:165|_atomic_write_jsonl(target, (asdict(item) for item in rows))
+WRITE_REF=backend\app\prebreakout\prebreakout_live_watch.py:17|DEFAULT_LIVE_WATCH_PATH = Path("backend/data/prebreakout_live_watch.jsonl")
+WRITE_REF=backend\app\prebreakout\prebreakout_operation_archive.py:9|DEFAULT_OPERATION_ARCHIVE_PATH = Path("backend/data/prebreakout_daily_operation_archive.jsonl")
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:3971|from backend.app.analysis.ranking_memory import (
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:3972|RankObservationJsonlStore,
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:3976|_rank_observations = observations_from_research_rows(
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:3982|RankObservationJsonlStore().append_snapshot(_rank_observations)
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:3986|r"D:\Projects\Hisse-Robotu\_discovery\ranking_memory_write_error.log"
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:4062|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:4066|_ranking_history = RankObservationJsonlStore().list()
+WRITE_REF=backend\dashboard.backup_before_navigation_fix.py:7929|"pilot_olcumleri.jsonl"
+WRITE_REF=backend\dashboard.py:4119|from backend.app.analysis.ranking_memory import (
+WRITE_REF=backend\dashboard.py:4120|RankObservationJsonlStore,
+WRITE_REF=backend\dashboard.py:4128|_ranking_memory_rows = tuple(
+WRITE_REF=backend\dashboard.py:4138|_rank_observations = observations_from_research_rows(
+WRITE_REF=backend\dashboard.py:4139|rows=_ranking_memory_rows,
+WRITE_REF=backend\dashboard.py:4144|RankObservationJsonlStore().append_snapshot(_rank_observations)
+WRITE_REF=backend\dashboard.py:4148|r"D:\Projects\Hisse-Robotu\_discovery\ranking_memory_write_error.log"
+WRITE_REF=backend\dashboard.py:4225|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+WRITE_REF=backend\dashboard.py:4232|_ranking_history = RankObservationJsonlStore().list()
+WRITE_REF=backend\dashboard.py:8109|"pilot_olcumleri.jsonl"
+WRITE_REF=backend\dashboard.py:8337|from backend.app.analysis.ranking_memory import (
+WRITE_REF=backend\dashboard.py:8338|RankObservationJsonlStore,
+WRITE_REF=backend\dashboard.py:8344|_daily10_rank_history = RankObservationJsonlStore().list()
+WRITE_REF=backend\dashboard.py:8528|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+WRITE_REF=backend\dashboard.py:8534|_daily_rank_history = RankObservationJsonlStore().list()
+WRITE_REFS_TOTAL=69
+
+=== 6. EXISTING CLI / SCRIPT ENTRYPOINTS ===
+ENTRYPOINT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:5|import argparse
+ENTRYPOINT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:458|parser = argparse.ArgumentParser(description="Hisse Robotu otomatik g├╝nl├╝k karar ko┼Яusu")
+ENTRYPOINT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:467|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\app\ui\sprint135_dashboard_patch.py:3|import argparse
+ENTRYPOINT_REF=backend\app\ui\sprint135_dashboard_patch.py:74|parser = argparse.ArgumentParser()
+ENTRYPOINT_REF=backend\app\ui\sprint135_dashboard_patch.py:80|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\app\ui\sprint136_dashboard_patch.py:3|import argparse
+ENTRYPOINT_REF=backend\app\ui\sprint136_dashboard_patch.py:53|parser = argparse.ArgumentParser()
+ENTRYPOINT_REF=backend\app\ui\sprint136_dashboard_patch.py:63|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_indicators.py:82|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_market_data.py:26|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_risk_engine.py:81|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_signal_engine.py:123|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_stock_analyzer.py:82|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_structural_risk.py:127|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_support_resistance.py:96|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\check_volume_analysis.py:78|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\dashboard.backup_before_navigation_fix.py:9522|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\dashboard.py:10447|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_backtest.py:3|import argparse
+ENTRYPOINT_REF=backend\run_backtest.py:55|raise argparse.ArgumentTypeError(
+ENTRYPOINT_REF=backend\run_backtest.py:60|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_backtest.py:61|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_backtest.py:258|argumanlar: argparse.Namespace,
+ENTRYPOINT_REF=backend\run_backtest.py:1562|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_market_regime_analysis.py:3|import argparse
+ENTRYPOINT_REF=backend\run_market_regime_analysis.py:58|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_market_regime_analysis.py:59|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_market_regime_analysis.py:386|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_multi_timeframe_analysis.py:3|import argparse
+ENTRYPOINT_REF=backend\run_multi_timeframe_analysis.py:25|def argumanlari_oku() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_multi_timeframe_analysis.py:26|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_multi_timeframe_analysis.py:107|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_multi_timeframe_data.py:3|import argparse
+ENTRYPOINT_REF=backend\run_multi_timeframe_data.py:17|def argumanlari_oku() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_multi_timeframe_data.py:18|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_multi_timeframe_data.py:90|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_parameter_sensitivity.py:3|import argparse
+ENTRYPOINT_REF=backend\run_parameter_sensitivity.py:51|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_parameter_sensitivity.py:52|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_parameter_sensitivity.py:257|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_portfolio_backtest.py:3|import argparse
+ENTRYPOINT_REF=backend\run_portfolio_backtest.py:41|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_portfolio_backtest.py:42|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_portfolio_backtest.py:333|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_portfolio_capacity_robustness.py:3|import argparse
+ENTRYPOINT_REF=backend\run_portfolio_capacity_robustness.py:48|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_portfolio_capacity_robustness.py:49|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_portfolio_capacity_robustness.py:347|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_portfolio_capacity_sensitivity.py:3|import argparse
+ENTRYPOINT_REF=backend\run_portfolio_capacity_sensitivity.py:41|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_portfolio_capacity_sensitivity.py:42|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_portfolio_capacity_sensitivity.py:295|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_portfolio_risk_comparison.py:3|import argparse
+ENTRYPOINT_REF=backend\run_portfolio_risk_comparison.py:40|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_portfolio_risk_comparison.py:41|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_portfolio_risk_comparison.py:326|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_position_monitor.py:3|import argparse
+ENTRYPOINT_REF=backend\run_position_monitor.py:40|def argumanlari_oku() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_position_monitor.py:41|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_position_monitor.py:218|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_regime_filter_impact.py:3|import argparse
+ENTRYPOINT_REF=backend\run_regime_filter_impact.py:40|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_regime_filter_impact.py:41|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_regime_filter_impact.py:240|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_rolling_window_analysis.py:3|import argparse
+ENTRYPOINT_REF=backend\run_rolling_window_analysis.py:51|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_rolling_window_analysis.py:52|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_rolling_window_analysis.py:322|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_scan_history.py:3|import argparse
+ENTRYPOINT_REF=backend\run_scan_history.py:32|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_scan_history.py:33|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_scan_history.py:455|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_stock_analysis.py:3|import argparse
+ENTRYPOINT_REF=backend\run_stock_analysis.py:12|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_stock_analysis.py:19|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_stock_analysis.py:191|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_stock_scanner.py:3|import argparse
+ENTRYPOINT_REF=backend\run_stock_scanner.py:22|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_stock_scanner.py:23|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_stock_scanner.py:162|argumanlar: argparse.Namespace,
+ENTRYPOINT_REF=backend\run_stock_scanner.py:422|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_system_check.py:3|import argparse
+ENTRYPOINT_REF=backend\run_system_check.py:29|def argumanlari_oku() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_system_check.py:30|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_system_check.py:90|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_technical_confirmation.py:3|import argparse
+ENTRYPOINT_REF=backend\run_technical_confirmation.py:25|def argumanlari_oku() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_technical_confirmation.py:26|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_technical_confirmation.py:146|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_trade_plan.py:3|import argparse
+ENTRYPOINT_REF=backend\run_trade_plan.py:36|def argumanlari_oku() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_trade_plan.py:37|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_trade_plan.py:161|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\run_watchlist_scanner.py:3|import argparse
+ENTRYPOINT_REF=backend\run_watchlist_scanner.py:74|def argumanlari_al() -> argparse.Namespace:
+ENTRYPOINT_REF=backend\run_watchlist_scanner.py:75|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\run_watchlist_scanner.py:270|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\scripts\sector_market_check.py:47|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\scripts\sector_member_strength_check.py:3|import argparse
+ENTRYPOINT_REF=backend\scripts\sector_member_strength_check.py:15|parser = argparse.ArgumentParser(
+ENTRYPOINT_REF=backend\scripts\sector_member_strength_check.py:86|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\tools\verify_bist_official_batch_merge.py:87|if __name__ == "__main__":
+ENTRYPOINT_REF=backend\tools\verify_bist_official_live.py:3|import argparse
+ENTRYPOINT_REF=backend\tools\verify_bist_official_live.py:27|parser = argparse.ArgumentParser()
+ENTRYPOINT_REF=backend\tools\verify_bist_official_live.py:115|if __name__ == "__main__":
+ENTRYPOINT_REFS_TOTAL=106
+
+=== 7. HEADLESS SCHEDULING DECISION ===
+18_20_CANONICAL_CLOSE_HEADLESS=YES
+08_45_MORNING_HEADLESS=YES
+17_20_PRECLOSE_HEADLESS=NO
+CORE_BACKEND_SERVICES_OUTSIDE_UI=YES
+DECISION=PARTIAL_HEADLESS_SEAMS_PRESENT
+NEXT=IMPLEMENT_NARROW_SCHEDULED_RUNNER_ADAPTER;NO_NEW_ENGINE
+
+SAFETY_CONTRACT:
+17:20_PREVIEW_MUST_NOT_WRITE_CANONICAL_RANKING_MEMORY=YES
+17:20_PREVIEW_MUST_NOT_WRITE_PROFILE_MEMORY=YES
+17:20_PREVIEW_MUST_NOT_CREATE_AL_SAT_DECISION=YES
+18:20_CANONICAL_CLOSE_REMAINS_AUTHORITATIVE=YES
+08:45_GAP_ENTRY_CHECK_MUST_NOT_REWRITE_PRIOR_CLOSE_RANKING=YES
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+
+=== PREFLIGHT COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO

@@ -1,0 +1,1674 @@
+diff --git a/backend/app/funds/portfolio_tracking.py b/backend/app/funds/portfolio_tracking.py
+index 5749004..cf9d247 100644
+--- a/backend/app/funds/portfolio_tracking.py
++++ b/backend/app/funds/portfolio_tracking.py
+@@ -1,442 +1,486 @@
+-from __future__ import annotations
+-
+-import hashlib
+-import json
+-from dataclasses import dataclass
+-from datetime import date, datetime
+-from decimal import Decimal
+-from enum import Enum
+-from pathlib import Path
+-from typing import Iterable
+-
+-from .contracts import DataQualityState
+-
+-
+-class PortfolioSnapshotStoreError(RuntimeError):
+-    pass
+-
+-
+-class PositionChangeKind(str, Enum):
+-    NEW_ENTRY = "NEW_ENTRY"
+-    INCREASED = "INCREASED"
+-    REDUCED = "REDUCED"
+-    FULL_EXIT = "FULL_EXIT"
+-    UNCHANGED = "UNCHANGED"
+-    UNKNOWN = "UNKNOWN"
+-
+-
+-class PositionChangeConfidence(str, Enum):
+-    HIGH = "HIGH"
+-    MEDIUM = "MEDIUM"
+-    LOW = "LOW"
+-
+-
+-class WeightChangeDirection(str, Enum):
+-    INCREASED = "INCREASED"
+-    REDUCED = "REDUCED"
+-    UNCHANGED = "UNCHANGED"
+-    UNKNOWN = "UNKNOWN"
+-
+-
+-def _non_negative(value: Decimal | None, name: str) -> None:
+-    if value is not None and (not value.is_finite() or value < 0):
+-        raise ValueError(f"{name} negatif veya sonlu olmayan değer olamaz.")
+-
+-
+-def _ratio(value: Decimal | None, name: str) -> None:
+-    if value is None:
+-        return
+-    if not value.is_finite() or value < 0 or value > 1:
+-        raise ValueError(f"{name} 0-1 aralığında olmalıdır.")
+-
+-
+-def _aware(value: datetime, name: str) -> None:
+-    if value.tzinfo is None or value.utcoffset() is None:
+-        raise ValueError(f"{name} timezone-aware olmalıdır.")
+-
+-
+-def _clean_symbol(value: str) -> str:
+-    clean = value.strip().upper()
+-    if not clean:
+-        raise ValueError("symbol boş olamaz.")
+-    return clean
+-
+-
+-@dataclass(frozen=True, slots=True)
+-class FundPortfolioPosition:
+-    canonical_fund_id: str
+-    portfolio_date: date
+-    symbol: str
+-    asset_type: str
+-    asset_name: str | None = None
+-    shares_held: Decimal | None = None
+-    market_value: Decimal | None = None
+-    portfolio_weight: Decimal | None = None
+-
+-    def __post_init__(self) -> None:
+-        fund_id = self.canonical_fund_id.strip()
+-        if not fund_id:
+-            raise ValueError("canonical_fund_id boş olamaz.")
+-        object.__setattr__(self, "canonical_fund_id", fund_id)
+-        object.__setattr__(self, "symbol", _clean_symbol(self.symbol))
+-        asset_type = self.asset_type.strip().upper()
+-        if not asset_type:
+-            raise ValueError("asset_type boş olamaz.")
+-        object.__setattr__(self, "asset_type", asset_type)
+-        _non_negative(self.shares_held, "shares_held")
+-        _non_negative(self.market_value, "market_value")
+-        _ratio(self.portfolio_weight, "portfolio_weight")
+-
+-
+-@dataclass(frozen=True, slots=True)
+-class FundPortfolioSnapshot:
+-    canonical_fund_id: str
+-    portfolio_date: date
+-    publication_date: date
+-    ingested_at: datetime
+-    provider: str
+-    positions: tuple[FundPortfolioPosition, ...]
+-    data_quality_state: DataQualityState = DataQualityState.VALID
+-    source_reference: str | None = None
+-
+-    def __post_init__(self) -> None:
+-        fund_id = self.canonical_fund_id.strip()
+-        provider = self.provider.strip().upper()
+-        if not fund_id or not provider:
+-            raise ValueError("Fon ve provider kimliği zorunludur.")
+-        _aware(self.ingested_at, "ingested_at")
+-        if self.publication_date < self.portfolio_date:
+-            raise ValueError("publication_date portfolio_date öncesinde olamaz.")
+-        seen: set[str] = set()
+-        ordered: list[FundPortfolioPosition] = []
+-        for item in sorted(self.positions, key=lambda row: (row.asset_type, row.symbol)):
+-            if item.canonical_fund_id != fund_id or item.portfolio_date != self.portfolio_date:
+-                raise ValueError("Snapshot pozisyon kimliği snapshot ile eşleşmiyor.")
+-            key = f"{item.asset_type}|{item.symbol}"
+-            if key in seen:
+-                raise ValueError(f"DUPLICATE_PORTFOLIO_POSITION:{key}")
+-            seen.add(key)
+-            ordered.append(item)
+-        object.__setattr__(self, "canonical_fund_id", fund_id)
+-        object.__setattr__(self, "provider", provider)
+-        object.__setattr__(self, "positions", tuple(ordered))
+-
+-    @property
+-    def snapshot_id(self) -> str:
+-        raw = f"{self.canonical_fund_id}|{self.portfolio_date.isoformat()}|{self.provider}"
+-        return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+-
+-
+-@dataclass(frozen=True, slots=True)
+-class PortfolioPositionChange:
+-    canonical_fund_id: str
+-    symbol: str
+-    previous_portfolio_date: date
+-    current_portfolio_date: date
+-    kind: PositionChangeKind
+-    confidence: PositionChangeConfidence
+-    previous_shares: Decimal | None
+-    current_shares: Decimal | None
+-    share_change: Decimal | None
+-    previous_market_value: Decimal | None
+-    current_market_value: Decimal | None
+-    market_value_change: Decimal | None
+-    previous_weight: Decimal | None
+-    current_weight: Decimal | None
+-    weight_change_percentage_points: Decimal | None
+-    weight_direction: WeightChangeDirection
+-    reason: str
+-
+-
+-@dataclass(frozen=True, slots=True)
+-class FundPortfolioChangeSet:
+-    canonical_fund_id: str
+-    previous_portfolio_date: date
+-    current_portfolio_date: date
+-    previous_publication_date: date
+-    current_publication_date: date
+-    changes: tuple[PortfolioPositionChange, ...]
+-
+-
+-@dataclass(frozen=True, slots=True)
+-class StockFundActivity:
+-    symbol: str
+-    current_fund_count: int
+-    comparable_fund_count: int
+-    new_fund_count: int
+-    exited_fund_count: int
+-    increasing_fund_count: int
+-    decreasing_fund_count: int
+-    unchanged_fund_count: int
+-    unknown_fund_count: int
+-    accumulation_breadth: Decimal | None
+-    distribution_breadth: Decimal | None
+-
+-
+-@dataclass(frozen=True, slots=True)
+-class PortfolioSnapshotStoreResult:
+-    inserted: int
+-    unchanged: int
+-    total_records: int
+-
+-
+-def _snapshot_complete(snapshot: FundPortfolioSnapshot) -> bool:
+-    return snapshot.data_quality_state is DataQualityState.VALID
+-
+-
+-def _weight_direction(previous: Decimal | None, current: Decimal | None) -> tuple[WeightChangeDirection, Decimal | None]:
+-    if previous is None or current is None:
+-        return WeightChangeDirection.UNKNOWN, None
+-    delta_pp = (current - previous) * Decimal("100")
+-    if delta_pp > 0:
+-        return WeightChangeDirection.INCREASED, delta_pp
+-    if delta_pp < 0:
+-        return WeightChangeDirection.REDUCED, delta_pp
+-    return WeightChangeDirection.UNCHANGED, delta_pp
+-
+-
+-def _decimal_delta(previous: Decimal | None, current: Decimal | None) -> Decimal | None:
+-    if previous is None or current is None:
+-        return None
+-    return current - previous
+-
+-
+-def compare_portfolio_snapshots(
+-    previous: FundPortfolioSnapshot,
+-    current: FundPortfolioSnapshot,
+-) -> FundPortfolioChangeSet:
+-    if previous.canonical_fund_id != current.canonical_fund_id:
+-        raise ValueError("PORTFOLIO_COMPARE_FUND_MISMATCH")
+-    if current.portfolio_date <= previous.portfolio_date:
+-        raise ValueError("PORTFOLIO_COMPARE_DATE_ORDER")
+-
+-    prev = {item.symbol: item for item in previous.positions if item.asset_type == "EQUITY"}
+-    curr = {item.symbol: item for item in current.positions if item.asset_type == "EQUITY"}
+-    output: list[PortfolioPositionChange] = []
+-
+-    for symbol in sorted(set(prev) | set(curr)):
+-        before = prev.get(symbol)
+-        after = curr.get(symbol)
+-        complete = _snapshot_complete(previous) and _snapshot_complete(current)
+-
+-        previous_weight = before.portfolio_weight if before else None
+-        current_weight = after.portfolio_weight if after else None
+-        weight_direction, weight_delta = _weight_direction(previous_weight, current_weight)
+-
+-        if before is None and after is not None:
+-            if complete:
+-                kind = PositionChangeKind.NEW_ENTRY
+-                confidence = PositionChangeConfidence.HIGH
+-                reason = "CURRENT_PRESENT_PREVIOUS_ABSENT_COMPLETE_SNAPSHOTS"
+-            else:
+-                kind = PositionChangeKind.UNKNOWN
+-                confidence = PositionChangeConfidence.LOW
+-                reason = "PRESENCE_CHANGE_WITH_PARTIAL_SNAPSHOT"
+-        elif before is not None and after is None:
+-            if complete:
+-                kind = PositionChangeKind.FULL_EXIT
+-                confidence = PositionChangeConfidence.HIGH
+-                reason = "PREVIOUS_PRESENT_CURRENT_ABSENT_COMPLETE_SNAPSHOTS"
+-            else:
+-                kind = PositionChangeKind.UNKNOWN
+-                confidence = PositionChangeConfidence.LOW
+-                reason = "ABSENCE_CANNOT_PROVE_EXIT_WITH_PARTIAL_SNAPSHOT"
+-        elif before is not None and after is not None:
+-            if before.shares_held is not None and after.shares_held is not None:
+-                share_delta = after.shares_held - before.shares_held
+-                if share_delta > 0:
+-                    kind = PositionChangeKind.INCREASED
+-                elif share_delta < 0:
+-                    kind = PositionChangeKind.REDUCED
+-                else:
+-                    kind = PositionChangeKind.UNCHANGED
+-                confidence = PositionChangeConfidence.HIGH
+-                reason = "SHARE_COUNT_COMPARISON"
+-            else:
+-                kind = PositionChangeKind.UNKNOWN
+-                confidence = (
+-                    PositionChangeConfidence.MEDIUM
+-                    if before.market_value is not None and after.market_value is not None
+-                    else PositionChangeConfidence.LOW
+-                )
+-                reason = "WEIGHT_OR_VALUE_CHANGE_ONLY_NOT_CONFIRMED_TRADE"
+-        else:  # pragma: no cover - union guarantees one side exists.
+-            continue
+-
+-        previous_shares = before.shares_held if before else None
+-        current_shares = after.shares_held if after else None
+-        previous_value = before.market_value if before else None
+-        current_value = after.market_value if after else None
+-
+-        output.append(
+-            PortfolioPositionChange(
+-                canonical_fund_id=current.canonical_fund_id,
+-                symbol=symbol,
+-                previous_portfolio_date=previous.portfolio_date,
+-                current_portfolio_date=current.portfolio_date,
+-                kind=kind,
+-                confidence=confidence,
+-                previous_shares=previous_shares,
+-                current_shares=current_shares,
+-                share_change=_decimal_delta(previous_shares, current_shares),
+-                previous_market_value=previous_value,
+-                current_market_value=current_value,
+-                market_value_change=_decimal_delta(previous_value, current_value),
+-                previous_weight=previous_weight,
+-                current_weight=current_weight,
+-                weight_change_percentage_points=weight_delta,
+-                weight_direction=weight_direction,
+-                reason=reason,
+-            )
+-        )
+-
+-    return FundPortfolioChangeSet(
+-        canonical_fund_id=current.canonical_fund_id,
+-        previous_portfolio_date=previous.portfolio_date,
+-        current_portfolio_date=current.portfolio_date,
+-        previous_publication_date=previous.publication_date,
+-        current_publication_date=current.publication_date,
+-        changes=tuple(output),
+-    )
+-
+-
+-def aggregate_stock_fund_activity(
+-    change_sets: Iterable[FundPortfolioChangeSet],
+-) -> tuple[StockFundActivity, ...]:
+-    by_symbol: dict[str, list[PortfolioPositionChange]] = {}
+-    for change_set in change_sets:
+-        for change in change_set.changes:
+-            by_symbol.setdefault(change.symbol, []).append(change)
+-
+-    output: list[StockFundActivity] = []
+-    for symbol in sorted(by_symbol):
+-        rows = by_symbol[symbol]
+-        new_count = sum(item.kind is PositionChangeKind.NEW_ENTRY for item in rows)
+-        exit_count = sum(item.kind is PositionChangeKind.FULL_EXIT for item in rows)
+-        increase_count = sum(item.kind is PositionChangeKind.INCREASED for item in rows)
+-        decrease_count = sum(item.kind is PositionChangeKind.REDUCED for item in rows)
+-        unchanged_count = sum(item.kind is PositionChangeKind.UNCHANGED for item in rows)
+-        unknown_count = sum(item.kind is PositionChangeKind.UNKNOWN for item in rows)
+-        comparable = new_count + exit_count + increase_count + decrease_count + unchanged_count
+-        current_fund_count = sum(
+-            item.kind not in (PositionChangeKind.FULL_EXIT, PositionChangeKind.UNKNOWN)
+-            or item.current_shares is not None
+-            or item.current_weight is not None
+-            for item in rows
+-        )
+-        accumulation = None
+-        distribution = None
+-        if comparable:
+-            denominator = Decimal(comparable)
+-            accumulation = Decimal(new_count + increase_count) / denominator
+-            distribution = Decimal(exit_count + decrease_count) / denominator
+-
+-        output.append(
+-            StockFundActivity(
+-                symbol=symbol,
+-                current_fund_count=current_fund_count,
+-                comparable_fund_count=comparable,
+-                new_fund_count=new_count,
+-                exited_fund_count=exit_count,
+-                increasing_fund_count=increase_count,
+-                decreasing_fund_count=decrease_count,
+-                unchanged_fund_count=unchanged_count,
+-                unknown_fund_count=unknown_count,
+-                accumulation_breadth=accumulation,
+-                distribution_breadth=distribution,
+-            )
+-        )
+-    return tuple(output)
+-
+-
+-def _snapshot_to_primitive(snapshot: FundPortfolioSnapshot) -> dict[str, object]:
+-    return {
+-        "record_type": "FundPortfolioSnapshot",
+-        "snapshot_id": snapshot.snapshot_id,
+-        "canonical_fund_id": snapshot.canonical_fund_id,
+-        "portfolio_date": snapshot.portfolio_date.isoformat(),
+-        "publication_date": snapshot.publication_date.isoformat(),
+-        "ingested_at": snapshot.ingested_at.isoformat(),
+-        "provider": snapshot.provider,
+-        "data_quality_state": snapshot.data_quality_state.value,
+-        "source_reference": snapshot.source_reference,
+-        "positions": [
+-            {
+-                "canonical_fund_id": item.canonical_fund_id,
+-                "portfolio_date": item.portfolio_date.isoformat(),
+-                "symbol": item.symbol,
+-                "asset_type": item.asset_type,
+-                "asset_name": item.asset_name,
+-                "shares_held": None if item.shares_held is None else str(item.shares_held),
+-                "market_value": None if item.market_value is None else str(item.market_value),
+-                "portfolio_weight": None if item.portfolio_weight is None else str(item.portfolio_weight),
+-            }
+-            for item in snapshot.positions
+-        ],
+-    }
+-
+-
+-class FundPortfolioSnapshotJsonStore:
+-    """Append-only tarihli fon portföy snapshot deposu.
+-
+-    Aynı fon/tarih/provider kimliği farklı içerikle yeniden gelirse sessizce
+-    overwrite etmez; conflict üretir. Böylece tarihsel değişim kanıtı korunur.
+-    """
+-
+-    def __init__(self, path: str | Path) -> None:
+-        self.path = Path(path)
+-
+-    def _read(self) -> dict[str, dict[str, object]]:
+-        if not self.path.exists():
+-            return {}
+-        try:
+-            payload = json.loads(self.path.read_text(encoding="utf-8"))
+-        except Exception as exc:
+-            raise PortfolioSnapshotStoreError("Fon portföy snapshot deposu okunamadı.") from exc
+-        if not isinstance(payload, dict):
+-            raise PortfolioSnapshotStoreError("Fon portföy snapshot deposu nesne biçiminde olmalıdır.")
+-        return payload
+-
+-    @staticmethod
+-    def _key(snapshot: FundPortfolioSnapshot) -> str:
+-        return f"{snapshot.canonical_fund_id}|{snapshot.portfolio_date.isoformat()}|{snapshot.provider}"
+-
+-    def append(self, snapshots: Iterable[FundPortfolioSnapshot]) -> PortfolioSnapshotStoreResult:
+-        existing = self._read()
+-        inserted = unchanged = 0
+-        for snapshot in sorted(snapshots, key=self._key):
+-            key = self._key(snapshot)
+-            record = _snapshot_to_primitive(snapshot)
+-            digest = hashlib.sha256(
+-                json.dumps(record, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+-            ).hexdigest()
+-            stored = existing.get(key)
+-            if stored is None:
+-                existing[key] = {**record, "_digest": digest}
+-                inserted += 1
+-                continue
+-            if stored.get("_digest") == digest:
+-                unchanged += 1
+-                continue
+-            raise PortfolioSnapshotStoreError(f"PORTFOLIO_SNAPSHOT_CONFLICT:{key}")
+-
+-        self.path.parent.mkdir(parents=True, exist_ok=True)
+-        temp = self.path.with_suffix(self.path.suffix + ".tmp")
+-        temp.write_text(json.dumps(existing, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+-        temp.replace(self.path)
+-        return PortfolioSnapshotStoreResult(inserted, unchanged, len(existing))
+-
+-    def list_records(self) -> tuple[dict[str, object], ...]:
+-        payload = self._read()
+-        return tuple(payload[key] for key in sorted(payload))
+-
+-
+-DEFAULT_FUND_PORTFOLIO_SNAPSHOT_PATH = (
+-    Path(__file__).resolve().parents[2] / "data" / "funds" / "portfolio_snapshots.json"
+-)
+-
+-
+-def fund_portfolio_snapshot_store(path: str | Path | None = None) -> FundPortfolioSnapshotJsonStore:
+-    return FundPortfolioSnapshotJsonStore(
+-        DEFAULT_FUND_PORTFOLIO_SNAPSHOT_PATH if path is None else path
+-    )
++from __future__ import annotations
++
++import hashlib
++import json
++from dataclasses import dataclass
++from datetime import date, datetime
++from decimal import Decimal
++from enum import Enum
++from pathlib import Path
++from typing import Iterable
++
++from .contracts import DataQualityState
++
++
++class PortfolioSnapshotStoreError(RuntimeError):
++    pass
++
++
++class PositionChangeKind(str, Enum):
++    NEW_ENTRY = "NEW_ENTRY"
++    INCREASED = "INCREASED"
++    REDUCED = "REDUCED"
++    FULL_EXIT = "FULL_EXIT"
++    UNCHANGED = "UNCHANGED"
++    UNKNOWN = "UNKNOWN"
++
++
++class PositionChangeConfidence(str, Enum):
++    HIGH = "HIGH"
++    MEDIUM = "MEDIUM"
++    LOW = "LOW"
++
++
++class WeightChangeDirection(str, Enum):
++    INCREASED = "INCREASED"
++    REDUCED = "REDUCED"
++    UNCHANGED = "UNCHANGED"
++    UNKNOWN = "UNKNOWN"
++
++
++def _non_negative(value: Decimal | None, name: str) -> None:
++    if value is not None and (not value.is_finite() or value < 0):
++        raise ValueError(f"{name} negatif veya sonlu olmayan değer olamaz.")
++
++
++def _ratio(value: Decimal | None, name: str) -> None:
++    if value is None:
++        return
++    if not value.is_finite() or value < 0 or value > 1:
++        raise ValueError(f"{name} 0-1 aralığında olmalıdır.")
++
++
++def _aware(value: datetime, name: str) -> None:
++    if value.tzinfo is None or value.utcoffset() is None:
++        raise ValueError(f"{name} timezone-aware olmalıdır.")
++
++
++def _clean_symbol(value: str) -> str:
++    clean = value.strip().upper()
++    if not clean:
++        raise ValueError("symbol boş olamaz.")
++    return clean
++
++
++@dataclass(frozen=True, slots=True)
++class FundPortfolioPosition:
++    canonical_fund_id: str
++    portfolio_date: date
++    symbol: str
++    asset_type: str
++    asset_name: str | None = None
++    shares_held: Decimal | None = None
++    market_value: Decimal | None = None
++    portfolio_weight: Decimal | None = None
++
++    def __post_init__(self) -> None:
++        fund_id = self.canonical_fund_id.strip()
++        if not fund_id:
++            raise ValueError("canonical_fund_id boş olamaz.")
++        object.__setattr__(self, "canonical_fund_id", fund_id)
++        object.__setattr__(self, "symbol", _clean_symbol(self.symbol))
++        asset_type = self.asset_type.strip().upper()
++        if not asset_type:
++            raise ValueError("asset_type boş olamaz.")
++        object.__setattr__(self, "asset_type", asset_type)
++        _non_negative(self.shares_held, "shares_held")
++        _non_negative(self.market_value, "market_value")
++        _ratio(self.portfolio_weight, "portfolio_weight")
++
++
++@dataclass(frozen=True, slots=True)
++class FundPortfolioSnapshot:
++    canonical_fund_id: str
++    portfolio_date: date
++    publication_date: date
++    ingested_at: datetime
++    provider: str
++    positions: tuple[FundPortfolioPosition, ...]
++    data_quality_state: DataQualityState = DataQualityState.VALID
++    source_reference: str | None = None
++
++    def __post_init__(self) -> None:
++        fund_id = self.canonical_fund_id.strip()
++        provider = self.provider.strip().upper()
++        if not fund_id or not provider:
++            raise ValueError("Fon ve provider kimliği zorunludur.")
++        _aware(self.ingested_at, "ingested_at")
++        if self.publication_date < self.portfolio_date:
++            raise ValueError("publication_date portfolio_date öncesinde olamaz.")
++        seen: set[str] = set()
++        ordered: list[FundPortfolioPosition] = []
++        for item in sorted(self.positions, key=lambda row: (row.asset_type, row.symbol)):
++            if item.canonical_fund_id != fund_id or item.portfolio_date != self.portfolio_date:
++                raise ValueError("Snapshot pozisyon kimliği snapshot ile eşleşmiyor.")
++            key = f"{item.asset_type}|{item.symbol}"
++            if key in seen:
++                raise ValueError(f"DUPLICATE_PORTFOLIO_POSITION:{key}")
++            seen.add(key)
++            ordered.append(item)
++        object.__setattr__(self, "canonical_fund_id", fund_id)
++        object.__setattr__(self, "provider", provider)
++        object.__setattr__(self, "positions", tuple(ordered))
++
++    @property
++    def snapshot_id(self) -> str:
++        raw = f"{self.canonical_fund_id}|{self.portfolio_date.isoformat()}|{self.provider}"
++        return hashlib.sha256(raw.encode("utf-8")).hexdigest()
++
++
++@dataclass(frozen=True, slots=True)
++class PortfolioPositionChange:
++    canonical_fund_id: str
++    symbol: str
++    previous_portfolio_date: date
++    current_portfolio_date: date
++    kind: PositionChangeKind
++    confidence: PositionChangeConfidence
++    previous_shares: Decimal | None
++    current_shares: Decimal | None
++    share_change: Decimal | None
++    previous_market_value: Decimal | None
++    current_market_value: Decimal | None
++    market_value_change: Decimal | None
++    previous_weight: Decimal | None
++    current_weight: Decimal | None
++    weight_change_percentage_points: Decimal | None
++    weight_direction: WeightChangeDirection
++    reason: str
++
++
++@dataclass(frozen=True, slots=True)
++class FundPortfolioChangeSet:
++    canonical_fund_id: str
++    previous_portfolio_date: date
++    current_portfolio_date: date
++    previous_publication_date: date
++    current_publication_date: date
++    changes: tuple[PortfolioPositionChange, ...]
++
++
++@dataclass(frozen=True, slots=True)
++class StockFundActivity:
++    symbol: str
++    current_fund_count: int
++    comparable_fund_count: int
++    new_fund_count: int
++    exited_fund_count: int
++    increasing_fund_count: int
++    decreasing_fund_count: int
++    unchanged_fund_count: int
++    unknown_fund_count: int
++    accumulation_breadth: Decimal | None
++    distribution_breadth: Decimal | None
++
++
++@dataclass(frozen=True, slots=True)
++class PortfolioSnapshotStoreResult:
++    inserted: int
++    unchanged: int
++    total_records: int
++
++
++def _snapshot_complete(snapshot: FundPortfolioSnapshot) -> bool:
++    return snapshot.data_quality_state is DataQualityState.VALID
++
++
++def _weight_direction(previous: Decimal | None, current: Decimal | None) -> tuple[WeightChangeDirection, Decimal | None]:
++    if previous is None or current is None:
++        return WeightChangeDirection.UNKNOWN, None
++    delta_pp = (current - previous) * Decimal("100")
++    if delta_pp > 0:
++        return WeightChangeDirection.INCREASED, delta_pp
++    if delta_pp < 0:
++        return WeightChangeDirection.REDUCED, delta_pp
++    return WeightChangeDirection.UNCHANGED, delta_pp
++
++
++def _decimal_delta(previous: Decimal | None, current: Decimal | None) -> Decimal | None:
++    if previous is None or current is None:
++        return None
++    return current - previous
++
++
++def compare_portfolio_snapshots(
++    previous: FundPortfolioSnapshot,
++    current: FundPortfolioSnapshot,
++) -> FundPortfolioChangeSet:
++    if previous.canonical_fund_id != current.canonical_fund_id:
++        raise ValueError("PORTFOLIO_COMPARE_FUND_MISMATCH")
++    if current.portfolio_date <= previous.portfolio_date:
++        raise ValueError("PORTFOLIO_COMPARE_DATE_ORDER")
++
++    prev = {item.symbol: item for item in previous.positions if item.asset_type == "EQUITY"}
++    curr = {item.symbol: item for item in current.positions if item.asset_type == "EQUITY"}
++    output: list[PortfolioPositionChange] = []
++
++    for symbol in sorted(set(prev) | set(curr)):
++        before = prev.get(symbol)
++        after = curr.get(symbol)
++        complete = _snapshot_complete(previous) and _snapshot_complete(current)
++
++        previous_weight = before.portfolio_weight if before else None
++        current_weight = after.portfolio_weight if after else None
++        weight_direction, weight_delta = _weight_direction(previous_weight, current_weight)
++
++        if before is None and after is not None:
++            if complete:
++                kind = PositionChangeKind.NEW_ENTRY
++                confidence = PositionChangeConfidence.HIGH
++                reason = "CURRENT_PRESENT_PREVIOUS_ABSENT_COMPLETE_SNAPSHOTS"
++            else:
++                kind = PositionChangeKind.UNKNOWN
++                confidence = PositionChangeConfidence.LOW
++                reason = "PRESENCE_CHANGE_WITH_PARTIAL_SNAPSHOT"
++        elif before is not None and after is None:
++            if complete:
++                kind = PositionChangeKind.FULL_EXIT
++                confidence = PositionChangeConfidence.HIGH
++                reason = "PREVIOUS_PRESENT_CURRENT_ABSENT_COMPLETE_SNAPSHOTS"
++            else:
++                kind = PositionChangeKind.UNKNOWN
++                confidence = PositionChangeConfidence.LOW
++                reason = "ABSENCE_CANNOT_PROVE_EXIT_WITH_PARTIAL_SNAPSHOT"
++        elif before is not None and after is not None:
++            if before.shares_held is not None and after.shares_held is not None:
++                share_delta = after.shares_held - before.shares_held
++                if share_delta > 0:
++                    kind = PositionChangeKind.INCREASED
++                elif share_delta < 0:
++                    kind = PositionChangeKind.REDUCED
++                else:
++                    kind = PositionChangeKind.UNCHANGED
++                confidence = PositionChangeConfidence.HIGH
++                reason = "SHARE_COUNT_COMPARISON"
++            else:
++                kind = PositionChangeKind.UNKNOWN
++                confidence = (
++                    PositionChangeConfidence.MEDIUM
++                    if before.market_value is not None and after.market_value is not None
++                    else PositionChangeConfidence.LOW
++                )
++                reason = "WEIGHT_OR_VALUE_CHANGE_ONLY_NOT_CONFIRMED_TRADE"
++        else:  # pragma: no cover - union guarantees one side exists.
++            continue
++
++        previous_shares = before.shares_held if before else None
++        current_shares = after.shares_held if after else None
++        previous_value = before.market_value if before else None
++        current_value = after.market_value if after else None
++
++        output.append(
++            PortfolioPositionChange(
++                canonical_fund_id=current.canonical_fund_id,
++                symbol=symbol,
++                previous_portfolio_date=previous.portfolio_date,
++                current_portfolio_date=current.portfolio_date,
++                kind=kind,
++                confidence=confidence,
++                previous_shares=previous_shares,
++                current_shares=current_shares,
++                share_change=_decimal_delta(previous_shares, current_shares),
++                previous_market_value=previous_value,
++                current_market_value=current_value,
++                market_value_change=_decimal_delta(previous_value, current_value),
++                previous_weight=previous_weight,
++                current_weight=current_weight,
++                weight_change_percentage_points=weight_delta,
++                weight_direction=weight_direction,
++                reason=reason,
++            )
++        )
++
++    return FundPortfolioChangeSet(
++        canonical_fund_id=current.canonical_fund_id,
++        previous_portfolio_date=previous.portfolio_date,
++        current_portfolio_date=current.portfolio_date,
++        previous_publication_date=previous.publication_date,
++        current_publication_date=current.publication_date,
++        changes=tuple(output),
++    )
++
++
++def aggregate_stock_fund_activity(
++    change_sets: Iterable[FundPortfolioChangeSet],
++) -> tuple[StockFundActivity, ...]:
++    by_symbol: dict[str, list[PortfolioPositionChange]] = {}
++    for change_set in change_sets:
++        for change in change_set.changes:
++            by_symbol.setdefault(change.symbol, []).append(change)
++
++    output: list[StockFundActivity] = []
++    for symbol in sorted(by_symbol):
++        rows = by_symbol[symbol]
++        new_count = sum(item.kind is PositionChangeKind.NEW_ENTRY for item in rows)
++        exit_count = sum(item.kind is PositionChangeKind.FULL_EXIT for item in rows)
++        increase_count = sum(item.kind is PositionChangeKind.INCREASED for item in rows)
++        decrease_count = sum(item.kind is PositionChangeKind.REDUCED for item in rows)
++        unchanged_count = sum(item.kind is PositionChangeKind.UNCHANGED for item in rows)
++        unknown_count = sum(item.kind is PositionChangeKind.UNKNOWN for item in rows)
++        comparable = new_count + exit_count + increase_count + decrease_count + unchanged_count
++        current_fund_count = sum(
++            item.kind not in (PositionChangeKind.FULL_EXIT, PositionChangeKind.UNKNOWN)
++            or item.current_shares is not None
++            or item.current_weight is not None
++            for item in rows
++        )
++        accumulation = None
++        distribution = None
++        if comparable:
++            denominator = Decimal(comparable)
++            accumulation = Decimal(new_count + increase_count) / denominator
++            distribution = Decimal(exit_count + decrease_count) / denominator
++
++        output.append(
++            StockFundActivity(
++                symbol=symbol,
++                current_fund_count=current_fund_count,
++                comparable_fund_count=comparable,
++                new_fund_count=new_count,
++                exited_fund_count=exit_count,
++                increasing_fund_count=increase_count,
++                decreasing_fund_count=decrease_count,
++                unchanged_fund_count=unchanged_count,
++                unknown_fund_count=unknown_count,
++                accumulation_breadth=accumulation,
++                distribution_breadth=distribution,
++            )
++        )
++    return tuple(output)
++
++
++def _snapshot_to_primitive(snapshot: FundPortfolioSnapshot) -> dict[str, object]:
++    return {
++        "record_type": "FundPortfolioSnapshot",
++        "snapshot_id": snapshot.snapshot_id,
++        "canonical_fund_id": snapshot.canonical_fund_id,
++        "portfolio_date": snapshot.portfolio_date.isoformat(),
++        "publication_date": snapshot.publication_date.isoformat(),
++        "ingested_at": snapshot.ingested_at.isoformat(),
++        "provider": snapshot.provider,
++        "data_quality_state": snapshot.data_quality_state.value,
++        "source_reference": snapshot.source_reference,
++        "positions": [
++            {
++                "canonical_fund_id": item.canonical_fund_id,
++                "portfolio_date": item.portfolio_date.isoformat(),
++                "symbol": item.symbol,
++                "asset_type": item.asset_type,
++                "asset_name": item.asset_name,
++                "shares_held": None if item.shares_held is None else str(item.shares_held),
++                "market_value": None if item.market_value is None else str(item.market_value),
++                "portfolio_weight": None if item.portfolio_weight is None else str(item.portfolio_weight),
++            }
++            for item in snapshot.positions
++        ],
++    }
++
++
++class FundPortfolioSnapshotJsonStore:
++    """Append-only tarihli fon portföy snapshot deposu.
++
++    Aynı fon/tarih/provider kimliği farklı içerikle yeniden gelirse sessizce
++    overwrite etmez; conflict üretir. Böylece tarihsel değişim kanıtı korunur.
++    """
++
++    def __init__(self, path: str | Path) -> None:
++        self.path = Path(path)
++
++    def _read(self) -> dict[str, dict[str, object]]:
++        if not self.path.exists():
++            return {}
++        try:
++            payload = json.loads(self.path.read_text(encoding="utf-8"))
++        except Exception as exc:
++            raise PortfolioSnapshotStoreError("Fon portföy snapshot deposu okunamadı.") from exc
++        if not isinstance(payload, dict):
++            raise PortfolioSnapshotStoreError("Fon portföy snapshot deposu nesne biçiminde olmalıdır.")
++        return payload
++
++    @staticmethod
++    def _key(snapshot: FundPortfolioSnapshot) -> str:
++        return f"{snapshot.canonical_fund_id}|{snapshot.portfolio_date.isoformat()}|{snapshot.provider}"
++
++    def append(self, snapshots: Iterable[FundPortfolioSnapshot]) -> PortfolioSnapshotStoreResult:
++        existing = self._read()
++        inserted = unchanged = 0
++        for snapshot in sorted(snapshots, key=self._key):
++            key = self._key(snapshot)
++            record = _snapshot_to_primitive(snapshot)
++            digest = hashlib.sha256(
++                json.dumps(record, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
++            ).hexdigest()
++            stored = existing.get(key)
++            if stored is None:
++                existing[key] = {**record, "_digest": digest}
++                inserted += 1
++                continue
++            if stored.get("_digest") == digest:
++                unchanged += 1
++                continue
++            raise PortfolioSnapshotStoreError(f"PORTFOLIO_SNAPSHOT_CONFLICT:{key}")
++
++        self.path.parent.mkdir(parents=True, exist_ok=True)
++        temp = self.path.with_suffix(self.path.suffix + ".tmp")
++        temp.write_text(json.dumps(existing, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
++        temp.replace(self.path)
++        return PortfolioSnapshotStoreResult(inserted, unchanged, len(existing))
++
++    def list_records(self) -> tuple[dict[str, object], ...]:
++        payload = self._read()
++        return tuple(payload[key] for key in sorted(payload))
++
++    def list_snapshots(self) -> tuple[FundPortfolioSnapshot, ...]:
++        """Persisted kayıtları typed read model olarak döndürür; store üzerinde mutation yapmaz."""
++        snapshots: list[FundPortfolioSnapshot] = []
++        for record in self.list_records():
++            try:
++                portfolio_date = date.fromisoformat(str(record["portfolio_date"]))
++                positions_raw = record.get("positions", ())
++                if not isinstance(positions_raw, list):
++                    raise ValueError("positions liste biçiminde olmalıdır.")
++                positions = tuple(
++                    FundPortfolioPosition(
++                        canonical_fund_id=str(item["canonical_fund_id"]),
++                        portfolio_date=date.fromisoformat(str(item["portfolio_date"])),
++                        symbol=str(item["symbol"]),
++                        asset_type=str(item["asset_type"]),
++                        asset_name=None if item.get("asset_name") is None else str(item.get("asset_name")),
++                        shares_held=None if item.get("shares_held") is None else Decimal(str(item.get("shares_held"))),
++                        market_value=None if item.get("market_value") is None else Decimal(str(item.get("market_value"))),
++                        portfolio_weight=None if item.get("portfolio_weight") is None else Decimal(str(item.get("portfolio_weight"))),
++                    )
++                    for item in positions_raw
++                    if isinstance(item, dict)
++                )
++                snapshots.append(
++                    FundPortfolioSnapshot(
++                        canonical_fund_id=str(record["canonical_fund_id"]),
++                        portfolio_date=portfolio_date,
++                        publication_date=date.fromisoformat(str(record["publication_date"])),
++                        ingested_at=datetime.fromisoformat(str(record["ingested_at"])),
++                        provider=str(record["provider"]),
++                        positions=positions,
++                        data_quality_state=DataQualityState(str(record["data_quality_state"])),
++                        source_reference=None if record.get("source_reference") is None else str(record.get("source_reference")),
++                    )
++                )
++            except (KeyError, TypeError, ValueError) as exc:
++                raise PortfolioSnapshotStoreError("Fon portföy snapshot kaydı çözümlenemedi.") from exc
++        return tuple(
++            sorted(
++                snapshots,
++                key=lambda item: (item.canonical_fund_id, item.provider, item.portfolio_date, item.publication_date, item.ingested_at),
++            )
++        )
++
++
++DEFAULT_FUND_PORTFOLIO_SNAPSHOT_PATH = (
++    Path(__file__).resolve().parents[2] / "data" / "funds" / "portfolio_snapshots.json"
++)
++
++
++def fund_portfolio_snapshot_store(path: str | Path | None = None) -> FundPortfolioSnapshotJsonStore:
++    return FundPortfolioSnapshotJsonStore(
++        DEFAULT_FUND_PORTFOLIO_SNAPSHOT_PATH if path is None else path
++    )
+diff --git a/backend/app/ui/fund_analysis_center.py b/backend/app/ui/fund_analysis_center.py
+index cdc61b7..27152ec 100644
+--- a/backend/app/ui/fund_analysis_center.py
++++ b/backend/app/ui/fund_analysis_center.py
+@@ -1,8 +1,29 @@
+ from __future__ import annotations
+ 
+-from typing import Any, Iterable
++from dataclasses import dataclass
++from decimal import Decimal
++from typing import Any, Iterable, Mapping
+ 
+ from backend.app.funds.analysis_engine import FundAnalysisResult
++from backend.app.funds.portfolio_tracking import (
++    FundPortfolioChangeSet,
++    FundPortfolioSnapshot,
++    FundPortfolioSnapshotJsonStore,
++    PortfolioPositionChange,
++    PortfolioSnapshotStoreError,
++    PositionChangeKind,
++    StockFundActivity,
++    aggregate_stock_fund_activity,
++    compare_portfolio_snapshots,
++)
++from backend.app.funds.pressure_risk import StockFundPressureInput, StockFundPressureProfile
++
++
++@dataclass(frozen=True, slots=True)
++class FundPortfolioTrackingReadModel:
++    latest_by_fund: Mapping[str, FundPortfolioSnapshot]
++    changes_by_fund: Mapping[str, FundPortfolioChangeSet]
++    stock_activity: tuple[StockFundActivity, ...]
+ 
+ 
+ def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+@@ -17,7 +38,243 @@ def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str,
+     } for item in sorted(results, key=lambda x: (x.classification.value, x.canonical_fund_id)))
+ 
+ 
+-def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] = ()) -> None:
++def _decimal_display(value: Decimal | None, *, digits: int = 2) -> float | None:
++    if value is None:
++        return None
++    return round(float(value), digits)
++
++
++def _percent_display(value: Decimal | None) -> float | None:
++    if value is None:
++        return None
++    return _decimal_display(value * Decimal("100"))
++
++
++def _latest_series_by_fund(
++    snapshots: Iterable[FundPortfolioSnapshot],
++) -> tuple[dict[str, FundPortfolioSnapshot], dict[str, FundPortfolioChangeSet]]:
++    grouped: dict[str, list[FundPortfolioSnapshot]] = {}
++    for snapshot in snapshots:
++        grouped.setdefault(snapshot.canonical_fund_id, []).append(snapshot)
++
++    latest_by_fund: dict[str, FundPortfolioSnapshot] = {}
++    changes_by_fund: dict[str, FundPortfolioChangeSet] = {}
++    for fund_id, candidates in grouped.items():
++        latest = max(
++            candidates,
++            key=lambda item: (item.portfolio_date, item.publication_date, item.ingested_at, item.provider),
++        )
++        latest_by_fund[fund_id] = latest
++        same_provider = sorted(
++            (item for item in candidates if item.provider == latest.provider),
++            key=lambda item: (item.portfolio_date, item.publication_date, item.ingested_at),
++        )
++        if len(same_provider) >= 2:
++            changes_by_fund[fund_id] = compare_portfolio_snapshots(
++                same_provider[-2],
++                same_provider[-1],
++            )
++    return latest_by_fund, changes_by_fund
++
++
++def build_fund_portfolio_tracking_read_model(
++    store: FundPortfolioSnapshotJsonStore,
++) -> FundPortfolioTrackingReadModel:
++    snapshots = store.list_snapshots()
++    latest_by_fund, changes_by_fund = _latest_series_by_fund(snapshots)
++    return FundPortfolioTrackingReadModel(
++        latest_by_fund=latest_by_fund,
++        changes_by_fund=changes_by_fund,
++        stock_activity=aggregate_stock_fund_activity(changes_by_fund.values()),
++    )
++
++
++def current_portfolio_rows(snapshot: FundPortfolioSnapshot) -> tuple[dict[str, object], ...]:
++    positions = sorted(
++        snapshot.positions,
++        key=lambda item: (
++            item.portfolio_weight is None,
++            -(item.portfolio_weight or Decimal("0")),
++            item.asset_type,
++            item.symbol,
++        ),
++    )
++    return tuple(
++        {
++            "Sembol": item.symbol,
++            "Varlık Türü": item.asset_type,
++            "Varlık": item.asset_name or "-",
++            "Adet": _decimal_display(item.shares_held, digits=4),
++            "Piyasa Değeri": _decimal_display(item.market_value),
++            "Portföy %": _percent_display(item.portfolio_weight),
++        }
++        for item in positions
++    )
++
++
++def portfolio_change_rows(change_set: FundPortfolioChangeSet) -> tuple[dict[str, object], ...]:
++    labels = {
++        PositionChangeKind.NEW_ENTRY: "Yeni giriş",
++        PositionChangeKind.INCREASED: "Artırıldı",
++        PositionChangeKind.REDUCED: "Azaltıldı",
++        PositionChangeKind.FULL_EXIT: "Tam çıkış",
++        PositionChangeKind.UNCHANGED: "Değişmedi",
++        PositionChangeKind.UNKNOWN: "Belirsiz",
++    }
++    return tuple(
++        {
++            "Hisse": item.symbol,
++            "Durum": labels[item.kind],
++            "Güven": item.confidence.value,
++            "Önceki Adet": _decimal_display(item.previous_shares, digits=4),
++            "Güncel Adet": _decimal_display(item.current_shares, digits=4),
++            "Adet Değişimi": _decimal_display(item.share_change, digits=4),
++            "Önceki %": _percent_display(item.previous_weight),
++            "Güncel %": _percent_display(item.current_weight),
++            "Ağırlık Δ pp": _decimal_display(item.weight_change_percentage_points),
++            "Kanıt": item.reason,
++        }
++        for item in change_set.changes
++    )
++
++
++def stock_fund_activity_rows(items: Iterable[StockFundActivity]) -> tuple[dict[str, object], ...]:
++    return tuple(
++        {
++            "Hisse": item.symbol,
++            "Fon": item.current_fund_count,
++            "Karşılaştırılabilir": item.comparable_fund_count,
++            "Yeni": item.new_fund_count,
++            "Tam Çıkış": item.exited_fund_count,
++            "Artıran": item.increasing_fund_count,
++            "Azaltan": item.decreasing_fund_count,
++            "Belirsiz": item.unknown_fund_count,
++            "Birikim Breadth %": _percent_display(item.accumulation_breadth),
++            "Dağıtım Breadth %": _percent_display(item.distribution_breadth),
++        }
++        for item in items
++    )
++
++
++def fund_pressure_rows(
++    profiles: Mapping[str, StockFundPressureProfile],
++    inputs: Mapping[str, StockFundPressureInput] | None = None,
++) -> tuple[dict[str, object], ...]:
++    inputs = inputs or {}
++    rows: list[dict[str, object]] = []
++    for symbol, profile in sorted(profiles.items()):
++        raw = inputs.get(symbol)
++        rows.append({
++            "Hisse": symbol,
++            "Fon/FDO %": None if raw is None else _percent_display(raw.ownership.fund_free_float_ratio),
++            "Likidasyon Normal (gün)": None if raw is None else _decimal_display(raw.liquidity.liquidation_days_normal),
++            "Likidasyon Agresif (gün)": None if raw is None else _decimal_display(raw.liquidity.liquidation_days_aggressive),
++            "Likidasyon Stres (gün)": None if raw is None else _decimal_display(raw.liquidity.liquidation_days_stress),
++            "Fon Yoğunluğu": _decimal_display(profile.fund_concentration_risk.score),
++            "Çıkış Zorluğu": _decimal_display(profile.exit_difficulty_risk.score),
++            "Aktif Satış Baskısı": _decimal_display(profile.active_selling_pressure.score),
++            "Veri Kalitesi": profile.data_quality_state.value,
++            "Trade Authority": profile.automatic_trade_authority,
++        })
++    return tuple(rows)
++
++
++def _render_portfolio_tracking(
++    st: Any,
++    store: FundPortfolioSnapshotJsonStore,
++    pressure_profiles: Mapping[str, StockFundPressureProfile],
++    pressure_inputs: Mapping[str, StockFundPressureInput],
++) -> None:
++    try:
++        model = build_fund_portfolio_tracking_read_model(store)
++    except PortfolioSnapshotStoreError:
++        st.error("Fon portföy snapshot deposu okunamadı; mevcut fon analiz sonuçları korunuyor.")
++        return
++
++    st.divider()
++    st.subheader("Fon Portföy Takibi & Baskı Riski")
++    st.caption(
++        "Tarihli snapshot karşılaştırmasıdır. Ağırlık değişimi tek başına doğrulanmış alım/satım sayılmaz; "
++        "bu ekran otomatik AL/SAT üretmez."
++    )
++
++    if not model.latest_by_fund:
++        st.info("Henüz tarihli fon portföy snapshot verisi yok.")
++    else:
++        fund_ids = tuple(sorted(model.latest_by_fund))
++        selected_fund = st.selectbox(
++            "Fon portföyü",
++            options=fund_ids,
++            index=0,
++            key="fund_portfolio_tracking_selected_fund",
++        )
++        latest = model.latest_by_fund[selected_fund]
++        columns = st.columns(5)
++        columns[0].metric("Portföy tarihi", latest.portfolio_date.isoformat())
++        columns[1].metric("Yayın tarihi", latest.publication_date.isoformat())
++        columns[2].metric("Yayın gecikmesi", f"{(latest.publication_date - latest.portfolio_date).days} gün")
++        columns[3].metric("Provider", latest.provider)
++        columns[4].metric("Veri kalitesi", latest.data_quality_state.value)
++        if latest.source_reference:
++            st.caption(f"Kaynak: {latest.source_reference}")
++
++        st.markdown("#### Güncel Portföy")
++        current_rows = current_portfolio_rows(latest)
++        if current_rows:
++            st.dataframe(current_rows, width="stretch", hide_index=True)
++        else:
++            st.info("Bu snapshot içinde gösterilecek hisse pozisyonu yok.")
++
++        st.markdown("#### Portföy Değişimleri")
++        change_set = model.changes_by_fund.get(selected_fund)
++        if change_set is None:
++            st.info("Değişim karşılaştırması için aynı provider'dan en az iki snapshot gerekir.")
++        else:
++            change_counts = {kind: sum(item.kind is kind for item in change_set.changes) for kind in PositionChangeKind}
++            summary_columns = st.columns(5)
++            summary_columns[0].metric("Yeni giriş", change_counts[PositionChangeKind.NEW_ENTRY])
++            summary_columns[1].metric("Artırılan", change_counts[PositionChangeKind.INCREASED])
++            summary_columns[2].metric("Azaltılan", change_counts[PositionChangeKind.REDUCED])
++            summary_columns[3].metric("Tam çıkış", change_counts[PositionChangeKind.FULL_EXIT])
++            summary_columns[4].metric("Belirsiz", change_counts[PositionChangeKind.UNKNOWN])
++            all_rows = portfolio_change_rows(change_set)
++            selected_states = st.multiselect(
++                "Değişim türü",
++                options=("Yeni giriş", "Artırıldı", "Azaltıldı", "Tam çıkış", "Değişmedi", "Belirsiz"),
++                default=("Yeni giriş", "Artırıldı", "Azaltıldı", "Tam çıkış", "Belirsiz"),
++                key="fund_portfolio_change_filter",
++            )
++            filtered = [row for row in all_rows if row["Durum"] in selected_states]
++            if filtered:
++                st.dataframe(filtered, width="stretch", hide_index=True)
++            else:
++                st.info("Seçili değişim türlerinde kayıt yok.")
++
++        st.markdown("#### Hisse Bazlı Fon Hareketleri")
++        activity_rows = stock_fund_activity_rows(model.stock_activity)
++        if activity_rows:
++            st.dataframe(activity_rows, width="stretch", hide_index=True)
++        else:
++            st.info("Hisse bazlı birikim/dağıtım için karşılaştırılabilir snapshot henüz yok.")
++
++    st.markdown("#### Fon/FDO & Baskı Riski")
++    risk_rows = fund_pressure_rows(pressure_profiles, pressure_inputs)
++    if risk_rows:
++        st.dataframe(risk_rows, width="stretch", hide_index=True)
++    else:
++        st.info(
++            "Risk profilini göstermek için Fon/FDO, likidite ve fiyat/hacim girdilerinin production read model'e bağlanması bekleniyor."
++        )
++
++
++def render_fund_analysis_center(
++    st: Any,
++    results: Iterable[FundAnalysisResult] = (),
++    *,
++    portfolio_store: FundPortfolioSnapshotJsonStore | None = None,
++    pressure_profiles: Mapping[str, StockFundPressureProfile] | None = None,
++    pressure_inputs: Mapping[str, StockFundPressureInput] | None = None,
++) -> None:
+     items = tuple(results)
+     st.subheader("Fon Analiz Merkezi")
+     st.caption("TEFAS/fon araştırma dikeyidir. BIST taraması çalıştırmaz; otomatik AL/SAT üretmez.")
+@@ -30,4 +287,20 @@ def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] =
+         st.dataframe(rows, width="stretch", hide_index=True)
+     else:
+         st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+-    st.caption("Forward takip: 1H / 1A / 3A · outcome tuning kapalı · AL/SAT authority: NONE")
++    st.caption("Forward takip: 1H / 1A / 3A · outcome tuning kapalı · AL/SAT authority: NONE")
++
++    if portfolio_store is not None or pressure_profiles:
++        _render_portfolio_tracking(
++            st,
++            portfolio_store if portfolio_store is not None else _EmptyPortfolioStore(),
++            pressure_profiles or {},
++            pressure_inputs or {},
++        )
++
++
++class _EmptyPortfolioStore(FundPortfolioSnapshotJsonStore):
++    def __init__(self) -> None:
++        pass
++
++    def list_snapshots(self) -> tuple[FundPortfolioSnapshot, ...]:
++        return ()
+diff --git a/backend/dashboard.py b/backend/dashboard.py
+index 5a9882a..fbbdfef 100644
+--- a/backend/dashboard.py
++++ b/backend/dashboard.py
+@@ -10381,11 +10381,13 @@ def main() -> None:
+         tek_hisse_formu()
+     elif analiz_modu == "Fon Analiz Merkezi":
+         from backend.app.funds.live_pipeline import run_live_fund_analysis
++        from backend.app.funds.portfolio_tracking import fund_portfolio_snapshot_store
+         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+ 
+         render_fund_analysis_center(
+             st,
+             run_live_fund_analysis(),
++            portfolio_store=fund_portfolio_snapshot_store(),
+         )
+     elif analiz_modu == "Seans Öncesi Bağlam":
+         # SEANS_ONCESI_BAGLAM_V11_ROLE_CLARITY
+diff --git a/backend/tests/test_fund_analysis_center_ui_v1.py b/backend/tests/test_fund_analysis_center_ui_v1.py
+index 3c0f97e..942b4a9 100644
+--- a/backend/tests/test_fund_analysis_center_ui_v1.py
++++ b/backend/tests/test_fund_analysis_center_ui_v1.py
+@@ -1,5 +1,26 @@
++from datetime import date, datetime, timezone
++from decimal import Decimal
++
+ from backend.app.funds.analysis_engine import FundAnalysisClass, FundAnalysisResult
+-from backend.app.ui.fund_analysis_center import fund_analysis_rows, render_fund_analysis_center
++from backend.app.funds.contracts import DataQualityState
++from backend.app.funds.portfolio_tracking import (
++    FundPortfolioPosition,
++    FundPortfolioSnapshot,
++    FundPortfolioSnapshotJsonStore,
++)
++from backend.app.funds.pressure_risk import (
++    FundExitLiquidity,
++    FundOwnershipConcentration,
++    PressureScoreStatus,
++    PressureSubScore,
++    StockFundPressureInput,
++    StockFundPressureProfile,
++)
++from backend.app.ui.fund_analysis_center import (
++    fund_analysis_rows,
++    fund_pressure_rows,
++    render_fund_analysis_center,
++)
+ 
+ 
+ def item():
+@@ -8,17 +29,22 @@ def item():
+ 
+ 
+ class Column:
+-    def metric(self, *_args, **_kwargs): pass
++    def __init__(self): self.metrics = []
++    def metric(self, *args, **kwargs): self.metrics.append((args, kwargs))
+ 
+ 
+ class Stub:
+-    def __init__(self): self.info_messages = []; self.frames = []
++    def __init__(self): self.info_messages = []; self.frames = []; self.markdowns = []
+     def subheader(self, *_args): pass
+     def caption(self, *_args): pass
++    def divider(self): pass
++    def markdown(self, value): self.markdowns.append(value)
+     def columns(self, count): return [Column() for _ in range(count)]
+     def multiselect(self, _label, options, default, key): return default
++    def selectbox(self, _label, options, index, key): return options[index]
+     def dataframe(self, rows, **_kwargs): self.frames.append(rows)
+     def info(self, message): self.info_messages.append(message)
++    def error(self, message): self.info_messages.append(message)
+ 
+ 
+ def test_rows_are_research_only():
+@@ -29,4 +55,98 @@ def test_rows_are_research_only():
+ def test_empty_and_populated_states():
+     empty = Stub(); render_fund_analysis_center(empty, ())
+     full = Stub(); render_fund_analysis_center(full, (item(),))
+-    assert empty.info_messages and full.frames
++    assert empty.info_messages and full.frames
++
++
++def _snapshot(fund: str, day: date, positions: tuple[FundPortfolioPosition, ...]):
++    return FundPortfolioSnapshot(
++        canonical_fund_id=fund,
++        portfolio_date=day,
++        publication_date=day,
++        ingested_at=datetime(day.year, day.month, day.day, 12, tzinfo=timezone.utc),
++        provider="TEFAS",
++        positions=positions,
++        data_quality_state=DataQualityState.VALID,
++    )
++
++
++def _position(fund: str, day: date, symbol: str, shares: str, weight: str):
++    return FundPortfolioPosition(
++        canonical_fund_id=fund,
++        portfolio_date=day,
++        symbol=symbol,
++        asset_type="EQUITY",
++        shares_held=Decimal(shares),
++        market_value=Decimal(shares) * Decimal("100"),
++        portfolio_weight=Decimal(weight),
++    )
++
++
++def test_portfolio_tracking_bridge_shows_current_changes_and_stock_breadth(tmp_path):
++    fund = "fund:tefas:AAA"
++    first = date(2026, 7, 31)
++    second = date(2026, 8, 31)
++    store = FundPortfolioSnapshotJsonStore(tmp_path / "portfolio_snapshots.json")
++    store.append((
++        _snapshot(fund, first, (_position(fund, first, "THYAO", "100", "0.10"),)),
++        _snapshot(fund, second, (
++            _position(fund, second, "THYAO", "130", "0.12"),
++            _position(fund, second, "ASELS", "50", "0.05"),
++        )),
++    ))
++
++    st = Stub()
++    render_fund_analysis_center(st, (item(),), portfolio_store=store)
++
++    assert any(rows and "Portföy %" in rows[0] for rows in st.frames)
++    assert any(any(row.get("Durum") == "Yeni giriş" for row in rows) for rows in st.frames)
++    assert any(rows and "Birikim Breadth %" in rows[0] for rows in st.frames)
++    assert any("Güncel Portföy" in title for title in st.markdowns)
++
++
++def test_pressure_rows_expose_raw_fdo_liquidation_and_keep_trade_authority_none():
++    symbol = "THYAO"
++    ownership = FundOwnershipConcentration(
++        fund_owned_shares=Decimal("25"),
++        free_float_shares=Decimal("100"),
++        fund_free_float_ratio=Decimal("0.25"),
++        largest_fund_share=Decimal("0.5"),
++        top3_fund_share=Decimal("0.8"),
++        top5_fund_share=Decimal("1"),
++        hhi=Decimal("0.4"),
++    )
++    liquidity = FundExitLiquidity(
++        total_fund_position_value=Decimal("1000"),
++        adv20_value=Decimal("500"),
++        median_daily_value_20=Decimal("450"),
++        stressed_liquidity_capacity=Decimal("25"),
++        liquidation_days_normal=Decimal("20"),
++        liquidation_days_aggressive=Decimal("10"),
++        liquidation_days_stress=Decimal("40"),
++    )
++    raw = StockFundPressureInput(
++        symbol=symbol,
++        observation_date=date(2026, 9, 1),
++        ownership=ownership,
++        liquidity=liquidity,
++        ownership_change_20d=Decimal("-0.02"),
++        distribution_breadth_20d=Decimal("0.6"),
++        down_volume_ratio_20d=Decimal("0.7"),
++        return_20d=Decimal("-0.05"),
++        data_quality_state=DataQualityState.VALID,
++    )
++    ready = PressureSubScore(Decimal("80"), PressureScoreStatus.READY, ())
++    profile = StockFundPressureProfile(
++        symbol=symbol,
++        observation_date=date(2026, 9, 1),
++        fund_concentration_risk=ready,
++        exit_difficulty_risk=ready,
++        active_selling_pressure=ready,
++        data_quality_state=DataQualityState.VALID,
++    )
++
++    row = fund_pressure_rows({symbol: profile}, {symbol: raw})[0]
++    assert row["Fon/FDO %"] == 25.0
++    assert row["Likidasyon Normal (gün)"] == 20.0
++    assert row["Aktif Satış Baskısı"] == 80.0
++    assert row["Trade Authority"] == "NONE"
+diff --git a/backend/tests/test_fund_portfolio_tracking_v1.py b/backend/tests/test_fund_portfolio_tracking_v1.py
+index d180f97..3b20a37 100644
+--- a/backend/tests/test_fund_portfolio_tracking_v1.py
++++ b/backend/tests/test_fund_portfolio_tracking_v1.py
+@@ -1,122 +1,137 @@
+-from datetime import date, datetime, timezone
+-from decimal import Decimal
+-
+-import pytest
+-
+-from backend.app.funds.contracts import DataQualityState
+-from backend.app.funds.portfolio_tracking import (
+-    FundPortfolioPosition,
+-    FundPortfolioSnapshot,
+-    FundPortfolioSnapshotJsonStore,
+-    PortfolioSnapshotStoreError,
+-    PositionChangeConfidence,
+-    PositionChangeKind,
+-    WeightChangeDirection,
+-    aggregate_stock_fund_activity,
+-    compare_portfolio_snapshots,
+-)
+-
+-UTC = timezone.utc
+-
+-
+-def position(fund: str, day: date, symbol: str, *, shares=None, weight=None, value=None):
+-    return FundPortfolioPosition(
+-        canonical_fund_id=fund,
+-        portfolio_date=day,
+-        symbol=symbol,
+-        asset_type="EQUITY",
+-        shares_held=None if shares is None else Decimal(str(shares)),
+-        market_value=None if value is None else Decimal(str(value)),
+-        portfolio_weight=None if weight is None else Decimal(str(weight)),
+-    )
+-
+-
+-def snapshot(fund: str, day: date, *positions, quality=DataQualityState.VALID):
+-    return FundPortfolioSnapshot(
+-        canonical_fund_id=fund,
+-        portfolio_date=day,
+-        publication_date=day,
+-        ingested_at=datetime(day.year, day.month, day.day, 12, tzinfo=UTC),
+-        provider="TEFAS",
+-        positions=tuple(positions),
+-        data_quality_state=quality,
+-    )
+-
+-
+-def test_snapshot_store_is_append_only_and_idempotent(tmp_path):
+-    day = date(2026, 8, 31)
+-    item = snapshot("fund:tefas:AAA", day, position("fund:tefas:AAA", day, "THYAO", shares=100))
+-    store = FundPortfolioSnapshotJsonStore(tmp_path / "snapshots.json")
+-    assert store.append((item,)).inserted == 1
+-    assert store.append((item,)).unchanged == 1
+-
+-    changed = snapshot("fund:tefas:AAA", day, position("fund:tefas:AAA", day, "THYAO", shares=101))
+-    with pytest.raises(PortfolioSnapshotStoreError, match="PORTFOLIO_SNAPSHOT_CONFLICT"):
+-        store.append((changed,))
+-
+-
+-def test_change_engine_uses_share_counts_for_confirmed_increase_and_reduction():
+-    first_day = date(2026, 7, 31)
+-    second_day = date(2026, 8, 31)
+-    fund = "fund:tefas:AAA"
+-    previous = snapshot(
+-        fund,
+-        first_day,
+-        position(fund, first_day, "THYAO", shares=100, weight="0.10"),
+-        position(fund, first_day, "ASELS", shares=200, weight="0.20"),
+-    )
+-    current = snapshot(
+-        fund,
+-        second_day,
+-        position(fund, second_day, "THYAO", shares=130, weight="0.12"),
+-        position(fund, second_day, "ASELS", shares=150, weight="0.15"),
+-    )
+-    changes = {item.symbol: item for item in compare_portfolio_snapshots(previous, current).changes}
+-    assert changes["THYAO"].kind is PositionChangeKind.INCREASED
+-    assert changes["THYAO"].confidence is PositionChangeConfidence.HIGH
+-    assert changes["THYAO"].share_change == Decimal("30")
+-    assert changes["ASELS"].kind is PositionChangeKind.REDUCED
+-
+-
+-def test_weight_change_alone_is_not_mislabeled_as_confirmed_trade():
+-    first_day = date(2026, 7, 31)
+-    second_day = date(2026, 8, 31)
+-    fund = "fund:tefas:AAA"
+-    previous = snapshot(fund, first_day, position(fund, first_day, "THYAO", weight="0.05", value=1000))
+-    current = snapshot(fund, second_day, position(fund, second_day, "THYAO", weight="0.08", value=1500))
+-    change = compare_portfolio_snapshots(previous, current).changes[0]
+-    assert change.kind is PositionChangeKind.UNKNOWN
+-    assert change.weight_direction is WeightChangeDirection.INCREASED
+-    assert change.reason == "WEIGHT_OR_VALUE_CHANGE_ONLY_NOT_CONFIRMED_TRADE"
+-
+-
+-def test_partial_snapshot_cannot_prove_full_exit():
+-    first_day = date(2026, 7, 31)
+-    second_day = date(2026, 8, 31)
+-    fund = "fund:tefas:AAA"
+-    previous = snapshot(fund, first_day, position(fund, first_day, "THYAO", shares=100))
+-    current = snapshot(fund, second_day, quality=DataQualityState.PARTIAL)
+-    change = compare_portfolio_snapshots(previous, current).changes[0]
+-    assert change.kind is PositionChangeKind.UNKNOWN
+-    assert "PARTIAL" in change.reason
+-
+-
+-def test_new_entry_and_full_exit_feed_stock_breadth():
+-    first_day = date(2026, 7, 31)
+-    second_day = date(2026, 8, 31)
+-    a = "fund:tefas:AAA"
+-    b = "fund:tefas:BBB"
+-    set_a = compare_portfolio_snapshots(
+-        snapshot(a, first_day),
+-        snapshot(a, second_day, position(a, second_day, "THYAO", shares=100)),
+-    )
+-    set_b = compare_portfolio_snapshots(
+-        snapshot(b, first_day, position(b, first_day, "THYAO", shares=100)),
+-        snapshot(b, second_day),
+-    )
+-    activity = aggregate_stock_fund_activity((set_a, set_b))[0]
+-    assert activity.symbol == "THYAO"
+-    assert activity.new_fund_count == 1
+-    assert activity.exited_fund_count == 1
+-    assert activity.accumulation_breadth == Decimal("0.5")
+-    assert activity.distribution_breadth == Decimal("0.5")
++from datetime import date, datetime, timezone
++from decimal import Decimal
++
++import pytest
++
++from backend.app.funds.contracts import DataQualityState
++from backend.app.funds.portfolio_tracking import (
++    FundPortfolioPosition,
++    FundPortfolioSnapshot,
++    FundPortfolioSnapshotJsonStore,
++    PortfolioSnapshotStoreError,
++    PositionChangeConfidence,
++    PositionChangeKind,
++    WeightChangeDirection,
++    aggregate_stock_fund_activity,
++    compare_portfolio_snapshots,
++)
++
++UTC = timezone.utc
++
++
++def position(fund: str, day: date, symbol: str, *, shares=None, weight=None, value=None):
++    return FundPortfolioPosition(
++        canonical_fund_id=fund,
++        portfolio_date=day,
++        symbol=symbol,
++        asset_type="EQUITY",
++        shares_held=None if shares is None else Decimal(str(shares)),
++        market_value=None if value is None else Decimal(str(value)),
++        portfolio_weight=None if weight is None else Decimal(str(weight)),
++    )
++
++
++def snapshot(fund: str, day: date, *positions, quality=DataQualityState.VALID):
++    return FundPortfolioSnapshot(
++        canonical_fund_id=fund,
++        portfolio_date=day,
++        publication_date=day,
++        ingested_at=datetime(day.year, day.month, day.day, 12, tzinfo=UTC),
++        provider="TEFAS",
++        positions=tuple(positions),
++        data_quality_state=quality,
++    )
++
++
++def test_snapshot_store_is_append_only_and_idempotent(tmp_path):
++    day = date(2026, 8, 31)
++    item = snapshot("fund:tefas:AAA", day, position("fund:tefas:AAA", day, "THYAO", shares=100))
++    store = FundPortfolioSnapshotJsonStore(tmp_path / "snapshots.json")
++    assert store.append((item,)).inserted == 1
++    assert store.append((item,)).unchanged == 1
++
++    changed = snapshot("fund:tefas:AAA", day, position("fund:tefas:AAA", day, "THYAO", shares=101))
++    with pytest.raises(PortfolioSnapshotStoreError, match="PORTFOLIO_SNAPSHOT_CONFLICT"):
++        store.append((changed,))
++
++
++def test_change_engine_uses_share_counts_for_confirmed_increase_and_reduction():
++    first_day = date(2026, 7, 31)
++    second_day = date(2026, 8, 31)
++    fund = "fund:tefas:AAA"
++    previous = snapshot(
++        fund,
++        first_day,
++        position(fund, first_day, "THYAO", shares=100, weight="0.10"),
++        position(fund, first_day, "ASELS", shares=200, weight="0.20"),
++    )
++    current = snapshot(
++        fund,
++        second_day,
++        position(fund, second_day, "THYAO", shares=130, weight="0.12"),
++        position(fund, second_day, "ASELS", shares=150, weight="0.15"),
++    )
++    changes = {item.symbol: item for item in compare_portfolio_snapshots(previous, current).changes}
++    assert changes["THYAO"].kind is PositionChangeKind.INCREASED
++    assert changes["THYAO"].confidence is PositionChangeConfidence.HIGH
++    assert changes["THYAO"].share_change == Decimal("30")
++    assert changes["ASELS"].kind is PositionChangeKind.REDUCED
++
++
++def test_weight_change_alone_is_not_mislabeled_as_confirmed_trade():
++    first_day = date(2026, 7, 31)
++    second_day = date(2026, 8, 31)
++    fund = "fund:tefas:AAA"
++    previous = snapshot(fund, first_day, position(fund, first_day, "THYAO", weight="0.05", value=1000))
++    current = snapshot(fund, second_day, position(fund, second_day, "THYAO", weight="0.08", value=1500))
++    change = compare_portfolio_snapshots(previous, current).changes[0]
++    assert change.kind is PositionChangeKind.UNKNOWN
++    assert change.weight_direction is WeightChangeDirection.INCREASED
++    assert change.reason == "WEIGHT_OR_VALUE_CHANGE_ONLY_NOT_CONFIRMED_TRADE"
++
++
++def test_partial_snapshot_cannot_prove_full_exit():
++    first_day = date(2026, 7, 31)
++    second_day = date(2026, 8, 31)
++    fund = "fund:tefas:AAA"
++    previous = snapshot(fund, first_day, position(fund, first_day, "THYAO", shares=100))
++    current = snapshot(fund, second_day, quality=DataQualityState.PARTIAL)
++    change = compare_portfolio_snapshots(previous, current).changes[0]
++    assert change.kind is PositionChangeKind.UNKNOWN
++    assert "PARTIAL" in change.reason
++
++
++def test_new_entry_and_full_exit_feed_stock_breadth():
++    first_day = date(2026, 7, 31)
++    second_day = date(2026, 8, 31)
++    a = "fund:tefas:AAA"
++    b = "fund:tefas:BBB"
++    set_a = compare_portfolio_snapshots(
++        snapshot(a, first_day),
++        snapshot(a, second_day, position(a, second_day, "THYAO", shares=100)),
++    )
++    set_b = compare_portfolio_snapshots(
++        snapshot(b, first_day, position(b, first_day, "THYAO", shares=100)),
++        snapshot(b, second_day),
++    )
++    activity = aggregate_stock_fund_activity((set_a, set_b))[0]
++    assert activity.symbol == "THYAO"
++    assert activity.new_fund_count == 1
++    assert activity.exited_fund_count == 1
++    assert activity.accumulation_breadth == Decimal("0.5")
++    assert activity.distribution_breadth == Decimal("0.5")
++
++
++def test_snapshot_store_typed_read_model_roundtrip(tmp_path):
++    day = date(2026, 8, 31)
++    original = snapshot(
++        "fund:tefas:AAA",
++        day,
++        position("fund:tefas:AAA", day, "THYAO", shares=123, weight="0.12", value=4567),
++    )
++    store = FundPortfolioSnapshotJsonStore(tmp_path / "snapshots.json")
++    store.append((original,))
++
++    loaded = store.list_snapshots()
++    assert loaded == (original,)
++    assert store.list_records()[0]["snapshot_id"] == original.snapshot_id

@@ -1,0 +1,3094 @@
+{
+  "artifact": "historical_nav_5y_start_probe_181_20261007",
+  "reference_date": "2026-10-07",
+  "cutoff_date": "2021-10-07",
+  "input_count": 181,
+  "result_count": 181,
+  "classification_counts": {
+    "SERIES_BEGINS_AFTER_5Y_CUTOFF": 181
+  },
+  "definition": "Checks whether the historical NAV series contains a point on or before 2021-10-07. Does not calculate or write ranks.",
+  "rank_history_write": false,
+  "production_decisions_modified": false,
+  "trade_authority": "NONE",
+  "forced_fill": false,
+  "results": [
+    {
+      "isin": "AT0000A2STD2",
+      "instrument_id": "12011",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1229,
+      "earliest_nav_date": "2021-10-28",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-28",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A2STF7",
+      "instrument_id": "12021",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1228,
+      "earliest_nav_date": "2021-10-28",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-28",
+        "nav": 36385.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A36G29",
+      "instrument_id": "12921",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 631,
+      "earliest_nav_date": "2024-03-25",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-03-25",
+        "nav": 43669.08
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A37UP3",
+      "instrument_id": "13101",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 720,
+      "earliest_nav_date": "2023-11-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-11-15",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3BMG4",
+      "instrument_id": "12942",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 587,
+      "earliest_nav_date": "2024-06-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-06-03",
+        "nav": 38887.5
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3BMK6",
+      "instrument_id": "12941",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 587,
+      "earliest_nav_date": "2024-06-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-06-03",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3FTU1",
+      "instrument_id": "13078",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 400,
+      "earliest_nav_date": "2025-03-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-03-03",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3FU35",
+      "instrument_id": "13081",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 400,
+      "earliest_nav_date": "2025-03-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-03-03",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3JH46",
+      "instrument_id": "13193",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 359,
+      "earliest_nav_date": "2025-05-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-05-02",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3KDC3",
+      "instrument_id": "13115",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 369,
+      "earliest_nav_date": "2025-04-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-04-15",
+        "nav": 41057.5
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3MZ56",
+      "instrument_id": "13158",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 276,
+      "earliest_nav_date": "2025-09-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-09-02",
+        "nav": 100.38
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3MZ80",
+      "instrument_id": "13161",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 276,
+      "earliest_nav_date": "2025-09-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-09-02",
+        "nav": 39637.55
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3N1Y4",
+      "instrument_id": "13201",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 131,
+      "earliest_nav_date": "2026-04-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-02",
+        "nav": 99.99
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3P9Z2",
+      "instrument_id": "13196",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 242,
+      "earliest_nav_date": "2025-10-20",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-10-20",
+        "nav": 116.76
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3PA11",
+      "instrument_id": "13190",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 242,
+      "earliest_nav_date": "2025-10-20",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-10-20",
+        "nav": 38983.66
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3RVA4",
+      "instrument_id": "13199",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 160,
+      "earliest_nav_date": "2026-02-20",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-02-20",
+        "nav": 37892.5
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3S446",
+      "instrument_id": "13212",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 134,
+      "earliest_nav_date": "2026-03-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-03-27",
+        "nav": 101.25
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3S461",
+      "instrument_id": "13215",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 133,
+      "earliest_nav_date": "2026-03-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-03-27",
+        "nav": 39274.87
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "AT0000A3TAZ1",
+      "instrument_id": "13335",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 64,
+      "earliest_nav_date": "2026-07-14",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-07-14",
+        "nav": 99.99
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000705926",
+      "instrument_id": "12152",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1225,
+      "earliest_nav_date": "2021-11-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-15",
+        "nav": 5.425409
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000705934",
+      "instrument_id": "12092",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1227,
+      "earliest_nav_date": "2021-11-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-15",
+        "nav": 1.63568
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000716410",
+      "instrument_id": "12371",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 977,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.280502
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000716436",
+      "instrument_id": "12541",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1023,
+      "earliest_nav_date": "2022-08-25",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-08-25",
+        "nav": 1.369686
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000716501",
+      "instrument_id": "12421",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 978,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.064079
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000716519",
+      "instrument_id": "12411",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 978,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.202374
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000717145",
+      "instrument_id": "12431",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 978,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.192344
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000717590",
+      "instrument_id": "12391",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 978,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.077232
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000718614",
+      "instrument_id": "12461",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1119,
+      "earliest_nav_date": "2022-03-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-03-08",
+        "nav": 1.722352
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000719364",
+      "instrument_id": "12948",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 550,
+      "earliest_nav_date": "2024-05-14",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-05-14",
+        "nav": 0.010113
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000720958",
+      "instrument_id": "12471",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1013,
+      "earliest_nav_date": "2022-08-26",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-08-26",
+        "nav": 1.117888
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000720966",
+      "instrument_id": "12481",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 962,
+      "earliest_nav_date": "2022-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-10",
+        "nav": 1.038558
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000721469",
+      "instrument_id": "12381",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 977,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.106953
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000721782",
+      "instrument_id": "12501",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 978,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 0.965519
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000722467",
+      "instrument_id": "12551",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 971,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.081879
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000722475",
+      "instrument_id": "12561",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 971,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 0.969242
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000722582",
+      "instrument_id": "12521",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 953,
+      "earliest_nav_date": "2022-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-10",
+        "nav": 1.03838
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000722590",
+      "instrument_id": "12531",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 954,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 0.934751
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000723705",
+      "instrument_id": "12102",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1226,
+      "earliest_nav_date": "2021-11-16",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-16",
+        "nav": 1.411471
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000724232",
+      "instrument_id": "12142",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1225,
+      "earliest_nav_date": "2021-11-16",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-16",
+        "nav": 0.967171
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000724240",
+      "instrument_id": "12132",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1225,
+      "earliest_nav_date": "2021-11-16",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-16",
+        "nav": 0.977183
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000724653",
+      "instrument_id": "12122",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1226,
+      "earliest_nav_date": "2021-11-16",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-16",
+        "nav": 1.580024
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000724711",
+      "instrument_id": "11911",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1239,
+      "earliest_nav_date": "2021-10-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-27",
+        "nav": 1.199419
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000724745",
+      "instrument_id": "11931",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1235,
+      "earliest_nav_date": "2021-11-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-03",
+        "nav": 1.343501
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000724778",
+      "instrument_id": "11951",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1239,
+      "earliest_nav_date": "2021-10-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-27",
+        "nav": 1.550218
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000725460",
+      "instrument_id": "12401",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 978,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 0.994921
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000726484",
+      "instrument_id": "11941",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1239,
+      "earliest_nav_date": "2021-10-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-27",
+        "nav": 1.061304
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000727698",
+      "instrument_id": "11981",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1221,
+      "earliest_nav_date": "2021-10-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-27",
+        "nav": 1.014696
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000727706",
+      "instrument_id": "11991",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1227,
+      "earliest_nav_date": "2021-10-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-27",
+        "nav": 0.997872
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000727714",
+      "instrument_id": "12001",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1222,
+      "earliest_nav_date": "2021-10-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-27",
+        "nav": 1.00163
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000728282",
+      "instrument_id": "12172",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1199,
+      "earliest_nav_date": "2021-12-22",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-12-22",
+        "nav": 0.859477
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000728290",
+      "instrument_id": "12162",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1199,
+      "earliest_nav_date": "2021-12-22",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-12-22",
+        "nav": 0.900957
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000729678",
+      "instrument_id": "12581",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1112,
+      "earliest_nav_date": "2022-05-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-05-02",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000729694",
+      "instrument_id": "13164",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 276,
+      "earliest_nav_date": "2025-09-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-09-01",
+        "nav": 1.42797
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000729702",
+      "instrument_id": "13167",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 276,
+      "earliest_nav_date": "2025-09-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-09-01",
+        "nav": 1.178198
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000729710",
+      "instrument_id": "13170",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 276,
+      "earliest_nav_date": "2025-09-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-09-01",
+        "nav": 1.255385
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000730064",
+      "instrument_id": "12252",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1092,
+      "earliest_nav_date": "2022-05-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-05-27",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000730726",
+      "instrument_id": "12571",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 971,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 0.950728
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000730882",
+      "instrument_id": "12661",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 963,
+      "earliest_nav_date": "2022-11-29",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-29",
+        "nav": 0.992129
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000730890",
+      "instrument_id": "12511",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 978,
+      "earliest_nav_date": "2022-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-09",
+        "nav": 1.01209
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000731393",
+      "instrument_id": "12622",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 939,
+      "earliest_nav_date": "2023-01-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-01-02",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000731401",
+      "instrument_id": "12632",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 938,
+      "earliest_nav_date": "2023-01-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-01-02",
+        "nav": 0.01
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000731880",
+      "instrument_id": "12671",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 855,
+      "earliest_nav_date": "2023-05-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-05-08",
+        "nav": 1.0013
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000731898",
+      "instrument_id": "13145",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 288,
+      "earliest_nav_date": "2025-08-07",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-08-07",
+        "nav": 1.350874
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000731906",
+      "instrument_id": "13151",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 289,
+      "earliest_nav_date": "2025-08-07",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-08-07",
+        "nav": 1.241616
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000731914",
+      "instrument_id": "13148",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 288,
+      "earliest_nav_date": "2025-08-07",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-08-07",
+        "nav": 1.270509
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000731955",
+      "instrument_id": "12957",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 558,
+      "earliest_nav_date": "2024-07-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-07-08",
+        "nav": 0.009752
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000732011",
+      "instrument_id": "12672",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 801,
+      "earliest_nav_date": "2023-07-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-07-24",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000732664",
+      "instrument_id": "12761",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 805,
+      "earliest_nav_date": "2023-07-18",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-07-18",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000732938",
+      "instrument_id": "12986",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 507,
+      "earliest_nav_date": "2024-09-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-09-24",
+        "nav": 1.079882
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000732979",
+      "instrument_id": "12989",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 507,
+      "earliest_nav_date": "2024-09-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-09-24",
+        "nav": 1.059802
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000733019",
+      "instrument_id": "12980",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 507,
+      "earliest_nav_date": "2024-09-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-09-24",
+        "nav": 1.064683
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000733035",
+      "instrument_id": "12983",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 507,
+      "earliest_nav_date": "2024-09-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-09-24",
+        "nav": 1.04485
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000733589",
+      "instrument_id": "12802",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 700,
+      "earliest_nav_date": "2023-12-14",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-12-14",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000734553",
+      "instrument_id": "12992",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 507,
+      "earliest_nav_date": "2024-09-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-09-24",
+        "nav": 1.015188
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000734819",
+      "instrument_id": "12960",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 558,
+      "earliest_nav_date": "2024-07-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-07-08",
+        "nav": 0.009625
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000734827",
+      "instrument_id": "12963",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 558,
+      "earliest_nav_date": "2024-07-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-07-08",
+        "nav": 0.968722
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735147",
+      "instrument_id": "12977",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 553,
+      "earliest_nav_date": "2024-07-18",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-07-18",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735220",
+      "instrument_id": "13041",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 484,
+      "earliest_nav_date": "2024-10-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-24",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735238",
+      "instrument_id": "13038",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 484,
+      "earliest_nav_date": "2024-10-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-24",
+        "nav": 0.01
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735246",
+      "instrument_id": "13044",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 474,
+      "earliest_nav_date": "2024-11-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-11-08",
+        "nav": 0.01
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735253",
+      "instrument_id": "13050",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 485,
+      "earliest_nav_date": "2024-10-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-24",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735261",
+      "instrument_id": "13047",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 485,
+      "earliest_nav_date": "2024-10-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-24",
+        "nav": 0.01
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735279",
+      "instrument_id": "13035",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 484,
+      "earliest_nav_date": "2024-10-24",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-24",
+        "nav": 0.01
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735287",
+      "instrument_id": "13029",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 501,
+      "earliest_nav_date": "2024-10-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-01",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735295",
+      "instrument_id": "13026",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 501,
+      "earliest_nav_date": "2024-10-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-01",
+        "nav": 0.01
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735303",
+      "instrument_id": "13032",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 501,
+      "earliest_nav_date": "2024-10-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-01",
+        "nav": 0.01
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735568",
+      "instrument_id": "12968",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 537,
+      "earliest_nav_date": "2024-08-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-08-09",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735824",
+      "instrument_id": "13053",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 453,
+      "earliest_nav_date": "2024-12-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-12-10",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000735923",
+      "instrument_id": "13084",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 416,
+      "earliest_nav_date": "2025-02-06",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-02-06",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000736426",
+      "instrument_id": "13131",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 341,
+      "earliest_nav_date": "2025-06-18",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-06-18",
+        "nav": 1.102666
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000736434",
+      "instrument_id": "13128",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 341,
+      "earliest_nav_date": "2025-06-18",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-06-18",
+        "nav": 1.085041
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000736467",
+      "instrument_id": "13135",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 325,
+      "earliest_nav_date": "2025-06-19",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-06-19",
+        "nav": 1.094399
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000736475",
+      "instrument_id": "13132",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 325,
+      "earliest_nav_date": "2025-06-19",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-06-19",
+        "nav": 1.058883
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000736574",
+      "instrument_id": "13227",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 450,
+      "earliest_nav_date": "2024-12-16",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-12-16",
+        "nav": 1.000895
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000737242",
+      "instrument_id": "13157",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 291,
+      "earliest_nav_date": "2025-08-07",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-08-07",
+        "nav": 0.010085
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000737259",
+      "instrument_id": "13086",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 460,
+      "earliest_nav_date": "2025-03-14",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-03-14",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000737283",
+      "instrument_id": "13154",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 289,
+      "earliest_nav_date": "2025-08-11",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-08-11",
+        "nav": 0.01021
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000737309",
+      "instrument_id": "13095",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 326,
+      "earliest_nav_date": "2025-06-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-06-13",
+        "nav": 1.006577
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000737317",
+      "instrument_id": "13092",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 325,
+      "earliest_nav_date": "2025-06-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-06-13",
+        "nav": 1.013535
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000737531",
+      "instrument_id": "13104",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 336,
+      "earliest_nav_date": "2025-05-07",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-05-07",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738448",
+      "instrument_id": "13341",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 252,
+      "earliest_nav_date": "2025-10-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-10-03",
+        "nav": 0.009975
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738455",
+      "instrument_id": "13344",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 252,
+      "earliest_nav_date": "2025-10-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-10-03",
+        "nav": 0.009957
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738463",
+      "instrument_id": "13338",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 252,
+      "earliest_nav_date": "2025-10-03",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-10-03",
+        "nav": 0.995947
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738505",
+      "instrument_id": "13233",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 309,
+      "earliest_nav_date": "2025-07-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-07-15",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738612",
+      "instrument_id": "13142",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 286,
+      "earliest_nav_date": "2025-08-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-08-15",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738653",
+      "instrument_id": "13173",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 288,
+      "earliest_nav_date": "2025-08-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-08-13",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738885",
+      "instrument_id": "13182",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 204,
+      "earliest_nav_date": "2025-12-12",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-12-12",
+        "nav": 0.991837
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000738893",
+      "instrument_id": "13179",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 201,
+      "earliest_nav_date": "2025-12-12",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-12-12",
+        "nav": 0.010038
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000740162",
+      "instrument_id": "13242",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 127,
+      "earliest_nav_date": "2026-04-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-09",
+        "nav": 1.00002
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000740170",
+      "instrument_id": "13245",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 127,
+      "earliest_nav_date": "2026-04-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-09",
+        "nav": 1.000082
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000740188",
+      "instrument_id": "13248",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 127,
+      "earliest_nav_date": "2026-04-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-09",
+        "nav": 1.000071
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000740691",
+      "instrument_id": "13207",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 125,
+      "earliest_nav_date": "2026-04-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-13",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000740709",
+      "instrument_id": "13204",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 125,
+      "earliest_nav_date": "2026-04-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-13",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000741376",
+      "instrument_id": "13230",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 94,
+      "earliest_nav_date": "2026-05-28",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-05-28",
+        "nav": 1.017226
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000741491",
+      "instrument_id": "13226",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 92,
+      "earliest_nav_date": "2026-06-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-06-01",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000741509",
+      "instrument_id": "13220",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 91,
+      "earliest_nav_date": "2026-06-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-06-02",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000741517",
+      "instrument_id": "13223",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 92,
+      "earliest_nav_date": "2026-06-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-06-01",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000742051",
+      "instrument_id": "13356",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 54,
+      "earliest_nav_date": "2026-07-23",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-07-23",
+        "nav": 1.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "HU0000742127",
+      "instrument_id": "13357",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 33,
+      "earliest_nav_date": "2026-08-25",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-08-25",
+        "nav": 1.0016
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "IE000N8A2V09",
+      "instrument_id": "13010",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 451,
+      "earliest_nav_date": "2024-12-18",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-12-18",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU0342679015",
+      "instrument_id": "12182",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1132,
+      "earliest_nav_date": "2022-01-26",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-01-26",
+        "nav": 39.09
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU1731833304",
+      "instrument_id": "13070",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 438,
+      "earliest_nav_date": "2022-10-19",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-10-19",
+        "nav": 10.79
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2003419707",
+      "instrument_id": "12242",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1147,
+      "earliest_nav_date": "2022-04-05",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-04-05",
+        "nav": 100.81
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2087696931",
+      "instrument_id": "12071",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1245,
+      "earliest_nav_date": "2021-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-10",
+        "nav": 18.87
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2210151697",
+      "instrument_id": "12945",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 577,
+      "earliest_nav_date": "2024-07-18",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-07-18",
+        "nav": 13.07
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2219351363",
+      "instrument_id": "11851",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1284,
+      "earliest_nav_date": "2021-10-28",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-10-28",
+        "nav": 9.784
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2242646235",
+      "instrument_id": "12602",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 986,
+      "earliest_nav_date": "2022-12-21",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-12-21",
+        "nav": 8.996
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2384387564",
+      "instrument_id": "12211",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1170,
+      "earliest_nav_date": "2021-11-09",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-09",
+        "nav": 34767.96
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2387455277",
+      "instrument_id": "12091",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1245,
+      "earliest_nav_date": "2021-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-10",
+        "nav": 11.07
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2387455517",
+      "instrument_id": "12081",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1245,
+      "earliest_nav_date": "2021-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-10",
+        "nav": 11.19
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2387456168",
+      "instrument_id": "12061",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1245,
+      "earliest_nav_date": "2021-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-10",
+        "nav": 9.84
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2387457133",
+      "instrument_id": "12041",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1245,
+      "earliest_nav_date": "2021-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-10",
+        "nav": 9.76
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2387457489",
+      "instrument_id": "12031",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1245,
+      "earliest_nav_date": "2021-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-10",
+        "nav": 9.86
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2387457729",
+      "instrument_id": "12051",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1245,
+      "earliest_nav_date": "2021-11-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-10",
+        "nav": 9.94
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2387749000",
+      "instrument_id": "12192",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1109,
+      "earliest_nav_date": "2022-02-22",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-02-22",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2389405080",
+      "instrument_id": "12201",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1172,
+      "earliest_nav_date": "2021-11-30",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2021-11-30",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2402382688",
+      "instrument_id": "12331",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1072,
+      "earliest_nav_date": "2022-06-17",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-06-17",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2416417751",
+      "instrument_id": "12612",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 994,
+      "earliest_nav_date": "2022-12-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-12-08",
+        "nav": 3193.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2450391748",
+      "instrument_id": "12592",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 927,
+      "earliest_nav_date": "2022-11-17",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-11-17",
+        "nav": 99.12
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2504555777",
+      "instrument_id": "13058",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 1091,
+      "earliest_nav_date": "2022-07-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2022-07-27",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2539337126",
+      "instrument_id": "12822",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 692,
+      "earliest_nav_date": "2023-12-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-12-15",
+        "nav": 106.26
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2546391173",
+      "instrument_id": "13271",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 956,
+      "earliest_nav_date": "2023-02-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-02-01",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2570611322",
+      "instrument_id": "13125",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 874,
+      "earliest_nav_date": "2023-03-28",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-03-28",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2577109551",
+      "instrument_id": "13268",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 956,
+      "earliest_nav_date": "2023-02-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-02-01",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2578936770",
+      "instrument_id": "12792",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 714,
+      "earliest_nav_date": "2023-12-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-12-08",
+        "nav": 1223.45
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2614689482",
+      "instrument_id": "12731",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 814,
+      "earliest_nav_date": "2023-07-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-07-27",
+        "nav": 106.6817
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2645235321",
+      "instrument_id": "13316",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 788,
+      "earliest_nav_date": "2023-09-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-09-13",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2645235677",
+      "instrument_id": "13319",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 788,
+      "earliest_nav_date": "2023-09-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-09-13",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2659281880",
+      "instrument_id": "12812",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 692,
+      "earliest_nav_date": "2023-12-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-12-15",
+        "nav": 98.93
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2665174160",
+      "instrument_id": "13001",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 757,
+      "earliest_nav_date": "2023-10-18",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-10-18",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2670341259",
+      "instrument_id": "12881",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 811,
+      "earliest_nav_date": "2023-08-23",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-08-23",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2670341333",
+      "instrument_id": "12871",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 811,
+      "earliest_nav_date": "2023-08-23",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-08-23",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2682081786",
+      "instrument_id": "12851",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 766,
+      "earliest_nav_date": "2023-10-25",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-10-25",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2701010469",
+      "instrument_id": "13322",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 720,
+      "earliest_nav_date": "2023-12-07",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-12-07",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2701010899",
+      "instrument_id": "13325",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 725,
+      "earliest_nav_date": "2023-12-07",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-12-07",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2701599156",
+      "instrument_id": "13061",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 766,
+      "earliest_nav_date": "2023-10-25",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2023-10-25",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2719174067",
+      "instrument_id": "12965",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 589,
+      "earliest_nav_date": "2024-06-04",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-06-04",
+        "nav": 71.31
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2755902827",
+      "instrument_id": "13310",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 660,
+      "earliest_nav_date": "2024-03-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-03-13",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2755903395",
+      "instrument_id": "13313",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 660,
+      "earliest_nav_date": "2024-03-13",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-03-13",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2834349156",
+      "instrument_id": "12943",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 589,
+      "earliest_nav_date": "2024-07-02",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-07-02",
+        "nav": 10.13
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2854867186",
+      "instrument_id": "13292",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 501,
+      "earliest_nav_date": "2024-10-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-15",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2854867855",
+      "instrument_id": "13295",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 501,
+      "earliest_nav_date": "2024-10-15",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-15",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2860962559",
+      "instrument_id": "13118",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 480,
+      "earliest_nav_date": "2024-10-10",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-10",
+        "nav": 100.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2886171474",
+      "instrument_id": "13298",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 516,
+      "earliest_nav_date": "2024-10-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-01",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2886171714",
+      "instrument_id": "13301",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 516,
+      "earliest_nav_date": "2024-10-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-10-01",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2887166093",
+      "instrument_id": "13056",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 548,
+      "earliest_nav_date": "2024-08-28",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-08-28",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2913287418",
+      "instrument_id": "13009",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 472,
+      "earliest_nav_date": "2024-11-11",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2024-11-11",
+        "nav": 10000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2977979645",
+      "instrument_id": "13064",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 445,
+      "earliest_nav_date": "2025-01-22",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-01-22",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2977980221",
+      "instrument_id": "13074",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 445,
+      "earliest_nav_date": "2025-01-22",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-01-22",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU2996679879",
+      "instrument_id": "13113",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 350,
+      "earliest_nav_date": "2025-06-04",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-06-04",
+        "nav": 9.984
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3017887970",
+      "instrument_id": "13107",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 400,
+      "earliest_nav_date": "2025-03-12",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-03-12",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3046617042",
+      "instrument_id": "13304",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 363,
+      "earliest_nav_date": "2025-05-06",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-05-06",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3046617554",
+      "instrument_id": "13307",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 363,
+      "earliest_nav_date": "2025-05-06",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-05-06",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3086256131",
+      "instrument_id": "13328",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 323,
+      "earliest_nav_date": "2025-07-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-07-01",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3086256214",
+      "instrument_id": "13331",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 323,
+      "earliest_nav_date": "2025-07-01",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2025-07-01",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3229330371",
+      "instrument_id": "13256",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 192,
+      "earliest_nav_date": "2026-01-14",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-01-14",
+        "nav": 10.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3287330990",
+      "instrument_id": "13280",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 122,
+      "earliest_nav_date": "2026-03-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-03-27",
+        "nav": 10.66
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3287331378",
+      "instrument_id": "13283",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 122,
+      "earliest_nav_date": "2026-03-27",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-03-27",
+        "nav": 10.64
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3327677806",
+      "instrument_id": "13259",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 132,
+      "earliest_nav_date": "2026-04-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-08",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3327677988",
+      "instrument_id": "13250",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 132,
+      "earliest_nav_date": "2026-04-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-08",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    },
+    {
+      "isin": "LU3327678010",
+      "instrument_id": "13332",
+      "cutoff_date": "2021-10-07",
+      "target_date": "2026-10-07",
+      "point_count": 113,
+      "earliest_nav_date": "2026-04-08",
+      "latest_nav_date_on_or_before_target": "2026-10-07",
+      "nav_on_or_before_cutoff_date": null,
+      "nav_after_cutoff_first_date": {
+        "date": "2026-04-08",
+        "nav": 3000.0
+      },
+      "status": "NO_NAV_ON_OR_BEFORE_CUTOFF",
+      "classification": "SERIES_BEGINS_AFTER_5Y_CUTOFF",
+      "error": null
+    }
+  ]
+}

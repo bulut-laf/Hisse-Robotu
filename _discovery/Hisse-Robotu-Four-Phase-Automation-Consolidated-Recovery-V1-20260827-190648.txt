@@ -1,0 +1,34 @@
+=== HISSE ROBOTU — FOUR-PHASE AUTOMATION CONSOLIDATED RECOVERY V1 ===
+RECOVERY_MODE=YES
+LOOP_BREAK_STRATEGY=CONSOLIDATED
+ROOT_CAUSE_1=STALE_TWO_PHASE_INSTALLER_TEST
+ROOT_CAUSE_2=FRAGILE_UNICODE_UI_COPY_ASSERTION
+UI_PRODUCTION_MUTATION=NO
+INSTALLER_SOURCE_PATCH=YES
+LEGACY_BRIDGE_TEST_CONTRACT_REWRITTEN=YES
+WINDOWS_TASK_MUTATION=NO
+INSTALLER_EXECUTION=NO
+PARALLEL_SCHEDULER=NO
+POWERSHELL_INSTALLER_PARSE=PASS
+F.............                                                           [100%]
+================================== FAILURES ===================================
+____ test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner ____
+
+    def test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner():
+        source = DASHBOARD.read_text(encoding="utf-8")
+    
+        # Structural contract only: UI copy may contain historical encoding artifacts.
+        assert "DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1" in source
+        assert "scheduler_status_rows" in source
+>       assert "execute_scheduled_run" in source
+E       assert 'execute_scheduled_run' in 'from __future__ import annotations\\n\\nfrom datetime import datetime\\n\\nfrom backend.app.integration.three_system_exch...\xfc":\\n        portfoy_formu()\\n    else:\\n        analiz_gecmisi_goster()\\n\\n\\nif __name__ == "__main__":\\n    main()\\n'
+
+backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:14: AssertionError
+=========================== short test summary info ===========================
+FAILED backend/tests/test_daily_buy_decision_automation_bridge_dashboard_v1.py::test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner
+1 failed, 13 passed in 4.13s
+TARGET_TEST=FAIL
+RECOVERY_STATUS=FAILED
+ERROR=TARGET_TEST_FAILED
+ROLLBACK=STARTED
+ROLLBACK=COMPLETE

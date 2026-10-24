@@ -1,0 +1,76 @@
+{
+  "schema_version": "financial-intelligence-v1-3-akbnk-exact-numeric-bank-metric-extraction-canonical-gate-v1",
+  "status": "PASS_FAIL_CLOSED",
+  "symbol": "AKBNK",
+  "sector_model": "BANK",
+  "as_of": "2026-08-31",
+  "publication_date": "2026-07-28",
+  "source_type": "KAP",
+  "source_uri": "https://www.kap.org.tr/tr/Bildirim/1637884",
+  "source_attachment_uri": "https://www.kap.org.tr/tr/api/file/download/4028328c9f52dc40019fa90343905e35",
+  "evidence_hash": "sha256:48a89d5e4343ee8b34fd7af9e2c73f6405e25b803b2d1695b4374bcacba9b9e5",
+  "hash_verified": true,
+  "metrics": {
+    "capital_adequacy_ratio": "16.38",
+    "cost_to_income_ratio": null,
+    "deposit_growth": "15.53624447357414877283324310",
+    "liquidity_ratio": null,
+    "loan_growth": null,
+    "loan_to_deposit_ratio": null,
+    "net_income_growth": "38.19044937039868045218650680",
+    "net_interest_margin": null,
+    "npl_coverage_ratio": null,
+    "npl_ratio": null,
+    "roa": null,
+    "roe": null,
+    "tier1_capital_ratio": null
+  },
+  "metric_evidence": {
+    "capital_adequacy_ratio": {
+      "value": "16.38",
+      "method": "DIRECT_REPORTED_RATIO",
+      "evidence": "sermaye yeterliliği  \nstandart oranı ise %16,38"
+    },
+    "deposit_growth": {
+      "value": "15.53624447357414877283324310",
+      "current_total": "2511089",
+      "prior_total": "2173421",
+      "method": "DERIVED_FROM_REPORTED_CURRENT_PRIOR_TOTALS",
+      "evidence": "I. MEVDUAT  (II-a)         1.574.677             936.412         2.511.089         1.350.918             822.503         2.173.421"
+    },
+    "net_income_growth": {
+      "value": "38.19044937039868045218650680",
+      "current": "34350",
+      "prior": "24857",
+      "method": "DERIVED_FROM_REPORTED_CURRENT_PRIOR_NET_INCOME",
+      "evidence": "Grubun Net Dönem Kârı 34.350 24.857"
+    }
+  },
+  "guidance_rejections": {
+    "net_interest_margin": {
+      "reason": "GUIDANCE_NOT_ACTUAL",
+      "evidence": "Net Faiz Marjı (Swap düzeltilmiş)                                     %3,2 - 3,5"
+    },
+    "roe": {
+      "reason": "GUIDANCE_NOT_ACTUAL",
+      "evidence": "Özsermaye Karlılığı %23 - 25"
+    }
+  },
+  "extracted_metric_count": 3,
+  "missing_metric_count": 10,
+  "canonical_adapter_status": "BLOCKED",
+  "canonical_adapter_blocker": "BANK_CANONICAL_METRIC_MISSING:CAPITAL_ADEQUACY.capital_adequacy_ratio",
+  "canonical_payload_ready": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "production_evidence": false,
+  "blockers": [
+    "BANK_CANONICAL_ADAPTER_NOT_READY:BANK_CANONICAL_METRIC_MISSING:CAPITAL_ADEQUACY.capital_adequacy_ratio",
+    "BANK_REQUIRED_METRICS_STILL_MISSING"
+  ],
+  "missing_to_zero": false,
+  "future_publication_allowed": false,
+  "production_mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

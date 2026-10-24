@@ -1,0 +1,146 @@
+from __future__ import annotations
+
+import os
+from dataclasses import dataclass
+from typing import Any
+
+from backend.app.compliance.kap_http_source import KapHttpSource
+
+
+@dataclass(frozen=True, slots=True)
+class KapSettings:
+    """KAP HTTP bağlantısı için dış yapılandırma değerleri."""
+
+    base_url: str
+    api_key: str | None = None
+    timeout_seconds: float = 10.0
+    endpoint_path: str = "notifications"
+    api_key_header: str = "Authorization"
+    collection_key: str = "notifications"
+    api_key_prefix: str = "Bearer"
+
+    def __post_init__(self) -> None:
+        normalized_base_url = self.base_url.strip().rstrip("/")
+        normalized_api_key = (
+            self.api_key.strip()
+            if self.api_key is not None and self.api_key.strip()
+            else None
+        )
+        normalized_endpoint_path = self.endpoint_path.strip().strip("/")
+        normalized_api_key_header = self.api_key_header.strip()
+        normalized_collection_key = self.collection_key.strip()
+        normalized_api_key_prefix = self.api_key_prefix.strip()
+
+        if not normalized_base_url:
+            raise ValueError("KAP temel adresi boş bırakılamaz.")
+
+        if not normalized_endpoint_path:
+            raise ValueError("KAP servis yolu boş bırakılamaz.")
+
+        if not normalized_api_key_header:
+            raise ValueError("KAP API anahtar başlığı boş bırakılamaz.")
+
+        if not normalized_collection_key:
+            raise ValueError("KAP yanıt liste anahtarı boş bırakılamaz.")
+
+        try:
+            timeout = float(self.timeout_seconds)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "KAP zaman aşımı sayısal bir değer olmalıdır."
+            ) from exc
+
+        if timeout <= 0:
+            raise ValueError(
+                "KAP zaman aşımı sıfırdan büyük olmalıdır."
+            )
+
+        object.__setattr__(self, "base_url", normalized_base_url)
+        object.__setattr__(self, "api_key", normalized_api_key)
+        object.__setattr__(self, "timeout_seconds", timeout)
+        object.__setattr__(self, "endpoint_path", normalized_endpoint_path)
+        object.__setattr__(self, "api_key_header", normalized_api_key_header)
+        object.__setattr__(self, "collection_key", normalized_collection_key)
+        object.__setattr__(self, "api_key_prefix", normalized_api_key_prefix)
+
+    @classmethod
+    def from_environment(cls) -> "KapSettings":
+        base_url = os.getenv(
+            "HISSE_ROBOTU_KAP_BASE_URL",
+            "",
+        ).strip()
+
+        if not base_url:
+            raise ValueError(
+                "KAP temel adresi ortam değişkeninde tanımlanmalıdır."
+            )
+
+        api_key_value = os.getenv(
+            "HISSE_ROBOTU_KAP_API_KEY",
+        )
+        timeout_raw = os.getenv(
+            "HISSE_ROBOTU_KAP_TIMEOUT_SECONDS",
+            "10.0",
+        )
+
+        contract_values = {
+            "endpoint_path": os.getenv(
+                "HISSE_ROBOTU_KAP_ENDPOINT_PATH",
+                "",
+            ).strip(),
+            "api_key_header": os.getenv(
+                "HISSE_ROBOTU_KAP_API_KEY_HEADER",
+                "",
+            ).strip(),
+            "collection_key": os.getenv(
+                "HISSE_ROBOTU_KAP_COLLECTION_KEY",
+                "",
+            ).strip(),
+        }
+
+        missing = [
+            name
+            for name, value in contract_values.items()
+            if not value
+        ]
+        if missing:
+            raise ValueError(
+                "KAP abonelik sözleşmesi ayarları eksik: "
+                + ", ".join(missing)
+            )
+
+        try:
+            timeout_seconds = float(timeout_raw)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(
+                "KAP zaman aşımı ortam değişkeni sayısal olmalıdır."
+            ) from exc
+
+        return cls(
+            base_url=base_url,
+            api_key=api_key_value,
+            timeout_seconds=timeout_seconds,
+            endpoint_path=contract_values["endpoint_path"],
+            api_key_header=contract_values["api_key_header"],
+            collection_key=contract_values["collection_key"],
+            api_key_prefix=os.getenv(
+                "HISSE_ROBOTU_KAP_API_KEY_PREFIX",
+                "",
+            ),
+        )
+
+    def build_http_source(
+        self,
+        *,
+        http_get: Any,
+    ) -> KapHttpSource:
+        return KapHttpSource(
+            base_url=self.base_url,
+            http_get=http_get,
+            timeout_seconds=self.timeout_seconds,
+            api_key=self.api_key,
+            endpoint_path=self.endpoint_path,
+            api_key_header=self.api_key_header,
+            collection_key=self.collection_key,
+            api_key_prefix=self.api_key_prefix,
+        )

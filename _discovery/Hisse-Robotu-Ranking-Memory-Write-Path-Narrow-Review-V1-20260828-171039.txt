@@ -1,0 +1,1343 @@
+=== HISSE ROBOTU — RANKING MEMORY WRITE PATH NARROW REVIEW V1 ===
+MODE=READ_ONLY
+PURPOSE=EXPLAIN_POST_25_CANONICAL_RUN_WITHOUT_RANK_SNAPSHOT
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+RANKING_MEMORY_WRITE=NO
+PROFILE_MEMORY_WRITE=NO
+NETWORK_CALL=NO
+
+=== 1. EXACT RANKING MEMORY WRITE REFERENCES ===
+TOKEN=observations_from_research_rows|COUNT=7
+REF=backend\app\analysis\historical_research_replay.py:25|FUNC=<module>|from .ranking_memory import RankObservation, observations_from_research_rows
+REF=backend\app\analysis\historical_research_replay.py:171|FUNC=replay_canonical_research|    observations = observations_from_research_rows(
+REF=backend\app\analysis\ranking_memory.py:30|FUNC=observations_from_research_rows|def observations_from_research_rows(*, rows, as_of, universe_source, profile_name):
+REF=backend\app\analysis\ranking_snapshot_adapter.py:6|FUNC=<module>|    observations_from_research_rows,
+REF=backend\app\analysis\ranking_snapshot_adapter.py:19|FUNC=persist_research_rank_snapshot|    observations = observations_from_research_rows(
+REF=backend\dashboard.py:4121|FUNC=bist_toplu_tarama_sonucu_goster|            observations_from_research_rows,
+REF=backend\dashboard.py:4138|FUNC=bist_toplu_tarama_sonucu_goster|        _rank_observations = observations_from_research_rows(
+
+TOKEN=append_snapshot|COUNT=3
+REF=backend\app\analysis\ranking_memory.py:134|FUNC=append_snapshot|    def append_snapshot(self, observations):
+REF=backend\app\analysis\ranking_snapshot_adapter.py:26|FUNC=persist_research_rank_snapshot|    return (store or RankObservationJsonlStore()).append_snapshot(
+REF=backend\dashboard.py:4144|FUNC=bist_toplu_tarama_sonucu_goster|        RankObservationJsonlStore().append_snapshot(_rank_observations)
+
+TOKEN=RankObservationJsonlStore|COUNT=21
+REF=backend\app\analysis\fast_mover_preclose_attachment.py:24|FUNC=<module>|    RankObservationJsonlStore,
+REF=backend\app\analysis\fast_mover_preclose_attachment.py:53|FUNC=_materialize_rank_history|        return tuple(RankObservationJsonlStore().list())
+REF=backend\app\analysis\ranking_memory.py:88|FUNC=<module>|class RankObservationJsonlStore:
+REF=backend\app\analysis\ranking_snapshot_adapter.py:7|FUNC=<module>|    RankObservationJsonlStore,
+REF=backend\app\analysis\ranking_snapshot_adapter.py:26|FUNC=persist_research_rank_snapshot|    return (store or RankObservationJsonlStore()).append_snapshot(
+REF=backend\app\analysis\ranking_visibility_service.py:3|FUNC=<module>|from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+REF=backend\app\analysis\ranking_visibility_service.py:11|FUNC=build_current_visibility_context|    store: RankObservationJsonlStore | None = None,
+REF=backend\app\analysis\ranking_visibility_service.py:13|FUNC=build_current_visibility_context|    memory = store or RankObservationJsonlStore()
+REF=backend\app\analysis\research_profile_memory.py:8|FUNC=<module>|from .ranking_memory import RankObservationJsonlStore, ResearchProfileObservation
+REF=backend\app\analysis\research_profile_memory.py:103|FUNC=persist_research_profile_bundle|    store: RankObservationJsonlStore | None = None,
+REF=backend\app\analysis\research_profile_memory.py:121|FUNC=persist_research_profile_bundle|    target = store or RankObservationJsonlStore()
+REF=backend\app\analysis\research_profile_memory.py:248|FUNC=build_rank_movement_map|    target = store or RankObservationJsonlStore()
+REF=backend\app\analysis\research_profile_memory.py:256|FUNC=load_profile_memory_context|    target = store or RankObservationJsonlStore()
+REF=backend\dashboard.py:4120|FUNC=bist_toplu_tarama_sonucu_goster|            RankObservationJsonlStore,
+REF=backend\dashboard.py:4144|FUNC=bist_toplu_tarama_sonucu_goster|        RankObservationJsonlStore().append_snapshot(_rank_observations)
+REF=backend\dashboard.py:4225|FUNC=bist_toplu_tarama_sonucu_goster|        from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+REF=backend\dashboard.py:4232|FUNC=bist_toplu_tarama_sonucu_goster|        _ranking_history = RankObservationJsonlStore().list()
+REF=backend\dashboard.py:8338|FUNC=gunluk_operasyon_paneli_formu|                    RankObservationJsonlStore,
+REF=backend\dashboard.py:8344|FUNC=gunluk_operasyon_paneli_formu|                _daily10_rank_history = RankObservationJsonlStore().list()
+REF=backend\dashboard.py:8528|FUNC=gunluk_operasyon_paneli_formu|                    from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+REF=backend\dashboard.py:8534|FUNC=gunluk_operasyon_paneli_formu|                    _daily_rank_history = RankObservationJsonlStore().list()
+
+
+=== 2. WRITE CALL CONTEXT ===
+--- backend\app\analysis\historical_research_replay.py:25 | FUNC=<module> | TOKEN=observations_from_research_rows ---
+1: """Read-only historical replay adapter for the canonical Research pipeline.
+2: 
+3: Bu katman yeni teknik skor, işlem sinyali veya AL/SAT kararı üretmez.
+4: Mevcut BatchStockScanner + ScanProfile + scan_filter sözleşmesini geçmiş
+5: bir tamamlanmış seansa güvenli biçimde yeniden uygular.
+6: 
+7: V1 guarantees:
+8: - explicit cut-date price boundary;
+9: - explicit historical universe input;
+10: - canonical Research filtering/ranking path is reused;
+11: - full filtered Research rows are returned, never the UI display slice;
+12: - future-dated analysis is fail-closed;
+13: - Ranking Memory is never written here;
+14: - no new score, signal, trade decision, store, or ranking engine.
+15: """
+16: 
+17: from __future__ import annotations
+18: 
+19: from dataclasses import dataclass
+20: from datetime import date
+21: import inspect
+22: from typing import Callable, Iterable
+23: 
+24: from .market_scanner import sembolleri_normalize_et
+25: from .ranking_memory import RankObservation, observations_from_research_rows
+26: from .scan_filter import tarama_sonucunu_filtrele
+27: from .scan_profiles import profil_al
+28: from .stock_scanner import BatchStockScanner, StockScanResult
+29: from ..data.batch_market_data import (
+30:     BatchMarketDataResult,
+31:     toplu_fiyat_verisi_getir,
+32: )
+33: 
+34: 
+35: HISTORICAL_REPLAY_UNIVERSE_SOURCE = "HISTORICAL_XUTUM_OFFICIAL_LEDGER_V1"
+36: 
+37: BatchDataFetcher = Callable[..., BatchMarketDataResult]
+38: 
+39: 
+40: @dataclass(frozen=True)
+41: class HistoricalResearchReplayResult:
+42:     as_of: str
+43:     universe_source: str
+44:     profile_name: str
+45:     input_universe_size: int
+46:     successful_scan_count: int
+47:     failed_scan_count: int
+48:     ranked_research_count: int
+49:     stale_analysis_count: int
+
+--- backend\app\analysis\historical_research_replay.py:171 | FUNC=replay_canonical_research | TOKEN=observations_from_research_rows ---
+147:     if future_dates:
+148:         latest = max(future_dates)
+149:         raise ValueError(
+150:             "Historical replay future leakage detected: "
+151:             f"cut={as_of.isoformat()} latest_analysis={latest.isoformat()}"
+152:         )
+153: 
+154:     rows = tuple(
+155:         {
+156:             "Sıra": rank,
+157:             "Hisse": candidate.sembol.removesuffix(".IS"),
+158:             "Skor": candidate.sinyal.skor,
+159:         }
+160:         for rank, candidate in enumerate(candidates, start=1)
+161:     )
+162: 
+163:     ranks = tuple(int(row["Sıra"]) for row in rows)
+164:     if ranks != tuple(range(1, len(rows) + 1)):
+165:         raise ValueError("Historical Research ranks are not contiguous.")
+166: 
+167:     row_symbols = tuple(str(row["Hisse"]) for row in rows)
+168:     if len(row_symbols) != len(set(row_symbols)):
+169:         raise ValueError("Historical Research rows contain duplicate symbols.")
+170: 
+171:     observations = observations_from_research_rows(
+172:         rows=rows,
+173:         as_of=as_of.isoformat(),
+174:         universe_source=source,
+175:         profile_name=profile_name,
+176:     )
+177: 
+178:     if len(observations) != len(rows):
+179:         raise ValueError(
+180:             "Historical Research row/observation count mismatch: "
+181:             f"{len(rows)} != {len(observations)}"
+182:         )
+183: 
+184:     return HistoricalResearchReplayResult(
+185:         as_of=as_of.isoformat(),
+186:         universe_source=source,
+187:         profile_name=profile_name,
+188:         input_universe_size=len(normalized_symbols),
+189:         successful_scan_count=len(scan.basarili_sonuclar),
+190:         failed_scan_count=len(scan.hatalar),
+191:         ranked_research_count=len(rows),
+192:         stale_analysis_count=stale_analysis_count,
+193:         rows=rows,
+194:         observations=observations,
+195:         scan_result=scan,
+
+--- backend\app\analysis\ranking_memory.py:30 | FUNC=observations_from_research_rows | TOKEN=observations_from_research_rows ---
+6: 
+7: 
+8: @dataclass(frozen=True)
+9: class RankObservation:
+10:     as_of: str
+11:     symbol: str
+12:     rank: int
+13:     ranked_universe_size: int
+14:     universe_source: str
+15:     profile_name: str
+16: 
+17: 
+18: def _clean_symbol(value: object) -> str:
+19:     return str(value or "").removesuffix(".IS").upper().strip()
+20: 
+21: 
+22: def _coerce_rank(value: object) -> int | None:
+23:     try:
+24:         rank = int(value)
+25:     except (TypeError, ValueError):
+26:         return None
+27:     return rank if rank > 0 else None
+28: 
+29: 
+30: def observations_from_research_rows(*, rows, as_of, universe_source, profile_name):
+31:     materialized = tuple(rows)
+32:     ranked_universe_size = len(materialized)
+33: 
+34:     if ranked_universe_size == 0:
+35:         return ()
+36: 
+37:     observations = []
+38: 
+39:     for row in materialized:
+40:         symbol = _clean_symbol(
+41:             row.get("Hisse")
+42:             or row.get("hisse")
+43:             or row.get("symbol")
+44:             or row.get("Symbol")
+45:         )
+46: 
+47:         rank = _coerce_rank(
+48:             row.get("Sıra")
+49:             or row.get("Sira")
+50:             or row.get("rank")
+51:             or row.get("Rank")
+52:         )
+53: 
+54:         if not symbol or rank is None:
+
+--- backend\app\analysis\ranking_snapshot_adapter.py:6 | FUNC=<module> | TOKEN=observations_from_research_rows ---
+1: from __future__ import annotations
+2: 
+3: from datetime import date
+4: 
+5: from backend.app.analysis.ranking_memory import (
+6:     observations_from_research_rows,
+7:     RankObservationJsonlStore,
+8: )
+9: 
+10: 
+11: def persist_research_rank_snapshot(
+12:     *,
+13:     rows,
+14:     as_of: str | None = None,
+15:     universe_source: str = "",
+16:     profile_name: str = "",
+17:     store=None,
+18: ) -> int:
+19:     observations = observations_from_research_rows(
+20:         rows=rows,
+21:         as_of=as_of or date.today().isoformat(),
+22:         universe_source=universe_source,
+23:         profile_name=profile_name,
+24:     )
+25: 
+26:     return (store or RankObservationJsonlStore()).append_snapshot(
+27:         observations
+28:     )
+
+--- backend\app\analysis\ranking_snapshot_adapter.py:19 | FUNC=persist_research_rank_snapshot | TOKEN=observations_from_research_rows ---
+1: from __future__ import annotations
+2: 
+3: from datetime import date
+4: 
+5: from backend.app.analysis.ranking_memory import (
+6:     observations_from_research_rows,
+7:     RankObservationJsonlStore,
+8: )
+9: 
+10: 
+11: def persist_research_rank_snapshot(
+12:     *,
+13:     rows,
+14:     as_of: str | None = None,
+15:     universe_source: str = "",
+16:     profile_name: str = "",
+17:     store=None,
+18: ) -> int:
+19:     observations = observations_from_research_rows(
+20:         rows=rows,
+21:         as_of=as_of or date.today().isoformat(),
+22:         universe_source=universe_source,
+23:         profile_name=profile_name,
+24:     )
+25: 
+26:     return (store or RankObservationJsonlStore()).append_snapshot(
+27:         observations
+28:     )
+
+--- backend\dashboard.py:4121 | FUNC=bist_toplu_tarama_sonucu_goster | TOKEN=observations_from_research_rows ---
+4097:                 hide_index=True,
+4098:             )
+4099: 
+4100:     # RPV1_SPRINT02_RENDER_PANEL
+4101:     if research_profiles_bundle is not None:
+4102:         render_research_profiles_panel(st, research_profiles_bundle)
+4103: 
+4104:     adaylar = sonuc.adaylar
+4105:     temel_filtre_sonucu = apply_optional_fundamental_filter(
+4106:         adaylar,
+4107:         symbol_getter=lambda aday: aday.sembol,
+4108:         scores=temel_skorlar or {},
+4109:         enabled=temel_filtre_aktif,
+4110:         minimum_score=minimum_temel_skor,
+4111:     )
+4112:     gorunen_semboller = {
+4113:         aday.sembol for aday in temel_filtre_sonucu.accepted
+4114:     }
+4115:     _three_all_rows = aday_tablosu_kayitlari(sonuc)
+4116: 
+4117:     # RANKING_JUMP_V1_BLOCK1 — observation only; no rank/score/decision mutation.
+4118:     try:
+4119:         from backend.app.analysis.ranking_memory import (
+4120:             RankObservationJsonlStore,
+4121:             observations_from_research_rows,
+4122:         )
+4123: 
+4124:         _ranking_as_of = str(sonuc.evren_tarihi or "").strip()
+4125:         if _ranking_as_of == "Kişisel liste":
+4126:             _ranking_as_of = datetime.now().date().isoformat()
+4127: 
+4128:         _ranking_memory_rows = tuple(
+4129:             {
+4130:                 "Sıra": _rank,
+4131:                 "Hisse": _candidate.sembol.removesuffix(".IS"),
+4132:             }
+4133:             for _rank, _candidate in enumerate(
+4134:                 sonuc.filtrelenmis.adaylar,
+4135:                 start=1,
+4136:             )
+4137:         )
+4138:         _rank_observations = observations_from_research_rows(
+4139:             rows=_ranking_memory_rows,
+4140:             as_of=_ranking_as_of,
+4141:             universe_source=sonuc.evren_kaynagi,
+4142:             profile_name=sonuc.profil.ad,
+4143:         )
+4144:         RankObservationJsonlStore().append_snapshot(_rank_observations)
+4145:     except Exception as _rank_history_exc:
+
+--- backend\dashboard.py:4138 | FUNC=bist_toplu_tarama_sonucu_goster | TOKEN=observations_from_research_rows ---
+4114:     }
+4115:     _three_all_rows = aday_tablosu_kayitlari(sonuc)
+4116: 
+4117:     # RANKING_JUMP_V1_BLOCK1 — observation only; no rank/score/decision mutation.
+4118:     try:
+4119:         from backend.app.analysis.ranking_memory import (
+4120:             RankObservationJsonlStore,
+4121:             observations_from_research_rows,
+4122:         )
+4123: 
+4124:         _ranking_as_of = str(sonuc.evren_tarihi or "").strip()
+4125:         if _ranking_as_of == "Kişisel liste":
+4126:             _ranking_as_of = datetime.now().date().isoformat()
+4127: 
+4128:         _ranking_memory_rows = tuple(
+4129:             {
+4130:                 "Sıra": _rank,
+4131:                 "Hisse": _candidate.sembol.removesuffix(".IS"),
+4132:             }
+4133:             for _rank, _candidate in enumerate(
+4134:                 sonuc.filtrelenmis.adaylar,
+4135:                 start=1,
+4136:             )
+4137:         )
+4138:         _rank_observations = observations_from_research_rows(
+4139:             rows=_ranking_memory_rows,
+4140:             as_of=_ranking_as_of,
+4141:             universe_source=sonuc.evren_kaynagi,
+4142:             profile_name=sonuc.profil.ad,
+4143:         )
+4144:         RankObservationJsonlStore().append_snapshot(_rank_observations)
+4145:     except Exception as _rank_history_exc:
+4146:         try:
+4147:             _rank_history_log = Path(
+4148:                 r"D:\Projects\Hisse-Robotu\_discovery\ranking_memory_write_error.log"
+4149:             )
+4150:             _rank_history_log.parent.mkdir(parents=True, exist_ok=True)
+4151:             with _rank_history_log.open("a", encoding="utf-8") as _rank_history_f:
+4152:                 _rank_history_f.write(
+4153:                     f"{datetime.now().isoformat()} | "
+4154:                     f"{type(_rank_history_exc).__name__}: {_rank_history_exc}\n"
+4155:                 )
+4156:         except Exception:
+4157:             pass
+4158: 
+4159:     # THREE_SYSTEM_ACTIVE_HISSE_PUBLISH_V4
+4160:     for _three_row in _three_all_rows:
+4161:         try:
+4162:             write_scan_row_opinion(
+
+--- backend\app\analysis\ranking_memory.py:134 | FUNC=append_snapshot | TOKEN=append_snapshot ---
+110:     def list(self):
+111:         # Rank reader stays backward compatible; profile records are ignored here.
+112:         if not self.path.exists():
+113:             return ()
+114:         items = []
+115:         for raw in self.path.read_text(encoding="utf-8").splitlines():
+116:             raw = raw.strip()
+117:             if not raw:
+118:                 continue
+119:             payload = json.loads(raw)
+120:             if payload.get("record_type", "rank") != "rank":
+121:                 continue
+122:             items.append(
+123:                 RankObservation(
+124:                     as_of=payload["as_of"],
+125:                     symbol=payload["symbol"],
+126:                     rank=payload["rank"],
+127:                     ranked_universe_size=payload["ranked_universe_size"],
+128:                     universe_source=payload["universe_source"],
+129:                     profile_name=payload["profile_name"],
+130:                 )
+131:             )
+132:         return tuple(items)
+133: 
+134:     def append_snapshot(self, observations):
+135:         incoming = tuple(observations)
+136:         if not incoming:
+137:             return 0
+138: 
+139:         existing_keys = {self._key(item) for item in self.list()}
+140:         new_items = [item for item in incoming if self._key(item) not in existing_keys]
+141:         if not new_items:
+142:             return 0
+143: 
+144:         self.path.parent.mkdir(parents=True, exist_ok=True)
+145:         with self.path.open("a", encoding="utf-8") as handle:
+146:             for item in new_items:
+147:                 handle.write(
+148:                     json.dumps(asdict(item), ensure_ascii=False, sort_keys=True) + "\n"
+149:                 )
+150:         return len(new_items)
+151: 
+152: 
+153: 
+154:     def list_profile_observations(self):
+155:         if not self.path.exists():
+156:             return ()
+157:         items = []
+158:         for raw in self.path.read_text(encoding="utf-8").splitlines():
+
+--- backend\app\analysis\ranking_snapshot_adapter.py:26 | FUNC=persist_research_rank_snapshot | TOKEN=append_snapshot ---
+2: 
+3: from datetime import date
+4: 
+5: from backend.app.analysis.ranking_memory import (
+6:     observations_from_research_rows,
+7:     RankObservationJsonlStore,
+8: )
+9: 
+10: 
+11: def persist_research_rank_snapshot(
+12:     *,
+13:     rows,
+14:     as_of: str | None = None,
+15:     universe_source: str = "",
+16:     profile_name: str = "",
+17:     store=None,
+18: ) -> int:
+19:     observations = observations_from_research_rows(
+20:         rows=rows,
+21:         as_of=as_of or date.today().isoformat(),
+22:         universe_source=universe_source,
+23:         profile_name=profile_name,
+24:     )
+25: 
+26:     return (store or RankObservationJsonlStore()).append_snapshot(
+27:         observations
+28:     )
+
+--- backend\dashboard.py:4144 | FUNC=bist_toplu_tarama_sonucu_goster | TOKEN=append_snapshot ---
+4120:             RankObservationJsonlStore,
+4121:             observations_from_research_rows,
+4122:         )
+4123: 
+4124:         _ranking_as_of = str(sonuc.evren_tarihi or "").strip()
+4125:         if _ranking_as_of == "Kişisel liste":
+4126:             _ranking_as_of = datetime.now().date().isoformat()
+4127: 
+4128:         _ranking_memory_rows = tuple(
+4129:             {
+4130:                 "Sıra": _rank,
+4131:                 "Hisse": _candidate.sembol.removesuffix(".IS"),
+4132:             }
+4133:             for _rank, _candidate in enumerate(
+4134:                 sonuc.filtrelenmis.adaylar,
+4135:                 start=1,
+4136:             )
+4137:         )
+4138:         _rank_observations = observations_from_research_rows(
+4139:             rows=_ranking_memory_rows,
+4140:             as_of=_ranking_as_of,
+4141:             universe_source=sonuc.evren_kaynagi,
+4142:             profile_name=sonuc.profil.ad,
+4143:         )
+4144:         RankObservationJsonlStore().append_snapshot(_rank_observations)
+4145:     except Exception as _rank_history_exc:
+4146:         try:
+4147:             _rank_history_log = Path(
+4148:                 r"D:\Projects\Hisse-Robotu\_discovery\ranking_memory_write_error.log"
+4149:             )
+4150:             _rank_history_log.parent.mkdir(parents=True, exist_ok=True)
+4151:             with _rank_history_log.open("a", encoding="utf-8") as _rank_history_f:
+4152:                 _rank_history_f.write(
+4153:                     f"{datetime.now().isoformat()} | "
+4154:                     f"{type(_rank_history_exc).__name__}: {_rank_history_exc}\n"
+4155:                 )
+4156:         except Exception:
+4157:             pass
+4158: 
+4159:     # THREE_SYSTEM_ACTIVE_HISSE_PUBLISH_V4
+4160:     for _three_row in _three_all_rows:
+4161:         try:
+4162:             write_scan_row_opinion(
+4163:                 _three_row,
+4164:                 as_of=str(sonuc.evren_tarihi),
+4165:             )
+4166:         except Exception as _three_exc:
+4167:             try:
+4168:                 _three_log = Path(
+
+=== 3. CANONICAL CLOSE / EVENING DEFINITIONS AND CALLS ===
+--- DEF=backend\app\analysis\daily_buy_decision_cycle.py:66|resolve_daily_buy_decision_phase ---
+CALLS=astimezone;datetime.now
+def resolve_daily_buy_decision_phase(now: datetime | None = None) -> str | None:
+    local = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    hour = local.hour
+    if hour >= 17:
+        return "EVENING"
+    if 7 <= hour < 12:
+        return "MORNING"
+    return None
+
+--- DEF=backend\app\analysis\daily_buy_decision_cycle.py:121|build_daily_buy_decision_snapshot ---
+CALLS=DailyBuyDecisionSnapshot;ValueError;_candidate_from_card;astimezone;datetime.now;decision_by_symbol.get;getattr;str;strip;timestamp.isoformat;tuple;upper
+def build_daily_buy_decision_snapshot(
+    cards: Iterable[object],
+    *,
+    phase: str,
+    now: datetime | None = None,
+    decisions: Iterable[object] = (),
+) -> DailyBuyDecisionSnapshot:
+    phase_value = str(phase).strip().upper()
+    if phase_value not in {"EVENING", "MORNING"}:
+        raise ValueError("phase EVENING veya MORNING olmalıdır.")
+    timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    decision_by_symbol = {
+        str(getattr(item, "symbol", "")).strip().upper(): item
+        for item in decisions
+        if str(getattr(item, "symbol", "")).strip()
+    }
+    candidates = tuple(cards)
+    return DailyBuyDecisionSnapshot(
+        phase=phase_value,
+        created_at=timestamp.isoformat(timespec="seconds"),
+        candidates=tuple(
+            _candidate_from_card(
+                card,
+                decision_by_symbol.get(str(getattr(card, "symbol", "")).strip().upper()),
+            )
+            for card in candidates
+        ),
+    )
+
+--- DEF=backend\app\analysis\daily_buy_decision_cycle.py:245|compare_evening_morning ---
+CALLS=DailyBuyDecisionChange;_decision_change_reasons;changes.append;dict.fromkeys;evening_by_symbol.get;join;list;morning_by_symbol.get;reasons.append;reasons.extend;tuple
+def compare_evening_morning(
+    evening: DailyBuyDecisionSnapshot | None,
+    morning: DailyBuyDecisionSnapshot | None,
+) -> tuple[DailyBuyDecisionChange, ...]:
+    if evening is None or morning is None:
+        return ()
+
+    evening_by_symbol = {item.symbol: item for item in evening.candidates}
+    morning_by_symbol = {item.symbol: item for item in morning.candidates}
+    symbols = list(dict.fromkeys([
+        *(item.symbol for item in evening.candidates),
+        *(item.symbol for item in morning.candidates),
+    ]))
+    changes: list[DailyBuyDecisionChange] = []
+
+    for symbol in symbols:
+        old = evening_by_symbol.get(symbol)
+        new = morning_by_symbol.get(symbol)
+        reasons: list[str] = []
+        if old is None:
+            reasons.append("Sabah listesine yeni girdi")
+        elif new is None:
+            reasons.append("Sabah listeden çıktı")
+        else:
+            reasons.extend(_decision_change_reasons(old, new))
+            if old.rank != new.rank:
+                reasons.append(f"Öncelik sırası {old.rank}→{new.rank}")
+            if old.operational_status != new.operational_status:
+                reasons.append(
+                    f"Durum {old.operational_status}→{new.operational_status}"
+                )
+            if old.rank_change != new.rank_change:
+                reasons.append("Sıralama hareketi güncellendi")
+            if old.data_blocked != new.data_blocked:
+                reasons.append("Veri kalite durumu değişti")
+        changes.append(
+            DailyBuyDecisionChange(
+                symbol=symbol,
+                evening_rank=old.rank if old else None,
+                morning_rank=new.rank if new else None,
+                rank_delta=(old.rank - new.rank) if old and new else None,
+                evening_status=old.operational_status if old else None,
+                morning_status=new.operational_status if new else None,
+                change_reason="; ".join(reasons) if reasons else "Değişiklik yok",
+                evening_decision=old.decision if old else None,
+                morning_decision=new.decision if new else None,
+            )
+        )
+    return tuple(changes)
+
+--- DEF=backend\app\analysis\daily_buy_decision_cycle.py:340|compare_evening_morning_replacements ---
+CALLS=DailyBuyDecisionReplacement;_replacement_context;incoming.sort;outgoing.sort;replacements.append;tuple;zip
+def compare_evening_morning_replacements(
+    evening: DailyBuyDecisionSnapshot | None,
+    morning: DailyBuyDecisionSnapshot | None,
+) -> tuple[DailyBuyDecisionReplacement, ...]:
+    """Top-5 üyeliğindeki akşam→sabah giriş/çıkışları eşleştirir."""
+    if evening is None or morning is None:
+        return ()
+
+    evening_symbols = {item.symbol for item in evening.candidates}
+    morning_symbols = {item.symbol for item in morning.candidates}
+
+    outgoing = [item for item in evening.candidates if item.symbol not in morning_symbols]
+    incoming = [item for item in morning.candidates if item.symbol not in evening_symbols]
+
+    outgoing.sort(key=lambda item: item.rank)
+    incoming.sort(key=lambda item: item.rank)
+
+    replacements: list[DailyBuyDecisionReplacement] = []
+    for old, new in zip(outgoing, incoming):
+        replacements.append(
+            DailyBuyDecisionReplacement(
+                outgoing_symbol=old.symbol,
+                incoming_symbol=new.symbol,
+                outgoing_rank=old.rank,
+                incoming_rank=new.rank,
+                outgoing_decision=old.decision,
+                incoming_decision=new.decision,
+                replacement_context=_replacement_context(old, new),
+            )
+        )
+    return tuple(replacements)
+
+--- DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:58|build_operational_closeout ---
+CALLS=DecisionOutputArchiveJsonStore;OperationalCloseoutCheck;OperationalCloseoutResult;ScheduledRunAuditJsonStore;ScheduledRunJsonStore;_archive_records;_audit_records;_phase_due;_state_records;checks.append;datetime.now;getattr;int;isoformat;join;len;max;missing.append;states.get;str;timestamp.astimezone;timestamp.date;timestamp.replace;tuple;upper
+def build_operational_closeout(
+    *,
+    now: datetime | None = None,
+    scheduler_store: object | None = None,
+    audit_store: object | None = None,
+    archive_store: object | None = None,
+) -> OperationalCloseoutResult:
+    timestamp = now or datetime.now(ISTANBUL)
+    if timestamp.tzinfo is None:
+        timestamp = timestamp.replace(tzinfo=ISTANBUL)
+    timestamp = timestamp.astimezone(ISTANBUL)
+    run_date = timestamp.date().isoformat()
+
+    if scheduler_store is None:
+        from backend.app.operations.daily_buy_decision_scheduled_runner import ScheduledRunJsonStore
+        scheduler_store = ScheduledRunJsonStore()
+    if audit_store is None:
+        from backend.app.operations.daily_buy_decision_scheduled_runner import ScheduledRunAuditJsonStore
+        audit_store = ScheduledRunAuditJsonStore()
+    if archive_store is None:
+        from backend.app.analysis.daily_buy_decision_output_archive import DecisionOutputArchiveJsonStore
+        archive_store = DecisionOutputArchiveJsonStore()
+
+    states = _state_records(scheduler_store)
+    audits = _audit_records(audit_store)
+    archives = _archive_records(archive_store)
+
+    checks: list[OperationalCloseoutCheck] = []
+    missing: list[str] = []
+    waiting = False
+
+    for phase in ("MORNING", "EVENING"):
+        label = PHASE_LABELS[phase]
+        due = _phase_due(phase, timestamp)
+        state = states.get(f"{run_date}:{phase}")
+
+        if not due:
+            waiting = True
+            checks.append(OperationalCloseoutCheck(label, "BEKLİYOR", "Planlanan çalışma saati henüz gelmedi."))
+            continue
+
+        if state is None:
+            missing.append(f"{label}: zamanlanmış koşu kaydı yok")
+            checks.append(OperationalCloseoutCheck(label, "EKSİK", "Zamanlanmış/recovery koşu kaydı bulunamadı."))
+            continue
+
+        state_status = str(getattr(state, "status", "")).upper()
+        if state_status != "SUCCESS":
+            detail = str(getattr(state, "detail", "")) or f"Durum: {state_status or '-'}"
+            missing.append(f"{label}: koşu başarılı değil ({state_status or 'BİLİNMİYOR'})")
+            checks.append(OperationalCloseoutCheck(label, "BAŞARISIZ", detail))
+            continue
+
+        candidate_count = int(getattr(state, "candidate_count", 0) or 0)
+        checks.append(
+            OperationalCloseoutCheck(
+                label,
+                "TAMAM",
+                f"Koşu başarılı · {candidate_count} aday · AL: {', '.join(tuple(getattr(state, 'buy_symbols', ()) or ())) or '-'}",
+            )
+        )
+
+        phase_audits = [
+            item for item in audits
+            if str(getattr(item, "run_date", "")) == run_date
+            and str(getattr(item, "phase", "")).upper() == phase
+            and str(getattr(item, "status", "")).upper() in {"SUCCESS", "SKIPPED"}
+        ]
+        if phase_audits:
+            latest_audit = max(phase_audits, key=lambda item: str(getattr(item, "finished_at", "")))
+            checks.append(
+                OperationalCloseoutCheck(
+                    f"{label} Audit",
+                    "TAMAM",
+                    f"{getattr(latest_audit, 'run_kind', 'SCHEDULED')} · {getattr(latest_audit, 'status', '-')}",
+                )
+            )
+        else:
+            missing.append(f"{label}: audit eşleşmesi yok")
+            checks.append(OperationalCloseoutCheck(f"{label} Audit", "EKSİK", "Başarılı koşuyla eşleşen audit kaydı bulunamadı."))
+
+        phase_archives = [
+            item for item in archives
+            if str(getattr(item, "run_date", "")) == run_date
+            and str(getattr(item, "phase", "")).upper() == phase
+        ]
+        if phase_archives:
+            latest_archive = max(phase_archives, key=lambda item: str(getattr(item, "created_at", "")))
+            archive_count = len(tuple(getattr(latest_archive, "candidates", ()) or ()))
+            if archive_count == candidate_count:
+                checks.append(
+                    OperationalCloseoutCheck(
+                        f"{label} Karar Arşivi",
+                        "TAMAM",
+                        f"Scheduler ile aday sayısı eşleşiyor ({archive_count}).",
+                    )
+                )
+            else:
+                missing.append(f"{label}: scheduler/arşiv aday sayısı uyuşmuyor")
+                checks.append(
+                    OperationalCloseoutCheck(
+                        f"{label} Karar Arşivi",
+                        "UYUMSUZ",
+                        f"Scheduler {candidate_count} aday, arşiv {archive_count} aday.",
+                    )
+                )
+        else:
+            missing.append(f"{label}: karar arşivi yok")
+            checks.append(OperationalCloseoutCheck(f"{label} Karar Arşivi", "EKSİK", "Günlük karar çıktı arşivi bulunamadı."))
+
+    if missing:
+        status = "INCOMPLETE"
+        headline = f"Operasyonel kapanış eksik: {len(missing)} halka doğrulanamadı."
+    elif waiting:
+        status = "WAITING"
+        headline = "Bugünkü operasyon zinciri henüz tamamlanma saatini bekliyor."
+    else:
+        status = "COMPLETE"
+        headline = "EOD → 09:00 karar zinciri, audit ve karar arşivi birlikte doğrulandı."
+
+    return OperationalCloseoutResult(
+        run_date=run_date,
+        status=status,
+        checks=tuple(checks),
+        missing_links=tuple(missing),
+        headline=headline,
+    )
+
+--- DEF=backend\app\analysis\eod_morning_board_delta.py:81|build_eod_morning_board_delta ---
+CALLS=EodMorningBoardDeltaItem;EodMorningBoardDeltaSummary;_decision;_reason;dict.fromkeys;evening_by_symbol.get;getattr;int;items.append;len;list;morning_by_symbol.get;str;strip;sum;tuple;upper
+def build_eod_morning_board_delta(
+    evening: object | None,
+    morning: object | None,
+) -> EodMorningBoardDeltaSummary | None:
+    """Akşam ve sabah Top-5 snapshot'larının karar farkını read-only özetler."""
+    if evening is None or morning is None:
+        return None
+
+    evening_candidates = tuple(getattr(evening, "candidates", ()) or ())
+    morning_candidates = tuple(getattr(morning, "candidates", ()) or ())
+    evening_by_symbol = {
+        str(getattr(item, "symbol", "")).strip().upper(): item
+        for item in evening_candidates
+        if str(getattr(item, "symbol", "")).strip()
+    }
+    morning_by_symbol = {
+        str(getattr(item, "symbol", "")).strip().upper(): item
+        for item in morning_candidates
+        if str(getattr(item, "symbol", "")).strip()
+    }
+
+    symbols = list(dict.fromkeys([
+        *(str(getattr(item, "symbol", "")).strip().upper() for item in evening_candidates),
+        *(str(getattr(item, "symbol", "")).strip().upper() for item in morning_candidates),
+    ]))
+
+    items: list[EodMorningBoardDeltaItem] = []
+    unchanged = upgrades = downgrades = added = removed = 0
+
+    for symbol in symbols:
+        old = evening_by_symbol.get(symbol)
+        new = morning_by_symbol.get(symbol)
+        if old is None:
+            delta_type = "YENİ"
+            added += 1
+        elif new is None:
+            delta_type = "ÇIKTI"
+            removed += 1
+        else:
+            old_decision = _decision(getattr(old, "decision", None))
+            new_decision = _decision(getattr(new, "decision", None))
+            old_weight = _DECISION_WEIGHT[old_decision]
+            new_weight = _DECISION_WEIGHT[new_decision]
+            if new_weight > old_weight:
+                delta_type = "GÜÇLENDİ"
+                upgrades += 1
+            elif new_weight < old_weight:
+                delta_type = "ZAYIFLADI"
+                downgrades += 1
+            else:
+                delta_type = "AYNI"
+                unchanged += 1
+
+        items.append(
+            EodMorningBoardDeltaItem(
+                symbol=symbol,
+                evening_decision=(
+                    _decision(getattr(old, "decision", None)) if old is not None else "-"
+                ),
+                morning_decision=(
+                    _decision(getattr(new, "decision", None)) if new is not None else "-"
+                ),
+                delta_type=delta_type,
+                evening_rank=(int(getattr(old, "rank")) if old is not None else None),
+                morning_rank=(int(getattr(new, "rank")) if new is not None else None),
+                reason=_reason(old, new, delta_type),
+            )
+        )
+
+    evening_buy = sum(
+        1 for item in evening_candidates if _decision(getattr(item, "decision", None)) == "AL"
+    )
+    morning_buy = sum(
+        1 for item in morning_candidates if _decision(getattr(item, "decision", None)) == "AL"
+    )
+
+    if upgrades == downgrades == added == removed == 0:
+        headline = "Akşam Top-5 ile 09:00 nihai liste aynı karar yapısını korudu."
+    else:
+        headline = (
+            f"09:00 sonucu: {morning_buy} AL · {upgrades} güçlenen · "
+            f"{downgrades} zayıflayan · {added} yeni · {removed} çıkan aday."
+        )
+
+    return EodMorningBoardDeltaSummary(
+        evening_total=len(evening_candidates),
+        morning_total=len(morning_candidates),
+        evening_buy=evening_buy,
+        morning_buy=morning_buy,
+        unchanged=unchanged,
+        upgrades=upgrades,
+        downgrades=downgrades,
+        added=added,
+        removed=removed,
+        headline=headline,
+        items=tuple(items),
+    )
+
+--- DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:136|_normalize_phase ---
+CALLS=ValueError;str;strip;upper
+def _normalize_phase(phase: str) -> str:
+    value = str(phase or "").strip().upper()
+    if value not in VALID_PHASES:
+        raise ValueError("phase EVENING veya MORNING olmalıdır.")
+    return value
+
+--- DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:302|scheduler_status_rows ---
+CALLS=ScheduledRunJsonStore;join;rows.append;state_store.latest;tuple
+def scheduler_status_rows(store: ScheduledRunJsonStore | None = None) -> tuple[dict[str, object], ...]:
+    state_store = store or ScheduledRunJsonStore()
+    rows: list[dict[str, object]] = []
+    for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+        item = state_store.latest(phase)
+        rows.append({
+            "Koşu": label,
+            "Durum": item.status if item else "HENÜZ YOK",
+            "Son çalışma": item.finished_at if item else "-",
+            "Aday": item.candidate_count if item else 0,
+            "AL": ", ".join(item.buy_symbols) if item and item.buy_symbols else "-",
+            "Detay": item.detail if item else "-",
+        })
+    return tuple(rows)
+
+--- DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:323|scheduler_health_rows ---
+CALLS=ScheduledRunJsonStore;_phase_due;astimezone;datetime.now;get;isoformat;join;rows.append;state_store.latest;state_store.latest_success;state_store.load;timestamp.date;tuple
+def scheduler_health_rows(
+    store: ScheduledRunJsonStore | None = None,
+    *,
+    now: datetime | None = None,
+) -> tuple[dict[str, object], ...]:
+    state_store = store or ScheduledRunJsonStore()
+    timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    today = timestamp.date().isoformat()
+    rows: list[dict[str, object]] = []
+    for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+        latest = state_store.latest(phase)
+        latest_success = state_store.latest_success(phase)
+        today_record = state_store.load().get(f"{today}:{phase}")
+        due = _phase_due(phase, timestamp)
+        if today_record is not None and today_record.status == "SUCCESS":
+            health = "SAĞLIKLI"
+            recovery = "GEREK YOK"
+        elif today_record is not None and today_record.status == "FAILED":
+            health = "BAŞARISIZ"
+            recovery = "YENİDEN ÇALIŞTIR"
+        elif due:
+            health = "EKSİK KOŞU"
+            recovery = "YENİDEN ÇALIŞTIR"
+        else:
+            health = "ZAMANI BEKLİYOR"
+            recovery = "GEREK YOK"
+        rows.append({
+            "Koşu": label,
+            "Sağlık": health,
+            "Bugünkü durum": today_record.status if today_record else "HENÜZ YOK",
+            "Son başarılı": (f"{latest_success.run_date} · {latest_success.finished_at}" if latest_success else "-"),
+            "Son çalışma": latest.finished_at if latest else "-",
+            "Aday": today_record.candidate_count if today_record else 0,
+            "AL": ", ".join(today_record.buy_symbols) if today_record and today_record.buy_symbols else "-",
+            "Kurtarma": recovery,
+            "Son hata/detay": latest.detail if latest else "-",
+        })
+    return tuple(rows)
+
+--- DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:402|scheduler_audit_rows ---
+CALLS=ScheduledRunAuditJsonStore;join;kind_label.get;phase_label.get;store.latest;tuple
+def scheduler_audit_rows(
+    audit_store: ScheduledRunAuditJsonStore | None = None,
+    *,
+    limit: int = 50,
+) -> tuple[dict[str, object], ...]:
+    store = audit_store or ScheduledRunAuditJsonStore()
+    phase_label = {"EVENING": "Seans sonu", "MORNING": "09:00"}
+    kind_label = {"SCHEDULED": "Zamanlanmış", "RECOVERY": "Kurtarma"}
+    return tuple(
+        {
+            "Tarih": item.run_date,
+            "Koşu": phase_label.get(item.phase, item.phase),
+            "Tür": kind_label.get(item.run_kind, item.run_kind),
+            "Durum": item.status,
+            "Başlangıç": item.started_at,
+            "Bitiş": item.finished_at,
+            "Aday": item.candidate_count,
+            "AL": ", ".join(item.buy_symbols) if item.buy_symbols else "-",
+            "Detay/Hata": item.detail or "-",
+        }
+        for item in store.latest(limit)
+    )
+
+--- DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:426|scheduler_daily_chain_rows ---
+CALLS=ScheduledRunJsonStore;max;records.get;records.values;rows.append;sorted;store.load;tuple
+def scheduler_daily_chain_rows(
+    state_store: ScheduledRunJsonStore | None = None,
+    *,
+    limit_days: int = 14,
+) -> tuple[dict[str, object], ...]:
+    store = state_store or ScheduledRunJsonStore()
+    records = store.load()
+    dates = sorted({item.run_date for item in records.values()}, reverse=True)[:max(0, limit_days)]
+    rows: list[dict[str, object]] = []
+    for run_date in dates:
+        evening = records.get(f"{run_date}:EVENING")
+        morning = records.get(f"{run_date}:MORNING")
+        evening_ok = evening is not None and evening.status == "SUCCESS"
+        morning_ok = morning is not None and morning.status == "SUCCESS"
+        if evening_ok and morning_ok:
+            chain = "TAMAMLANDI"
+        elif evening_ok or morning_ok:
+            chain = "KISMİ"
+        else:
+            chain = "BAŞARISIZ/EKSİK"
+        rows.append({
+            "Tarih": run_date,
+            "EOD": evening.status if evening else "YOK",
+            "EOD aday": evening.candidate_count if evening else 0,
+            "09:00": morning.status if morning else "YOK",
+            "09:00 aday": morning.candidate_count if morning else 0,
+            "Günlük zincir": chain,
+        })
+    return tuple(rows)
+
+--- DEF=backend\app\operations\preclose_partial_daily_preview.py:64|_preclose_guard ---
+CALLS=PreclosePartialDailyPreviewError;observed_at.timetz;replace
+def _preclose_guard(observed_at: datetime) -> None:
+    clock = observed_at.timetz().replace(tzinfo=None)
+    if clock < PRECLOSE_START:
+        raise PreclosePartialDailyPreviewError(
+            "17:20 öncesinde pre-close preview çalıştırılamaz."
+        )
+    if clock >= CANONICAL_CLOSE_START:
+        raise PreclosePartialDailyPreviewError(
+            "18:30 ve sonrasında partial preview yerine canonical close kullanılmalıdır."
+        )
+
+--- DEF=backend\app\operations\scheduled_operation_phase_runner.py:113|_schedule_guard ---
+CALLS=ScheduledOperationPhaseError;now.timetz;replace;time
+def _schedule_guard(phase: str, now: datetime) -> None:
+    clock = now.timetz().replace(tzinfo=None)
+
+    if phase == PREOPEN:
+        if clock < time(8, 45) or clock >= time(10, 0):
+            raise ScheduledOperationPhaseError(
+                "PREOPEN yalnız 08:45–09:59 aralığında çalışır."
+            )
+        return
+
+    if phase == POSTOPEN:
+        if clock < time(10, 20) or clock >= time(17, 20):
+            raise ScheduledOperationPhaseError(
+                "POSTOPEN yalnız 10:20–17:19 aralığında çalışır."
+            )
+        return
+
+    if phase == PRECLOSE:
+        if clock < time(17, 20) or clock >= time(18, 30):
+            raise ScheduledOperationPhaseError(
+                "PRECLOSE yalnız 17:20–18:29 aralığında çalışır."
+            )
+        return
+
+    if phase == CANONICAL_CLOSE and clock < time(18, 30):
+        raise ScheduledOperationPhaseError(
+            "CANONICAL_CLOSE 18:30 öncesinde çalıştırılamaz."
+        )
+
+--- DEF=backend\app\operations\scheduled_operation_phase_runner.py:383|execute_operation_phase ---
+CALLS=ProductionScheduledOperationRuntime;ScheduledOperationPhaseError;_local_now;_normalize_phase;_schedule_guard;service.canonical_close;service.postopen_gap_entry;service.preclose_preview;service.preopen_context
+def execute_operation_phase(
+    phase: str,
+    *,
+    now: datetime | None = None,
+    runtime: ScheduledOperationRuntime | None = None,
+    enforce_schedule: bool = True,
+) -> ScheduledOperationPhaseResult:
+    normalized = _normalize_phase(phase)
+    observed_at = _local_now(now)
+
+    if enforce_schedule:
+        _schedule_guard(normalized, observed_at)
+
+    service = runtime or ProductionScheduledOperationRuntime()
+
+    if normalized == PREOPEN:
+        result = service.preopen_context(now=observed_at)
+    elif normalized == POSTOPEN:
+        result = service.postopen_gap_entry(now=observed_at)
+    elif normalized == PRECLOSE:
+        result = service.preclose_preview(now=observed_at)
+    else:
+        result = service.canonical_close(now=observed_at)
+
+    if result.phase != normalized:
+        raise ScheduledOperationPhaseError(
+            f"Runtime yanlış phase döndürdü: {result.phase!r}"
+        )
+
+    # Hard safety guard: only canonical close may expose write authority.
+    if normalized != CANONICAL_CLOSE and (
+        result.canonical
+        or result.ranking_write_allowed
+        or result.profile_write_allowed
+        or result.al_sat_decision_allowed
+    ):
+        raise ScheduledOperationPhaseError(
+            f"{normalized} preview phase yazma/karar yetkisi taşıyamaz."
+        )
+
+    return result
+
+--- DEF=backend\app\operations\scheduled_operation_phase_runner.py:90|canonical_close ---
+CALLS=
+def canonical_close(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult: ...
+
+--- DEF=backend\app\operations\scheduled_operation_phase_runner.py:214|_latest_evening_record ---
+CALLS=DecisionOutputArchiveJsonStore;latest
+def _latest_evening_record(self) -> Any | None:
+        return DecisionOutputArchiveJsonStore().latest("EVENING")
+
+--- DEF=backend\app\operations\scheduled_operation_phase_runner.py:354|canonical_close ---
+CALLS=ScheduledOperationPhaseResult;execute_scheduled_run;getattr;int;isoformat;now.date;now.isoformat;str
+def canonical_close(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult:
+        legacy = execute_scheduled_run(
+            "EVENING",
+            now=now,
+        )
+
+        count = int(getattr(legacy, "candidate_count", 0) or 0)
+        status = str(getattr(legacy, "status", "SUCCESS") or "SUCCESS")
+
+        return ScheduledOperationPhaseResult(
+            phase=CANONICAL_CLOSE,
+            run_date=now.date().isoformat(),
+            observed_at=now.isoformat(),
+            status=status,
+            candidate_count=count,
+            detail_rows=(),
+            delegated_legacy_phase="EVENING",
+            preview_only=False,
+            canonical=True,
+            ranking_write_allowed=True,
+            profile_write_allowed=True,
+            al_sat_decision_allowed=True,
+        )
+
+--- DEF=backend\dashboard.py:8115|gunluk_operasyon_paneli_formu ---
+CALLS=BuyDecisionOutcomeJsonStore;DailyBuyDecisionJsonStore;DecisionOutputArchiveJsonStore;DelayedDataPilotStore;MarketScanRequest;RankObservationJsonlStore;RecommendationGovernanceJsonStore;ScheduledRunAuditJsonStore;ScheduledRunJsonStore;ShadowPortfolioStore;SignalOutcomeJsonStore;TradeJournalStore;_ai_gecmis_egilim_goster;_auto_scan_service.calistir;_c1.metric;_c2.metric;_c3.metric;_c4.metric;_decision_archive_store.by_date;_decision_archive_store.load;_decision_snapshots.get;_decision_store.load;_decision_store.save;_governance_store.load;_governance_store.save;_gunluk_ai_karar_destegi_goster;_outcome_store.load;_outcome_store.save;alert_rows;apply_session_prices;build_buy_decision_calibration;build_current_visibility_context;build_daily_buy_decision_snapshot;build_daily_buy_decisions;build_daily_decision_reviews;build_daily_early_trajectory_candidates;build_daily_operation_summary;build_dashboard_market_scanner;build_eod_final_actions;build_eod_morning_board_delta;build_high_conviction_buy_gate;build_morning_final_actions;build_morning_operation_snapshot;build_operational_closeout;build_rank_trajectories;build_ranking_movement_rows;build_threshold_recommendations;button;buy_decision_calibration_rows;buy_decision_hit_summary;buy_decision_outcome_rows;compare_evening_morning;compare_evening_morning_replacements;daily_buy_decision_change_rows;daily_buy_decision_replacement_rows;daily_buy_decision_rows;daily_decision_archive_delta_rows;daily_decision_review_rows;daily_decision_review_summary;daily_early_trajectory_rows;decision_output_archive_rows;decision_output_audit_rows;decision_output_board_rows;eod_final_action_rows;eod_morning_board_delta_rows;eq;governance_rows;high_conviction_rows;isin;join;latest_daily_compare;len;list;load;metrik_izgarasi_goster;morning_candidate_rows;morning_final_action_rows;next;observability_rows;operational_closeout_rows;pd.DataFrame;pd.to_numeric;pilot_store.list;ranking_movement_table_rows;register_buy_decisions;resolve_daily_buy_decision_phase;retry_failed_or_missing_run;review_governance_record;save_snapshot;scheduler_audit_rows;scheduler_daily_chain_rows;scheduler_health_rows;shadow_store.list;signal_store.list;sorted;st.button;st.caption;st.column_config.NumberColumn;st.columns;st.dataframe;st.error;st.expander;st.info;st.markdown;st.radio;st.rerun;st.selectbox;st.session_state.get;st.spinner;st.subheader;st.success;st.warning;st.write;str;sync_governance_records;task_rows;threshold_recommendation_rows;trade_store.list_records;tuple
+def gunluk_operasyon_paneli_formu() -> None:
+    st.subheader("Günlük Operasyon Paneli — Sistem ve Görev Özeti")
+    st.caption(
+        "Gün içi veri kalitesi, bekleyen/tamamlanan sinyal sonuçları, "
+        "gölge/gerçek işlem kayıtları ve günlük görevler tek ekranda özetlenir."
+    )
+    st.info(
+        "Bu panel yeni teknik skor, işlem sinyali veya AL/SAT kararı üretmez. "
+        "Mevcut tarama, Early Visibility, teknik teyit ve risk kanıtlarından üretilmiş "
+        "günlük Top-5 ile AL / BEKLE / İŞLEM YOK closeout sonucunu tek ekranda gösterir."
+    )
+
+    pilot_store = DelayedDataPilotStore()
+    signal_store = SignalOutcomeJsonStore()
+    trade_store = TradeJournalStore()
+
+    try:
+        trade_records = trade_store.list_records()
+    except TradeJournalError as error:
+        trade_records = ()
+        st.warning(f"İşlem günlüğü okunamadı: {error}")
+
+    shadow_store = ShadowPortfolioStore()
+    try:
+        shadow_positions = shadow_store.list()
+    except ShadowPortfolioError as error:
+        shadow_positions = ()
+        st.warning(f"Gölge portföy okunamadı: {error}")
+
+    summary = build_daily_operation_summary(
+        pilot_records=pilot_store.list(),
+        signal_outcomes=signal_store.list(),
+        trade_records=trade_records,
+        shadow_positions=shadow_positions,
+    )
+
+    # DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1
+    st.markdown("#### Otomatik Karar Koşusu")
+    st.caption(
+        "Windows görevleri kurulduğunda sistem hafta içi 18:20'de seans sonu, "
+        "09:00'da sabah yeniden değerlendirme koşusunu panel açık olmasa da çalıştırır."
+    )
+    try:
+        _scheduler_store = ScheduledRunJsonStore()
+        st.dataframe(
+            pd.DataFrame(scheduler_health_rows(_scheduler_store)),
+            width="stretch",
+            hide_index=True,
+        )
+        _recovery_cols = st.columns(2)
+        with _recovery_cols[0]:
+            if st.button("18:20 koşusunu yeniden çalıştır", key="retry_evening_daily_buy_decision"):
+                with st.spinner("Seans sonu karar koşusu yeniden çalıştırılıyor..."):
+                    _retry_evening = retry_failed_or_missing_run("EVENING", store=_scheduler_store)
+                if _retry_evening.status in {"SUCCESS", "SKIPPED"}:
+                    st.success(_retry_evening.detail)
+                else:
+                    st.error(_retry_evening.detail)
+                st.rerun()
+        with _recovery_cols[1]:
+            if st.button("09:00 koşusunu yeniden çalıştır", key="retry_morning_daily_buy_decision"):
+                with st.spinner("Sabah karar koşusu yeniden çalıştırılıyor..."):
+                    _retry_morning = retry_failed_or_missing_run("MORNING", store=_scheduler_store)
+                if _retry_morning.status in {"SUCCESS", "SKIPPED"}:
+                    st.success(_retry_morning.detail)
+                else:
+                    st.error(_retry_morning.detail)
+                st.rerun()
+        st.caption(
+            "Yeniden çalıştırma yalnız başarısız/eksik koşuyu kurtarır; aynı gün başarılı faz varsa duplicate üretmez."
+        )
+
+        # SCHEDULED_RUN_AUDIT_HISTORY_V1
+        with st.expander("Otomasyon Koşu Geçmişi / Audit", expanded=False):
+            _audit_store = ScheduledRunAuditJsonStore()
+            _audit_rows = scheduler_audit_rows(_audit_store, limit=50)
+            if _audit_rows:
+                st.dataframe(
+                    pd.DataFrame(_audit_rows),
+                    width="stretch",
+                    hide_index=True,
+                )
+            else:
+                st.caption("Henüz arşivlenmiş otomasyon koşusu yok.")
+
+            st.markdown("**EOD → 09:00 günlük zincir denetimi**")
+            _chain_rows = scheduler_daily_chain_rows(_scheduler_store, limit_days=14)
+            if _chain_rows:
+                st.dataframe(
+                    pd.DataFrame(_chain_rows),
+                    width="stretch",
+                    hide_index=True,
+                )
+            else:
+                st.caption("Henüz günlük EOD / 09:00 zincir kaydı yok.")
+    except (OSError, ValueError, TypeError) as _scheduler_status_error:
+        st.caption(f"Otomatik koşu durumu okunamadı: {_scheduler_status_error}")
+
+    # OPERATIONAL_CLOSEOUT_V1
+    st.markdown("#### Operasyonel Kapanış — Günlük Karar Zinciri")
+    st.caption(
+        "18:20 EOD ve 09:00 Morning koşularını scheduler durumu, audit kaydı ve "
+        "karar çıktı arşivi üzerinden birlikte doğrular. Yeni skor veya karar üretmez."
+    )
+    try:
+        _operational_closeout = build_operational_closeout()
+        if _operational_closeout.status == "COMPLETE":
+            st.success(_operational_closeout.headline)
+        elif _operational_closeout.status == "WAITING":
+            st.info(_operational_closeout.headline)
+        else:
+            st.warning(_operational_closeout.headline)
+        st.dataframe(
+            pd.DataFrame(operational_closeout_rows(_operational_closeout)),
+            width="stretch",
+            hide_index=True,
+        )
+        if _operational_closeout.missing_links:
+            st.caption("Eksik halkalar: " + " · ".join(_operational_closeout.missing_links))
+    except (OSError, ValueError, TypeError) as _operational_closeout_error:
+        st.caption(f"Operasyonel kapanış doğrulanamadı: {_operational_closeout_error}")
+    # OPERATIONAL_CLOSEOUT_V1_END
+
+    # V1_OPERATIONS_01C_MORNING_CANDIDATE_UI
+    # DAILY_10_TRAJECTORY_V1
+    st.markdown("#### Bugünün 10 Araştırma Adayı")
+    st.caption(
+        "İlk 5 mevcut operasyon/karar adayını aynen korur. Ek 5 araştırma adayı, "
+        "22–80 Research bandında 5S → 3S → 1S → bugün sırası sürekli iyileşen "
+        "sağlıklı sıra göçlerinden seçilir. Erken 5 yeni teknik skor, işlem sinyali "
+        "veya AL/SAT kararı üretmez."
+    )
+    # Legacy V1 Operations wiring contract intentionally preserved.
+    st.markdown("#### Bugünün 5 Adayı")
+    st.caption(
+        "Seans sonu ve sabah karar koşusu, mevcut BIST tarama sırasını Early Visibility "
+        "ve operasyon bağlamıyla birleştirir. Veri eskiliği listeyi bloke etmez."
+    )
+
+    _morning_scan_state = st.session_state.get("bist_toplu_tarama_son_sonuc")
+... <TRUNCATED AFTER 140 LINES>
+
+CANONICAL_EVENING_FUNCTIONS=18
+
+=== 4. DIRECT CONNECTION CHECK ===
+WRITER_FUNCTIONS=append_snapshot;bist_toplu_tarama_sonucu_goster;persist_research_rank_snapshot
+DIRECT_CONNECTION=NONE
+
+=== 5. WRITER CALLERS / ONE-HOP GRAPH ===
+CALLER=backend\app\analysis\ranking_snapshot_adapter.py:11|persist_research_rank_snapshot->append_snapshot|CALLS=RankObservationJsonlStore;append_snapshot;date.today;isoformat;observations_from_research_rows
+CALLER=backend\dashboard.py:4037|bist_toplu_tarama_sonucu_goster->append_snapshot|CALLS=Path;RankObservationJsonlStore;_alsata_aday_gonder;_alsata_adaylari_toplu_gonder;_candidate.sembol.removesuffix;_rank_history_f.write;_rank_history_log.open;_rank_history_log.parent.mkdir;_three_f.write;_three_log.open;_three_log.parent.mkdir;a.sembol.removesuffix;aciklama_listesi_goster;aday.sembol.removesuffix;aday_tablosu_kayitlari;any;append_snapshot;apply_optional_fundamental_filter;astype;build_ranking_movement_rows;date;datetime.now;elenen.sembol.removesuffix;elenen_kayitlari.append;enumerate;eq;get;hata.sembol.removesuffix;isin;isoformat;join;len;list;metrik_izgarasi_goster;next;observations_from_research_rows;payloadlar.append;pd.DataFrame;pd.to_numeric;ranking_movement_table_rows;render_research_profiles_panel;row.get;satir.get;secili.sembol.removesuffix;secili_satir.get;sembol.removesuffix;sorted;st.button;st.caption;st.column_config.NumberColumn;st.column_config.TextColumn;st.columns;st.dataframe;st.error;st.expander;st.info;st.markdown;st.multiselect;st.radio;st.selectbox;st.subheader;st.success;st.warning;str;str.contains;strip;tuple;type;upper;vbts_nedenleri.get;vbts_nedenleri.items;veri_tazeligi_kilidi_goster;webbrowser.open;write_scan_row_opinion;zip
+CALLER=backend\dashboard.py:4493|bist_toplu_tarama_formu->bist_toplu_tarama_sonucu_goster|CALLS=MarketScanRequest;Path;bist_toplu_tarama_sonucu_goster;bool;build_daily_research_profiles;build_dashboard_market_scanner;build_fundamental_snapshot;calculate_fundamental_quality;date.today;durum.caption;durum.empty;evaluate_fundamental_freshness;getattr;ilerleme.empty;ilerleme.progress;int;kap_vbts_durum_karti_goster;kayitli_temel_skorlari_yukle;manuel_vbts_durum_paneli_goster;max;min;onceki_tarama.get;ozel_sembol_metinini_ayristir;periods_from_csv_bytes;periods_from_json_bytes;persist_research_profile_bundle;research_profile_as_of_from_scan;research_profile_contexts_from_bytes;save;sorted;st.button;st.caption;st.checkbox;st.empty;st.error;st.file_uploader;st.form;st.form_submit_button;st.header;st.info;st.progress;st.rerun;st.selectbox;st.session_state.get;st.session_state.pop;st.slider;st.spinner;st.success;st.text_area;st.warning;str;suffix.lower;tarama_servisi.calistir;temel_filtre_dosyasi.getvalue;temel_skor_deposu;tuple;vbts_yonetim_paneli_goster
+WRITER_CALLER_COUNT=3
+
+=== 6. WRITER GUARDS / FAIL-CLOSED CONDITIONS ===
+--- WRITER=backend\app\analysis\ranking_memory.py:134|FUNC=append_snapshot ---
+95:         if path is None:
+102:         return (
+103:             item.as_of,
+105:             item.universe_source,
+106:             item.profile_name,
+111:         # Rank reader stays backward compatible; profile records are ignored here.
+112:         if not self.path.exists():
+113:             return ()
+117:             if not raw:
+120:             if payload.get("record_type", "rank") != "rank":
+124:                     as_of=payload["as_of"],
+127:                     ranked_universe_size=payload["ranked_universe_size"],
+128:                     universe_source=payload["universe_source"],
+129:                     profile_name=payload["profile_name"],
+132:         return tuple(items)
+136:         if not incoming:
+137:             return 0
+140:         new_items = [item for item in incoming if self._key(item) not in existing_keys]
+141:         if not new_items:
+142:             return 0
+150:         return len(new_items)
+154:     def list_profile_observations(self):
+155:         if not self.path.exists():
+156:             return ()
+160:             if not raw:
+163:             if payload.get("record_type") != PROFILE_RECORD_TYPE:
+166:                 ResearchProfileObservation(
+167:                     as_of=str(payload["as_of"]),
+169:                     research_profile=str(payload["research_profile"]),
+174:                     universe_name=str(payload.get("universe_name", "")),
+
+--- WRITER=backend\app\analysis\ranking_snapshot_adapter.py:26|FUNC=persist_research_rank_snapshot ---
+3: from datetime import date
+14:     as_of: str | None = None,
+15:     universe_source: str = "",
+16:     profile_name: str = "",
+21:         as_of=as_of or date.today().isoformat(),
+22:         universe_source=universe_source,
+23:         profile_name=profile_name,
+26:     return (store or RankObservationJsonlStore()).append_snapshot(
+
+--- WRITER=backend\dashboard.py:4144|FUNC=bist_toplu_tarama_sonucu_goster ---
+4124:         _ranking_as_of = str(sonuc.evren_tarihi or "").strip()
+4125:         if _ranking_as_of == "Kişisel liste":
+4126:             _ranking_as_of = datetime.now().date().isoformat()
+4131:                 "Hisse": _candidate.sembol.removesuffix(".IS"),
+4133:             for _rank, _candidate in enumerate(
+4140:             as_of=_ranking_as_of,
+4141:             universe_source=sonuc.evren_kaynagi,
+4142:             profile_name=sonuc.profil.ad,
+4153:                     f"{datetime.now().isoformat()} | "
+4164:                 as_of=str(sonuc.evren_tarihi),
+4174:                         f"{datetime.now().isoformat()} | "
+
+=== 7. REVIEW DECISION ===
+DECISION=WRITE_PATH_PRESENT_BUT_NOT_DIRECTLY_CONNECTED_TO_CANONICAL_CLOSE
+NEXT=TRACE_ONE_HOP_CALLER_TO_CANONICAL_CLOSE
+APPEND_SNAPSHOT_REFS=3
+OBSERVATION_BUILDER_REFS=7
+DIRECT_CONNECTIONS=0
+WRITER_CALLERS=3
+SCHEDULER_CHANGES_ALLOWED=NO
+PRODUCTION_THRESHOLD_SELECTION=BLOCKED
+CURRENT_FAST_MOVER_BASELINE=3418_PASS
+
+=== 8. SAFETY ===
+READ_ONLY=YES
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+RANKING_MEMORY_WRITE=NO
+PROFILE_MEMORY_WRITE=NO
+EARLY_VISIBILITY_MUTATION=NO
+MAIN_TOP5_MUTATION=NO
+AL_SAT_MUTATION=NO
+REPORT_ONLY=YES

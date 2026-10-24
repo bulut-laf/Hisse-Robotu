@@ -1,0 +1,1024 @@
+﻿FH16 - Fund Analysis Center Surface Discovery
+DATE=2026-10-07 20:49:25
+MODE=READ_ONLY_DISCOVERY
+PRODUCTION_MUTATION=NO
+FILE_COUNT=3166
+
+========== PATTERN: Fund Analysis Center ==========
+NO_MATCH
+
+========== PATTERN: FundAnalysis ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:11 | class FundAnalysisClass(str, Enum):
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:20 | FundAnalysisClass.A: "GL / NCELKL",
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:21 | FundAnalysisClass.B: "GELŞEN",
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:22 | FundAnalysisClass.C: "ZLE",
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:23 | FundAnalysisClass.D: "ZAYIFLAYAN",
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:24 | FundAnalysisClass.X: "UYGUN DEL",
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:29 | class FundAnalysisResult:
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:32 | classification: FundAnalysisClass
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:45 | def analyze_fund(evidence_map: FundEvidenceMap) -> FundAnalysisResult:
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:57 | classification = FundAnalysisClass.X
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:60 | classification = FundAnalysisClass.X
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:63 | classification = FundAnalysisClass.D
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:71 | classification = FundAnalysisClass.A
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:74 | classification = FundAnalysisClass.B
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:77 | classification = FundAnalysisClass.C
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:85 | return FundAnalysisResult(
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:99 | def analyze_funds(items: tuple[FundEvidenceMap, ...]) -> tuple[FundAnalysisResult, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:7 | from .analysis_engine import FundAnalysisClass, FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:20 | results: Iterable[FundAnalysisResult],
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:59 | ) -> tuple[FundAnalysisResult, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:71 | FundAnalysisResult(
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:74 | classification=FundAnalysisClass(str(raw["classification"])),
+D:\Projects\Hisse-Robotu\backend\app\funds\f3_store_read_model.py:8 | from .analysis_engine import FundAnalysisResult, analyze_funds
+D:\Projects\Hisse-Robotu\backend\app\funds\f3_store_read_model.py:233 | ) -> tuple[FundAnalysisResult, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\fund_store_read_model.py:5 | from .analysis_engine import FundAnalysisResult, analyze_funds
+D:\Projects\Hisse-Robotu\backend\app\funds\fund_store_read_model.py:20 | ) -> tuple[FundAnalysisResult, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\live_pipeline.py:6 | from backend.app.funds.analysis_engine import FundAnalysisResult, analyze_funds
+D:\Projects\Hisse-Robotu\backend\app\funds\live_pipeline.py:134 | ) -> tuple[FundAnalysisResult, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\live_pipeline.py:140 | def run_live_fund_analysis() -> tuple[FundAnalysisResult, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\outcome.py:9 | from .analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\app\funds\outcome.py:45 | analysis: FundAnalysisResult, *, selection_date: date, start_price: Decimal,
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:6 | from .analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:9 | FundAnalysisLoader = Callable[[], Iterable[FundAnalysisResult]]
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:14 | results: tuple[FundAnalysisResult, ...]
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:22 | current_results: Iterable[FundAnalysisResult] = (),
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:23 | loader: FundAnalysisLoader | None = None,
+D:\Projects\Hisse-Robotu\backend\app\funds\weekly_snapshot.py:10 | from .analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\app\funds\weekly_snapshot.py:17 | results: tuple[FundAnalysisResult, ...]
+D:\Projects\Hisse-Robotu\backend\app\funds\weekly_snapshot.py:22 | def build_weekly_snapshot(week_ending: date, results: Iterable[FundAnalysisResult], *, observed_at: datetime | None = None) -> FundWeeklySnapshot:
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:9 | from backend.app.funds.analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:85 | results: Iterable[FundAnalysisResult],
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:995 | results: Iterable[FundAnalysisResult] = (),
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:4 | from backend.app.funds.analysis_engine import FundAnalysisClass, FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:27 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.A, "GL / NCELKL",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:6 | from backend.app.funds.analysis_engine import FundAnalysisClass, analyze_fund, analyze_funds
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:28 | assert item.classification is FundAnalysisClass.A
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:35 | assert item.classification is FundAnalysisClass.B
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:44 | assert item.classification is FundAnalysisClass.C
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:50 | assert item.classification is FundAnalysisClass.D
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:54 | assert result(category_id=None).classification is FundAnalysisClass.X
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:56 | investor_change=None, total_expense_ratio=None).classification is FundAnalysisClass.X
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_canonical_rehydration_v1.py:3 | from backend.app.funds.analysis_engine import FundAnalysisClass, FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_canonical_rehydration_v1.py:11 | def _result(code: str = "AP5") -> FundAnalysisResult:
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_canonical_rehydration_v1.py:12 | return FundAnalysisResult(
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_canonical_rehydration_v1.py:15 | classification=FundAnalysisClass.X,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_live_pipeline_v1.py:1 | from backend.app.funds.analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_live_pipeline_v1.py:21 | assert isinstance(result, FundAnalysisResult)
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:4 | from backend.app.funds.analysis_engine import FundAnalysisClass, FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:9 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.B, "GELŞEN", ("F1", "F2"), ("F3",), (), (), "DEV", "x")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_post_core_integration_v1.py:5 | FundAnalysisClass,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_post_core_integration_v1.py:6 | FundAnalysisResult,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_post_core_integration_v1.py:19 | return FundAnalysisResult(
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_post_core_integration_v1.py:22 | classification=FundAnalysisClass.C,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:5 | from backend.app.funds.analysis_engine import FundAnalysisClass, FundAnalysisResult
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:9 | def item(code="AAA", cls=FundAnalysisClass.B):
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:10 | return FundAnalysisResult(f"fund:tefas:{code}", "equity", cls, cls.value, ("F1", "F2"), (), (), (), "TEST", "x")
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:25 | store.append(build_weekly_snapshot(date(2026, 9, 4), (item(cls=FundAnalysisClass.D),), observed_at=datetime(2026, 9, 5, tzinfo=timezone.utc)))
+D:\Projects\Hisse-Robotu\_backup\FDO_BUTTON_COMPAT_V8_20260905_184534\fund_analysis_center.py:9 | from backend.app.funds.analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\_backup\FDO_BUTTON_COMPAT_V8_20260905_184534\fund_analysis_center.py:56 | def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+D:\Projects\Hisse-Robotu\_backup\FDO_BUTTON_COMPAT_V8_20260905_184534\fund_analysis_center.py:873 | results: Iterable[FundAnalysisResult] = (),
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\fund_analysis_center.py:9 | from backend.app.funds.analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\fund_analysis_center.py:56 | def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\fund_analysis_center.py:875 | results: Iterable[FundAnalysisResult] = (),
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\fund_analysis_center.py:9 | from backend.app.funds.analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\fund_analysis_center.py:56 | def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\fund_analysis_center.py:875 | results: Iterable[FundAnalysisResult] = (),
+D:\Projects\Hisse-Robotu\_backup\FDO_RENDER_ORDER_V7_20260905_184357\fund_analysis_center.py:9 | from backend.app.funds.analysis_engine import FundAnalysisResult
+D:\Projects\Hisse-Robotu\_backup\FDO_RENDER_ORDER_V7_20260905_184357\fund_analysis_center.py:56 | def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+D:\Projects\Hisse-Robotu\_backup\FDO_RENDER_ORDER_V7_20260905_184357\fund_analysis_center.py:873 | results: Iterable[FundAnalysisResult] = (),
+D:\Projects\Hisse-Robotu\_backup\FDO_UI_PRE_RESTORE_20260905_181340\fund_analysis_center.py:9 | from backend.app.funds.analysis_engine import FundAnalysisResult
+
+========== PATTERN: Fon Analiz ==========
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:477 | "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için "
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:627 | st.error("Fon portföy snapshot deposu okunamadı; mevcut fon analiz sonuçları korunuyor.")
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:1003 | st.subheader("Fon Analiz Merkezi")
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:1030 | st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FINANCIAL_INTELLIGENCE_V1_3_BANK_OFFICIAL_KAP_FINANCIAL_ACQUISITION_PREFLIGHT.json:407 | "snippet": "def _render_portfolio_tracking(\n    st: Any,\n    store: FundPortfolioSnapshotJsonStore,\n    pressure_profiles: Mapping[str, StockFundPressureProfile],\n    pressure_inputs: Mapping[str, StockFundPressureInput],\n    *,\n    fund_codes: Iterable[str] = (),\n) -> None:\n    known_codes = {\n        str(code or \"\").strip().upper()\n        for code in fund_codes\n        if str(code or \"\").strip()\n    }\n    try:\n        for snapshot in store.list_snapshots():\n            if snapshot.canonical_fund_id.startswith(\"fund:tefas:\"):\n                known_codes.add(snapshot.canonical_fund_id.rsplit(\":\", 1)[-1].strip().upper())\n    except PortfolioSnapshotStoreError:\n        pass\n\n    if hasattr(st, \"button\"):\n        st.markdown(\"#### Otomatik KAP Portföy Güncelleme\")\n        st.caption(\n            \"Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için \"\n            \"resmî KAP bildirim listesini tarar; Portföy Dağılım Raporu bildirimini, ekini ve \"\n            \"snapshot içe aktarımını otomatik yürütür. Manuel PDF yalnız fallback olarak kalır.\"\n        )\n        if known_codes:\n            st.caption(f\"Otomatik tarama evreni: {len(known_codes)} fon kodu.\")\n        else:\n            st.caption(\"Otomatik tarama için önce TEFAS fon evreni veya kayıtlı bir fon snapshot'ı gerekir.\")\n\n        if st.button(\n            \"Yeni KAP Portföy Raporlarını Otomatik Tara\",\n            key=\"fund_portfolio_kap_auto_ingest_button\",",
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_NAVIGATION_EXACT.txt:85 | 10382:     elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_NAVIGATION_EXACT.txt:111 | 10408:             "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_NAVIGATION_EXACT.txt:187 | 10484:                     f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_analysis_menu_order.py:18 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_canonical_rehydration_dashboard_wiring_v2.py:8 | start = next(i for i, line in enumerate(lines) if line.strip() == 'elif analiz_modu == "Fon Analiz Merkezi":')
+D:\Projects\Hisse-Robotu\backend\dashboard.py:527 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\backend\dashboard.py:572 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\backend\dashboard.py:10384 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\backend\dashboard.py:10411 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\backend\dashboard.py:10487 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\backend\mobile_dashboard.py:17 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\backend\mobile_dashboard.py:26 | "fon": "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\backend\mobile_dashboard.py:152 | ("💼 Fon", "Fon Analiz Merkezi"),
+D:\Projects\Hisse-Robotu\backend\mobile_dashboard.py:195 | st.markdown("### Fon Analiz Merkezi")
+D:\Projects\Hisse-Robotu\backend\mobile_dashboard.py:360 | st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+D:\Projects\Hisse-Robotu\backend\mobile_dashboard.py:562 | elif selected == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\fund_ui_bundle\README.txt:4 | - Existing Fon Analiz Merkezi is preserved.
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_ALPHABETICAL_V1_20260907_091530\dashboard.py:526 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_ALPHABETICAL_V1_20260907_091530\dashboard.py:572 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_ALPHABETICAL_V1_20260907_091530\dashboard.py:10398 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_ALPHABETICAL_V1_20260907_091530\dashboard.py:10424 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_ALPHABETICAL_V1_20260907_091530\dashboard.py:10500 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_ALPHABETICAL_V1_20260907_091530\test_dashboard_analysis_menu_order.py:17 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092503\dashboard.py:527 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092503\dashboard.py:572 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092503\dashboard.py:10398 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092503\dashboard.py:10424 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092503\dashboard.py:10500 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092718\dashboard.py:527 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092718\dashboard.py:572 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092718\dashboard.py:10384 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092718\dashboard.py:10410 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_FINPRODV7_LITERAL_WIRING_V1_20260907_092718\dashboard.py:10486 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_USAGE_COVERAGE_FINPRODV7_V1_20260907_090925\dashboard.py:526 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_USAGE_COVERAGE_FINPRODV7_V1_20260907_090925\dashboard.py:571 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_USAGE_COVERAGE_FINPRODV7_V1_20260907_090925\dashboard.py:10397 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_USAGE_COVERAGE_FINPRODV7_V1_20260907_090925\dashboard.py:10423 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\_backup\DASHBOARD_USAGE_COVERAGE_FINPRODV7_V1_20260907_090925\dashboard.py:10499 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\_backup\FDO_BUTTON_COMPAT_V8_20260905_184534\fund_analysis_center.py:413 | "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için "
+D:\Projects\Hisse-Robotu\_backup\FDO_BUTTON_COMPAT_V8_20260905_184534\fund_analysis_center.py:563 | st.error("Fon portföy snapshot deposu okunamadı; mevcut fon analiz sonuçları korunuyor.")
+D:\Projects\Hisse-Robotu\_backup\FDO_BUTTON_COMPAT_V8_20260905_184534\fund_analysis_center.py:880 | st.subheader("Fon Analiz Merkezi")
+D:\Projects\Hisse-Robotu\_backup\FDO_BUTTON_COMPAT_V8_20260905_184534\fund_analysis_center.py:890 | st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\dashboard.py:526 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\dashboard.py:571 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\dashboard.py:10382 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\dashboard.py:10394 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\dashboard.py:10468 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\fund_analysis_center.py:413 | "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için "
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\fund_analysis_center.py:563 | st.error("Fon portföy snapshot deposu okunamadı; mevcut fon analiz sonuçları korunuyor.")
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\fund_analysis_center.py:882 | st.subheader("Fon Analiz Merkezi")
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V1_20260905_190622\fund_analysis_center.py:892 | st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\dashboard.py:526 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\dashboard.py:571 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\dashboard.py:10382 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\dashboard.py:10408 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\dashboard.py:10484 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\fund_analysis_center.py:413 | "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için "
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\fund_analysis_center.py:563 | st.error("Fon portföy snapshot deposu okunamadı; mevcut fon analiz sonuçları korunuyor.")
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\fund_analysis_center.py:882 | st.subheader("Fon Analiz Merkezi")
+D:\Projects\Hisse-Robotu\_backup\FDO_CANONICAL_COHERENT_RECOVERY_V2_20260905_190834\fund_analysis_center.py:892 | st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+D:\Projects\Hisse-Robotu\_backup\FDO_RENDER_ORDER_V7_20260905_184357\fund_analysis_center.py:413 | "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için "
+D:\Projects\Hisse-Robotu\_backup\FDO_RENDER_ORDER_V7_20260905_184357\fund_analysis_center.py:563 | st.error("Fon portföy snapshot deposu okunamadı; mevcut fon analiz sonuçları korunuyor.")
+D:\Projects\Hisse-Robotu\_backup\FDO_RENDER_ORDER_V7_20260905_184357\fund_analysis_center.py:880 | st.subheader("Fon Analiz Merkezi")
+D:\Projects\Hisse-Robotu\_backup\FDO_RENDER_ORDER_V7_20260905_184357\fund_analysis_center.py:890 | st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+D:\Projects\Hisse-Robotu\_backup\FDO_UI_PRE_RESTORE_20260905_181340\fund_analysis_center.py:413 | "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için "
+D:\Projects\Hisse-Robotu\_backup\FDO_UI_PRE_RESTORE_20260905_181340\fund_analysis_center.py:563 | st.error("Fon portföy snapshot deposu okunamadı; mevcut fon analiz sonuçları korunuyor.")
+D:\Projects\Hisse-Robotu\_backup\FDO_UI_PRE_RESTORE_20260905_181340\fund_analysis_center.py:937 | st.subheader("Fon Analiz Merkezi")
+D:\Projects\Hisse-Robotu\_backup\FDO_UI_PRE_RESTORE_20260905_181340\fund_analysis_center.py:947 | st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+D:\Projects\Hisse-Robotu\_backup\FINPRODV5_CLOSURE_REPAIR_20260905_180154\dashboard.py:526 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\FINPRODV5_CLOSURE_REPAIR_20260905_180154\dashboard.py:571 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\FINPRODV5_CLOSURE_REPAIR_20260905_180154\dashboard.py:10382 | elif analiz_modu == "Fon Analiz Merkezi":
+D:\Projects\Hisse-Robotu\_backup\FINPRODV5_CLOSURE_REPAIR_20260905_180154\dashboard.py:10408 | "Fon Analiz Merkezi TEFAS fon evrenini uygulama açıkken otomatik güncel tutar. "
+D:\Projects\Hisse-Robotu\_backup\FINPRODV5_CLOSURE_REPAIR_20260905_180154\dashboard.py:10484 | f"TEFAS canlı fon analizi güncellendi: "
+D:\Projects\Hisse-Robotu\_backup\FINPRODV7_PANEL_UI_20260905_214548\dashboard.py:526 | "Fon Analiz Merkezi",
+D:\Projects\Hisse-Robotu\_backup\FINPRODV7_PANEL_UI_20260905_214548\dashboard.py:571 | "Fon Analiz Merkezi",
+
+========== PATTERN: fund analysis ==========
+D:\Projects\Hisse-Robotu\fund_ui_bundle\README.txt:1 | HISSE ROBOTU - FUND ANALYSIS UI BRIDGE V1
+D:\Projects\Hisse-Robotu\_fund_analysis_non_blocking_entry_v1\README.txt:1 | HISSE ROBOTU — FUND ANALYSIS NON-BLOCKING ENTRY V1
+D:\Projects\Hisse-Robotu\_fund_analysis_ui_bridge_v1\fund_ui_bundle\README.txt:1 | HISSE ROBOTU - FUND ANALYSIS UI BRIDGE V1
+D:\Projects\Hisse-Robotu\_fund_analysis_v1_final_3sprint\README.txt:1 | HISSE ROBOTU — FUND ANALYSIS V1 FINAL 3-SPRINT PACKAGE
+D:\Projects\Hisse-Robotu\_fund_pressure_read_model_v1\README.txt:16 | - No canonical persistent free-float/FDO source is currently available to Fund Analysis.
+
+========== PATTERN: fund_analysis ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:8 | FUND_ANALYSIS_ENGINE_VERSION = "fund-analysis-v1"
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:42 | engine_version: str = FUND_ANALYSIS_ENGINE_VERSION
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:19 | def save_last_good_fund_analysis_results(
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:56 | def load_last_good_fund_analysis_results(
+D:\Projects\Hisse-Robotu\backend\app\funds\live_pipeline.py:140 | def run_live_fund_analysis() -> tuple[FundAnalysisResult, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:19 | def refresh_fund_analysis_if_requested(
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:31 | from .live_pipeline import run_live_fund_analysis
+D:\Projects\Hisse-Robotu\backend\app\funds\ui_live_refresh.py:33 | loader = run_live_fund_analysis
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:84 | def fund_analysis_rows(
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:993 | def render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:1012 | key="fund_analysis_class_filter",
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:1014 | all_rows = list(fund_analysis_rows(items, fund_metadata))
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:1020 | key="fund_analysis_category_filter",
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9380 | backend\app\ui\fund_analysis_center.py:950:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9382 | backend\app\ui\fund_analysis_center.py:951:    if
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9384 | backend\app\ui\fund_analysis_center.py:952:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9386 | backend\app\ui\fund_analysis_center.py:953:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9389 | > backend\app\ui\fund_analysis_center.py:954:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9392 | backend\app\ui\fund_analysis_center.py:955:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9394 | backend\app\ui\fund_analysis_center.py:956:        )
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9395 | backend\app\ui\fund_analysis_center.py:957:    if
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9397 | backend\app\ui\fund_analysis_center.py:958:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9400 | backend\app\ui\fund_analysis_center.py:959:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9401 | backend\app\ui\fund_analysis_center.py:960:    rows =
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9403 | backend\app\ui\fund_analysis_center.py:961:    if rows:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\AKBNK_NIM_SEMANTICS_SEARCH.txt:9404 | backend\app\ui\fund_analysis_center.py:962:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FINANCIAL_INTELLIGENCE_V1_3_BANK_OFFICIAL_KAP_FINANCIAL_ACQUISITION_PREFLIGHT.json:169 | "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\fund_analysis_center.py",
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FINANCIAL_INTELLIGENCE_V1_3_BANK_OFFICIAL_KAP_FINANCIAL_ACQUISITION_PREFLIGHT.json:408 | "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\fund_analysis_center.py"
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_SHORT_TERM_SOURCE_PREFLIGHT.json:1409 | "path": "backend\\app\\ui\\fund_analysis_center.py",
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_SHORT_TERM_SOURCE_PREFLIGHT.json:1434 | "fund_analysis_rows",
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_SHORT_TERM_SOURCE_PREFLIGHT.json:1438 | "render_fund_analysis_center",
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1073 | 10393:         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1074 | 10488:         render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1366 | FILE=D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1367 | 00898: def render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1877 | 00003: UI = Path("backend/app/ui/fund_analysis_center.py")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1878 | 00013:     start = text.index("def render_fund_analysis_center(")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1881 | 00004: UI = Path("backend/app/ui/fund_analysis_center.py")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1882 | 00011:         if isinstance(n, ast.FunctionDef) and n.name == "render_fund_analysis_center"
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1947 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1948 | 00019: from backend.app.ui.fund_analysis_center import (
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1949 | 00022:     render_fund_analysis_center,
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1950 | 00056:     empty = Stub(); render_fund_analysis_center(empty, ())
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1951 | 00057:     full = Stub(); render_fund_analysis_center(full, (item(),))
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1952 | 00099:     render_fund_analysis_center(st, (item(),), portfolio_store=store)
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1953 | 00157:     source = (Path(__file__).resolve().parents[1] / "app" / "ui" / "fund_analysis_center.py").read_text(encoding="utf-8")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1954 | 00165:     source = (Path(__file__).resolve().parents[1] / "app" / "ui" / "fund_analysis_center.py").read_text(encoding="utf-8")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1961 | 00003: UI = Path("backend/app/ui/fund_analysis_center.py")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1962 | 00008:     render = text[text.index("def render_fund_analysis_center("):]
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1965 | 00003: UI = Path("backend/app/ui/fund_analysis_center.py")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1968 | 00003: UI = Path("backend/app/ui/fund_analysis_center.py")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1971 | 00003: UI = Path("backend/app/ui/fund_analysis_center.py")
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:1974 | 00003: from backend.app.ui.fund_analysis_center import fund_pressure_rows
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6863 | 00005: ui = root / "backend/app/ui/fund_analysis_center.py"
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6865 | FILE=D:\Projects\Hisse-Robotu\_fund_profile_nonblocking_autorefresh_v1\20260904-192131\backup\backend\app\ui\fund_analysis_center.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6866 | 00759: def render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6869 | 00005: ui = root / "backend/app/ui/fund_analysis_center.py"
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6871 | FILE=D:\Projects\Hisse-Robotu\_fund_profile_nonblocking_autorefresh_v1\20260904-193428\backup\backend\app\ui\fund_analysis_center.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6872 | 00759: def render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6875 | 00005: ui = root / "backend/app/ui/fund_analysis_center.py"
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6877 | FILE=D:\Projects\Hisse-Robotu\_fund_profile_nonblocking_autorefresh_v1\20260904-193727\backup\backend\app\ui\fund_analysis_center.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6878 | 00759: def render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6881 | 00005: ui = root / "backend/app/ui/fund_analysis_center.py"
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6883 | FILE=D:\Projects\Hisse-Robotu\_fund_profile_nonblocking_fastfix_v1\20260904-193601\backup\backend\app\ui\fund_analysis_center.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:6884 | 00759: def render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:7711 | 10383:         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:7712 | 10385:         render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:7816 | 10383:         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:7817 | 10385:         render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:8040 | 10383:         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:8041 | 10385:         render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9495 | 10385:         from backend.app.ui.fund_analysis_center import render_fund_analysis_center
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9496 | 10448:         render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9504 | FILE=D:\Projects\Hisse-Robotu\_tefas_nonblocking_exact_source\CAPTURE-20260904-191138\backend\app\ui\fund_analysis_center.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9505 | 00759: def render_fund_analysis_center(
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9507 | FILE=D:\Projects\Hisse-Robotu\_tefas_nonblocking_exact_source\CAPTURE-20260904-191138\backend\tests\test_fund_analysis_center_ui_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9508 | 00019: from backend.app.ui.fund_analysis_center import (
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9509 | 00022:     render_fund_analysis_center,
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9510 | 00056:     empty = Stub(); render_fund_analysis_center(empty, ())
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V7_UI_INTEGRATION_PREFLIGHT.txt:9511 | 00057:     full = Stub(); render_fund_analysis_center(full, (item(),))
+
+========== PATTERN: FundEvidenceInput ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_evidence_bridge.py:8 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_evidence_bridge.py:18 | evidence_input: FundEvidenceInput
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_evidence_bridge.py:30 | ) -> FundEvidenceInput:
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_evidence_bridge.py:31 | return FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f2_bridge.py:8 | from backend.app.funds.evidence_mapper import FundEvidenceInput
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f2_bridge.py:99 | ) -> FundEvidenceInput:
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f2_bridge.py:100 | return FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f3_bridge.py:6 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f3_bridge.py:58 | ) -> FundEvidenceInput:
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f3_bridge.py:59 | return FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f3_bridge.py:78 | def mapped_f3_state(value: FundEvidenceInput) -> str:
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, EvidenceState
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:34 | base: FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:38 | ) -> FundEvidenceInput:
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:17 | class FundEvidenceInput:
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:63 | def _f1(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:82 | def _f2(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:97 | def _f3(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:111 | def _f4(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:124 | def _f5(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\backend\app\funds\evidence_mapper.py:141 | def map_fund_evidence(value: FundEvidenceInput) -> FundEvidenceMap:
+D:\Projects\Hisse-Robotu\backend\app\funds\f3_store_read_model.py:10 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\app\funds\f3_store_read_model.py:145 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\app\funds\f4_store_read_model.py:9 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\app\funds\f4_store_read_model.py:183 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\app\funds\live_pipeline.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\backend\app\funds\live_pipeline.py:77 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\app\funds\risk_metrics.py:7 | from .evidence_mapper import FundEvidenceInput
+D:\Projects\Hisse-Robotu\backend\app\funds\risk_metrics.py:151 | inputs: Sequence[FundEvidenceInput],
+D:\Projects\Hisse-Robotu\backend\app\funds\risk_metrics.py:156 | ) -> tuple[FundEvidenceInput, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\risk_metrics.py:159 | result: list[FundEvidenceInput] = []
+D:\Projects\Hisse-Robotu\backend\app\funds\tefas_history_f3.py:8 | from .evidence_mapper import FundEvidenceInput
+D:\Projects\Hisse-Robotu\backend\app\funds\tefas_history_f3.py:169 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\app\funds\tefas_history_f3.py:175 | ) -> tuple[FundEvidenceInput, ...]:
+D:\Projects\Hisse-Robotu\backend\app\funds\tefas_history_f3.py:196 | ordered_inputs: list[FundEvidenceInput] = []
+D:\Projects\Hisse-Robotu\backend\app\funds\tefas_history_f3.py:203 | tuple[str, FundEvidenceInput]
+D:\Projects\Hisse-Robotu\backend\app\funds\tefas_history_f3.py:246 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\app\funds\tefas_history_f3.py:251 | ) -> tuple[FundEvidenceInput, ...]:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1055 | 00063: def _f1(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f4_bridge_v1.py:3 | from backend.app.funds.evidence_mapper import EvidenceState, FundEvidenceInput
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f4_bridge_v1.py:47 | base = FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:11 | value = FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:4 | from backend.app.funds.evidence_mapper import EvidenceState, FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:8 | value = FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f1_safe_unavailable_v1.py:5 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f1_safe_unavailable_v1.py:14 | value = FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py:6 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py:35 | return FundEvidenceInput(
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_tefas_history_f3_v1.py:7 | FundEvidenceInput,
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_tefas_history_f3_v1.py:15 | ) -> FundEvidenceInput:
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_tefas_history_f3_v1.py:16 | return FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_backup\FUND_IDENTITY_CATEGORY_UI_V1_20260907_101951\live_pipeline.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\_backup\FUND_IDENTITY_CATEGORY_UI_V1_20260907_101951\live_pipeline.py:49 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_backup\FUND_IDENTITY_CATEGORY_UI_V3_20260907_103135\live_pipeline.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\_backup\FUND_IDENTITY_CATEGORY_UI_V3_20260907_103135\live_pipeline.py:75 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_backup\FUND_IDENTITY_CATEGORY_UI_V4_20260907_103702\live_pipeline.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\_backup\FUND_IDENTITY_CATEGORY_UI_V4_20260907_103702\live_pipeline.py:75 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_20260923_164701\live_pipeline.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\_backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_20260923_164701\live_pipeline.py:73 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_REV1_20260923_164912\live_pipeline.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\_backups\F1_CATEGORY_RANK_CHANGE_BINDING_V1_REV1_20260923_164912\live_pipeline.py:73 | FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:279 | 0017: class FundEvidenceInput:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:325 | 0063: def _f1(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:344 | 0082: def _f2(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:359 | 0097: def _f3(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:373 | 0111: def _f4(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:386 | 0124: def _f5(value: FundEvidenceInput) -> FundEvidence:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:403 | 0141: def map_fund_evidence(value: FundEvidenceInput) -> FundEvidenceMap:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:571 | map_fund_evidence( | backend\app\funds\evidence_mapper.py:L141 | def map_fund_evidence(value: FundEvidenceInput) -> FundEvidenceMap:
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:583 | FundEvidenceInput( | backend\tests\test_fund_analysis_engine_v1.py:L11 | value = FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_discovery\fund_live_exact_wiring_source_20260901-230458.txt:584 | FundEvidenceInput( | backend\tests\test_fund_evidence_mapper_v1.py:L8 | value = FundEvidenceInput(
+D:\Projects\Hisse-Robotu\_rollback\fund-live-wiring-20260901-235620\live_pipeline.py:7 | from backend.app.funds.evidence_mapper import FundEvidenceInput, map_fund_evidence
+D:\Projects\Hisse-Robotu\_rollback\fund-live-wiring-20260901-235620\live_pipeline.py:49 | FundEvidenceInput(
+
+========== PATTERN: f1_f2_f3_f4_evidence_v1_latest ==========
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_evidence_read_model_v1.py:14 | / "f1_f2_f3_f4_evidence_v1_latest.json"
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh14_evidence_engine_closure_readiness_latest.txt:11 | FOUND=D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh15_evidence_surface_read_model_latest.txt:11 | FOUND=D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh9_f4_production_bridge_v1.py:19 | OUTPUT = DISC / "f1_f2_f3_f4_evidence_v1_latest.json"
+
+========== PATTERN: f1_f2_f3_f4_evidence_v1_summary_latest ==========
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh14_evidence_engine_closure_readiness_latest.txt:12 | FOUND=D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_summary_latest.json
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh9_f4_production_bridge_v1.py:20 | SUMMARY = DISC / "f1_f2_f3_f4_evidence_v1_summary_latest.json"
+
+========== PATTERN: classification ==========
+D:\Projects\Hisse-Robotu\.recovery\fund-live-final-20260901-234659\dashboard.py:2302 | ("Sınıflandırma", karar_matrisi.classification.value),
+D:\Projects\Hisse-Robotu\.recovery\fund-live-final-20260901-234905\dashboard.py:2302 | ("Sınıflandırma", karar_matrisi.classification.value),
+D:\Projects\Hisse-Robotu\.recovery\fund-live-wiring-20260901-233444\dashboard.py:2302 | ("Sınıflandırma", karar_matrisi.classification.value),
+D:\Projects\Hisse-Robotu\.recovery\fund-live-wiring-20260901-233640\dashboard.py:2302 | ("Sınıflandırma", karar_matrisi.classification.value),
+D:\Projects\Hisse-Robotu\.recovery\fund-live-wiring-20260901-233920\dashboard.py:2302 | ("Sınıflandırma", karar_matrisi.classification.value),
+D:\Projects\Hisse-Robotu\backend\app\analysis\earnings_cash_quality.py:201 | # True normalized earnings require explicit one-off classification. Do not fabricate it.
+D:\Projects\Hisse-Robotu\backend\app\analysis\earnings_cash_quality.py:202 | normalized_status = "NOT_AVAILABLE_WITHOUT_ONE_OFF_CLASSIFICATION"
+D:\Projects\Hisse-Robotu\backend\app\analysis\research_profiles.py:124 | size_classification: str | None = None
+D:\Projects\Hisse-Robotu\backend\app\analysis\research_profiles.py:223 | warnings=tuple(dict.fromkeys(warnings)), size_classification=size
+D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py:54 | classification: DecisionClass
+D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py:369 | classification = DecisionClass.NOT_SUITABLE
+D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py:375 | classification = DecisionClass.WATCH_WORTHY
+D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py:377 | classification = DecisionClass.CAUTIOUS_WATCH
+D:\Projects\Hisse-Robotu\backend\app\analysis\technical_decision_matrix.py:392 | classification=classification,
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:32 | classification: FundAnalysisClass
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:57 | classification = FundAnalysisClass.X
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:60 | classification = FundAnalysisClass.X
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:63 | classification = FundAnalysisClass.D
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:71 | classification = FundAnalysisClass.A
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:74 | classification = FundAnalysisClass.B
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:77 | classification = FundAnalysisClass.C
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:81 | f"{CLASS_LABELS[classification]} · pozitif={','.join(positive) or '-'} · "
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:88 | classification=classification,
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py:89 | class_label=CLASS_LABELS[classification],
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:35 | "classification": item.classification.value,
+D:\Projects\Hisse-Robotu\backend\app\funds\canonical_result_store.py:74 | classification=FundAnalysisClass(str(raw["classification"])),
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:3 | This module does not calculate evidence, scores, classifications, trade decisions,
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:18 | "classification",
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:34 | classification: str
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:89 | classification=str(item["classification"]),
+D:\Projects\Hisse-Robotu\backend\app\funds\outcome.py:32 | classification: str
+D:\Projects\Hisse-Robotu\backend\app\funds\outcome.py:62 | canonical_fund_id=analysis.canonical_fund_id, classification=analysis.classification.value,
+D:\Projects\Hisse-Robotu\backend\app\funds\weekly_snapshot.py:38 | "classification": x.classification.value, "reason": x.eligibility_reason,
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_live_evaluation.py:31 | f"- Risk ayrımı: {contract['risk_classification_policy']}\n"
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_prompt_contract.py:46 | "risk_classification_policy": (
+D:\Projects\Hisse-Robotu\backend\app\news_center\classifier.py:11 | class ClassificationSuggestion:
+D:\Projects\Hisse-Robotu\backend\app\news_center\classifier.py:277 | ) -> ClassificationSuggestion:
+D:\Projects\Hisse-Robotu\backend\app\news_center\classifier.py:298 | return ClassificationSuggestion(
+D:\Projects\Hisse-Robotu\backend\app\ui\financial_intelligence_renderer_payload.py:148 | for key in ("status", "label", "classification"):
+D:\Projects\Hisse-Robotu\backend\app\ui\financial_intelligence_renderer_payload.py:157 | # and the value is a valuation classification, never PASS/FAIL.
+D:\Projects\Hisse-Robotu\backend\app\ui\financial_intelligence_renderer_payload.py:167 | for key in ("status", "label", "classification"):
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:91 | "S\u0131n\u0131f": item.classification.value,
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:100 | key=lambda x: (x.classification.value, x.canonical_fund_id),
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:1005 | counts = {key: sum(item.classification.value == key for item in items) for key in "ABCDX"}
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1263 | classification = None
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1265 | classification = classify_news(
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1272 | if previewed and classification is not None:
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1273 | if not classification.has_suggestion:
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1282 | f"{classification.source_tier.value if classification.source_tier else '—'} · "
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1284 | f"{classification.event_type.value if classification.event_type else '—'} · "
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1286 | f"{classification.market_scope.value if classification.market_scope else '—'} · "
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1288 | f"{', '.join(classification.sectors) or '—'}"
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1290 | for reason in classification.reasons:
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1311 | if auto_apply and classification is not None:
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1313 | classification.source_tier or manual_source_tier
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1317 | classification.event_type or manual_event_type
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1320 | classification.market_scope or manual_scope
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1324 | (*manual_sectors, *classification.sectors)
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1395 | if auto_apply and classification is not None and classification.has_suggestion:
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:1400 | for reason in classification.reasons:
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V6_EBITDA_SHARES_EXACT_SOURCE.txt:540 | 00223:         warnings=tuple(dict.fromkeys(warnings)), size_classification=size
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V6_LONG_TERM_PREFLIGHT.txt:2058 | 00054:     classification: DecisionClass
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:7 | "classification": "B",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:31 | "classification": "B",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:55 | "classification": "C",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:78 | "classification": "D",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:101 | "classification": "D",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:123 | "classification": "B",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:145 | "classification": "B",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:167 | "classification": "D",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:190 | "classification": "D",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:212 | "classification": "B",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:235 | "classification": "B",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:257 | "classification": "C",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:281 | "classification": "D",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:304 | "classification": "D",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:326 | "classification": "C",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:349 | "classification": "D",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:372 | "classification": "B",
+D:\Projects\Hisse-Robotu\backend\data\funds\canonical_analysis_results.json:395 | "classification": "B",
+
+========== PATTERN: f1_state ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_evidence_bridge.py:19 | mapped_f1_state: str
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_evidence_bridge.py:69 | mapped_f1_state=str(f1.state),
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:19 | "f1_state",
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:35 | f1_state: str
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:90 | f1_state=str(item["f1_state"]),
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:8 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:22 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:36 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:50 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:64 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:78 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:92 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:106 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:120 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:134 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:148 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:162 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:176 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:190 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:204 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:218 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:232 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:246 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:260 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:274 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:288 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:302 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:316 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:330 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:344 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:358 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:372 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:386 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:400 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:414 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:428 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:442 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:456 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:470 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:484 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:498 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:512 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:526 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:540 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:554 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:568 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:582 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:596 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:610 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:624 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:638 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:652 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:666 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:680 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:694 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:708 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:722 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:736 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:750 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:764 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:778 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:792 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:806 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:820 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:834 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:848 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:862 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:876 | "f1_state": "EvidenceState.POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:890 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:904 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:918 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:932 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:946 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:960 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:974 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:988 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:1002 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:1016 | "f1_state": "EvidenceState.CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:1030 | "f1_state": "EvidenceState.NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_evidence_bridge_v1_latest.json:1044 | "f1_state": "EvidenceState.NEUTRAL",
+
+========== PATTERN: f2_state ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:20 | "f2_state",
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:36 | f2_state: str
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:91 | f2_state=str(item["f2_state"]),
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:12 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:29 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:46 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:63 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:80 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:97 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:114 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:131 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:148 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:165 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:182 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:199 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:216 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:233 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:250 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:267 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:284 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:301 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:318 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:335 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:352 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:369 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:386 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:403 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:420 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:437 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:454 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:471 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:488 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:505 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:522 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:539 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:556 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:573 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:590 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:607 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:624 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:641 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:658 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:675 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:692 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:709 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:726 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:743 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:760 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:777 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:794 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:811 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:828 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:845 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:862 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:879 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:896 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:913 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:930 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:947 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:964 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:981 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:998 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1015 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1032 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1049 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1066 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1083 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1100 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1117 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1134 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1151 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1168 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1185 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1202 | "f2_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1219 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1236 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1253 | "f2_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1270 | "f2_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1287 | "f2_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1304 | "f2_state": "NEUTRAL",
+
+========== PATTERN: f3_state ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f3_bridge.py:78 | def mapped_f3_state(value: FundEvidenceInput) -> str:
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:21 | "f3_state",
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:37 | f3_state: str
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:92 | f3_state=str(item["f3_state"]),
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f3_bridge_v1.py:6 | mapped_f3_state,
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f3_bridge_v1.py:34 | assert mapped_f3_state(value) == "EvidenceState.POSITIVE"
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f3_bridge_v1.py:47 | assert mapped_f3_state(value) == "EvidenceState.CAUTION"
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f3_bridge_v1.py:60 | assert mapped_f3_state(value) == "EvidenceState.UNAVAILABLE"
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:13 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:30 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:47 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:64 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:81 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:98 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:115 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:132 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:149 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:166 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:183 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:200 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:217 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:234 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:251 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:268 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:285 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:302 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:319 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:336 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:353 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:370 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:387 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:404 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:421 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:438 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:455 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:472 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:489 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:506 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:523 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:540 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:557 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:574 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:591 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:608 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:625 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:642 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:659 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:676 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:693 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:710 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:727 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:744 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:761 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:778 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:795 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:812 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:829 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:846 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:863 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:880 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:897 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:914 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:931 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:948 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:965 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:982 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:999 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1016 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1033 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1050 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1067 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1084 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1101 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1118 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1135 | "f3_state": "CAUTION",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1152 | "f3_state": "POSITIVE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1169 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1186 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1203 | "f3_state": "NEUTRAL",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_evidence_v1_latest.json:1220 | "f3_state": "NEUTRAL",
+
+========== PATTERN: f4_state ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\international\erste_hungary_f4_bridge.py:12 | def derive_f4_state(
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:22 | "f4_state",
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:38 | f4_state: str
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:93 | f4_state=str(item["f4_state"]),
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_evidence_read_model_v1.py:46 | counts[row.f4_state] = counts.get(row.f4_state, 0) + 1
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f4_bridge_v1.py:5 | derive_f4_state,
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f4_bridge_v1.py:12 | assert derive_f4_state(
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f4_bridge_v1.py:19 | assert derive_f4_state(
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f4_bridge_v1.py:26 | assert derive_f4_state(
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_f4_bridge_v1.py:33 | assert derive_f4_state(
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:18 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:40 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:62 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:84 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:106 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:128 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:150 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:172 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:194 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:216 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:238 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:260 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:282 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:304 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:326 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:348 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:370 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:392 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:414 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:436 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:458 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:480 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:502 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:524 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:546 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:568 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:590 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:612 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:634 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:656 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:678 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:700 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:722 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:744 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:766 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:788 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:810 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:832 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:854 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:876 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:898 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:920 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:942 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:964 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:986 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1008 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1030 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1052 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1074 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1096 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1118 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1140 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1162 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1184 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1206 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1228 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1250 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1272 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1294 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1316 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1338 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1360 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1382 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1404 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1426 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1448 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1470 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1492 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1514 | "f4_state": "UNAVAILABLE",
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\f1_f2_f3_f4_evidence_v1_latest.json:1536 | "f4_state": "UNAVAILABLE",
+
+========== PATTERN: SAFE_UNAVAILABLE ==========
+D:\Projects\Hisse-Robotu\backend\app\funds\erste_hungary_evidence_read_model.py:47 | return "SAFE_UNAVAILABLE"
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1261 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f1_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1320 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f1_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1438 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1497 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1556 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1615 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1674 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1733 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1792 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1851 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:6 | F1=SAFE_UNAVAILABLE
+D:\Projects\Hisse-Robotu\backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:10 | F5=SAFE_UNAVAILABLE
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py:64 | def test_no_archive_returns_safe_unavailable_context():
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_evidence_read_model_v1.py:29 | def test_fh15_f5_is_safe_unavailable_and_not_synthesized():
+D:\Projects\Hisse-Robotu\backend\tests\test_erste_hungary_evidence_read_model_v1.py:31 | assert all(row.f5_state == "SAFE_UNAVAILABLE" for row in rows)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64 | def test_no_archive_returns_safe_unavailable_context():
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:363 | backend\tests\test_fund_f1_safe_unavailable_v1.py:28 | regime_fit=None,
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:364 | backend\tests\test_fund_f5_safe_unavailable_v1.py:29 | regime_fit=None,
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:377 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1438 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:379 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1497 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:380 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1556 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:381 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1615 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:382 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1674 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:383 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1733 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:384 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1792 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:385 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1851 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:386 | backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:10 | F5=SAFE_UNAVAILABLE
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:387 | backend\tests\test_fund_f5_safe_unavailable_v1.py:52 | def test_missing_all_f5_sources_is_unavailable():
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:398 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1438 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:399 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1497 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:400 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1556 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:401 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1615 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:402 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1674 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:403 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1733 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:404 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1792 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:405 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1851 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:406 | backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:10 | F5=SAFE_UNAVAILABLE
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:407 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:364 | backend\tests\test_fund_f5_safe_unavailable_v1.py:29 | regime_fit=None,
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:408 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:377 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1438 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:409 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:379 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1497 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:410 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:380 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1556 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:411 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:381 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1615 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:412 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:382 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1674 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:413 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:383 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1733 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:414 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:384 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1792 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:415 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:385 | backend\data\financial_intelligence\FIN_PROD_V5_V4_BRIDGE_CONTRACT.txt:1851 | FILE=D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:416 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:386 | backend\data\funds\FUND_ANALYSIS_V1_STATUS.txt:10 | F5=SAFE_UNAVAILABLE
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:417 | _discovery\erste_hungary\fh13_f5_regime_fit_contract_design_latest.txt:387 | backend\tests\test_fund_f5_safe_unavailable_v1.py:52 | def test_missing_all_f5_sources_is_unavailable():
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh14_evidence_engine_closure_readiness_latest.txt:36 | F5_CONTRACT_STATUS=SAFE_UNAVAILABLE
+D:\Projects\Hisse-Robotu\_discovery\erste_hungary\fh15_evidence_surface_read_model_latest.txt:18 | F5_SURFACE=SAFE_UNAVAILABLE
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-20260827-164152.txt:1276 | CONTRACT_DEF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-20260827-164152.txt:1278 | CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-20260827-164152.txt:1280 | CONTRACT_DEF=backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-20260827-164152.txt:1282 | CONTRACT_REF=backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-Rev1-20260827-165023.txt:299 | DEF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-Rev1-20260827-165023.txt:302 | REF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-Rev1-20260827-165023.txt:304 | DEF=backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-Rev1-20260827-165023.txt:307 | REF=backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+
+========== CANDIDATE UI FILES ==========
+D:\Projects\Hisse-Robotu\.recovery\fund-live-final-20260901-234659\dashboard.py
+D:\Projects\Hisse-Robotu\.recovery\fund-live-final-20260901-234905\dashboard.py
+D:\Projects\Hisse-Robotu\.recovery\fund-live-wiring-20260901-233444\dashboard.py
+D:\Projects\Hisse-Robotu\.recovery\fund-live-wiring-20260901-233640\dashboard.py
+D:\Projects\Hisse-Robotu\.recovery\fund-live-wiring-20260901-233920\dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel_status_bridge.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_panel.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_panel_read_model.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_selector_aware_panel.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_score_history.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\loss_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_command_center.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_command_center_view.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_dashboard_integration.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_operation_dashboard_view.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_release_center.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_user_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\multi_timeframe_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\analysis\volume_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\backtest\analysis_context.py
+D:\Projects\Hisse-Robotu\backend\app\backtest\analysis_profile.py
+D:\Projects\Hisse-Robotu\backend\app\backtest\market_regime_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\backtest\rolling_window_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_manual_vbts.py
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_factory.py
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_market_scanner_source_factory.py
+D:\Projects\Hisse-Robotu\backend\app\compliance\dashboard_vbts_manager.py
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_data.py
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_score_store.py
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_settings.py
+D:\Projects\Hisse-Robotu\backend\app\data\fundamental_store.py
+D:\Projects\Hisse-Robotu\backend\app\data\kap_fundamental_source.py
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\analysis_connector.py
+D:\Projects\Hisse-Robotu\backend\app\decision_engine\dashboard_decision_card.py
+D:\Projects\Hisse-Robotu\backend\app\funds\analysis_engine.py
+D:\Projects\Hisse-Robotu\backend\app\funds\fund_auto_refresh.py
+D:\Projects\Hisse-Robotu\backend\app\funds\fund_profile.py
+D:\Projects\Hisse-Robotu\backend\app\funds\fund_profile_nonblocking_refresh.py
+D:\Projects\Hisse-Robotu\backend\app\funds\fund_store_read_model.py
+D:\Projects\Hisse-Robotu\backend\app\funds\kap_fund_cost.py
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_analysis_engine.py
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_card.py
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_integration.py
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_provider.py
+D:\Projects\Hisse-Robotu\backend\app\market_context\ai_trend_analysis.py
+D:\Projects\Hisse-Robotu\backend\app\market_context\fund_etf_context.py
+D:\Projects\Hisse-Robotu\backend\app\models\fundamental_models.py
+D:\Projects\Hisse-Robotu\backend\app\portfolio\portfolio_decision_panel.py
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py
+D:\Projects\Hisse-Robotu\backend\app\system\dashboard_connection_validation.py
+D:\Projects\Hisse-Robotu\backend\app\ui\backtest_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\bist_daily_market_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_market_briefing_panel.py
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py
+D:\Projects\Hisse-Robotu\backend\app\ui\financial_intelligence_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py
+D:\Projects\Hisse-Robotu\backend\app\ui\live_analysis_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s157.py
+D:\Projects\Hisse-Robotu\backend\app\ui\market_context_dashboard_s182.py
+D:\Projects\Hisse-Robotu\backend\app\ui\market_regime_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\official_source_operations_panel.py
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\portfolio_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\public_news_feed_panel.py
+D:\Projects\Hisse-Robotu\backend\app\ui\research_profiles_dashboard.py
+D:\Projects\Hisse-Robotu\backend\app\ui\sprint135_dashboard_patch.py
+D:\Projects\Hisse-Robotu\backend\app\ui\sprint136_dashboard_patch.py
+D:\Projects\Hisse-Robotu\backend\scripts\run_financial_intelligence_v1_1_selector_aware_panel_acceptance.py
+D:\Projects\Hisse-Robotu\backend\scripts\run_fin_prod_v7_financial_intelligence_panel.py
+D:\Projects\Hisse-Robotu\backend\scripts\verify_news_center_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ai_analysis_assistant_role_clarity_v11.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ai_analysis_engine.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ai_dashboard_card.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ai_dashboard_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ai_dashboard_provider.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ai_history_trend_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_ai_trend_analysis.py
+D:\Projects\Hisse-Robotu\backend\tests\test_analysis_connector.py
+D:\Projects\Hisse-Robotu\backend\tests\test_analysis_context.py
+D:\Projects\Hisse-Robotu\backend\tests\test_analysis_profile.py
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_backtest_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_bist_daily_market_dashboard_wiring.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_operational_closeout_dashboard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_integration_fix_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_shadow.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_analysis_menu_order.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_connection_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_decision_card.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_kap_status_card.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_kap_wiring.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_manual_vbts.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_manual_vbts_status_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_manual_vbts_wiring.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_market_scanner_factory.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_market_scanner_source_factory.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_prebreakout_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_prebreakout_validation_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_source_aware_vbts_status.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_backup_restore.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_backup_restore_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_duplicate_message.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_integrity_health.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_integrity_health_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_lifecycle.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_lifecycle_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_management_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_manager.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_operational_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_vbts_operational_reliability.py
+D:\Projects\Hisse-Robotu\backend\tests\test_delayed_data_pilot_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_divergence_analysis.py
+D:\Projects\Hisse-Robotu\backend\tests\test_divergence_analysis_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_dashboard_loader_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_bank_panel_visibility_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_financial_intelligence_selector_aware_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fin_prod_v7_financial_intelligence_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_analysis.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_data.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_models.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_archive_filter_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_report_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_role_clarity_v11.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_history_store.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_score_store_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_settings_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_store.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_v1_closeout.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_non_blocking_entry_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_canonical_rehydration_dashboard_wiring_v2.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_canonical_rehydration_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_etf_context.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f1_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f3_invalid_price_resilience_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f3_population_performance_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f3_production_population_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f3_provider_resilience_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f3_store_read_model_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f4_money_flow_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_f5_safe_unavailable_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_fdo_pressure_live_render_v6.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_fdo_pressure_ui_wiring_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_fdo_pressure_ui_wiring_v4.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_free_float_canonical_source_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_kap_free_float_auto_population_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_kap_portfolio_auto_ingestion_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_kap_portfolio_ingestion_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_kap_portfolio_real_formats_v2.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_live_pipeline_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_numeric_canonical_id_guard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_portfolio_tracking_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_post_core_integration_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_pressure_read_model_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_pressure_real_value_activation_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_pressure_real_value_display_v5.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_pressure_risk_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_production_store_runtime_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_profile_auto_refresh_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_profile_nonblocking_refresh_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_risk_metrics_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_tefas_history_f3_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_tefas_history_population_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_high_conviction_buy_gate_dashboard_v1.py
+D:\Projects\Hisse-Robotu\backend\tests\test_indicator_contribution_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_kap_api_dashboard.py
+
+========== EVIDENCE ARTIFACT ==========
+ARTIFACT_EXISTS=True
+SUMMARY_EXISTS=True

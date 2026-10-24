@@ -1,0 +1,2082 @@
+{
+  "contract_id": "NEXT_DAY_20_SESSION_OBSERVATION_PREFLIGHT_V1",
+  "mode": "READ_ONLY_PREFLIGHT",
+  "project_root": "D:\\Projects\\Hisse-Robotu",
+  "required_modules": {
+    "backend/app/analysis/next_day_selection.py": true,
+    "backend/app/analysis/next_day_outcome.py": true,
+    "backend/app/analysis/next_day_walk_forward.py": true
+  },
+  "selection_runtime_refs": [],
+  "outcome_runtime_refs": [],
+  "walk_forward_runtime_refs": [],
+  "persistence_candidates": [
+    {
+      "path": "backend/app/analysis/next_day_walk_forward.py",
+      "persistence_score": 2,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": true,
+      "has_primary": true,
+      "has_reserve": true,
+      "has_selection_digest": true,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "WalkForwardSessionIssue",
+          "line": 21,
+          "methods": [],
+          "fields": [
+            "canonical_date",
+            "t1_date",
+            "selection_digest",
+            "reason"
+          ]
+        },
+        {
+          "class": "WalkForwardTierAggregate",
+          "line": 29,
+          "methods": [],
+          "fields": [
+            "role",
+            "observation_count",
+            "hit_count",
+            "miss_count",
+            "hit_rate",
+            "average_return",
+            "median_return",
+            "average_relative_return",
+            "median_relative_return",
+            "median_mfe",
+            "median_mae"
+          ]
+        },
+        {
+          "class": "NextDayWalkForwardReadiness",
+          "line": 44,
+          "methods": [],
+          "fields": [
+            "contract_id",
+            "strategy_id",
+            "required_valid_sessions",
+            "input_session_count",
+            "valid_session_count",
+            "invalid_session_count",
+            "valid_canonical_dates",
+            "issues",
+            "status",
+            "ready_for_review",
+            "primary",
+            "reserve",
+            "primary_reserve_median_relative_spread",
+            "full_primary_five_session_count",
+            "primary_three_of_five_hit_session_count",
+            "primary_average_above_benchmark_session_count",
+            "primary_average_negative_return_session_count",
+            "p0_only_changes",
+            "outcome_tuning",
+            "new_score",
+            "new_store",
+            "new_scanner",
+            "al_sat_authority"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/next_day_walk_forward.py",
+      "persistence_score": 2,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": true,
+      "has_primary": true,
+      "has_reserve": true,
+      "has_selection_digest": true,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "WalkForwardSessionIssue",
+          "line": 21,
+          "methods": [],
+          "fields": [
+            "canonical_date",
+            "t1_date",
+            "selection_digest",
+            "reason"
+          ]
+        },
+        {
+          "class": "WalkForwardTierAggregate",
+          "line": 29,
+          "methods": [],
+          "fields": [
+            "role",
+            "observation_count",
+            "hit_count",
+            "miss_count",
+            "hit_rate",
+            "average_return",
+            "median_return",
+            "average_relative_return",
+            "median_relative_return",
+            "median_mfe",
+            "median_mae"
+          ]
+        },
+        {
+          "class": "NextDayWalkForwardReadiness",
+          "line": 44,
+          "methods": [],
+          "fields": [
+            "contract_id",
+            "strategy_id",
+            "required_valid_sessions",
+            "input_session_count",
+            "valid_session_count",
+            "invalid_session_count",
+            "valid_canonical_dates",
+            "issues",
+            "status",
+            "ready_for_review",
+            "primary",
+            "reserve",
+            "primary_reserve_median_relative_spread",
+            "full_primary_five_session_count",
+            "primary_three_of_five_hit_session_count",
+            "primary_average_above_benchmark_session_count",
+            "primary_average_negative_return_session_count",
+            "p0_only_changes",
+            "outcome_tuning",
+            "new_score",
+            "new_store",
+            "new_scanner",
+            "al_sat_authority"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/dashboard.py",
+      "persistence_score": 6,
+      "canonical_score": 4,
+      "date_score": 5,
+      "has_next_day": false,
+      "has_primary": true,
+      "has_reserve": true,
+      "has_selection_digest": false,
+      "has_full_result": true,
+      "classes": []
+    },
+    {
+      "path": "backend/app/operations/preclose_partial_daily_preview.py",
+      "persistence_score": 2,
+      "canonical_score": 4,
+      "date_score": 2,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": true,
+      "has_selection_digest": false,
+      "has_full_result": true,
+      "classes": [
+        {
+          "class": "PreclosePartialDailyPreviewError",
+          "line": 39,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "PreclosePreviewResult",
+          "line": 44,
+          "methods": [],
+          "fields": [
+            "observed_at",
+            "scan_result",
+            "partial_symbol_count",
+            "intraday_failure_count",
+            "preview_only",
+            "canonical",
+            "ranking_write_allowed",
+            "profile_write_allowed",
+            "al_sat_decision_allowed",
+            "fast_mover_observations"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/operations/preclose_partial_daily_preview.py",
+      "persistence_score": 2,
+      "canonical_score": 4,
+      "date_score": 2,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": true,
+      "has_selection_digest": false,
+      "has_full_result": true,
+      "classes": [
+        {
+          "class": "PreclosePartialDailyPreviewError",
+          "line": 39,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "PreclosePreviewResult",
+          "line": 44,
+          "methods": [],
+          "fields": [
+            "observed_at",
+            "scan_result",
+            "partial_symbol_count",
+            "intraday_failure_count",
+            "preview_only",
+            "canonical",
+            "ranking_write_allowed",
+            "profile_write_allowed",
+            "al_sat_decision_allowed",
+            "fast_mover_observations"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/fast_mover_preclose_attachment.py",
+      "persistence_score": 5,
+      "canonical_score": 3,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": true,
+      "classes": []
+    },
+    {
+      "path": "backend/app/analysis/fast_mover_preclose_attachment.py",
+      "persistence_score": 5,
+      "canonical_score": 3,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": true,
+      "classes": []
+    },
+    {
+      "path": "backend/dashboard.backup_before_navigation_fix.py",
+      "persistence_score": 6,
+      "canonical_score": 4,
+      "date_score": 4,
+      "has_next_day": false,
+      "has_primary": true,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": []
+    },
+    {
+      "path": "backend/app/analysis/historical_research_replay.py",
+      "persistence_score": 2,
+      "canonical_score": 4,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "HistoricalResearchReplayResult",
+          "line": 41,
+          "methods": [],
+          "fields": [
+            "as_of",
+            "universe_source",
+            "profile_name",
+            "input_universe_size",
+            "successful_scan_count",
+            "failed_scan_count",
+            "ranked_research_count",
+            "stale_analysis_count",
+            "rows",
+            "observations",
+            "scan_result"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/historical_research_replay.py",
+      "persistence_score": 2,
+      "canonical_score": 4,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "HistoricalResearchReplayResult",
+          "line": 41,
+          "methods": [],
+          "fields": [
+            "as_of",
+            "universe_source",
+            "profile_name",
+            "input_universe_size",
+            "successful_scan_count",
+            "failed_scan_count",
+            "ranked_research_count",
+            "stale_analysis_count",
+            "rows",
+            "observations",
+            "scan_result"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/research_profile_memory.py",
+      "persistence_score": 5,
+      "canonical_score": 2,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "ResearchProfileMemoryWriteResult",
+          "line": 18,
+          "methods": [],
+          "fields": [
+            "status",
+            "attempted",
+            "appended",
+            "as_of",
+            "reason"
+          ]
+        },
+        {
+          "class": "ProfileLifecycleContext",
+          "line": 27,
+          "methods": [],
+          "fields": [
+            "symbol",
+            "research_profile",
+            "current_state",
+            "first_match",
+            "last_match",
+            "consecutive_match_sessions",
+            "profile_age_sessions",
+            "event",
+            "block_reason",
+            "observed_sessions"
+          ]
+        },
+        {
+          "class": "RankMovementContext",
+          "line": 41,
+          "methods": [
+            "rank_path"
+          ],
+          "fields": [
+            "symbol",
+            "current_rank",
+            "rank_1s",
+            "rank_3s",
+            "rank_5s",
+            "gain_1s",
+            "gain_3s",
+            "gain_5s",
+            "lifecycle",
+            "comparable",
+            "warming_up"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/research_profile_memory.py",
+      "persistence_score": 5,
+      "canonical_score": 2,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "ResearchProfileMemoryWriteResult",
+          "line": 18,
+          "methods": [],
+          "fields": [
+            "status",
+            "attempted",
+            "appended",
+            "as_of",
+            "reason"
+          ]
+        },
+        {
+          "class": "ProfileLifecycleContext",
+          "line": 27,
+          "methods": [],
+          "fields": [
+            "symbol",
+            "research_profile",
+            "current_state",
+            "first_match",
+            "last_match",
+            "consecutive_match_sessions",
+            "profile_age_sessions",
+            "event",
+            "block_reason",
+            "observed_sessions"
+          ]
+        },
+        {
+          "class": "RankMovementContext",
+          "line": 41,
+          "methods": [
+            "rank_path"
+          ],
+          "fields": [
+            "symbol",
+            "current_rank",
+            "rank_1s",
+            "rank_3s",
+            "rank_5s",
+            "gain_1s",
+            "gain_3s",
+            "gain_5s",
+            "lifecycle",
+            "comparable",
+            "warming_up"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/operations/daily_buy_decision_scheduled_runner.py",
+      "persistence_score": 5,
+      "canonical_score": 1,
+      "date_score": 4,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "ScheduledRunRecord",
+          "line": 19,
+          "methods": [],
+          "fields": [
+            "phase",
+            "run_date",
+            "started_at",
+            "finished_at",
+            "status",
+            "candidate_count",
+            "buy_symbols",
+            "detail",
+            "run_kind"
+          ]
+        },
+        {
+          "class": "ScheduledRunRuntime",
+          "line": 31,
+          "methods": [
+            "operation_summary",
+            "scan",
+            "visibility_contexts",
+            "candidate_snapshot",
+            "decisions",
+            "persist_decision_snapshot"
+          ],
+          "fields": []
+        },
+        {
+          "class": "ScheduledRunJsonStore",
+          "line": 40,
+          "methods": [
+            "__init__",
+            "load",
+            "save",
+            "latest",
+            "latest_success"
+          ],
+          "fields": []
+        },
+        {
+          "class": "ScheduledRunAuditJsonStore",
+          "line": 92,
+          "methods": [
+            "__init__",
+            "load",
+            "append",
+            "latest"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/operations/daily_buy_decision_scheduled_runner.py",
+      "persistence_score": 5,
+      "canonical_score": 1,
+      "date_score": 4,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "ScheduledRunRecord",
+          "line": 19,
+          "methods": [],
+          "fields": [
+            "phase",
+            "run_date",
+            "started_at",
+            "finished_at",
+            "status",
+            "candidate_count",
+            "buy_symbols",
+            "detail",
+            "run_kind"
+          ]
+        },
+        {
+          "class": "ScheduledRunRuntime",
+          "line": 31,
+          "methods": [
+            "operation_summary",
+            "scan",
+            "visibility_contexts",
+            "candidate_snapshot",
+            "decisions",
+            "persist_decision_snapshot"
+          ],
+          "fields": []
+        },
+        {
+          "class": "ScheduledRunJsonStore",
+          "line": 40,
+          "methods": [
+            "__init__",
+            "load",
+            "save",
+            "latest",
+            "latest_success"
+          ],
+          "fields": []
+        },
+        {
+          "class": "ScheduledRunAuditJsonStore",
+          "line": 92,
+          "methods": [
+            "__init__",
+            "load",
+            "append",
+            "latest"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/operations/scheduled_operation_phase_runner.py",
+      "persistence_score": 4,
+      "canonical_score": 1,
+      "date_score": 4,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "ScheduledOperationPhaseError",
+          "line": 51,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "ScheduledOperationPhaseResult",
+          "line": 56,
+          "methods": [],
+          "fields": [
+            "phase",
+            "run_date",
+            "observed_at",
+            "status",
+            "candidate_count",
+            "detail_rows",
+            "delegated_legacy_phase",
+            "preview_only",
+            "canonical",
+            "ranking_write_allowed",
+            "profile_write_allowed",
+            "al_sat_decision_allowed"
+          ]
+        },
+        {
+          "class": "ScheduledOperationRuntime",
+          "line": 71,
+          "methods": [
+            "preopen_context",
+            "postopen_gap_entry",
+            "preclose_preview",
+            "canonical_close"
+          ],
+          "fields": []
+        },
+        {
+          "class": "ProductionScheduledOperationRuntime",
+          "line": 211,
+          "methods": [
+            "_latest_evening_record",
+            "preopen_context",
+            "postopen_gap_entry",
+            "preclose_preview",
+            "canonical_close"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/operations/scheduled_operation_phase_runner.py",
+      "persistence_score": 4,
+      "canonical_score": 1,
+      "date_score": 4,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "ScheduledOperationPhaseError",
+          "line": 51,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "ScheduledOperationPhaseResult",
+          "line": 56,
+          "methods": [],
+          "fields": [
+            "phase",
+            "run_date",
+            "observed_at",
+            "status",
+            "candidate_count",
+            "detail_rows",
+            "delegated_legacy_phase",
+            "preview_only",
+            "canonical",
+            "ranking_write_allowed",
+            "profile_write_allowed",
+            "al_sat_decision_allowed"
+          ]
+        },
+        {
+          "class": "ScheduledOperationRuntime",
+          "line": 71,
+          "methods": [
+            "preopen_context",
+            "postopen_gap_entry",
+            "preclose_preview",
+            "canonical_close"
+          ],
+          "fields": []
+        },
+        {
+          "class": "ProductionScheduledOperationRuntime",
+          "line": 211,
+          "methods": [
+            "_latest_evening_record",
+            "preopen_context",
+            "postopen_gap_entry",
+            "preclose_preview",
+            "canonical_close"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/ranking_memory.py",
+      "persistence_score": 4,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "RankObservation",
+          "line": 9,
+          "methods": [],
+          "fields": [
+            "as_of",
+            "symbol",
+            "rank",
+            "ranked_universe_size",
+            "universe_source",
+            "profile_name"
+          ]
+        },
+        {
+          "class": "ResearchProfileObservation",
+          "line": 75,
+          "methods": [],
+          "fields": [
+            "as_of",
+            "symbol",
+            "research_profile",
+            "state",
+            "direction",
+            "reasons",
+            "warnings",
+            "universe_name",
+            "successful_universe_size",
+            "recorded_at",
+            "record_type"
+          ]
+        },
+        {
+          "class": "RankObservationJsonlStore",
+          "line": 88,
+          "methods": [
+            "__init__",
+            "_key",
+            "list",
+            "append_snapshot",
+            "list_profile_observations",
+            "_profile_revision_key",
+            "append_profile_snapshot"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/ranking_memory.py",
+      "persistence_score": 4,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "RankObservation",
+          "line": 9,
+          "methods": [],
+          "fields": [
+            "as_of",
+            "symbol",
+            "rank",
+            "ranked_universe_size",
+            "universe_source",
+            "profile_name"
+          ]
+        },
+        {
+          "class": "ResearchProfileObservation",
+          "line": 75,
+          "methods": [],
+          "fields": [
+            "as_of",
+            "symbol",
+            "research_profile",
+            "state",
+            "direction",
+            "reasons",
+            "warnings",
+            "universe_name",
+            "successful_universe_size",
+            "recorded_at",
+            "record_type"
+          ]
+        },
+        {
+          "class": "RankObservationJsonlStore",
+          "line": 88,
+          "methods": [
+            "__init__",
+            "_key",
+            "list",
+            "append_snapshot",
+            "list_profile_observations",
+            "_profile_revision_key",
+            "append_profile_snapshot"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/ranking_snapshot_adapter.py",
+      "persistence_score": 4,
+      "canonical_score": 1,
+      "date_score": 0,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": []
+    },
+    {
+      "path": "backend/app/analysis/ranking_snapshot_adapter.py",
+      "persistence_score": 4,
+      "canonical_score": 1,
+      "date_score": 0,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": []
+    },
+    {
+      "path": "backend/app/news_center/official_source_operations.py",
+      "persistence_score": 3,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "OfficialSourceOperationError",
+          "line": 24,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "OfficialSourceOperationKind",
+          "line": 28,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "OfficialSourceOperationRecord",
+          "line": 38,
+          "methods": [],
+          "fields": [
+            "operation_id",
+            "source_name",
+            "kind",
+            "occurred_at",
+            "source_reference",
+            "detail"
+          ]
+        },
+        {
+          "class": "OfficialSourceOperationReadResult",
+          "line": 48,
+          "methods": [],
+          "fields": [
+            "records",
+            "invalid_lines"
+          ]
+        },
+        {
+          "class": "OfficialSourceOperationSummary",
+          "line": 54,
+          "methods": [],
+          "fields": [
+            "source_name",
+            "last_preview_at",
+            "last_preview_kind",
+            "last_archive_at",
+            "last_archive_kind",
+            "last_success_at"
+          ]
+        },
+        {
+          "class": "OfficialSourceOperationStore",
+          "line": 173,
+          "methods": [
+            "__init__",
+            "append",
+            "read"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/news_center/official_source_operations.py",
+      "persistence_score": 3,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "OfficialSourceOperationError",
+          "line": 24,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "OfficialSourceOperationKind",
+          "line": 28,
+          "methods": [],
+          "fields": []
+        },
+        {
+          "class": "OfficialSourceOperationRecord",
+          "line": 38,
+          "methods": [],
+          "fields": [
+            "operation_id",
+            "source_name",
+            "kind",
+            "occurred_at",
+            "source_reference",
+            "detail"
+          ]
+        },
+        {
+          "class": "OfficialSourceOperationReadResult",
+          "line": 48,
+          "methods": [],
+          "fields": [
+            "records",
+            "invalid_lines"
+          ]
+        },
+        {
+          "class": "OfficialSourceOperationSummary",
+          "line": 54,
+          "methods": [],
+          "fields": [
+            "source_name",
+            "last_preview_at",
+            "last_preview_kind",
+            "last_archive_at",
+            "last_archive_kind",
+            "last_success_at"
+          ]
+        },
+        {
+          "class": "OfficialSourceOperationStore",
+          "line": 173,
+          "methods": [
+            "__init__",
+            "append",
+            "read"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/ranking_movement_visibility.py",
+      "persistence_score": 3,
+      "canonical_score": 1,
+      "date_score": 2,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "RankingMovementRow",
+          "line": 11,
+          "methods": [],
+          "fields": [
+            "symbol",
+            "current_rank",
+            "gain_1s",
+            "gain_3s",
+            "gain_5s",
+            "acceleration",
+            "positive_steps_5s",
+            "persistence",
+            "lifecycle",
+            "top5_distance",
+            "comparable"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/ranking_movement_visibility.py",
+      "persistence_score": 3,
+      "canonical_score": 1,
+      "date_score": 2,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "RankingMovementRow",
+          "line": 11,
+          "methods": [],
+          "fields": [
+            "symbol",
+            "current_rank",
+            "gain_1s",
+            "gain_3s",
+            "gain_5s",
+            "acceleration",
+            "positive_steps_5s",
+            "persistence",
+            "lifecycle",
+            "top5_distance",
+            "comparable"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/market_context/service.py",
+      "persistence_score": 3,
+      "canonical_score": 1,
+      "date_score": 0,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "MarketContextDateMismatchError",
+          "line": 19,
+          "methods": [
+            "__init__"
+          ],
+          "fields": []
+        },
+        {
+          "class": "MarketContextService",
+          "line": 31,
+          "methods": [
+            "__init__",
+            "import_text",
+            "import_txt",
+            "import_pdf",
+            "_persist_extracted",
+            "_build_document",
+            "_new_document_id",
+            "_utc_now_iso"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/market_context/service.py",
+      "persistence_score": 3,
+      "canonical_score": 1,
+      "date_score": 0,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "MarketContextDateMismatchError",
+          "line": 19,
+          "methods": [
+            "__init__"
+          ],
+          "fields": []
+        },
+        {
+          "class": "MarketContextService",
+          "line": 31,
+          "methods": [
+            "__init__",
+            "import_text",
+            "import_txt",
+            "import_pdf",
+            "_persist_extracted",
+            "_build_document",
+            "_new_document_id",
+            "_utc_now_iso"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/analysis/daily_buy_decision_cycle.py",
+      "persistence_score": 2,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "DailyBuyDecisionCandidate",
+          "line": 15,
+          "methods": [],
+          "fields": [
+            "rank",
+            "symbol",
+            "technical_score",
+            "technical_view",
+            "research_priority",
+            "visibility_state",
+            "rank_change",
+            "operational_status",
+            "data_blocked",
+            "decision",
+            "volume_ratio",
+            "risk_reward",
+            "selection_source",
+            "jump_quality",
+            "entry_readiness",
+            "decision_reasons",
+            "decision_cautions"
+          ]
+        },
+        {
+          "class": "DailyBuyDecisionSnapshot",
+          "line": 36,
+          "methods": [],
+          "fields": [
+            "phase",
+            "created_at",
+            "candidates"
+          ]
+        },
+        {
+          "class": "DailyBuyDecisionChange",
+          "line": 43,
+          "methods": [],
+          "fields": [
+            "symbol",
+            "evening_rank",
+            "morning_rank",
+            "rank_delta",
+            "evening_status",
+            "morning_status",
+            "change_reason",
+            "evening_decision",
+            "morning_decision"
+          ]
+        },
+        {
+          "class": "DailyBuyDecisionReplacement",
+          "line": 56,
+          "methods": [],
+          "fields": [
+            "outgoing_symbol",
+            "incoming_symbol",
+            "outgoing_rank",
+            "incoming_rank",
+            "outgoing_decision",
+            "incoming_decision",
+            "replacement_context"
+          ]
+        },
+        {
+          "class": "DailyBuyDecisionJsonStore",
+          "line": 151,
+          "methods": [
+            "__init__",
+            "load",
+            "save"
+          ],
+          "fields": []
+        }
+      ]
+    },
+    {
+      "path": "backend/app/data/bist_official_archive.py",
+      "persistence_score": 2,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "OfficialArchiveSnapshot",
+          "line": 23,
+          "methods": [],
+          "fields": [
+            "islem_tarihi",
+            "sembol_sayisi",
+            "kaynak_url",
+            "raw_zip",
+            "canonical_csv",
+            "manifest_json",
+            "sha256",
+            "gecersiz_semboller"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/data/bist_official_batch_bridge.py",
+      "persistence_score": 2,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "OfficialLatestDailyResult",
+          "line": 21,
+          "methods": [],
+          "fields": [
+            "islem_tarihi",
+            "veriler",
+            "kaynak",
+            "hatalar"
+          ]
+        }
+      ]
+    },
+    {
+      "path": "backend/app/prebreakout/prebreakout_live_watch.py",
+      "persistence_score": 2,
+      "canonical_score": 1,
+      "date_score": 3,
+      "has_next_day": false,
+      "has_primary": false,
+      "has_reserve": false,
+      "has_selection_digest": false,
+      "has_full_result": false,
+      "classes": [
+        {
+          "class": "PreBreakoutLiveSignal",
+          "line": 21,
+          "methods": [],
+          "fields": [
+            "schema_version",
+            "signal_id",
+            "symbol",
+            "signal_date",
+            "recorded_at_utc",
+            "stage",
+            "stage_label",
+            "score",
+            "accepted",
+            "close",
+            "minimum_momentum_score",
+            "threshold_policy_enabled",
+            "threshold_policy_source",
+            "features",
+            "reasons",
+            "risks",
+            "payload_sha256"
+          ]
+        }
+      ]
+    }
+  ],
+  "decision_archive": {
+    "source_present": true,
+    "data_present": true,
+    "source": "backend/app/analysis/daily_buy_decision_output_archive.py",
+    "data": "backend/data/daily_buy_decision_output_archive.json",
+    "has_store_class": true,
+    "has_load": true,
+    "has_by_date": true,
+    "has_latest": true,
+    "next_day_fields": {
+      "strategy_id": false,
+      "selection_digest": false,
+      "primary": false,
+      "reserve": false,
+      "NextDaySelectionResult": false
+    },
+    "classes": [
+      {
+        "class": "DecisionOutputArchiveRecord",
+        "line": 22,
+        "methods": [],
+        "fields": [
+          "run_date",
+          "phase",
+          "created_at",
+          "candidates"
+        ]
+      },
+      {
+        "class": "DailyDecisionArchiveDelta",
+        "line": 30,
+        "methods": [],
+        "fields": [
+          "current_date",
+          "previous_date",
+          "phase",
+          "added",
+          "removed",
+          "decision_changes",
+          "rank_changes",
+          "current_buy",
+          "previous_buy"
+        ]
+      },
+      {
+        "class": "DecisionOutputArchiveJsonStore",
+        "line": 42,
+        "methods": [
+          "__init__",
+          "load",
+          "save",
+          "save_snapshot",
+          "latest",
+          "by_date"
+        ],
+        "fields": []
+      }
+    ],
+    "data_type": "list",
+    "record_count": 7,
+    "keys": [
+      "candidates",
+      "created_at",
+      "phase",
+      "run_date"
+    ],
+    "date_count": 4,
+    "dates": [
+      "2026-08-25",
+      "2026-08-26",
+      "2026-08-27",
+      "2026-08-28"
+    ],
+    "phases": [
+      "EVENING",
+      "MORNING"
+    ]
+  },
+  "ranking_memory": {
+    "present": true,
+    "path": "data/ranking_memory/rank_observations.jsonl",
+    "line_count": 5502,
+    "date_count": 14,
+    "dates": [
+      "18/08/2026",
+      "19/08/2026",
+      "2026-08-19",
+      "2026-08-25",
+      "2026-08-26",
+      "2026-08-27",
+      "2026-08-28",
+      "21/08/2026",
+      "24/08/2026",
+      "26/08/2026",
+      "27/08/2026",
+      "28/08/2026",
+      "31/08/2026",
+      "Kişisel li"
+    ],
+    "record_types": {
+      "UNKNOWN": 570,
+      "research_profile": 4932
+    }
+  },
+  "data_files": [
+    {
+      "path": "backend/data/bist_official_daily/canonical/2026/08/2026-08-27.csv",
+      "size": 30661,
+      "name": "2026-08-27.csv"
+    },
+    {
+      "path": "backend/data/bist_official_daily/manifest/2026/08/2026-08-27.json",
+      "size": 642,
+      "name": "2026-08-27.json"
+    },
+    {
+      "path": "backend/data/daily_buy_decision_cycle.json",
+      "size": 9902,
+      "name": "daily_buy_decision_cycle.json"
+    },
+    {
+      "path": "backend/data/daily_buy_decision_outcomes.json",
+      "size": 2,
+      "name": "daily_buy_decision_outcomes.json"
+    },
+    {
+      "path": "backend/data/daily_buy_decision_output_archive.json",
+      "size": 33324,
+      "name": "daily_buy_decision_output_archive.json"
+    },
+    {
+      "path": "backend/data/daily_buy_decision_scheduler_audit.json",
+      "size": 137210,
+      "name": "daily_buy_decision_scheduler_audit.json"
+    },
+    {
+      "path": "backend/data/daily_buy_decision_scheduler_state.json",
+      "size": 1089,
+      "name": "daily_buy_decision_scheduler_state.json"
+    },
+    {
+      "path": "backend/data/fundamental_sample.csv",
+      "size": 582,
+      "name": "fundamental_sample.csv"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-03/d0919c4a914e4cb998729e5798a9502a.json",
+      "size": 1319,
+      "name": "d0919c4a914e4cb998729e5798a9502a.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-04/2f8d23b8b63a4afdb7388006ce39e526.json",
+      "size": 3100,
+      "name": "2f8d23b8b63a4afdb7388006ce39e526.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-05/af134b157cda4c439beeaf0d1a72cb13.json",
+      "size": 1707,
+      "name": "af134b157cda4c439beeaf0d1a72cb13.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-06/a0843436ddc94ffcbcdad8d89f6eb865.json",
+      "size": 3210,
+      "name": "a0843436ddc94ffcbcdad8d89f6eb865.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-10/5ec1de618aea428ba1c3f9918e5f8785.json",
+      "size": 4586,
+      "name": "5ec1de618aea428ba1c3f9918e5f8785.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-10/b19230c02f684313b63f4c85822656c2.json",
+      "size": 3724,
+      "name": "b19230c02f684313b63f4c85822656c2.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-10/ca009817f9674f43ad6bdeea1755cf8f.json",
+      "size": 3754,
+      "name": "ca009817f9674f43ad6bdeea1755cf8f.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-25/e7a6dd21cd974649ad8f4166113dfb35.json",
+      "size": 2938,
+      "name": "e7a6dd21cd974649ad8f4166113dfb35.json"
+    },
+    {
+      "path": "backend/data/market_context_ai_evaluations/2026-08-27/6ad83ce5eb3442218df0b359be060f23.json",
+      "size": 3147,
+      "name": "6ad83ce5eb3442218df0b359be060f23.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-03/daily_manifest.json",
+      "size": 2615,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-04/daily_manifest.json",
+      "size": 3064,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-05/daily_manifest.json",
+      "size": 2113,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-06/daily_manifest.json",
+      "size": 3949,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-07/daily_manifest.json",
+      "size": 1199,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-10/daily_manifest.json",
+      "size": 2179,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-25/daily_manifest.json",
+      "size": 1719,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_archive/2026-08-27/daily_manifest.json",
+      "size": 1686,
+      "name": "daily_manifest.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-05/257030c6aa6b8462-WhatsApp-Image-2026-08-05-at-15.54.53.json",
+      "size": 464,
+      "name": "257030c6aa6b8462-WhatsApp-Image-2026-08-05-at-15.54.53.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-05/2a09c17a8579e2fa-WhatsApp-Image-2026-08-05-at-11.05.32-1.json",
+      "size": 565,
+      "name": "2a09c17a8579e2fa-WhatsApp-Image-2026-08-05-at-11.05.32-1.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-05/5911b24fce1a0cca-WhatsApp-Image-2026-08-05-at-11.05.32-3.json",
+      "size": 470,
+      "name": "5911b24fce1a0cca-WhatsApp-Image-2026-08-05-at-11.05.32-3.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-05/923d54e4debd030f-WhatsApp-Image-2026-08-05-at-11.05.32.json",
+      "size": 559,
+      "name": "923d54e4debd030f-WhatsApp-Image-2026-08-05-at-11.05.32.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-05/a06763582ff0e541-WhatsApp-Image-2026-08-05-at-11.05.32-4.json",
+      "size": 564,
+      "name": "a06763582ff0e541-WhatsApp-Image-2026-08-05-at-11.05.32-4.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-06/11d97f08e30c5507-WhatsApp-Image-2026-08-06-at-10.06.15.json",
+      "size": 559,
+      "name": "11d97f08e30c5507-WhatsApp-Image-2026-08-06-at-10.06.15.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-06/400d2cdbcaa18261-WhatsApp-Image-2026-08-06-at-11.16.22.json",
+      "size": 559,
+      "name": "400d2cdbcaa18261-WhatsApp-Image-2026-08-06-at-11.16.22.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-06/fa167bcf129bf246-WhatsApp-Image-2026-08-06-at-10.17.38.json",
+      "size": 558,
+      "name": "fa167bcf129bf246-WhatsApp-Image-2026-08-06-at-10.17.38.json"
+    },
+    {
+      "path": "backend/data/market_context_image_archive/2026-08-10/1a43ab79dff7e29f-Veri-Takvimi.json",
+      "size": 507,
+      "name": "1a43ab79dff7e29f-Veri-Takvimi.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-03/26611014ec69436e94d75005877bde90.json",
+      "size": 1217,
+      "name": "26611014ec69436e94d75005877bde90.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-03/7e4f2df12b304f0bbb405283e5b57507.json",
+      "size": 4206,
+      "name": "7e4f2df12b304f0bbb405283e5b57507.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-03/ace61da9eae14ff8b40fc9ab5dfeec39.json",
+      "size": 5558,
+      "name": "ace61da9eae14ff8b40fc9ab5dfeec39.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-03/b1a2a2f4843f4e6091ad967a395861fb.json",
+      "size": 13264,
+      "name": "b1a2a2f4843f4e6091ad967a395861fb.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-03/bcb3789224b6448cab4c88a8cc6594e0.json",
+      "size": 16240,
+      "name": "bcb3789224b6448cab4c88a8cc6594e0.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-04/2a9aaa29ab92468ebe0f85c942a992c6.json",
+      "size": 6961,
+      "name": "2a9aaa29ab92468ebe0f85c942a992c6.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-04/59a4572d43e045fea51dc38b1e4af1a6.json",
+      "size": 1100,
+      "name": "59a4572d43e045fea51dc38b1e4af1a6.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-04/75ad14a6171c4be3aa2ec266c365efbb.json",
+      "size": 4206,
+      "name": "75ad14a6171c4be3aa2ec266c365efbb.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-04/7fbe7528058146fbb8c2be9a89a03210.json",
+      "size": 11392,
+      "name": "7fbe7528058146fbb8c2be9a89a03210.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-04/ccace5632b534ea6b7db7ba680086fa4.json",
+      "size": 16887,
+      "name": "ccace5632b534ea6b7db7ba680086fa4.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-04/f0312cb9848f473fa08a191e7f6eab09.json",
+      "size": 9247,
+      "name": "f0312cb9848f473fa08a191e7f6eab09.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-05/471864c44a59468e96b291362fde3242.json",
+      "size": 644,
+      "name": "471864c44a59468e96b291362fde3242.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-05/871ffa0787e14f3091bce22c07b15820.json",
+      "size": 1381,
+      "name": "871ffa0787e14f3091bce22c07b15820.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-05/89a439c087214a588a6660606b45ad59.json",
+      "size": 904,
+      "name": "89a439c087214a588a6660606b45ad59.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-05/e5f58041191d447196eb7c2006a94521.json",
+      "size": 1131,
+      "name": "e5f58041191d447196eb7c2006a94521.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/37561fa8136249b897218439daa433d8.json",
+      "size": 1002,
+      "name": "37561fa8136249b897218439daa433d8.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/38fe732d45b74055aa565faf1b0ceea4.json",
+      "size": 14802,
+      "name": "38fe732d45b74055aa565faf1b0ceea4.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/49c0c20e97a44652b693eb50ba9d6256.json",
+      "size": 7720,
+      "name": "49c0c20e97a44652b693eb50ba9d6256.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/7d9d94a69d7e4ad786ed1029e20f2922.json",
+      "size": 10139,
+      "name": "7d9d94a69d7e4ad786ed1029e20f2922.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/8d4169a784bc426dbe179faae1dd1321.json",
+      "size": 792,
+      "name": "8d4169a784bc426dbe179faae1dd1321.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/9cf5125ad2fa453ebf65400ce3f4a87a.json",
+      "size": 1267,
+      "name": "9cf5125ad2fa453ebf65400ce3f4a87a.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/e6bd63738c7e462380e2b5a245a629d5.json",
+      "size": 16916,
+      "name": "e6bd63738c7e462380e2b5a245a629d5.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-06/e760cd6f30fb468da6bfc45b209123b5.json",
+      "size": 14503,
+      "name": "e760cd6f30fb468da6bfc45b209123b5.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-07/120f5181cda140f4b42a1453cbdc2c9a.json",
+      "size": 6391,
+      "name": "120f5181cda140f4b42a1453cbdc2c9a.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-07/206b90f25a6c4c06a6ba77b8e4d33286.json",
+      "size": 2918,
+      "name": "206b90f25a6c4c06a6ba77b8e4d33286.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-10/050b41728b8e4b9ab191cf65f288ae9e.json",
+      "size": 17052,
+      "name": "050b41728b8e4b9ab191cf65f288ae9e.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-10/349ff429d3374fd2be45cfb869d859f0.json",
+      "size": 10553,
+      "name": "349ff429d3374fd2be45cfb869d859f0.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-10/95a37f9f1c644947a86997c0a3c84fdf.json",
+      "size": 14970,
+      "name": "95a37f9f1c644947a86997c0a3c84fdf.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-10/b18d25ecb5c944749122c38b4f9bf73a.json",
+      "size": 20328,
+      "name": "b18d25ecb5c944749122c38b4f9bf73a.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-25/197d6dc690ff4e71b62fd6c8c39af1a3.json",
+      "size": 17271,
+      "name": "197d6dc690ff4e71b62fd6c8c39af1a3.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-25/8be84fd590f84efeb921077ff773b097.json",
+      "size": 16952,
+      "name": "8be84fd590f84efeb921077ff773b097.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-25/cb3c3d00dc1c437ea3861a1909255a83.json",
+      "size": 7521,
+      "name": "cb3c3d00dc1c437ea3861a1909255a83.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-27/20dfd07ef59246f4aa5defdd8cd9cc25.json",
+      "size": 17573,
+      "name": "20dfd07ef59246f4aa5defdd8cd9cc25.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-27/3b8e6d3e74e4492f851e2cc3cae2b8ed.json",
+      "size": 16320,
+      "name": "3b8e6d3e74e4492f851e2cc3cae2b8ed.json"
+    },
+    {
+      "path": "backend/data/market_context_processed/2026-08-27/53efc82cc1e14e40bcb13825539842da.json",
+      "size": 7928,
+      "name": "53efc82cc1e14e40bcb13825539842da.json"
+    },
+    {
+      "path": "backend/data/opportunity_radar/03_aylik_quantile_sinirlari_rev2.csv",
+      "size": 3115,
+      "name": "03_aylik_quantile_sinirlari_rev2.csv"
+    },
+    {
+      "path": "backend/data/opportunity_radar/03_w2_w3_quantile_sinirlari_rev3.csv",
+      "size": 814,
+      "name": "03_w2_w3_quantile_sinirlari_rev3.csv"
+    },
+    {
+      "path": "backend/data/opportunity_radar/06_aylik_gecen_profiller_rev2.csv",
+      "size": 1308,
+      "name": "06_aylik_gecen_profiller_rev2.csv"
+    },
+    {
+      "path": "backend/data/opportunity_radar/06_w2_w3_gecen_profiller_rev3.csv",
+      "size": 2314,
+      "name": "06_w2_w3_gecen_profiller_rev3.csv"
+    },
+    {
+      "path": "backend/data/prebreakout_alarm_history.jsonl",
+      "size": 680,
+      "name": "prebreakout_alarm_history.jsonl"
+    },
+    {
+      "path": "backend/data/prebreakout_daily_operation_archive.jsonl",
+      "size": 310,
+      "name": "prebreakout_daily_operation_archive.jsonl"
+    },
+    {
+      "path": "backend/data/prebreakout_decision_journal.jsonl",
+      "size": 215,
+      "name": "prebreakout_decision_journal.jsonl"
+    },
+    {
+      "path": "backend/data/prebreakout_operation_diagnosis.json",
+      "size": 209,
+      "name": "prebreakout_operation_diagnosis.json"
+    },
+    {
+      "path": "backend/data/prebreakout_operation_recovery.json",
+      "size": 467,
+      "name": "prebreakout_operation_recovery.json"
+    },
+    {
+      "path": "backend/data/sector_reference_sample.csv",
+      "size": 85,
+      "name": "sector_reference_sample.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/07/2026-07-31.csv",
+      "size": 30316,
+      "name": "2026-07-31.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-03.csv",
+      "size": 30352,
+      "name": "2026-08-03.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-04.csv",
+      "size": 30449,
+      "name": "2026-08-04.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-05.csv",
+      "size": 30463,
+      "name": "2026-08-05.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-06.csv",
+      "size": 30485,
+      "name": "2026-08-06.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-07.csv",
+      "size": 30514,
+      "name": "2026-08-07.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-10.csv",
+      "size": 30487,
+      "name": "2026-08-10.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-11.csv",
+      "size": 30528,
+      "name": "2026-08-11.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-12.csv",
+      "size": 30689,
+      "name": "2026-08-12.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-13.csv",
+      "size": 30538,
+      "name": "2026-08-13.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-14.csv",
+      "size": 30557,
+      "name": "2026-08-14.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-17.csv",
+      "size": 30484,
+      "name": "2026-08-17.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-18.csv",
+      "size": 30617,
+      "name": "2026-08-18.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-19.csv",
+      "size": 30629,
+      "name": "2026-08-19.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-20.csv",
+      "size": 30683,
+      "name": "2026-08-20.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-21.csv",
+      "size": 30815,
+      "name": "2026-08-21.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-24.csv",
+      "size": 30737,
+      "name": "2026-08-24.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-25.csv",
+      "size": 30753,
+      "name": "2026-08-25.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-26.csv",
+      "size": 30800,
+      "name": "2026-08-26.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-27.csv",
+      "size": 30661,
+      "name": "2026-08-27.csv"
+    },
+    {
+      "path": "data/bist_official_daily/canonical/2026/08/2026-08-28.csv",
+      "size": 30706,
+      "name": "2026-08-28.csv"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/07/2026-07-31.json",
+      "size": 714,
+      "name": "2026-07-31.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-03.json",
+      "size": 658,
+      "name": "2026-08-03.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-04.json",
+      "size": 642,
+      "name": "2026-08-04.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-05.json",
+      "size": 642,
+      "name": "2026-08-05.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-06.json",
+      "size": 642,
+      "name": "2026-08-06.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-07.json",
+      "size": 642,
+      "name": "2026-08-07.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-10.json",
+      "size": 642,
+      "name": "2026-08-10.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-11.json",
+      "size": 658,
+      "name": "2026-08-11.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-12.json",
+      "size": 626,
+      "name": "2026-08-12.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-13.json",
+      "size": 642,
+      "name": "2026-08-13.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-14.json",
+      "size": 642,
+      "name": "2026-08-14.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-17.json",
+      "size": 642,
+      "name": "2026-08-17.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-18.json",
+      "size": 642,
+      "name": "2026-08-18.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-19.json",
+      "size": 642,
+      "name": "2026-08-19.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-20.json",
+      "size": 642,
+      "name": "2026-08-20.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-21.json",
+      "size": 642,
+      "name": "2026-08-21.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-24.json",
+      "size": 642,
+      "name": "2026-08-24.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-25.json",
+      "size": 642,
+      "name": "2026-08-25.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-26.json",
+      "size": 642,
+      "name": "2026-08-26.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-27.json",
+      "size": 642,
+      "name": "2026-08-27.json"
+    },
+    {
+      "path": "data/bist_official_daily/manifest/2026/08/2026-08-28.json",
+      "size": 642,
+      "name": "2026-08-28.json"
+    },
+    {
+      "path": "data/candidate_cache/ON_YUKSELIS_SON_ADAYLAR.csv",
+      "size": 66,
+      "name": "ON_YUKSELIS_SON_ADAYLAR.csv"
+    },
+    {
+      "path": "data/ranking_memory/rank_observations.jsonl",
+      "size": 1924489,
+      "name": "rank_observations.jsonl"
+    },
+    {
+      "path": "data/vbts/vbts_denetim.jsonl",
+      "size": 234,
+      "name": "vbts_denetim.jsonl"
+    },
+    {
+      "path": "data/vbts/vbts_kayitlari.csv",
+      "size": 159,
+      "name": "vbts_kayitlari.csv"
+    },
+    {
+      "path": "data/vbts/vbts_sablon.csv",
+      "size": 60,
+      "name": "vbts_sablon.csv"
+    },
+    {
+      "path": "data/vbts/vbts_senkronizasyon_durumu.json",
+      "size": 167,
+      "name": "vbts_senkronizasyon_durumu.json"
+    },
+    {
+      "path": "data/vbts/yedekler/vbts_guncel_20260821T210336829982Z_otomatik_senkronizasyon.csv",
+      "size": 179,
+      "name": "vbts_guncel_20260821T210336829982Z_otomatik_senkronizasyon.csv"
+    },
+    {
+      "path": "data/vbts/yedekler/vbts_yedek_manifest.json",
+      "size": 241,
+      "name": "vbts_yedek_manifest.json"
+    }
+  ],
+  "historical_research_replay_present": true,
+  "batch_market_data_present": true,
+  "frozen_next_day_selection_persistence_reuse_proven": false,
+  "blockers": [
+    "NEXT_DAY_SELECTION_NOT_WIRED_TO_PRODUCTION_RUNTIME",
+    "NEXT_DAY_OUTCOME_NOT_WIRED_TO_PRODUCTION_RUNTIME",
+    "FROZEN_NEXT_DAY_SELECTION_PERSISTENCE_REUSE_NOT_PROVEN"
+  ],
+  "warnings": [
+    "WALK_FORWARD_NOT_WIRED_TO_PRODUCTION_RUNTIME_YET"
+  ],
+  "decision": "STOP_CONTRACT_GAP",
+  "next": "MINIMAL_EXISTING_PERSISTENCE_REUSE_ADAPTER_DESIGN_REQUIRED",
+  "preservation": {
+    "production_mutation": false,
+    "scheduler_mutation": false,
+    "strategy_mutation": false,
+    "outcome_tuning": false,
+    "new_score": false,
+    "new_store": false,
+    "new_scanner": false,
+    "second_universe_traversal": false,
+    "al_sat_authority": false
+  }
+}

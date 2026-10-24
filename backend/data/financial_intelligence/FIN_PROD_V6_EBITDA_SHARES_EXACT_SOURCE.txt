@@ -1,0 +1,1141 @@
+﻿FIN_PROD_V6_EBITDA_SHARES_EXACT_SOURCE
+
+===== OWNERSHIP_ACCEPTANCE =====
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_market_ownership_acceptance.json
+FIELD|$.input_convention.issued_capital_try|'1926795598'
+FIELD|$.input_convention.legal_share_nominal_try|'0.01'
+FIELD|$.input_convention.legal_share_piece_count|'192679559800'
+FIELD|$.ownership.free_float_shares|'952415064.0914'
+
+===== EBITDA_PRODUCERS =====
+FILE=backend\app\analysis\financial_intelligence_market_acceptance.py
+00031:     return value
+00032: 
+00033: 
+00034: def run_market_ownership_acceptance(
+00035:     xls_paths: list[str | Path],
+00036:     canonical: CanonicalMarketOwnershipInput,
+00037:     *,
+00038:     as_of: datetime | None = None,
+00039:     ebitda_ttm: Decimal | None = None,
+00040:     fcf_ttm: Decimal | None = None,
+00041: ) -> dict[str, Any]:
+00042:     canonical.validate()
+00043:     reports = []
+00044:     for path in xls_paths:
+00045:         p = Path(path)
+00046:         reports.append(import_kap_financial_xls_bytes(p.read_bytes(), source_name=p.name))
+00047:     if not reports:
+00048:         raise ValueError("at least one KAP XLS is required")
+00049: 
+00050:     symbol = reports[0].identity.symbol
+00051:     if any(r.identity.symbol != symbol for r in reports):
+---
+00087:             price_date=canonical.price_date,
+00088:             price=canonical.price_try,
+00089:             published_at=canonical.price_published_at,
+00090:             source=canonical.market_source,
+00091:         )
+00092:         multiples = calculate_market_multiples(
+00093:             series, own, market,
+00094:             as_of=effective_as_of,
+00095:             ebitda_ttm=ebitda_ttm,
+00096:             fcf_ttm=fcf_ttm,
+00097:         )
+00098: 
+00099:     pb_available = multiples is not None and multiples.pb is not None
+00100:     pe_available = multiples is not None and multiples.pe is not None
+00101: 
+00102:     if multiples is None:
+00103:         valuation_status = "MARKET_PRICE_REQUIRED"
+00104:     elif pb_available and pe_available:
+00105:         valuation_status = "PE_PB_UNLOCKED"
+00106:     elif pb_available:
+00107:         valuation_status = "PB_UNLOCKED_PE_NEEDS_TTM_EARNINGS"
+---
+00145:         "derived_per_unit": {
+00146:             "book_value_per_valuation_unit_try": book_value_per_unit,
+00147:             "ttm_eps_per_valuation_unit_try": eps_ttm,
+00148:         },
+00149:         "valuation_status": valuation_status,
+00150:         "data_flags": [] if multiples is None else list(multiples.data_flags),
+00151:         "limitations": [
+00152:             "P/E remains unavailable until a reliable TTM earnings basis exists; interim profit is not blindly annualized.",
+00153:             "EV/EBITDA remains unavailable until reliable TTM EBITDA is supplied or canonically derived.",
+00154:             "This layer does not generate a DCF/fair value without forecast assumptions.",
+00155:             "No AL/SAT, ranking, scanner or portfolio score is mutated.",
+00156:         ],
+00157:     })
+---
+===
+FILE=backend\app\analysis\financial_intelligence_production_v2.py
+00029:         "cyclicality_default": "MEDIUM",
+00030:     },
+00031:     "HOLDING": {
+00032:         "valuation_models": ("SOTP", "NAV_DISCOUNT"),
+00033:         "required_focus": ("subsidiary_value", "holding_discount", "net_cash_debt", "governance"),
+00034:         "cyclicality_default": "MEDIUM",
+00035:     },
+00036:     "UTILITY_ENERGY": {
+00037:         "valuation_models": ("DCF_FCFF", "EV_EBITDA", "REGULATED_ASSET_BASE_WHERE_AVAILABLE"),
+00038:         "required_focus": ("regulated_returns", "capex", "debt", "cash_flow_visibility"),
+00039:         "cyclicality_default": "LOW",
+00040:     },
+00041:     "GENERIC": {
+00042:         "valuation_models": ("DCF_FCFF", "P_E", "P_B"),
+00043:         "required_focus": ("financial_health", "cash_quality", "risk", "valuation"),
+00044:         "cyclicality_default": "UNKNOWN",
+00045:     },
+00046: }
+00047: 
+00048: 
+00049: SECTOR_ALIASES = {
+---
+===
+FILE=backend\app\analysis\financial_intelligence_ttm_acceptance.py
+00018: 
+00019: def run_ttm_market_acceptance(
+00020:     xls_paths: list[str | Path],
+00021:     market_ownership_json: str | Path,
+00022:     *,
+00023:     price: Decimal | None = None,
+00024:     price_date=None,
+00025:     as_of: datetime | None = None,
+00026:     ebitda_ttm_override: Decimal | None = None,
+00027: ) -> dict[str, Any]:
+00028:     reports = import_reports(xls_paths)
+00029:     ttm = build_ttm_basis_from_reports(
+00030:         reports,
+00031:         as_of=as_of,
+00032:         ebitda_ttm_override=ebitda_ttm_override,
+00033:     )
+00034:     canonical = load_market_ownership_input(market_ownership_json)
+00035:     if canonical.symbol != ttm.symbol:
+00036:         raise ValueError("market/ownership symbol mismatch")
+00037: 
+00038:     series = build_historical_financial_series(reports)
+---
+00039:     effective_as_of = ttm.as_of
+00040: 
+00041:     own = OwnershipSnapshot(
+00042:         symbol=canonical.symbol,
+00043:         as_of_date=canonical.as_of_date,
+00044:         published_at=canonical.published_at,
+---
+00062:             price_date=effective_price_date,
+00063:             price=effective_price,
+00064:             published_at=canonical.price_published_at or effective_as_of,
+00065:             source=canonical.market_source,
+00066:         )
+00067: 
+00068:         # FIN-006..008 market_multiples owns its own canonical TTM
+00069:         # earnings/revenue derivation from HistoricalFinancialSeries.
+00070:         # Its public contract accepts explicit overrides only for EBITDA/FCF.
+00071:         multiples = calculate_market_multiples(
+00072:             series,
+00073:             own,
+00074:             market,
+00075:             as_of=effective_as_of,
+00076:             ebitda_ttm=ttm.ebitda_ttm,
+00077:             fcf_ttm=ttm.free_cash_flow_ttm,
+00078:         )
+00079: 
+00080:     pe_unlocked = multiples is not None and multiples.pe is not None
+00081:     ev_ebitda_unlocked = multiples is not None and multiples.ev_ebitda is not None
+00082:     p_fcf_unlocked = multiples is not None and multiples.p_fcf is not None
+---
+00083: 
+00084:     return serialize({
+00085:         "status": "PASS",
+00086:         "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+00087:         "symbol": ttm.symbol,
+00088:         "ttm_basis": ttm,
+---
+00089:         "multiples": multiples,
+00090:         "valuation_status": {
+00091:             "pe_unlocked": pe_unlocked,
+00092:             "ev_ebitda_unlocked": ev_ebitda_unlocked,
+00093:             "p_fcf_unlocked": p_fcf_unlocked,
+---
+00094:         },
+00095:         "limitations": [
+00096:             "EV/EBITDA remains fail-closed unless EBITDA TTM is canonical or explicitly supplied.",
+00097:             "TTM uses point-in-time compatible FY + current YTD - prior same-period arithmetic.",
+00098:             "No interim figure is blindly annualized.",
+00099:             "No AL/SAT, scanner, ranking or portfolio score is mutated.",
+00100:         ],
+00101:     })
+---
+---
+===
+FILE=backend\app\analysis\fundamental_analysis.py
+00054:             period.revenue,
+00055:             percentage=True,
+00056:         ),
+00057:         operating_margin=_safe_ratio(
+00058:             period.operating_profit,
+00059:             period.revenue,
+00060:             percentage=True,
+00061:         ),
+00062:         ebitda_margin=_safe_ratio(
+00063:             period.ebitda,
+00064:             period.revenue,
+00065:             percentage=True,
+00066:         ),
+00067:         net_margin=_safe_ratio(
+00068:             period.net_income,
+00069:             period.revenue,
+00070:             percentage=True,
+00071:         ),
+00072:         roe=_safe_ratio(
+00073:             period.net_income,
+00074:             period.total_equity,
+---
+00075:             percentage=True,
+---
+00083:             period.current_assets,
+00084:             period.current_liabilities,
+00085:         ),
+00086:         debt_to_equity=_safe_ratio(
+00087:             period.total_debt,
+00088:             period.total_equity,
+00089:         ),
+00090:         net_debt=net_debt.quantize(Decimal("0.01")),
+00091:         net_debt_to_ebitda=_safe_ratio(
+00092:             net_debt,
+00093:             period.ebitda,
+00094:         ),
+00095:         free_cash_flow=free_cash_flow.quantize(
+00096:             Decimal("0.01")
+00097:         ),
+00098:         free_cash_flow_margin=_safe_ratio(
+00099:             free_cash_flow,
+00100:             period.revenue,
+00101:             percentage=True,
+00102:         ),
+00103:     )
+---
+00104: 
+00105: 
+---
+00119:     return FundamentalGrowth(
+00120:         symbol=current.symbol,
+00121:         current_period_key=current.period_key,
+00122:         comparison_period_key=comparison.period_key,
+00123:         revenue_growth=_growth(
+00124:             current.revenue,
+00125:             comparison.revenue,
+00126:         ),
+00127:         ebitda_growth=_growth(
+00128:             current.ebitda,
+00129:             comparison.ebitda,
+00130:         ),
+00131:         net_income_growth=_growth(
+00132:             current.net_income,
+00133:             comparison.net_income,
+00134:         ),
+00135:         equity_growth=_growth(
+00136:             current.total_equity,
+00137:             comparison.total_equity,
+00138:         ),
+00139:         operating_cash_flow_growth=_growth(
+---
+00140:             current.operating_cash_flow,
+---
+00141:             comparison.operating_cash_flow,
+---
+===
+FILE=backend\app\analysis\fundamental_quality.py
+00094:             ),
+00095:         )
+00096: 
+00097:     required = (
+00098:         ratios.net_margin,
+00099:         ratios.roe,
+00100:         ratios.current_ratio,
+00101:         ratios.debt_to_equity,
+00102:         ratios.net_debt_to_ebitda,
+00103:         ratios.free_cash_flow_margin,
+00104:     )
+00105:     if any(value is None for value in required):
+00106:         return FundamentalQualityScore(
+00107:             symbol=latest.symbol,
+00108:             period_key=latest.period_key,
+00109:             total_score=None,
+00110:             profitability=empty,
+00111:             growth=empty,
+00112:             leverage=empty,
+00113:             liquidity=empty,
+00114:             cash_flow=empty,
+---
+00138:             (
+00139:                 ratios.roa is not None
+00140:                 and ratios.roa >= Decimal("5"),
+00141:                 5,
+00142:                 "ROA en az %5.",
+00143:                 "ROA %5 alt─▒nda veya hesaplanamad─▒.",
+00144:             ),
+00145:             (
+00146:                 ratios.ebitda_margin is not None
+00147:                 and ratios.ebitda_margin >= Decimal("15"),
+00148:                 5,
+00149:                 "FAV├ЦK marj─▒ en az %15.",
+00150:                 "FAV├ЦK marj─▒ %15 alt─▒nda veya hesaplanamad─▒.",
+00151:             ),
+00152:         ),
+00153:     )
+00154: 
+00155:     annual = snapshot.annual_growth
+00156:     growth = _component(
+00157:         "B├╝y├╝me",
+00158:         25,
+---
+00159:         (
+---
+00162:                 and annual.revenue_growth is not None
+00163:                 and annual.revenue_growth >= Decimal("10"),
+00164:                 7,
+00165:                 "Y─▒ll─▒k has─▒lat b├╝y├╝mesi en az %10.",
+00166:                 "Y─▒ll─▒k has─▒lat b├╝y├╝mesi %10 alt─▒nda veya eksik.",
+00167:             ),
+00168:             (
+00169:                 annual is not None
+00170:                 and annual.ebitda_growth is not None
+00171:                 and annual.ebitda_growth >= Decimal("10"),
+00172:                 7,
+00173:                 "Y─▒ll─▒k FAV├ЦK b├╝y├╝mesi en az %10.",
+00174:                 "Y─▒ll─▒k FAV├ЦK b├╝y├╝mesi %10 alt─▒nda veya eksik.",
+00175:             ),
+00176:             (
+00177:                 annual is not None
+00178:                 and annual.net_income_growth is not None
+00179:                 and annual.net_income_growth >= Decimal("10"),
+00180:                 7,
+00181:                 "Y─▒ll─▒k net k├вr b├╝y├╝mesi en az %10.",
+00182:                 "Y─▒ll─▒k net k├вr b├╝y├╝mesi %10 alt─▒nda veya eksik.",
+---
+00183:             ),
+---
+00198:         (
+00199:             (
+00200:                 ratios.debt_to_equity <= Decimal("1"),
+00201:                 8,
+00202:                 "Bor├з/├╢zsermaye oran─▒ 1 veya alt─▒nda.",
+00203:                 "Bor├з/├╢zsermaye oran─▒ 1 ├╝zerinde.",
+00204:             ),
+00205:             (
+00206:                 ratios.net_debt_to_ebitda <= Decimal("2"),
+00207:                 8,
+00208:                 "Net bor├з/FAV├ЦK 2 veya alt─▒nda.",
+00209:                 "Net bor├з/FAV├ЦK 2 ├╝zerinde.",
+00210:             ),
+00211:             (
+00212:                 ratios.net_debt <= Decimal("0"),
+00213:                 4,
+00214:                 "┼Юirket net nakit pozisyonunda.",
+00215:                 "┼Юirket net bor├з pozisyonunda.",
+00216:             ),
+00217:         ),
+00218:     )
+---
+===
+FILE=backend\app\analysis\market_multiples.py
+00058: 
+00059: 
+00060: def calculate_market_multiples(
+00061:     series: HistoricalFinancialSeries,
+00062:     ownership: OwnershipSnapshot,
+00063:     market: MarketSnapshot,
+00064:     *,
+00065:     as_of: datetime | None = None,
+00066:     ebitda_ttm: Decimal | None = None,
+00067:     fcf_ttm: Decimal | None = None,
+00068:     dividends_ttm: Decimal | None = None,
+00069: ) -> MultipleSnapshot:
+00070:     if series.symbol != ownership.symbol or series.symbol != market.symbol:
+00071:         raise MarketMultiplesError("symbol mismatch across financial/ownership/market inputs")
+00072:     if market.price <= 0:
+00073:         raise MarketMultiplesError("market price must be positive")
+00074:     if ownership.canonical_share_count <= 0:
+00075:         raise MarketMultiplesError("share count must be positive")
+00076:     if as_of is not None:
+00077:         if ownership.published_at is not None and ownership.published_at > as_of:
+00078:             raise MarketMultiplesError("ownership data not public as of requested time")
+---
+00092:     total_financial_debt = st + cur_lt + lt
+00093:     enterprise_value = market_cap + total_financial_debt - cash
+00094: 
+00095:     flags: list[str] = []
+00096:     pe = _safe_div(market_cap, earnings)
+00097:     pb = _safe_div(market_cap, parent_equity)
+00098:     ps = _safe_div(market_cap, revenue)
+00099:     ev_sales = _safe_div(enterprise_value, revenue)
+00100:     ev_ebitda = _safe_div(enterprise_value, ebitda_ttm)
+00101:     p_fcf = _safe_div(market_cap, fcf_ttm)
+00102:     dividend_yield = _safe_div(dividends_ttm, market_cap)
+00103: 
+00104:     if earnings is None:
+00105:         flags.append("TTM_EARNINGS_UNAVAILABLE")
+00106:     elif earnings <= 0:
+00107:         flags.append("PE_NOT_MEANINGFUL_NEGATIVE_EARNINGS")
+00108:     if parent_equity is None:
+00109:         flags.append("EQUITY_UNAVAILABLE")
+00110:     elif parent_equity <= 0:
+00111:         flags.append("PB_NOT_MEANINGFUL_NONPOSITIVE_EQUITY")
+00112:     if ebitda_ttm is None:
+---
+00113:         flags.append("EV_EBITDA_NOT_EVALUATED_WITHOUT_RELIABLE_EBITDA")
+00114:     if fcf_ttm is None:
+00115:         flags.append("P_FCF_NOT_EVALUATED_WITHOUT_TTM_FCF")
+00116: 
+00117:     return MultipleSnapshot(
+00118:         symbol=series.symbol,
+00119:         as_of_date=market.price_date,
+00120:         pe=pe,
+00121:         pb=pb,
+00122:         ev_ebitda=ev_ebitda,
+00123:         ev_sales=ev_sales,
+00124:         ps=ps,
+---
+00125:         p_fcf=p_fcf,
+---
+00126:         dividend_yield=dividend_yield,
+00127:         market_cap=market_cap,
+00128:         enterprise_value=enterprise_value,
+00129:         equity_value_basis=parent_equity,
+00130:         earnings_basis=earnings,
+00131:         ebitda_basis=ebitda_ttm,
+00132:         revenue_basis=revenue,
+00133:         fcf_basis=fcf_ttm,
+00134:         data_flags=tuple(flags),
+---
+00135:     )
+---
+===
+FILE=backend\app\analysis\relative_valuation.py
+00002: 
+00003: from decimal import Decimal
+00004: from statistics import median
+00005: from typing import Iterable
+00006: 
+00007: from ..models.valuation_foundation_models import MultipleSnapshot, RelativeValuationResult
+00008: 
+00009: 
+00010: _METRICS = ("pe", "pb", "ev_ebitda", "ev_sales", "ps", "p_fcf")
+00011: 
+00012: 
+00013: def _median_decimal(values: Iterable[Decimal | None]) -> Decimal | None:
+00014:     clean = [v for v in values if v is not None and v > 0]
+00015:     if not clean:
+00016:         return None
+00017:     return Decimal(str(median(clean)))
+00018: 
+00019: 
+00020: def _discount(current: Decimal | None, reference: Decimal | None) -> Decimal | None:
+00021:     if current is None or reference is None or reference <= 0:
+00022:         return None
+---
+===
+FILE=backend\app\analysis\research_profiles.py
+00085: 
+00086: @dataclass(frozen=True)
+00087: class FundamentalSnapshot:
+00088:     symbol: str
+00089:     market_cap_try: float | None = None
+00090:     free_float_shares: float | None = None
+00091:     ttm_cfo: float | None = None
+00092:     ttm_operating_profit: float | None = None
+00093:     latest_ebitda: float | None = None
+00094:     latest_operating_profit: float | None = None
+00095:     net_cash: float | None = None
+00096:     net_debt_ebitda: float | None = None
+00097:     debt_equity: float | None = None
+00098:     revenue_yoy_pct: float | None = None
+00099:     gross_margin_delta_pp: float | None = None
+00100:     ebitda_margin_delta_pp: float | None = None
+00101:     operating_profit_yoy_pct: float | None = None
+00102:     cfo_direction: str | None = None
+00103:     leverage_direction: str | None = None
+00104:     capex: CapexEvidence | None = None
+00105: 
+---
+00106: 
+00107: @dataclass(frozen=True)
+00108: class DirectionEvaluation:
+---
+00109:     direction: FundamentalDirection
+00110:     positive_count: int
+00111:     severe_negative_count: int
+00112:     observed_count: int
+---
+00143: 
+00144:     if snapshot.gross_margin_delta_pp is not None:
+00145:         observed += 1
+00146:         if snapshot.gross_margin_delta_pp >= 1:
+00147:             positive += 1; reasons.append("MATCH_GROSS_MARGIN_IMPROVEMENT")
+00148:         if snapshot.gross_margin_delta_pp <= -3:
+00149:             severe += 1; reasons.append("SEVERE_GROSS_MARGIN_DETERIORATION")
+00150: 
+00151:     if snapshot.ebitda_margin_delta_pp is not None:
+00152:         observed += 1
+00153:         if snapshot.ebitda_margin_delta_pp >= 1:
+00154:             positive += 1; reasons.append("MATCH_EBITDA_MARGIN_IMPROVEMENT")
+00155:         if snapshot.ebitda_margin_delta_pp <= -3:
+00156:             severe += 1; reasons.append("SEVERE_EBITDA_MARGIN_DETERIORATION")
+00157: 
+00158:     if snapshot.ttm_cfo is not None:
+00159:         observed += 1
+00160:         cfo_dir = _norm(snapshot.cfo_direction)
+00161:         if snapshot.ttm_cfo > 0 and cfo_dir != "deteriorating":
+00162:             positive += 1; reasons.append("MATCH_POSITIVE_CFO")
+00163:         if snapshot.ttm_cfo < 0 and cfo_dir == "deteriorating":
+---
+00164:             severe += 1; reasons.append("SEVERE_CFO_DETERIORATION")
+00165: 
+---
+00166:     leverage_observed = snapshot.net_cash is not None or snapshot.net_debt_ebitda is not None or snapshot.leverage_direction is not None
+---
+00167:     if leverage_observed:
+---
+00168:         observed += 1
+---
+00169:         lev_dir = _norm(snapshot.leverage_direction)
+00170:         if lev_dir in {"improving", "improved"}:
+00171:             positive += 1; reasons.append("MATCH_LEVERAGE_IMPROVEMENT")
+00172:         elif snapshot.net_cash is not None and snapshot.net_cash >= 0 and lev_dir != "deteriorating":
+00173:             positive += 1; reasons.append("MATCH_NET_CASH")
+00174:         if lev_dir == "deteriorating":
+00175:             severe += 1; reasons.append("SEVERE_LEVERAGE_DETERIORATION")
+00176: 
+00177:     if observed < 3:
+00178:         direction = FundamentalDirection.INSUFFICIENT
+---
+00198: 
+00199: def _verified_capex(s: FundamentalSnapshot) -> bool:
+00200:     return s.capex is not None and s.capex.evidence_status is CapexEvidenceStatus.VERIFIED and s.capex.stage in ACTIVE_CAPEX_STAGES
+00201: 
+00202: 
+00203: def _baby_balance(s: FundamentalSnapshot) -> bool | None:
+00204:     if s.net_cash is not None and s.net_cash >= 0:
+00205:         return True
+00206:     if s.net_debt_ebitda is None or s.debt_equity is None:
+00207:         return None
+00208:     return s.net_debt_ebitda <= 0.50 and s.debt_equity <= 0.25
+00209: 
+00210: 
+00211: def _capex_balance(s: FundamentalSnapshot) -> bool | None:
+00212:     if s.net_cash is not None and s.net_cash >= 0:
+00213:         return True
+00214:     if s.net_debt_ebitda is None:
+00215:         return None
+00216:     return s.net_debt_ebitda <= 2.0
+00217: 
+00218: 
+---
+00219: def _result(s, profile, state, d, reasons, warnings=(), size=None):
+00220:     return ResearchProfileResult(
+---
+00221:         symbol=s.symbol.strip().upper(), profile=profile, state=state,
+00222:         direction=d, reasons=tuple(dict.fromkeys(reasons)),
+00223:         warnings=tuple(dict.fromkeys(warnings)), size_classification=size
+00224:     )
+00225: 
+00226: 
+---
+00227: def evaluate_baby_quality_capex(snapshot: FundamentalSnapshot, *, as_of: date) -> ResearchProfileResult:
+00228:     profile = ResearchProfileName.BABY_QUALITY_CAPEX
+---
+00304:     return _result(snapshot, profile, ProfileState.MATCH, d.direction, reasons)
+00305: 
+00306: 
+00307: def evaluate_earnings_inflection(snapshot: FundamentalSnapshot, *, as_of: date) -> ResearchProfileResult:
+00308:     del as_of
+00309:     profile = ResearchProfileName.EARNINGS_INFLECTION
+00310:     d = evaluate_fundamental_direction(snapshot)
+00311: 
+00312:     if snapshot.latest_ebitda is None or snapshot.latest_operating_profit is None:
+00313:         return _result(snapshot, profile, ProfileState.INSUFFICIENT, d.direction, ["MISSING_OPERATING_PROFIT_DATA"])
+00314:     if snapshot.latest_ebitda <= 0 or snapshot.latest_operating_profit <= 0:
+00315:         return _result(snapshot, profile, ProfileState.BLOCKED, d.direction, ["BLOCK_NEGATIVE_OPERATING_PROFIT"])
+00316: 
+00317:     growth_known = snapshot.revenue_yoy_pct is not None or snapshot.gross_margin_delta_pp is not None
+00318:     acceleration_known = snapshot.ebitda_margin_delta_pp is not None or snapshot.operating_profit_yoy_pct is not None
+00319:     if not growth_known or not acceleration_known:
+00320:         return _result(snapshot, profile, ProfileState.INSUFFICIENT, d.direction, ["MISSING_INFLECTION_DATA"])
+00321: 
+00322:     growth = (snapshot.revenue_yoy_pct is not None and snapshot.revenue_yoy_pct > 0) or (snapshot.gross_margin_delta_pp is not None and snapshot.gross_margin_delta_pp >= 1)
+00323:     acceleration = (snapshot.ebitda_margin_delta_pp is not None and snapshot.ebitda_margin_delta_pp >= 2) or (snapshot.operating_profit_yoy_pct is not None and snapshot.operating_profit_yoy_pct >= 30)
+00324: 
+---
+00325:     reasons = [
+00326:         "MATCH_MARGIN_OR_REVENUE_INFLECTION" if growth else "BLOCK_NO_REVENUE_OR_GROSS_MARGIN_INFLECTION",
+---
+00327:         "MATCH_EBITDA_ACCELERATION" if acceleration else "BLOCK_NO_EBITDA_OR_OPERATING_PROFIT_ACCELERATION",
+00328:     ]
+00329:     if not growth or not acceleration:
+00330:         return _result(snapshot, profile, ProfileState.BLOCKED, d.direction, reasons)
+---
+00331:     if d.direction is FundamentalDirection.INSUFFICIENT:
+00332:         return _result(snapshot, profile, ProfileState.INSUFFICIENT, d.direction, reasons + ["MISSING_DIRECTION_DATA"])
+00333:     if d.direction is not FundamentalDirection.POSITIVE:
+00334:         return _result(snapshot, profile, ProfileState.BLOCKED, d.direction, reasons + ["BLOCK_DIRECTION_NOT_POSITIVE"])
+00335: 
+---
+00336:     warnings = ["WATCH_CFO_NEGATIVE"] if snapshot.ttm_cfo is not None and snapshot.ttm_cfo < 0 else []
+00337:     return _result(snapshot, profile, ProfileState.MATCH, d.direction, reasons, warnings)
+00338: 
+00339: 
+---
+===
+FILE=backend\app\analysis\research_profiles_daily.py
+00022: 
+00023: @dataclass(frozen=True)
+00024: class ResearchProfileContext:
+00025:     market_cap_try: float | None = None
+00026:     free_float_shares: float | None = None
+00027:     ttm_cfo: float | None = None
+00028:     ttm_operating_profit: float | None = None
+00029:     net_cash: float | None = None
+00030:     net_debt_ebitda: float | None = None
+00031:     debt_equity: float | None = None
+00032:     cfo_direction: str | None = None
+00033:     leverage_direction: str | None = None
+00034:     capex: CapexEvidence | None = None
+00035: 
+00036: 
+00037: @dataclass(frozen=True)
+00038: class DailyResearchProfileItem:
+00039:     symbol: str
+00040:     snapshot: FundamentalSnapshot
+00041:     results: tuple[ResearchProfileResult, ...]
+00042:     has_fundamental_periods: bool
+---
+00138: 
+00139: 
+00140: _PERIOD_DATE_FIELDS = (
+00141:     "period_end", "period_end_date", "end_date", "period_date",
+00142:     "report_date", "date", "donem_sonu", "d├╢nem_sonu",
+00143: )
+00144: _REVENUE_FIELDS = ("revenue", "sales", "hasilat", "has─▒lat")
+00145: _GROSS_PROFIT_FIELDS = ("gross_profit", "brut_kar", "br├╝t_kar")
+00146: _EBITDA_FIELDS = ("ebitda", "favok", "fav├╢k")
+00147: _OPERATING_PROFIT_FIELDS = (
+00148:     "operating_profit", "operating_income", "esas_faaliyet_kari",
+00149:     "esas_faaliyet_kar─▒",
+00150: )
+00151: _CFO_FIELDS = (
+00152:     "operating_cash_flow", "cash_flow_from_operations",
+00153:     "faaliyet_nakit_akisi", "faaliyet_nakit_ak─▒┼Я─▒",
+00154: )
+00155: _CASH_FIELDS = (
+00156:     "cash_and_equivalents", "cash", "nakit", "cash_equivalents",
+00157: )
+00158: _DEBT_FIELDS = (
+---
+00211: ) -> tuple[float | None, float | None]:
+00212:     # Existing fundamental ratio engine only; non-canonical inputs fail closed.
+00213:     try:
+00214:         ratios = calculate_ratios(latest)
+00215:     except (AttributeError, TypeError, ValueError, ArithmeticError):
+00216:         return None, None
+00217: 
+00218:     return (
+00219:         _float(getattr(ratios, "net_debt_to_ebitda", None)),
+00220:         _float(getattr(ratios, "debt_to_equity", None)),
+00221:     )
+00222: 
+00223: 
+00224: def snapshot_from_periods(
+00225:     symbol: str,
+00226:     periods: Iterable[object],
+00227:     *,
+00228:     context: ResearchProfileContext | None = None,
+00229: ) -> FundamentalSnapshot:
+00230:     context = context or ResearchProfileContext()
+00231:     ordered = sorted(
+---
+00235:     if not ordered:
+00236:         return FundamentalSnapshot(
+00237:             symbol=_symbol(symbol),
+00238:             market_cap_try=context.market_cap_try,
+00239:             free_float_shares=context.free_float_shares,
+00240:             ttm_cfo=context.ttm_cfo,
+00241:             ttm_operating_profit=context.ttm_operating_profit,
+00242:             net_cash=context.net_cash,
+00243:             net_debt_ebitda=context.net_debt_ebitda,
+00244:             debt_equity=context.debt_equity,
+00245:             cfo_direction=context.cfo_direction,
+00246:             leverage_direction=context.leverage_direction,
+00247:             capex=context.capex,
+00248:         )
+00249: 
+00250:     latest = ordered[-1]
+00251:     latest_date = _period_date(latest)
+00252:     previous = (
+00253:         _same_period_last_year(ordered, latest_date)
+00254:         if latest_date is not None
+00255:         else None
+---
+00256:     )
+00257: 
+00258:     revenue = _float(_field(latest, *_REVENUE_FIELDS))
+00259:     previous_revenue = _float(_field(previous, *_REVENUE_FIELDS))
+00260: 
+00261:     gross_profit = _float(_field(latest, *_GROSS_PROFIT_FIELDS))
+00262:     previous_gross_profit = _float(_field(previous, *_GROSS_PROFIT_FIELDS))
+00263: 
+00264:     ebitda = _float(_field(latest, *_EBITDA_FIELDS))
+00265:     previous_ebitda = _float(_field(previous, *_EBITDA_FIELDS))
+00266: 
+00267:     operating_profit = _float(_field(latest, *_OPERATING_PROFIT_FIELDS))
+00268:     previous_operating_profit = _float(
+00269:         _field(previous, *_OPERATING_PROFIT_FIELDS)
+00270:     )
+00271: 
+00272:     current_cfo = _float(_field(latest, *_CFO_FIELDS))
+00273:     previous_cfo = _float(_field(previous, *_CFO_FIELDS))
+00274: 
+00275:     cash = _float(_field(latest, *_CASH_FIELDS))
+00276:     debt = _float(_field(latest, *_DEBT_FIELDS))
+---
+00277:     previous_cash = _float(_field(previous, *_CASH_FIELDS))
+---
+00296:     cfo_direction = context.cfo_direction or _trend(current_cfo, previous_cfo)
+00297:     leverage_direction = context.leverage_direction or _trend(
+00298:         computed_net_cash, previous_net_cash
+00299:     )
+00300: 
+00301:     # RPV1_COVERAGE_HARDENING_V1:
+00302:     # Explicit context keeps precedence; otherwise reuse canonical balance ratios.
+00303:     (
+00304:         canonical_net_debt_ebitda,
+00305:         canonical_debt_equity,
+00306:     ) = _canonical_balance_ratios(latest)
+00307: 
+00308:     return FundamentalSnapshot(
+00309:         symbol=_symbol(symbol),
+00310:         market_cap_try=context.market_cap_try,
+00311:         free_float_shares=context.free_float_shares,
+00312:         ttm_cfo=(
+00313:             context.ttm_cfo
+00314:             if context.ttm_cfo is not None
+00315:             else explicit_ttm_cfo
+00316:         ),
+---
+00317:         ttm_operating_profit=(
+00318:             context.ttm_operating_profit
+00319:             if context.ttm_operating_profit is not None
+00320:             else explicit_ttm_operating_profit
+00321:         ),
+00322:         latest_ebitda=ebitda,
+00323:         latest_operating_profit=operating_profit,
+00324:         net_cash=(
+00325:             context.net_cash
+00326:             if context.net_cash is not None
+00327:             else computed_net_cash
+00328:         ),
+00329:         net_debt_ebitda=(
+00330:             context.net_debt_ebitda
+00331:             if context.net_debt_ebitda is not None
+00332:             else canonical_net_debt_ebitda
+00333:         ),
+00334:         debt_equity=(
+---
+00335:             context.debt_equity
+00336:             if context.debt_equity is not None
+00337:             else canonical_debt_equity
+00338:         ),
+00339:         revenue_yoy_pct=_pct_change(revenue, previous_revenue),
+00340:         gross_margin_delta_pp=_delta(
+00341:             _margin(gross_profit, revenue),
+---
+00342:             _margin(previous_gross_profit, previous_revenue),
+---
+00343:         ),
+---
+00344:         ebitda_margin_delta_pp=_delta(
+---
+00345:             _margin(ebitda, revenue),
+00346:             _margin(previous_ebitda, previous_revenue),
+00347:         ),
+00348:         operating_profit_yoy_pct=_pct_change(
+00349:             operating_profit, previous_operating_profit
+00350:         ),
+00351:         cfo_direction=cfo_direction,
+00352:         leverage_direction=leverage_direction,
+00353:         capex=context.capex,
+00354:     )
+00355: 
+00356: 
+---
+00357: def _group_periods(periods: Iterable[object]) -> dict[str, list[object]]:
+---
+00358:     grouped: dict[str, list[object]] = {}
+---
+00463:                     "Profil": result.profile.value,
+00464:                     "Durum": result.state.value,
+00465:                     "Fundamental y├╢n": result.direction.value,
+00466:                     "Piyasa de─Яeri": snapshot.market_cap_try,
+00467:                     "Fiili dola┼Я─▒m lot": snapshot.free_float_shares,
+00468:                     "Net nakit": snapshot.net_cash,
+00469:                     "Ciro YoY (%)": snapshot.revenue_yoy_pct,
+00470:                     "Br├╝t marj ╬Ф (pp)": snapshot.gross_margin_delta_pp,
+00471:                     "FAV├ЦK marj ╬Ф (pp)": snapshot.ebitda_margin_delta_pp,
+00472:                     "Capex a┼Яamas─▒": (
+00473:                         snapshot.capex.stage.value
+00474:                         if snapshot.capex is not None
+00475:                         else None
+00476:                     ),
+00477:                     "Neden": " | ".join(result.reasons),
+00478:                     "─░zleme": " | ".join(result.warnings),
+00479:                 }
+00480:             )
+00481:     return tuple(rows)
+00482: 
+00483: 
+---
+00572:         free_float_shares=_float(
+00573:             _first(record, "free_float_shares", "free_float_lot", "fiili_dolasim_lot")
+00574:         ),
+00575:         ttm_cfo=_float(_first(record, "ttm_cfo", "ttm_operating_cash_flow")),
+00576:         ttm_operating_profit=_float(
+00577:             _first(record, "ttm_operating_profit", "ttm_operating_income")
+00578:         ),
+00579:         net_cash=_float(_first(record, "net_cash", "net_nakit")),
+00580:         net_debt_ebitda=_float(
+00581:             _first(record, "net_debt_ebitda", "net_borc_favok")
+00582:         ),
+00583:         debt_equity=_float(
+00584:             _first(
+00585:                 record,
+00586:                 "debt_equity",
+00587:                 "debt_to_equity",
+00588:                 "borc_ozkaynak",
+00589:                 "borc_ozsermaye",
+00590:             )
+00591:         ),
+00592:         cfo_direction=(
+---
+00593:             str(_first(record, "cfo_direction", "cfo_yonu"))
+---
+00643:             free_float_shares=context.free_float_shares or previous.free_float_shares,
+00644:             ttm_cfo=context.ttm_cfo if context.ttm_cfo is not None else previous.ttm_cfo,
+00645:             ttm_operating_profit=(
+00646:                 context.ttm_operating_profit
+00647:                 if context.ttm_operating_profit is not None
+00648:                 else previous.ttm_operating_profit
+00649:             ),
+00650:             net_cash=context.net_cash if context.net_cash is not None else previous.net_cash,
+00651:             net_debt_ebitda=(
+00652:                 context.net_debt_ebitda
+00653:                 if context.net_debt_ebitda is not None
+00654:                 else previous.net_debt_ebitda
+00655:             ),
+00656:             debt_equity=(
+00657:                 context.debt_equity
+00658:                 if context.debt_equity is not None
+00659:                 else previous.debt_equity
+00660:             ),
+00661:             cfo_direction=context.cfo_direction or previous.cfo_direction,
+00662:             leverage_direction=context.leverage_direction or previous.leverage_direction,
+00663:             capex=context.capex or previous.capex,
+---
+00664:         )
+---
+00665:     return out
+---
+---
+===
+FILE=backend\app\analysis\ttm_financial_bridge.py
+00025:     symbol: str
+00026:     as_of: datetime
+00027:     revenue_ttm: Decimal | None
+00028:     net_income_ttm: Decimal | None
+00029:     parent_net_income_ttm: Decimal | None
+00030:     operating_cash_flow_ttm: Decimal | None
+00031:     capex_ttm: Decimal | None
+00032:     free_cash_flow_ttm: Decimal | None
+00033:     ebitda_ttm: Decimal | None
+00034:     source_formula: str
+00035:     data_flags: tuple[str, ...]
+00036:     engine_version: str = "fin-prod-003-v1"
+00037: 
+00038: 
+00039: def _iter_points(series, metric_code: str):
+00040:     for p in series.points:
+00041:         if getattr(p, "metric_code", None) == metric_code:
+00042:             yield p
+00043: 
+00044: 
+00045: def _select_duration_point(series, metric_code: str, *,
+---
+00086:     v = _ttm_from_roles(series, "CAPEX")
+00087:     return None if v is None else abs(v)
+00088: 
+00089: 
+00090: def build_ttm_basis_from_reports(
+00091:     reports: Iterable[Any],
+00092:     *,
+00093:     as_of: datetime | None = None,
+00094:     ebitda_ttm_override: Decimal | None = None,
+00095: ) -> TTMBasis:
+00096:     reports = tuple(reports)
+00097:     if not reports:
+00098:         raise TTMBridgeError("at least one report is required")
+00099:     symbols = {r.identity.symbol for r in reports}
+00100:     if len(symbols) != 1:
+00101:         raise TTMBridgeError("all reports must belong to one symbol")
+00102:     symbol = next(iter(symbols))
+00103: 
+00104:     effective_as_of = as_of or max(
+00105:         (r.identity.published_at for r in reports if r.identity.published_at is not None),
+00106:         default=datetime.min,
+---
+00125:         flags.append("TTM_EARNINGS_UNAVAILABLE")
+00126:     if ocf_ttm is None:
+00127:         flags.append("TTM_OCF_UNAVAILABLE")
+00128:     if capex_ttm is None:
+00129:         flags.append("TTM_CAPEX_UNAVAILABLE")
+00130:     if fcf_ttm is None:
+00131:         flags.append("TTM_FCF_UNAVAILABLE")
+00132: 
+00133:     ebitda_ttm = _D(ebitda_ttm_override)
+00134:     if ebitda_ttm is None:
+00135:         # Do not synthesize EBITDA from EBIT + depreciation unless every
+00136:         # component has been canonically verified across all three TTM legs.
+00137:         flags.append("TTM_EBITDA_REQUIRES_CANONICAL_OR_EXPLICIT_OVERRIDE")
+00138: 
+00139:     return TTMBasis(
+00140:         symbol=symbol,
+00141:         as_of=effective_as_of,
+00142:         revenue_ttm=revenue_ttm,
+00143:         net_income_ttm=net_income_ttm,
+00144:         parent_net_income_ttm=parent_net_income_ttm,
+00145:         operating_cash_flow_ttm=ocf_ttm,
+---
+00146:         capex_ttm=capex_ttm,
+---
+00147:         free_cash_flow_ttm=fcf_ttm,
+---
+00148:         ebitda_ttm=ebitda_ttm,
+00149:         source_formula="TTM = PRIOR_FULL_YEAR + CURRENT_YTD - PRIOR_YEAR_SAME_PERIOD",
+---
+00150:         data_flags=tuple(flags),
+00151:     )
+00152: 
+00153: 
+00154: def import_reports(paths: Iterable[str | Path]):
+00155:     reports = []
+00156:     for p in paths:
+00157:         path = Path(p)
+00158:         reports.append(import_kap_financial_xls_bytes(path.read_bytes(), source_name=path.name))
+00159:     return tuple(reports)
+00160: 
+---
+===
+FILE=backend\app\data\fundamental_data.py
+00016:     "symbol",
+00017:     "period_end",
+00018:     "fiscal_year",
+00019:     "fiscal_quarter",
+00020:     "currency",
+00021:     "revenue",
+00022:     "gross_profit",
+00023:     "operating_profit",
+00024:     "ebitda",
+00025:     "net_income",
+00026:     "total_assets",
+00027:     "total_equity",
+00028:     "total_debt",
+00029:     "cash_and_equivalents",
+00030:     "current_assets",
+00031:     "current_liabilities",
+00032:     "operating_cash_flow",
+00033:     "capital_expenditure",
+00034:     "shares_outstanding",
+00035: )
+00036: 
+---
+00105:         fiscal_year=int(record["fiscal_year"]),
+00106:         fiscal_quarter=int(record["fiscal_quarter"]),
+00107:         currency=str(record["currency"]),
+00108:         revenue=Decimal(str(record["revenue"])),
+00109:         gross_profit=Decimal(str(record["gross_profit"])),
+00110:         operating_profit=Decimal(
+00111:             str(record["operating_profit"])
+00112:         ),
+00113:         ebitda=Decimal(str(record["ebitda"])),
+00114:         net_income=Decimal(str(record["net_income"])),
+00115:         total_assets=Decimal(str(record["total_assets"])),
+00116:         total_equity=Decimal(str(record["total_equity"])),
+00117:         total_debt=Decimal(str(record["total_debt"])),
+00118:         cash_and_equivalents=Decimal(
+00119:             str(record["cash_and_equivalents"])
+00120:         ),
+00121:         current_assets=Decimal(
+00122:             str(record["current_assets"])
+00123:         ),
+00124:         current_liabilities=Decimal(
+00125:             str(record["current_liabilities"])
+---
+===
+FILE=backend\app\data\kap_fundamental_source.py
+00069:     "currency": ("currency", "currencyCode"),
+00070:     "revenue": ("revenue", "sales", "netSales"),
+00071:     "gross_profit": ("gross_profit", "grossProfit"),
+00072:     "operating_profit": (
+00073:         "operating_profit",
+00074:         "operatingProfit",
+00075:         "operatingIncome",
+00076:     ),
+00077:     "ebitda": ("ebitda", "favok", "EBITDA"),
+00078:     "net_income": ("net_income", "netIncome", "netProfit"),
+00079:     "total_assets": ("total_assets", "totalAssets"),
+00080:     "total_equity": ("total_equity", "totalEquity", "equity"),
+00081:     "total_debt": ("total_debt", "totalDebt"),
+00082:     "cash_and_equivalents": (
+00083:         "cash_and_equivalents",
+00084:         "cashAndEquivalents",
+00085:         "cash",
+00086:     ),
+00087:     "current_assets": ("current_assets", "currentAssets"),
+00088:     "current_liabilities": (
+00089:         "current_liabilities",
+---
+===
+FILE=backend\app\models\fundamental_models.py
+00031:     symbol: str
+00032:     period_end: date
+00033:     fiscal_year: int
+00034:     fiscal_quarter: int
+00035:     currency: str
+00036:     revenue: Decimal
+00037:     gross_profit: Decimal
+00038:     operating_profit: Decimal
+00039:     ebitda: Decimal
+00040:     net_income: Decimal
+00041:     total_assets: Decimal
+00042:     total_equity: Decimal
+00043:     total_debt: Decimal
+00044:     cash_and_equivalents: Decimal
+00045:     current_assets: Decimal
+00046:     current_liabilities: Decimal
+00047:     operating_cash_flow: Decimal
+00048:     capital_expenditure: Decimal
+00049:     shares_outstanding: Decimal
+00050:     source: str = "manual"
+00051:     published_at: date | None = None
+---
+00069:             )
+00070:         if not self.currency.strip():
+00071:             raise FundamentalModelError("Para birimi bo┼Я olamaz.")
+00072: 
+00073:         decimal_fields = (
+00074:             "revenue",
+00075:             "gross_profit",
+00076:             "operating_profit",
+00077:             "ebitda",
+00078:             "net_income",
+00079:             "total_assets",
+00080:             "total_equity",
+00081:             "total_debt",
+00082:             "cash_and_equivalents",
+00083:             "current_assets",
+00084:             "current_liabilities",
+00085:             "operating_cash_flow",
+00086:             "capital_expenditure",
+00087:             "shares_outstanding",
+00088:         )
+00089:         for field_name in decimal_fields:
+---
+00120: 
+00121: 
+00122: @dataclass(frozen=True)
+00123: class FundamentalRatios:
+00124:     symbol: str
+00125:     period_key: str
+00126:     gross_margin: Decimal | None
+00127:     operating_margin: Decimal | None
+00128:     ebitda_margin: Decimal | None
+00129:     net_margin: Decimal | None
+00130:     roe: Decimal | None
+00131:     roa: Decimal | None
+00132:     current_ratio: Decimal | None
+00133:     debt_to_equity: Decimal | None
+00134:     net_debt: Decimal
+00135:     net_debt_to_ebitda: Decimal | None
+00136:     free_cash_flow: Decimal
+00137:     free_cash_flow_margin: Decimal | None
+00138: 
+00139: 
+00140: @dataclass(frozen=True)
+---
+00141: class FundamentalGrowth:
+00142:     symbol: str
+00143:     current_period_key: str
+00144:     comparison_period_key: str
+00145:     revenue_growth: Decimal | None
+00146:     ebitda_growth: Decimal | None
+00147:     net_income_growth: Decimal | None
+---
+00148:     equity_growth: Decimal | None
+00149:     operating_cash_flow_growth: Decimal | None
+00150: 
+00151: 
+00152: @dataclass(frozen=True)
+00153: class FundamentalSnapshot:
+00154:     latest: FinancialPeriod
+00155:     previous_quarter: FinancialPeriod | None
+00156:     previous_year_same_quarter: FinancialPeriod | None
+00157:     ratios: FundamentalRatios
+00158:     quarter_growth: FundamentalGrowth | None
+---
+===
+FILE=backend\app\models\valuation_foundation_models.py
+00045: 
+00046: 
+00047: @dataclass(frozen=True)
+00048: class MultipleSnapshot:
+00049:     symbol: str
+00050:     as_of_date: date
+00051:     pe: Decimal | None
+00052:     pb: Decimal | None
+00053:     ev_ebitda: Decimal | None
+00054:     ev_sales: Decimal | None
+00055:     ps: Decimal | None
+00056:     p_fcf: Decimal | None
+00057:     dividend_yield: Decimal | None
+00058:     market_cap: Decimal
+00059:     enterprise_value: Decimal | None
+00060:     equity_value_basis: Decimal | None
+00061:     earnings_basis: Decimal | None
+00062:     ebitda_basis: Decimal | None
+00063:     revenue_basis: Decimal | None
+00064:     fcf_basis: Decimal | None
+00065:     data_flags: tuple[str, ...] = ()
+---
+00066: 
+00067: 
+00068: @dataclass(frozen=True)
+00069: class RelativeValuationResult:
+00070:     symbol: str
+00071:     as_of_date: date
+00072:     current: MultipleSnapshot
+00073:     historical_medians: dict[str, Decimal | None]
+00074:     historical_discount_premium: dict[str, Decimal | None]
+---
+===
+
+===== EBITDA_ARTIFACT_VALUES =====
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_market_ownership_acceptance.json
+FIELD|$.multiples.ev_ebitda|None
+FIELD|$.multiples.ebitda_basis|None
+---
+FILE=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_ttm_acceptance.json
+FIELD|$.ttm_basis.ebitda_ttm|None
+FIELD|$.multiples.ev_ebitda|None
+FIELD|$.multiples.ebitda_basis|None
+FIELD|$.valuation_status.ev_ebitda_unlocked|False
+---
+
+FIN_PROD_V6_EBITDA_SHARES_EXACT_SOURCE=PASS

@@ -1,0 +1,59 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+  "symbol": "TUPRS",
+  "ttm_basis": {
+    "symbol": "TUPRS",
+    "as_of": "2026-08-04T18:24:32",
+    "revenue_ttm": null,
+    "net_income_ttm": null,
+    "parent_net_income_ttm": null,
+    "operating_cash_flow_ttm": null,
+    "capex_ttm": null,
+    "free_cash_flow_ttm": null,
+    "ebitda_ttm": null,
+    "source_formula": "TTM = PRIOR_FULL_YEAR + CURRENT_YTD - PRIOR_YEAR_SAME_PERIOD",
+    "data_flags": [
+      "TTM_REVENUE_UNAVAILABLE",
+      "TTM_EARNINGS_UNAVAILABLE",
+      "TTM_OCF_UNAVAILABLE",
+      "TTM_CAPEX_UNAVAILABLE",
+      "TTM_FCF_UNAVAILABLE",
+      "TTM_EBITDA_REQUIRES_CANONICAL_OR_EXPLICIT_OVERRIDE"
+    ],
+    "engine_version": "fin-prod-003-v1"
+  },
+  "multiples": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "pe": "11.65193939079602782839153319",
+    "pb": "1.626293962900025293817977136",
+    "ev_ebitda": null,
+    "ev_sales": "0.6300529023082803237142346322",
+    "ps": "0.7609927487089325743381605960",
+    "p_fcf": null,
+    "dividend_yield": null,
+    "market_cap": "741816305230",
+    "enterprise_value": "614176044230",
+    "equity_value_basis": "456139125000",
+    "earnings_basis": "63664621000",
+    "ebitda_basis": null,
+    "revenue_basis": "974800754000",
+    "fcf_basis": null,
+    "data_flags": [
+      "EV_EBITDA_NOT_EVALUATED_WITHOUT_RELIABLE_EBITDA",
+      "P_FCF_NOT_EVALUATED_WITHOUT_TTM_FCF"
+    ]
+  },
+  "valuation_status": {
+    "pe_unlocked": true,
+    "ev_ebitda_unlocked": false,
+    "p_fcf_unlocked": false
+  },
+  "limitations": [
+    "EV/EBITDA remains fail-closed unless EBITDA TTM is canonical or explicitly supplied.",
+    "TTM uses point-in-time compatible FY + current YTD - prior same-period arithmetic.",
+    "No interim figure is blindly annualized.",
+    "No AL/SAT, scanner, ranking or portfolio score is mutated."
+  ]
+}

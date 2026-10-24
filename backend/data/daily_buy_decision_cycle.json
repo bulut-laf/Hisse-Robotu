@@ -1,0 +1,118 @@
+{
+  "EVENING": {
+    "phase": "EVENING",
+    "created_at": "2026-10-24T00:09:38+03:00",
+    "candidates": [
+      {
+        "rank": 1,
+        "symbol": "ENTRA",
+        "technical_score": 60,
+        "technical_view": "Nötr Teknik Görünüm",
+        "research_priority": "NORMAL",
+        "visibility_state": "STABLE",
+        "rank_change": 0,
+        "operational_status": "TEYİT BEKLİYOR",
+        "data_blocked": false,
+        "decision": "İŞLEM YOK",
+        "volume_ratio": 1.0317789977464977,
+        "risk_reward": 0.11472688256392037,
+        "selection_source": "TARAMA",
+        "jump_quality": "FİLTRE DIŞI",
+        "entry_readiness": "ERKEN",
+        "decision_reasons": [
+          "Hacim teyidi mevcut (1.03)"
+        ],
+        "decision_cautions": [
+          "MACD histogramı zayıflıyor.",
+          "Risk/ödül oranı minimum koşulu karşılamıyor.",
+          "Risk/getiri hedefin altında (0.11)"
+        ]
+      },
+      {
+        "rank": 2,
+        "symbol": "ENJSA",
+        "technical_score": 53,
+        "technical_view": "Nötr Teknik Görünüm",
+        "research_priority": "MEDIUM",
+        "visibility_state": "IMPROVING",
+        "rank_change": 6,
+        "operational_status": "TEYİT BEKLİYOR",
+        "data_blocked": false,
+        "decision": "İŞLEM YOK",
+        "volume_ratio": 1.1324033029848941,
+        "risk_reward": 0.4240122318030263,
+        "selection_source": "TARAMA",
+        "jump_quality": "FİLTRE DIŞI",
+        "entry_readiness": "ERKEN",
+        "decision_reasons": [
+          "Hacim teyidi mevcut (1.13)",
+          "Sıralama iyileşiyor (+6)",
+          "Erken görünürlük IMPROVING"
+        ],
+        "decision_cautions": [
+          "MACD histogramı zayıflıyor.",
+          "Risk/ödül oranı minimum koşulu karşılamıyor.",
+          "Risk/getiri hedefin altında (0.42)"
+        ]
+      }
+    ]
+  },
+  "MORNING": {
+    "phase": "MORNING",
+    "created_at": "2026-10-24T00:24:16+03:00",
+    "candidates": [
+      {
+        "rank": 1,
+        "symbol": "ENTRA",
+        "technical_score": 60,
+        "technical_view": "Nötr Teknik Görünüm",
+        "research_priority": "NORMAL",
+        "visibility_state": "STABLE",
+        "rank_change": 0,
+        "operational_status": "TEYİT BEKLİYOR",
+        "data_blocked": false,
+        "decision": "İŞLEM YOK",
+        "volume_ratio": 1.0317789977464977,
+        "risk_reward": 0.11472688256392037,
+        "selection_source": "TARAMA",
+        "jump_quality": "FİLTRE DIŞI",
+        "entry_readiness": "ERKEN",
+        "decision_reasons": [
+          "Hacim teyidi mevcut (1.03)"
+        ],
+        "decision_cautions": [
+          "MACD histogramı zayıflıyor.",
+          "Risk/ödül oranı minimum koşulu karşılamıyor.",
+          "Risk/getiri hedefin altında (0.11)"
+        ]
+      },
+      {
+        "rank": 2,
+        "symbol": "ENJSA",
+        "technical_score": 53,
+        "technical_view": "Nötr Teknik Görünüm",
+        "research_priority": "MEDIUM",
+        "visibility_state": "IMPROVING",
+        "rank_change": 6,
+        "operational_status": "TEYİT BEKLİYOR",
+        "data_blocked": false,
+        "decision": "İŞLEM YOK",
+        "volume_ratio": 1.1324033029848941,
+        "risk_reward": 0.4240122318030263,
+        "selection_source": "TARAMA",
+        "jump_quality": "FİLTRE DIŞI",
+        "entry_readiness": "ERKEN",
+        "decision_reasons": [
+          "Hacim teyidi mevcut (1.13)",
+          "Sıralama iyileşiyor (+6)",
+          "Erken görünürlük IMPROVING"
+        ],
+        "decision_cautions": [
+          "MACD histogramı zayıflıyor.",
+          "Risk/ödül oranı minimum koşulu karşılamıyor.",
+          "Risk/getiri hedefin altında (0.42)"
+        ]
+      }
+    ]
+  }
+}

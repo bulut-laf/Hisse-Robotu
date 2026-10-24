@@ -1,0 +1,129 @@
+﻿TEFAS_LIVE_WIRING_PREFLIGHT
+LIVE_PROVIDER_STATUS=ACTIVATED
+
+[REPOSITORY_REFS]
+backend\app\analysis\weekly_opportunity_memory.py:L129:weekly_snapshot:def list_weekly_snapshot_records(
+backend\app\analysis\weekly_opportunity_memory.py:L143:weekly_snapshot:def persist_weekly_snapshot(
+backend\app\analysis\weekly_opportunity_memory.py:L152:weekly_snapshot:row for row in list_weekly_snapshot_records(memory)
+backend\app\analysis\weekly_opportunity_memory.py:L157:weekly_snapshot:raise WeeklyOpportunityPersistenceError("DUPLICATE_WEEKLY_SNAPSHOT_DATE")
+backend\app\analysis\weekly_opportunity_memory.py:L160:weekly_snapshot:raise WeeklyOpportunityPersistenceError("WEEKLY_SNAPSHOT_DIGEST_CONFLICT")
+backend\app\analysis\weekly_opportunity_memory.py:L165:weekly_snapshot:def load_weekly_snapshot(
+backend\app\analysis\weekly_opportunity_memory.py:L171:weekly_snapshot:row for row in list_weekly_snapshot_records(store)
+backend\app\analysis\weekly_opportunity_memory.py:L177:weekly_snapshot:raise WeeklyOpportunityPersistenceError("DUPLICATE_WEEKLY_SNAPSHOT_DATE")
+backend\app\analysis\weekly_opportunity_memory.py:L190:weekly_snapshot:raise WeeklyOpportunityPersistenceError("WEEKLY_SNAPSHOT_DIGEST_MISMATCH")
+backend\app\analysis\weekly_opportunity_outcome.py:L13:weekly_snapshot:list_weekly_snapshot_records,
+backend\app\analysis\weekly_opportunity_outcome.py:L14:weekly_snapshot:load_weekly_snapshot,
+backend\app\analysis\weekly_opportunity_outcome.py:L139:weekly_snapshot:for raw in list_weekly_snapshot_records(memory):
+backend\app\analysis\weekly_opportunity_outcome.py:L146:weekly_snapshot:snapshot = load_weekly_snapshot(canonical_date, store=memory)
+backend\app\analysis\weekly_opportunity_runtime.py:L12:weekly_snapshot:from backend.app.analysis.weekly_opportunity_memory import persist_weekly_snapshot
+backend\app\analysis\weekly_opportunity_runtime.py:L123:weekly_snapshot:persistence = persist_weekly_snapshot(result, store=memory)
+backend\app\funds\analysis_engine.py:L8:fund_analysis:FUND_ANALYSIS_ENGINE_VERSION = "fund-analysis-v1"
+backend\app\funds\analysis_engine.py:L11:FundAnalysis:class FundAnalysisClass(str, Enum):
+backend\app\funds\analysis_engine.py:L20:FundAnalysis:FundAnalysisClass.A: "GL / NCELKL",
+backend\app\funds\analysis_engine.py:L21:FundAnalysis:FundAnalysisClass.B: "GELŞEN",
+backend\app\funds\analysis_engine.py:L22:FundAnalysis:FundAnalysisClass.C: "ZLE",
+backend\app\funds\analysis_engine.py:L23:FundAnalysis:FundAnalysisClass.D: "ZAYIFLAYAN",
+backend\app\funds\analysis_engine.py:L24:FundAnalysis:FundAnalysisClass.X: "UYGUN DEL",
+backend\app\funds\analysis_engine.py:L29:FundAnalysis:class FundAnalysisResult:
+backend\app\funds\analysis_engine.py:L32:FundAnalysis:classification: FundAnalysisClass
+backend\app\funds\analysis_engine.py:L42:fund_analysis:engine_version: str = FUND_ANALYSIS_ENGINE_VERSION
+backend\app\funds\analysis_engine.py:L45:FundAnalysis:def analyze_fund(evidence_map: FundEvidenceMap) -> FundAnalysisResult:
+backend\app\funds\analysis_engine.py:L57:FundAnalysis:classification = FundAnalysisClass.X
+backend\app\funds\analysis_engine.py:L60:FundAnalysis:classification = FundAnalysisClass.X
+backend\app\funds\analysis_engine.py:L63:FundAnalysis:classification = FundAnalysisClass.D
+backend\app\funds\analysis_engine.py:L71:FundAnalysis:classification = FundAnalysisClass.A
+backend\app\funds\analysis_engine.py:L74:FundAnalysis:classification = FundAnalysisClass.B
+backend\app\funds\analysis_engine.py:L77:FundAnalysis:classification = FundAnalysisClass.C
+backend\app\funds\analysis_engine.py:L85:FundAnalysis:return FundAnalysisResult(
+backend\app\funds\analysis_engine.py:L99:FundAnalysis:def analyze_funds(items: tuple[FundEvidenceMap, ...]) -> tuple[FundAnalysisResult, ...]:
+backend\app\funds\outcome.py:L9:FundAnalysis:from .analysis_engine import FundAnalysisResult
+backend\app\funds\outcome.py:L45:FundAnalysis:analysis: FundAnalysisResult, *, selection_date: date, start_price: Decimal,
+backend\app\funds\store.py:L24:FundObservationJsonStore:class FundObservationJsonStore:
+backend\app\funds\tefas_adapter.py:L21:TEFAS:class TefasProviderError(RuntimeError):
+backend\app\funds\tefas_adapter.py:L25:TEFAS:TEFAS_API_BASE = "https://www.tefas.gov.tr/api/funds"
+backend\app\funds\tefas_adapter.py:L27:TEFAS:TEFAS_ALLOWED_ENDPOINTS = frozenset(
+backend\app\funds\tefas_adapter.py:L36:TEFAS:def _tefas_api_url(endpoint: str) -> str:
+backend\app\funds\tefas_adapter.py:L37:TEFAS:if endpoint not in TEFAS_ALLOWED_ENDPOINTS:
+backend\app\funds\tefas_adapter.py:L38:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L39:TEFAS:f"TEFAS_ENDPOINT_NOT_ALLOWED:{endpoint}"
+backend\app\funds\tefas_adapter.py:L41:TEFAS:return f"{TEFAS_API_BASE}/{endpoint}"
+backend\app\funds\tefas_adapter.py:L44:TEFAS:def canonical_tefas_fund_id(provider_fund_id: object) -> str:
+backend\app\funds\tefas_adapter.py:L45:TEFAS:return f"fund:tefas:{normalize_fund_code(provider_fund_id)}"
+backend\app\funds\tefas_adapter.py:L48:TEFAS:def fetch_tefas_bytes(url: str, timeout_seconds: int = 10) -> bytes:
+backend\app\funds\tefas_adapter.py:L51:TEFAS:error_type=TefasProviderError, source_label="TEFAS",
+backend\app\funds\tefas_adapter.py:L56:map_tefas_rows:def map_tefas_rows(
+backend\app\funds\tefas_adapter.py:L56:TEFAS:def map_tefas_rows(
+backend\app\funds\tefas_adapter.py:L68:TEFAS:raise TefasProviderError(f"DUPLICATE_FUND_OBSERVATION:{code}:{observed}")
+backend\app\funds\tefas_adapter.py:L70:TEFAS:canonical_id = canonical_tefas_fund_id(row.get("provider_fund_id", code))
+backend\app\funds\tefas_adapter.py:L79:TEFAS:category_name=category_name, provider="TEFAS",
+backend\app\funds\tefas_adapter.py:L92:TEFAS:provider="TEFAS", fetched_at=fetched_at, source_as_of=source_as_of,
+backend\app\funds\tefas_adapter.py:L97:TEFAS:def _post_tefas_json(
+backend\app\funds\tefas_adapter.py:L104:TEFAS:url = _tefas_api_url(endpoint)
+backend\app\funds\tefas_adapter.py:L113:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L114:TEFAS:"TEFAS_REQUEST_JSON_INVALID"
+backend\app\funds\tefas_adapter.py:L124:TEFAS:"Origin": "https://www.tefas.gov.tr",
+backend\app\funds\tefas_adapter.py:L125:TEFAS:"Referer": "https://www.tefas.gov.tr/tr/fon-verileri",
+backend\app\funds\tefas_adapter.py:L140:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L141:TEFAS:f"TEFAS HTTP hatası: {exc.code}"
+backend\app\funds\tefas_adapter.py:L144:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L145:TEFAS:f"TEFAS bağlantı hatası: {exc.reason}"
+backend\app\funds\tefas_adapter.py:L148:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L149:TEFAS:"TEFAS bağlantısı zaman aşımına uğradı."
+backend\app\funds\tefas_adapter.py:L156:TEFAS:or parsed_url.hostname != "www.tefas.gov.tr"
+backend\app\funds\tefas_adapter.py:L159:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L160:TEFAS:f"TEFAS_UNEXPECTED_REDIRECT:{final_url}"
+backend\app\funds\tefas_adapter.py:L164:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L165:TEFAS:"TEFAS yanıtı güvenlik boyutu sınırını aşıyor."
+backend\app\funds\tefas_adapter.py:L174:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L175:TEFAS:"TEFAS_RESPONSE_JSON_INVALID"
+backend\app\funds\tefas_adapter.py:L179:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L180:TEFAS:"TEFAS_RESPONSE_ROOT_NOT_OBJECT"
+backend\app\funds\tefas_adapter.py:L186:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L187:TEFAS:f"TEFAS_API_ERROR:{error_code}:"
+backend\app\funds\tefas_adapter.py:L192:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L193:TEFAS:"TEFAS_RESULT_LIST_MISSING"
+backend\app\funds\tefas_adapter.py:L199:fetch_tefas_result_list:def fetch_tefas_result_list(
+backend\app\funds\tefas_adapter.py:L199:TEFAS:def fetch_tefas_result_list(
+backend\app\funds\tefas_adapter.py:L205:TEFAS:response = _post_tefas_json(
+backend\app\funds\tefas_adapter.py:L215:TEFAS:raise TefasProviderError(
+backend\app\funds\tefas_adapter.py:L216:TEFAS:"TEFAS_RESULT_ROW_NOT_OBJECT"
+backend\app\funds\tefas_adapter.py:L223:fetch_tefas_universe_rows:def fetch_tefas_universe_rows(
+backend\app\funds\tefas_adapter.py:L223:TEFAS:def fetch_tefas_universe_rows(
+backend\app\funds\tefas_adapter.py:L227:fetch_tefas_result_list:return fetch_tefas_result_list(
+backend\app\funds\tefas_adapter.py:L227:TEFAS:return fetch_tefas_result_list(
+backend\app\funds\tefas_adapter.py:L245:fetch_tefas_fund_detail_rows:def fetch_tefas_fund_detail_rows(
+backend\app\funds\tefas_adapter.py:L245:TEFAS:def fetch_tefas_fund_detail_rows(
+backend\app\funds\tefas_adapter.py:L255:fetch_tefas_result_list:return fetch_tefas_result_list(
+backend\app\funds\tefas_adapter.py:L255:TEFAS:return fetch_tefas_result_list(
+backend\app\funds\tefas_adapter.py:L262:fetch_tefas_fund_history_rows:def fetch_tefas_fund_history_rows(
+backend\app\funds\tefas_adapter.py:L262:TEFAS:def fetch_tefas_fund_history_rows(
+backend\app\funds\tefas_adapter.py:L278:fetch_tefas_result_list:return fetch_tefas_result_list(
+backend\app\funds\tefas_adapter.py:L278:TEFAS:return fetch_tefas_result_list(
+backend\app\funds\weekly_snapshot.py:L10:FundAnalysis:from .analysis_engine import FundAnalysisResult
+backend\app\funds\weekly_snapshot.py:L17:FundAnalysis:results: tuple[FundAnalysisResult, ...]
+backend\app\funds\weekly_snapshot.py:L22:FundAnalysis:def build_weekly_snapshot(week_ending: date, results: Iterable[FundAnalysisResult], *, observed_at: datetime | None = None) -> FundWeeklySnapshot:
+backend\app\funds\weekly_snapshot.py:L22:weekly_snapshot:def build_weekly_snapshot(week_ending: date, results: Iterable[FundAnalysisResult], *, observed_at: datetime | None = None) -> FundWeeklySnapshot:
+backend\app\funds\weekly_snapshot.py:L26:weekly_snapshot:raise ValueError("DUPLICATE_FUND_WEEKLY_SNAPSHOT")
+backend\app\funds\weekly_snapshot.py:L47:weekly_snapshot:raise ValueError("WEEKLY_SNAPSHOT_CONFLICT")
+backend\app\ui\fund_analysis_center.py:L5:FundAnalysis:from backend.app.funds.analysis_engine import FundAnalysisResult
+backend\app\ui\fund_analysis_center.py:L8:fund_analysis:def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+backend\app\ui\fund_analysis_center.py:L8:FundAnalysis:def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+backend\app\ui\fund_analysis_center.py:L20:fund_analysis:def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] = ()) -> None:
+backend\app\ui\fund_analysis_center.py:L20:FundAnalysis:def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] = ()) -> None:
+backend\app\ui\fund_analysis_center.py:L23:TEFAS:st.caption("TEFAS/fon araştırma dikeyidir. BIST taraması çalıştırmaz; otomatik AL/SAT üretmez.")
+backend\app\ui\fund_analysis_center.py:L27:fund_analysis:selected = st.multiselect("Fon sınıfı", options=tuple("ABCDX"), default=tuple("ABCDX"), key="fund_analysis_class_filter")
+backend\app\ui\fund_analysis_center.py:L28:fund_analysis:rows = [row for row in fund_analysis_rows(items) if row["Sınıf"] in selected]
+backend\app\ui\prebreakout_dashboard.py:L220:weekly_snapshot:snapshots = list_weekly_snapshot_records()
+backend\app\ui\prebreakout_dashboard.py:L244:weekly_snapshot:latest = load_weekly_snapshot(latest_date)
+backend\app\ui\prebreakout_dashboard.py:L932:weekly_snapshot:list_weekly_snapshot_records,
+backend\app\ui\prebreakout_dashboard.py:L933:weekly_snapshot:load_weekly_snapshot,
+
+[UI_CONTRACT]
+backend\app\ui\fund_analysis_center.py:L1:from __future__ import annotations
+backend\app\ui\fund_analysis_center.py:L3:from typing import Any, Iterable
+backend\app\ui\fund_analysis_center.py:L5:from backend.app.funds.analysis_engine import FundAnalysisResult
+backend\app\ui\fund_analysis_center.py:L8:def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+backend\app\ui\fund_analysis_center.py:L20:def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] = ()) -> None:
+backend\app\ui\fund_analysis_center.py:L23:st.caption("TEFAS/fon araştırma dikeyidir. BIST taraması çalıştırmaz; otomatik AL/SAT üretmez.")
+backend\app\ui\fund_analysis_center.py:L27:selected = st.multiselect("Fon sınıfı", options=tuple("ABCDX"), default=tuple("ABCDX"), key="fund_analysis_class_filter")
+backend\app\ui\fund_analysis_center.py:L28:rows = [row for row in fund_analysis_rows(items) if row["Sınıf"] in selected]

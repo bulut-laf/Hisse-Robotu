@@ -1,0 +1,739 @@
+
+========== .\backend\tests\test_erste_hungary_f4_bridge_v1.py ==========
+from decimal import Decimal
+
+from backend.app.funds.evidence_mapper import EvidenceState, FundEvidenceInput
+from backend.app.funds.international.erste_hungary_f4_bridge import (
+    derive_f4_state,
+    derive_fund_size_change,
+    inject_f4_fields,
+)
+
+
+def test_f4_positive_requires_both_fields_positive():
+    assert derive_f4_state(
+        fund_size_change=Decimal("0.01"),
+        net_flow_ratio=Decimal("0.02"),
+    ) == EvidenceState.POSITIVE
+
+
+def test_f4_caution_requires_both_fields_negative():
+    assert derive_f4_state(
+        fund_size_change=Decimal("-0.01"),
+        net_flow_ratio=Decimal("-0.02"),
+    ) == EvidenceState.CAUTION
+
+
+def test_f4_mixed_is_neutral():
+    assert derive_f4_state(
+        fund_size_change=Decimal("0.01"),
+        net_flow_ratio=Decimal("-0.02"),
+    ) == EvidenceState.NEUTRAL
+
+
+def test_f4_requires_two_fields():
+    assert derive_f4_state(
+        fund_size_change=Decimal("0.01"),
+        net_flow_ratio=None,
+    ) == EvidenceState.UNAVAILABLE
+
+
+def test_fund_size_change_uses_same_source_nav_pair():
+    assert derive_fund_size_change(
+        Decimal("100"),
+        Decimal("105"),
+    ) == Decimal("0.05")
+
+
+def test_inject_f4_preserves_existing_fields():
+    base = FundEvidenceInput(
+        canonical_fund_id="fund:isin:TEST00000001",
+        category_id="EQUITY",
+        category_rank_percentile=Decimal("0.8"),
+        category_rank_change=5,
+        return_1m=Decimal("0.01"),
+        return_3m=Decimal("0.02"),
+        return_6m=Decimal("0.03"),
+        volatility_percentile=Decimal("0.4"),
+        max_drawdown=Decimal("-0.05"),
+        fund_size_change=None,
+        investor_change=None,
+        net_flow_ratio=None,
+        total_expense_ratio=None,
+        regime_fit=None,
+        allocation_known=False,
+    )
+    value = inject_f4_fields(
+        base,
+        fund_size_change=Decimal("0.01"),
+        net_flow_ratio=Decimal("0.02"),
+    )
+    assert value.return_1m == Decimal("0.01")
+    assert value.volatility_percentile == Decimal("0.4")
+    assert value.fund_size_change == Decimal("0.01")
+    assert value.net_flow_ratio == Decimal("0.02")
+    assert value.investor_change is None
+
+========== .\backend\tests\test_erste_hungary_f4_csv.py ==========
+from datetime import date
+from decimal import Decimal
+
+from backend.app.funds.international.erste_hungary_f4_csv import (
+    parse_bamosz_csv, fund_size_change, net_flow_ratio
+)
+
+def test_metadata_before_header_and_iso_8859_2():
+    body = (
+        '"Letöltés időpontja";"2026.10.24. 08:00"\n'
+        '"Alap neve:";"Erste Felelős Részvény"\n'
+        '"Dátum";"Árfolyam";"NEÉ";"Kifizetett hozam";"Napi befjegy. forgalom"\n'
+        '"2026.10.22.";"1.234,56";"100.000,00";"";"500,00"\n'
+        '"2026.10.23.";"1.240,00";"105.000,00";"";"600,00"\n'
+    ).encode("iso-8859-2")
+    parsed = parse_bamosz_csv(body, "AT0000627476")
+    assert parsed.encoding == "iso-8859-2"
+    assert parsed.fund_name == "Erste Felelős Részvény"
+    assert len(parsed.rows) == 2
+    assert parsed.rows[-1].nav == Decimal("105000.00")
+    assert parsed.rows[-1].turnover == Decimal("600.00")
+
+def test_fund_size_change_uses_latest_two_valid_nav_rows():
+    body = (
+        '"Dátum";"Árfolyam";"NEÉ"\n'
+        '"2026.10.22.";"1,0";"100,0"\n'
+        '"2026.10.23.";"1,0";"105,0"\n'
+    ).encode("iso-8859-2")
+    parsed = parse_bamosz_csv(body, "AT0000627476")
+    assert fund_size_change(parsed.rows) == Decimal("0.05")
+
+def test_no_net_flow_proxy_from_daily_turnover():
+    assert net_flow_ratio(official_net_investor_flow=None,
+                          prior_fund_nav=Decimal("100")) is None
+    assert net_flow_ratio(official_net_investor_flow=Decimal("2"),
+                          prior_fund_nav=Decimal("100")) == Decimal("0.02")
+
+def test_missing_header_fails_closed():
+    try:
+        parse_bamosz_csv(b'"Letoltes";"valami"\n"meta";"adat"\n', "AT0000627476")
+    except ValueError as exc:
+        assert "CSV_DAILY_HEADER_NOT_FOUND" in str(exc)
+    else:
+        raise AssertionError("expected explicit header error")
+
+========== .\backend\app\funds\evidence_mapper.py ==========
+from __future__ import annotations
+
+from dataclasses import dataclass
+from decimal import Decimal
+from enum import Enum
+from typing import Mapping
+
+
+class EvidenceState(str, Enum):
+    POSITIVE = "POSITIVE"
+    NEUTRAL = "NEUTRAL"
+    CAUTION = "CAUTION"
+    UNAVAILABLE = "UNAVAILABLE"
+
+
+@dataclass(frozen=True, slots=True)
+class FundEvidenceInput:
+    canonical_fund_id: str
+    category_id: str | None
+    category_rank_percentile: Decimal | None
+    category_rank_change: int | None
+    return_1m: Decimal | None
+    return_3m: Decimal | None
+    return_6m: Decimal | None
+    volatility_percentile: Decimal | None
+    max_drawdown: Decimal | None
+    fund_size_change: Decimal | None
+    investor_change: Decimal | None
+    net_flow_ratio: Decimal | None
+    total_expense_ratio: Decimal | None
+    regime_fit: Decimal | None
+    allocation_known: bool
+
+
+@dataclass(frozen=True, slots=True)
+class FundEvidence:
+    family: str
+    state: EvidenceState
+    facts: tuple[str, ...]
+    missing_fields: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True, slots=True)
+class FundEvidenceMap:
+    canonical_fund_id: str
+    category_id: str | None
+    category_mapping_state: str
+    evidence: tuple[FundEvidence, ...]
+
+    @property
+    def available_family_count(self) -> int:
+        return sum(item.state is not EvidenceState.UNAVAILABLE for item in self.evidence)
+
+
+def _fmt(value: Decimal) -> str:
+    return format(value.normalize(), "f")
+
+
+def _missing(family: str, *names: str) -> FundEvidence:
+    return FundEvidence(family, EvidenceState.UNAVAILABLE, (), tuple(sorted(names)))
+
+
+def _f1(value: FundEvidenceInput) -> FundEvidence:
+    if value.category_id is None:
+        return _missing("F1", "category_id")
+    if value.category_rank_percentile is None or value.category_rank_change is None:
+        missing = tuple(name for name, item in (
+            ("category_rank_percentile", value.category_rank_percentile),
+            ("category_rank_change", value.category_rank_change),
+        ) if item is None)
+        return _missing("F1", *missing)
+    percentile = value.category_rank_percentile
+    change = value.category_rank_change
+    state = (
+        EvidenceState.POSITIVE if percentile >= Decimal("0.70") and change > 0
+        else EvidenceState.CAUTION if percentile < Decimal("0.30") or change < -2
+        else EvidenceState.NEUTRAL
+    )
+    return FundEvidence("F1", state, (f"category_percentile={_fmt(percentile)}", f"rank_change={change}"))
+
+
+def _f2(value: FundEvidenceInput) -> FundEvidence:
+    returns = (value.return_1m, value.return_3m, value.return_6m)
+    names = ("return_1m", "return_3m", "return_6m")
+    if any(item is None for item in returns):
+        return _missing("F2", *(name for name, item in zip(names, returns) if item is None))
+    assert all(item is not None for item in returns)
+    numeric = tuple(item for item in returns if item is not None)
+    state = (
+        EvidenceState.POSITIVE if all(item > 0 for item in numeric)
+        else EvidenceState.CAUTION if sum(item < 0 for item in numeric) >= 2
+        else EvidenceState.NEUTRAL
+    )
+    return FundEvidence("F2", state, tuple(f"{name}={_fmt(item)}" for name, item in zip(names, numeric)))
+
+
+def _f3(value: FundEvidenceInput) -> FundEvidence:
+    if value.volatility_percentile is None or value.max_drawdown is None:
+        return _missing("F3", *(name for name, item in (
+            ("volatility_percentile", value.volatility_percentile), ("max_drawdown", value.max_drawdown)
+        ) if item is None))
+    vol, drawdown = value.volatility_percentile, value.max_drawdown
+    state = (
+        EvidenceState.POSITIVE if vol <= Decimal("0.50") and drawdown >= Decimal("-0.10")
+        else EvidenceState.CAUTION if vol >= Decimal("0.80") or drawdown <= Decimal("-0.20")
+        else EvidenceState.NEUTRAL
+    )
+    return FundEvidence("F3", state, (f"volatility_percentile={_fmt(vol)}", f"max_drawdown={_fmt(drawdown)}"))
+
+
+def _f4(value: FundEvidenceInput) -> FundEvidence:
+    values = (value.fund_size_change, value.investor_change, value.net_flow_ratio)
+    names = ("fund_size_change", "investor_change", "net_flow_ratio")
+    available = [(name, item) for name, item in zip(names, values) if item is not None]
+    if len(available) < 2:
+        return _missing("F4", *(name for name, item in zip(names, values) if item is None))
+    positives = sum(item > 0 for _, item in available)
+    negatives = sum(item < 0 for _, item in available)
+    state = EvidenceState.POSITIVE if positives >= 2 else EvidenceState.CAUTION if negatives >= 2 else EvidenceState.NEUTRAL
+    return FundEvidence("F4", state, tuple(f"{name}={_fmt(item)}" for name, item in available),
+                        tuple(name for name, item in zip(names, values) if item is None))
+
+
+def _f5(value: FundEvidenceInput) -> FundEvidence:
+    if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+        missing = [name for name, item in (
+            ("total_expense_ratio", value.total_expense_ratio), ("regime_fit", value.regime_fit)
+        ) if item is None]
+        if not value.allocation_known:
+            missing.append("allocation")
+        return _missing("F5", *missing)
+    cost, fit = value.total_expense_ratio, value.regime_fit
+    state = (
+        EvidenceState.POSITIVE if cost <= Decimal("0.02") and fit >= Decimal("0.70")
+        else EvidenceState.CAUTION if cost >= Decimal("0.04") or fit < Decimal("0.30")
+        else EvidenceState.NEUTRAL
+    )
+    return FundEvidence("F5", state, (f"total_expense_ratio={_fmt(cost)}", f"regime_fit={_fmt(fit)}"))
+
+
+def map_fund_evidence(value: FundEvidenceInput) -> FundEvidenceMap:
+    if not value.canonical_fund_id.strip():
+        raise ValueError("canonical_fund_id boş olamaz.")
+    return FundEvidenceMap(
+        canonical_fund_id=value.canonical_fund_id.strip(),
+        category_id=value.category_id,
+        category_mapping_state="MAPPED" if value.category_id else "UNMAPPED",
+        evidence=(_f1(value), _f2(value), _f3(value), _f4(value), _f5(value)),
+    )
+
+========== .\backend\app\funds\international\erste_hungary_f4_bridge.py ==========
+from __future__ import annotations
+
+from dataclasses import replace
+from decimal import Decimal
+from typing import Any
+
+from backend.app.funds.evidence_mapper import FundEvidenceInput, EvidenceState
+
+BRIDGE_VERSION = "erste-hungary-f4-evidence-bridge-v1"
+
+
+def derive_f4_state(
+    *,
+    fund_size_change: Decimal | None,
+    net_flow_ratio: Decimal | None,
+) -> EvidenceState:
+    values = [fund_size_change, net_flow_ratio]
+    available = [v for v in values if v is not None]
+
+    if len(available) < 2:
+        return EvidenceState.UNAVAILABLE
+
+    positive = sum(1 for value in available if value > 0)
+    caution = sum(1 for value in available if value < 0)
+
+    if positive >= 2:
+        return EvidenceState.POSITIVE
+    if caution >= 2:
+        return EvidenceState.CAUTION
+    return EvidenceState.NEUTRAL
+
+
+def inject_f4_fields(
+    base: FundEvidenceInput,
+    *,
+    fund_size_change: Decimal | None,
+    net_flow_ratio: Decimal | None,
+) -> FundEvidenceInput:
+    return replace(
+        base,
+        fund_size_change=fund_size_change,
+        investor_change=None,
+        net_flow_ratio=net_flow_ratio,
+    )
+
+
+def derive_fund_size_change(
+    previous_nav: Decimal | None,
+    latest_nav: Decimal | None,
+) -> Decimal | None:
+    if previous_nav is None or latest_nav is None:
+        return None
+    if previous_nav <= 0 or latest_nav <= 0:
+        return None
+    return (latest_nav / previous_nav) - Decimal("1")
+
+========== .\backend\app\funds\international\erste_hungary_f4_csv.py ==========
+from __future__ import annotations
+
+import csv
+import io
+import re
+from dataclasses import dataclass
+from datetime import date, datetime
+from decimal import Decimal, InvalidOperation
+from typing import Iterable
+
+BAMOSZ_DOWNLOAD_URL = "https://www.bamosz.hu/bamosz-public-alapoldal-portlet/kuka.download"
+TARGET_ISINS = (
+    "AT0000627476", "AT0000A00G88", "AT0000A00GA2",
+    "AT0000A00G96", "AT0000A00GC8", "AT0000A00GE4",
+    "AT0000A00GF1",
+)
+
+@dataclass(frozen=True)
+class DailyNavRow:
+    date: date
+    price: Decimal | None
+    nav: Decimal
+    turnover: Decimal | None
+
+@dataclass(frozen=True)
+class CsvEvidence:
+    isin: str
+    encoding: str
+    delimiter: str
+    header: tuple[str, ...]
+    rows: tuple[DailyNavRow, ...]
+    download_bytes: int
+    fund_name: str | None
+
+def _norm(s: object) -> str:
+    return re.sub(r"\s+", " ", str(s or "").replace("\ufeff", "").strip()).casefold()
+
+def _decimal(value: object) -> Decimal | None:
+    s = str(value or "").strip().replace("\u00a0", "").replace(" ", "")
+    if not s or s in {"-", "—", "–"}:
+        return None
+    # Hungarian exports commonly use decimal comma and dot thousands separators.
+    if "," in s:
+        s = s.replace(".", "").replace(",", ".")
+    try:
+        return Decimal(s)
+    except InvalidOperation:
+        return None
+
+def _date(value: object) -> date | None:
+    s = str(value or "").strip()
+    for fmt in ("%Y.%m.%d.", "%Y.%m.%d", "%Y-%m-%d", "%d.%m.%Y.", "%d.%m.%Y", "%Y/%m/%d"):
+        try:
+            return datetime.strptime(s, fmt).date()
+        except ValueError:
+            pass
+    return None
+
+def _decode(raw: bytes) -> tuple[str, str]:
+    for encoding in ("iso-8859-2", "cp1250", "utf-8-sig"):
+        try:
+            return raw.decode(encoding), encoding
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("iso-8859-2", errors="replace"), "iso-8859-2-replace"
+
+def parse_bamosz_csv(raw: bytes, isin: str) -> CsvEvidence:
+    if not raw:
+        raise ValueError("EMPTY_CSV_BODY")
+    text, encoding = _decode(raw)
+    lines = text.splitlines()
+    # Locate the real daily table header; do not assume metadata rows are the header.
+    header_line = None
+    delimiter = ";"
+    header = None
+    for i, line in enumerate(lines):
+        for candidate in (";", "\t", ","):
+            try:
+                cells = next(csv.reader([line], delimiter=candidate, quotechar='"', skipinitialspace=True))
+            except csv.Error:
+                continue
+            n = [_norm(c) for c in cells]
+            has_date = any(x == "dátum" or x == "datum" for x in n)
+            has_price = any(x in {"árfolyam", "arfolyam"} for x in n)
+            has_nav = any(x in {"neé", "nettó eszközérték", "netto eszkoz ertek"} for x in n)
+            if has_date and has_price and has_nav:
+                header_line, delimiter, header = i, candidate, [c.strip().strip('"') for c in cells]
+                break
+        if header_line is not None:
+            break
+    if header_line is None or header is None:
+        preview = " | ".join(lines[:5])[:500]
+        raise ValueError(f"CSV_DAILY_HEADER_NOT_FOUND:{isin}:preview={preview!r}")
+
+    norm_header = [_norm(x) for x in header]
+    def find_index(*aliases: str) -> int | None:
+        wanted = {_norm(x) for x in aliases}
+        return next((i for i, x in enumerate(norm_header) if x in wanted), None)
+
+    date_i = find_index("Dátum", "Datum")
+    price_i = find_index("Árfolyam", "Arfolyam")
+    nav_i = find_index("NEÉ", "Nettó eszközérték", "Netto eszkoz ertek")
+    turnover_i = find_index("Napi befjegy. forgalom", "Napi bef. jegy forgalom",
+                            "Napi befjegy forgalom", "Napi bef. jegy forgalom")
+    if date_i is None or nav_i is None:
+        raise ValueError(f"CSV_REQUIRED_COLUMNS_MISSING:{isin}")
+
+    rows: list[DailyNavRow] = []
+    for line in lines[header_line + 1:]:
+        if not line.strip():
+            continue
+        try:
+            cells = next(csv.reader([line], delimiter=delimiter, quotechar='"', skipinitialspace=True))
+        except csv.Error:
+            continue
+        if len(cells) <= max(date_i, nav_i):
+            continue
+        d = _date(cells[date_i])
+        nav = _decimal(cells[nav_i])
+        if d is None or nav is None or nav <= 0:
+            continue
+        price = _decimal(cells[price_i]) if price_i is not None and len(cells) > price_i else None
+        turnover = _decimal(cells[turnover_i]) if turnover_i is not None and len(cells) > turnover_i else None
+        rows.append(DailyNavRow(d, price, nav, turnover))
+
+    # Deduplicate by date deterministically and sort ascending.
+    by_date = {r.date: r for r in rows}
+    valid = tuple(by_date[d] for d in sorted(by_date))
+    fund_name = None
+    for line in lines[:header_line]:
+        try:
+            cells = next(csv.reader([line], delimiter=delimiter, quotechar='"'))
+        except csv.Error:
+            continue
+        if len(cells) >= 2 and _norm(cells[0]) in {"alap neve:", "fund name:"}:
+            fund_name = cells[1].strip()
+            break
+    return CsvEvidence(isin.upper(), encoding, delimiter, tuple(header), valid, len(raw), fund_name)
+
+def fund_size_change(rows: Iterable[DailyNavRow]) -> Decimal | None:
+    ordered = sorted(rows, key=lambda r: r.date)
+    if len(ordered) < 2:
+        return None
+    previous, latest = ordered[-2], ordered[-1]
+    if previous.nav <= 0 or latest.nav <= 0:
+        return None
+    return latest.nav / previous.nav - Decimal("1")
+
+def net_flow_ratio(*, official_net_investor_flow: Decimal | None,
+                   prior_fund_nav: Decimal | None) -> Decimal | None:
+    """Return only an explicitly sourced net investor flow / prior NAV ratio."""
+    if official_net_investor_flow is None or prior_fund_nav is None or prior_fund_nav <= 0:
+        return None
+    return official_net_investor_flow / prior_fund_nav
+
+========== .\_discovery\erste_hungary\fh9_f4_production_bridge_v1.py ==========
+from __future__ import annotations
+
+from collections import Counter
+from decimal import Decimal
+from pathlib import Path
+import json
+import os
+import re
+
+ROOT = Path(__file__).resolve().parents[2]
+DISC = ROOT / "_discovery" / "erste_hungary"
+
+# IMPORTANT:
+# F1-F3 are consumed from the already validated baseline evidence.
+# They are NOT recomputed here. F4 is the only newly added family.
+EVIDENCE = DISC / "f1_f2_f3_evidence_v1_latest.json"
+F4 = DISC / "fh9_bamosz_turnover_progress_v11.jsonl"
+
+OUTPUT = DISC / "f1_f2_f3_f4_evidence_v1_latest.json"
+SUMMARY = DISC / "f1_f2_f3_f4_evidence_v1_summary_latest.json"
+
+VALID_STATES = {"POSITIVE", "CAUTION", "NEUTRAL"}
+BRIDGE_VERSION = "erste-hungary-f4-evidence-bridge-v1"
+
+
+def norm_isin(value):
+    s = str(value or "").upper().strip()
+    m = re.search(r"([A-Z]{2}[A-Z0-9]{10})", s)
+    return m.group(1) if m else re.sub(r"[^A-Z0-9]", "", s)
+
+
+def normalize_state(value):
+    s = str(value or "").strip().upper()
+    if s.startswith("EVIDENCESTATE."):
+        s = s.split(".", 1)[1]
+    return s
+
+
+def load_jsonl(path):
+    out = {}
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        if not line.strip():
+            continue
+        obj = json.loads(line)
+        isin = norm_isin(obj.get("isin"))
+        if isin:
+            out[isin] = obj
+    return out
+
+
+def classify(states, category_id):
+    available = sum(
+        1 for family in ("F1", "F2", "F3", "F4")
+        if states.get(family) in VALID_STATES
+    )
+    positive = sum(
+        1 for family in ("F1", "F2", "F3", "F4")
+        if states.get(family) == "POSITIVE"
+    )
+    caution = sum(
+        1 for family in ("F1", "F2", "F3", "F4")
+        if states.get(family) == "CAUTION"
+    )
+
+    if not category_id:
+        return "X"
+    if available < 3:
+        return "X"
+    if caution >= 2 or (
+        states.get("F1") == "CAUTION"
+        and states.get("F2") == "CAUTION"
+    ):
+        return "D"
+    if (
+        available >= 4
+        and positive >= 4
+        and (
+            states.get("F1") == "POSITIVE"
+            or states.get("F2") == "POSITIVE"
+        )
+        and caution == 0
+    ):
+        return "A"
+    if available >= 3 and positive >= 2 and caution <= 1:
+        return "B"
+    return "C"
+
+
+def main():
+    if not EVIDENCE.exists():
+        raise SystemExit("F4_BASELINE_EVIDENCE_MISSING")
+    if not F4.exists():
+        raise SystemExit("F4_BAMOSZ_CACHE_MISSING")
+
+    baseline = json.loads(EVIDENCE.read_text(encoding="utf-8"))
+    if not isinstance(baseline, list):
+        raise SystemExit("F4_BASELINE_EVIDENCE_ROOT_NOT_LIST")
+
+    f4_rows = load_jsonl(F4)
+
+    rows = []
+    f4_state_counts = Counter()
+    class_counts = Counter()
+    eligibility_counts = Counter()
+    trade_counts = Counter()
+    transitions = Counter()
+
+    ready = 0
+    unavailable = 0
+    baseline_counts = Counter()
+
+    # Baseline gate: prove that the F1-F3 states/classifications are exactly
+    # the previously validated 929-record baseline before adding F4.
+    for row in baseline:
+        baseline_counts[str(row.get("classification") or "").upper()] += 1
+
+    for row in baseline:
+        isin = norm_isin(row.get("isin"))
+        states = {
+            "F1": normalize_state(row.get("f1_state")),
+            "F2": normalize_state(row.get("f2_state")),
+            "F3": normalize_state(row.get("f3_state")),
+        }
+
+        old_class = str(row.get("classification") or "").upper()
+        f4_cache = f4_rows.get(isin, {})
+
+        prev = f4_cache.get("previous")
+        latest = f4_cache.get("latest")
+        flow_raw = f4_cache.get("latest_net_flow_ratio")
+
+        size_change = None
+        flow = None
+        f4_state = "UNAVAILABLE"
+
+        if (
+            f4_cache.get("reason") == "SUCCESS"
+            and isinstance(prev, dict)
+            and isinstance(latest, dict)
+            and flow_raw not in (None, "")
+        ):
+            try:
+                prev_nav = Decimal(str(prev.get("nav")))
+                latest_nav = Decimal(str(latest.get("nav")))
+                flow = Decimal(str(flow_raw))
+                if prev_nav > 0 and latest_nav > 0:
+                    size_change = (latest_nav / prev_nav) - Decimal("1")
+                    positive = int(size_change > 0) + int(flow > 0)
+                    negative = int(size_change < 0) + int(flow < 0)
+
+                    if positive >= 2:
+                        f4_state = "POSITIVE"
+                    elif negative >= 2:
+                        f4_state = "CAUTION"
+                    else:
+                        f4_state = "NEUTRAL"
+            except Exception:
+                size_change = None
+                flow = None
+                f4_state = "UNAVAILABLE"
+
+        states["F4"] = f4_state
+        new_class = classify(states, row.get("category_id"))
+
+        class_counts[new_class] += 1
+        f4_state_counts[f4_state] += 1
+        transitions[(old_class, new_class)] += 1
+
+        if f4_state in VALID_STATES:
+            ready += 1
+        else:
+            unavailable += 1
+
+        # Preserve baseline identity and F1-F3 fields exactly; only add F4.
+        output_row = dict(row)
+        output_row.update({
+            "f4_state": f4_state,
+            "fund_size_change": None if size_change is None else str(size_change),
+            "net_flow_ratio": None if flow is None else str(flow),
+            "f4_previous_date": prev.get("date") if isinstance(prev, dict) else None,
+            "f4_latest_date": latest.get("date") if isinstance(latest, dict) else None,
+            "classification": new_class,
+            "eligibility_reason": (
+                "MULTI_FAMILY_WEAKENING" if new_class == "D"
+                else "BROAD_STRENGTH_WITH_RELATIVE_OR_TREND_CONFIRMATION" if new_class == "A"
+                else "DEVELOPING_MULTI_FAMILY_SUPPORT" if new_class == "B"
+                else "INSUFFICIENT_INDEPENDENT_EVIDENCE" if new_class == "X"
+                else "OBSERVATION_REQUIRED"
+            ),
+            "automatic_trade_authority": "NONE",
+            "forced_fill": False,
+        })
+        rows.append(output_row)
+
+    OUTPUT.write_text(
+        json.dumps(rows, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    summary = {
+        "version": BRIDGE_VERSION,
+        "result_count": len(rows),
+        "baseline_result_count": len(baseline),
+        "baseline_class_counts": dict(sorted(baseline_counts.items())),
+        "f4_ready": ready,
+        "f4_unavailable": unavailable,
+        "f4_state_counts": dict(sorted(f4_state_counts.items())),
+        "class_counts": dict(sorted(class_counts.items())),
+        "eligibility_counts": dict(sorted(eligibility_counts.items())),
+        "trade_authority_counts": {"NONE": len(rows)},
+        "classification_transitions": {
+            f"{a}->{b}": n for (a, b), n in sorted(transitions.items())
+        },
+        "baseline_source": "f1_f2_f3_evidence_v1_latest.json",
+        "f4_source": "fh9_bamosz_turnover_progress_v11.jsonl",
+        "f1_f2_f3_recomputed": False,
+        "mutation": "DISCOVERY_OUTPUT_ONLY",
+        "production_mutation": "NO",
+        "semantic_proxy": "NO",
+        "forced_fill": "NO",
+    }
+
+    SUMMARY.write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+
+    print("F4_BRIDGE_VERSION=" + BRIDGE_VERSION)
+    print("RESULT_COUNT=" + str(len(rows)))
+    print("BASELINE_RESULT_COUNT=" + str(len(baseline)))
+    print("F1_F2_F3_RECOMPUTED=NO")
+    print("F4_READY=" + str(ready))
+    print("F4_UNAVAILABLE=" + str(unavailable))
+    print("F4_STATE_COUNTS=" + json.dumps(dict(sorted(f4_state_counts.items())), sort_keys=True))
+    print("BASELINE_CLASS_COUNTS=" + json.dumps(dict(sorted(baseline_counts.items())), sort_keys=True))
+    print("CLASS_COUNTS=" + json.dumps(dict(sorted(class_counts.items())), sort_keys=True))
+    print("CLASSIFICATION_TRANSITIONS=" + json.dumps(
+        {f"{a}->{b}": n for (a, b), n in sorted(transitions.items())},
+        sort_keys=True,
+    ))
+    print("TRADE_AUTHORITY_COUNTS=" + json.dumps({"NONE": len(rows)}, sort_keys=True))
+    print("OUTPUT_JSON=" + str(OUTPUT))
+    print("SUMMARY_JSON=" + str(SUMMARY))
+    print("MUTATION=DISCOVERY_OUTPUT_ONLY")
+    print("PRODUCTION_MUTATION=NO")
+    print("SEMANTIC_PROXY=NO")
+    print("FORCED_FILL=NO")
+    print("STATUS_FINAL=SUCCESS")
+
+
+if __name__ == "__main__":
+    main()

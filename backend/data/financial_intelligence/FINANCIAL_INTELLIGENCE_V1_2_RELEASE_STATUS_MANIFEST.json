@@ -1,0 +1,36 @@
+{
+  "schema_version": "financial-intelligence-v1-2-release-status-manifest-v1",
+  "release": "V1.2",
+  "status": "CLOSED_PASS",
+  "full_regression": {
+    "passed": 3915,
+    "skipped": 1,
+    "failed": 0,
+    "status": "PASS"
+  },
+  "target_regression": {
+    "passed": 80,
+    "failed": 0,
+    "status": "PASS"
+  },
+  "production_ready_models": [
+    "INDUSTRIAL"
+  ],
+  "infrastructure_ready_but_not_production_ready": {
+    "BANK": "NO_REAL_BANK_SOURCE",
+    "INSURANCE": "NO_REAL_INSURANCE_SOURCE",
+    "REIT": "NO_REAL_REIT_SOURCE",
+    "HOLDING": "NO_REAL_HOLDING_SOURCE"
+  },
+  "sector_fallback_policy": "FAIL_CLOSED",
+  "industrial_threshold_reuse_for_special_sectors": false,
+  "missing_to_zero": false,
+  "future_publication_allowed": false,
+  "production_evidence_synthesized": false,
+  "al_sat_authority": "NONE",
+  "scanner_mutation": false,
+  "ranking_mutation": false,
+  "portfolio_mutation": false,
+  "tefas_history_verified_period": 1,
+  "tefas_unverified_period_rejected_before_network": true
+}

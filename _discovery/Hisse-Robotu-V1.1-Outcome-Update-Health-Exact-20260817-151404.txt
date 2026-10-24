@@ -1,0 +1,1556 @@
+﻿2026-08-17 — HISSE ROBOTU V1.1 — OUTCOME UPDATE HEALTH EXACT DISCOVERY
+MODE=READ_ONLY
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+PRODUCTION_MUTATION=YOK
+
+====================================================================================================
+1. AUTOMATIC OUTCOME UPDATE CALL CHAIN
+====================================================================================================
+[UPDATE_CHAIN_HITS]
+COUNT=200
+D:\Projects\Hisse-Robotu\backend\dashboard.py:60 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7089 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:234 [update_all_signal_outcomes] def update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:11 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:110 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:156 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking_dashboard.py:31 [update_all_signal_outcomes] assert "update_all_signal_outcomes" in text
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6680 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:234 [update_all_signal_outcomes] def update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:11 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:110 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:156 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking_dashboard.py:31 [update_all_signal_outcomes] assert "update_all_signal_outcomes" in text
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6693 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6703 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6711 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6711 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6720 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:36 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6720 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:6755 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:6758 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:6758 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6767 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:41 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6767 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:42 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6770 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:42 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6814 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:42 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:6815 [update_all_signal_outcomes] summary = update_all_signal_outcomes(store=store)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:59 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7042 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:178 [automatic_record_from_values] def automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:9 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:125 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking_dashboard.py:18 [automatic_record_from_values] assert "automatic_record_from_values" in text
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6633 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:178 [automatic_record_from_values] def automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:9 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:125 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking_dashboard.py:18 [automatic_record_from_values] assert "automatic_record_from_values" in text
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6646 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py:6656 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py:6664 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py:6664 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py:6673 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:35 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py:6673 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225805\backend\dashboard.py:6708 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint140_20260803_225849\backend\dashboard.py:6711 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_20260803_230940\backend\dashboard.py:6711 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6720 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:40 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint145_backup_20260804_170940\backend\dashboard.py:6720 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:41 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint146_backup_20260804_193700\backend\dashboard.py:6723 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:41 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6767 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:41 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\_sprint148c_backup_20260804_221041\backend\dashboard.py:6768 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:50 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6911 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7734 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8054 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8854 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8998 [SignalOutcomeJsonStore] signal_store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:13 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:140 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:187 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\automatic_signal_tracking.py:236 [SignalOutcomeJsonStore] store: SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\app\analysis\signal_outcome_tracking.py:228 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:14 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:50 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:64 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:84 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:103 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:123 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:146 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:11 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_outcome_tracking.py:92 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\backend\tests\test_v13_calibration_closeout_dashboard.py:25 [SignalOutcomeJsonStore] assert "SignalOutcomeJsonStore" in text
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\dashboard.py:6470 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\app\analysis\signal_outcome_tracking.py:222 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:11 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev1_sinyal_sonuc_takibi\backend\tests\test_signal_outcome_tracking.py:92 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore(tmp_path)
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint71_Rev2_dashboard_uyumluluk_duzeltmesi\backend\dashboard.py:6470 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\dashboard.py:6477 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint72_Rev1_gosterge_katki_analizi\backend\app\analysis\signal_outcome_tracking.py:228 [SignalOutcomeJsonStore] class SignalOutcomeJsonStore:
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint73_Rev1_parametre_kalibrasyonu_walk_forward\backend\dashboard.py:6484 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6493 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:26 [SignalOutcomeJsonStore] SignalOutcomeJsonStore,
+D:\Projects\Hisse-Robotu\Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6499 [SignalOutcomeJsonStore] store = SignalOutcomeJsonStore()
+
+====================================================================================================
+2. HEALTH / STATUS / FAILURE VISIBILITY
+====================================================================================================
+[HEALTH_VISIBILITY_HITS]
+COUNT=200
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:43 [last_success] last_success_at: datetime | None
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:238 [last_success] last_success_at=max(
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:330 [last_success] item.last_success_at.astimezone(timezone).strftime("%H:%M:%S")
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:331 [last_success] if item.last_success_at is not None
+D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:60 [last_success] last_success_at: datetime | None = None
+D:\Projects\Hisse-Robotu\backend\app\news_center\official_source_operations.py:356 [last_success] last_success_at=success.occurred_at if success else None,
+D:\Projects\Hisse-Robotu\backend\app\ui\official_source_operations_panel.py:112 [last_success] summary.last_success_at,
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:171 [last_success] assert kap.last_success_at == T0
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:174 [last_success] assert brief.official_sources[2].last_success_at is None
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:171 [last_success] assert summary.last_success_at == base + timedelta(minutes=1)
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:195 [last_success] assert summary.last_success_at == base
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:213 [last_success] assert summary.last_success_at is None
+D:\Projects\Hisse-Robotu\apply_sprint39_kap_status_card.py:9 [status] BACKUP = TARGET.with_suffix(".py.sprint39-kap-status-card.bak")
+D:\Projects\Hisse-Robotu\apply_sprint39_kap_status_card.py:28 [status] def add_status_function(source: str) -> str:
+D:\Projects\Hisse-Robotu\apply_sprint39_kap_status_card_v2.py:9 [status] BACKUP = TARGET.with_suffix(".py.sprint39-kap-status-card.bak")
+D:\Projects\Hisse-Robotu\apply_sprint39_kap_status_card_v2.py:28 [status] def add_status_function(source: str) -> str:
+D:\Projects\Hisse-Robotu\apply_sprint39_kap_status_card_v2.py:40 [status] def add_status_call(source: str) -> str:
+D:\Projects\Hisse-Robotu\apply_sprint39_kap_status_card_v2.py:67 [status] updated = add_status_function(updated)
+D:\Projects\Hisse-Robotu\apply_sprint39_kap_status_card_v2.py:68 [status] updated = add_status_call(updated)
+D:\Projects\Hisse-Robotu\apply_sprint39_manual_vbts_status_panel.py:9 [status] BACKUP = TARGET.with_suffix(".py.sprint39-manual-vbts-status-panel.bak")
+D:\Projects\Hisse-Robotu\apply_sprint39_manual_vbts_status_panel.py:59 [status] function_text = 'def manuel_vbts_durum_paneli_goster() -> None:\n """Manuel VBTS CSV kaynağının güncellik ve içerik özetini gösterir."""\n\n csv_path_raw = os.getenv("HISSE_ROBOTU_VBTS_CSV_PATH", "").strip()\n\n if not csv_path_raw:\n st.info("VBTS CSV dosyası tanımlı değil.")\n return\n\n csv_path = Path(csv_path_raw).expanduser()\n\n if not csv_path.exists() or not csv_path.is_file():\n st.warning(f"VBTS CSV dosyası bulunamadı: {csv_path}")\n return\n\n try:\n now = datetime.now(timezone.utc)\n dataset = load_dashboard_vbts_dataset(\n now_provider=lambda: now,\n )\n modified_at = datetime.fromtimestamp(\n csv_path.stat().st_mtime,\n tz=timezone.utc,\n )\n except DashboardManualVbtsError as exc:\n st.warning(f"VBTS CSV dosyası kullanılamıyor: {exc}")\n return\n\n st.markdown("#### Manuel VBTS Kaynağı")\n st.caption(f"VBTS CSV dosyası: {csv_path}")\n st.caption(\n "Son güncelleme: "\n + modified_at.astimezone().strftime("%d.%m.%Y %H:%M:%S")\n )\n st.caption(f"Kayıt sayısı: {dataset.status.record_count}")\n\n'
+D:\Projects\Hisse-Robotu\apply_sprint39_source_aware_vbts_status.py:9 [status] BACKUP = TARGET.with_suffix(".py.sprint39-source-aware-vbts-status.bak")
+D:\Projects\Hisse-Robotu\apply_sprint39_status_card_regression_fix.py:7 [status] TARGET = ROOT / 'backend' / 'tests' / 'test_dashboard_kap_status_card.py'
+D:\Projects\Hisse-Robotu\apply_sprint39_status_card_regression_fix.py:8 [status] BACKUP = TARGET.with_suffix('.py.sprint39-status-card-regression.bak')
+D:\Projects\Hisse-Robotu\apply_sprint43_vbts_lifecycle.py:11 [status] NEW_PANEL = 'def vbts_yonetim_paneli_goster() -> None:\n csv_path = configured_vbts_csv_path()\n\n with st.expander("VBTS kayıt yönetimi", expanded=False):\n st.caption(\n "Yalnızca resmî KAP bildirimlerinden doğrulanmış tedbirleri girin. "\n "Taramada sadece bugün aktif olan kayıtlar kullanılır."\n )\n\n try:\n records = list_vbts_records(csv_path)\n lifecycle = sync_active_vbts_csv(csv_path, records)\n except DashboardVbtsManagerError as hata:\n st.error(str(hata))\n records = ()\n lifecycle = classify_vbts_records(())\n\n metrik_izgarasi_goster(\n (\n ("Aktif kayıt", str(len(lifecycle.active))),\n ("Gelecekte başlayacak", str(len(lifecycle.future))),\n ("Süresi dolmuş", str(len(lifecycle.expired))),\n ("Toplam arşiv kaydı", str(len(records))),\n )\n )\n\n if records:\n st.dataframe(\n pd.DataFrame(record.as_display_row() for record in records),\n width="stretch",\n hide_index=True,\n )\n else:\n st.info("Kayıtlı VBTS tedbiri bulunmuyor.")\n\n if lifecycle.expired:\n st.warning(\n "Süresi dolmuş kayıtlar arşivde tutuluyor ancak toplu tarama "\n "filtresine dahil edilmiyor."\n )\n cleanup_confirmed = st.checkbox(\n "Süresi dolmuş kayıtların kalıcı olarak silinmesini onaylıyorum.",\n value=False,\n key="vbts_suresi_dolmus_temizlik_onayi",\n )\n cleanup_requested = st.button(\n "Süresi dolmuş kayıtları temizle",\n width="stretch",\n disabled=not cleanup_confirmed,\n key="vbts_suresi_dolmus_temizle",\n )\n if cleanup_requested:\n try:\n remaining = purge_expired_vbts_records(csv_path)\n except DashboardVbtsManagerError as hata:\n st.error(str(hata))\n else:\n st.session_state["vbts_yonetim_bildirimi"] = (\n "Süresi dolmuş VBTS kayıtları temizlendi. "\n f"Kalan arşiv kaydı: {len(remaining)}"\n )\n st.rerun()\n\n st.markdown("**Yeni VBTS kaydı ekle**")\n with st.form("vbts_kaydi_ekle_formu", clear_on_submit=True):\n sol, sag = st.columns(2)\n with sol:\n sembol = st.text_input("Hisse sembolü", value="")\n tedbir_turu = st.text_input("VBTS tedbir türü", value="")\n baslangic = st.date_input(\n "Başlangıç tarihi",\n value=date.today(),\n key="vbts_baslangic_tarihi",\n )\n with sag:\n bitis = st.date_input(\n "Bitiş tarihi",\n value=date.today() + timedelta(days=30),\n key="vbts_bitis_tarihi",\n )\n kap_referansi = st.text_input(\n "Resmî KAP bildirim referansı",\n value="",\n )\n resmi_onay = st.checkbox(\n "Resmî KAP bildirimiyle doğruladım.",\n value=False,\n )\n\n ekle = st.form_submit_button(\n "VBTS kaydını ekle",\n type="primary",\n width="stretch",\n )\n\n if ekle:\n if not resmi_onay:\n st.error(\n "VBTS kaydı eklemek için resmî KAP bildirimiyle "\n "doğrulama onayı verilmelidir."\n )\n return\n\n try:\n record = build_vbts_record(\n symbol=sembol,\n measure_type=tedbir_turu,\n start_date=baslangic,\n end_date=bitis,\n source_reference=kap_referansi,\n )\n updated = add_vbts_record(csv_path, record)\n except DashboardVbtsManagerError as hata:\n st.error(str(hata))\n else:\n st.session_state["vbts_yonetim_bildirimi"] = (\n f"{record.symbol.removesuffix(\'.IS\')} VBTS kaydı eklendi. "\n f"Toplam arşiv kaydı: {len(updated)}"\n )\n st.rerun()\n\n if records:\n st.divider()\n record_map = {\n (\n f"{record.symbol.removesuffix(\'.IS\')} · "\n f"{record.status()} · {record.measure_type} · "\n f"{record.source_reference}"\n ): record\n for record in records\n }\n selected_label = st.selectbox(\n "Silinecek VBTS kaydı",\n options=tuple(record_map),\n key="vbts_silinecek_kayit",\n )\n delete_confirmed = st.checkbox(\n "Seçili kaydın arşivden kalıcı olarak kaldırılmasını onaylıyorum.",\n value=False,\n key="vbts_silme_onayi",\n )\n delete_requested = st.button(\n "Seçili VBTS kaydını sil",\n width="stretch",\n disabled=not delete_confirmed,\n key="vbts_kaydi_sil",\n )\n\n if delete_requested:\n selected = record_map[selected_label]\n try:\n remaining = delete_vbts_record(\n csv_path,\n selected.record_key,\n )\n except DashboardVbtsManagerError as hata:\n st.error(str(hata))\n else:\n st.session_state["vbts_yonetim_bildirimi"] = (\n "VBTS kaydı silindi. "\n f"Kalan arşiv kaydı: {len(remaining)}"\n )\n st.rerun()\n\n\n'
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:130 [status] read_operational_status,
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:2389 [status] operational = read_operational_status(csv_path, lifecycle)
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:2521 [status] f"{record.status()} · {record.measure_type} · "
+D:\Projects\Hisse-Robotu\dashboard.sprint44.py:3490 [status] ("Güvenlik durumu", karar.status),
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:134 [status] read_operational_status,
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:2394 [status] operational = read_operational_status(csv_path, lifecycle)
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:2648 [status] f"{record.status()} · {record.measure_type} · "
+D:\Projects\Hisse-Robotu\dashboard.sprint45.py:3617 [status] ("Güvenlik durumu", karar.status),
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:136 [status] read_operational_status,
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:2397 [status] operational = read_operational_status(csv_path, lifecycle)
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:2429 [status] ("Kayıt arşivi", health.registry_status),
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:2430 [status] ("Aktif CSV", health.active_csv_status),
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:2431 [status] ("Yedek bütünlüğü", health.backup_status),
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:2432 [status] ("Denetim günlüğü", health.audit_status),
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:2726 [status] f"{record.status()} · {record.measure_type} · "
+D:\Projects\Hisse-Robotu\dashboard.sprint46.py:3695 [status] ("Güvenlik durumu", karar.status),
+D:\Projects\Hisse-Robotu\Hazirla-Temel-Analiz-V1-Snapshot.ps1:89 [status] status = "VALIDATED"
+D:\Projects\Hisse-Robotu\Sprint-41-Kirik-Testi-Onar-ve-Test-Et.ps1:19 [status] .\backend\tests\test_dashboard_manual_vbts_status_panel.py `
+D:\Projects\Hisse-Robotu\Sprint-41-Kirik-Testi-Onar-ve-Test-Et.ps1:20 [status] .\backend\tests\test_dashboard_source_aware_vbts_status.py -q
+D:\Projects\Hisse-Robotu\Sprint-41-Test-Kapsamini-Duzelt-ve-Test-Et.ps1:10 [status] .\backend\tests\test_dashboard_manual_vbts_status_panel.py `
+D:\Projects\Hisse-Robotu\Sprint-41-Test-Kapsamini-Duzelt-ve-Test-Et.ps1:11 [status] .\backend\tests\test_dashboard_source_aware_vbts_status.py -q
+D:\Projects\Hisse-Robotu\Sprint-41-VBTS-Mesajini-Sadelestir-ve-Test-Et.ps1:10 [status] .\backend\tests\test_dashboard_manual_vbts_status_panel.py `
+D:\Projects\Hisse-Robotu\Sprint-41-VBTS-Mesajini-Sadelestir-ve-Test-Et.ps1:11 [status] .\backend\tests\test_dashboard_source_aware_vbts_status.py -q
+D:\Projects\Hisse-Robotu\backend\dashboard.py:63 [status] CLOSED_STATUS,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:64 [status] OPEN_STATUS,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:342 [status] read_operational_status,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3332 [status] operational = read_operational_status(csv_path, lifecycle)
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3367 [status] ("Kayıt arşivi", health.registry_status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3368 [status] ("Aktif CSV", health.active_csv_status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3369 [status] ("Yedek bütünlüğü", health.backup_status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3370 [status] ("Denetim günlüğü", health.audit_status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3670 [status] f"{record.status()} · {record.measure_type} · "
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3821 [status] if response.status == 200:
+D:\Projects\Hisse-Robotu\backend\dashboard.py:3852 [status] if response.status == 200:
+D:\Projects\Hisse-Robotu\backend\dashboard.py:4112 [status] f"{secili_sektor.sector_status} · "
+D:\Projects\Hisse-Robotu\backend\dashboard.py:5071 [status] ("Güvenlik durumu", karar.status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:5853 [status] ("Tazelik durumu", tazelik.status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6524 [status] freshness_status=tazelik.status,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6687 [status] item.report.freshness_status
+D:\Projects\Hisse-Robotu\backend\dashboard.py:6737 [status] freshness_statuses=tuple(
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7620 [status] ("Durum", snapshot.status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:7772 [status] ("Veri durumu", summary.delayed_data_status),
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8064 [status] item for item in positions if item.status == OPEN_STATUS
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8067 [status] item for item in positions if item.status == CLOSED_STATUS
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8216 [status] "status": _price_suggestion.status,
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8246 [status] _price_meta["status"],
+D:\Projects\Hisse-Robotu\backend\dashboard.py:8883 [status] item.sample_status == "Yeterli"
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:301 [status] def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:306 [status] status = "Ay İçi Geçici Match"
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:309 [status] status = "Validated Profile Match"
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:312 [status] status = "Henüz Validate Değil"
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:316 [status] "Durum": status, "Profile Match Count": 0, "Validated Quality": 0.0,
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:321 [status] "Durum": status,
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:339 [status] payloads.append(_monthly_profile_status(
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:346 [status] payloads.append(_monthly_profile_status(current, closed))
+D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:348 [status] payloads.append(_monthly_profile_status(
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:31 [status] delayed_data_status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:89 [status] delayed_status = "Ölçüm yok"
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:109 [status] delayed_status = latest.status
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:118 [status] latest.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:208 [status] delayed_data_status=delayed_status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:259 [status] {"Alan": "Veri durumu", "Değer": summary.delayed_data_status},
+D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:40 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:274 [status] status="Yüksek benzerlik",
+D:\Projects\Hisse-Robotu\backend\app\analysis\indicator_contribution.py:318 [status] "Durum": item.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:63 [status] if package.status.locked or freshness.locked:
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:71 [status] package.status.explanation
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:72 [status] if package.status.locked
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:85 [status] "provider": package.status.source,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:86 [status] "data_identity": package.status.data_identity,
+D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py:87 [status] "fetched_at": package.status.fetched_at.isoformat(),
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py:435 [status] "Sektör görünümü": sektor_baglami.sector_status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:197 [status] StatusCallback = Callable[[str], None]
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:316 [status] durum_bildirimi: StatusCallback | None = None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:22 [status] OPEN_STATUS = "Açık"
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:23 [status] CLOSED_STATUS = "Kapalı"
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:42 [status] status: str = OPEN_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:66 [status] if self.status not in (OPEN_STATUS, CLOSED_STATUS):
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:93 [status] if self.status == CLOSED_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:130 [status] if self.status == CLOSED_STATUS and self.exit_price is not None:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:136 [status] if self.status == CLOSED_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:142 [status] if self.status != CLOSED_STATUS or self.exit_price is None:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:153 [status] if self.status == CLOSED_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:204 [status] item.status != OPEN_STATUS,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:252 [status] and item.status == OPEN_STATUS
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:360 [status] if position.status != OPEN_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:365 [status] status=CLOSED_STATUS,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:414 [status] if position.status != OPEN_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:471 [status] if position.status != OPEN_STATUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_portfolio.py:503 [status] "Durum": item.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py:14 [status] status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\shadow_price_bridge.py:31 [status] status=snapshot.status,
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:32 [status] sample_status: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:189 [status] sample_status=(
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:283 [status] "Örneklem durumu": item.sample_status,
+
+====================================================================================================
+3. DASHBOARD EXACT CONTEXT
+====================================================================================================
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:38-78 ---
+    38:     DivergenceAnalysisError,
+    39:     analyze_daily_weekly_divergences,
+    40:     divergence_rows,
+    41: )
+    42: from backend.app.analysis.technical_decision_matrix import (
+    43:     DecisionMatrixContext,
+    44:     build_technical_decision_matrix,
+    45:     decision_matrix_rows,
+    46: )
+    47: from backend.app.analysis.signal_outcome_tracking import (
+    48:     HORIZONS,
+    49:     SignalOutcomeError,
+    50:     SignalOutcomeJsonStore,
+    51:     SignalSnapshot,
+    52:     evaluate_signal,
+    53:     outcome_rows,
+    54:     outcomes_to_csv,
+    55:     success_summary,
+    56: )
+    57: from backend.app.analysis.automatic_signal_tracking import (
+    58:     AutomaticSignalTrackingError,
+    59:     automatic_record_from_values,
+    60:     update_all_signal_outcomes,
+    61: )
+    62: from backend.app.analysis.shadow_portfolio import (
+    63:     CLOSED_STATUS,
+    64:     OPEN_STATUS,
+    65:     ShadowPortfolioError,
+    66:     ShadowPortfolioStore,
+    67:     close_shadow_position,
+    68:     open_from_signal,
+    69:     open_shadow_position,
+    70:     position_rows,
+    71:     positions_to_csv,
+    72:     refresh_all_open_positions,
+    73: )
+    74: from backend.app.analysis.active_shadow_trader import (
+    75:     ACTION_EXIT_REVIEW,
+    76:     ACTION_STOP_EXIT,
+    77:     NEWS_OPTIONS,
+    78:     TECH_OPTIONS,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:47-87 ---
+    47: from backend.app.analysis.signal_outcome_tracking import (
+    48:     HORIZONS,
+    49:     SignalOutcomeError,
+    50:     SignalOutcomeJsonStore,
+    51:     SignalSnapshot,
+    52:     evaluate_signal,
+    53:     outcome_rows,
+    54:     outcomes_to_csv,
+    55:     success_summary,
+    56: )
+    57: from backend.app.analysis.automatic_signal_tracking import (
+    58:     AutomaticSignalTrackingError,
+    59:     automatic_record_from_values,
+    60:     update_all_signal_outcomes,
+    61: )
+    62: from backend.app.analysis.shadow_portfolio import (
+    63:     CLOSED_STATUS,
+    64:     OPEN_STATUS,
+    65:     ShadowPortfolioError,
+    66:     ShadowPortfolioStore,
+    67:     close_shadow_position,
+    68:     open_from_signal,
+    69:     open_shadow_position,
+    70:     position_rows,
+    71:     positions_to_csv,
+    72:     refresh_all_open_positions,
+    73: )
+    74: from backend.app.analysis.active_shadow_trader import (
+    75:     ACTION_EXIT_REVIEW,
+    76:     ACTION_STOP_EXIT,
+    77:     NEWS_OPTIONS,
+    78:     TECH_OPTIONS,
+    79:     ActiveShadowTraderError,
+    80:     ActiveShadowTraderStore,
+    81:     TraderPolicy,
+    82:     assess_shadow_position,
+    83:     stable_position_key,
+    84: )
+    85: from backend.app.analysis.weekly_performance_report import (
+    86:     WeeklyPerformanceArchive,
+    87:     WeeklyPerformanceReportError,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:48-88 ---
+    48:     HORIZONS,
+    49:     SignalOutcomeError,
+    50:     SignalOutcomeJsonStore,
+    51:     SignalSnapshot,
+    52:     evaluate_signal,
+    53:     outcome_rows,
+    54:     outcomes_to_csv,
+    55:     success_summary,
+    56: )
+    57: from backend.app.analysis.automatic_signal_tracking import (
+    58:     AutomaticSignalTrackingError,
+    59:     automatic_record_from_values,
+    60:     update_all_signal_outcomes,
+    61: )
+    62: from backend.app.analysis.shadow_portfolio import (
+    63:     CLOSED_STATUS,
+    64:     OPEN_STATUS,
+    65:     ShadowPortfolioError,
+    66:     ShadowPortfolioStore,
+    67:     close_shadow_position,
+    68:     open_from_signal,
+    69:     open_shadow_position,
+    70:     position_rows,
+    71:     positions_to_csv,
+    72:     refresh_all_open_positions,
+    73: )
+    74: from backend.app.analysis.active_shadow_trader import (
+    75:     ACTION_EXIT_REVIEW,
+    76:     ACTION_STOP_EXIT,
+    77:     NEWS_OPTIONS,
+    78:     TECH_OPTIONS,
+    79:     ActiveShadowTraderError,
+    80:     ActiveShadowTraderStore,
+    81:     TraderPolicy,
+    82:     assess_shadow_position,
+    83:     stable_position_key,
+    84: )
+    85: from backend.app.analysis.weekly_performance_report import (
+    86:     WeeklyPerformanceArchive,
+    87:     WeeklyPerformanceReportError,
+    88:     build_weekly_performance_report,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:51-91 ---
+    51:     SignalSnapshot,
+    52:     evaluate_signal,
+    53:     outcome_rows,
+    54:     outcomes_to_csv,
+    55:     success_summary,
+    56: )
+    57: from backend.app.analysis.automatic_signal_tracking import (
+    58:     AutomaticSignalTrackingError,
+    59:     automatic_record_from_values,
+    60:     update_all_signal_outcomes,
+    61: )
+    62: from backend.app.analysis.shadow_portfolio import (
+    63:     CLOSED_STATUS,
+    64:     OPEN_STATUS,
+    65:     ShadowPortfolioError,
+    66:     ShadowPortfolioStore,
+    67:     close_shadow_position,
+    68:     open_from_signal,
+    69:     open_shadow_position,
+    70:     position_rows,
+    71:     positions_to_csv,
+    72:     refresh_all_open_positions,
+    73: )
+    74: from backend.app.analysis.active_shadow_trader import (
+    75:     ACTION_EXIT_REVIEW,
+    76:     ACTION_STOP_EXIT,
+    77:     NEWS_OPTIONS,
+    78:     TECH_OPTIONS,
+    79:     ActiveShadowTraderError,
+    80:     ActiveShadowTraderStore,
+    81:     TraderPolicy,
+    82:     assess_shadow_position,
+    83:     stable_position_key,
+    84: )
+    85: from backend.app.analysis.weekly_performance_report import (
+    86:     WeeklyPerformanceArchive,
+    87:     WeeklyPerformanceReportError,
+    88:     build_weekly_performance_report,
+    89:     group_rows_for_table,
+    90:     summary_rows as weekly_summary_rows,
+    91:     weekly_report_csv_bytes,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:52-92 ---
+    52:     evaluate_signal,
+    53:     outcome_rows,
+    54:     outcomes_to_csv,
+    55:     success_summary,
+    56: )
+    57: from backend.app.analysis.automatic_signal_tracking import (
+    58:     AutomaticSignalTrackingError,
+    59:     automatic_record_from_values,
+    60:     update_all_signal_outcomes,
+    61: )
+    62: from backend.app.analysis.shadow_portfolio import (
+    63:     CLOSED_STATUS,
+    64:     OPEN_STATUS,
+    65:     ShadowPortfolioError,
+    66:     ShadowPortfolioStore,
+    67:     close_shadow_position,
+    68:     open_from_signal,
+    69:     open_shadow_position,
+    70:     position_rows,
+    71:     positions_to_csv,
+    72:     refresh_all_open_positions,
+    73: )
+    74: from backend.app.analysis.active_shadow_trader import (
+    75:     ACTION_EXIT_REVIEW,
+    76:     ACTION_STOP_EXIT,
+    77:     NEWS_OPTIONS,
+    78:     TECH_OPTIONS,
+    79:     ActiveShadowTraderError,
+    80:     ActiveShadowTraderStore,
+    81:     TraderPolicy,
+    82:     assess_shadow_position,
+    83:     stable_position_key,
+    84: )
+    85: from backend.app.analysis.weekly_performance_report import (
+    86:     WeeklyPerformanceArchive,
+    87:     WeeklyPerformanceReportError,
+    88:     build_weekly_performance_report,
+    89:     group_rows_for_table,
+    90:     summary_rows as weekly_summary_rows,
+    91:     weekly_report_csv_bytes,
+    92:     weekly_report_pdf_bytes,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:330-370 ---
+   330:     audit_events_csv_bytes,
+   331:     audit_display_rows,
+   332:     build_vbts_record,
+   333:     classify_vbts_records,
+   334:     configured_vbts_csv_path,
+   335:     delete_vbts_record,
+   336:     inspect_vbts_backup,
+   337:     list_vbts_backups,
+   338:     list_vbts_records,
+   339:     prune_vbts_backups,
+   340:     purge_expired_vbts_records,
+   341:     read_audit_events,
+   342:     read_operational_status,
+   343:     restore_vbts_backup,
+   344:     synchronize_vbts_operational_state,
+   345:     sync_active_vbts_csv,
+   346:     validate_vbts_system_health,
+   347: )
+   348: from backend.app.compliance.kap_factory import build_kap_vbts_service
+   349: from backend.app.analysis.trend_scan_policy import (
+   350:     REJIM_POZITIF,
+   351:     REJIM_RISKLI,
+   352:     REJIM_SECICI,
+   353:     rejime_gore_trend_politikasi,
+   354: )
+   355: from backend.app.analysis.momentum_discovery import (
+   356:     SINIF_DIRENCE_YAKLASIYOR,
+   357:     SINIF_ERKEN_UYARI,
+   358:     SINIF_HACIM_BIRIKIMI,
+   359:     SINIF_KALICI_HAZIRLIK,
+   360:     SINIF_SIKISMA,
+   361:     MomentumCandidate,
+   362:     MomentumDiscoveryError,
+   363:     MomentumDiscoveryRequest,
+   364:     MomentumDiscoveryResult,
+   365:     MomentumDiscoveryService,
+   366:     momentum_aday_tablosu,
+   367: )
+   368: from backend.app.analysis.momentum_walk_forward import (
+   369:     MomentumWalkForwardError,
+   370:     MomentumWalkForwardRequest,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3320-3360 ---
+  3320:     csv_path = configured_vbts_csv_path()
+  3321:     tarama_hazir = True
+  3322: 
+  3323:     with st.expander("VBTS kayД±t yГ¶netimi", expanded=False):
+  3324:         st.caption(
+  3325:             "YalnД±zca resmГ® KAP bildirimlerinden doДџrulanmД±Еџ tedbirleri girin. "
+  3326:             "Taramada sadece bugГјn aktif olan kayД±tlar kullanД±lД±r."
+  3327:         )
+  3328: 
+  3329:         try:
+  3330:             lifecycle = synchronize_vbts_operational_state(csv_path)
+  3331:             records = list_vbts_records(csv_path)
+  3332:             operational = read_operational_status(csv_path, lifecycle)
+  3333:         except DashboardVbtsManagerError as hata:
+  3334:             tarama_hazir = False
+  3335:             st.warning(
+  3336:                 "VBTS otomatik senkronizasyonu baЕџarД±sД±z. "
+  3337:                 "Toplu tarama VBTS uyarД± modunda devam edebilir."
+  3338:             )
+  3339:             st.caption(str(hata))
+  3340:             records = ()
+  3341:             lifecycle = classify_vbts_records(())
+  3342:             operational = None
+  3343: 
+  3344: 
+  3345:         try:
+  3346:             health = validate_vbts_system_health(csv_path)
+  3347:         except DashboardVbtsManagerError as hata:
+  3348:             tarama_hazir = False
+  3349:             health = None
+  3350:             st.warning(
+  3351:                 "VBTS sistem saДџlД±k kontrolГј tamamlanamadД±. "
+  3352:                 "Toplu tarama VBTS uyarД± modunda devam edebilir."
+  3353:             )
+  3354:             st.caption(str(hata))
+  3355: 
+  3356:         if health is not None:
+  3357:             if health.healthy:
+  3358:                 st.success("VBTS sistem saДџlД±ДџД±: SaДџlД±klД±")
+  3359:             else:
+  3360:                 tarama_hazir = False
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3355-3395 ---
+  3355: 
+  3356:         if health is not None:
+  3357:             if health.healthy:
+  3358:                 st.success("VBTS sistem saДџlД±ДџД±: SaДџlД±klД±")
+  3359:             else:
+  3360:                 tarama_hazir = False
+  3361:                 st.warning(
+  3362:                     "VBTS sistem saДџlД±ДџД±: Sorunlu. "
+  3363:                     "Toplu tarama VBTS uyarД± modunda devam edebilir."
+  3364:                 )
+  3365:             metrik_izgarasi_goster(
+  3366:                 (
+  3367:                     ("KayД±t arЕџivi", health.registry_status),
+  3368:                     ("Aktif CSV", health.active_csv_status),
+  3369:                     ("Yedek bГјtГјnlГјДџГј", health.backup_status),
+  3370:                     ("Denetim gГјnlГјДџГј", health.audit_status),
+  3371:                 )
+  3372:             )
+  3373:             for message in health.messages:
+  3374:                 st.caption(f"вЂў {message}")
+  3375: 
+  3376:         metrik_izgarasi_goster(
+  3377:             (
+  3378:                 ("Aktif kayД±t", str(len(lifecycle.active))),
+  3379:                 ("Gelecekte baЕџlayacak", str(len(lifecycle.future))),
+  3380:                 ("SГјresi dolmuЕџ", str(len(lifecycle.expired))),
+  3381:                 ("Toplam arЕџiv kaydД±", str(len(records))),
+  3382:             )
+  3383:         )
+  3384: 
+  3385:         if operational is not None:
+  3386:             st.caption(f"Son otomatik senkronizasyon: {operational.synchronized_at}")
+  3387:             st.caption(
+  3388:                 "Son VBTS iЕџlemi: "
+  3389:                 + (
+  3390:                     f"{operational.last_action} В· {operational.last_action_at}"
+  3391:                     if operational.last_action
+  3392:                     else "HenГјz kayД±tlД± iЕџlem yok"
+  3393:                 )
+  3394:             )
+  3395:             st.caption(f"Denetim gГјnlГјДџГј: {operational.audit_log_path}")
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3356-3396 ---
+  3356:         if health is not None:
+  3357:             if health.healthy:
+  3358:                 st.success("VBTS sistem saДџlД±ДџД±: SaДџlД±klД±")
+  3359:             else:
+  3360:                 tarama_hazir = False
+  3361:                 st.warning(
+  3362:                     "VBTS sistem saДџlД±ДџД±: Sorunlu. "
+  3363:                     "Toplu tarama VBTS uyarД± modunda devam edebilir."
+  3364:                 )
+  3365:             metrik_izgarasi_goster(
+  3366:                 (
+  3367:                     ("KayД±t arЕџivi", health.registry_status),
+  3368:                     ("Aktif CSV", health.active_csv_status),
+  3369:                     ("Yedek bГјtГјnlГјДџГј", health.backup_status),
+  3370:                     ("Denetim gГјnlГјДџГј", health.audit_status),
+  3371:                 )
+  3372:             )
+  3373:             for message in health.messages:
+  3374:                 st.caption(f"вЂў {message}")
+  3375: 
+  3376:         metrik_izgarasi_goster(
+  3377:             (
+  3378:                 ("Aktif kayД±t", str(len(lifecycle.active))),
+  3379:                 ("Gelecekte baЕџlayacak", str(len(lifecycle.future))),
+  3380:                 ("SГјresi dolmuЕџ", str(len(lifecycle.expired))),
+  3381:                 ("Toplam arЕџiv kaydД±", str(len(records))),
+  3382:             )
+  3383:         )
+  3384: 
+  3385:         if operational is not None:
+  3386:             st.caption(f"Son otomatik senkronizasyon: {operational.synchronized_at}")
+  3387:             st.caption(
+  3388:                 "Son VBTS iЕџlemi: "
+  3389:                 + (
+  3390:                     f"{operational.last_action} В· {operational.last_action_at}"
+  3391:                     if operational.last_action
+  3392:                     else "HenГјz kayД±tlД± iЕџlem yok"
+  3393:                 )
+  3394:             )
+  3395:             st.caption(f"Denetim gГјnlГјДџГј: {operational.audit_log_path}")
+  3396: 
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3357-3397 ---
+  3357:             if health.healthy:
+  3358:                 st.success("VBTS sistem saДџlД±ДџД±: SaДџlД±klД±")
+  3359:             else:
+  3360:                 tarama_hazir = False
+  3361:                 st.warning(
+  3362:                     "VBTS sistem saДџlД±ДџД±: Sorunlu. "
+  3363:                     "Toplu tarama VBTS uyarД± modunda devam edebilir."
+  3364:                 )
+  3365:             metrik_izgarasi_goster(
+  3366:                 (
+  3367:                     ("KayД±t arЕџivi", health.registry_status),
+  3368:                     ("Aktif CSV", health.active_csv_status),
+  3369:                     ("Yedek bГјtГјnlГјДџГј", health.backup_status),
+  3370:                     ("Denetim gГјnlГјДџГј", health.audit_status),
+  3371:                 )
+  3372:             )
+  3373:             for message in health.messages:
+  3374:                 st.caption(f"вЂў {message}")
+  3375: 
+  3376:         metrik_izgarasi_goster(
+  3377:             (
+  3378:                 ("Aktif kayД±t", str(len(lifecycle.active))),
+  3379:                 ("Gelecekte baЕџlayacak", str(len(lifecycle.future))),
+  3380:                 ("SГјresi dolmuЕџ", str(len(lifecycle.expired))),
+  3381:                 ("Toplam arЕџiv kaydД±", str(len(records))),
+  3382:             )
+  3383:         )
+  3384: 
+  3385:         if operational is not None:
+  3386:             st.caption(f"Son otomatik senkronizasyon: {operational.synchronized_at}")
+  3387:             st.caption(
+  3388:                 "Son VBTS iЕџlemi: "
+  3389:                 + (
+  3390:                     f"{operational.last_action} В· {operational.last_action_at}"
+  3391:                     if operational.last_action
+  3392:                     else "HenГјz kayД±tlД± iЕџlem yok"
+  3393:                 )
+  3394:             )
+  3395:             st.caption(f"Denetim gГјnlГјДџГј: {operational.audit_log_path}")
+  3396: 
+  3397:         if records:
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3358-3398 ---
+  3358:                 st.success("VBTS sistem saДџlД±ДџД±: SaДџlД±klД±")
+  3359:             else:
+  3360:                 tarama_hazir = False
+  3361:                 st.warning(
+  3362:                     "VBTS sistem saДџlД±ДџД±: Sorunlu. "
+  3363:                     "Toplu tarama VBTS uyarД± modunda devam edebilir."
+  3364:                 )
+  3365:             metrik_izgarasi_goster(
+  3366:                 (
+  3367:                     ("KayД±t arЕџivi", health.registry_status),
+  3368:                     ("Aktif CSV", health.active_csv_status),
+  3369:                     ("Yedek bГјtГјnlГјДџГј", health.backup_status),
+  3370:                     ("Denetim gГјnlГјДџГј", health.audit_status),
+  3371:                 )
+  3372:             )
+  3373:             for message in health.messages:
+  3374:                 st.caption(f"вЂў {message}")
+  3375: 
+  3376:         metrik_izgarasi_goster(
+  3377:             (
+  3378:                 ("Aktif kayД±t", str(len(lifecycle.active))),
+  3379:                 ("Gelecekte baЕџlayacak", str(len(lifecycle.future))),
+  3380:                 ("SГјresi dolmuЕџ", str(len(lifecycle.expired))),
+  3381:                 ("Toplam arЕџiv kaydД±", str(len(records))),
+  3382:             )
+  3383:         )
+  3384: 
+  3385:         if operational is not None:
+  3386:             st.caption(f"Son otomatik senkronizasyon: {operational.synchronized_at}")
+  3387:             st.caption(
+  3388:                 "Son VBTS iЕџlemi: "
+  3389:                 + (
+  3390:                     f"{operational.last_action} В· {operational.last_action_at}"
+  3391:                     if operational.last_action
+  3392:                     else "HenГјz kayД±tlД± iЕџlem yok"
+  3393:                 )
+  3394:             )
+  3395:             st.caption(f"Denetim gГјnlГјДџГј: {operational.audit_log_path}")
+  3396: 
+  3397:         if records:
+  3398:             st.dataframe(
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3658-3698 ---
+  3658:             else:
+  3659:                 st.session_state["vbts_yonetim_bildirimi"] = (
+  3660:                     f"{record.symbol.removesuffix('.IS')} VBTS kaydД± eklendi. "
+  3661:                     f"Toplam arЕџiv kaydД±: {len(updated)}"
+  3662:                 )
+  3663:                 st.rerun()
+  3664: 
+  3665:         if records:
+  3666:             st.divider()
+  3667:             record_map = {
+  3668:                 (
+  3669:                     f"{record.symbol.removesuffix('.IS')} В· "
+  3670:                     f"{record.status()} В· {record.measure_type} В· "
+  3671:                     f"{record.source_reference}"
+  3672:                 ): record
+  3673:                 for record in records
+  3674:             }
+  3675:             selected_label = st.selectbox(
+  3676:                 "Silinecek VBTS kaydД±",
+  3677:                 options=tuple(record_map),
+  3678:                 key="vbts_silinecek_kayit",
+  3679:             )
+  3680:             delete_confirmed = st.checkbox(
+  3681:                 "SeГ§ili kaydД±n arЕџivden kalД±cД± olarak kaldД±rД±lmasД±nД± onaylД±yorum.",
+  3682:                 value=False,
+  3683:                 key="vbts_silme_onayi",
+  3684:             )
+  3685:             delete_requested = st.button(
+  3686:                 "SeГ§ili VBTS kaydД±nД± sil",
+  3687:                 width="stretch",
+  3688:                 disabled=not delete_confirmed,
+  3689:                 key="vbts_kaydi_sil",
+  3690:             )
+  3691: 
+  3692:             if delete_requested:
+  3693:                 selected = record_map[selected_label]
+  3694:                 try:
+  3695:                     remaining = delete_vbts_record(
+  3696:                         csv_path,
+  3697:                         selected.record_key,
+  3698:                     )
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3809-3849 ---
+  3809:         return temel_skor_deposu().load_latest_scores()
+  3810:     except FundamentalScoreStoreError as hata:
+  3811:         st.warning(f"KayД±tlД± temel skorlar okunamadД±: {hata}")
+  3812:         return {}
+  3813: 
+  3814: 
+  3815: 
+  3816: 
+  3817: def _alsat_servisini_hazirla() -> None:
+  3818:     health_url = "http://127.0.0.1:8765/health"
+  3819:     try:
+  3820:         with urllib.request.urlopen(health_url, timeout=1.5) as response:
+  3821:             if response.status == 200:
+  3822:                 return
+  3823:     except Exception:
+  3824:         pass
+  3825: 
+  3826:     project = Path(r"D:\Projects\AL-SAT-Karar-Terminali")
+  3827:     env = os.environ.copy()
+  3828:     env["PYTHONPATH"] = str(project / "src")
+  3829:     creationflags = 0
+  3830:     if os.name == "nt":
+  3831:         creationflags = (
+  3832:             getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)
+  3833:             | getattr(subprocess, "CREATE_NO_WINDOW", 0)
+  3834:         )
+  3835:     subprocess.Popen(
+  3836:         [
+  3837:             "py",
+  3838:             "-3.14",
+  3839:             "-c",
+  3840:             "from al_sat_karar_terminali.v1_app import serve; serve(port=8765)",
+  3841:         ],
+  3842:         cwd=str(project),
+  3843:         env=env,
+  3844:         stdout=subprocess.DEVNULL,
+  3845:         stderr=subprocess.DEVNULL,
+  3846:         creationflags=creationflags,
+  3847:     )
+  3848:     for _ in range(20):
+  3849:         time.sleep(0.35)
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:3840-3880 ---
+  3840:             "from al_sat_karar_terminali.v1_app import serve; serve(port=8765)",
+  3841:         ],
+  3842:         cwd=str(project),
+  3843:         env=env,
+  3844:         stdout=subprocess.DEVNULL,
+  3845:         stderr=subprocess.DEVNULL,
+  3846:         creationflags=creationflags,
+  3847:     )
+  3848:     for _ in range(20):
+  3849:         time.sleep(0.35)
+  3850:         try:
+  3851:             with urllib.request.urlopen(health_url, timeout=1.0) as response:
+  3852:                 if response.status == 200:
+  3853:                     return
+  3854:         except Exception:
+  3855:             continue
+  3856:     raise RuntimeError("AL-SAT servisi baslatilamadi.")
+  3857: 
+  3858: 
+  3859: def _alsata_aday_gonder(payload: dict) -> dict:
+  3860:     _alsat_servisini_hazirla()
+  3861:     request = urllib.request.Request(
+  3862:         "http://127.0.0.1:8765/api/external-candidate",
+  3863:         data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+  3864:         headers={"Content-Type": "application/json; charset=utf-8"},
+  3865:         method="POST",
+  3866:     )
+  3867:     try:
+  3868:         with urllib.request.urlopen(request, timeout=5) as response:
+  3869:             return json.loads(response.read().decode("utf-8"))
+  3870:     except urllib.error.HTTPError as exc:
+  3871:         detail = exc.read().decode("utf-8", errors="replace")
+  3872:         raise RuntimeError(f"AL-SAT aday aktarimi reddedildi: {detail}") from exc
+  3873:     except Exception as exc:
+  3874:         raise RuntimeError(f"AL-SAT aday aktarimi basarisiz: {exc}") from exc
+  3875: 
+  3876: 
+  3877: def bist_toplu_tarama_sonucu_goster(
+  3878:     sonuc: MarketScanResult,
+  3879:     *,
+  3880:     temel_skorlar: dict | None = None,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:4100-4140 ---
+  4100:         )
+  4101:         if secili_vbts:
+  4102:             st.warning("VBTS: " + " | ".join(secili_vbts))
+  4103: 
+  4104:         secili_sektor = (sonuc.sektor_baglamlari or {}).get(
+  4105:             secili.sembol
+  4106:         )
+  4107:         if secili_sektor is not None:
+  4108:             st.info(
+  4109:                 "SektГ¶r baДџlamД±: "
+  4110:                 f"{secili_sektor.sector_name} В· "
+  4111:                 f"{secili_sektor.sector_score}/100 "
+  4112:                 f"{secili_sektor.sector_status} В· "
+  4113:                 f"GГјven: {secili_sektor.sector_confidence} В· "
+  4114:                 f"{secili_sektor.label}. "
+  4115:                 "Bu bilgi teknik skoru deДџiЕџtirmez."
+  4116:             )
+  4117: 
+  4118:         sol, sag = st.columns(2)
+  4119:         with sol:
+  4120:             aciklama_listesi_goster(
+  4121:                 "Olumlu gerekГ§eler",
+  4122:                 secili.sinyal.pozitif_nedenler,
+  4123:                 "Belirgin olumlu gerekГ§e yok.",
+  4124:             )
+  4125:         with sag:
+  4126:             aciklama_listesi_goster(
+  4127:                 "Riskler",
+  4128:                 secili.sinyal.riskler,
+  4129:                 "Belirgin risk yok.",
+  4130:             )
+  4131: 
+  4132:     if sonuc.filtrelenmis.elenenler:
+  4133:         with st.expander("Elenen hisseler ve nedenleri", expanded=False):
+  4134:             elenen_kayitlari = []
+  4135:             for elenen in sonuc.filtrelenmis.elenenler:
+  4136:                 elenen_kayitlari.append(
+  4137:                     {
+  4138:                         "Hisse": elenen.sembol.removesuffix(".IS"),
+  4139:                         "Neden": " | ".join(elenen.nedenler),
+  4140:                     }
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:5059-5099 ---
+  5059: def _guvenlik_karari_goster(karar: SafetyDecision) -> None:
+  5060:     if karar.allowed:
+  5061:         st.success(
+  5062:             "Д°Еџlem gГјvenlik kurallarД±nД± geГ§iyor. Bu sonuГ§ kazanГ§ garantisi veya "
+  5063:             "alД±m Г¶nerisi deДџildir; yalnД±zca tanД±mlД± risk sД±nД±rlarД±nД±n aЕџД±lmadД±ДџД±nД± gГ¶sterir."
+  5064:         )
+  5065:     else:
+  5066:         st.error("Yeni iЕџlem gГјvenlik kilidi tarafД±ndan engellendi.")
+  5067:         st.caption("Engel kaldД±rД±lmadan iЕџlem gГјvenlik kontrolГјnden geГ§miЕџ sayД±lmaz.")
+  5068: 
+  5069:     metrik_izgarasi_goster(
+  5070:         (
+  5071:             ("GГјvenlik durumu", karar.status),
+  5072:             ("Pozisyon tutarД±", para_yaz(karar.position_amount)),
+  5073:             ("Pozisyon / sermaye", yuzde_yaz(karar.position_pct)),
+  5074:             (
+  5075:                 "Planlanan risk",
+  5076:                 "вЂ”" if karar.risk_amount is None else para_yaz(karar.risk_amount),
+  5077:             ),
+  5078:             (
+  5079:                 "Risk / sermaye",
+  5080:                 "вЂ”" if karar.risk_pct is None else yuzde_yaz(karar.risk_pct),
+  5081:             ),
+  5082:             (
+  5083:                 "Risk/Getiri",
+  5084:                 "вЂ”" if karar.reward_risk is None else f"1:{karar.reward_risk:.2f}",
+  5085:             ),
+  5086:             ("GГјnlГјk zarar oranД±", yuzde_yaz(karar.daily_loss_pct)),
+  5087:             ("HaftalД±k zarar oranД±", yuzde_yaz(karar.weekly_loss_pct)),
+  5088:         )
+  5089:     )
+  5090:     aciklama_listesi_goster(
+  5091:         "Д°Еџlemi engelleyen nedenler",
+  5092:         karar.blocking_reasons,
+  5093:         "Engelleyen kural yok.",
+  5094:     )
+  5095:     aciklama_listesi_goster(
+  5096:         "UyarД±lar",
+  5097:         karar.warnings,
+  5098:         "Ek uyarД± yok.",
+  5099:     )
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:5841-5881 ---
+  5841: 
+  5842:     metrik_izgarasi_goster(
+  5843:         (
+  5844:             ("Finansal dГ¶nem", str(len(sirket_donemleri))),
+  5845:             (
+  5846:                 "Son dГ¶nem",
+  5847:                 (
+  5848:                     tarih_saat_yaz(tazelik.latest_period_end)
+  5849:                     if tazelik.latest_period_end is not None
+  5850:                     else "Yok"
+  5851:                 ),
+  5852:             ),
+  5853:             ("Tazelik durumu", tazelik.status),
+  5854:             (
+  5855:                 "Veri yaЕџД±",
+  5856:                 (
+  5857:                     f"{tazelik.age_days} gГјn"
+  5858:                     if tazelik.age_days is not None
+  5859:                     else "Bilinmiyor"
+  5860:                 ),
+  5861:             ),
+  5862:         )
+  5863:     )
+  5864: 
+  5865:     if tazelik.locked:
+  5866:         st.warning(
+  5867:             "Tazelik kilidi nedeniyle temel oranlar ve bГјyГјme "
+  5868:             "deДџerlendirmesi Гјretilmedi."
+  5869:         )
+  5870:         return
+  5871: 
+  5872:     try:
+  5873:         snapshot = build_fundamental_snapshot(
+  5874:             sirket_donemleri,
+  5875:             source_metadata={
+  5876:                 "filename": yuklenen.name,
+  5877:                 "record_count": str(len(sirket_donemleri)),
+  5878:             },
+  5879:         )
+  5880:     except (ValueError, TypeError) as hata:
+  5881:         st.error(f"Temel analiz Г¶zeti Гјretilemedi: {hata}")
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:6512-6552 ---
+  6512:     st.caption(
+  6513:         "Rapor gГјncel temel kalite skorunu, finansal oranlarД±, "
+  6514:         "dГ¶nemsel deДџiЕџimi ve varsa sektГ¶r karЕџД±laЕџtД±rmalarД±nД± "
+  6515:         "bir araya getirir."
+  6516:     )
+  6517:     try:
+  6518:         temel_rapor = FundamentalReport(
+  6519:             symbol=latest.symbol,
+  6520:             period_key=latest.period_key,
+  6521:             period_end=latest.period_end,
+  6522:             currency=latest.currency,
+  6523:             source=latest.source,
+  6524:             freshness_status=tazelik.status,
+  6525:             age_days=tazelik.age_days,
+  6526:             total_score=kalite.total_score,
+  6527:             grade=kalite.grade,
+  6528:             component_scores=(
+  6529:                 ("KГўrlД±lД±k", kalite.profitability.score, kalite.profitability.maximum_score),
+  6530:                 ("BГјyГјme", kalite.growth.score, kalite.growth.maximum_score),
+  6531:                 ("BorГ§luluk", kalite.leverage.score, kalite.leverage.maximum_score),
+  6532:                 ("Likidite", kalite.liquidity.score, kalite.liquidity.maximum_score),
+  6533:                 ("Nakit akД±ЕџД±", kalite.cash_flow.score, kalite.cash_flow.maximum_score),
+  6534:             ),
+  6535:             score_change=rapor_skor_degisimi,
+  6536:             ratio_rows=tuple(
+  6537:                 (str(row["GГ¶sterge"]), str(row["DeДџer"]))
+  6538:                 for row in oran_tablosu.to_dict("records")
+  6539:             ),
+  6540:             sector_ratio_rows=rapor_sektor_oranlari,
+  6541:             sector_ranking=rapor_sektor_siralamasi,
+  6542:             sector_strength=rapor_sektor_gucu,
+  6543:             quality_flags=tuple(snapshot.quality_flags),
+  6544:             generated_at=datetime.now(timezone.utc),
+  6545:         )
+  6546:         rapor_csv = fundamental_report_csv_bytes(temel_rapor)
+  6547:         rapor_pdf = fundamental_report_pdf_bytes(temel_rapor)
+  6548:         csv_adi, pdf_adi = fundamental_report_file_names(temel_rapor)
+  6549:     except (FundamentalReportError, ValueError, TypeError) as hata:
+  6550:         st.warning(f"Temel analiz raporu Гјretilemedi: {hata}")
+  6551:     else:
+  6552:         rapor_sutunlari = st.columns(2)
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:6675-6715 ---
+  6675:                     item.report.grade
+  6676:                     for item in tum_arsiv_raporlari
+  6677:                 }
+  6678:             )
+  6679:             kaynak_secenekleri = sorted(
+  6680:                 {
+  6681:                     item.report.source
+  6682:                     for item in tum_arsiv_raporlari
+  6683:                 }
+  6684:             )
+  6685:             tazelik_secenekleri = sorted(
+  6686:                 {
+  6687:                     item.report.freshness_status
+  6688:                     for item in tum_arsiv_raporlari
+  6689:                 }
+  6690:             )
+  6691: 
+  6692:             ek_filtre_sol, ek_filtre_orta, ek_filtre_sag = (
+  6693:                 st.columns(3)
+  6694:             )
+  6695:             with ek_filtre_sol:
+  6696:                 secili_kalite_siniflari = st.multiselect(
+  6697:                     "Kalite sД±nД±fД±",
+  6698:                     options=kalite_secenekleri,
+  6699:                     key="temel_arsiv_kalite",
+  6700:                 )
+  6701:             with ek_filtre_orta:
+  6702:                 secili_kaynaklar = st.multiselect(
+  6703:                     "Veri kaynaДџД±",
+  6704:                     options=kaynak_secenekleri,
+  6705:                     key="temel_arsiv_kaynak",
+  6706:                 )
+  6707:             with ek_filtre_sag:
+  6708:                 secili_tazelikler = st.multiselect(
+  6709:                     "Tazelik durumu",
+  6710:                     options=tazelik_secenekleri,
+  6711:                     key="temel_arsiv_tazelik",
+  6712:                 )
+  6713: 
+  6714:             siralama_esleme = {
+  6715:                 "DГ¶nem В· yeni в†’ eski": "period_desc",
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:6725-6765 ---
+  6725:                     search_archived_reports(
+  6726:                         tum_arsiv_raporlari,
+  6727:                         FundamentalReportArchiveFilter(
+  6728:                             symbol_query=arsiv_sembol_arama,
+  6729:                             period_start=arsiv_baslangic,
+  6730:                             period_end=arsiv_bitis,
+  6731:                             minimum_score=arsiv_skor_araligi[0],
+  6732:                             maximum_score=arsiv_skor_araligi[1],
+  6733:                             grades=tuple(
+  6734:                                 secili_kalite_siniflari
+  6735:                             ),
+  6736:                             sources=tuple(secili_kaynaklar),
+  6737:                             freshness_statuses=tuple(
+  6738:                                 secili_tazelikler
+  6739:                             ),
+  6740:                             sort_by=siralama_esleme[
+  6741:                                 arsiv_siralama
+  6742:                             ],
+  6743:                         ),
+  6744:                     )
+  6745:                 )
+  6746:             except FundamentalReportArchiveError as hata:
+  6747:                 st.warning(
+  6748:                     f"ArЕџiv filtresi uygulanamadД±: {hata}"
+  6749:                 )
+  6750:                 filtrelenmis_arsiv_raporlari = ()
+  6751: 
+  6752:             st.caption(
+  6753:                 f"Filtrelenen rapor sayД±sД±: "
+  6754:                 f"{len(filtrelenmis_arsiv_raporlari)}"
+  6755:             )
+  6756:             st.dataframe(
+  6757:                 pd.DataFrame(
+  6758:                     report_archive_rows(
+  6759:                         filtrelenmis_arsiv_raporlari
+  6760:                     )
+  6761:                 ),
+  6762:                 width="stretch",
+  6763:                 hide_index=True,
+  6764:             )
+  6765: 
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:6899-6939 ---
+  6899: 
+  6900: def sinyal_sonuclari_formu() -> None:
+  6901:     st.subheader("Sinyal SonuГ§larД± вЂ” Д°leri Performans ve Kalibrasyon KanД±tД±")
+  6902:     st.caption(
+  6903:         "KaydedilmiЕџ sinyallerin sonraki 5/10/20 iЕџlem gГјnГј performansД±nД± izler; "
+  6904:         "bekleyen ve tamamlanan ufuklarД±, baЕџarД± Г¶zetini ve kalibrasyon kanД±tД±nД± birleЕџtirir."
+  6905:     )
+  6906:     st.info(
+  6907:         "Kesim tarihinden sonraki fiyatlar yalnД±zca performans Г¶lГ§ГјmГј iГ§in kullanД±lД±r; "
+  6908:         "aday veya sinyal Гјretiminde kullanД±lmaz. Bu ekran yeni sinyal veya AL/SAT kararД± Гјretmez."
+  6909:     )
+  6910: 
+  6911:     store = SignalOutcomeJsonStore()
+  6912:     (
+  6913:         automatic_tab,
+  6914:         input_tab,
+  6915:         archive_tab,
+  6916:         contribution_tab,
+  6917:         walk_forward_tab,
+  6918:     ) = st.tabs(
+  6919:         (
+  6920:             "Otomatik kayД±t ve gГјncelleme",
+  6921:             "Yeni sonuГ§ Г¶lГ§ГјmГј",
+  6922:             "SonuГ§ arЕџivi",
+  6923:             "GГ¶sterge katkД±sД±",
+  6924:             "Walk-forward doДџrulama",
+  6925:         )
+  6926:     )
+  6927: 
+  6928:     with automatic_tab:
+  6929:         st.markdown("#### Bekleyen ve tamamlanan sonuГ§ ufuklarД±")
+  6930:         st.info(
+  6931:             "AynД± sembol ve sinyal tarihi iГ§in ikinci kayД±t oluЕџturulmaz. "
+  6932:             "5/10/20 gГјnlГјk sonuГ§lar yeni fiyat verisi geldikГ§e gГјncellenir. "
+  6933:             "HenГјz yeterli iЕџlem gГјnГј oluЕџmamД±Еџ ufuklar bekleyen olarak kalД±r."
+  6934:         )
+  6935: 
+  6936:         auto_left, auto_right = st.columns(2)
+  6937:         with auto_left:
+  6938:             auto_symbol = st.text_input(
+  6939:                 "Otomatik kayД±t sembolГј",
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:7030-7070 ---
+  7030:                 key="auto_signal_save",
+  7031:                 width="stretch",
+  7032:             )
+  7033:         with update_col:
+  7034:             update_clicked = st.button(
+  7035:                 "TГјm sonuГ§larД± gГјncelle",
+  7036:                 key="auto_signal_update_all",
+  7037:                 width="stretch",
+  7038:             )
+  7039: 
+  7040:         if save_clicked:
+  7041:             try:
+  7042:                 result = automatic_record_from_values(
+  7043:                     symbol=auto_symbol,
+  7044:                     signal_date=auto_signal_date,
+  7045:                     reference_price=float(auto_reference_price),
+  7046:                     decision_class=auto_class,
+  7047:                     quality_score=int(auto_quality),
+  7048:                     daily_direction=auto_daily,
+  7049:                     weekly_direction=auto_weekly,
+  7050:                     market_regime=auto_regime,
+  7051:                     sector=auto_sector,
+  7052:                     momentum_state=auto_momentum,
+  7053:                     stop_loss=auto_stop or None,
+  7054:                     target_1=auto_target1 or None,
+  7055:                     target_2=auto_target2 or None,
+  7056:                     store=store,
+  7057:                 )
+  7058:             except (
+  7059:                 AutomaticSignalTrackingError,
+  7060:                 SignalOutcomeError,
+  7061:                 ValueError,
+  7062:                 TypeError,
+  7063:                 OSError,
+  7064:             ) as error:
+  7065:                 st.error(str(error))
+  7066:             else:
+  7067:                 if result.created:
+  7068:                     st.success(
+  7069:                         f"Yeni sinyal kaydedildi: {result.path_name}"
+  7070:                     )
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:7077-7117 ---
+  7077:                     st.info(
+  7078:                         "AynД± sembol ve tarih iГ§in kayД±t zaten var; "
+  7079:                         "yeni tamamlanmД±Еџ Г¶lГ§Гјm bulunmadД±."
+  7080:                     )
+  7081:                 st.dataframe(
+  7082:                     pd.DataFrame(outcome_rows((result.outcome,))),
+  7083:                     width="stretch",
+  7084:                     hide_index=True,
+  7085:                 )
+  7086: 
+  7087:         if update_clicked:
+  7088:             with st.spinner("KayД±tlД± sinyal sonuГ§larД± gГјncelleniyor..."):
+  7089:                 summary = update_all_signal_outcomes(store=store)
+  7090: 
+  7091:             metrik_izgarasi_goster(
+  7092:                 (
+  7093:                     ("Toplam kayД±t", str(summary.total_records)),
+  7094:                     ("GГјncellenen", str(summary.updated_records)),
+  7095:                     ("DeДџiЕџmeyen", str(summary.unchanged_records)),
+  7096:                     ("Hata", str(summary.failed_records)),
+  7097:                     ("Bekleyen ufuk", str(summary.pending_horizons)),
+  7098:                     ("Tamamlanan ufuk", str(summary.completed_horizons)),
+  7099:                 )
+  7100:             )
+  7101:             if summary.errors:
+  7102:                 st.warning("\n".join(summary.errors))
+  7103:             elif summary.total_records == 0:
+  7104:                 st.info("GГјncellenecek sinyal kaydД± yok.")
+  7105:             else:
+  7106:                 st.success("Otomatik sonuГ§ gГјncellemesi tamamlandД±.")
+  7107: 
+  7108: 
+  7109:     with input_tab:
+  7110:         st.info(
+  7111:             "CSV dosyasД±nda tarih indeksi ile Close, High ve Low "
+  7112:             "sГјtunlarД± bulunmalД±dД±r."
+  7113:         )
+  7114:         left, right = st.columns(2)
+  7115:         with left:
+  7116:             symbol = st.text_input(
+  7117:                 "Sembol",
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:7608-7648 ---
+  7608:         try:
+  7609:             snapshot = fetch_delayed_snapshot(
+  7610:                 symbol,
+  7611:                 config=config,
+  7612:             )
+  7613:             store.append(snapshot)
+  7614:         except DelayedDataPilotError as error:
+  7615:             st.error(str(error))
+  7616:             return
+  7617: 
+  7618:         metrik_izgarasi_goster(
+  7619:             (
+  7620:                 ("Durum", snapshot.status),
+  7621:                 ("Son fiyat", f"{snapshot.last_price:.2f}"),
+  7622:                 (
+  7623:                     "Г–lГ§Гјlen gecikme",
+  7624:                     f"{snapshot.measured_delay_minutes:.1f} dk",
+  7625:                 ),
+  7626:                 (
+  7627:                     "Beklenen gecikme",
+  7628:                     f"{snapshot.expected_delay_minutes} dk",
+  7629:                 ),
+  7630:                 (
+  7631:                     "Eksik bar",
+  7632:                     str(snapshot.missing_bar_count),
+  7633:                 ),
+  7634:                 (
+  7635:                     "GГјvenlik kilidi",
+  7636:                     "AKTД°F" if snapshot.locked else "KapalД±",
+  7637:                 ),
+  7638:             )
+  7639:         )
+  7640: 
+  7641:         st.dataframe(
+  7642:             pd.DataFrame(
+  7643:                 (
+  7644:                     {
+  7645:                         "Sembol": snapshot.symbol,
+  7646:                         "Borsa zamanД±": snapshot.exchange_time,
+  7647:                         "Sisteme alД±nma zamanД±": snapshot.received_time,
+  7648:                         "GГјn iГ§i aГ§Д±lД±Еџ": snapshot.day_open,
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:7722-7762 ---
+  7722: def gunluk_operasyon_paneli_formu() -> None:
+  7723:     st.subheader("GГјnlГјk Operasyon Paneli вЂ” Sistem ve GГ¶rev Г–zeti")
+  7724:     st.caption(
+  7725:         "GГјn iГ§i veri kalitesi, bekleyen/tamamlanan sinyal sonuГ§larД±, "
+  7726:         "gГ¶lge/gerГ§ek iЕџlem kayД±tlarД± ve gГјnlГјk gГ¶revler tek ekranda Г¶zetlenir."
+  7727:     )
+  7728:     st.info(
+  7729:         "Bu panel yeni teknik skor, iЕџlem sinyali veya AL/SAT kararД± Гјretmez. "
+  7730:         "Mevcut modГјllerin operasyon durumunu birleЕџtirir ve gerekli ekrana yГ¶nlendirir."
+  7731:     )
+  7732: 
+  7733:     pilot_store = DelayedDataPilotStore()
+  7734:     signal_store = SignalOutcomeJsonStore()
+  7735:     trade_store = TradeJournalStore()
+  7736: 
+  7737:     try:
+  7738:         trade_records = trade_store.list_records()
+  7739:     except TradeJournalError as error:
+  7740:         trade_records = ()
+  7741:         st.warning(f"Д°Еџlem gГјnlГјДџГј okunamadД±: {error}")
+  7742: 
+  7743:     shadow_store = ShadowPortfolioStore()
+  7744:     try:
+  7745:         shadow_positions = shadow_store.list()
+  7746:     except ShadowPortfolioError as error:
+  7747:         shadow_positions = ()
+  7748:         st.warning(f"GГ¶lge portfГ¶y okunamadД±: {error}")
+  7749: 
+  7750:     summary = build_daily_operation_summary(
+  7751:         pilot_records=pilot_store.list(),
+  7752:         signal_outcomes=signal_store.list(),
+  7753:         trade_records=trade_records,
+  7754:         shadow_positions=shadow_positions,
+  7755:     )
+  7756:     # V11_TRACK1_OBSERVABILITY_UI
+  7757:     st.markdown("#### Operasyon SaДџlД±ДџД± вЂ” Tek BakД±Еџ")
+  7758:     st.caption(
+  7759:         "Mevcut GГјnlГјk Operasyon kanД±tД±nД± tek yerde Г¶zetler; yeni teknik skor, sinyal, "
+  7760:         "AL/SAT kararД± veya ayrД± veri deposu Гјretmez."
+  7761:     )
+  7762:     st.dataframe(
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:7760-7800 ---
+  7760:         "AL/SAT kararД± veya ayrД± veri deposu Гјretmez."
+  7761:     )
+  7762:     st.dataframe(
+  7763:         pd.DataFrame(observability_rows(summary)),
+  7764:         width="stretch",
+  7765:         hide_index=True,
+  7766:     )
+  7767: 
+  7768: 
+  7769:     st.markdown("#### Operasyon Г¶zeti")
+  7770:     metrik_izgarasi_goster(
+  7771:         (
+  7772:             ("Veri durumu", summary.delayed_data_status),
+  7773:             (
+  7774:                 "Г–lГ§Гјlen gecikme",
+  7775:                 "вЂ”"
+  7776:                 if summary.delayed_data_age_minutes is None
+  7777:                 else f"{summary.delayed_data_age_minutes:.1f} dk",
+  7778:             ),
+  7779:             (
+  7780:                 "Bekleyen sonuГ§",
+  7781:                 str(summary.pending_signal_horizons),
+  7782:             ),
+  7783:             (
+  7784:                 "Tamamlanan sonuГ§",
+  7785:                 str(summary.completed_signal_horizons),
+  7786:             ),
+  7787:             (
+  7788:                 "Sinyal kaydД±",
+  7789:                 str(summary.signal_record_count),
+  7790:             ),
+  7791:             (
+  7792:                 "GГ¶lge iЕџlem",
+  7793:                 str(summary.shadow_trade_count),
+  7794:             ),
+  7795:             (
+  7796:                 "GerГ§ek iЕџlem",
+  7797:                 str(summary.real_trade_count),
+  7798:             ),
+  7799:             (
+  7800:                 "GГјvenlik kilidi",
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:8042-8082 ---
+  8042: def golge_portfoy_formu() -> None:
+  8043:     st.header("GГ¶lge PortfГ¶y вЂ” KaДџД±t Д°Еџlem ve Trader Д°zleme")
+  8044:     st.caption(
+  8045:         "Sinyal veya manuel giriЕџten aГ§Д±lan gГ¶lge pozisyonlarД±n performansД±nД±, "
+  8046:         "stop/hedef geliЕџimini ve aktif trader deДџerlendirmesini tek yerde izler."
+  8047:     )
+  8048:     st.info(
+  8049:         "Bu ekran gerГ§ek emir gГ¶ndermez ve gerГ§ek para kullanmaz. "
+  8050:         "Pozisyonlar yalnД±zca sinyal kalibrasyonu ve performans Г¶lГ§ГјmГј iГ§indir."
+  8051:     )
+  8052: 
+  8053:     store = ShadowPortfolioStore()
+  8054:     signal_store = SignalOutcomeJsonStore()
+  8055: 
+  8056:     try:
+  8057:         positions = store.list()
+  8058:         signals = signal_store.list()
+  8059:     except (ShadowPortfolioError, SignalOutcomeError) as error:
+  8060:         st.error(str(error))
+  8061:         return
+  8062: 
+  8063:     open_positions = tuple(
+  8064:         item for item in positions if item.status == OPEN_STATUS
+  8065:     )
+  8066:     closed_positions = tuple(
+  8067:         item for item in positions if item.status == CLOSED_STATUS
+  8068:     )
+  8069: 
+  8070:     total_unrealized = sum(
+  8071:         item.unrealized_pnl for item in open_positions
+  8072:     )
+  8073:     total_realized = sum(
+  8074:         item.realized_pnl for item in closed_positions
+  8075:     )
+  8076:     metrik_izgarasi_goster(
+  8077:         (
+  8078:             ("AГ§Д±k pozisyon", str(len(open_positions))),
+  8079:             ("KapalД± pozisyon", str(len(closed_positions))),
+  8080:             ("GerГ§ekleЕџmemiЕџ K/Z", para_yaz(total_unrealized)),
+  8081:             ("GerГ§ekleЕџen K/Z", para_yaz(total_realized)),
+  8082:         )
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:8052-8092 ---
+  8052: 
+  8053:     store = ShadowPortfolioStore()
+  8054:     signal_store = SignalOutcomeJsonStore()
+  8055: 
+  8056:     try:
+  8057:         positions = store.list()
+  8058:         signals = signal_store.list()
+  8059:     except (ShadowPortfolioError, SignalOutcomeError) as error:
+  8060:         st.error(str(error))
+  8061:         return
+  8062: 
+  8063:     open_positions = tuple(
+  8064:         item for item in positions if item.status == OPEN_STATUS
+  8065:     )
+  8066:     closed_positions = tuple(
+  8067:         item for item in positions if item.status == CLOSED_STATUS
+  8068:     )
+  8069: 
+  8070:     total_unrealized = sum(
+  8071:         item.unrealized_pnl for item in open_positions
+  8072:     )
+  8073:     total_realized = sum(
+  8074:         item.realized_pnl for item in closed_positions
+  8075:     )
+  8076:     metrik_izgarasi_goster(
+  8077:         (
+  8078:             ("AГ§Д±k pozisyon", str(len(open_positions))),
+  8079:             ("KapalД± pozisyon", str(len(closed_positions))),
+  8080:             ("GerГ§ekleЕџmemiЕџ K/Z", para_yaz(total_unrealized)),
+  8081:             ("GerГ§ekleЕџen K/Z", para_yaz(total_realized)),
+  8082:         )
+  8083:     )
+  8084: 
+  8085:     portfolio_tab, trader_tab, signal_tab, manual_tab, close_tab = st.tabs(
+  8086:         (
+  8087:             "PortfГ¶y ve gГјnlГјk",
+  8088:             "Aktif Trader YГ¶netimi",
+  8089:             "Sinyalden pozisyon aГ§",
+  8090:             "Manuel pozisyon aГ§",
+  8091:             "Pozisyon kapat",
+  8092:         )
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:8055-8095 ---
+  8055: 
+  8056:     try:
+  8057:         positions = store.list()
+  8058:         signals = signal_store.list()
+  8059:     except (ShadowPortfolioError, SignalOutcomeError) as error:
+  8060:         st.error(str(error))
+  8061:         return
+  8062: 
+  8063:     open_positions = tuple(
+  8064:         item for item in positions if item.status == OPEN_STATUS
+  8065:     )
+  8066:     closed_positions = tuple(
+  8067:         item for item in positions if item.status == CLOSED_STATUS
+  8068:     )
+  8069: 
+  8070:     total_unrealized = sum(
+  8071:         item.unrealized_pnl for item in open_positions
+  8072:     )
+  8073:     total_realized = sum(
+  8074:         item.realized_pnl for item in closed_positions
+  8075:     )
+  8076:     metrik_izgarasi_goster(
+  8077:         (
+  8078:             ("AГ§Д±k pozisyon", str(len(open_positions))),
+  8079:             ("KapalД± pozisyon", str(len(closed_positions))),
+  8080:             ("GerГ§ekleЕџmemiЕџ K/Z", para_yaz(total_unrealized)),
+  8081:             ("GerГ§ekleЕџen K/Z", para_yaz(total_realized)),
+  8082:         )
+  8083:     )
+  8084: 
+  8085:     portfolio_tab, trader_tab, signal_tab, manual_tab, close_tab = st.tabs(
+  8086:         (
+  8087:             "PortfГ¶y ve gГјnlГјk",
+  8088:             "Aktif Trader YГ¶netimi",
+  8089:             "Sinyalden pozisyon aГ§",
+  8090:             "Manuel pozisyon aГ§",
+  8091:             "Pozisyon kapat",
+  8092:         )
+  8093:     )
+  8094: 
+  8095:     with portfolio_tab:
+--- CONTEXT D:\Projects\Hisse-Robotu\backend\dashboard.py:8204-8244 ---
+  8204:                     if st.button(
+  8205:                         "Gecikmeli fiyatД± getir",
+  8206:                         key="shadow_trader_fetch_delayed_price",
+  8207:                         width="stretch",
+  8208:                     ):
+  8209:                         try:
+  8210:                             _price_suggestion = fetch_shadow_price_suggestion(_current_symbol)
+  8211:                         except DelayedDataPilotError as error:
+  8212:                             st.error(str(error))
+  8213:                         else:
+  8214:                             st.session_state[_price_meta_key] = {
+  8215:                                 "symbol": _price_suggestion.symbol,
+  8216:                                 "status": _price_suggestion.status,
+  8217:                                 "locked": _price_suggestion.locked,
+  8218:                                 "preview_only": _price_suggestion.preview_only,
+  8219:                                 "source": _price_suggestion.source,
+  8220:                                 "delay": _price_suggestion.measured_delay_minutes,
+  8221:                             }
+  8222:                             if _price_suggestion.usable:
+  8223:                                 st.session_state[_price_prefill_key] = float(_price_suggestion.price)
+  8224:                                 st.session_state.pop(_price_key, None)
+  8225:                                 st.rerun()
+  8226:                             else:
+  8227:                                 st.warning("Gecikmeli fiyat gГјvenlik kilidinde; manuel fiyat deДџiЕџtirilmedi.")
+  8228: 
+  8229:                     _price_default = st.session_state.pop(
+  8230:                         _price_prefill_key,
+  8231:                         max(0.01, float(trader_position.current_price)),
+  8232:                     )
+  8233:                     trader_price = st.number_input(
+  8234:                         "Manuel gГјn iГ§i fiyat",
+  8235:                         min_value=0.01,
+  8236:                         value=max(0.01, float(_price_default)),
+  8237:                         step=0.01,
+  8238:                         key="shadow_trader_manual_price",
+  8239:                     )
+  8240: 
+  8241:                     _price_meta = st.session_state.get(_price_meta_key)
+  8242:                     if _price_meta and _price_meta.get("symbol") == _current_symbol:
+  8243:                         st.caption(
+  8244:                             "Kaynak {} В· Durum {} В· Gecikme {:.1f} dk".format(
+
+====================================================================================================
+4. TEST COVERAGE
+====================================================================================================
+[TEST_HITS]
+COUNT=19
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:11 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:110 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:156 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking_dashboard.py:31 [update_all_signal_outcomes] assert "update_all_signal_outcomes" in text
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:11 [update_all_signal_outcomes] update_all_signal_outcomes,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:110 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:156 [update_all_signal_outcomes] summary = update_all_signal_outcomes(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking_dashboard.py:31 [update_all_signal_outcomes] assert "update_all_signal_outcomes" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:9 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking.py:125 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\backend\tests\test_automatic_signal_tracking_dashboard.py:18 [automatic_record_from_values] assert "automatic_record_from_values" in text
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:9 [automatic_record_from_values] automatic_record_from_values,
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking.py:125 [automatic_record_from_values] result = automatic_record_from_values(
+D:\Projects\Hisse-Robotu\Sprint77_Rev1_otomatik_sinyal_kaydi\backend\tests\test_automatic_signal_tracking_dashboard.py:18 [automatic_record_from_values] assert "automatic_record_from_values" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:171 [last_success] assert kap.last_success_at == T0
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:174 [last_success] assert brief.official_sources[2].last_success_at is None
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:171 [last_success] assert summary.last_success_at == base + timedelta(minutes=1)
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:195 [last_success] assert summary.last_success_at == base
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_official_source_operations.py:213 [last_success] assert summary.last_success_at is None
+
+====================================================================================================
+5. DECISION
+====================================================================================================
+DASHBOARD_UPDATE_REFERENCE=YES
+DASHBOARD_HEALTH_REFERENCE=YES
+USER_VISIBLE_HEALTH_SURFACE=NO
+DISCOVERY_DECISION=PROVEN_VISIBILITY_GAP_CANDIDATE
+REASON=Health/status literals exist in dashboard but no user-visible Streamlit surface was proven.
+NEXT_RULE=If exact updater-to-health surface relation is proven, closure-only. If missing, smallest visibility/wiring patch only.
+PRODUCTION_MUTATION=YOK

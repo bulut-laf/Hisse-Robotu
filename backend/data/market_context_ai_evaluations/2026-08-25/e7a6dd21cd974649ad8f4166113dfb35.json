@@ -1,0 +1,48 @@
+{
+  "review_id": "e7a6dd21cd974649ad8f4166113dfb35",
+  "date": "2026-08-25",
+  "created_at": "2026-08-25T12:10:00Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 38.062,
+  "report_count": 3,
+  "sources": [
+    "ICBC GÜNLÜK BÜLTEN",
+    "YATIRIM FİNANSMAN"
+  ],
+  "document_ids": [
+    "197d6dc690ff4e71b62fd6c8c39af1a3",
+    "cb3c3d00dc1c437ea3861a1909255a83",
+    "8be84fd590f84efeb921077ff773b097"
+  ],
+  "output": {
+    "summary": "Piyasalarda 25 Ağustos 2026 tarihi itibarıyla BIST100 endeksinin güne yatay-pozitif bir başlangıç yapması beklenmektedir; dünkü kapanış 14.501 puan seviyesinde gerçekleşmiştir. Küresel cephede Asya borsaları yatay-negatif, ABD vadeli endeksleri ise yatay-pozitif bir seyir izlemektedir. Makroekonomik takvimde ABD'de tüketici güveni ve yeni konut satışları ile Nvidia bilançosu ve Jackson Hole toplantısı öne çıkarken; yurt içinde TCMB enflasyon beklentileri, büyüme tahminleri ve 1 Eylül'de yürürlüğe girecek MSCI endeks değişiklikleri takip edilmektedir.",
+    "positive_factors": [
+      "BIST100 endeksinin güne yatay-pozitif başlangıç yapması beklenmektedir",
+      "MSCI Global Standard Endeks’e Türkiye’den ASTOR eklenmesiyle endeksteki hisse sayısının 12’ye yükselecek olması",
+      "Çeşitli şirketlerin pay geri alım işlemleri ve sermaye/borçlanma aracı ihraç başvuruları"
+    ],
+    "risk_factors": [
+      "ABD yönetiminin Çin ürünlerine %7,5 oranında ilave gümrük vergisi getirme hazırlığı",
+      "Fed’in Temmuz toplantısında enflasyon endişelerinin derinleşmesi ve borçlanma maliyetlerinde artış gerekebileceği vurgusu",
+      "TCMB yıl sonu enflasyon tahmininin %26’dan %28’e yükseltilmesi ve anketlerde beklentilerin %29-30 bandında bulunması",
+      "Yurt içi büyüme beklentilerinin 2026 geneli için yüzde 3’e gerilemesi"
+    ],
+    "stock_specific_risks": [
+      "YAYLA ve TMPOL paylarının VBTS kapsamında açığa satışa ve kredili işlemlere konu edilemeyecek olması"
+    ],
+    "aligned_points": [
+      "BIST100 endeksinin teknik seviyeleri ve endeks görünümüne yönelik değerlendirmeler",
+      "Ağustos ayı son haftasında ekonomik takvimin görece sakin olduğu ve küresel veri akışının yoğunluğu"
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "ABD'de Ağustos ayı Tüketici Güveni ve Temmuz ayı Yeni Konut Satışları verileri",
+      "Nvidia'nın Çarşamba günü açıklanacak bilançosu",
+      "Perşembe günü Jackson Hole'da Fed Başkanı Kevin Warsh'ın gerçekleştireceği konuşma",
+      "31 Ağustos Pazartesi günü açıklanacak 2Ç26 GSYH büyüme verisi",
+      "3 Eylül Perşembe günü açıklanacak Ağustos ayı enflasyon verisi",
+      "1 Eylül Salı günü yürürlüğe girecek MSCI endeks değişiklikleri"
+    ]
+  }
+}

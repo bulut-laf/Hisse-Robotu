@@ -1,0 +1,4 @@
+TRADE_RECORD_CLASS_COUNT=1
+WRITER_CANDIDATE_COUNT=3
+TOP_WRITERS=D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:245::records_to_csv_bytes:score=9 | D:\Projects\Hisse-Robotu\backend\app\history\trade_journal.py:273::records_from_csv_bytes:score=9
+RCA=AMBIGUOUS_CANONICAL_TRADE_WRITER

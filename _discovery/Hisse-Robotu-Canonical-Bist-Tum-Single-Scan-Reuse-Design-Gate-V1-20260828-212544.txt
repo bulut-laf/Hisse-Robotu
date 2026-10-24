@@ -1,0 +1,434 @@
+HISSE ROBOTU — CANONICAL BIST TUM SINGLE-SCAN REUSE DESIGN GATE V1
+======================================================================================
+
+=== 1. CONCRETE CANONICAL CLOSE ===
+CANONICAL_CLOSE_DEFS_FOUND=3
+CONCRETE_DEFS_WITH_EXECUTE_SCHEDULED_RUN=1
+CANONICAL_CLOSE_DELEGATES_EVENING=True
+CONCRETE_PATH=backend\app\operations\scheduled_operation_phase_runner.py
+def canonical_close(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult:
+        legacy = execute_scheduled_run(
+            "EVENING",
+            now=now,
+        )
+
+        count = int(getattr(legacy, "candidate_count", 0) or 0)
+        status = str(getattr(legacy, "status", "SUCCESS") or "SUCCESS")
+
+        return ScheduledOperationPhaseResult(
+            phase=CANONICAL_CLOSE,
+            run_date=now.date().isoformat(),
+            observed_at=now.isoformat(),
+            status=status,
+            candidate_count=count,
+            detail_rows=(),
+            delegated_legacy_phase="EVENING",
+            preview_only=False,
+            canonical=True,
+            ranking_write_allowed=True,
+            profile_write_allowed=True,
+            al_sat_decision_allowed=True,
+        )
+
+=== 2. SCHEDULED LEGACY RUNTIME ===
+DEFAULT_RUNTIME_PATH=backend\app\operations\daily_buy_decision_scheduled_runner.py
+SCHEDULED_UNIVERSE=BIST 100
+SCHEDULED_MAXIMUM_ADAY=15
+SCHEDULED_RUNTIME_CALLS_SCANNER=True
+def _default_runtime() -> ScheduledRunRuntime:
+    from backend.app.analysis.daily_buy_decision_closeout import build_daily_buy_decisions
+    from backend.app.analysis.daily_buy_decision_cycle import (
+        DailyBuyDecisionJsonStore,
+        build_daily_buy_decision_snapshot,
+    )
+    from backend.app.analysis.daily_operation_panel import build_daily_operation_summary
+    from backend.app.analysis.morning_operation_snapshot import build_morning_operation_snapshot
+    from backend.app.analysis.ranking_visibility_service import build_current_visibility_context
+    from backend.app.analysis.market_scanner import MarketScanRequest
+    from backend.app.compliance.dashboard_market_scanner_source_factory import build_dashboard_market_scanner
+    from backend.app.data.delayed_data_pilot import DelayedDataPilotStore
+    from backend.app.analysis.signal_outcome_tracking import SignalOutcomeJsonStore
+    from backend.app.history.trade_journal import TradeJournalStore, TradeJournalError
+    from backend.app.analysis.shadow_portfolio import ShadowPortfolioStore, ShadowPortfolioError
+
+    class Runtime:
+        def operation_summary(self) -> object:
+            pilot_store = DelayedDataPilotStore()
+            signal_store = SignalOutcomeJsonStore()
+            trade_store = TradeJournalStore()
+            shadow_store = ShadowPortfolioStore()
+            try:
+                trades = trade_store.list_records()
+            except TradeJournalError:
+                trades = ()
+            try:
+                shadow = shadow_store.list()
+            except ShadowPortfolioError:
+                shadow = ()
+            return build_daily_operation_summary(
+                pilot_records=pilot_store.list(),
+                signal_outcomes=signal_store.list(),
+                trade_records=trades,
+                shadow_positions=shadow,
+            )
+
+        def scan(self) -> object:
+            service = build_dashboard_market_scanner(vbts_hard_block=False)
+            request = MarketScanRequest(
+                evren="BIST 100",
+                profil_adi="dengeli",
+                maksimum_aday=15,
+                ozel_semboller=(),
+                internetten_evren_guncelle=True,
+                sektor_baglami_aktif=True,
+            )
+            return service.calistir(request)
+
+        def visibility_contexts(self) -> tuple[object, ...]:
+            try:
+                return tuple(build_current_visibility_context())
+            except Exception:
+                return ()
+
+        def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+            return build_morning_operation_snapshot(
+                operation_summary=operation_summary,
+                scan_result=scan_result,
+                visibility_contexts=visibility_contexts,
+                limit=5,
+            )
+
+        def decisions(self, cards: tuple[object, ...]) -> tuple[object, ...]:
+            return tuple(build_daily_buy_decisions(cards))
+
+        def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None:
+            snapshot = build_daily_buy_decision_snapshot(
+                cards,
+                phase=phase,
+                now=now,
+                decisions=decisions,
+            )
+            DailyBuyDecisionJsonStore().save(snapshot)
+            from backend.app.analysis.daily_buy_decision_output_archive import (
+                DecisionOutputArchiveJsonStore,
+            )
+            DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+
+    return Runtime()
+
+=== 3. MARKET SCAN RESULT SHAPE ===
+MARKET_SCAN_RESULT_FILES=backend\app\analysis\market_scanner.py
+MARKET_SCAN_RESULT_FIELDS=adaylar;evren_adi;evren_kaynagi;evren_sembol_sayisi;evren_tarihi;filtrelenmis;profil;sektor_baglami_uyarisi;sektor_baglamlari;sektor_referans_evreni;tum_sonuclar;vbts_dogrulama_uyarisi;vbts_engelleme_nedenleri;vbts_engellenen_semboller;veri_tazeligi
+HAS_TUM_SONUCLAR=True
+HAS_ADAYLAR=True
+HAS_FILTRELENMIS=True
+
+=== 4. BIST TUM / FULL RESULT REFERENCES ===
+backend\dashboard.backup_before_navigation_fix.py:3102: index=TARAMA_EVRENLERI.index("BIST Tüm"),
+backend\dashboard.backup_before_navigation_fix.py:3130: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.backup_before_navigation_fix.py:4449: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.py:3245: index=TARAMA_EVRENLERI.index("BIST Tüm"),
+backend\dashboard.py:3273: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.py:4574: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\app\opportunity_radar.py:616: "BIST Tüm",
+backend\scripts\sector_member_strength_check.py:23: choices=("BIST 30", "BIST 50", "BIST 100", "BIST 500", "BIST Tüm"),
+backend\tests\test_bist_daily_market_universe_selector.py:6: assert '"BIST Tüm": "BIST Tüm"' in text
+backend\tests\test_bist_toplu_tarama_role_clarity_v11.py:25: "BIST Tüm",
+backend\tests\test_fast_mover_preclose_attachment.py:37: source: str = "BIST Tüm",
+backend\tests\test_momentum_batch_history_integration.py:64: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_prebreakout_universe.py:29: "BIST Tüm",
+backend\tests\test_replay_batch_adapter.py:15: assert common_universe_mapper("BIST Tüm") == "BIST Tüm"
+backend\tests\test_research_profile_memory_v1.py:30: universe_name="BIST Tüm",
+backend\tests\test_research_profile_memory_v1.py:133: bundle(date(2026, 8, 25)), universe_name="BIST Tüm", store=store
+backend\tests\test_research_profile_memory_v1.py:142: bundle(AS_OF), universe_name="BIST Tüm", store=store
+backend\tests\test_sprint136_backward_compatibility.py:34: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_system_check.py:179: assert "BIST Tüm" in item.aciklama
+backend\app\analysis\bist_daily_market.py:92: evren_adi: str = "BIST Tüm",
+backend\app\analysis\bist_daily_market.py:104: "BIST Tüm",
+backend\app\analysis\bist_universe.py:21: "BIST Tüm": "XUTUM",
+backend\app\analysis\market_regime.py:29: "XUTUM": "BIST Tüm",
+backend\app\analysis\market_scanner.py:46: "BIST Tüm",
+backend\app\analysis\momentum_discovery.py:73: evren: str = "BIST Tüm"
+backend\app\analysis\research_profile_memory.py:14: CANONICAL_PROFILE_MEMORY_UNIVERSE = "BIST Tüm"
+backend\app\diagnostics\system_check.py:671: "BIST Tüm": 500,
+backend\app\history\replay_batch_adapter.py:56: "bisttüm": "BIST Tüm",
+backend\app\history\replay_batch_adapter.py:57: "bisttum": "BIST Tüm",
+backend\app\operations\preclose_partial_daily_preview.py:285: "evren": "BIST Tüm",
+backend\app\prebreakout\prebreakout_universe.py:16: "BIST Tüm",
+backend\app\ui\batch_historical_export_ui.py:91: universe_options: tuple[str, ...] = ("BIST100", "BIST Tüm"),
+backend\app\ui\bist_daily_market_dashboard.py:200: "BIST Tüm": "BIST Tüm",
+backend\app\ui\momentum_batch_history_integration.py:71: universe_options=("BIST100", "BIST Tüm"),
+backend\app\ui\sprint136_batch_history_ui.py:113: options=["BIST100", "BIST Tüm"],
+--- TUM_SONUCLAR ---
+backend\dashboard.py:4769: item.sembol for item in tuple(getattr(sonuc, "tum_sonuclar", ()) or ())
+backend\tests\test_research_profiles_sprint02_contract.py:10: assert "tum_sonuclar=tuple(tarama.basarili_sonuclar)" in text
+backend\tests\test_research_profiles_sprint02_contract.py:24: assert 'getattr(sonuc, "tum_sonuclar", ())' in text
+backend\app\analysis\fast_mover_preclose_attachment.py:103: The order of existing ``tum_sonuclar`` is reused as the current Research
+backend\app\analysis\market_scanner.py:90: tum_sonuclar: tuple[StockAnalysisResult, ...] = ()
+backend\app\analysis\market_scanner.py:265: tum_sonuclar = tuple(tarama.basarili_sonuclar)
+backend\app\analysis\market_scanner.py:272: for sonuc in tum_sonuclar
+backend\app\analysis\market_scanner.py:287: tum_sonuclar=tuple(tarama.basarili_sonuclar),
+backend\app\analysis\momentum_walk_forward.py:372: tum_sonuclar, motor_hatalari = self._motor.calistir(
+backend\app\analysis\momentum_walk_forward.py:387: for sonuc in tum_sonuclar
+backend\app\analysis\momentum_walk_forward.py:395: sonuc for sonuc in tum_sonuclar if sonuc.aday.sinif == SINIF_IZLEME_DISI
+backend\app\analysis\momentum_walk_forward.py:407: basarili_sayisi=len(tum_sonuclar),
+backend\app\analysis\research_profiles_daily.py:446: for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ()):
+backend\app\operations\preclose_partial_daily_preview.py:300: for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ())
+backend\app\operations\preclose_partial_daily_preview.py:323: getattr(scan_result, "tum_sonuclar", ()) or ()
+
+=== 5. BIST100 MEMBERSHIP / UNIVERSE REFERENCES ===
+backend\dashboard.backup_before_navigation_fix.py:3130: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.backup_before_navigation_fix.py:3931: f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansı · "
+backend\dashboard.backup_before_navigation_fix.py:4449: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.backup_before_navigation_fix.py:5555: + ". BIST 100 ana rejimi kullanılabilir; güven düzeyi "
+backend\dashboard.backup_before_navigation_fix.py:5561: ("BIST 100 rejimi", ana.rejim),
+backend\dashboard.py:3273: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.py:4075: f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansı · "
+backend\dashboard.py:4574: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.py:5735: + ". BIST 100 ana rejimi kullanılabilir; güven düzeyi "
+backend\dashboard.py:5741: ("BIST 100 rejimi", ana.rejim),
+backend\dashboard.py:8260: evren="BIST 100",
+backend\dashboard.py:8267: with st.spinner("Günlük karar listesi için BIST 100 otomatik taranıyor..."):
+backend\scripts\sector_member_strength_check.py:22: default="BIST 100",
+backend\scripts\sector_member_strength_check.py:23: choices=("BIST 30", "BIST 50", "BIST 100", "BIST 500", "BIST Tüm"),
+backend\tests\test_ai_daily_review_service.py:28: "raw_text": "BIST 100 için temkinli pozitif görünüm.",
+backend\tests\test_ai_daily_review_service.py:90: assert package["reports"][0]["raw_text"].startswith("BIST 100")
+backend\tests\test_batch_historical_export.py:59: req = BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100")
+backend\tests\test_batch_historical_export.py:65: assert result.combined_rows[0]["Evren"] == "BIST100"
+backend\tests\test_batch_historical_export.py:95: {"Hisse": "AAA", "Sıra": 1, "Kesim Tarihi": "2026-07-01", "Evren": "BIST100"}
+backend\tests\test_batch_historical_export.py:105: "Evren": "BIST100",
+backend\tests\test_batch_historical_export.py:133: req = BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100")
+backend\tests\test_batch_historical_export.py:141: "2026-07-01_BIST100.csv",
+backend\tests\test_batch_historical_export.py:142: "2026-07-02_BIST100.csv",
+backend\tests\test_batch_historical_export.py:147: req = BatchReplayRequest(date(2026, 6, 29), date(2026, 7, 29), "BIST100")
+backend\tests\test_batch_historical_export.py:149: "tarihsel_toplu_BIST100_2026-06-29_2026-07-29.csv"
+backend\tests\test_batch_historical_export.py:152: "tarihsel_gunluk_BIST100_2026-06-29_2026-07-29.zip"
+backend\tests\test_batch_historical_export_ui.py:47: universe="BIST100",
+backend\tests\test_batch_historical_export_ui.py:63: universe="BIST100",
+backend\tests\test_bist_daily_market_universe_selector.py:7: assert '"XU100": "BIST 100"' in text
+backend\tests\test_bist_toplu_tarama_role_clarity_v11.py:23: "BIST 100",
+backend\tests\test_bist_universe.py:18: ORNEK_CSV = """BILESEN KODU;BULTEN_ADI;ENDEKS KODU;ENDEKS ADI;ENDEKS INGILIZCE ADI;TARIH(GG/AA/YYYY)\nCONSTITUENT CODE;CONSTITUENT NAME;INDEX CODE;INDEX NAME IN TURKISH;INDEX NAME IN ENGLISH;DATE(DD/MM/YYYY)\nTHYAO.E;TURK HAVA YOLLARI;XU100;BIST 100;BIST 100;27/07/2026\nASELS.E;ASELSAN;XU100;BIST 100;BIST 100;27/07/2026\nTHYAO.E;TURK HAVA YOLLARI;XU030;BIST 30;BIST 30;27/07/2026\n"""
+backend\tests\test_bist_universe.py:24: evren_adi="BIST 100",
+backend\tests\test_bist_universe.py:25: endeks_kodu="XU100",
+backend\tests\test_bist_universe.py:49: evren = depo.evreni_yukle("BIST 100")
+backend\tests\test_daily_operation_ai_context.py:36: conflicts=["Kurum görüşleri ayrışıyor"], watch=["BIST100 destekleri"]),
+backend\tests\test_daily_operation_ai_context.py:50: assert context.watch_items == ("BIST100 destekleri",)
+backend\tests\test_daily_operation_panel_integration_fix_v1.py:8: assert 'evren="BIST 100"' in dashboard
+backend\tests\test_daily_operation_panel_integration_fix_v1.py:10: assert "Günlük karar listesi için BIST 100 otomatik taranıyor" in dashboard
+backend\tests\test_dashboard_market_scanner_factory.py:24: endeks_kodu="XU100",
+backend\tests\test_dashboard_market_scanner_factory.py:136: evren="BIST 100",
+backend\tests\test_market_context_dashboard.py:55: manual_text="BIST100 pozitif. 13.200 destek, 14.228 direnç.",
+backend\tests\test_market_context_dashboard.py:77: uploaded_file=Uploaded("BIST100 pozitif.".encode("utf-8")),
+backend\tests\test_market_context_dashboard.py:113: text="ICBC: BIST100 pozitif.",
+backend\tests\test_market_context_dashboard.py:119: text="Gedik: BIST100 temkinli.",
+backend\tests\test_market_context_extractors.py:11: "BIST100 pozitif.",
+backend\tests\test_market_context_extractors.py:16: assert item.raw_text == "BIST100 pozitif."
+backend\tests\test_market_context_extractors.py:28: "\ufeffBIST100 güne pozitif başlayabilir.",
+backend\tests\test_market_context_image_extraction.py:31: {"content": {"parts": [{"text": "BIST 100 destek 13.000"}]}}
+backend\tests\test_market_context_image_extraction.py:45: assert result.text == "BIST 100 destek 13.000"
+backend\tests\test_market_context_models.py:14: "raw_text": "BIST100 güne pozitif başlayabilir.",
+backend\tests\test_market_context_parser.py:5: BIST100 endeksinin güne temkinli ancak pozitif bir başlangıç yapmasını bekliyoruz.
+backend\tests\test_market_context_parser.py:8: BIST100 için 13.200 ve 12.966 destek;
+backend\tests\test_market_context_parser_rev1.py:6: BIST100 endeksinin güne temkinli ancak pozitif başlamasını bekliyoruz.
+backend\tests\test_market_context_parser_rev1.py:7: BIST100 için 13.200 ve 12.966 destek;
+backend\tests\test_market_context_service.py:8: BIST100 endeksinin güne temkinli ancak pozitif bir başlangıç yapmasını bekliyoruz.
+backend\tests\test_market_context_service.py:11: BIST100 için 13.200 ve 12.966 destek;
+backend\tests\test_market_context_service.py:59: "BIST100 pozitif. 13.200 destek, 14.228 direnç.",
+backend\tests\test_market_context_service.py:80: text="BIST100 pozitif.",
+backend\tests\test_market_context_service.py:91: text="BIST100 pozitif.",
+backend\tests\test_market_context_service.py:102: text="ICBC: BIST100 pozitif.",
+backend\tests\test_market_context_service.py:108: text="Gedik: BIST100 temkinli.",
+backend\tests\test_market_context_service_isolation.py:33: text="BIST100 pozitif.",
+backend\tests\test_market_context_store.py:15: raw_text="BIST100 güne pozitif başlayabilir.",
+backend\tests\test_market_context_store.py:41: "BIST100   pozitif.\r\nDestek: 13200"
+backend\tests\test_market_context_store.py:44: "BIST100 pozitif.\nDestek: 13200"
+backend\tests\test_market_regime_live.py:38: assert endeks_sembolunu_hazirla("xu100.is") == "XU100"
+backend\tests\test_market_scanner.py:59: endeks_kodu="XU100",
+backend\tests\test_market_scanner.py:89: evren="BIST 100",
+backend\tests\test_market_scanner.py:191: evren="BIST 100",
+backend\tests\test_market_scanner.py:273: evren="BIST 100",
+backend\tests\test_market_scanner_sector_context.py:48: endeks_kodu="XU100",
+backend\tests\test_market_scanner_sector_context.py:80: assert reference_universe == "BIST 100"
+backend\tests\test_market_scanner_sector_context.py:93: evren="BIST 100",
+backend\tests\test_market_scanner_sector_context.py:115: evren="BIST 100",
+backend\tests\test_market_scanner_sector_context.py:140: evren="BIST 100",
+backend\tests\test_momentum_batch_history_integration.py:29: "BIST100",
+backend\tests\test_momentum_batch_history_integration.py:37: assert request.evren == "BIST 100"
+backend\tests\test_momentum_batch_history_integration.py:64: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_momentum_discovery.py:169: evren="BIST 100",
+backend\tests\test_news_center_classifier.py:79: headline="BIST 100 endeks duyurusu",
+backend\tests\test_prebreakout_universe.py:28: "BIST 100",
+backend\tests\test_ranking_trajectory_date_contract.py:10: ranked_universe_size=100,
+backend\tests\test_replay_batch_adapter.py:14: assert common_universe_mapper("BIST100") == "BIST 100"
+backend\tests\test_replay_batch_adapter.py:31: rows = adapter.scan_day(date(2026, 7, 1), "BIST100")
+backend\tests\test_replay_batch_adapter.py:33: assert calls == [(date(2026, 7, 1), "BIST 100")]
+backend\tests\test_research_profile_memory_v1.py:124: bundle(AS_OF), universe_name="BIST 100", store=store
+backend\tests\test_resilient_batch_replay.py:11: BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100"),
+backend\tests\test_resilient_batch_replay.py:30: BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 2), "BIST100"),
+backend\tests\test_resilient_batch_replay.py:42: BatchReplayRequest(date(2026, 7, 1), date(2026, 7, 1), "BIST100"),
+backend\tests\test_reusable_momentum_batch_scanner.py:32: scanner.scan_day(date(2026, 7, 1), "BIST100")
+backend\tests\test_reusable_momentum_batch_scanner.py:33: scanner.scan_day(date(2026, 7, 2), "BIST100")
+backend\tests\test_reusable_momentum_batch_scanner.py:56: scanner.scan_day(date(2026, 7, 1), "BIST100")
+backend\tests\test_reusable_momentum_batch_scanner.py:57: scanner.scan_day(date(2026, 7, 2), "BIST100")
+backend\tests\test_sector_candidate_context.py:80: reference_universe="BIST 100",
+backend\tests\test_sector_member_strength.py:23: AAA.E;AAA;XU100;BIST 100;BIST 100;04/08/2026
+backend\tests\test_sector_member_strength.py:24: BBB.E;BBB;XU100;BIST 100;BIST 100;04/08/2026
+backend\tests\test_sector_member_strength.py:25: CCC.E;CCC;XU100;BIST 100;BIST 100;04/08/2026
+backend\tests\test_sector_member_strength.py:26: DDD.E;DDD;XU100;BIST 100;BIST 100;04/08/2026
+backend\tests\test_sector_member_strength.py:109: def test_sektor_bist100_uyeleriyle_kisitlanir(tmp_path: Path):
+backend\tests\test_sprint136_backward_compatibility.py:34: assert captured["universes"] == ("BIST100", "BIST Tüm")
+backend\tests\test_sprint142_hardening.py:21: assert detect_report_date("GÜNLÜK BÜLTEN 03.08.2026\nBIST100") == "2026-08-03"
+backend\tests\test_sprint142_hardening.py:30: text="GÜNLÜK BÜLTEN 03.08.2026\nBIST100 pozitif.",
+backend\tests\test_sprint142_hardening.py:39: text="BIST100 pozitif.",
+backend\tests\test_sprint146_vbts_soft_warning.py:92: evren="BIST 100",
+backend\tests\test_sprint179_market_context_image_ux.py:61: changed = _transfer_approved_image_text(st, "  BIST 100 destek 13.000  ")
+backend\tests\test_sprint179_market_context_image_ux.py:65: assert st.session_state["market_context_manual_text"] == "BIST 100 destek 13.000"
+backend\tests\test_sprint180_public_news_feed.py:17: <title>BIST 100 endeksi gune yukselisle basladi</title>
+backend\tests\test_sprint180_public_news_feed.py:19: <description><![CDATA[<p>Borsa Istanbul'da BIST 100 endeksi acilista yukselis kaydetti.</p>]]></description>
+backend\tests\test_sprint182_pdf_fallback_ui.py:17: PDF_FALLBACK_TEXT_KEY: "BIST 100 13.700 desteğini izliyor.",
+backend\tests\test_sprint182_pdf_fallback_ui.py:21: assert state["market_context_manual_text"] == "BIST 100 13.700 desteğini izliyor."
+backend\tests\test_sprint182_pdf_image_fallback.py:19: def _success(text: str = "BIST 100 destek 13.700") -> dict:
+backend\tests\test_sprint182_pdf_image_fallback.py:60: assert result.text == "BIST 100 destek 13.700"
+backend\tests\test_system_check.py:178: assert "BIST 100" in item.aciklama
+backend\tests\test_v1_operations_01c_dashboard_wiring.py:26: assert "BIST 100 otomatik taranıyor" in block
+backend\app\analysis\bist_universe.py:19: "BIST 100": "XU100",
+backend\app\analysis\market_regime.py:27: "XU100": "BIST 100",
+backend\app\analysis\market_regime.py:37: "XU100": "XU100", "XU100.IS": "XU100", "BIST100": "XU100",
+backend\app\analysis\market_regime.py:117: "Desteklenmeyen endeks sembolü. Geçerli değerler: XU100, XU030, XUTUM."
+backend\app\analysis\market_regime.py:463: if endeks_sembolunu_hazirla(sembol) == "XU100":
+backend\app\analysis\market_scanner.py:44: "BIST 100",
+backend\app\analysis\market_scanner.py:304: karşılaştırılabilirlik nedeniyle BIST 100 sektör bağlamıyla değerlendirilir.
+backend\app\analysis\market_scanner.py:308: return "BIST 100"
+backend\app\analysis\momentum_walk_forward.py:32: evren: str = "BIST 100"
+backend\app\diagnostics\system_check.py:669: "BIST 100": 100,
+backend\app\history\batch_historical_export.py:20: universe: str = "BIST100"
+backend\app\history\replay_batch_adapter.py:55: "bist100": "BIST 100",
+backend\app\market_context\daily_market_briefing.py:32: "BIST100",
+backend\app\market_context\parser.py:66: if "bist100" in s.casefold() or "endeks" in s.casefold():
+backend\app\operations\daily_buy_decision_scheduled_runner.py:183: evren="BIST 100",
+backend\app\prebreakout\prebreakout_universe.py:15: "BIST 100",
+backend\app\sector_analysis\sector_candidate_context.py:158: reference_universe: str = "BIST 100",
+backend\app\sector_analysis\sector_market_strength.py:292: """Tek bir sektör endeksini XU100'e göre değerlendirir.
+backend\app\sector_analysis\sector_member_strength.py:292: # BIST 100 kesişiminde bazı gerçek sektörlerin doğal olarak yalnızca
+backend\app\sector_analysis\sector_member_strength.py:441: reference_universe: str = "BIST 100",
+backend\app\sector_analysis\sector_member_strength.py:454: Varsayılan olarak sektör üyeleri BIST 100 ile kesiştirilir. Böylece
+backend\app\sector_analysis\sector_member_strength.py:455: BIST 100 aday taramasında kullanılan bağlam, aynı yatırım evreninden
+backend\app\ui\batch_historical_export_ui.py:91: universe_options: tuple[str, ...] = ("BIST100", "BIST Tüm"),
+backend\app\ui\bist_daily_market_dashboard.py:201: "XU100": "BIST 100",
+backend\app\ui\market_regime_dashboard.py:77: """Ana BIST 100 sonucundan tarihli ve doğrulanabilir rejim bağlamı üretir."""
+backend\app\ui\market_regime_dashboard.py:88: "BIST 100 rejim verisi tazelik kilidinde."
+backend\app\ui\market_regime_dashboard.py:126: raise MarketRegimeDashboardError("BIST 100 piyasa rejimi sonucu üretilemedi.")
+backend\app\ui\momentum_batch_history_integration.py:71: universe_options=("BIST100", "BIST Tüm"),
+backend\app\ui\sprint136_batch_history_ui.py:113: options=["BIST100", "BIST Tüm"],
+PRODUCTION_BIST100_MEMBERSHIP_SEAM=True
+
+=== 6. LEGACY CONSUMER SHAPE ===
+EXECUTE_SCHEDULED_RUN_PATH=backend\app\operations\daily_buy_decision_scheduled_runner.py
+CANDIDATE_SNAPSHOT_RECEIVES_SCAN_RESULT=True
+EXECUTE_SCHEDULED_RUN_MULTIPLE_SCAN_CALLS=False
+def execute_scheduled_run(
+    phase: str,
+    *,
+    now: datetime | None = None,
+    runtime: ScheduledRunRuntime | None = None,
+    store: ScheduledRunJsonStore | None = None,
+    force: bool = False,
+    audit_store: ScheduledRunAuditJsonStore | None = None,
+    run_kind: str = "SCHEDULED",
+) -> ScheduledRunRecord:
+    phase_value = _normalize_phase(phase)
+    timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+    run_date = timestamp.date().isoformat()
+    state_store = store or ScheduledRunJsonStore()
+    history_store = audit_store or ScheduledRunAuditJsonStore()
+    key = f"{run_date}:{phase_value}"
+    existing = state_store.load().get(key)
+    if existing is not None and existing.status == "SUCCESS" and not force:
+        skipped = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=existing.started_at,
+            finished_at=existing.finished_at,
+            status="SKIPPED",
+            candidate_count=existing.candidate_count,
+            buy_symbols=existing.buy_symbols,
+            detail="Aynı gün/faz için başarılı otomatik koşu zaten mevcut.",
+            run_kind=run_kind,
+        )
+        history_store.append(skipped)
+        return skipped
+
+    started_at = timestamp.isoformat(timespec="seconds")
+    engine = runtime or _default_runtime()
+    try:
+        summary = engine.operation_summary()
+        scan_result = engine.scan()
+        visibility = engine.visibility_contexts()
+        candidate_snapshot = engine.candidate_snapshot(summary, scan_result, visibility)
+        cards = tuple(getattr(candidate_snapshot, "candidates", ()) or ())
+        decisions = engine.decisions(cards)
+        engine.persist_decision_snapshot(cards, decisions, phase_value, timestamp)
+        buy_symbols = tuple(
+            str(getattr(item, "symbol", "")).strip().upper()
+            for item in decisions
+            if str(getattr(item, "decision", "")).strip().upper() == "AL"
+        )
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="SUCCESS",
+            candidate_count=len(cards),
+            buy_symbols=buy_symbols,
+            detail="Seans sonu/sabah günlük karar koşusu tamamlandı.",
+            run_kind=run_kind,
+        )
+    except Exception as error:
+        finished = datetime.now(ISTANBUL).isoformat(timespec="seconds")
+        record = ScheduledRunRecord(
+            phase=phase_value,
+            run_date=run_date,
+            started_at=started_at,
+            finished_at=finished,
+            status="FAILED",
+            candidate_count=0,
+            buy_symbols=(),
+            detail=f"{type(error).__name__}: {error}",
+            run_kind=run_kind,
+        )
+    state_store.save(record)
+    history_store.append(record)
+    return record
+
+=== 7. IN-MEMORY RESULT VIEW / FILTER REFERENCES ===
+backend\dashboard.py:4134: sonuc.filtrelenmis.adaylar,
+backend\tests\test_ranking_memory.py:80: assert "sonuc.filtrelenmis.adaylar" in capture_segment
+backend\tests\test_ranking_memory_full_research_capture_v2.py:46: assert "sonuc.filtrelenmis.adaylar" in expr
+backend\tests\test_ranking_memory_full_research_capture_v2.py:61: assert "filtrelenmis.adaylar[:istek.maksimum_aday]" in compact
+backend\app\analysis\market_scanner.py:221: filtrelenmis.adaylar[: istek.maksimum_aday]
+backend\app\analysis\market_scanner.py:279: return MarketScanResult(
+backend\app\operations\preclose_partial_daily_preview.py:309: getattr(getattr(scan_result, "filtrelenmis", None), "adaylar", ())
+EXISTING_RESULT_VIEW_OR_FILTER_SEAM=True
+
+=== 8. DECISION ===
+BLOCKERS=NONE
+WARNINGS=NONE
+DECISION=READY_FOR_MINIMAL_SINGLE_SCAN_CANONICAL_ORCHESTRATOR_DESIGN
+NEXT=IMPLEMENT_ONE_SCAN_BIST_TUM_REUSE_ADAPTER_PREFLIGHT
+
+INTENDED_SHAPE=
+CANONICAL_CLOSE -> ONE BIST TUM SCAN -> SAME RESULT
+  -> NEXT-DAY 5+5 (FULL RESULT)
+  -> LEGACY EVENING (BIST100 IN-MEMORY VIEW, NO RE-SCAN)
+
+SECOND_SCANNER=NO
+SECOND_UNIVERSE_TRAVERSAL=NO
+NEW_STORE=NO
+MAIN_RANKING_MUTATION=NO
+AL_SAT_AUTHORITY_CHANGE=NO

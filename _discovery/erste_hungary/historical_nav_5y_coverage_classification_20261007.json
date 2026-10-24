@@ -1,0 +1,935 @@
+{
+  "reference_date": "2026-10-07",
+  "total_funds": 892,
+  "cagr_available": 709,
+  "cagr_null_total": 183,
+  "cagr_null_with_start_date": 2,
+  "cagr_null_without_start_date": 181,
+  "classification": {
+    "start_date_present_but_cagr_null": [
+      {
+        "isin": "HU0000713243",
+        "start_date": "2021-09-29",
+        "target_date": "2026-10-07",
+        "reason": "Start date is outside the 7-day tolerance; verify exact lag."
+      },
+      {
+        "isin": "LU0231793349",
+        "start_date": "2021-06-28",
+        "target_date": "2026-10-07",
+        "reason": "Start date is outside the 7-day tolerance; verify exact lag."
+      }
+    ],
+    "start_date_absent": [
+      {
+        "isin": "AT0000A2STD2",
+        "instrument_id": "12011",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A2STF7",
+        "instrument_id": "12021",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A36G29",
+        "instrument_id": "12921",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A37UP3",
+        "instrument_id": "13101",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3BMG4",
+        "instrument_id": "12942",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3BMK6",
+        "instrument_id": "12941",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3FTU1",
+        "instrument_id": "13078",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3FU35",
+        "instrument_id": "13081",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3JH46",
+        "instrument_id": "13193",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3KDC3",
+        "instrument_id": "13115",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3MZ56",
+        "instrument_id": "13158",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3MZ80",
+        "instrument_id": "13161",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3N1Y4",
+        "instrument_id": "13201",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3P9Z2",
+        "instrument_id": "13196",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3PA11",
+        "instrument_id": "13190",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3RVA4",
+        "instrument_id": "13199",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3S446",
+        "instrument_id": "13212",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3S461",
+        "instrument_id": "13215",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "AT0000A3TAZ1",
+        "instrument_id": "13335",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000705926",
+        "instrument_id": "12152",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000705934",
+        "instrument_id": "12092",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000716410",
+        "instrument_id": "12371",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000716436",
+        "instrument_id": "12541",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000716501",
+        "instrument_id": "12421",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000716519",
+        "instrument_id": "12411",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000717145",
+        "instrument_id": "12431",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000717590",
+        "instrument_id": "12391",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000718614",
+        "instrument_id": "12461",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000719364",
+        "instrument_id": "12948",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000720958",
+        "instrument_id": "12471",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000720966",
+        "instrument_id": "12481",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000721469",
+        "instrument_id": "12381",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000721782",
+        "instrument_id": "12501",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000722467",
+        "instrument_id": "12551",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000722475",
+        "instrument_id": "12561",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000722582",
+        "instrument_id": "12521",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000722590",
+        "instrument_id": "12531",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000723705",
+        "instrument_id": "12102",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000724232",
+        "instrument_id": "12142",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000724240",
+        "instrument_id": "12132",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000724653",
+        "instrument_id": "12122",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000724711",
+        "instrument_id": "11911",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000724745",
+        "instrument_id": "11931",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000724778",
+        "instrument_id": "11951",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000725460",
+        "instrument_id": "12401",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000726484",
+        "instrument_id": "11941",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000727698",
+        "instrument_id": "11981",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000727706",
+        "instrument_id": "11991",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000727714",
+        "instrument_id": "12001",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000728282",
+        "instrument_id": "12172",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000728290",
+        "instrument_id": "12162",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000729678",
+        "instrument_id": "12581",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000729694",
+        "instrument_id": "13164",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000729702",
+        "instrument_id": "13167",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000729710",
+        "instrument_id": "13170",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000730064",
+        "instrument_id": "12252",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000730726",
+        "instrument_id": "12571",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000730882",
+        "instrument_id": "12661",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000730890",
+        "instrument_id": "12511",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000731393",
+        "instrument_id": "12622",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000731401",
+        "instrument_id": "12632",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000731880",
+        "instrument_id": "12671",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000731898",
+        "instrument_id": "13145",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000731906",
+        "instrument_id": "13151",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000731914",
+        "instrument_id": "13148",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000731955",
+        "instrument_id": "12957",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000732011",
+        "instrument_id": "12672",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000732664",
+        "instrument_id": "12761",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000732938",
+        "instrument_id": "12986",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000732979",
+        "instrument_id": "12989",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000733019",
+        "instrument_id": "12980",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000733035",
+        "instrument_id": "12983",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000733589",
+        "instrument_id": "12802",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000734553",
+        "instrument_id": "12992",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000734819",
+        "instrument_id": "12960",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000734827",
+        "instrument_id": "12963",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735147",
+        "instrument_id": "12977",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735220",
+        "instrument_id": "13041",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735238",
+        "instrument_id": "13038",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735246",
+        "instrument_id": "13044",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735253",
+        "instrument_id": "13050",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735261",
+        "instrument_id": "13047",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735279",
+        "instrument_id": "13035",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735287",
+        "instrument_id": "13029",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735295",
+        "instrument_id": "13026",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735303",
+        "instrument_id": "13032",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735568",
+        "instrument_id": "12968",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735824",
+        "instrument_id": "13053",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000735923",
+        "instrument_id": "13084",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000736426",
+        "instrument_id": "13131",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000736434",
+        "instrument_id": "13128",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000736467",
+        "instrument_id": "13135",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000736475",
+        "instrument_id": "13132",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000736574",
+        "instrument_id": "13227",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000737242",
+        "instrument_id": "13157",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000737259",
+        "instrument_id": "13086",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000737283",
+        "instrument_id": "13154",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000737309",
+        "instrument_id": "13095",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000737317",
+        "instrument_id": "13092",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000737531",
+        "instrument_id": "13104",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738448",
+        "instrument_id": "13341",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738455",
+        "instrument_id": "13344",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738463",
+        "instrument_id": "13338",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738505",
+        "instrument_id": "13233",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738612",
+        "instrument_id": "13142",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738653",
+        "instrument_id": "13173",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738885",
+        "instrument_id": "13182",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000738893",
+        "instrument_id": "13179",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000740162",
+        "instrument_id": "13242",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000740170",
+        "instrument_id": "13245",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000740188",
+        "instrument_id": "13248",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000740691",
+        "instrument_id": "13207",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000740709",
+        "instrument_id": "13204",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000741376",
+        "instrument_id": "13230",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000741491",
+        "instrument_id": "13226",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000741509",
+        "instrument_id": "13220",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000741517",
+        "instrument_id": "13223",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000742051",
+        "instrument_id": "13356",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "HU0000742127",
+        "instrument_id": "13357",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "IE000N8A2V09",
+        "instrument_id": "13010",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU0342679015",
+        "instrument_id": "12182",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU1731833304",
+        "instrument_id": "13070",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2003419707",
+        "instrument_id": "12242",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2087696931",
+        "instrument_id": "12071",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2210151697",
+        "instrument_id": "12945",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2219351363",
+        "instrument_id": "11851",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2242646235",
+        "instrument_id": "12602",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2384387564",
+        "instrument_id": "12211",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2387455277",
+        "instrument_id": "12091",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2387455517",
+        "instrument_id": "12081",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2387456168",
+        "instrument_id": "12061",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2387457133",
+        "instrument_id": "12041",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2387457489",
+        "instrument_id": "12031",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2387457729",
+        "instrument_id": "12051",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2387749000",
+        "instrument_id": "12192",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2389405080",
+        "instrument_id": "12201",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2402382688",
+        "instrument_id": "12331",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2416417751",
+        "instrument_id": "12612",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2450391748",
+        "instrument_id": "12592",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2504555777",
+        "instrument_id": "13058",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2539337126",
+        "instrument_id": "12822",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2546391173",
+        "instrument_id": "13271",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2570611322",
+        "instrument_id": "13125",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2577109551",
+        "instrument_id": "13268",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2578936770",
+        "instrument_id": "12792",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2614689482",
+        "instrument_id": "12731",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2645235321",
+        "instrument_id": "13316",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2645235677",
+        "instrument_id": "13319",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2659281880",
+        "instrument_id": "12812",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2665174160",
+        "instrument_id": "13001",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2670341259",
+        "instrument_id": "12881",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2670341333",
+        "instrument_id": "12871",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2682081786",
+        "instrument_id": "12851",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2701010469",
+        "instrument_id": "13322",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2701010899",
+        "instrument_id": "13325",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2701599156",
+        "instrument_id": "13061",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2719174067",
+        "instrument_id": "12965",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2755902827",
+        "instrument_id": "13310",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2755903395",
+        "instrument_id": "13313",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2834349156",
+        "instrument_id": "12943",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2854867186",
+        "instrument_id": "13292",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2854867855",
+        "instrument_id": "13295",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2860962559",
+        "instrument_id": "13118",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2886171474",
+        "instrument_id": "13298",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2886171714",
+        "instrument_id": "13301",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2887166093",
+        "instrument_id": "13056",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2913287418",
+        "instrument_id": "13009",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2977979645",
+        "instrument_id": "13064",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2977980221",
+        "instrument_id": "13074",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU2996679879",
+        "instrument_id": "13113",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3017887970",
+        "instrument_id": "13107",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3046617042",
+        "instrument_id": "13304",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3046617554",
+        "instrument_id": "13307",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3086256131",
+        "instrument_id": "13328",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3086256214",
+        "instrument_id": "13331",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3229330371",
+        "instrument_id": "13256",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3287330990",
+        "instrument_id": "13280",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3287331378",
+        "instrument_id": "13283",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3327677806",
+        "instrument_id": "13259",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3327677988",
+        "instrument_id": "13250",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      },
+      {
+        "isin": "LU3327678010",
+        "instrument_id": "13332",
+        "reason": "No eligible NAV point on or before the 5-year cutoff was recorded."
+      }
+    ]
+  },
+  "rank_history_write": false,
+  "production_decisions_modified": false,
+  "trade_authority": "NONE",
+  "forced_fill": false
+}

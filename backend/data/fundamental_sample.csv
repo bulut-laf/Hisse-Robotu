@@ -1,0 +1,7 @@
+symbol,period_end,fiscal_year,fiscal_quarter,currency,revenue,gross_profit,operating_profit,ebitda,net_income,total_assets,total_equity,total_debt,cash_and_equivalents,current_assets,current_liabilities,operating_cash_flow,capital_expenditure,shares_outstanding,source,published_at
+THYAO,2026-06-30,2026,2,TRY,1000,300,180,220,120,2500,1000,700,200,900,600,160,40,100,KAP,2026-07-20
+THYAO,2026-03-31,2026,1,TRY,900,260,150,190,95,2350,920,720,180,850,610,130,35,100,KAP,2026-05-10
+THYAO,2025-06-30,2025,2,TRY,800,220,120,160,80,2100,800,650,150,760,580,110,30,100,KAP,2025-08-10
+
+
+

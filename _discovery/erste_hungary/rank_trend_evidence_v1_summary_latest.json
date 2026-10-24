@@ -1,0 +1,58 @@
+{
+  "trend_version": "erste-hungary-rank-trend-v1",
+  "date_1": "2026-09-24",
+  "date_2": "2026-09-25",
+  "evidence_count": 929,
+  "direction_counts": {
+    "IMPROVING": 385,
+    "STABLE": 249,
+    "WEAKENING": 295
+  },
+  "strength_counts": {
+    "MINIMAL": 475,
+    "WEAK": 343,
+    "MODERATE": 85,
+    "STRONG": 26
+  },
+  "category_direction_counts": {
+    "ABSOLUTE_RETURN": {
+      "WEAKENING": 6,
+      "STABLE": 97,
+      "IMPROVING": 14
+    },
+    "BOND": {
+      "IMPROVING": 95,
+      "STABLE": 36,
+      "WEAKENING": 86
+    },
+    "COMMODITY": {
+      "STABLE": 6
+    },
+    "DERIVATIVE": {
+      "STABLE": 3
+    },
+    "EQUITY": {
+      "IMPROVING": 237,
+      "STABLE": 64,
+      "WEAKENING": 179
+    },
+    "FUND_OF_FUNDS": {
+      "STABLE": 4
+    },
+    "MIXED": {
+      "STABLE": 33,
+      "IMPROVING": 37,
+      "WEAKENING": 22
+    },
+    "MONEY_MARKET": {
+      "STABLE": 6
+    },
+    "REAL_ESTATE": {
+      "WEAKENING": 2,
+      "IMPROVING": 2
+    }
+  },
+  "strong_improving_count": 7,
+  "strong_weakening_count": 19,
+  "trade_authority": "NONE"
+}

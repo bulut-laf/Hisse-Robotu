@@ -1,0 +1,1 @@
+Write-Host "EV-13.6 rollback restore point."

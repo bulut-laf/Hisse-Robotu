@@ -1,0 +1,24 @@
+=== HISSE ROBOTU — DAILY10 RANKING MEMORY BACKFILL V1 ===
+RESULT=PYTHON_STAGE_FAIL
+ROLLBACK=SUCCESS
+PRODUCTION_STATUS=PRE_BACKFILL_RESTORED
+PYTHON_EXITCODE=1
+
+
+=== EXISTING RANKING MEMORY ===
+OBSERVATIONS_BEFORE=138
+SHA_BEFORE=58be0d4fdd727ced589c54b4875cf18fa538c4a5b3b78e03231be9843e1d980e
+
+=== UNIVERSE CONTRACT ===
+BASELINE17_EXACT=PASS
+LEDGER_RECONCILIATION=PASS
+UNIVERSE_COUNTS=2026-08-18:579 | 2026-08-19:579 | 2026-08-20:581 | 2026-08-21:582 | 2026-08-24:582 | 2026-08-25:582
+
+=== NATIVE STDERR (NON-FATAL UNLESS EXITCODE != 0) ===
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\hisse_daily10_ranking_memory_backfill_v1.py", line 350, in <module>
+    if parse_observation_date(item.as_of) == TERMINAL_DATE
+       ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Temp\hisse_daily10_ranking_memory_backfill_v1.py", line 73, in parse_observation_date
+    raise ValueError(f"Unsupported ranking-memory date: {value!r}")
+ValueError: Unsupported ranking-memory date: 'Ki\u015fisel liste'

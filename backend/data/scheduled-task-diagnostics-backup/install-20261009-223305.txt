@@ -1,0 +1,13 @@
+INSTALLED_AT=2026-10-09T22:33:05.4940627+03:00
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+WRAPPER=D:\Projects\Hisse-Robotu\scripts\scheduled-task-diagnostics\run_phase_with_logging.ps1
+UPDATED_TASK=HisseRobotu-1720-PreClose
+PHASE=PRECLOSE
+BACKUP_XML=D:\Projects\Hisse-Robotu\backend\data\scheduled-task-diagnostics-backup\HisseRobotu-1720-PreClose-20261009-223305.xml
+NEW_EXECUTE=C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+NEW_ARGUMENTS=-NoProfile -NonInteractive -ExecutionPolicy Bypass -File "D:\Projects\Hisse-Robotu\scripts\scheduled-task-diagnostics\run_phase_with_logging.ps1" -Phase PRECLOSE -PythonPath "D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe" -ProjectRoot "D:\Projects\Hisse-Robotu"
+UPDATED_TASK=HisseRobotu-1830-CanonicalClose
+PHASE=CANONICAL_CLOSE
+BACKUP_XML=D:\Projects\Hisse-Robotu\backend\data\scheduled-task-diagnostics-backup\HisseRobotu-1830-CanonicalClose-20261009-223305.xml
+NEW_EXECUTE=C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+NEW_ARGUMENTS=-NoProfile -NonInteractive -ExecutionPolicy Bypass -File "D:\Projects\Hisse-Robotu\scripts\scheduled-task-diagnostics\run_phase_with_logging.ps1" -Phase CANONICAL_CLOSE -PythonPath "D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe" -ProjectRoot "D:\Projects\Hisse-Robotu"

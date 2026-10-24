@@ -1,0 +1,103 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_FINANCIAL_INTELLIGENCE_PANEL_V1",
+  "schema_version": "fin-prod-v7-financial-intelligence-panel-v1",
+  "symbol": "TUPRS",
+  "read_only": true,
+  "sections": {
+    "financial_health": {
+      "score": 94,
+      "cash_quality_score": 100,
+      "capital_efficiency_score": 15,
+      "risk_status": "LOW"
+    },
+    "valuation": {
+      "bear": null,
+      "base": null,
+      "bull": null,
+      "current_price": "385",
+      "margin_of_safety": null,
+      "attractive_entry_price": "179.7114588180551815064056906",
+      "status": "VERY_EXPENSIVE"
+    },
+    "short_term_context": {
+      "status": "PASS",
+      "as_of_date": "2026-08-04",
+      "technical_trend": null,
+      "relative_strength": null,
+      "volume_liquidity": null,
+      "data_quality": "READY",
+      "blockers": [],
+      "warnings": [
+        "FUTURE_MARKET_ROWS_EXCLUDED"
+      ]
+    },
+    "long_term_context": {
+      "status": "PASS",
+      "as_of_date": "2026-08-04",
+      "business_quality": "45",
+      "governance": "45",
+      "growth_durability": "70",
+      "capital_efficiency": 15,
+      "coverage": {
+        "value": "0.95",
+        "unlock_threshold": "0.70",
+        "threshold_pass": true,
+        "weights_counted": {
+          "financial_health": "0.15",
+          "cash_quality": "0.12",
+          "capital_efficiency": "0.12",
+          "growth_durability": "0.12",
+          "governance": "0.08",
+          "valuation": "0.12",
+          "margin_of_safety": "0.09",
+          "business_quality": "0.15"
+        }
+      },
+      "data_quality": {
+        "status": "PASS",
+        "point_in_time": "PASS",
+        "missing_is_not_zero": true
+      },
+      "blockers": [],
+      "warnings": [
+        "BUSINESS_QUALITY_FROM_EXISTING_FUNDAMENTAL_QUALITY_ENGINE"
+      ]
+    },
+    "coverage_readiness": {
+      "short_term": {
+        "kind": "SHORT_TERM",
+        "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_short_term_canonical_context.json",
+        "status": "PASS",
+        "as_of_date": "2026-08-04",
+        "warnings": [
+          "FUTURE_MARKET_ROWS_EXCLUDED"
+        ],
+        "missing_fields": []
+      },
+      "long_term": {
+        "kind": "LONG_TERM",
+        "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_long_term_canonical_coverage.json",
+        "status": "PASS",
+        "as_of_date": "2026-08-04",
+        "warnings": [
+          "BUSINESS_QUALITY_FROM_EXISTING_FUNDAMENTAL_QUALITY_ENGINE"
+        ],
+        "missing_fields": []
+      },
+      "unresolved_blockers": [],
+      "coverage_status": "READY_FULL_CANONICAL_COVERAGE",
+      "decision_support_status": "READY_FULL_DECISION_SUPPORT"
+    }
+  },
+  "source_health": {
+    "missing_sources": [],
+    "complete": true
+  },
+  "production_rules": [
+    "Read-only aggregation only.",
+    "No AL/SAT, scanner, ranking or portfolio mutation.",
+    "Missing values remain null; they are never converted to zero.",
+    "Panel readiness is a data-coverage state, not a trade recommendation."
+  ]
+}

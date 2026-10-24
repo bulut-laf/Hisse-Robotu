@@ -1,0 +1,54 @@
+diff --git a/backend/app/funds/kap_portfolio_ingestion.py b/backend/app/funds/kap_portfolio_ingestion.py
+index e4ce5fc..f222f58 100644
+--- a/backend/app/funds/kap_portfolio_ingestion.py
++++ b/backend/app/funds/kap_portfolio_ingestion.py
+@@ -284,14 +284,19 @@ def parse_kap_portfolio_report_text(
+     if ingested_at.tzinfo is None or ingested_at.utcoffset() is None:
+         raise ValueError("ingested_at timezone-aware olmalıdır.")
+     text = str(report_text or "").replace("\u00a0", " ")
+-    fund_match = re.search(
++    fund_patterns = (
+         r"A\.\s*FONUN\s+ADI\s*:\s*([A-Z0-9]{2,12})\s*[-–—]",
+-        text,
+-        re.IGNORECASE,
++        r"(?m)^\s*([A-Z0-9]{2,12})\s+FON\b",
++        r"(?m)^\s*([A-Z0-9]{2,12})\s*[-–—]\s*[A-ZÇĞİÖŞÜ]",
+     )
+-    if fund_match is None:
++    fund_code = ""
++    for pattern in fund_patterns:
++        fund_match = re.search(pattern, text, re.IGNORECASE)
++        if fund_match is not None:
++            fund_code = normalize_fund_code(fund_match.group(1))
++            break
++    if not fund_code:
+         raise KapFundPortfolioError("KAP_FUND_CODE_MISSING")
+-    fund_code = normalize_fund_code(fund_match.group(1))
+     canonical_fund_id = _canonical_current_fund_id(fund_code)
+     section = _equity_section(text)
+ 
+diff --git a/backend/tests/test_fund_kap_portfolio_ingestion_v1.py b/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
+index e8e82b5..c63d7da 100644
+--- a/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
++++ b/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
+@@ -67,6 +67,20 @@ def test_report_text_maps_real_equity_table_shape_to_snapshot():
+     assert by_symbol["TTKOM"].portfolio_weight == Decimal("0.5434")
+ 
+ 
++def test_report_text_accepts_real_pdf_extraction_order_when_fund_name_value_is_detached():
++    reference = parse_kap_portfolio_report_reference(DETAIL_HTML, detail_url=DETAIL_URL)
++    detached_name_text = REPORT_TEXT.replace(
++        "A. FONUN ADI : AP5-ATLAS PORTFÖY BEŞİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
++        "A. FONUN ADI :\nAP5-ATLAS PORTFÖY BEŞİNCİ HİSSE SENEDİ SERBEST FON (HİSSE SENEDİ YOĞUN FON)",
++    )
++    snapshot = parse_kap_portfolio_report_text(
++        detached_name_text,
++        reference=reference,
++        ingested_at=STAMP,
++    )
++    assert snapshot.canonical_fund_id == "fund:tefas:AP5"
++
++
+ def test_ingestion_is_explicit_bounded_and_idempotent(tmp_path):
+     store = FundPortfolioSnapshotJsonStore(tmp_path / "portfolio_snapshots.json")
+     calls = []

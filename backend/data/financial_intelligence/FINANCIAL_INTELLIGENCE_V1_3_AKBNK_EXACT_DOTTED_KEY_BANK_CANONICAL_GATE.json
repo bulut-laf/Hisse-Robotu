@@ -1,0 +1,22 @@
+{
+  "status": "PASS_FAIL_CLOSED",
+  "canonical_facts": {
+    "CAPITAL_ADEQUACY.capital_adequacy_ratio": "16.38",
+    "GROWTH_QUALITY.deposit_growth": "15.53624447357414877283324310",
+    "GROWTH_QUALITY.net_income_growth": "38.19044937039868045218650680"
+  },
+  "canonical_adapter_status": "BLOCKED",
+  "canonical_adapter_blocker": "BANK_CANONICAL_METRIC_MISSING:CAPITAL_ADEQUACY.tier1_capital_ratio",
+  "canonical_payload_ready": false,
+  "production_evidence": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "missing_to_zero": false,
+  "industrial_threshold_reuse": false,
+  "blockers": [
+    "BANK_CANONICAL_ADAPTER_NOT_READY:BANK_CANONICAL_METRIC_MISSING:CAPITAL_ADEQUACY.tier1_capital_ratio"
+  ],
+  "production_mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

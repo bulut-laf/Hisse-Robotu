@@ -1,0 +1,5 @@
+﻿FUNCTION=normalize_symbol|LINE=111|ARGS=symbol:REQ:str|RET=str
+FUNCTION=fetch_delayed_snapshot|LINE=252|ARGS=symbol:REQ:str|RET=DelayedDataSnapshot
+FUNCTION=snapshot_to_record|LINE=339|ARGS=snapshot:REQ:DelayedDataSnapshot|RET=PilotLogRecord
+FUNCTION=pilot_rows|LINE=407|ARGS=records:REQ:tuple[PilotLogRecord, ...]|RET=list[dict[str, object]]
+FUNCTION=pilot_to_csv|LINE=435|ARGS=records:REQ:tuple[PilotLogRecord, ...]|RET=bytes

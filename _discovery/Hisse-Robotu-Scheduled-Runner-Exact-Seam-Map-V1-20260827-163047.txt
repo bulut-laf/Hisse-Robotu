@@ -1,0 +1,690 @@
+=== HISSE ROBOTU тАФ SCHEDULED RUNNER EXACT SEAM MAP V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+MEMORY_MUTATION=NO
+SCHEDULER_MUTATION=NO
+NETWORK_CALL=NO
+
+=== 1. EXACT DEFINITIONS / SIGNATURES ===
+DEF=backend\app\analysis\daily_operation_panel.py:68|FUNCTION|build_daily_operation_summary(*, pilot_records, signal_outcomes, trade_records, shadow_positions=...)
+DEF=backend\app\analysis\jump_candidate_entry_readiness.py:53|FUNCTION|evaluate_jump_candidate_entry_readiness(candidate, *, policy=...)
+DEF=backend\app\analysis\market_scanner.py:56|CLASS|MarketScanRequest
+DEF=backend\app\analysis\market_scanner.py:79|CLASS|MarketScanResult
+DEF=backend\app\analysis\market_scanner.py:111|CLASS|BistMarketScannerService
+DEF=backend\app\analysis\market_scanner.py:146|FUNCTION|calistir(self, istek, ilerleme_bildirimi=...)
+DEF=backend\app\analysis\morning_operation_snapshot.py:28|FUNCTION|build_morning_operation_snapshot(*, operation_summary, scan_result, visibility_contexts=..., limit=...)
+DEF=backend\app\analysis\ranking_visibility_service.py:9|FUNCTION|build_current_visibility_context(*, store=...)
+DEF=backend\app\compliance\dashboard_market_scanner_source_factory.py:26|FUNCTION|build_dashboard_market_scanner(*, now_provider=..., maximum_age=..., vbts_hard_block=..., evren_repository=..., tarayici=..., izleme_listesi_yolu=...)
+DEF=backend\app\opportunity_radar.py:280|FUNCTION|_monthly_profile_snapshots(daily, edges, profiles)
+DEF=backend\app\opportunity_radar.py:301|FUNCTION|_monthly_profile_status(current, closed)
+DEF=backend\app\opportunity_radar.py:330|FUNCTION|_apply_monthly_validation(frame, validation_data, edges, profiles)
+DEF=backend\app\opportunity_radar.py:612|FUNCTION|run_opportunity_radar(*, result_limit=...)
+
+=== 2. 18:20 CANONICAL CLOSE CALL CONTRACT ===
+--- CLOSE backend\app\compliance\dashboard_market_scanner_source_factory.py:26 ---
+00019: class DashboardMarketScannerSourceError(RuntimeError):
+00020:     """Dashboard tarama servisi se├зilen VBTS kayna─Я─▒yla kurulamad─▒─Я─▒nda olu┼Яur."""
+00021: 
+00022: 
+00023: NowProvider = Callable[[], datetime]
+00024: 
+00025: 
+00026: def build_dashboard_market_scanner(
+00027:     *,
+00028:     now_provider: NowProvider | None = None,
+00029:     maximum_age: timedelta = timedelta(hours=24),
+00030:     vbts_hard_block: bool = True,
+00031:     evren_repository: Any = None,
+00032:     tarayici: Any = None,
+00033:     izleme_listesi_yolu: str | Path | None = None,
+--- CLOSE backend\dashboard.py:2043 ---
+02036:             **ortak,
+02037:             minimum_skor=int(karsilastirma_minimum_skor),
+02038:         )
+02039:         with st.spinner(
+02040:             f"{baz_istek.sembol} verisi bir kez haz─▒rlan─▒yor; "
+02041:             "iki ayar ayn─▒ anl─▒k g├╢r├╝nt├╝de ├зal─▒┼Я─▒yor..."
+02042:         ):
+02043:             sonuc = SameDataComparisonService().calistir(
+02044:                 baz_istek,
+02045:                 ikinci_istek,
+02046:             )
+02047:     except (ValueError, TypeError, SameDataComparisonError) as hata:
+02048:         st.error(str(hata))
+02049:         return
+02050: 
+--- CLOSE backend\dashboard.py:2466 ---
+02459:             sembol=sembol,
+02460:             sermaye=float(sermaye),
+02461:             azami_risk_orani=float(risk_yuzde) / 100.0,
+02462:         )
+02463:         with st.spinner(
+02464:             f"{istek.sembol} i├зin saatlik, g├╝nl├╝k ve haftal─▒k veri haz─▒rlan─▒yor..."
+02465:         ):
+02466:             sonuc = LiveAnalysisDashboardService().calistir(istek)
+02467:     except (ValueError, TypeError, LiveAnalysisDashboardError) as hata:
+02468:         st.error(str(hata))
+02469:         return
+02470: 
+02471:     if not veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+02472:         return
+02473:     guncel_analiz_sonucu_goster(sonuc)
+--- CLOSE backend\dashboard.py:3410 ---
+03403:                 ozel_semboller=semboller,
+03404:                 internetten_evren_guncelle=bool(internetten_guncelle),
+03405:             )
+03406:             with st.spinner(
+03407:                 f"{istek_replay.evren} {istek_replay.kesim_tarihi} "
+03408:                 "tarihinde yeniden oynat─▒l─▒yor..."
+03409:             ):
+03410:                 replay_sonucu = MomentumWalkForwardService().calistir(istek_replay)
+03411:         except (ValueError, TypeError, MomentumWalkForwardError) as hata:
+03412:             st.error(str(hata))
+03413:             return
+03414:         st.session_state[MOMENTUM_REPLAY_RESULT_KEY] = replay_sonucu
+03415:         st.session_state[MOMENTUM_REPLAY_SIGNATURE_KEY] = replay_imzasi
+03416:         momentum_walk_forward_sonucu_goster(replay_sonucu)
+03417:         return
+--- CLOSE backend\dashboard.py:3447 ---
+03440:             ozel_semboller=semboller,
+03441:             internetten_evren_guncelle=bool(internetten_guncelle),
+03442:             piyasa_rejimi=(
+03443:                 aktif_rejim
+03444:             ),
+03445:         )
+03446:         with st.spinner(f"{istek.evren} momentum potansiyeli taran─▒yor..."):
+03447:             sonuc = MomentumDiscoveryService().calistir(
+03448:                 istek,
+03449:                 ilerleme_bildirimi=ilerleme_bildir,
+03450:                 durum_bildirimi=durum_bildir,
+03451:             )
+03452:     except (ValueError, TypeError, MomentumDiscoveryError) as hata:
+03453:         ilerleme.empty()
+03454:         durum.empty()
+--- CLOSE backend\dashboard.py:4515 ---
+04508:     vbts_operasyonel_hazir = vbts_yonetim_paneli_goster()
+04509:     vbts_kaynak_hazir = kap_vbts_durum_karti_goster()
+04510:     manuel_vbts_durum_paneli_goster()
+04511: 
+04512:     vbts_hazirlik_hatasi: str | None = None
+04513:     hazir_tarama_servisi: BistMarketScannerService | None = None
+04514:     try:
+04515:         hazir_tarama_servisi = build_dashboard_market_scanner(
+04516:             vbts_hard_block=False,
+04517:         )
+04518:     except DashboardMarketScannerSourceError as hata:
+04519:         vbts_hazirlik_hatasi = str(hata)
+04520: 
+04521:     if (
+04522:         not vbts_operasyonel_hazir
+--- CLOSE backend\dashboard.py:4610 ---
+04603:                 "Toplu taramay─▒ ba┼Яlat",
+04604:                 type="primary",
+04605:                 width="stretch",
+04606:                 disabled=hazir_tarama_servisi is None,
+04607:             )
+04608: 
+04609:     if not calistirildi:
+04610:         onceki_tarama = st.session_state.get("bist_toplu_tarama_son_sonuc")
+04611:         if onceki_tarama is not None:
+04612:             bist_toplu_tarama_sonucu_goster(
+04613:                 onceki_tarama["sonuc"],
+04614:                 temel_skorlar=onceki_tarama.get("temel_skorlar", {}),
+04615:                 temel_filtre_aktif=bool(onceki_tarama.get("temel_filtre_aktif", False)),
+04616:                 minimum_temel_skor=int(onceki_tarama.get("minimum_temel_skor", 60)),
+04617:             )
+--- CLOSE backend\dashboard.py:4740 ---
+04733:         ilerleme.progress(
+04734:             oran,
+04735:             text=f"[{sira}/{toplam}] {sembol} analiz ediliyor...",
+04736:         )
+04737:         durum.caption(f"Son i┼Яlenen hisse: {sembol}")
+04738: 
+04739:     try:
+04740:         istek = MarketScanRequest(
+04741:             evren=evren,
+04742:             profil_adi=TARAMA_PROFILLERI[profil_etiketi],
+04743:             maksimum_aday=int(maksimum_aday),
+04744:             ozel_semboller=ozel_sembol_metinini_ayristir(ozel_liste),
+04745:             internetten_evren_guncelle=bool(internetten_guncelle),
+04746:             sektor_baglami_aktif=True,
+04747:         )
+--- CLOSE backend\dashboard.py:4807 ---
+04800:     if st.button(
+04801:         "G├╝nl├╝k Operasyon Paneline Git",
+04802:         key="bist_toplu_tarama_gunluk_operasyon_gecis",
+04803:     ):
+04804:         st.session_state["analiz_modu"] = "G├╝nl├╝k Operasyon Paneli"
+04805:         st.rerun()
+04806: 
+04807:     st.session_state["bist_toplu_tarama_son_sonuc"] = {
+04808:         "sonuc": sonuc,
+04809:         "temel_skorlar": temel_skorlar,
+04810:         "temel_filtre_aktif": bool(temel_filtre_aktif),
+04811:         "minimum_temel_skor": int(minimum_temel_skor),
+04812:     }
+04813:     bist_toplu_tarama_sonucu_goster(
+04814:         sonuc,
+--- CLOSE backend\dashboard.py:4995 ---
+04988:             hedef_2=float(hedef_2),
+04989:             mevcut_stop=(
+04990:                 float(mevcut_stop_degeri) if mevcut_stop_kullan else None
+04991:             ),
+04992:             hedef_1_gerceklesti=bool(hedef_1_gerceklesti),
+04993:         )
+04994:         with st.spinner(f"{istek.sembol} a├з─▒k pozisyonu g├╝ncelleniyor..."):
+04995:             sonuc = OpenPositionDashboardService().calistir(istek)
+04996:     except (ValueError, TypeError, LiveAnalysisDashboardError) as hata:
+04997:         st.error(str(hata))
+04998:         return
+04999: 
+05000:     acik_pozisyon_sonucu_goster(sonuc)
+05001: 
+05002: def tek_hisse_formu() -> None:
+--- CLOSE backend\dashboard.py:5107 ---
+05100:             stop_yuzde=float(stop_yuzde),
+05101:             hedef_yuzde=float(hedef_yuzde),
+05102:         )
+05103: 
+05104:         with st.spinner(
+05105:             f"{istek.sembol} verisi haz─▒rlan─▒yor ve backtest ├зal─▒┼Я─▒yor..."
+05106:         ):
+05107:             sonuc = BacktestDashboardService().calistir(istek)
+05108: 
+05109:     except (ValueError, TypeError, BacktestServiceError) as hata:
+05110:         st.error(str(hata))
+05111:         return
+05112: 
+05113:     kayit = gecmise_kaydet(sonuc)
+05114:     if kayit is not None:
+--- CLOSE backend\dashboard.py:5229 ---
+05222:             maksimum_es_zamanli_pozisyon=int(maksimum_pozisyon),
+05223:         )
+05224: 
+05225:         with st.spinner(
+05226:             f"{len(istek.semboller)} hisse haz─▒rlan─▒yor ve "
+05227:             "portf├╢y backtestтАЩi ├зal─▒┼Я─▒yor..."
+05228:         ):
+05229:             sonuc = PortfolioDashboardService().calistir(istek)
+05230: 
+05231:     except (ValueError, TypeError, PortfolioDashboardError) as hata:
+05232:         st.error(str(hata))
+05233:         return
+05234: 
+05235:     kayit = gecmise_kaydet(sonuc)
+05236:     if kayit is not None:
+--- CLOSE backend\dashboard.py:5714 ---
+05707:             "XU100, XU030 ve XUTUM analizini ba┼Яlatmak i├зin "
+05708:             "sol men├╝deki d├╝─Яmeye bas─▒n."
+05709:         )
+05710:         return
+05711: 
+05712:     with st.spinner("Endeks verileri ve piyasa rejimi hesaplan─▒yor..."):
+05713:         try:
+05714:             sonuc = MarketRegimeDashboardService().calistir()
+05715:         except MarketRegimeDashboardError as hata:
+05716:             st.error(str(hata))
+05717:             return
+05718: 
+05719:     ana = sonuc.ana_rejim
+05720:     rejim_baglami = piyasa_rejimi_baglami_olustur(sonuc)
+05721:     st.session_state[PIYASA_REJIMI_BAGLAMI_KEY] = (
+
+=== 3. 08:45 MORNING / GAP CALL CONTRACT ===
+--- MORNING backend\dashboard.py:8144 ---
+08137:     shadow_store = ShadowPortfolioStore()
+08138:     try:
+08139:         shadow_positions = shadow_store.list()
+08140:     except ShadowPortfolioError as error:
+08141:         shadow_positions = ()
+08142:         st.warning(f"G├╢lge portf├╢y okunamad─▒: {error}")
+08143: 
+08144:     summary = build_daily_operation_summary(
+08145:         pilot_records=pilot_store.list(),
+08146:         signal_outcomes=signal_store.list(),
+08147:         trade_records=trade_records,
+08148:         shadow_positions=shadow_positions,
+08149:     )
+08150: 
+08151:     # DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1
+--- MORNING backend\dashboard.py:8293 ---
+08286:             "Otomatik g├╝nl├╝k tarama hen├╝z sonu├з ├╝retmedi. Son kay─▒tl─▒ ak┼Яam/sabah "
+08287:             "snapshot'─▒ varsa a┼Яa─Я─▒daki karar ge├зmi┼Яinde korunur; manuel tarama zorunlu de─Яildir."
+08288:         )
+08289:         if _auto_scan_error:
+08290:             st.caption(f"Otomatik tarama detay─▒: {_auto_scan_error}")
+08291:     else:
+08292:         try:
+08293:             _morning_visibility_contexts = build_current_visibility_context()
+08294:         except Exception as _morning_visibility_error:
+08295:             _morning_visibility_contexts = ()
+08296:             st.caption(
+08297:                 "Early Visibility ge├зmi┼Яi ┼Яu anda okunamad─▒; adaylar mevcut "
+08298:                 "tarama s─▒ras─▒yla g├╢sterilecek. "
+08299:                 f"Detay: {_morning_visibility_error}"
+08300:             )
+--- MORNING backend\dashboard.py:8424 ---
+08417:                         f"{_candidate_card.selection_reason}"
+08418:                     )
+08419:                     st.write(
+08420:                         f"**S─▒├зrama kalite kap─▒s─▒:** {_candidate_card.jump_quality} ┬╖ "
+08421:                         f"{_candidate_card.jump_quality_reason}"
+08422:                     )
+08423:                     st.write(
+08424:                         f"**Giri┼Я haz─▒rl─▒─Я─▒:** {_candidate_card.entry_readiness} ┬╖ "
+08425:                         f"{_candidate_card.entry_readiness_reason}"
+08426:                     )
+08427:                     st.write(
+08428:                         f"**S─▒ra de─Яi┼Яimi:** "
+08429:                         f"{_candidate_card.rank_change if _candidate_card.rank_change is not None else '-'}"
+08430:                     )
+08431: 
+--- MORNING backend\app\analysis\daily_operation_panel.py:68 ---
+00061:             if horizon.available:
+00062:                 completed += 1
+00063:             else:
+00064:                 pending += 1
+00065:     return len(records), pending, completed
+00066: 
+00067: 
+00068: def build_daily_operation_summary(
+00069:     *,
+00070:     pilot_records: Iterable[PilotLogRecord],
+00071:     signal_outcomes: Iterable[SignalOutcome],
+00072:     trade_records: Iterable[TradeRecord],
+00073:     shadow_positions: Iterable[ShadowPosition] = (),
+00074: ) -> DailyOperationSummary:
+00075:     latest = _latest_pilot(pilot_records)
+--- MORNING backend\app\analysis\eod_morning_board_delta.py:48 ---
+00041:     text = str(value or "─░┼ЮLEM YOK").strip().upper()
+00042:     return text if text in _DECISION_WEIGHT else "─░┼ЮLEM YOK"
+00043: 
+00044: 
+00045: def _reason(old: object | None, new: object | None, delta_type: str) -> str:
+00046:     if old is None:
+00047:         source = str(getattr(new, "selection_source", "TARAMA") or "TARAMA").upper()
+00048:         readiness = str(getattr(new, "entry_readiness", "-") or "-").upper()
+00049:         return f"Sabah Top-5'e girdi ┬╖ Kaynak: {source} ┬╖ Giri┼Я haz─▒rl─▒─Я─▒: {readiness}"
+00050:     if new is None:
+00051:         return "Ak┼Яam Top-5'teydi; sabah nihai listede yer alm─▒yor."
+00052: 
+00053:     parts: list[str] = []
+00054:     old_decision = _decision(getattr(old, "decision", None))
+00055:     new_decision = _decision(getattr(new, "decision", None))
+--- MORNING backend\app\analysis\jump_candidate_entry_readiness.py:53 ---
+00046: 
+00047: 
+00048: def _resistance_distance_pct(candidate: object) -> float | None:
+00049:     levels = getattr(candidate, "destek_direnc", None)
+00050:     return _float_attr(levels, "direnc_uzaklik_yuzde") if levels is not None else None
+00051: 
+00052: 
+00053: def evaluate_jump_candidate_entry_readiness(
+00054:     candidate: object,
+00055:     *,
+00056:     policy: JumpCandidateEntryReadinessPolicy | None = None,
+00057: ) -> JumpCandidateEntryReadinessResult:
+00058:     """S─▒├зrama aday─▒n─▒n giri┼Я zamanlamas─▒n─▒ a├з─▒klanabilir durumlara ay─▒r─▒r.
+00059: 
+00060:     Yeni skor ├╝retmez. Mevcut teknik skor, hacim, risk/├╢d├╝l ve EMA9-ATR
+--- MORNING backend\app\analysis\morning_candidate_flow.py:9 ---
+00002: 
+00003: from dataclasses import dataclass
+00004: from typing import Iterable
+00005: 
+00006: from backend.app.analysis.jump_candidate_quality import (
+00007:     evaluate_jump_candidate_quality,
+00008: )
+00009: from backend.app.analysis.jump_candidate_entry_readiness import (
+00010:     evaluate_jump_candidate_entry_readiness,
+00011: )
+00012: from backend.app.analysis.jump_candidate_priority_merge import (
+00013:     merge_jump_and_scan_candidates,
+00014: )
+00015: 
+00016: 
+--- MORNING backend\app\analysis\morning_candidate_flow.py:37 ---
+00030:     positive_reasons: tuple[str, ...]
+00031:     risks: tuple[str, ...]
+00032:     operational_status: str
+00033:     selection_source: str = "TARAMA"
+00034:     selection_reason: str = ""
+00035:     jump_quality: str = "-"
+00036:     jump_quality_reason: str = ""
+00037:     entry_readiness: str = "-"
+00038:     entry_readiness_reason: str = ""
+00039:     entry_extension_atr: float | None = None
+00040:     priority_reason: str = ""
+00041: 
+00042: 
+00043: def _normalize_symbol(value: object) -> str:
+00044:     return str(value or "").strip().upper().removesuffix(".IS")
+--- MORNING backend\app\analysis\morning_candidate_flow.py:178 ---
+00171:             and getattr(context, "rank_change", None) is not None
+00172:             else None
+00173:         )
+00174: 
+00175:         technical_view = str(getattr(signal, "karar"))
+00176: 
+00177:         _jump_quality = evaluate_jump_candidate_quality(candidate)
+00178:         _entry_readiness = evaluate_jump_candidate_entry_readiness(candidate)
+00179: 
+00180:         cards.append(
+00181:             MorningCandidateCard(
+00182:                 rank=rank,
+00183:                 symbol=symbol,
+00184:                 technical_score=int(getattr(signal, "skor")),
+00185:                 technical_view=technical_view,
+--- MORNING backend\app\analysis\morning_candidate_flow.py:211 ---
+00204:                     source=selection_source,
+00205:                     rank_change=rank_change,
+00206:                 ),
+00207:                 jump_quality=(
+00208:                     "UYGUN" if _jump_quality.eligible else "F─░LTRE DI┼ЮI"
+00209:                 ),
+00210:                 jump_quality_reason=" ┬╖ ".join(_jump_quality.reasons),
+00211:                 entry_readiness=_entry_readiness.state,
+00212:                 entry_readiness_reason=" ┬╖ ".join(_entry_readiness.reasons),
+00213:                 entry_extension_atr=_entry_readiness.extension_atr,
+00214:                 priority_reason=priority_reason,
+00215:             )
+00216:         )
+00217: 
+00218:     return tuple(cards)
+--- MORNING backend\app\analysis\morning_candidate_flow.py:234 ---
+00227:             "S─▒ra": card.rank,
+00228:             "Hisse": card.symbol,
+00229:             "Aday kayna─Я─▒": card.selection_source,
+00230:             "Se├зim nedeni": card.selection_reason,
+00231:             "Top-5 ├╢ncelik nedeni": card.priority_reason,
+00232:             "S─▒├зrama kalite kap─▒s─▒": card.jump_quality,
+00233:             "S─▒├зrama kalite nedeni": card.jump_quality_reason,
+00234:             "Giri┼Я haz─▒rl─▒─Я─▒": card.entry_readiness,
+00235:             "Giri┼Я haz─▒rl─▒─Я─▒ nedeni": card.entry_readiness_reason,
+00236:             "Uzama (ATR)": (
+00237:                 round(card.entry_extension_atr, 2)
+00238:                 if card.entry_extension_atr is not None
+00239:                 else "-"
+00240:             ),
+00241:             "Skor": card.technical_score,
+--- MORNING backend\app\analysis\morning_final_action_board.py:15 ---
+00008: class MorningFinalAction:
+00009:     action_priority: int
+00010:     symbol: str
+00011:     decision: str
+00012:     action: str
+00013:     original_priority: int
+00014:     selection_source: str
+00015:     entry_readiness: str
+00016:     jump_quality: str
+00017:     technical_score: int
+00018:     volume_ratio: float
+00019:     risk_reward: float
+00020:     data_status: str
+00021:     reason: str
+00022: 
+--- MORNING backend\app\analysis\morning_final_action_board.py:62 ---
+00055:             MorningFinalAction(
+00056:                 action_priority=0,
+00057:                 symbol=symbol,
+00058:                 decision=decision_value,
+00059:                 action=_action_label(decision_value),
+00060:                 original_priority=int(getattr(decision, "priority", len(items) + 1)),
+00061:                 selection_source=str(getattr(card, "selection_source", "TARAMA") or "TARAMA").upper(),
+00062:                 entry_readiness=str(getattr(card, "entry_readiness", "-") or "-").upper(),
+00063:                 jump_quality=str(getattr(card, "jump_quality", "-") or "-").upper(),
+00064:                 technical_score=int(getattr(decision, "technical_score", 0)),
+00065:                 volume_ratio=float(getattr(decision, "volume_ratio", 0.0)),
+00066:                 risk_reward=float(getattr(decision, "risk_reward", 0.0)),
+00067:                 data_status=str(getattr(decision, "data_status", "UYGUN")),
+00068:                 reason=reason,
+00069:             )
+--- MORNING backend\app\analysis\morning_final_action_board.py:82 ---
+00075:         MorningFinalAction(
+00076:             action_priority=index,
+00077:             symbol=item.symbol,
+00078:             decision=item.decision,
+00079:             action=item.action,
+00080:             original_priority=item.original_priority,
+00081:             selection_source=item.selection_source,
+00082:             entry_readiness=item.entry_readiness,
+00083:             jump_quality=item.jump_quality,
+00084:             technical_score=item.technical_score,
+00085:             volume_ratio=item.volume_ratio,
+00086:             risk_reward=item.risk_reward,
+00087:             data_status=item.data_status,
+00088:             reason=item.reason,
+00089:         )
+--- MORNING backend\app\analysis\morning_final_action_board.py:105 ---
+00098:         {
+00099:             "Aksiyon ├╢nceli─Яi": f"#{item.action_priority}",
+00100:             "Hisse": item.symbol,
+00101:             "Sabah aksiyon": item.action,
+00102:             "Karar": item.decision,
+00103:             "Top-5 s─▒ras─▒": f"#{item.original_priority}",
+00104:             "Kaynak": item.selection_source,
+00105:             "Giri┼Я haz─▒rl─▒─Я─▒": item.entry_readiness,
+00106:             "S─▒├зrama kalite": item.jump_quality,
+00107:             "Teknik skor": item.technical_score,
+00108:             "Hacim": round(item.volume_ratio, 2),
+00109:             "Risk/Getiri": round(item.risk_reward, 2),
+00110:             "Veri": item.data_status,
+00111:             "Neden / dikkat": item.reason,
+00112:         }
+--- MORNING backend\app\analysis\morning_operation_snapshot.py:28 ---
+00021: def _critical_alert_count(summary: DailyOperationSummary) -> int:
+00022:     return sum(
+00023:         str(item.level).casefold() == "kritik"
+00024:         for item in summary.alerts
+00025:     )
+00026: 
+00027: 
+00028: def build_morning_operation_snapshot(
+00029:     *,
+00030:     operation_summary: DailyOperationSummary,
+00031:     scan_result: object,
+00032:     visibility_contexts: Iterable[object] = (),
+00033:     limit: int = 5,
+00034: ) -> MorningOperationSnapshot:
+00035:     """
+--- MORNING backend\app\analysis\ranking_visibility_service.py:9 ---
+00002: 
+00003: from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+00004: from backend.app.analysis.ranking_visibility_context import (
+00005:     build_visibility_context_from_trajectory,
+00006: )
+00007: 
+00008: 
+00009: def build_current_visibility_context(
+00010:     *,
+00011:     store: RankObservationJsonlStore | None = None,
+00012: ):
+00013:     memory = store or RankObservationJsonlStore()
+00014:     observations = memory.list()
+00015: 
+00016:     return build_visibility_context_from_trajectory(observations)
+
+=== 4. 17:20 PRE-CLOSE EXISTING PARTIAL-AWARE CONTRACT ===
+--- PRECLOSE backend\app\opportunity_radar.py:280 ---
+00272:                 "quality": float(p["validation_quality_score"]),
+00273:                 "profile": f'{cls}: {p["factor_1"]}={p["bin_1"]} + {p["factor_2"]}={p["bin_2"]}',
+00274:                 "excess3": float(p["valid_median_excess_3m_pct"]),
+00275:                 "excess6": float(p["valid_median_excess_6m_pct"]),
+00276:             })
+00277:     return matches
+00278: 
+00279: 
+00280: def _monthly_profile_snapshots(daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame):
+00281:     z = _monthly_validation_features(daily)
+00282:     if z.empty:
+00283:         return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+00284:     d = _normalize_ohlcv(daily)
+00285:     last_daily = pd.Timestamp(d.index.max()).normalize()
+00286:     current_end = last_daily.to_period("M").to_timestamp(how="end").normalize()
+00287:     is_partial = z.index[-1] == current_end and last_daily < current_end
+00288: 
+--- PRECLOSE backend\app\opportunity_radar.py:304 ---
+00296:         "matches": _monthly_profile_matches(closed_row, edges, profiles),
+00297:     }
+00298:     return current, closed
+00299: 
+00300: 
+00301: def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+00302:     current_matches = list(current.get("matches", []))
+00303:     closed_matches = list(closed.get("matches", []))
+00304:     if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+00305:         chosen = current_matches
+00306:         status = "Ay ─░├зi Ge├зici Match"
+00307:     elif closed_matches:
+00308:         chosen = closed_matches
+00309:         status = "Validated Profile Match"
+00310:     else:
+00311:         chosen = []
+00312:         status = "Hen├╝z Validate De─Яil"
+--- PRECLOSE backend\app\opportunity_radar.py:340 ---
+00332:         return frame
+00333:     out = frame.copy()
+00334:     payloads = []
+00335:     for _, row in out.iterrows():
+00336:         symbol = str(row["Hisse"])
+00337:         daily = validation_data.get(symbol) or validation_data.get(symbol + ".IS")
+00338:         if daily is None:
+00339:             payloads.append(_monthly_profile_status(
+00340:                 {"snapshot":"CURRENT_PARTIAL","matches":[]},
+00341:                 {"snapshot":"LAST_CLOSED","matches":[]},
+00342:             ))
+00343:             continue
+00344:         try:
+00345:             current, closed = _monthly_profile_snapshots(daily, edges, profiles)
+00346:             payloads.append(_monthly_profile_status(current, closed))
+00347:         except Exception:
+00348:             payloads.append(_monthly_profile_status(
+--- PRECLOSE backend\app\opportunity_radar.py:612 ---
+00604:             "Hacim Oran─▒": round(x["vol_ratio"], 2) if pd.notna(x["vol_ratio"]) else np.nan,
+00605:             "ATR %": round(x["atr_pct"], 2) if pd.notna(x["atr_pct"]) else np.nan,
+00606:             "Ay": x["month"],
+00607:             "Neden se├зildi?": " ".join(early_reasons),
+00608:         }
+00609:     return strong, early
+00610: 
+00611: 
+00612: def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+00613:     edges, profiles = _load_validated_profiles()
+00614:     monthly_edges, monthly_profiles = _load_monthly_validated_profiles()
+00615:     universe = on_yukselis_evrenini_yukle(
+00616:         "BIST T├╝m",
+00617:         internetten_guncelle=False,
+00618:     )
+00619: 
+00620:     # Tek veri hatti: mevcut batch market data seam. 420 completed days gives
+--- PRECLOSE backend\app\opportunity_radar.py:714 ---
+00706:     )
+00707:     monthly_early = _apply_monthly_validation(
+00708:         monthly_early, validation_data, monthly_edges, monthly_profiles
+00709:     )
+00710: 
+00711:     for frame in (monthly_strong, monthly_early):
+00712:         if not frame.empty:
+00713:             frame["_validation_priority"] = frame["Durum"].map(
+00714:                 {"Validated Profile Match": 2, "Ay ─░├зi Ge├зici Match": 1}
+00715:             ).fillna(0)
+00716:             frame.sort_values(
+00717:                 ["_validation_priority", "Profile Match Count", "Validated Quality", "Ayl─▒k Skor"],
+00718:                 ascending=[False, False, False, False],
+00719:                 inplace=True,
+00720:             )
+00721:             frame.drop(columns=["_validation_priority"], inplace=True)
+00722:             frame.reset_index(drop=True, inplace=True)
+
+=== 5. PRECLOSE PERSISTENCE / EXPORT EVIDENCE ===
+PERSISTENCE_HIT=backend\app\ui\opportunity_radar_dashboard.py:87|data=result.weekly.to_csv(index=False).encode("utf-8-sig"),
+PERSISTENCE_HIT=backend\app\ui\opportunity_radar_dashboard.py:95|data=result.monthly_strong.to_csv(index=False).encode("utf-8-sig"),
+PERSISTENCE_HIT=backend\app\ui\opportunity_radar_dashboard.py:103|data=result.monthly_early.to_csv(index=False).encode("utf-8-sig"),
+PRECLOSE_PERSISTENCE_HITS=3
+
+=== 6. EXISTING SESSION-ONLY STATE EVIDENCE ===
+SESSION_HIT=backend\dashboard.py:1015|st.session_state["gecmis_silme_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:1133|st.session_state["gecmis_geri_yukleme_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:1359|silme_bildirimi = st.session_state.pop(
+SESSION_HIT=backend\dashboard.py:1366|geri_yukleme_bildirimi = st.session_state.pop(
+SESSION_HIT=backend\dashboard.py:2952|st.session_state[canli_key] = guncel_seans_ozeti_getir(
+SESSION_HIT=backend\dashboard.py:2956|st.session_state.pop(canli_key, None)
+SESSION_HIT=backend\dashboard.py:2959|canli = st.session_state.get(canli_key)
+SESSION_HIT=backend\dashboard.py:3197|_eski_rejim_uyumluluk = st.session_state.get("aktif_piyasa_rejimi")
+SESSION_HIT=backend\dashboard.py:3200|st.session_state.get(PIYASA_REJIMI_BAGLAMI_KEY)
+SESSION_HIT=backend\dashboard.py:3349|kayitli_replay = st.session_state.get(MOMENTUM_REPLAY_RESULT_KEY)
+SESSION_HIT=backend\dashboard.py:3350|kayitli_imza = st.session_state.get(MOMENTUM_REPLAY_SIGNATURE_KEY)
+SESSION_HIT=backend\dashboard.py:3361|kayitli_sonuc = st.session_state.get(
+SESSION_HIT=backend\dashboard.py:3364|kayitli_discovery_imzasi = st.session_state.get(
+SESSION_HIT=backend\dashboard.py:3379|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+SESSION_HIT=backend\dashboard.py:3380|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+SESSION_HIT=backend\dashboard.py:3395|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+SESSION_HIT=backend\dashboard.py:3396|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+SESSION_HIT=backend\dashboard.py:3414|st.session_state[MOMENTUM_REPLAY_RESULT_KEY] = replay_sonucu
+SESSION_HIT=backend\dashboard.py:3415|st.session_state[MOMENTUM_REPLAY_SIGNATURE_KEY] = replay_imzasi
+SESSION_HIT=backend\dashboard.py:3419|st.session_state.pop(MOMENTUM_REPLAY_RESULT_KEY, None)
+SESSION_HIT=backend\dashboard.py:3420|st.session_state.pop(MOMENTUM_REPLAY_SIGNATURE_KEY, None)
+SESSION_HIT=backend\dashboard.py:3466|st.session_state[MOMENTUM_DISCOVERY_RESULT_KEY] = sonuc
+SESSION_HIT=backend\dashboard.py:3467|st.session_state[MOMENTUM_DISCOVERY_SIGNATURE_KEY] = discovery_imzasi
+SESSION_HIT=backend\dashboard.py:3581|st.session_state["vbts_yonetim_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:3691|st.session_state["vbts_yonetim_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:3752|st.session_state["vbts_yonetim_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:3811|st.session_state["vbts_yonetim_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:3855|st.session_state["vbts_yonetim_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:4504|bildirim = st.session_state.pop("vbts_yonetim_bildirimi", None)
+SESSION_HIT=backend\dashboard.py:4610|onceki_tarama = st.session_state.get("bist_toplu_tarama_son_sonuc")
+SESSION_HIT=backend\dashboard.py:4804|st.session_state["analiz_modu"] = "G├╝nl├╝k Operasyon Paneli"
+SESSION_HIT=backend\dashboard.py:4807|st.session_state["bist_toplu_tarama_son_sonuc"] = {
+SESSION_HIT=backend\dashboard.py:5317|st.session_state["islem_gunlugu_bildirimi"] = "─░┼Яlem kayd─▒ silindi."
+SESSION_HIT=backend\dashboard.py:5401|st.session_state["islem_gunlugu_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:5444|st.session_state["islem_gunlugu_bildirimi"] = (
+SESSION_HIT=backend\dashboard.py:5611|bildirim = st.session_state.pop("islem_gunlugu_bildirimi", None)
+SESSION_HIT=backend\dashboard.py:5721|st.session_state[PIYASA_REJIMI_BAGLAMI_KEY] = (
+SESSION_HIT=backend\dashboard.py:5725|st.session_state["aktif_piyasa_rejimi"] = ana.rejim
+SESSION_HIT=backend\dashboard.py:5727|st.session_state.pop("aktif_piyasa_rejimi", None)
+SESSION_HIT=backend\dashboard.py:5728|st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+SESSION_HIT=backend\dashboard.py:5729|st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+SESSION_HIT=backend\dashboard.py:8254|_morning_scan_state = st.session_state.get("bist_toplu_tarama_son_sonuc")
+SESSION_HIT=backend\dashboard.py:8275|st.session_state["bist_toplu_tarama_son_sonuc"] = _morning_scan_state
+SESSION_HIT=backend\dashboard.py:9452|if st.session_state.get(_price_symbol_key) != _current_symbol:
+SESSION_HIT=backend\dashboard.py:9453|st.session_state.pop(_price_key, None)
+SESSION_HIT=backend\dashboard.py:9454|st.session_state.pop(_price_prefill_key, None)
+SESSION_HIT=backend\dashboard.py:9455|st.session_state.pop(_price_meta_key, None)
+SESSION_HIT=backend\dashboard.py:9456|st.session_state[_price_symbol_key] = _current_symbol
+SESSION_HIT=backend\dashboard.py:9468|st.session_state[_price_meta_key] = {
+SESSION_HIT=backend\dashboard.py:9477|st.session_state[_price_prefill_key] = float(_price_suggestion.price)
+SESSION_HIT=backend\dashboard.py:9478|st.session_state.pop(_price_key, None)
+SESSION_HIT=backend\dashboard.py:9483|_price_default = st.session_state.pop(
+SESSION_HIT=backend\dashboard.py:9495|_price_meta = st.session_state.get(_price_meta_key)
+SESSION_HIT=backend\app\ui\prebreakout_dashboard.py:293|cache_key = "prebreakout_last_completed_run"
+SESSION_HIT=backend\app\ui\prebreakout_dashboard.py:294|cached_run = st.session_state.get(cache_key)
+SESSION_HIT=backend\app\ui\prebreakout_dashboard.py:375|st.session_state[cache_key] = {
+SESSION_HIT=backend\app\ui\opportunity_radar_dashboard.py:48|st.session_state[cache_key] = result
+SESSION_HIT=backend\app\ui\opportunity_radar_dashboard.py:50|result = st.session_state.get(cache_key)
+SESSION_HIT=backend\app\ui\opportunity_radar_dashboard.py:55|st.session_state.pop(cache_key, None)
+SESSION_STATE_HITS=59
+
+=== 7. EXACT ADAPTER DECISION ===
+CLOSE_CALLABLE=YES
+MORNING_SNAPSHOT_CALLABLE=YES
+GAP_ENTRY_CALLABLE=YES
+PRECLOSE_PUBLIC_RUNNER=YES
+PRECLOSE_PARTIAL_AWARE=YES
+PRECLOSE_STRONG_PERSISTENCE_SEAM=YES
+DECISION=READY_FOR_FULL_NARROW_SCHEDULED_RUNNER_ADAPTER
+NEXT=IMPLEMENT_RUNNER_AND_WINDOWS_TASK_BINDINGS
+
+SAFETY:
+17:20_CANONICAL_RANKING_WRITE=NO
+17:20_PROFILE_MEMORY_WRITE=NO
+17:20_AL_SAT_DECISION=NO
+18:20_CANONICAL_AUTHORITY=PRESERVED
+08:45_PRIOR_CLOSE_RANKING_REWRITE=NO
+NEW_ENGINE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+
+=== PREFLIGHT COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO

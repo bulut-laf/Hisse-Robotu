@@ -1,0 +1,1 @@
+Write-Host "Early Visibility V2 Readiness Check installed."

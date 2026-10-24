@@ -1,0 +1,7 @@
+PHASE=PRECLOSE
+STARTED_AT=2026-10-23T17:20:08.2451281+03:00
+PROJECT_ROOT=D:\Projects\Hisse-Robotu
+PYTHON=D:\Projects\Hisse-Robotu\.venv\Scripts\python.exe
+COMMAND=-m backend.app.operations.scheduled_operation_phase_runner --phase PRECLOSE
+USER=user-Bilgisayar\user
+MACHINE=USER-BILGISAYAR

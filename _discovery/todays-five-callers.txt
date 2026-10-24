@@ -1,0 +1,3 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:13: def build_todays_five_candidates_view(
+D:\Projects\Hisse-Robotu\backend\tests\test_turbo_10_todays_five_candidates.py:4:     build_todays_five_candidates_view,
+D:\Projects\Hisse-Robotu\backend\tests\test_turbo_10_todays_five_candidates.py:9:     result = build_todays_five_candidates_view(

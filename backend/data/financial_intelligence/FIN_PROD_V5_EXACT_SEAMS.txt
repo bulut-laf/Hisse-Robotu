@@ -1,0 +1,9 @@
+﻿====================================================================================================
+FILE=backend\app\data\market_data.py
+EXISTS=True
+----------------------------------------------------------------------------------------------------
+NAME=fiyat_verisi_getir
+TYPE=FunctionDef
+SIGNATURE=sembol: str, islem_gunu: int=60, indirme_donemi: str='6mo', yalnizca_tamamlanmis_gunler: bool=True
+LINES=17-85
+SOURCE_BEGIN

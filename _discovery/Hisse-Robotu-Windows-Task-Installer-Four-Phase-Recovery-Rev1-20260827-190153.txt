@@ -1,0 +1,33 @@
+=== HISSE ROBOTU — WINDOWS TASK INSTALLER FOUR-PHASE RECOVERY REV1 ===
+RECOVERY_MODE=YES
+ROOT_CAUSE=STALE_LEGACY_INSTALLER_TEST_EXPECTED_EVENING_MORNING_BINDINGS
+PRODUCTION_INSTALLER_PATCHED=YES
+LEGACY_TEST_CONTRACT_EVOLVED=YES
+DASHBOARD_UI_TESTS_CHANGED=NO
+WINDOWS_TASK_MUTATION=NO
+INSTALLER_EXECUTION=NO
+PARALLEL_SCHEDULER=NO
+08:45=PREOPEN
+10:20=POSTOPEN
+17:20=PRECLOSE
+18:30=CANONICAL_CLOSE
+POWERSHELL_INSTALLER_PARSE=PASS
+F.............                                                           [100%]
+================================== FAILURES ===================================
+____ test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner ____
+
+    def test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner():
+        source = Path("backend/dashboard.py").read_text(encoding="utf-8")
+        assert "DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1" in source
+>       assert "Otomatik Karar Ko┼Яusu" in source
+E       assert 'Otomatik Karar Ko\u0415\u045fusu' in 'from __future__ import annotations\\n\\nfrom datetime import datetime\\n\\nfrom backend.app.integration.three_system_exch...\xfc":\\n        portfoy_formu()\\n    else:\\n        analiz_gecmisi_goster()\\n\\n\\nif __name__ == "__main__":\\n    main()\\n'
+
+backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:7: AssertionError
+=========================== short test summary info ===========================
+FAILED backend/tests/test_daily_buy_decision_automation_bridge_dashboard_v1.py::test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner
+1 failed, 13 passed in 2.76s
+TARGET_TEST=FAIL
+RECOVERY_STATUS=FAILED
+ERROR=TARGET_TEST_FAILED
+ROLLBACK=STARTED
+ROLLBACK=COMPLETE

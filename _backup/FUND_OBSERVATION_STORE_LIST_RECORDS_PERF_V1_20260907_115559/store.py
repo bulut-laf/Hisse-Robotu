@@ -1,0 +1,88 @@
+from __future__ import annotations
+
+import hashlib
+import json
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable
+
+from .contracts import FundDailyObservation, to_primitive
+
+
+class FundStoreError(RuntimeError):
+    pass
+
+
+@dataclass(frozen=True, slots=True)
+class FundStoreResult:
+    inserted: int
+    updated: int
+    unchanged: int
+    total_records: int
+
+
+class FundObservationJsonStore:
+    """Stock store'dan ayrı namespace kullanan atomik, idempotent fon deposu."""
+
+    def __init__(self, path: str | Path) -> None:
+        self.path = Path(path)
+
+    def _read(self) -> dict[str, dict[str, object]]:
+        if not self.path.exists():
+            return {}
+        try:
+            payload = json.loads(self.path.read_text(encoding="utf-8"))
+        except Exception as exc:
+            raise FundStoreError("Fon gözlem deposu okunamadı.") from exc
+        if not isinstance(payload, dict):
+            raise FundStoreError("Fon gözlem deposu nesne biçiminde olmalıdır.")
+        return payload
+
+    @staticmethod
+    def _key(item: FundDailyObservation) -> str:
+        return f"{item.canonical_fund_id}|{item.observation_date.isoformat()}"
+
+    def upsert(self, observations: Iterable[FundDailyObservation]) -> FundStoreResult:
+        existing = self._read()
+        inserted = updated = unchanged = 0
+        for item in sorted(observations, key=self._key):
+            key = self._key(item)
+            record = to_primitive(item)
+            digest = hashlib.sha256(json.dumps(
+                record, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+            ).encode("utf-8")).hexdigest()
+            stored = existing.get(key)
+            if stored is None:
+                inserted += 1
+            elif stored.get("_digest") == digest:
+                unchanged += 1
+                continue
+            else:
+                updated += 1
+            existing[key] = {**record, "_digest": digest}
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        temp = self.path.with_suffix(self.path.suffix + ".tmp")
+        temp.write_text(json.dumps(existing, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+        temp.replace(self.path)
+        return FundStoreResult(inserted, updated, unchanged, len(existing))
+
+    def list_records(self) -> tuple[dict[str, object], ...]:
+        return tuple(self._read()[key] for key in sorted(self._read()))
+# Canonical production persistence seam for fund daily observations.
+# Resolved from this module location; independent of process cwd.
+DEFAULT_FUND_OBSERVATION_PATH = (
+    Path(__file__).resolve().parents[2]
+    / "data"
+    / "funds"
+    / "observations.json"
+)
+
+
+def fund_observation_store(
+    path: str | Path | None = None,
+) -> FundObservationJsonStore:
+    return FundObservationJsonStore(
+        DEFAULT_FUND_OBSERVATION_PATH
+        if path is None
+        else path
+    )

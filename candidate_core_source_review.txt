@@ -1,0 +1,548 @@
+
+========== .\backend\app\analysis\high_conviction_buy_gate.py ==========
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: from typing import Iterable
+   5: 
+   6: 
+   7: HIGH_CONFIDENCE = "AL — YÜKSEK GÜVEN"
+   8: NORMAL_CONFIDENCE = "AL — NORMAL GÜVEN"
+   9: WAIT = "BEKLE"
+  10: NO_TRADE = "İŞLEM YOK"
+  11: 
+  12: _SUPPORTIVE_VISIBILITY = {"IMPROVING", "RISING", "ACCELERATING"}
+  13: 
+  14: 
+  15: @dataclass(frozen=True)
+  16: class HistoricalSupport:
+  17:     status: str
+  18:     supportive_slices: int
+  19:     evaluated_slices: int
+  20:     reasons: tuple[str, ...]
+  21: 
+  22: 
+  23: @dataclass(frozen=True)
+  24: class HighConvictionDecision:
+  25:     priority: int
+  26:     symbol: str
+  27:     base_decision: str
+  28:     conviction: str
+  29:     technical_gate: str
+  30:     volume_gate: str
+  31:     risk_reward_gate: str
+  32:     timing_gate: str
+  33:     entry_gate: str
+  34:     data_gate: str
+  35:     history_gate: str
+  36:     reasons: tuple[str, ...]
+  37:     blockers: tuple[str, ...]
+  38: 
+  39: 
+  40: def _positive_technical(view: object) -> bool:
+  41:     return "pozitif" in str(view or "").casefold()
+  42: 
+  43: 
+  44: def _score_segment(value: int) -> str:
+  45:     if value >= 80:
+  46:         return "80+"
+  47:     if value >= 70:
+  48:         return "70-79"
+  49:     return "<70"
+  50: 
+  51: 
+  52: def _ratio_segment(value: float, *, high: float, mid: float) -> str:
+  53:     if value >= high:
+  54:         return f">={high:g}"
+  55:     if value >= mid:
+  56:         return f"{mid:g}-{high:g}"
+  57:     return f"<{mid:g}"
+  58: 
+  59: 
+  60: def _relevant_calibration_keys(decision: object) -> tuple[tuple[str, str], ...]:
+  61:     return (
+  62:         ("Teknik skor", _score_segment(int(getattr(decision, "technical_score", 0)))),
+  63:         (
+  64:             "Hacim",
+  65:             _ratio_segment(
+  66:                 float(getattr(decision, "volume_ratio", 0.0)), high=1.3, mid=1.0
+  67:             ),
+  68:         ),
+  69:         (
+  70:             "Risk/Getiri",
+  71:             _ratio_segment(
+  72:                 float(getattr(decision, "risk_reward", 0.0)), high=2.0, mid=1.5
+  73:             ),
+  74:         ),
+  75:     )
+  76: 
+  77: 
+  78: def evaluate_historical_support(
+  79:     decision: object,
+  80:     calibration_slices: Iterable[object] = (),
+  81: ) -> HistoricalSupport:
+  82:     """Use only existing outcome calibration; never creates a new score.
+  83: 
+  84:     High-confidence history support requires at least two supportive core
+  85:     calibration slices at 3S/5S. A slice is supportive only when the existing
+  86:     calibration layer already labels it DESTEKLEYİCİ with >=10 samples,
+  87:     >=60% hit rate and positive average return.
+  88:     """
+  89:     keys = set(_relevant_calibration_keys(decision))
+  90:     relevant = []
+  91:     for item in calibration_slices:
+  92:         key = (str(getattr(item, "dimension", "")), str(getattr(item, "segment", "")))
+  93:         horizon = str(getattr(item, "horizon", "")).upper()
+  94:         if key in keys and horizon in {"3S", "5S"}:
+  95:             relevant.append(item)
+  96: 
+  97:     supportive = []
+  98:     for item in relevant:
+  99:         sample_size = int(getattr(item, "sample_size", 0))
+ 100:         hit_rate = getattr(item, "hit_rate", None)
+ 101:         average_return = getattr(item, "average_return", None)
+ 102:         status = str(getattr(item, "status", "")).upper()
+ 103:         if (
+ 104:             status == "DESTEKLEYİCİ"
+ 105:             and sample_size >= 10
+ 106:             and hit_rate is not None
+ 107:             and float(hit_rate) >= 60.0
+ 108:             and average_return is not None
+ 109:             and float(average_return) > 0.0
+ 110:         ):
+ 111:             supportive.append(item)
+ 112: 
+ 113:     reasons = tuple(
+ 114:         f"{getattr(item, 'dimension', '-')} {getattr(item, 'segment', '-')} "
+ 115:         f"{getattr(item, 'horizon', '-')} · n={int(getattr(item, 'sample_size', 0))} · "
+ 116:         f"isabet={float(getattr(item, 'hit_rate', 0.0)):.1f}% · "
+ 117:         f"ort={float(getattr(item, 'average_return', 0.0)):.2f}%"
+ 118:         for item in supportive
+ 119:     )
+ 120: 
+ 121:     if len(supportive) >= 2:
+ 122:         status = "DESTEKLEYİCİ"
+ 123:     elif relevant:
+ 124:         status = "YETERSİZ / KARIŞIK"
+ 125:     else:
+ 126:         status = "YETERSİZ VERİ"
+ 127: 
+ 128:     return HistoricalSupport(
+ 129:         status=status,
+ 130:         supportive_slices=len(supportive),
+ 131:         evaluated_slices=len(relevant),
+ 132:         reasons=reasons,
+ 133:     )
+ 134: 
+ 135: 
+ 136: def _timing_pass(card: object, decision: object) -> tuple[bool, str]:
+ 137:     rank_change = getattr(decision, "rank_change", None)
+ 138:     priority = str(getattr(decision, "research_priority", "NORMAL") or "NORMAL").upper()
+ 139:     visibility = str(getattr(decision, "visibility_state", "") or "").upper()
+ 140: 
+ 141:     if rank_change is not None and int(rank_change) < 0:
+ 142:         return False, f"Sıralama geriliyor ({int(rank_change)})"
+ 143:     if rank_change is not None and int(rank_change) > 0:
+ 144:         return True, f"Sıralama iyileşiyor (+{int(rank_change)})"
+ 145:     if visibility in _SUPPORTIVE_VISIBILITY:
+ 146:         return True, f"Erken görünürlük {visibility}"
+ 147:     if priority == "HIGH":
+ 148:         return True, "Araştırma önceliği HIGH"
+ 149:     return False, "Pozitif zamanlama/ranking kanıtı yok"
+ 150: 
+ 151: 
+ 152: def _entry_pass(card: object) -> tuple[bool, str]:
+ 153:     source = str(getattr(card, "selection_source", "TARAMA") or "TARAMA").upper()
+ 154:     quality = str(getattr(card, "jump_quality", "-") or "-").upper()
+ 155:     readiness = str(getattr(card, "entry_readiness", "-") or "-").upper()
+ 156: 
+ 157:     if source == "SICRAMA":
+ 158:         if quality != "UYGUN":
+ 159:             return False, f"Sıçrama kalite kapısı {quality}"
+ 160:         if readiness != "GİRİŞE HAZIR":
+ 161:             return False, f"Giriş hazırlığı {readiness}"
+ 162:         return True, "Sıçrama kalite + giriş hazırlığı uygun"
+ 163: 
+ 164:     if readiness in {"TEYİT BEKLİYOR", "ERKEN", "AŞIRI UZAMIŞ"}:
+ 165:         return False, f"Giriş hazırlığı {readiness}"
+ 166:     return True, "Mevcut giriş kapısı engel üretmiyor"
+ 167: 
+ 168: 
+ 169: def build_high_conviction_buy_gate(
+ 170:     cards: Iterable[object],
+ 171:     decisions: Iterable[object],
+ 172:     *,
+ 173:     calibration_slices: Iterable[object] = (),
+ 174: ) -> tuple[HighConvictionDecision, ...]:
+ 175:     """Classify existing daily decisions without changing the AL/SAT engine.
+ 176: 
+ 177:     This is a strict confidence overlay. It never upgrades BEKLE/İŞLEM YOK to AL,
+ 178:     never changes existing thresholds, and creates no combined confidence score.
+ 179:     """
+ 180:     cards_by_symbol = {
+ 181:         str(getattr(card, "symbol", "")).strip().upper(): card for card in cards
+ 182:     }
+ 183:     calibration = tuple(calibration_slices)
+ 184:     result: list[HighConvictionDecision] = []
+ 185: 
+ 186:     for decision in decisions:
+ 187:         symbol = str(getattr(decision, "symbol", "")).strip().upper()
+ 188:         card = cards_by_symbol.get(symbol)
+ 189:         base = str(getattr(decision, "decision", "")).upper()
+ 190:         priority = int(getattr(decision, "priority", 0))
+ 191: 
+ 192:         score = int(getattr(decision, "technical_score", 0))
+ 193:         view = str(getattr(decision, "technical_view", ""))
+ 194:         volume = float(getattr(decision, "volume_ratio", 0.0))
+ 195:         rr = float(getattr(decision, "risk_reward", 0.0))
+ 196:         data_status = str(getattr(decision, "data_status", "UYGUN") or "UYGUN").upper()
+ 197: 
+ 198:         technical_ok = _positive_technical(view) and score >= 80
+ 199:         volume_ok = volume >= 1.30
+ 200:         rr_ok = rr >= 2.0
+ 201:         timing_ok, timing_reason = _timing_pass(card, decision)
+ 202:         entry_ok, entry_reason = _entry_pass(card) if card is not None else (False, "Aday kartı yok")
+ 203:         data_ok = data_status == "UYGUN"
+ 204:         history = evaluate_historical_support(decision, calibration)
+ 205:         history_ok = history.status == "DESTEKLEYİCİ"
+ 206: 
+ 207:         reasons: list[str] = []
+ 208:         blockers: list[str] = []
+ 209: 
+ 210:         if technical_ok:
+ 211:             reasons.append(f"Teknik kapı geçti ({score})")
+ 212:         else:
+ 213:             blockers.append(f"Teknik kapı: pozitif görünüm + skor >=80 gerekli ({score})")
+ 214:         if volume_ok:
+ 215:             reasons.append(f"Hacim kapısı geçti ({volume:.2f})")
+ 216:         else:
+ 217:             blockers.append(f"Hacim kapısı: >=1.30 gerekli ({volume:.2f})")
+ 218:         if rr_ok:
+ 219:             reasons.append(f"Risk/getiri kapısı geçti ({rr:.2f})")
+ 220:         else:
+ 221:             blockers.append(f"Risk/getiri kapısı: >=2.00 gerekli ({rr:.2f})")
+ 222:         if timing_ok:
+ 223:             reasons.append(timing_reason)
+ 224:         else:
+ 225:             blockers.append(timing_reason)
+ 226:         if entry_ok:
+ 227:             reasons.append(entry_reason)
+ 228:         else:
+ 229:             blockers.append(entry_reason)
+ 230:         if data_ok:
+ 231:             reasons.append("Veri durumu UYGUN")
+ 232:         else:
+ 233:             blockers.append("Kısmi/gecikmeli veri yüksek güveni engelliyor")
+ 234:         if history_ok:
+ 235:             reasons.append("Outcome geçmişi destekleyici")
+ 236:             reasons.extend(history.reasons)
+ 237:         else:
+ 238:             blockers.append(
+ 239:                 "Outcome geçmişi yüksek güven için henüz destekleyici değil "
+ 240:                 f"({history.supportive_slices}/{max(history.evaluated_slices, 1)} destekleyici dilim)"
+ 241:             )
+ 242: 
+ 243:         if base != "AL":
+ 244:             conviction = NO_TRADE if base == NO_TRADE else WAIT
+ 245:         elif all((technical_ok, volume_ok, rr_ok, timing_ok, entry_ok, data_ok, history_ok)):
+ 246:             conviction = HIGH_CONFIDENCE
+ 247:         else:
+ 248:             conviction = NORMAL_CONFIDENCE
+ 249: 
+ 250:         result.append(
+ 251:             HighConvictionDecision(
+ 252:                 priority=priority,
+ 253:                 symbol=symbol,
+ 254:                 base_decision=base,
+ 255:                 conviction=conviction,
+ 256:                 technical_gate="GEÇTİ" if technical_ok else "KALDI",
+ 257:                 volume_gate="GEÇTİ" if volume_ok else "KALDI",
+ 258:                 risk_reward_gate="GEÇTİ" if rr_ok else "KALDI",
+ 259:                 timing_gate="GEÇTİ" if timing_ok else "KALDI",
+ 260:                 entry_gate="GEÇTİ" if entry_ok else "KALDI",
+ 261:                 data_gate="GEÇTİ" if data_ok else "KALDI",
+ 262:                 history_gate=history.status,
+ 263:                 reasons=tuple(dict.fromkeys(reasons)),
+ 264:                 blockers=tuple(dict.fromkeys(blockers)),
+ 265:             )
+ 266:         )
+ 267: 
+ 268:     return tuple(result)
+ 269: 
+ 270: 
+ 271: def high_conviction_rows(
+ 272:     decisions: Iterable[HighConvictionDecision],
+ 273: ) -> tuple[dict[str, object], ...]:
+ 274:     return tuple(
+ 275:         {
+ 276:             "Öncelik": f"#{item.priority}",
+ 277:             "Hisse": item.symbol,
+ 278:             "Mevcut karar": item.base_decision,
+ 279:             "Güven sonucu": item.conviction,
+ 280:             "Teknik": item.technical_gate,
+ 281:             "Hacim": item.volume_gate,
+ 282:             "R/R": item.risk_reward_gate,
+ 283:             "Zamanlama": item.timing_gate,
+ 284:             "Giriş": item.entry_gate,
+ 285:             "Veri": item.data_gate,
+ 286:             "Geçmiş kanıt": item.history_gate,
+ 287:             "Destek": " | ".join(item.reasons) or "-",
+ 288:             "Eksik / engel": " | ".join(item.blockers) or "-",
+ 289:         }
+ 290:         for item in decisions
+ 291:     )
+
+========== .\backend\app\analysis\jump_candidate_quality.py ==========
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: 
+   5: 
+   6: @dataclass(frozen=True)
+   7: class JumpCandidateQualityPolicy:
+   8:     minimum_technical_score: int = 60
+   9:     minimum_volume_ratio: float = 1.0
+  10:     minimum_risk_reward: float = 1.5
+  11:     maximum_extension_atr: float = 2.0
+  12: 
+  13: 
+  14: @dataclass(frozen=True)
+  15: class JumpCandidateQualityResult:
+  16:     eligible: bool
+  17:     technical_ok: bool
+  18:     volume_ok: bool
+  19:     risk_reward_ok: bool
+  20:     entry_ok: bool
+  21:     extension_atr: float | None
+  22:     reasons: tuple[str, ...]
+  23: 
+  24: 
+  25: def _float_attr(obj: object, name: str) -> float | None:
+  26:     value = getattr(obj, name, None)
+  27:     if value in (None, ""):
+  28:         return None
+  29:     try:
+  30:         return float(value)
+  31:     except (TypeError, ValueError):
+  32:         return None
+  33: 
+  34: 
+  35: def _extension_atr(candidate: object) -> float | None:
+  36:     close = _float_attr(candidate, "kapanis")
+  37:     ema9 = _float_attr(candidate, "ema9")
+  38:     atr14 = _float_attr(candidate, "atr14")
+  39:     if close is None or ema9 is None or atr14 is None or atr14 <= 0:
+  40:         return None
+  41:     return max(0.0, (close - ema9) / atr14)
+  42: 
+  43: 
+  44: def evaluate_jump_candidate_quality(
+  45:     candidate: object,
+  46:     *,
+  47:     policy: JumpCandidateQualityPolicy | None = None,
+  48: ) -> JumpCandidateQualityResult:
+  49:     """Sıçrama havuzu için açıklanabilir, skor üretmeyen kalite kapısı."""
+  50:     policy = policy or JumpCandidateQualityPolicy()
+  51:     signal = getattr(candidate, "sinyal", None)
+  52:     risk_plan = getattr(candidate, "risk_plani", None)
+  53: 
+  54:     technical_score = int(getattr(signal, "skor", 0) or 0)
+  55:     technical_view = str(getattr(signal, "karar", "") or "")
+  56:     volume_ratio = float(getattr(candidate, "hacim_orani", 0.0) or 0.0)
+  57:     risk_reward = float(getattr(risk_plan, "risk_odul_orani", 0.0) or 0.0)
+  58:     extension_atr = _extension_atr(candidate)
+  59: 
+  60:     technical_ok = (
+  61:         technical_score >= policy.minimum_technical_score
+  62:         and technical_view != "Negatif Teknik Görünüm"
+  63:     )
+  64:     volume_ok = volume_ratio >= policy.minimum_volume_ratio
+  65:     risk_reward_ok = risk_reward >= policy.minimum_risk_reward
+  66:     entry_ok = (
+  67:         extension_atr is None
+  68:         or extension_atr <= policy.maximum_extension_atr
+  69:     )
+  70: 
+  71:     reasons: list[str] = []
+  72:     reasons.append(
+  73:         f"teknik {technical_score} {'uygun' if technical_ok else 'zayıf'}"
+  74:     )
+  75:     reasons.append(
+  76:         f"hacim {volume_ratio:.2f}x {'uygun' if volume_ok else 'zayıf'}"
+  77:     )
+  78:     reasons.append(
+  79:         f"R/R {risk_reward:.2f} {'uygun' if risk_reward_ok else 'zayıf'}"
+  80:     )
+  81:     if extension_atr is None:
+  82:         reasons.append("aşırı uzama ölçümü yok; bloklamadı")
+  83:     else:
+  84:         reasons.append(
+  85:             f"uzama {extension_atr:.2f} ATR "
+  86:             f"{'uygun' if entry_ok else 'yüksek'}"
+  87:         )
+  88: 
+  89:     return JumpCandidateQualityResult(
+  90:         eligible=technical_ok and volume_ok and risk_reward_ok and entry_ok,
+  91:         technical_ok=technical_ok,
+  92:         volume_ok=volume_ok,
+  93:         risk_reward_ok=risk_reward_ok,
+  94:         entry_ok=entry_ok,
+  95:         extension_atr=extension_atr,
+  96:         reasons=tuple(reasons),
+  97:     )
+
+========== .\backend\app\analysis\jump_candidate_entry_readiness.py ==========
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: 
+   5: from backend.app.analysis.jump_candidate_quality import (
+   6:     JumpCandidateQualityPolicy,
+   7:     evaluate_jump_candidate_quality,
+   8: )
+   9: 
+  10: 
+  11: READY = "GİRİŞE HAZIR"
+  12: WAIT_CONFIRMATION = "TEYİT BEKLİYOR"
+  13: EARLY = "ERKEN"
+  14: OVEREXTENDED = "AŞIRI UZAMIŞ"
+  15: 
+  16: 
+  17: @dataclass(frozen=True)
+  18: class JumpCandidateEntryReadinessPolicy:
+  19:     minimum_ready_technical_score: int = 70
+  20:     minimum_ready_volume_ratio: float = 1.20
+  21:     minimum_ready_risk_reward: float = 1.50
+  22:     maximum_ready_extension_atr: float = 1.25
+  23:     maximum_wait_extension_atr: float = 2.00
+  24: 
+  25: 
+  26: @dataclass(frozen=True)
+  27: class JumpCandidateEntryReadinessResult:
+  28:     state: str
+  29:     ready: bool
+  30:     technical_score: int
+  31:     volume_ratio: float
+  32:     risk_reward: float
+  33:     extension_atr: float | None
+  34:     resistance_distance_pct: float | None
+  35:     reasons: tuple[str, ...]
+  36: 
+  37: 
+  38: def _float_attr(obj: object, name: str) -> float | None:
+  39:     value = getattr(obj, name, None)
+  40:     if value in (None, ""):
+  41:         return None
+  42:     try:
+  43:         return float(value)
+  44:     except (TypeError, ValueError):
+  45:         return None
+  46: 
+  47: 
+  48: def _resistance_distance_pct(candidate: object) -> float | None:
+  49:     levels = getattr(candidate, "destek_direnc", None)
+  50:     return _float_attr(levels, "direnc_uzaklik_yuzde") if levels is not None else None
+  51: 
+  52: 
+  53: def evaluate_jump_candidate_entry_readiness(
+  54:     candidate: object,
+  55:     *,
+  56:     policy: JumpCandidateEntryReadinessPolicy | None = None,
+  57: ) -> JumpCandidateEntryReadinessResult:
+  58:     """Sıçrama adayının giriş zamanlamasını açıklanabilir durumlara ayırır.
+  59: 
+  60:     Yeni skor üretmez. Mevcut teknik skor, hacim, risk/ödül ve EMA9-ATR
+  61:     uzama kanıtlarını kullanır. Destek/direnç mesafesi yalnız açıklayıcı bağlamdır.
+  62:     """
+  63:     policy = policy or JumpCandidateEntryReadinessPolicy()
+  64:     signal = getattr(candidate, "sinyal", None)
+  65:     risk_plan = getattr(candidate, "risk_plani", None)
+  66: 
+  67:     technical_score = int(getattr(signal, "skor", 0) or 0)
+  68:     technical_view = str(getattr(signal, "karar", "") or "")
+  69:     volume_ratio = float(getattr(candidate, "hacim_orani", 0.0) or 0.0)
+  70:     risk_reward = float(getattr(risk_plan, "risk_odul_orani", 0.0) or 0.0)
+  71:     resistance_distance_pct = _resistance_distance_pct(candidate)
+  72: 
+  73:     quality = evaluate_jump_candidate_quality(
+  74:         candidate,
+  75:         policy=JumpCandidateQualityPolicy(
+  76:             minimum_technical_score=60,
+  77:             minimum_volume_ratio=1.0,
+  78:             minimum_risk_reward=policy.minimum_ready_risk_reward,
+  79:             maximum_extension_atr=policy.maximum_wait_extension_atr,
+  80:         ),
+  81:     )
+  82:     extension_atr = quality.extension_atr
+  83: 
+  84:     reasons: list[str] = []
+  85: 
+  86:     if extension_atr is not None and extension_atr > policy.maximum_wait_extension_atr:
+  87:         state = OVEREXTENDED
+  88:         reasons.append(
+  89:             f"EMA9 üzeri uzama {extension_atr:.2f} ATR; "
+  90:             f"{policy.maximum_wait_extension_atr:.2f} ATR sınırının üzerinde."
+  91:         )
+  92:     elif not quality.eligible:
+  93:         state = EARLY
+  94:         if technical_score < 60 or technical_view == "Negatif Teknik Görünüm":
+  95:             reasons.append("Teknik kalite sıçrama giriş hazırlığı için henüz yeterli değil.")
+  96:         if volume_ratio < 1.0:
+  97:             reasons.append("Hacim teyidi henüz oluşmadı.")
+  98:         if risk_reward < policy.minimum_ready_risk_reward:
+  99:             reasons.append("Risk/getiri giriş hazırlığı için yetersiz.")
+ 100:         if not reasons:
+ 101:             reasons.append("Kalite kapısı henüz tamamlanmadı.")
+ 102:     else:
+ 103:         strong_technical = (
+ 104:             technical_score >= policy.minimum_ready_technical_score
+ 105:             and technical_view == "Pozitif Teknik Görünüm"
+ 106:         )
+ 107:         strong_volume = volume_ratio >= policy.minimum_ready_volume_ratio
+ 108:         acceptable_extension = (
+ 109:             extension_atr is None
+ 110:             or extension_atr <= policy.maximum_ready_extension_atr
+ 111:         )
+ 112: 
+ 113:         if strong_technical and strong_volume and acceptable_extension:
+ 114:             state = READY
+ 115:             reasons.append(
+ 116:                 f"Teknik {technical_score}, hacim {volume_ratio:.2f}x ve "
+ 117:                 f"R/R {risk_reward:.2f} giriş hazırlığını destekliyor."
+ 118:             )
+ 119:         else:
+ 120:             state = WAIT_CONFIRMATION
+ 121:             if not strong_technical:
+ 122:                 reasons.append(
+ 123:                     f"Teknik skor/görünüm henüz güçlü teyit vermiyor ({technical_score})."
+ 124:                 )
+ 125:             if not strong_volume:
+ 126:                 reasons.append(
+ 127:                     f"Hacim {volume_ratio:.2f}x; güçlü giriş teyidi için "
+ 128:                     f"{policy.minimum_ready_volume_ratio:.2f}x bekleniyor."
+ 129:                 )
+ 130:             if not acceptable_extension and extension_atr is not None:
+ 131:                 reasons.append(
+ 132:                     f"Uzama {extension_atr:.2f} ATR; fiyatın giriş bölgesine "
+ 133:                     "yaklaşması bekleniyor."
+ 134:                 )
+ 135: 
+ 136:     if resistance_distance_pct is not None:
+ 137:         reasons.append(
+ 138:             f"En yakın direnç mesafesi %{resistance_distance_pct:.2f}; "
+ 139:             "yalnız zamanlama bağlamı olarak gösteriliyor."
+ 140:         )
+ 141: 
+ 142:     if extension_atr is None:
+ 143:         reasons.append("ATR uzama ölçümü yok; tek başına giriş durumunu bloklamadı.")
+ 144: 
+ 145:     return JumpCandidateEntryReadinessResult(
+ 146:         state=state,
+ 147:         ready=state == READY,
+ 148:         technical_score=technical_score,
+ 149:         volume_ratio=volume_ratio,
+ 150:         risk_reward=risk_reward,
+ 151:         extension_atr=extension_atr,
+ 152:         resistance_distance_pct=resistance_distance_pct,
+ 153:         reasons=tuple(reasons),
+ 154:     )

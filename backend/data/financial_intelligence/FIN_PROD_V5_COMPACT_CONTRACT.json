@@ -1,0 +1,175 @@
+{
+  "status": "PASS",
+  "mode": "FIN_PROD_V5_COMPACT_CONTRACT",
+  "results": [
+    {
+      "file": "backend/app/analysis/short_term_investability.py",
+      "name": "calculate_short_term_investability",
+      "type": "function",
+      "args": "symbol: str, as_of_date: date, *, financial_health_score: int | None, risk_score: int | None, financial_momentum: Decimal | None, valuation_stretch: Decimal | None, market: MarketContextInput",
+      "return_annotation": "InvestabilityResult",
+      "status": "PASS"
+    },
+    {
+      "file": "backend/app/models/investability_models.py",
+      "name": "InvestabilityResult",
+      "type": "class",
+      "fields": [
+        {
+          "name": "symbol",
+          "annotation": "str",
+          "default": null
+        },
+        {
+          "name": "as_of_date",
+          "annotation": "date",
+          "default": null
+        },
+        {
+          "name": "score",
+          "annotation": "int | None",
+          "default": null
+        },
+        {
+          "name": "label",
+          "annotation": "str",
+          "default": null
+        },
+        {
+          "name": "locked",
+          "annotation": "bool",
+          "default": null
+        },
+        {
+          "name": "components",
+          "annotation": "tuple[ScoreComponent, ...]",
+          "default": null
+        },
+        {
+          "name": "strengths",
+          "annotation": "tuple[str, ...]",
+          "default": null
+        },
+        {
+          "name": "risks",
+          "annotation": "tuple[str, ...]",
+          "default": null
+        },
+        {
+          "name": "explanation",
+          "annotation": "str",
+          "default": null
+        },
+        {
+          "name": "confidence",
+          "annotation": "str",
+          "default": null
+        },
+        {
+          "name": "engine_version",
+          "annotation": "str",
+          "default": null
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "backend/app/models/investability_models.py",
+      "name": "MarketContextInput",
+      "type": "class",
+      "fields": [
+        {
+          "name": "technical_trend",
+          "annotation": "Decimal | None",
+          "default": "None"
+        },
+        {
+          "name": "relative_strength",
+          "annotation": "Decimal | None",
+          "default": "None"
+        },
+        {
+          "name": "volume_liquidity",
+          "annotation": "Decimal | None",
+          "default": "None"
+        },
+        {
+          "name": "catalyst",
+          "annotation": "Decimal | None",
+          "default": "None"
+        },
+        {
+          "name": "entry_risk",
+          "annotation": "Decimal | None",
+          "default": "None"
+        },
+        {
+          "name": "earnings_surprise",
+          "annotation": "Decimal | None",
+          "default": "None"
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "backend/app/models/investability_models.py",
+      "name": "PointInTimeObservation",
+      "type": "class",
+      "fields": [
+        {
+          "name": "observation_date",
+          "annotation": "date",
+          "default": null
+        },
+        {
+          "name": "publication_date",
+          "annotation": "date",
+          "default": null
+        },
+        {
+          "name": "score",
+          "annotation": "int | None",
+          "default": null
+        },
+        {
+          "name": "forward_return",
+          "annotation": "Decimal | None",
+          "default": null
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "file": "backend/app/analysis/investability_runtime_wiring.py",
+      "name": "run_runtime_wiring",
+      "type": "function",
+      "args": "*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]",
+      "return_annotation": "dict[str, Any]",
+      "status": "PASS"
+    },
+    {
+      "file": "backend/app/analysis/investability_production_closure.py",
+      "name": "discover_exact_canonical_candidates",
+      "type": "function",
+      "args": "data_root: str | Path, symbol: str",
+      "return_annotation": "list[dict[str, Any]]",
+      "status": "PASS"
+    },
+    {
+      "file": "backend/app/analysis/investability_production_closure.py",
+      "name": "run_closure",
+      "type": "function",
+      "args": "*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path",
+      "return_annotation": "dict[str, Any]",
+      "status": "PASS"
+    },
+    {
+      "file": "backend/app/analysis/market_regime.py",
+      "name": "piyasa_rejimi_karsilastirmasi",
+      "type": "function",
+      "args": "semboller: tuple[str, ...]=('XU100', 'XU030', 'XUTUM'), *, downloader: DataDownloader | None=None, ikincil_downloader: DataDownloader | None=None, yeniden_deneme_politikasi: MarketRegimeRetryPolicy=MarketRegimeRetryPolicy()",
+      "return_annotation": "tuple[MarketRegimeResult, ...]",
+      "status": "PASS"
+    }
+  ]
+}

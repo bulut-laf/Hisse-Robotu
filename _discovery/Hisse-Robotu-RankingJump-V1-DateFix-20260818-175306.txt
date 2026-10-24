@@ -1,0 +1,44 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818175306
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-RankingJump-V1-ResearchDate-Fix.ps1
+Process ID: 11272
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+=== RANKING JUMP V1 — RESEARCH DATE CONTRACT FIX ===
+ROOT_CAUSE=DD/MM/YYYY_RESEARCH_DATE_NOT_ACCEPTED
+SCOPE=RANKING_TRAJECTORY_DATE_PARSER_ONLY
+MUTATION=APPLIED
+SUPPORTED_DATE_FORMATS=YYYY-MM-DD+DD/MM/YYYY
+
+=== PY COMPILE ===
+
+
+=== TARGET TEST ===
+
+
+=== ONE FULL REGRESSION ===
+
+
+=== FINAL DECISION ===
+TARGET_TEST=PASS
+FULL_REGRESSION=PASS
+RESEARCH_DATE_CONTRACT_FIX=COMPLETE
+NEXT=FINAL_BROWSER_RECHECK
+ROLLBACK=NO
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-RankingJump-V1-DateFix-20260818-175306.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818175715
+**********************

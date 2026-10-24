@@ -1,0 +1,52 @@
+{
+  "review_id": "5ec1de618aea428ba1c3f9918e5f8785",
+  "date": "2026-08-10",
+  "created_at": "2026-08-10T13:30:33Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 4.527,
+  "report_count": 4,
+  "sources": [
+    "Yatirim Fánansman",
+    "Yatırım Finansman"
+  ],
+  "document_ids": [
+    "050b41728b8e4b9ab191cf65f288ae9e",
+    "95a37f9f1c644947a86997c0a3c84fdf",
+    "b18d25ecb5c944749122c38b4f9bf73a",
+    "349ff429d3374fd2be45cfb869d859f0"
+  ],
+  "output": {
+    "summary": "10 Ağustos 2026 tarihli günlük piyasa brifinglerine göre, BIST100 endeksi güne pozitif bir başlangıç beklentisiyle girerken, Cuma gününü %0,14 düşüşle 13,779 puandan tamamlamıştı. ABD’de Temmuz ayı tarım dışı istihdam verisinin beklentilerin altında kalması ve işsizlik oranının gerilemesi, Fed’in 16 Eylül’de faiz artırma ihtimalini zayıflatarak küresel risk iştahını desteklemiştir. Yurt içinde haftanın en önemli gündemi, 13 Ağustos'ta yayımlanacak TCMB Enflasyon Raporu sunumu ve Başkan Karahan'ın vereceği mesajlar ile Haziran ayı sanayi üretimi ve ödemeler dengesi verileridir. Jeopolitik cephede Hürmüz Boğazı'na ilişkin belirsizlikler ve petrol fiyatlarındaki yukarı yönlü seyrin etkileri takip edilmektedir. Bilanço döneminde VakıfBank ve Halkbank 2Ç26 sonuçlarını açıklamış; ayrıca CCOLA ve ENJSA finansalları ile ilgili beklentiler ve KAP'ta duyurulan şirket gelişmeleri (Alarko Carrier pay alımı, Halkbank ikincil halka arzı vb.) piyasanın radarında yer almaktadır.",
+    "positive_factors": [
+      "ABD'de tarım dışı istihdam verisinin zayıf gelmesiyle Fed'in Eylül ayında faiz artırma ihtimalinin azalması ve küresel risk iştahının desteklenmesi",
+      "BIST100 endeksinin kısa vadeli yükselen trendi koruma çabası ve Cuma akşam seansında BIST30 kontratının artı kapaması",
+      "Türkiye'nin risk priminde (CDS) ve gösterge tahvil faizlerinde gözlenen kademeli iyileşme",
+      "Bankaların (VAKBN ve HALKB) beklentilerin üzerinde veya uyumlu net kâr açıklamaları ile güçlü komisyon ve TÜFEX gelir destekleri"
+    ],
+    "risk_factors": [
+      "ABD-İran hattında Hürmüz Boğazı ve deniz ablukasına ilişkin belirsizliklerin sürmesi, jeopolitik risk priminin devam etmesi",
+      "Vadeli petrol fiyatlarının 85 dolar seviyesi üzerine yerleşmesinin enflasyon ve maliyetler üzerindeki olası baskısı",
+      "Yurt içinde enflasyon beklentilerinin resmi hedeflerin üzerinde seyretmesi ve TCMB Enflasyon Raporu'nda olası yukarı yönlü revizyon beklentileri",
+      "Yüksek enflasyon, artan mevduat ve swap maliyetlerinin bankacılık sektörünün net faiz marjları ve kârlılık kalitesi üzerindeki baskısı"
+    ],
+    "stock_specific_risks": [
+      "HALKB'de ikincil halka arz kapsamında yapılacak %25 oranındaki bedelli sermaye artırımının mevcut yatırımcılar açısından mekanik pay ve hisse başına kâr (EPS) sulanmasına işaret etmesi",
+      "VAKBN ve HALKB'de artan faaliyet giderleri, daralan kredi-mevduat makasları ve aktif kalitesindeki (takipteki krediler oranı) sınırlı artışlar",
+      "MSCI Global Standart Endeksi'nde olası bir revizyonda SAHOL’ün endeksten çıkarılma adayları arasında gösterilmesi ve halka açıklık düzenlemelerinin hisselerde satış baskısı yaratabileceği değerlendirmesi"
+    ],
+    "aligned_points": [
+      "ABD'de Temmuz ayı tarım dışı istihdam verilerinin beklentilerin altında kalmasının Fed'in faiz artırım beklentilerini törpülediği görüşü",
+      "Haftanın en kritik yurt içi veri ve olayları arasında TCMB Enflasyon Raporu ve sanayi üretimi/cari işlemler dengesinin bulunduğu",
+      "Jeopolitik riskler kapsamında Hürmüz Boğazı'ndaki gelişmelerin petrol fiyatları ve piyasa oynaklığı üzerindeki etkisinin sürdüğü"
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "Haziran ayı Sanayi Üretimi verisi ve Haziran ayı Ödemeler Dengesi (Cari İşlemler Dengesi) verileri",
+      "13 Ağustos tarihinde yayımlanacak yılın 3. TCMB Enflasyon Raporu ve Başkan Karahan'ın açıklamaları",
+      "Çarşamba günü açıklanacak ABD Tüketici Fiyat Endeksi (TÜFE) ve Perşembe günkü Üretici Fiyat Endeksi (ÜFE) verileri",
+      "Çarşamba günü MSCI tarafından açıklanacak üçüncü dönem endeks değişiklikleri",
+      "CCOLA ve ENJSA 2Ç26 finansal sonuçları ve şirket bazlı KAP açıklamaları"
+    ]
+  }
+}

@@ -1,0 +1,649 @@
+diff --git a/backend/app/funds/kap_portfolio_auto_ingestion.py b/backend/app/funds/kap_portfolio_auto_ingestion.py
+new file mode 100644
+index 0000000..723132b
+--- /dev/null
++++ b/backend/app/funds/kap_portfolio_auto_ingestion.py
+@@ -0,0 +1,278 @@
++from __future__ import annotations
++
++import json
++import re
++from dataclasses import dataclass
++from typing import Callable, Iterable
++from urllib.parse import urlparse
++
++from .kap_portfolio_ingestion import (
++    DEFAULT_TIMEOUT_SECONDS,
++    KapFundPortfolioError,
++    KapPortfolioIngestionResult,
++    ingest_kap_portfolio_report_url,
++)
++from .normalization import normalize_fund_code
++from .portfolio_tracking import FundPortfolioSnapshotJsonStore
++
++
++KAP_DISCLOSURES_URL = "https://www.kap.org.tr/tr/api/disclosures"
++MAX_DISCOVERY_BYTES = 8 * 1024 * 1024
++MAX_DISCOVERY_CANDIDATES = 50
++
++
++FetchBytes = Callable[[str, int], tuple[bytes, str, str]]
++
++
++@dataclass(frozen=True, slots=True)
++class KapPortfolioDiscoveryCandidate:
++    notification_id: str
++    detail_url: str
++    evidence_text: str
++
++
++@dataclass(frozen=True, slots=True)
++class KapPortfolioAutoIngestionFailure:
++    notification_id: str
++    detail_url: str
++    error: str
++
++
++@dataclass(frozen=True, slots=True)
++class KapPortfolioAutoIngestionSummary:
++    discovered: int
++    attempted: int
++    inserted: int
++    unchanged: int
++    failures: tuple[KapPortfolioAutoIngestionFailure, ...]
++    ingestions: tuple[KapPortfolioIngestionResult, ...]
++
++
++def _default_fetch(url: str, timeout_seconds: int) -> tuple[bytes, str, str]:
++    # Reuse the hardened KAP transport contract without exposing a second
++    # general-purpose HTTP client.
++    from .kap_portfolio_ingestion import _default_fetch as kap_fetch
++
++    return kap_fetch(url, timeout_seconds)
++
++
++def _validate_disclosures_url(url: str) -> str:
++    value = str(url or "").strip()
++    parsed = urlparse(value)
++    if parsed.scheme.lower() != "https":
++        raise KapFundPortfolioError("KAP_DISCOVERY_HTTPS_REQUIRED")
++    if (parsed.hostname or "").lower() not in {"kap.org.tr", "www.kap.org.tr"}:
++        raise KapFundPortfolioError("KAP_DISCOVERY_HOST_NOT_ALLOWED")
++    if parsed.username or parsed.password or parsed.port not in (None, 443):
++        raise KapFundPortfolioError("KAP_DISCOVERY_AUTH_OR_PORT_NOT_ALLOWED")
++    if parsed.path.rstrip("/").lower() != "/tr/api/disclosures":
++        raise KapFundPortfolioError("KAP_DISCOVERY_PATH_INVALID")
++    if parsed.query or parsed.fragment:
++        raise KapFundPortfolioError("KAP_DISCOVERY_PATH_INVALID")
++    return value
++
++
++def _decode_disclosures_json(raw: bytes, content_type: str) -> object:
++    if len(raw) > MAX_DISCOVERY_BYTES:
++        raise KapFundPortfolioError("KAP_DISCOVERY_RESPONSE_TOO_LARGE")
++    lowered = str(content_type or "").casefold()
++    stripped = raw.lstrip()
++    if "json" not in lowered and not stripped.startswith((b"[", b"{")):
++        raise KapFundPortfolioError("KAP_DISCOVERY_NOT_JSON")
++    try:
++        return json.loads(raw.decode("utf-8-sig"))
++    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
++        raise KapFundPortfolioError("KAP_DISCOVERY_JSON_INVALID") from exc
++
++
++def _iter_dicts(value: object) -> Iterable[dict[str, object]]:
++    if isinstance(value, dict):
++        yield value
++        for child in value.values():
++            yield from _iter_dicts(child)
++    elif isinstance(value, list):
++        for child in value:
++            yield from _iter_dicts(child)
++
++
++def _first_scalar(mapping: dict[str, object], keys: tuple[str, ...]) -> object | None:
++    lowered = {str(key).casefold(): value for key, value in mapping.items()}
++    for key in keys:
++        value = lowered.get(key.casefold())
++        if isinstance(value, (str, int, float)) and str(value).strip():
++            return value
++    return None
++
++
++def _mapping_text(mapping: dict[str, object]) -> str:
++    values: list[str] = []
++    for value in mapping.values():
++        if isinstance(value, (str, int, float)):
++            clean = re.sub(r"\s+", " ", str(value)).strip()
++            if clean:
++                values.append(clean)
++    return " ".join(values)
++
++
++def _looks_like_portfolio_report(text: str) -> bool:
++    folded = text.casefold()
++    return (
++        "portföy dağılım raporu" in folded
++        or "portfoy dagilim raporu" in folded
++        or (
++            "portföy" in folded
++            and "dağılım" in folded
++            and "rapor" in folded
++        )
++    )
++
++
++def _contains_fund_code(text: str, fund_codes: frozenset[str]) -> bool:
++    if not fund_codes:
++        return True
++    upper = text.upper()
++    return any(
++        re.search(rf"(?<![A-Z0-9]){re.escape(code)}(?![A-Z0-9])", upper)
++        for code in fund_codes
++    )
++
++
++def parse_kap_disclosures_for_portfolio_reports(
++    payload: object,
++    *,
++    fund_codes: Iterable[str] = (),
++    max_candidates: int = MAX_DISCOVERY_CANDIDATES,
++) -> tuple[KapPortfolioDiscoveryCandidate, ...]:
++    if max_candidates <= 0 or max_candidates > MAX_DISCOVERY_CANDIDATES:
++        raise ValueError(
++            f"max_candidates 1-{MAX_DISCOVERY_CANDIDATES} aralığında olmalıdır."
++        )
++    normalized_codes = frozenset(
++        normalize_fund_code(code)
++        for code in fund_codes
++        if str(code or "").strip()
++    )
++
++    by_id: dict[str, KapPortfolioDiscoveryCandidate] = {}
++    for mapping in _iter_dicts(payload):
++        raw_id = _first_scalar(
++            mapping,
++            (
++                "disclosureIndex",
++                "disclosure_index",
++                "notificationId",
++                "notification_id",
++                "bildirimId",
++                "bildirim_id",
++                "id",
++            ),
++        )
++        if raw_id is None:
++            continue
++        notification_id = str(raw_id).strip()
++        if not notification_id.isdigit():
++            continue
++
++        evidence = _mapping_text(mapping)
++        if not _looks_like_portfolio_report(evidence):
++            continue
++        if not _contains_fund_code(evidence, normalized_codes):
++            continue
++
++        by_id[notification_id] = KapPortfolioDiscoveryCandidate(
++            notification_id=notification_id,
++            detail_url=f"https://www.kap.org.tr/tr/Bildirim/{notification_id}",
++            evidence_text=evidence[:1000],
++        )
++
++    ordered = sorted(
++        by_id.values(),
++        key=lambda item: int(item.notification_id),
++        reverse=True,
++    )
++    return tuple(ordered[:max_candidates])
++
++
++def discover_kap_portfolio_reports(
++    *,
++    fund_codes: Iterable[str] = (),
++    network_enabled: bool = False,
++    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
++    max_candidates: int = MAX_DISCOVERY_CANDIDATES,
++    fetcher: FetchBytes | None = None,
++    disclosures_url: str = KAP_DISCLOSURES_URL,
++) -> tuple[KapPortfolioDiscoveryCandidate, ...]:
++    if not network_enabled:
++        raise KapFundPortfolioError("KAP_PORTFOLIO_DISCOVERY_NETWORK_DISABLED")
++    if timeout_seconds <= 0 or timeout_seconds > 30:
++        raise ValueError("timeout_seconds 1-30 aralığında olmalıdır.")
++
++    validated_url = _validate_disclosures_url(disclosures_url)
++    fetch = fetcher or _default_fetch
++    raw, final_url, content_type = fetch(validated_url, timeout_seconds)
++    if _validate_disclosures_url(final_url) != validated_url:
++        raise KapFundPortfolioError("KAP_DISCOVERY_REDIRECT_MISMATCH")
++    payload = _decode_disclosures_json(raw, content_type)
++    return parse_kap_disclosures_for_portfolio_reports(
++        payload,
++        fund_codes=fund_codes,
++        max_candidates=max_candidates,
++    )
++
++
++def auto_ingest_kap_portfolio_reports(
++    *,
++    store: FundPortfolioSnapshotJsonStore,
++    fund_codes: Iterable[str] = (),
++    network_enabled: bool = False,
++    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,
++    max_candidates: int = MAX_DISCOVERY_CANDIDATES,
++    discovery_fetcher: FetchBytes | None = None,
++    detail_fetcher: FetchBytes | None = None,
++    attachment_fetcher: FetchBytes | None = None,
++) -> KapPortfolioAutoIngestionSummary:
++    candidates = discover_kap_portfolio_reports(
++        fund_codes=fund_codes,
++        network_enabled=network_enabled,
++        timeout_seconds=timeout_seconds,
++        max_candidates=max_candidates,
++        fetcher=discovery_fetcher,
++    )
++
++    ingestions: list[KapPortfolioIngestionResult] = []
++    failures: list[KapPortfolioAutoIngestionFailure] = []
++    inserted = 0
++    unchanged = 0
++
++    for candidate in candidates:
++        try:
++            result = ingest_kap_portfolio_report_url(
++                candidate.detail_url,
++                store=store,
++                network_enabled=True,
++                timeout_seconds=timeout_seconds,
++                detail_fetcher=detail_fetcher,
++                attachment_fetcher=attachment_fetcher,
++            )
++        except (KapFundPortfolioError, ValueError) as exc:
++            failures.append(
++                KapPortfolioAutoIngestionFailure(
++                    notification_id=candidate.notification_id,
++                    detail_url=candidate.detail_url,
++                    error=str(exc),
++                )
++            )
++            continue
++
++        ingestions.append(result)
++        inserted += int(result.store_result.inserted)
++        unchanged += int(result.store_result.unchanged)
++
++    return KapPortfolioAutoIngestionSummary(
++        discovered=len(candidates),
++        attempted=len(candidates),
++        inserted=inserted,
++        unchanged=unchanged,
++        failures=tuple(failures),
++        ingestions=tuple(ingestions),
++    )
+diff --git a/backend/app/funds/kap_portfolio_ingestion.py b/backend/app/funds/kap_portfolio_ingestion.py
+index 5c0df57..f48927f 100644
+--- a/backend/app/funds/kap_portfolio_ingestion.py
++++ b/backend/app/funds/kap_portfolio_ingestion.py
+@@ -231,11 +231,41 @@ def parse_kap_portfolio_report_reference(
+     )
+ 
+ 
+-def extract_kap_portfolio_pdf_text(raw_pdf: bytes) -> str:
+-    if len(raw_pdf) > MAX_KAP_PORTFOLIO_PDF_BYTES:
++def extract_kap_portfolio_pdf_payload(raw_payload: bytes) -> bytes:
++    """Return the embedded PDF bytes from a bounded KAP/mirror payload.
++
++    Some browser/mirror downloads wrap the original PDF with transport bytes.
++    Native PDFs are returned unchanged; wrapped payloads are sliced from the
++    first PDF header through the last EOF marker when available.
++    """
++    if not isinstance(raw_payload, (bytes, bytearray)) or not raw_payload:
++        raise KapFundPortfolioError("KAP_PORTFOLIO_ATTACHMENT_EMPTY")
++    raw = bytes(raw_payload)
++    if len(raw) > MAX_KAP_PORTFOLIO_PDF_BYTES:
+         raise KapFundPortfolioError("KAP_PORTFOLIO_PDF_TOO_LARGE")
+-    if not raw_pdf.startswith(b"%PDF-"):
++
++    start = raw.find(b"%PDF-")
++    if start < 0:
++        raise KapFundPortfolioError("KAP_PORTFOLIO_ATTACHMENT_NOT_PDF")
++    if start == 0:
++        return raw
++
++    end = raw.rfind(b"%%EOF")
++    if end >= start:
++        end += len(b"%%EOF")
++        payload = raw[start:end]
++    else:
++        payload = raw[start:]
++
++    if not payload.startswith(b"%PDF-"):
+         raise KapFundPortfolioError("KAP_PORTFOLIO_ATTACHMENT_NOT_PDF")
++    if len(payload) > MAX_KAP_PORTFOLIO_PDF_BYTES:
++        raise KapFundPortfolioError("KAP_PORTFOLIO_PDF_TOO_LARGE")
++    return payload
++
++
++def extract_kap_portfolio_pdf_text(raw_pdf: bytes) -> str:
++    raw_pdf = extract_kap_portfolio_pdf_payload(raw_pdf)
+     try:
+         from pypdf import PdfReader
+     except ImportError as exc:  # pragma: no cover - dependency contract.
+@@ -515,17 +545,20 @@ def ingest_kap_portfolio_report_url(
+     _, expected_attachment_id = validate_kap_attachment_url(reference.attachment_url)
+     if final_attachment_id != expected_attachment_id:
+         raise KapFundPortfolioError("KAP_ATTACHMENT_REDIRECT_MISMATCH")
+-    if len(raw_pdf) > MAX_KAP_PORTFOLIO_PDF_BYTES:
+-        raise KapFundPortfolioError("KAP_PORTFOLIO_PDF_TOO_LARGE")
++    pdf_payload = extract_kap_portfolio_pdf_payload(raw_pdf)
+     lowered_content_type = pdf_content_type.casefold()
+-    if "pdf" not in lowered_content_type and "octet-stream" not in lowered_content_type and not raw_pdf.startswith(b"%PDF-"):
++    if (
++        "pdf" not in lowered_content_type
++        and "octet-stream" not in lowered_content_type
++        and not pdf_payload.startswith(b"%PDF-")
++    ):
+         raise KapFundPortfolioError("KAP_PORTFOLIO_ATTACHMENT_NOT_PDF")
+ 
+     stamp = ingested_at if ingested_at is not None else datetime.now(timezone.utc)
+     if stamp.tzinfo is None or stamp.utcoffset() is None:
+         raise ValueError("ingested_at timezone-aware olmalıdır.")
+     snapshot = parse_kap_portfolio_report_text(
+-        extractor(raw_pdf),
++        extractor(pdf_payload),
+         reference=reference,
+         ingested_at=stamp,
+     )
+diff --git a/backend/app/ui/fund_analysis_center.py b/backend/app/ui/fund_analysis_center.py
+index db7a3b3..43c42c5 100644
+--- a/backend/app/ui/fund_analysis_center.py
++++ b/backend/app/ui/fund_analysis_center.py
+@@ -6,6 +6,9 @@ from decimal import Decimal
+ from typing import Any, Iterable, Mapping
+ 
+ from backend.app.funds.analysis_engine import FundAnalysisResult
++from backend.app.funds.kap_portfolio_auto_ingestion import (
++    auto_ingest_kap_portfolio_reports,
++)
+ from backend.app.funds.kap_portfolio_ingestion import (
+     KapFundPortfolioError,
+     ingest_kap_portfolio_pdf_upload,
+@@ -190,12 +193,67 @@ def _render_portfolio_tracking(
+     store: FundPortfolioSnapshotJsonStore,
+     pressure_profiles: Mapping[str, StockFundPressureProfile],
+     pressure_inputs: Mapping[str, StockFundPressureInput],
++    *,
++    fund_codes: Iterable[str] = (),
+ ) -> None:
++    known_codes = {
++        str(code or "").strip().upper()
++        for code in fund_codes
++        if str(code or "").strip()
++    }
++    try:
++        for snapshot in store.list_snapshots():
++            if snapshot.canonical_fund_id.startswith("fund:tefas:"):
++                known_codes.add(snapshot.canonical_fund_id.rsplit(":", 1)[-1].strip().upper())
++    except PortfolioSnapshotStoreError:
++        pass
++
++    if hasattr(st, "button"):
++        st.markdown("#### Otomatik KAP Portföy Güncelleme")
++        st.caption(
++            "Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için "
++            "resmî KAP bildirim listesini tarar; Portföy Dağılım Raporu bildirimini, ekini ve "
++            "snapshot içe aktarımını otomatik yürütür. Manuel PDF yalnız fallback olarak kalır."
++        )
++        if known_codes:
++            st.caption(f"Otomatik tarama evreni: {len(known_codes)} fon kodu.")
++        else:
++            st.caption("Otomatik tarama için önce TEFAS fon evreni veya kayıtlı bir fon snapshot'ı gerekir.")
++
++        if st.button(
++            "Yeni KAP Portföy Raporlarını Otomatik Tara",
++            key="fund_portfolio_kap_auto_ingest_button",
++            disabled=not known_codes,
++        ):
++            try:
++                summary = auto_ingest_kap_portfolio_reports(
++                    store=store,
++                    fund_codes=tuple(sorted(known_codes)),
++                    network_enabled=True,
++                )
++            except (KapFundPortfolioError, PortfolioSnapshotStoreError, ValueError) as exc:
++                st.error(f"Otomatik KAP portföy güncellemesi çalışmadı: {exc}")
++            else:
++                if hasattr(st, "success"):
++                    st.success(
++                        "Otomatik KAP taraması tamamlandı · "
++                        f"bulunan={summary.discovered} · "
++                        f"yeni={summary.inserted} · "
++                        f"zaten kayıtlı={summary.unchanged} · "
++                        f"hata={len(summary.failures)}."
++                    )
++                if summary.failures and hasattr(st, "warning"):
++                    preview = " | ".join(
++                        f"{item.notification_id}: {item.error}"
++                        for item in summary.failures[:5]
++                    )
++                    st.warning(f"İçe alınamayan KAP bildirimleri: {preview}")
++
+     if hasattr(st, "text_input") and hasattr(st, "button"):
+         st.markdown("#### KAP Portföy Raporu İçeri Aktar")
+         st.caption(
+-            "Yalnız resmî KAP Portföy Dağılım Raporu bildirim URL\'si kabul edilir. "
+-            "Ağ çağrısı sadece bu düğmeye açıkça basıldığında yapılır; otomatik tarama yoktur."
++            "Tekil resmî KAP Portföy Dağılım Raporu bildirim URL\'siyle manuel tetikleme yoludur. "
++            "Ağ çağrısı yalnız bu düğmeye açıkça basıldığında yapılır."
+         )
+         kap_url = st.text_input(
+             "KAP bildirim URL\'si",
+@@ -405,11 +463,19 @@ def render_fund_analysis_center(
+     st.caption("Forward takip: 1H / 1A / 3A · outcome tuning kapalı · AL/SAT authority: NONE")
+ 
+     if portfolio_store is not None or pressure_profiles:
++        known_fund_codes = tuple(
++            sorted({
++                item.canonical_fund_id.rsplit(":", 1)[-1]
++                for item in items
++                if item.canonical_fund_id.startswith("fund:tefas:")
++            })
++        )
+         _render_portfolio_tracking(
+             st,
+             portfolio_store if portfolio_store is not None else _EmptyPortfolioStore(),
+             pressure_profiles or {},
+             pressure_inputs or {},
++            fund_codes=known_fund_codes,
+         )
+ 
+ 
+diff --git a/backend/tests/test_fund_kap_portfolio_auto_ingestion_v1.py b/backend/tests/test_fund_kap_portfolio_auto_ingestion_v1.py
+new file mode 100644
+index 0000000..c6cace5
+--- /dev/null
++++ b/backend/tests/test_fund_kap_portfolio_auto_ingestion_v1.py
+@@ -0,0 +1,154 @@
++from datetime import date, datetime, timezone
++
++import pytest
++
++from backend.app.funds.kap_portfolio_auto_ingestion import (
++    KAP_DISCLOSURES_URL,
++    auto_ingest_kap_portfolio_reports,
++    discover_kap_portfolio_reports,
++    parse_kap_disclosures_for_portfolio_reports,
++)
++from backend.app.funds.kap_portfolio_ingestion import (
++    KapFundPortfolioError,
++    KapPortfolioIngestionResult,
++    KapPortfolioReportReference,
++)
++from backend.app.funds.contracts import DataQualityState
++from backend.app.funds.portfolio_tracking import (
++    FundPortfolioSnapshot,
++    FundPortfolioSnapshotJsonStore,
++    PortfolioSnapshotStoreResult,
++)
++
++
++def test_discovery_parser_filters_portfolio_reports_and_known_fund_codes():
++    payload = [
++        {
++            "basic": {
++                "disclosureIndex": 1646130,
++                "title": "Portföy Dağılım Raporu",
++                "fundName": "ATLAS PORTFÖY BEŞİNCİ HİSSE SENEDİ SERBEST FON AP5",
++                "summary": "AP5 FON - TEMMUZ 2026 PORTFÖY DAĞILIM RAPORU",
++            }
++        },
++        {
++            "basic": {
++                "disclosureIndex": 1646000,
++                "title": "Portföy Dağılım Raporu",
++                "fundName": "BAŞKA FON XYZ",
++            }
++        },
++        {
++            "basic": {
++                "disclosureIndex": 1645000,
++                "title": "Yönetim Kurulu Kararı",
++                "fundName": "AP5",
++            }
++        },
++    ]
++
++    candidates = parse_kap_disclosures_for_portfolio_reports(
++        payload,
++        fund_codes=("AP5",),
++    )
++
++    assert len(candidates) == 1
++    assert candidates[0].notification_id == "1646130"
++    assert candidates[0].detail_url == "https://www.kap.org.tr/tr/Bildirim/1646130"
++
++
++def test_discovery_requires_explicit_network_enablement():
++    calls = []
++
++    def forbidden_fetcher(url, timeout):
++        calls.append((url, timeout))
++        raise AssertionError("NETWORK_CALLED")
++
++    with pytest.raises(KapFundPortfolioError, match="DISCOVERY_NETWORK_DISABLED"):
++        discover_kap_portfolio_reports(
++            fund_codes=("AP5",),
++            fetcher=forbidden_fetcher,
++        )
++
++    assert calls == []
++
++
++def test_discovery_fetches_official_json_once_and_is_bounded():
++    payload = b'''[
++      {"disclosureIndex":1646130,"title":"Portf\\u00f6y Da\\u011f\\u0131l\\u0131m Raporu","fundName":"AP5"}
++    ]'''
++    calls = []
++
++    def fetcher(url, timeout):
++        calls.append((url, timeout))
++        return payload, KAP_DISCLOSURES_URL, "application/json; charset=utf-8"
++
++    result = discover_kap_portfolio_reports(
++        fund_codes=("AP5",),
++        network_enabled=True,
++        fetcher=fetcher,
++    )
++
++    assert calls == [(KAP_DISCLOSURES_URL, 10)]
++    assert [item.notification_id for item in result] == ["1646130"]
++
++
++def test_auto_ingestion_isolates_candidate_failures(monkeypatch, tmp_path):
++    store = FundPortfolioSnapshotJsonStore(tmp_path / "portfolio_snapshots.json")
++    payload = b'''[
++      {"disclosureIndex":1646130,"title":"Portf\\u00f6y Da\\u011f\\u0131l\\u0131m Raporu","fundName":"AP5"},
++      {"disclosureIndex":1628517,"title":"Portf\\u00f6y Da\\u011f\\u0131l\\u0131m Raporu","fundName":"AP5"}
++    ]'''
++
++    def discovery_fetcher(url, timeout):
++        return payload, KAP_DISCLOSURES_URL, "application/json"
++
++    def fake_ingest(detail_url, **_kwargs):
++        if detail_url.endswith("1646130"):
++            raise KapFundPortfolioError("KAP_HTTP_ERROR:403")
++        reference = KapPortfolioReportReference(
++            notification_id="1628517",
++            detail_url=detail_url,
++            attachment_url="https://www.kap.org.tr/tr/api/file/download/abc",
++            attachment_name="AP5.pdf",
++            publication_at=datetime(2026, 7, 8, tzinfo=timezone.utc),
++            report_year=2026,
++            report_month=6,
++        )
++        snapshot = FundPortfolioSnapshot(
++            canonical_fund_id="fund:tefas:AP5",
++            portfolio_date=date(2026, 6, 30),
++            publication_date=date(2026, 7, 8),
++            ingested_at=datetime(2026, 9, 4, tzinfo=timezone.utc),
++            provider="KAP",
++            positions=(),
++            data_quality_state=DataQualityState.VALID,
++        )
++        return KapPortfolioIngestionResult(
++            reference=reference,
++            snapshot=snapshot,
++            store_result=PortfolioSnapshotStoreResult(
++                inserted=1,
++                unchanged=0,
++                total_records=1,
++            ),
++        )
++
++    monkeypatch.setattr(
++        "backend.app.funds.kap_portfolio_auto_ingestion.ingest_kap_portfolio_report_url",
++        fake_ingest,
++    )
++
++    summary = auto_ingest_kap_portfolio_reports(
++        store=store,
++        fund_codes=("AP5",),
++        network_enabled=True,
++        discovery_fetcher=discovery_fetcher,
++    )
++
++    assert summary.discovered == 2
++    assert summary.attempted == 2
++    assert summary.inserted == 1
++    assert summary.unchanged == 0
++    assert len(summary.failures) == 1
++    assert summary.failures[0].notification_id == "1646130"
+diff --git a/backend/tests/test_fund_kap_portfolio_ingestion_v1.py b/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
+index 6ce9b61..0fedc0c 100644
+--- a/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
++++ b/backend/tests/test_fund_kap_portfolio_ingestion_v1.py
+@@ -5,6 +5,7 @@ import pytest
+ 
+ from backend.app.funds.kap_portfolio_ingestion import (
+     KapFundPortfolioError,
++    extract_kap_portfolio_pdf_payload,
+     ingest_kap_portfolio_pdf_upload,
+     ingest_kap_portfolio_report_url,
+     parse_kap_portfolio_report_reference,
+@@ -210,3 +211,14 @@ def test_manual_pdf_upload_rejects_notification_page_print_without_holdings_tabl
+             ingested_at=STAMP,
+             pdf_text_extractor=lambda _raw: notification_page_text,
+         )
++
++
++def test_wrapped_pdf_payload_is_unwrapped_before_native_extraction():
++    native = b"%PDF-1.7\nbody\n%%EOF"
++    wrapped = b"\xac\xed\x00\x05transport-prefix" + native + b"transport-suffix"
++    assert extract_kap_portfolio_pdf_payload(wrapped) == native
++
++
++def test_non_pdf_payload_still_fails_closed():
++    with pytest.raises(KapFundPortfolioError, match="ATTACHMENT_NOT_PDF"):
++        extract_kap_portfolio_pdf_payload(b"not-a-pdf")

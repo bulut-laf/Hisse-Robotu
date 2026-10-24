@@ -1,0 +1,6 @@
+﻿CALLABLE=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py COUNT=2
+CALLABLE=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py COUNT=2
+CALLABLE=recover_daily_market_data FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py COUNT=2
+DECISION=ACTIVE_PRODUCTION_CONSUMER_FOUND
+NEXT=Inspect only the listed active consumer before deciding closure or wiring.
+PRODUCTION_MUTATION=YOK

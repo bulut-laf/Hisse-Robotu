@@ -1,0 +1,1098 @@
+=== HISSE ROBOTU — FAST MOVER EXACT INTEGRATION SEAM CONTRACT V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+TEST_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+
+=== 1. EXACT PRECLOSE / PHASE / INTRADAY DEFINITIONS ===
+FILE=backend\app\operations\preclose_partial_daily_preview.py
+--- DEF backend\app\operations\preclose_partial_daily_preview.py::PreclosePartialDailyPreviewError @L37 ---
+class PreclosePartialDailyPreviewError(ValueError):
+    """Pre-close partial daily preview cannot be built safely."""
+
+--- DEF backend\app\operations\preclose_partial_daily_preview.py::PreclosePreviewResult @L42 ---
+class PreclosePreviewResult:
+    observed_at: datetime
+    scan_result: MarketScanResult
+    partial_symbol_count: int
+    intraday_failure_count: int
+    preview_only: bool = True
+    canonical: bool = False
+    ranking_write_allowed: bool = False
+    profile_write_allowed: bool = False
+    al_sat_decision_allowed: bool = False
+
+--- DEF backend\app\operations\preclose_partial_daily_preview.py::_preclose_guard @L61 ---
+def _preclose_guard(observed_at: datetime) -> None:
+    clock = observed_at.timetz().replace(tzinfo=None)
+    if clock < PRECLOSE_START:
+        raise PreclosePartialDailyPreviewError(
+            "17:20 öncesinde pre-close preview çalıştırılamaz."
+        )
+    if clock >= CANONICAL_CLOSE_START:
+        raise PreclosePartialDailyPreviewError(
+            "18:30 ve sonrasında partial preview yerine canonical close kullanılmalıdır."
+        )
+
+--- DEF backend\app\operations\preclose_partial_daily_preview.py::overlay_partial_daily_bar @L77 ---
+def overlay_partial_daily_bar(
+    completed_daily: pd.DataFrame,
+    snapshot: DelayedDataSnapshot,
+    *,
+    observed_at: datetime,
+) -> pd.DataFrame:
+    """Append/replace today's synthetic daily row using current intraday evidence."""
+
+    if completed_daily is None or completed_daily.empty:
+        raise PreclosePartialDailyPreviewError("Tamamlanmış günlük seri boş.")
+
+    local_observed = _local_now(observed_at)
+    _preclose_guard(local_observed)
+
+    exchange_time = snapshot.exchange_time
+    if exchange_time.tzinfo is None:
+        exchange_time = exchange_time.replace(tzinfo=ISTANBUL)
+    else:
+        exchange_time = exchange_time.astimezone(ISTANBUL)
+
+    if exchange_time.date() != local_observed.date():
+        raise PreclosePartialDailyPreviewError(
+            "Gün içi snapshot bugünkü seansa ait değil."
+        )
+    if snapshot.locked:
+        raise PreclosePartialDailyPreviewError(
+            "Gün içi snapshot veri kilidi altında."
+        )
+    if not snapshot.preview_only:
+        # This capability is explicitly for a partial-session preview.
+        raise PreclosePartialDailyPreviewError(
+            "Pre-close overlay yalnız preview_only intraday snapshot kabul eder."
+        )
+
+    required = ("Open", "High", "Low", "Close", "Volume")
+    missing = [column for column in required if column not in completed_daily.columns]
+    if missing:
+        raise PreclosePartialDailyPreviewError(
+            "Günlük seride eksik OHLCV sütunları: " + ", ".join(missing)
+        )
+
+    values = (
+        snapshot.day_open,
+        snapshot.day_high,
+        snapshot.day_low,
+        snapshot.last_price,
+        snapshot.cumulative_volume,
+    )
+    if any(float(value) <= 0 for value in values):
+        raise PreclosePartialDailyPreviewError(
+            "Partial OHLCV pozitif sayısal değerler içermelidir."
+        )
+
+    out = completed_daily.copy()
+    today = local_observed.date()
+    out = out.loc[_date_index(out) != today].copy()
+
+    synthetic_index = pd.Timestamp(today)
+    synthetic = pd.DataFrame(
+        {
+            "Open": [float(snapshot.day_open)],
+            "High": [float(snapshot.day_high)],
+            "Low": [float(snapshot.day_low)],
+            "Close": [float(snapshot.last_price)],
+            "Volume": [float(snapshot.cumulative_volume)],
+        },
+        index=[synthetic_index],
+    )
+
+    # Preserve any extra columns used by an upstream frame without inventing values.
+    for column in out.columns:
+        if column not in synthetic.columns:
+            synthetic[column] = pd.NA
+    synthetic = synthetic[out.columns]
+
+    out = pd.concat([out, synthetic], axis=0).sort_index()
+    return out
+
+--- DEF backend\app\operations\preclose_partial_daily_preview.py::build_preclose_overlay_fetcher @L156 ---
+def build_preclose_overlay_fetcher(
+    *,
+    now: datetime,
+    daily_fetcher: Callable[..., BatchMarketDataResult] = toplu_fiyat_verisi_getir,
+    intraday_fetcher: Callable[..., ScheduledIntradayBatchResult] = (
+        fetch_scheduled_intraday_batch
+    ),
+) -> Callable[..., BatchMarketDataResult]:
+    """Bind a BatchStockScanner-compatible read-only partial-day data fetcher."""
+
+    observed_at = _local_now(now)
+    _preclose_guard(observed_at)
+
+    def fetch(
+        symbols: Iterable[str],
+        *,
+        islem_gunu: int = 160,
+        indirme_donemi: str = "1y",
+        **kwargs: object,
+    ) -> BatchMarketDataResult:
+        normalized = tuple(str(symbol) for symbol in symbols)
+
+        daily = daily_fetcher(
+            normalized,
+            islem_gunu=islem_gunu,
+            indirme_donemi=indirme_donemi,
+            **kwargs,
+        )
+        intraday = intraday_fetcher(
+            normalized,
+            now=observed_at,
+        )
+
+        overlaid: dict[str, pd.DataFrame] = {}
+        failures: list[BatchMarketDataFailure] = list(daily.hatalar)
+
+        intraday_failure_by_symbol = {
+            str(item.symbol): str(item.error)
+            for item in intraday.failures
+        }
+
+        for symbol in normalized:
+            daily_frame = daily.veriler.get(symbol)
+            if daily_frame is None:
+                continue
+
+            snapshot = intraday.snapshots.get(symbol)
+            if snapshot is None:
+                failures.append(
+                    BatchMarketDataFailure(
+                        sembol=symbol,
+                        hata=(
+                            "PRECLOSE_INTRADAY_MISSING: "
+                            + intraday_failure_by_symbol.get(
+                                symbol,
+                                "bugünkü partial snapshot yok",
+                            )
+                        ),
+                    )
+                )
+                continue
+
+            try:
+                overlaid[symbol] = overlay_partial_daily_bar(
+                    daily_frame,
+                    snapshot,
+                    observed_at=observed_at,
+                )
+            except PreclosePartialDailyPreviewError as error:
+                failures.append(
+                    BatchMarketDataFailure(
+                        sembol=symbol,
+                        hata=f"PRECLOSE_OVERLAY_BLOCKED: {error}",
+                    )
+                )
+
+        # Preserve any additional fields on the canonical BatchMarketDataResult.
+        return replace(
+            daily,
+            veriler=overlaid,
+            hatalar=tuple(failures),
+        )
+
+    return fetch
+
+--- DEF backend\app\operations\preclose_partial_daily_preview.py::run_preclose_partial_preview @L242 ---
+def run_preclose_partial_preview(
+    *,
+    now: datetime | None = None,
+    profile_name: str = "dengeli",
+    result_limit: int = 50,
+    daily_fetcher: Callable[..., BatchMarketDataResult] = toplu_fiyat_verisi_getir,
+    intraday_fetcher: Callable[..., ScheduledIntradayBatchResult] = (
+        fetch_scheduled_intraday_batch
+    ),
+) -> PreclosePreviewResult:
+    """Run existing BIST scanner with a temporary partial-day overlay.
+
+    The existing scanner, filter profile, BIST universe and StockAnalyzer are
+    reused. The result is PREVIEW / NOT CANONICAL and is not persisted by this
+    module.
+    """
+
+    observed_at = _local_now(now)
+    _preclose_guard(observed_at)
+
+    if not 1 <= int(result_limit) <= 100:
+        raise PreclosePartialDailyPreviewError(
+            "result_limit 1 ile 100 arasında olmalıdır."
+        )
+
+    overlay_fetcher = build_preclose_overlay_fetcher(
+        now=observed_at,
+        daily_fetcher=daily_fetcher,
+        intraday_fetcher=intraday_fetcher,
+    )
+    scanner = BatchStockScanner(veri_getirici=overlay_fetcher)
+
+    service = build_dashboard_market_scanner(
+        now_provider=lambda: observed_at,
+        tarayici=scanner,
+    )
+
+    request_kwargs: dict[str, object] = {
+        "evren": "BIST Tüm",
+        "profil_adi": profile_name,
+        "maksimum_aday": int(result_limit),
+        "internetten_evren_guncelle": False,
+    }
+
+    # Current production may expose optional sector context. Keep preview lean.
+    fields = getattr(MarketScanRequest, "__dataclass_fields__", {})
+    if "sektor_baglami_aktif" in fields:
+        request_kwargs["sektor_baglami_aktif"] = False
+
+    scan_result = service.calistir(MarketScanRequest(**request_kwargs))
+
+    partial_count = sum(
+        1
+        for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ())
+        if str(getattr(item, "analiz_tarihi", "")).startswith(
+            observed_at.date().isoformat()
+        )
+    )
+    if not partial_count:
+        partial_count = sum(
+            1
+            for item in tuple(
+                getattr(getattr(scan_result, "filtrelenmis", None), "adaylar", ())
+                or ()
+            )
+            if str(getattr(item, "analiz_tarihi", "")).startswith(
+                observed_at.date().isoformat()
+            )
+        )
+
+    failure_count = len(
+        tuple(getattr(getattr(scan_result, "filtrelenmis", None), "hatalar", ()) or ())
+    )
+
+    return PreclosePreviewResult(
+        observed_at=observed_at,
+        scan_result=scan_result,
+        partial_symbol_count=partial_count,
+        intraday_failure_count=failure_count,
+    )
+
+--- DEF backend\app\operations\preclose_partial_daily_preview.py::preclose_preview_rows @L324 ---
+def preclose_preview_rows(
+    result: PreclosePreviewResult,
+) -> tuple[dict[str, object], ...]:
+    rows: list[dict[str, object]] = []
+    candidates = tuple(result.scan_result.adaylar)
+
+    for rank, candidate in enumerate(candidates, start=1):
+        signal = getattr(candidate, "sinyal", None)
+        risk = getattr(candidate, "risk_plani", None)
+        rows.append(
+            {
+                "Sıra": rank,
+                "Hisse": str(getattr(candidate, "sembol", "")).removesuffix(".IS"),
+                "Preview skor": getattr(signal, "skor", None),
+                "R/R": getattr(risk, "risk_odul_orani", None),
+                "Hacim oranı": getattr(candidate, "hacim_orani", None),
+                "Analiz tarihi": str(getattr(candidate, "analiz_tarihi", "")),
+                "Durum": "PREVIEW · NOT CANONICAL · PARTIAL SESSION",
+            }
+        )
+
+    return tuple(rows)
+
+FILE=backend\app\operations\scheduled_operation_phase_runner.py
+--- DEF backend\app\operations\scheduled_operation_phase_runner.py::ScheduledOperationRuntime.preclose_preview @L84 ---
+def preclose_preview(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult: ...
+
+--- DEF backend\app\operations\scheduled_operation_phase_runner.py::ProductionScheduledOperationRuntime.preclose_preview @L337 ---
+def preclose_preview(
+        self,
+        *,
+        now: datetime,
+    ) -> ScheduledOperationPhaseResult:
+        preview = run_preclose_partial_preview(now=now)
+        rows = preclose_preview_rows(preview)
+
+        return ScheduledOperationPhaseResult(
+            phase=PRECLOSE,
+            run_date=now.date().isoformat(),
+            observed_at=now.isoformat(),
+            status="PRECLOSE_PREVIEW_READY",
+            candidate_count=len(rows),
+            detail_rows=rows,
+        )
+
+FILE=backend\app\operations\scheduled_intraday_batch.py
+--- DEF backend\app\operations\scheduled_intraday_batch.py::ScheduledIntradayBatchFailure @L23 ---
+class ScheduledIntradayBatchFailure:
+    symbol: str
+    error: str
+
+--- DEF backend\app\operations\scheduled_intraday_batch.py::ScheduledIntradayBatchResult @L29 ---
+class ScheduledIntradayBatchResult:
+    snapshots: dict[str, DelayedDataSnapshot]
+    failures: tuple[ScheduledIntradayBatchFailure, ...]
+    requested_count: int
+
+    @property
+    def successful_count(self) -> int:
+        return len(self.snapshots)
+
+--- DEF backend\app\operations\scheduled_intraday_batch.py::fetch_scheduled_intraday_batch @L81 ---
+def fetch_scheduled_intraday_batch(
+    symbols: Iterable[str],
+    *,
+    now: datetime | None = None,
+    config: DelayedDataPilotConfig = DelayedDataPilotConfig(),
+    chunk_size: int = 40,
+    downloader: Callable[..., pd.DataFrame] = yf.download,
+) -> ScheduledIntradayBatchResult:
+    """Fetch delayed intraday snapshots in chunks using the existing pilot semantics.
+
+    This is a data adapter only. It has no ranking, profile, scanner, signal,
+    AL/SAT, or persistence authority.
+    """
+
+    normalized = _symbols(symbols)
+    if chunk_size < 1:
+        raise ValueError("chunk_size en az 1 olmalıdır.")
+
+    received_at = now or datetime.now(ISTANBUL)
+    if received_at.tzinfo is None:
+        received_at = received_at.replace(tzinfo=ISTANBUL)
+    else:
+        received_at = received_at.astimezone(ISTANBUL)
+
+    snapshots: dict[str, DelayedDataSnapshot] = {}
+    failures: list[ScheduledIntradayBatchFailure] = []
+
+    for start in range(0, len(normalized), chunk_size):
+        chunk = normalized[start : start + chunk_size]
+
+        try:
+            raw = downloader(
+                tickers=list(chunk),
+                period=config.period,
+                interval=config.interval,
+                auto_adjust=True,
+                progress=False,
+                threads=True,
+                prepost=False,
+                timeout=45,
+                group_by="ticker",
+            )
+        except Exception as error:
+            failures.extend(
+                ScheduledIntradayBatchFailure(
+                    symbol=symbol,
+                    error=f"Toplu gün içi indirme hatası: {error}",
+                )
+                for symbol in chunk
+            )
+            continue
+
+        for symbol in chunk:
+            try:
+                frame = _extract_symbol_frame(
+                    raw,
+                    symbol,
+                    chunk_size=len(chunk),
+                )
+
+                def cached_downloader(**_: object) -> pd.DataFrame:
+                    return frame
+
+                snapshot = fetch_delayed_snapshot(
+                    symbol,
+                    config=config,
+                    now=received_at,
+                    downloader=cached_downloader,
+                )
+                snapshots[symbol] = snapshot
+            except (DelayedDataPilotError, KeyError, TypeError, ValueError) as error:
+                failures.append(
+                    ScheduledIntradayBatchFailure(
+                        symbol=symbol,
+                        error=str(error),
+                    )
+                )
+
+    return ScheduledIntradayBatchResult(
+        snapshots=snapshots,
+        failures=tuple(failures),
+        requested_count=len(normalized),
+    )
+
+
+=== 2. DATACLASSES / NAMED RESULT CONTRACTS IN PRECLOSE FILE ===
+--- CLASS PreclosePartialDailyPreviewError @L37 ---
+class PreclosePartialDailyPreviewError(ValueError):
+    """Pre-close partial daily preview cannot be built safely."""
+
+--- CLASS PreclosePreviewResult @L42 ---
+class PreclosePreviewResult:
+    observed_at: datetime
+    scan_result: MarketScanResult
+    partial_symbol_count: int
+    intraday_failure_count: int
+    preview_only: bool = True
+    canonical: bool = False
+    ranking_write_allowed: bool = False
+    profile_write_allowed: bool = False
+    al_sat_decision_allowed: bool = False
+
+
+=== 3. RANKING / EARLY VISIBILITY READ DEFINITIONS ===
+--- READ CANDIDATE backend\app\analysis\daily_buy_decision_calibration.py::_band_rank @L39 ---
+def _band_rank(value: int | None) -> str:
+    if value is None:
+        return "YOK"
+    if value >= 30:
+        return "+30 ve üzeri"
+    if value > 0:
+        return "+1..+29"
+    if value == 0:
+        return "0"
+    return "Negatif"
+
+--- READ CANDIDATE backend\app\analysis\daily_early_trajectory.py::DailyEarlyTrajectoryCandidate @L15 ---
+class DailyEarlyTrajectoryCandidate:
+    symbol: str
+    current_rank: int
+    rank_1s: int
+    rank_3s: int
+    rank_5s: int
+    gain_1s: int
+    gain_3s: int
+    gain_5s: int
+    movement: str = "SAĞLIKLI İVMELENME"
+
+    @property
+    def rank_path(self) -> str:
+        return (
+            f"{self.rank_5s} → {self.rank_3s} → "
+            f"{self.rank_1s} → {self.current_rank}"
+        )
+
+--- READ CANDIDATE backend\app\analysis\daily_early_trajectory.py::DailyEarlyTrajectoryCandidate.rank_path @L27 ---
+def rank_path(self) -> str:
+        return (
+            f"{self.rank_5s} → {self.rank_3s} → "
+            f"{self.rank_1s} → {self.current_rank}"
+        )
+
+--- READ CANDIDATE backend\app\analysis\daily_early_trajectory.py::_healthy_rank_path @L34 ---
+def _healthy_rank_path(item: RankTrajectory) -> bool:
+    values = (
+        item.rank_5s,
+        item.rank_3s,
+        item.rank_1s,
+        item.current_rank,
+        item.gain_1s,
+        item.gain_3s,
+        item.gain_5s,
+    )
+    if any(value is None for value in values):
+        return False
+
+    return bool(
+        item.rank_5s > item.rank_3s > item.rank_1s > item.current_rank
+        and item.gain_1s > 0
+        and item.gain_3s > 0
+        and item.gain_5s > 0
+    )
+
+--- READ CANDIDATE backend\app\analysis\daily_early_trajectory.py::build_daily_early_trajectory_candidates @L55 ---
+def build_daily_early_trajectory_candidates(
+    trajectories: Iterable[RankTrajectory],
+    *,
+    primary_symbols: Iterable[str] = (),
+    limit: int = DEFAULT_EARLY_LIMIT,
+    rank_min: int = DEFAULT_EARLY_RANK_MIN,
+    rank_max: int = DEFAULT_EARLY_RANK_MAX,
+) -> tuple[DailyEarlyTrajectoryCandidate, ...]:
+    """
+    Read-only early-research selection.
+
+    This is not a score and has no AL/SAT authority. It selects only
+    comparable Research trajectories whose 5S -> 3S -> 1S -> today path
+    improves monotonically inside the configured research rank band.
+
+    Ordering is deterministic:
+    1) 3S rank gain descending (primary early-visibility horizon)
+    2) 5S rank gain descending (persistence context)
+    3) 1S rank gain descending (latest continuation)
+    4) current Research rank ascending
+    5) symbol ascending
+    """
+    if limit < 1:
+        raise ValueError("limit 1 veya daha büyük olmalıdır")
+    if rank_min < 1 or rank_max < rank_min:
+        raise ValueError("rank bandı geçersiz")
+
+    excluded = {
+        str(symbol).removesuffix(".IS").upper().strip()
+        for symbol in primary_symbols
+    }
+
+    candidates: list[DailyEarlyTrajectoryCandidate] = []
+    for item in trajectories:
+        symbol = str(item.symbol).removesuffix(".IS").upper().strip()
+        if symbol in excluded:
+            continue
+        if not item.comparable:
+            continue
+        if item.current_rank < rank_min or item.current_rank > rank_max:
+            continue
+        if not _healthy_rank_path(item):
+            continue
+
+        candidates.append(
+            DailyEarlyTrajectoryCandidate(
+                symbol=symbol,
+                current_rank=int(item.current_rank),
+                rank_1s=int(item.rank_1s),
+                rank_3s=int(item.rank_3s),
+                rank_5s=int(item.rank_5s),
+                gain_1s=int(item.gain_1s),
+                gain_3s=int(item.gain_3s),
+                gain_5s=int(item.gain_5s),
+            )
+        )
+
+    candidates.sort(
+        key=lambda item: (
+            -item.gain_3s,
+            -item.gain_5s,
+            -item.gain_1s,
+            item.current_rank,
+            item.symbol,
+        )
+    )
+    return tuple(candidates[:limit])
+
+--- READ CANDIDATE backend\app\analysis\daily_early_trajectory.py::daily_early_trajectory_rows @L124 ---
+def daily_early_trajectory_rows(
+    candidates: Iterable[DailyEarlyTrajectoryCandidate],
+    *,
+    start_priority: int = 6,
+) -> tuple[dict[str, object], ...]:
+    if start_priority < 1:
+        raise ValueError("start_priority 1 veya daha büyük olmalıdır")
+
+    rows = []
+    for offset, item in enumerate(candidates):
+        rows.append(
+            {
+                "Öncelik": start_priority + offset,
+                "Hisse": item.symbol,
+                "Sıra yolu": item.rank_path,
+                "1S Δ": f"+{item.gain_1s}",
+                "3S Δ": f"+{item.gain_3s}",
+                "5S Δ": f"+{item.gain_5s}",
+                "Bugün": f"#{item.current_rank}",
+                "Hareket": item.movement,
+            }
+        )
+    return tuple(rows)
+
+--- READ CANDIDATE backend\app\analysis\early_visibility_report.py::build_early_visibility_report @L7 ---
+def build_early_visibility_report(
+    contexts: tuple[RankingVisibilityContext, ...],
+) -> tuple[dict[str, object], ...]:
+    return tuple(
+        {
+            "symbol": item.symbol,
+            "current_rank": item.current_rank,
+            "previous_rank": item.previous_rank,
+            "rank_change": item.rank_change,
+            "visibility_state": item.visibility_state,
+            "zone_transition": item.zone_transition,
+            "research_priority": item.research_priority,
+            "quality_status": item.quality_status,
+            "data_blocked": item.data_blocked,
+        }
+        for item in contexts
+    )
+
+--- READ CANDIDATE backend\app\analysis\early_visibility_tracking_bridge.py::EarlyVisibilityTrackingContext @L7 ---
+class EarlyVisibilityTrackingContext:
+    symbol: str
+    visibility_state: str
+    research_priority: str
+    source: str = "EARLY_VISIBILITY"
+
+--- READ CANDIDATE backend\app\analysis\early_visibility_tracking_bridge.py::build_early_visibility_tracking_context @L14 ---
+def build_early_visibility_tracking_context(
+    *,
+    symbol: str,
+    visibility_state: str,
+    research_priority: str,
+) -> EarlyVisibilityTrackingContext:
+    return EarlyVisibilityTrackingContext(
+        symbol=str(symbol).upper().strip(),
+        visibility_state=visibility_state,
+        research_priority=research_priority,
+    )
+
+--- READ CANDIDATE backend\app\analysis\fast_mover_watch.py::FastMoverVisibilityPolicy @L38 ---
+class FastMoverVisibilityPolicy:
+    min_rank_gain: int
+    min_percentile_gain: float
+    min_support_families: int
+    max_contradiction_families_for_main: int
+
+    def __post_init__(self) -> None:
+        if self.min_rank_gain < 0:
+            raise ValueError("min_rank_gain must be >= 0")
+        if not 0.0 <= self.min_percentile_gain <= 1.0:
+            raise ValueError("min_percentile_gain must be between 0 and 1")
+        if self.min_support_families < 0:
+            raise ValueError("min_support_families must be >= 0")
+        if self.max_contradiction_families_for_main < 0:
+            raise ValueError("max_contradiction_families_for_main must be >= 0")
+
+--- READ CANDIDATE backend\app\analysis\fast_mover_watch.py::FastMoverObservation @L56 ---
+class FastMoverObservation:
+    symbol: str
+    current_rank: int | None
+    previous_canonical_rank: int | None
+    current_universe_size: int | None
+    previous_universe_size: int | None
+
+    data_usable: bool
+    baseline_comparable: bool
+
+    security_or_data_lock: bool = False
+    proven_data_artifact: bool = False
+    positive_state_transition: bool = False
+
+    research_score_current: float | None = None
+    research_score_previous: float | None = None
+
+    support_families: tuple[str, ...] = ()
+    contradiction_families: tuple[str, ...] = ()
+    early_visibility_overlap: bool = False
+    warnings: tuple[FastMoverWarning, ...] = ()
+
+--- READ CANDIDATE backend\app\analysis\morning_candidate_flow.py::_visibility_by_symbol @L47 ---
+def _visibility_by_symbol(
+    contexts: Iterable[object],
+) -> dict[str, object]:
+    result: dict[str, object] = {}
+    for context in contexts:
+        symbol = _normalize_symbol(getattr(context, "symbol", ""))
+        if symbol:
+            result[symbol] = context
+    return result
+
+--- READ CANDIDATE backend\app\analysis\ranking_memory.py::RankObservation @L9 ---
+class RankObservation:
+    as_of: str
+    symbol: str
+    rank: int
+    ranked_universe_size: int
+    universe_source: str
+    profile_name: str
+
+--- READ CANDIDATE backend\app\analysis\ranking_memory.py::_coerce_rank @L22 ---
+def _coerce_rank(value: object) -> int | None:
+    try:
+        rank = int(value)
+    except (TypeError, ValueError):
+        return None
+    return rank if rank > 0 else None
+
+--- READ CANDIDATE backend\app\analysis\ranking_memory.py::observations_from_research_rows @L30 ---
+def observations_from_research_rows(*, rows, as_of, universe_source, profile_name):
+    materialized = tuple(rows)
+    ranked_universe_size = len(materialized)
+
+    if ranked_universe_size == 0:
+        return ()
+
+    observations = []
+
+    for row in materialized:
+        symbol = _clean_symbol(
+            row.get("Hisse")
+            or row.get("hisse")
+            or row.get("symbol")
+            or row.get("Symbol")
+        )
+
+        rank = _coerce_rank(
+            row.get("Sıra")
+            or row.get("Sira")
+            or row.get("rank")
+            or row.get("Rank")
+        )
+
+        if not symbol or rank is None:
+            continue
+
+        observations.append(
+            RankObservation(
+                as_of=str(as_of),
+                symbol=symbol,
+                rank=rank,
+                ranked_universe_size=ranked_universe_size,
+                universe_source=str(universe_source or ""),
+                profile_name=str(profile_name or ""),
+            )
+        )
+
+    return tuple(observations)
+
+--- READ CANDIDATE backend\app\analysis\ranking_memory.py::ResearchProfileObservation @L75 ---
+class ResearchProfileObservation:
+    as_of: str
+    symbol: str
+    research_profile: str
+    state: str
+    direction: str
+    reasons: tuple[str, ...]
+    warnings: tuple[str, ...]
+    universe_name: str
+    successful_universe_size: int
+    recorded_at: str
+    record_type: str = PROFILE_RECORD_TYPE
+
+--- READ CANDIDATE backend\app\analysis\ranking_memory.py::RankObservationJsonlStore @L88 ---
+class RankObservationJsonlStore:
+    """Append-only history of existing Research ranks.
+
+    No scoring, ranking, signal, or trading authority.
+    """
+
+    def __init__(self, path=None):
+        if path is None:
+            project_root = Path(__file__).resolve().parents[3]
+            path = project_root / "data" / "ranking_memory" / "rank_observations.jsonl"
+        self.path = Path(path)
+
+    @staticmethod
+    def _key(item):
+        return (
+            item.as_of,
+            item.symbol,
+            item.universe_source,
+            item.profile_name,
+        )
+
+
+    def list(self):
+        # Rank reader stays backward compatible; profile records are ignored here.
+        if not self.path.exists():
+            return ()
+        items = []
+        for raw in self.path.read_text(encoding="utf-8").splitlines():
+            raw = raw.strip()
+            if not raw:
+                continue
+            payload = json.loads(raw)
+            if payload.get("record_type", "rank") != "rank":
+                continue
+            items.append(
+                RankObservation(
+                    as_of=payload["as_of"],
+                    symbol=payload["symbol"],
+                    rank=payload["rank"],
+                    ranked_universe_size=payload["ranked_universe_size"],
+                    universe_source=payload["universe_source"],
+                    profile_name=payload["profile_name"],
+                )
+            )
+        return tuple(items)
+
+    def append_snapshot(self, observations):
+        incoming = tuple(observations)
+        if not incoming:
+            return 0
+
+        existing_keys = {self._key(item) for item in self.list()}
+        new_items = [item for item in incoming if self._key(item) not in existing_keys]
+        if not new_items:
+            return 0
+
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with self.path.open("a", encoding="utf-8") as handle:
+            for item in new_items:
+                handle.write(
+                    json.dumps(asdict(item), ensure_ascii=False, sort_keys=True) + "\n"
+                )
+        return len(new_items)
+
+
+
+    def list_profile_observations(self):
+        if not self.path.exists():
+            return ()
+        items = []
+        for raw in self.path.read_text(encoding="utf-8").splitlines():
+            raw = raw.strip()
+            if not raw:
+                continue
+            payload = json.loads(raw)
+            if payload.get("record_type") != PROFILE_RECORD_TYPE:
+                continue
+            items.append(
+                ResearchProfileObservation(
+                    as_of=str(payload["as_of"]),
+                    symbol=_clean_symbol(payload["symbol"]),
+                    research_profile=str(payload["research_profile"]),
+                    state=str(payload["state"]),
+                    direction=str(payload["direction"]),
+                    reasons=tuple(payload.get("reasons", ())),
+                    warnings=tuple(payload.get("warnings", ())),
+                    universe_name=str(payload.get("universe_name", "")),
+                    successful_universe_size=int(
+                        payload.get("successful_universe_size", 0)
+                    ),
+                    recorded_at=str(payload.get("recorded_at", "")),
+                )
+            )
+        return tuple(
+            sorted(
+                items,
+                key=lambda item: (
+                    item.as_of,
+                    item.symbol,
+                    item.research_profile,
+... <TRUNCATED AFTER 100 LINES>
+
+--- READ CANDIDATE backend\app\analysis\ranking_memory.py::RankObservationJsonlStore.list_profile_observations @L154 ---
+def list_profile_observations(self):
+        if not self.path.exists():
+            return ()
+        items = []
+        for raw in self.path.read_text(encoding="utf-8").splitlines():
+            raw = raw.strip()
+            if not raw:
+                continue
+            payload = json.loads(raw)
+            if payload.get("record_type") != PROFILE_RECORD_TYPE:
+                continue
+            items.append(
+                ResearchProfileObservation(
+                    as_of=str(payload["as_of"]),
+                    symbol=_clean_symbol(payload["symbol"]),
+                    research_profile=str(payload["research_profile"]),
+                    state=str(payload["state"]),
+                    direction=str(payload["direction"]),
+                    reasons=tuple(payload.get("reasons", ())),
+                    warnings=tuple(payload.get("warnings", ())),
+                    universe_name=str(payload.get("universe_name", "")),
+                    successful_universe_size=int(
+                        payload.get("successful_universe_size", 0)
+                    ),
+                    recorded_at=str(payload.get("recorded_at", "")),
+                )
+            )
+        return tuple(
+            sorted(
+                items,
+                key=lambda item: (
+                    item.as_of,
+                    item.symbol,
+                    item.research_profile,
+                    item.recorded_at,
+                ),
+            )
+        )
+
+--- READ CANDIDATE backend\app\analysis\ranking_memory.py::rank_history_for_symbol @L245 ---
+def rank_history_for_symbol(observations, symbol):
+    target = _clean_symbol(symbol)
+    return tuple(
+        sorted(
+            (item for item in observations if item.symbol == target),
+            key=lambda item: item.as_of,
+        )
+    )
+
+--- READ CANDIDATE backend\app\analysis\ranking_movement_visibility.py::RankingMovementRow @L11 ---
+class RankingMovementRow:
+    symbol: str
+    current_rank: int
+    gain_1s: int | None
+    gain_3s: int | None
+    gain_5s: int | None
+    acceleration: float | None
+    positive_steps_5s: int
+    persistence: str
+    lifecycle: str
+    top5_distance: int
+    comparable: bool
+
+--- READ CANDIDATE backend\app\analysis\ranking_movement_visibility.py::_valid_history @L25 ---
+def _valid_history(observations: Iterable[RankObservation], symbol: str) -> list[RankObservation]:
+    from backend.app.analysis.ranking_trajectory import _parse_observation_date
+
+    rows: list[tuple[object, RankObservation]] = []
+    for item in observations:
+        if item.symbol != symbol:
+            continue
+        try:
+            parsed = _parse_observation_date(item.as_of)
+        except ValueError:
+            continue
+        rows.append((parsed, item))
+    rows.sort(key=lambda pair: pair[0])
+    return [item for _, item in rows]
+
+--- READ CANDIDATE backend\app\analysis\ranking_movement_visibility.py::build_ranking_movement_rows @L73 ---
+def build_ranking_movement_rows(
+    observations: Iterable[RankObservation],
+) -> tuple[RankingMovementRow, ...]:
+    items = tuple(observations)
+    trajectories = build_rank_trajectories(items)
+    result: list[RankingMovementRow] = []
+
+    for trajectory in trajectories:
+        history = _valid_history(items, trajectory.symbol)
+        transitions = max(0, min(5, len(history) - 1))
+        positive_steps = _positive_steps_5s(history)
+        result.append(
+            RankingMovementRow(
+                symbol=trajectory.symbol,
+                current_rank=trajectory.current_rank,
+                gain_1s=trajectory.gain_1s,
+                gain_3s=trajectory.gain_3s,
+                gain_5s=trajectory.gain_5s,
+                acceleration=_acceleration(history),
+                positive_steps_5s=positive_steps,
+                persistence=_persistence(positive_steps, transitions),
+                lifecycle=trajectory.lifecycle,
+                top5_distance=max(0, trajectory.current_rank - 5),
+                comparable=trajectory.comparable,
+            )
+        )
+
+    return tuple(
+        sorted(
+            result,
+            key=lambda row: (
+                row.gain_3s is None,
+                -(row.gain_3s or -10**9),
+                -(row.acceleration or -10**9),
+                row.current_rank,
+                row.symbol,
+            ),
+        )
+    )
+
+--- READ CANDIDATE backend\app\analysis\ranking_movement_visibility.py::ranking_movement_reason @L114 ---
+def ranking_movement_reason(row: RankingMovementRow) -> str:
+    """Ham hareket metriklerinden açıklanabilir görünürlük nedeni üretir."""
+    if not row.comparable:
+        return "Research source/profile değişti; hareket karşılaştırması bloklu."
+    if row.gain_3s is None:
+        return "3 seanslık karşılaştırma için yeterli tarihli snapshot yok."
+    if row.gain_3s <= 0:
+        return "Son 3 seansta pozitif sıra kazanımı yok."
+
+    parts = [f"3S +{row.gain_3s} sıra"]
+    if row.gain_1s is not None and row.gain_1s > 0:
+        parts.append(f"1S +{row.gain_1s}")
+    if row.acceleration is not None and row.acceleration > 0:
+        parts.append("hareket hızlanıyor")
+    if row.persistence == "KALICI":
+        parts.append("5S hareket kalıcı")
+    elif row.persistence == "DESTEKLI":
+        parts.append("5S hareket destekli")
+    elif row.persistence == "TEKIL_SICRAMA":
+        parts.append("tekil sıçrama")
+    if row.top5_distance <= 20:
+        parts.append(f"Top-5'e {row.top5_distance} sıra")
+    return " · ".join(parts)
+
+--- READ CANDIDATE backend\app\analysis\ranking_movement_visibility.py::ranking_movement_table_rows @L139 ---
+def ranking_movement_table_rows(
+    rows: Iterable[RankingMovementRow],
+) -> tuple[dict[str, object], ...]:
+    return tuple(
+        {
+            "Hisse": row.symbol,
+            "Bugün": row.current_rank,
+            "1S Δ": row.gain_1s if row.gain_1s is not None else "-",
+            "3S Δ": row.gain_3s if row.gain_3s is not None else "-",
+            "5S Δ": row.gain_5s if row.gain_5s is not None else "-",
+            "Sıçrama ivmesi": round(row.acceleration, 1) if row.acceleration is not None else "-",
+            "5S pozitif adım": row.positive_steps_5s,
+            "Kalıcılık": row.persistence,
+            "Hareket": row.lifecycle,
+            "Top-5 uzaklık": row.top5_distance,
+            "Sıçrama görünürlüğü": (
+                "ADAY"
+                if row.comparable and row.gain_3s is not None and row.gain_3s > 0
+                else "DEĞİL"
+            ),
+            "Neden?": ranking_movement_reason(row),
+            "Karşılaştırma": "Uygun" if row.comparable else "Bloklu",
+        }
+        for row in rows
+    )
+
+RANK_READ_CANDIDATES_PRINTED=24
+
+=== 4. EXACT FIELD REFERENCES IN PRECLOSE ASSEMBLY ===
+3: from dataclasses import dataclass, replace
+45:     partial_symbol_count: int
+49:     ranking_write_allowed: bool = False
+57:         return current.replace(tzinfo=ISTANBUL)
+58:     return current.astimezone(ISTANBUL)
+62:     clock = observed_at.timetz().replace(tzinfo=None)
+74:     return pd.Index(pd.to_datetime(frame.index).date)
+83:     """Append/replace today's synthetic daily row using current intraday evidence."""
+93:         exchange_time = exchange_time.replace(tzinfo=ISTANBUL)
+111:     required = ("Open", "High", "Low", "Close", "Volume")
+123:         snapshot.cumulative_volume,
+141:             "Volume": [float(snapshot.cumulative_volume)],
+153:     return out
+170:         symbols: Iterable[str],
+176:         normalized = tuple(str(symbol) for symbol in symbols)
+192:         intraday_failure_by_symbol = {
+193:             str(item.symbol): str(item.error)
+197:         for symbol in normalized:
+198:             daily_frame = daily.veriler.get(symbol)
+202:             snapshot = intraday.snapshots.get(symbol)
+204:                 failures.append(
+206:                         sembol=symbol,
+209:                             + intraday_failure_by_symbol.get(
+210:                                 symbol,
+219:                 overlaid[symbol] = overlay_partial_daily_bar(
+225:                 failures.append(
+227:                         sembol=symbol,
+233:         return replace(
+239:     return fetch
+295:         for item in tuple(getattr(scan_result, "tum_sonuclar", ()) or ())
+316:     return PreclosePreviewResult(
+319:         partial_symbol_count=partial_count,
+324: def preclose_preview_rows(
+327:     rows: list[dict[str, object]] = []
+330:     for rank, candidate in enumerate(candidates, start=1):
+333:         rows.append(
+335:                 "Sıra": rank,
+339:                 "Hacim oranı": getattr(candidate, "hacim_orani", None),
+345:     return tuple(rows)
+
+=== 5. DECISION ===
+DECISION=EXACT_SEAM_CONTRACT_EXTRACTED
+NEXT=GENERATE_ONE_LIMITED_INTEGRATION_BLOCK_FROM_EXACT_SIGNATURES
+NO_MUTATION=YES
+
+=== SAFETY ===
+READ_ONLY=YES
+REPORT_ONLY=YES

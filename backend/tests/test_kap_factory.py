@@ -1,0 +1,142 @@
+from __future__ import annotations
+
+from datetime import date, datetime, timezone
+from typing import Any
+
+
+class FakeResponse:
+    def __init__(
+        self,
+        *,
+        status_code: int = 200,
+        payload: Any = None,
+    ) -> None:
+        self.status_code = status_code
+        self._payload = payload
+
+    def json(self) -> Any:
+        return self._payload
+
+
+def test_kap_factory_ortam_ayarlarindan_servis_olusturur(
+    monkeypatch,
+) -> None:
+    from backend.app.compliance.kap_factory import build_kap_vbts_service
+
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_BASE_URL",
+        "https://ornek.kap.test/api",
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_ENDPOINT_PATH',
+        'notifications',
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_API_KEY_HEADER',
+        'Authorization',
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_COLLECTION_KEY',
+        'notifications',
+    )
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_API_KEY",
+        "test-anahtari",
+    )
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_TIMEOUT_SECONDS",
+        "9",
+    )
+
+    cagrilar: list[dict[str, object]] = []
+
+    def fake_get(
+        url: str,
+        *,
+        params: dict[str, object],
+        headers: dict[str, str],
+        timeout: float,
+    ) -> FakeResponse:
+        cagrilar.append(
+            {
+                "url": url,
+                "params": params,
+                "headers": headers,
+                "timeout": timeout,
+            }
+        )
+
+        return FakeResponse(
+            payload={
+                "notifications": [
+                    {
+                        "id": 1629762,
+                        "title": (
+                            "Pay Piyasasında Volatilite Bazlı "
+                            "Tedbir Sistemi"
+                        ),
+                        "body": (
+                            "VBTS kapsamında BORLS.E paylarında "
+                            "09/07/2026 tarihli işlemlerden "
+                            "07/08/2026 tarihli işlemlere kadar "
+                            "brüt takas uygulanacaktır."
+                        ),
+                        "publishedAt": "2026-07-08T15:30:00+03:00",
+                    }
+                ]
+            }
+        )
+
+    service = build_kap_vbts_service(http_get=fake_get)
+
+    dataset = service.fetch_dataset(
+        start_date=date(2026, 7, 1),
+        end_date=date(2026, 7, 28),
+        fetched_at=datetime(
+            2026,
+            7,
+            28,
+            18,
+            0,
+            tzinfo=timezone.utc,
+        ),
+    )
+
+    assert dataset.status.record_count == 1
+    assert dataset.measures[0].symbol == "BORLS.IS"
+
+    assert cagrilar == [
+        {
+            "url": "https://ornek.kap.test/api/notifications",
+            "params": {
+                "startDate": "2026-07-01",
+                "endDate": "2026-07-28",
+            },
+            "headers": {
+                "Accept": "application/json",
+                "Authorization": "Bearer test-anahtari",
+            },
+            "timeout": 9.0,
+        }
+    ]
+
+
+def test_kap_factory_eksik_ayarlarla_servis_olusturmaz(
+    monkeypatch,
+) -> None:
+    from backend.app.compliance.kap_factory import build_kap_vbts_service
+
+    monkeypatch.delenv(
+        "HISSE_ROBOTU_KAP_BASE_URL",
+        raising=False,
+    )
+
+    def fake_get(*args: object, **kwargs: object) -> object:
+        return object()
+
+    try:
+        build_kap_vbts_service(http_get=fake_get)
+    except ValueError as exc:
+        assert "temel adres" in str(exc)
+    else:
+        raise AssertionError("Eksik KAP ayarlarında ValueError bekleniyordu.")

@@ -1,0 +1,55 @@
+{
+  "370001": {
+    "last_attempt_utc": "2026-09-07T09:27:16.664409+00:00",
+    "last_success_utc": "2026-09-07T09:27:16.664409+00:00",
+    "warnings": [
+      "TEFAS_DETAIL:F4_DETAIL_ROW_COUNT:0",
+      "KAP_PORTFOLIO:KAP_TIMEOUT"
+    ]
+  },
+  "AAL": {
+    "last_attempt_utc": "2026-10-23T22:07:07.830446+00:00",
+    "last_success_utc": "2026-10-23T22:07:07.830446+00:00",
+    "warnings": []
+  },
+  "AAS": {
+    "last_attempt_utc": "2026-09-24T18:27:39.766006+00:00",
+    "last_success_utc": "2026-09-24T18:27:39.766006+00:00",
+    "warnings": [
+      "TEFAS_HISTORY:TEFAS history verified contract requires period=1."
+    ]
+  },
+  "AP5": {
+    "last_attempt_utc": "2026-09-05T15:20:19.137323+00:00",
+    "last_success_utc": "2026-09-05T15:20:19.137323+00:00",
+    "warnings": [
+      "TEFAS_DETAIL:[WinError 5] Access is denied: 'D:\\\\Projects\\\\Hisse-Robotu\\\\backend\\\\data\\\\funds\\\\observations.json.tmp' -> 'D:\\\\Projects\\\\Hisse-Robotu\\\\backend\\\\data\\\\funds\\\\observations.json'",
+      "KAP_PORTFOLIO:KAP_TIMEOUT"
+    ]
+  },
+  "KCV": {
+    "last_attempt_utc": "2026-09-24T17:58:04.672099+00:00",
+    "last_success_utc": "2026-09-24T17:58:04.672099+00:00",
+    "warnings": [
+      "TEFAS_HISTORY:TEFAS history verified contract requires period=1.",
+      "KAP_FDO:[SSL: RECORD_LAYER_FAILURE] record layer failure (_ssl.c:2713)"
+    ]
+  },
+  "KHA": {
+    "last_attempt_utc": "2026-09-26T15:30:34.086447+00:00",
+    "last_success_utc": "2026-09-26T15:30:34.086447+00:00",
+    "warnings": []
+  },
+  "PHE": {
+    "last_attempt_utc": "2026-09-28T11:19:02.189140+00:00",
+    "last_success_utc": "2026-09-28T11:19:02.189140+00:00",
+    "warnings": [
+      "TEFAS_DETAIL:F4_DETAIL_INVALID_sonFiyat:0"
+    ]
+  },
+  "YHY": {
+    "last_attempt_utc": "2026-09-28T11:22:02.480224+00:00",
+    "last_success_utc": "2026-09-28T11:22:02.480224+00:00",
+    "warnings": []
+  }
+}

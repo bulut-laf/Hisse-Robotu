@@ -1,0 +1,43 @@
+{
+  "schema_version": "financial-intelligence-v1.1-multi-symbol-rollout-readiness-v2",
+  "status": "NO_ADDITIONAL_ACCEPTED_SYMBOLS_FOUND",
+  "mode": "READ_ONLY_DISCOVERY",
+  "filename_contract": "financial_intelligence_acceptance_<SYMBOL>_<YYYY>_<PERIOD>.json",
+  "reference_symbol": "TUPRS",
+  "candidate_count": 1,
+  "additional_candidate_count": 0,
+  "additional_pass_like_count": 0,
+  "ignored_noncanonical_files": [],
+  "candidates": [
+    {
+      "symbol": "TUPRS",
+      "year": "2026",
+      "period_code": "2",
+      "period": "2026_2",
+      "acceptance_path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+      "acceptance_status": "PASS",
+      "acceptance_pass_like": true,
+      "existing_outputs": {
+        "short_term": true,
+        "long_term": true,
+        "panel": true,
+        "market_ownership": true,
+        "investability_acceptance": true,
+        "investability_closure": true
+      },
+      "existing_output_count": 6,
+      "reference_symbol": true
+    }
+  ],
+  "rules": [
+    "NO_NEW_SCORE",
+    "NO_NEW_STORE",
+    "NO_AL_SAT_MUTATION",
+    "NO_SCANNER_MUTATION",
+    "NO_RANKING_MUTATION",
+    "NO_PORTFOLIO_MUTATION",
+    "REUSE_EXISTING_FINANCIAL_INTELLIGENCE_PIPELINE",
+    "TUPRS_REMAINS_REFERENCE_ACCEPTANCE_SYMBOL",
+    "YEAR_AND_PERIOD_MUST_NOT_BE_PART_OF_SYMBOL"
+  ]
+}

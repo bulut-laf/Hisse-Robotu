@@ -1,0 +1,25 @@
+{
+  "document_id": "9cf5125ad2fa453ebf65400ce3f4a87a",
+  "source": "ICBC",
+  "document_date": "2026-08-06",
+  "imported_at": "2026-08-06T07:28:38Z",
+  "input_type": "text",
+  "raw_text": "BIST100 endeksinin güne pozitif bir\nbaslangic yapmasini bekliyoruz.\nAgustos vadeli BIST30 kontrati\naksam seansini 3 puan ekside\ntamamladi. Bu sabah Asya\npiyasalari negatif bolgede islem\ngorurken, ABD vadeli endeksleri ise\npozitif seyrediyor. BIST100\nendeksinde 13.564 seviyesi ile\n13.395-13.286 bandi ilk destek\nbolgesi olarak one cikarken,\nasagida 13.216 seviyesi takip\nedilmektedir. Direnc tarafinda ise\n13.779 seviyesinin ardindan\n13.872-14.085 bandi one cikarken,\nhaftalik bazda dip olusumunun\nteyidi acisindan kritik onem\ntasidigini dusundugumuz 14.228\nseviyesi izlenmektedir.",
+  "content_hash": "1953bb776cd67674fd0ad42e40c3c4083cc60336a2048871706afa2e71a82837",
+  "index_outlook": "Pozitif",
+  "supports": [
+    "13.395",
+    "13.286"
+  ],
+  "resistances": [],
+  "external_market_outlook": null,
+  "futures_outlook": null,
+  "macro_risks": [],
+  "sector_impacts": [],
+  "stock_news": [],
+  "notes": [],
+  "archive_date": "2026-08-06",
+  "archive_status": "archived",
+  "ai_eligible": true,
+  "ai_review_status": "not_reviewed"
+}

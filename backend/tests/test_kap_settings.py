@@ -1,0 +1,142 @@
+from __future__ import annotations
+
+import os
+
+import pytest
+
+
+def test_kap_ayarlari_ortam_degiskenlerinden_yuklenir(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from backend.app.compliance.kap_settings import KapSettings
+
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_BASE_URL",
+        "https://ornek.kap.test/api/",
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_ENDPOINT_PATH',
+        'notifications',
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_API_KEY_HEADER',
+        'Authorization',
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_COLLECTION_KEY',
+        'notifications',
+    )
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_API_KEY",
+        "gizli-anahtar",
+    )
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_TIMEOUT_SECONDS",
+        "12.5",
+    )
+
+    settings = KapSettings.from_environment()
+
+    assert settings.base_url == "https://ornek.kap.test/api"
+    assert settings.api_key == "gizli-anahtar"
+    assert settings.timeout_seconds == 12.5
+
+
+def test_kap_api_anahtari_istege_bagli_olabilir(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from backend.app.compliance.kap_settings import KapSettings
+
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_BASE_URL",
+        "https://ornek.kap.test/api",
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_ENDPOINT_PATH',
+        'notifications',
+    )
+    monkeypatch.delenv("KAP_API_KEY", raising=False)
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_API_KEY_HEADER',
+        'Authorization',
+    )
+    monkeypatch.setenv(
+        'HISSE_ROBOTU_KAP_COLLECTION_KEY',
+        'notifications',
+    )
+    monkeypatch.delenv(
+        "HISSE_ROBOTU_KAP_API_KEY",
+        raising=False,
+    )
+    monkeypatch.delenv(
+        "HISSE_ROBOTU_KAP_TIMEOUT_SECONDS",
+        raising=False,
+    )
+
+    settings = KapSettings.from_environment()
+
+    assert settings.api_key is None
+    assert settings.timeout_seconds == 10.0
+
+
+def test_kap_temel_adresi_yoksa_ayarlar_reddedilir(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from backend.app.compliance.kap_settings import KapSettings
+
+    monkeypatch.delenv(
+        "HISSE_ROBOTU_KAP_BASE_URL",
+        raising=False,
+    )
+
+    with pytest.raises(ValueError, match="temel adres"):
+        KapSettings.from_environment()
+
+
+def test_kap_zaman_asimi_sayisal_degilse_reddedilir(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from backend.app.compliance.kap_settings import KapSettings
+
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_BASE_URL",
+        "https://ornek.kap.test/api",
+    )
+    monkeypatch.setenv(
+        "HISSE_ROBOTU_KAP_TIMEOUT_SECONDS",
+        "on-saniye",
+    )
+
+    with pytest.raises(ValueError, match="zaman aşımı"):
+        KapSettings.from_environment()
+
+
+def test_kap_zaman_asimi_sifir_veya_negatifse_reddedilir() -> None:
+    from backend.app.compliance.kap_settings import KapSettings
+
+    with pytest.raises(ValueError, match="sıfırdan büyük"):
+        KapSettings(
+            base_url="https://ornek.kap.test/api",
+            api_key=None,
+            timeout_seconds=0,
+        )
+
+
+def test_kap_ayarlari_http_kaynagini_olusturur() -> None:
+    from backend.app.compliance.kap_settings import KapSettings
+
+    def fake_get(*args: object, **kwargs: object) -> object:
+        return object()
+
+    settings = KapSettings(
+        base_url="https://ornek.kap.test/api/",
+        api_key="anahtar",
+        timeout_seconds=7.0,
+    )
+
+    source = settings.build_http_source(http_get=fake_get)
+
+    assert source._base_url == "https://ornek.kap.test/api"
+    assert source._api_key == "anahtar"
+    assert source._timeout_seconds == 7.0
+    assert source._http_get is fake_get

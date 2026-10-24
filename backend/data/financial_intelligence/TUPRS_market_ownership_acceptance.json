@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+  "symbol": "TUPRS",
+  "as_of": "2026-08-04T18:24:32",
+  "input_convention": {
+    "issued_capital_try": "1926795598",
+    "quote_nominal_unit_try": "1",
+    "valuation_units": "1926795598",
+    "legal_share_nominal_try": "0.01",
+    "legal_share_piece_count": "192679559800",
+    "note": "Market-cap uses BIST quote lot-equivalent valuation units, not raw legal share-piece count when nominal share value differs from TRY 1."
+  },
+  "ownership": {
+    "symbol": "TUPRS",
+    "free_float_ratio": "0.4943",
+    "effective_free_float_ratio": "0.4943",
+    "free_float_shares": "952415064.0914",
+    "float_liquidity_risk": "MODERATE",
+    "ownership_concentration": "HIGH",
+    "dilution_risk": "LOW",
+    "governance_concentration": "ELEVATED",
+    "evidence": [
+      "MID_FREE_FLOAT",
+      "CONTROLLING_SHAREHOLDER"
+    ],
+    "warnings": []
+  },
+  "market": {
+    "price_try": "385",
+    "price_date": "2026-08-04",
+    "market_cap_try": "741816305230",
+    "free_float_market_cap_try": "366679799675.1890",
+    "free_float_ratio": "0.4943",
+    "effective_free_float_ratio": "0.4943",
+    "controlling_group_ratio": "0.507"
+  },
+  "multiples": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "pe": null,
+    "pb": "1.626293962900025293817977136",
+    "ev_ebitda": null,
+    "ev_sales": null,
+    "ps": null,
+    "p_fcf": null,
+    "dividend_yield": null,
+    "market_cap": "741816305230",
+    "enterprise_value": "614176044230",
+    "equity_value_basis": "456139125000",
+    "earnings_basis": null,
+    "ebitda_basis": null,
+    "revenue_basis": null,
+    "fcf_basis": null,
+    "data_flags": [
+      "TTM_EARNINGS_UNAVAILABLE",
+      "EV_EBITDA_NOT_EVALUATED_WITHOUT_RELIABLE_EBITDA",
+      "P_FCF_NOT_EVALUATED_WITHOUT_TTM_FCF"
+    ]
+  },
+  "derived_per_unit": {
+    "book_value_per_valuation_unit_try": "236.7345687697590432215633492",
+    "ttm_eps_per_valuation_unit_try": null
+  },
+  "valuation_status": "PB_UNLOCKED_PE_NEEDS_TTM_EARNINGS",
+  "data_flags": [
+    "TTM_EARNINGS_UNAVAILABLE",
+    "EV_EBITDA_NOT_EVALUATED_WITHOUT_RELIABLE_EBITDA",
+    "P_FCF_NOT_EVALUATED_WITHOUT_TTM_FCF"
+  ],
+  "limitations": [
+    "P/E remains unavailable until a reliable TTM earnings basis exists; interim profit is not blindly annualized.",
+    "EV/EBITDA remains unavailable until reliable TTM EBITDA is supplied or canonically derived.",
+    "This layer does not generate a DCF/fair value without forecast assumptions.",
+    "No AL/SAT, ranking, scanner or portfolio score is mutated."
+  ]
+}

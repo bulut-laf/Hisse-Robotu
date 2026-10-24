@@ -1,0 +1,47 @@
+﻿PUBLIC_SYMBOL=def evaluate_decision_context LINE=6
+HAS_PLACEHOLDER=False
+HAS_PERSISTENCE=False
+HAS_UI=False
+HAS_DECISION_OUTPUT=True
+HAS_RISK=True
+HAS_SIGNAL=False
+TEST_CONSUMER=D:\Projects\Hisse-Robotu\backend\tests\test_decision_engine.py
+     1: from __future__ import annotations
+     2: 
+     3: from typing import Any
+     4: 
+     5: 
+     6: def evaluate_decision_context(
+     7:     market_state: str,
+     8:     sector_state: str,
+     9:     technical_state: str,
+    10:     risk_state: str,
+    11: ) -> dict[str, Any]:
+    12:     """BirleЕџik karar deДџerlendirme hazД±rlД±ДџД±.
+    13: 
+    14:     TГјm baДџlamlarД± bir araya getirir.
+    15:     Nihai iЕџlem emri Гјretmez.
+    16:     """
+    17: 
+    18:     positive = (
+    19:         market_state == "positive"
+    20:         and sector_state == "strong"
+    21:         and technical_state == "positive"
+    22:         and risk_state == "controlled"
+    23:     )
+    24: 
+    25:     if positive:
+    26:         decision = "candidate"
+    27:     else:
+    28:         decision = "watch"
+    29: 
+    30:     return {
+    31:         "decision": decision,
+    32:         "market_state": market_state,
+    33:         "sector_state": sector_state,
+    34:         "technical_state": technical_state,
+    35:         "risk_state": risk_state,
+    36:     }
+DECISION=ISOLATED_DOMAIN_ENGINE_LIKELY_INTENTIONAL
+NEXT=No V1.1 wiring gap proven. Keep unchanged unless a product flow explicitly requires it.
+PRODUCTION_MUTATION=YOK

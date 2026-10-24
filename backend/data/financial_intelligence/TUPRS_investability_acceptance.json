@@ -1,0 +1,105 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "short_term": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "score": null,
+    "label": "DATA_INSUFFICIENT",
+    "locked": true,
+    "components": [
+      {
+        "code": "FINANCIAL_HEALTH",
+        "score": "94",
+        "weight": "0.10",
+        "reason": "Finansal sağlık tabanı"
+      }
+    ],
+    "strengths": [],
+    "risks": [
+      "Kısa dönem için piyasa/teknik kanıt eksik"
+    ],
+    "explanation": "Skor fail-closed kilitlendi.",
+    "confidence": "LOW",
+    "engine_version": "fin013-v1"
+  },
+  "long_term": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "score": null,
+    "label": "DATA_INSUFFICIENT",
+    "locked": true,
+    "components": [
+      {
+        "code": "FINANCIAL_HEALTH",
+        "score": "94",
+        "weight": "0.15",
+        "reason": "Finansal sağlık"
+      },
+      {
+        "code": "CASH_QUALITY",
+        "score": "100",
+        "weight": "0.12",
+        "reason": "Nakit üretim kalitesi"
+      }
+    ],
+    "strengths": [],
+    "risks": [
+      "Uzun dönem için temel kanıt eksik"
+    ],
+    "explanation": "Skor fail-closed kilitlendi.",
+    "confidence": "LOW",
+    "engine_version": "fin014-v1"
+  },
+  "panel": {
+    "symbol": "TUPRS",
+    "as_of": "2026-08-04T18:24:32",
+    "financial_health_score": 94,
+    "financial_health_grade": "VERY_STRONG",
+    "financial_risk": "LOW",
+    "valuation_status": "BASE_BELOW_MARKET",
+    "current_price": "385",
+    "bear_value": "168.5025404092570726539180712",
+    "base_value": "239.6152784240735753418742541",
+    "bull_value": "340.9882160178062191946897823",
+    "upside_downside_to_base": "-0.3776226534439647393717551842",
+    "margin_of_safety_status": "VERY_EXPENSIVE",
+    "short_term_score": null,
+    "short_term_label": "DATA_INSUFFICIENT",
+    "long_term_score": null,
+    "long_term_label": "DATA_INSUFFICIENT",
+    "confidence": "MEDIUM",
+    "strengths": [
+      "FINANCIAL_HEALTH_VERY_STRONG",
+      "CASH_QUALITY_VERY_HIGH",
+      "LOW_FINANCIAL_RISK"
+    ],
+    "risks": [
+      "Kısa dönem için piyasa/teknik kanıt eksik",
+      "Uzun dönem için temel kanıt eksik",
+      "CURRENT_PRICE_ABOVE_BASE_FAIR_VALUE",
+      "CURRENT_PRICE_ABOVE_BULL_FAIR_VALUE",
+      "HIGH_CYCLICALITY",
+      "MODEL_DISPERSION"
+    ],
+    "what_to_watch_next": [
+      "TECHNICAL_MARKET_CONTEXT_REQUIRED_FOR_SHORT_TERM",
+      "CAPITAL_EFFICIENCY_AND_GROWTH_DURABILITY_REQUIRED_FOR_LONG_TERM",
+      "VALUATION_AND_MARGIN_OF_SAFETY_SCORE_ADAPTER_REQUIRED"
+    ],
+    "read_only": true,
+    "schema_version": "fin015-v1"
+  },
+  "input_transparency": {
+    "short_term_market_context_supplied": false,
+    "long_term_context_supplied": false
+  },
+  "production_rules": [
+    "Short-term and long-term investability are separate outputs.",
+    "Missing inputs remain missing; they are not converted to zero.",
+    "LOCKED is valid when required context is insufficient.",
+    "Read-only: no AL/SAT, scanner, ranking, portfolio or score mutation."
+  ]
+}

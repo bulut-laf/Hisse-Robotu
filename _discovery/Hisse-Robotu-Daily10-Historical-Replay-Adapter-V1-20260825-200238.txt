@@ -1,0 +1,22 @@
+=== HISSE ROBOTU — HISTORICAL RESEARCH REPLAY ADAPTER V1 ===
+MODULE=backend/app/analysis/historical_research_replay.py
+TEST=backend/tests/test_historical_research_replay_v1.py
+RANKING_MEMORY_WRITE=DISABLED
+DEFAULT_LIVE_BEHAVIOR=UNCHANGED
+NEW_ENGINE=NO
+NEW_STORE=NO
+
+....F                                                                    [100%]
+================================== FAILURES ===================================
+______________________ test_contract_phrase_is_preserved ______________________
+
+    def test_contract_phrase_is_preserved():
+        source = replay.__doc__ or ""
+>       assert "yeni teknik skor, i\u015flem sinyali veya AL/SAT karar\u0131 \xfcretmez" in source
+E       AssertionError: assert 'yeni teknik skor, i\u015flem sinyali veya AL/SAT karar\u0131 \xfcretmez' in ''
+
+backend\tests\test_historical_research_replay_v1.py:184: AssertionError
+=========================== short test summary info ===========================
+FAILED backend/tests/test_historical_research_replay_v1.py::test_contract_phrase_is_preserved
+1 failed, 4 passed in 4.40s
+TARGET_TEST=FAIL

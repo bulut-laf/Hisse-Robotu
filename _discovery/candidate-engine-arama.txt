@@ -1,0 +1,243 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\analysis\daily_buy_decision_cycle.py:344: """Top-5 üyeliğindeki akşam→sabah giriş/çıkışları eşleştirir."""
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_buy_decision_output_archive.py:225: "Top-5": ", ".join(_symbols(item)) or "-",
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_buy_decision_output_archive.py:303: "Top-5": ", ".join(_symbols(item)) or "-",
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_early_trajectory.py:6: from backend.app.analysis.ranking_trajectory import RankTrajectory
+D:\Projects\Hisse-Robotu\backend\app\analysis\early_visibility_report.py:4: from backend.app.analysis.ranking_visibility_context import RankingVisibilityContext
+D:\Projects\Hisse-Robotu\backend\app\analysis\early_visibility_report.py:8: contexts: tuple[RankingVisibilityContext, ...],
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_final_action_board.py:103: "Top-5 sırası": f"#{item.original_priority}",
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_morning_board_delta.py:49: return f"Sabah Top-5'e girdi · Kaynak: {source} · Giriş hazırlığı: {readiness}"
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_morning_board_delta.py:51: return "Akşam Top-5'teydi; sabah nihai listede yer almıyor."
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_morning_board_delta.py:85: """Akşam ve sabah Top-5 snapshot'larının karar farkını read-only özetler."""
+D:\Projects\Hisse-Robotu\backend\app\analysis\eod_morning_board_delta.py:158: headline = "Akşam Top-5 ile 09:00 nihai liste aynı karar yapısını korudu."
+D:\Projects\Hisse-Robotu\backend\app\analysis\fast_mover_preclose_attachment.py:5: the latest prior canonical Ranking Memory snapshot.
+D:\Projects\Hisse-Robotu\backend\app\analysis\fast_mover_preclose_attachment.py:9: - Ranking Memory: READ
+D:\Projects\Hisse-Robotu\backend\app\analysis\fast_mover_preclose_attachment.py:22: from backend.app.analysis.ranking_memory import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\fast_mover_preclose_attachment.py:105: baseline. Same-day Ranking Memory observations are excluded because 17:20
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_canonical_coverage_v4.py:307: "No score, forecast, AL/SAT, scanner, ranking or portfolio output is created or mutated.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_fair_value_acceptance.py:270: "No AL/SAT, scanner, ranking, portfolio or existing score is mutated.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_investability_acceptance.py:109: "Read-only: no AL/SAT, scanner, ranking, portfolio or score mutation."
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_live_pipeline_v3.py:28: No watchlist/ranking/scanner mutation and no symbol invention.
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_live_pipeline_v3.py:162: "No scanner/ranking/watchlist output is used to invent symbols.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_live_pipeline_v3.py:164: "No AL/SAT, scanner, ranking or portfolio mutation.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_market_acceptance.py:155: "No AL/SAT, ranking, scanner or portfolio score is mutated.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_panel.py:94: scanner, ranking or portfolio state.
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_panel_read_model.py:271: "No AL/SAT, scanner, ranking or portfolio mutation.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_production_v2.py:234: "AL/SAT, scanner, ranking and portfolio outputs are not mutated.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_ttm_acceptance.py:99: "No AL/SAT, scanner, ranking or portfolio score is mutated.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation_report.py:37: It never mutates weights, thresholds, AL/SAT, scanner, ranking or portfolio state.
+D:\Projects\Hisse-Robotu\backend\app\analysis\financial_intelligence_validation_report.py:98: "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION",
+D:\Projects\Hisse-Robotu\backend\app\analysis\fin_prod_v5_short_term_context_adapter.py:590: "No scanner/ranking/watchlist mutation.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\high_conviction_buy_gate.py:149: return False, "Pozitif zamanlama/ranking kanıtı yok"
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:10: - canonical Research filtering/ranking path is reused;
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:13: - Ranking Memory is never written here;
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:14: - no new score, signal, trade decision, store, or ranking engine.
+D:\Projects\Hisse-Robotu\backend\app\analysis\historical_research_replay.py:25: from .ranking_memory import RankObservation, observations_from_research_rows
+D:\Projects\Hisse-Robotu\backend\app\analysis\investability_production_closure.py:308: "Existing AL/SAT, scanner, ranking and portfolio engines are not mutated.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\investability_runtime_wiring.py:157: "Read-only: no AL/SAT, scanner, ranking, portfolio or score mutation.",
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:5: from backend.app.analysis.jump_candidate_quality import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:7: evaluate_jump_candidate_quality,
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:53: def evaluate_jump_candidate_entry_readiness(
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_entry_readiness.py:73: quality = evaluate_jump_candidate_quality(
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:6: from backend.app.analysis.jump_candidate_entry_readiness import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:11: evaluate_jump_candidate_entry_readiness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:13: from backend.app.analysis.jump_candidate_quality import evaluate_jump_candidate_quality
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:96: quality = evaluate_jump_candidate_quality(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:97: readiness = evaluate_jump_candidate_entry_readiness(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:127: quality = evaluate_jump_candidate_quality(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:131: readiness = evaluate_jump_candidate_entry_readiness(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_priority_merge.py:154: # belirler; son Top-5 önceliği giriş hazırlığı + orijinal tarama sırasıdır.
+D:\Projects\Hisse-Robotu\backend\app\analysis\jump_candidate_quality.py:44: def evaluate_jump_candidate_quality(
+D:\Projects\Hisse-Robotu\backend\app\analysis\loss_analysis.py:209: elif record.exit_price < record.stop_loss * 0.995:
+D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py:409: elif toplam<45 or gy==DUSUS or hy==DUSUS:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:845: if asiri and toplam >= 55:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:847: elif toplam >= 75 and bool(ham["kirilim"]) and teknik_skor >= 60 and rr_uygun:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:849: elif toplam >= 65 and bool(ham["kirilim"]):
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:860: elif toplam >= 56 and zirve <= 0.05 and trend >= 8:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:862: elif toplam >= 50 and hacim_birikiyor:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:864: elif toplam >= 45 and bool(ham["sikisma"]):
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:953: if toplam < 45:
+D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py:954: nedenler.append(f"Momentum skoru {toplam}; görünür hazırlık sınıfı için en az 45 gerekli.")
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:6: from backend.app.analysis.jump_candidate_quality import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:7: evaluate_jump_candidate_quality,
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:9: from backend.app.analysis.jump_candidate_entry_readiness import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:10: evaluate_jump_candidate_entry_readiness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:12: from backend.app.analysis.jump_candidate_priority_merge import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:177: _jump_quality = evaluate_jump_candidate_quality(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:178: _entry_readiness = evaluate_jump_candidate_entry_readiness(candidate)
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:231: "Top-5 öncelik nedeni": card.priority_reason,
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_final_action_board.py:103: "Top-5 sırası": f"#{item.original_priority}",
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_observation_memory.py:23: from .ranking_memory import RankObservationJsonlStore
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_observation_memory.py:54: f"RANKING_MEMORY_JSON_INVALID_LINE={line_no}"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_observation_memory.py:58: f"RANKING_MEMORY_RECORD_NOT_OBJECT_LINE={line_no}"
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_outcome_runtime_adapter.py:16: from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_runtime_observer.py:7: from backend.app.analysis.jump_candidate_entry_readiness import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_runtime_observer.py:8: evaluate_jump_candidate_entry_readiness,
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_runtime_observer.py:19: from backend.app.analysis.ranking_snapshot_adapter import persist_research_rank_snapshot
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_runtime_observer.py:232: readiness = evaluate_jump_candidate_entry_readiness(item)
+D:\Projects\Hisse-Robotu\backend\app\analysis\next_day_runtime_observer.py:312: # by Next-Day evidence mapping. No second scan/ranking.
+D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py:477: stopa_yakin = stop_mesafesi <= atr14 * 0.50
+D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py:479: riskler.append("Kapanış dinamik stopa 0.50 ATR veya daha yakın.")
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_memory.py:91: No scoring, ranking, signal, or trading authority.
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_memory.py:97: path = project_root / "data" / "ranking_memory" / "rank_observations.jsonl"
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:6: from backend.app.analysis.ranking_memory import RankObservation
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:7: from backend.app.analysis.ranking_trajectory import build_rank_trajectories
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:11: class RankingMovementRow:
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:21: top5_distance: int
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:26: from backend.app.analysis.ranking_trajectory import _parse_observation_date
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:73: def build_ranking_movement_rows(
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:75: ) -> tuple[RankingMovementRow, ...]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:78: result: list[RankingMovementRow] = []
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:85: RankingMovementRow(
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:95: top5_distance=max(0, trajectory.current_rank - 5),
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:114: def ranking_movement_reason(row: RankingMovementRow) -> str:
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:134: if row.top5_distance <= 20:
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:135: parts.append(f"Top-5'e {row.top5_distance} sıra")
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:139: def ranking_movement_table_rows(
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:140: rows: Iterable[RankingMovementRow],
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:153: "Top-5 uzaklık": row.top5_distance,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_movement_visibility.py:159: "Neden?": ranking_movement_reason(row),
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_snapshot_adapter.py:5: from backend.app.analysis.ranking_memory import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_trajectory.py:7: from backend.app.analysis.ranking_memory import RankObservation
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_trajectory.py:12: ("TOP50", 50),
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_validation.py:6: from backend.app.analysis.ranking_memory import RankObservation
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_validation.py:25: reached_top50: bool | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_validation.py:37: top50_conversion_rate: float | None
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_validation.py:96: reached_top50=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_validation.py:133: reached_top50=(outcome.rank <= 50) if comparable else None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_validation.py:157: top50_conversion_rate=None,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_validation.py:178: top50_conversion_rate=rate(lambda item: item.reached_top50 is True),
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:6: from backend.app.analysis.ranking_memory import RankObservation
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:7: from backend.app.analysis.ranking_trajectory import build_rank_trajectories
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:11: class RankingVisibilityContext:
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:25: ) -> tuple[RankingVisibilityContext, ...]:
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:49: RankingVisibilityContext(
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:66: from backend.app.analysis.ranking_quality_context import EarlyVisibilityQualityContext
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:70: visibility: RankingVisibilityContext,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:72: ) -> RankingVisibilityContext:
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_context.py:73: return RankingVisibilityContext(
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_explanation.py:5: from backend.app.analysis.ranking_visibility_context import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_explanation.py:6: RankingVisibilityContext,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_explanation.py:9: from backend.app.analysis.ranking_quality_context import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_explanation.py:37: visibility: RankingVisibilityContext,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_explanation.py:61: visibility: RankingVisibilityContext,
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_service.py:3: from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_service.py:4: from backend.app.analysis.ranking_visibility_context import (
+D:\Projects\Hisse-Robotu\backend\app\analysis\research_profiles.py:341: """Read-only: no ranking, scoring, signal, order or AL/SAT authority."""
+D:\Projects\Hisse-Robotu\backend\app\analysis\research_profiles_daily.py:175: candidates.append((abs(delta - 365), item))
+D:\Projects\Hisse-Robotu\backend\app\analysis\research_profile_memory.py:8: from .ranking_memory import RankObservationJsonlStore, ResearchProfileObservation
+D:\Projects\Hisse-Robotu\backend\app\analysis\research_profile_memory.py:9: from .ranking_trajectory import RankTrajectory, build_rank_trajectories
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:11: class SectorScoreRankingError(ValueError):
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:16: class SectorScoreRankingItem:
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:34: class SectorScoreRanking:
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:39: items: tuple[SectorScoreRankingItem, ...]
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:55: raise SectorScoreRankingError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:80: def build_sector_score_ranking(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:89: ) -> SectorScoreRanking:
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:92: raise SectorScoreRankingError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:96: raise SectorScoreRankingError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:114: raise SectorScoreRankingError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:128: raise SectorScoreRankingError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:135: raise SectorScoreRankingError(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:156: SectorScoreRankingItem(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:187: return SectorScoreRanking(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:196: def sector_score_ranking_rows(
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:197: ranking: SectorScoreRanking,
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_score_ranking.py:214: for item in ranking.items
+D:\Projects\Hisse-Robotu\backend\app\analysis\sector_strength_map.py:9: from .sector_score_ranking import quality_class
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_analyzer.py:251: stop_atr_katsayisi=1.50,
+D:\Projects\Hisse-Robotu\backend\app\analysis\stock_analyzer.py:261: stop_atr_katsayisi=1.50,
+D:\Projects\Hisse-Robotu\backend\app\analysis\success_comparison_report.py:260: strongest=tuple(ranked[:5]),
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:7: class TodaysFiveCandidatesView:
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:13: def build_todays_five_candidates_view(
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:15: ) -> TodaysFiveCandidatesView:
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:18: for item in candidates[:5]
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:21: return TodaysFiveCandidatesView(
+D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py:153: stop_atr_katsayisi: float = 1.50,
+D:\Projects\Hisse-Robotu\backend\app\analysis\walk_forward_calibration.py:489: )[:5]
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_opportunity_memory.py:10: from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_opportunity_outcome.py:9: from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_opportunity_outcome.py:169: sessions = tuple(all_dates[:5])
+D:\Projects\Hisse-Robotu\backend\app\analysis\weekly_opportunity_runtime.py:7: from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+D:\Projects\Hisse-Robotu\backend\app\backtest\analysis_profile.py:49: ORTAK_STOP_YUZDE = 5.0
+D:\Projects\Hisse-Robotu\backend\app\backtest\regime_filter_impact.py:355: return (1 + toplam_getiri_orani) ** (365 / takvim_gunu_sayisi) - 1
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:485: stop_loss=95.0,
+D:\Projects\Hisse-Robotu\backend\app\diagnostics\system_check.py:531: stop_loss=95.0,
+D:\Projects\Hisse-Robotu\backend\app\funds\kap_portfolio_auto_ingestion.py:24: MAX_DISCOVERY_CANDIDATES = 50
+D:\Projects\Hisse-Robotu\backend\app\funds\pressure_risk.py:26: top5_fund_share: Decimal | None
+D:\Projects\Hisse-Robotu\backend\app\funds\pressure_risk.py:107: top5 = sum(ratios[:5], Decimal("0")) if ratios else None
+D:\Projects\Hisse-Robotu\backend\app\funds\pressure_risk.py:115: top5_fund_share=top5,
+D:\Projects\Hisse-Robotu\backend\app\news_center\day_end_summary.py:91: if not isinstance(top_limit, int) or not 1 <= top_limit <= 25:
+D:\Projects\Hisse-Robotu\backend\app\news_center\day_end_summary.py:92: raise ValueError("top_limit 1-25 aralığında tam sayı olmalıdır.")
+D:\Projects\Hisse-Robotu\backend\app\news_center\day_end_summary.py:205: for item in sector_map.summaries[:5]
+D:\Projects\Hisse-Robotu\backend\app\operations\daily_buy_decision_scheduled_runner.py:152: from backend.app.analysis.ranking_visibility_service import build_current_visibility_context
+D:\Projects\Hisse-Robotu\backend\app\operations\preclose_partial_daily_preview.py:51: ranking_write_allowed: bool = False
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_intraday_batch.py:91: This is a data adapter only. It has no ranking, profile, scanner, signal,
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_operation_phase_runner.py:66: ranking_write_allowed: bool = False
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_operation_phase_runner.py:377: ranking_write_allowed=True,
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_operation_phase_runner.py:415: or result.ranking_write_allowed
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_operation_phase_runner.py:443: "ranking_write_allowed": result.ranking_write_allowed,
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_session_data_adapter.py:28: # Read-only evidence adapter. No ranking/profile/AL-SAT write authority.
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_session_data_adapter.py:58: ranking_write_allowed: bool = False
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_session_data_adapter.py:147: POSTOPEN starts after the existing 15-minute delayed feed can expose the first completed continuous-session bar and reuses the existing delayed 5m pilot and may calculate the real
+D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_session_data_adapter.py:151: This adapter has no authority to write Ranking Memory, Profile Memory,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:53: first_top5_date: date | None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:56: sessions_radar_to_top5: int | None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:57: move_captured_before_top5_pct: float | None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:143: first_top5 = _first_rank_date(rows, 5)
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:146: if first_top5 is not None:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:147: top5_row = next(row for row in rows if row.cut_date == first_top5)
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:152: and top5_row.signal_price is not None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:157: realized = top5_row.signal_price - start_row.signal_price
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:168: first_top5_date=first_top5,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:171: sessions_radar_to_top5=(
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:173: if first_radar is None or first_top5 is None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:174: else _session_distance(rows, first_radar.cut_date, first_top5)
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:176: move_captured_before_top5_pct=move_captured,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:197: reached_top5: int
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:198: radar_before_top5: int
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:199: avg_sessions_radar_to_top5: float | None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:200: avg_move_captured_before_top5_pct: float | None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:208: top5 = [x for x in rows if x.first_top5_date is not None]
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:209: radar_before_top5 = [
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:212: and x.first_top5_date is not None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:213: and x.first_early_radar_date <= x.first_top5_date
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:217: float(x.sessions_radar_to_top5)
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:218: for x in radar_before_top5
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:219: if x.sessions_radar_to_top5 is not None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:222: float(x.move_captured_before_top5_pct)
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:224: if x.move_captured_before_top5_pct is not None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:230: reached_top5=len(top5),
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:231: radar_before_top5=len(radar_before_top5),
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:232: avg_sessions_radar_to_top5=(
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_daily_rank_history.py:235: avg_move_captured_before_top5_pct=(
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_features.py:151: stop = latest_close - (1.5 * latest_atr)
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:16: class RankingSnapshot:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:34: first_top5_date: date | None
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:60: def analyze_movement_age(history: tuple[RankingSnapshot,...], *, early_rank_low=11, early_rank_high=30,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:126: def top5_forward_performance(*, entry_price: float, future_closes: tuple[float,...]):
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_paper_portfolio.py:27: stop_loss_pct: float = 5.0
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_v2_calibration_validation.py:36: maximum_candidate_loss_pct: float = 35.0
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py:46: sector_ranking: str
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py:106: ("Sektör sıralaması", report.sector_ranking),
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py:257: topMargin=15 * mm,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report.py:368: ("Sektör sıralaması", report.sector_ranking),
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:59: sector_ranking_change: tuple[str, str]
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:134: sector_ranking=str(payload["sector_ranking"]),
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:390: sector_ranking_change=(
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:391: previous.report.sector_ranking,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:392: current.report.sector_ranking,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:461: "Önceki": comparison.sector_ranking_change[0],
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:462: "Güncel": comparison.sector_ranking_change[1],
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:680: topMargin=15 * mm,
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:717: ["Sektör sıralaması", report.sector_ranking],
+D:\Projects\Hisse-Robotu\backend\app\reporting\fundamental_report_archive.py:730: ("TOPPADDING", (0, 0), (-1, -1), 5),
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:36: stop_atr_katsayisi: float = 1.50,
+D:\Projects\Hisse-Robotu\backend\app\risk\risk_engine.py:44: Stop mesafesi  = 1,50 ATR
+D:\Projects\Hisse-Robotu\backend\app\risk\structural_risk.py:16: stop_atr_katsayisi: float = 1.50,
+D:\Projects\Hisse-Robotu\backend\app\system\dashboard_connection_validation.py:13: "ranking": bool(data.get("ranking")),
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:512: for item in summary.failures[:5]
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:764: for item in fdo_summary.failures[:5]
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:770: + " | ".join(pressure_model.warnings[:5])
+D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:831: + " | ".join(pressure_model.warnings[:5])
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:1093: from backend.app.analysis.ranking_memory import RankObservationJsonlStore
+D:\Projects\Hisse-Robotu\backend\app\ui\research_profiles_dashboard.py:51: item["Ranking lifecycle"] = rank.lifecycle if rank else None

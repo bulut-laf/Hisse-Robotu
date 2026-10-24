@@ -1,0 +1,80 @@
+﻿=== BASELINE ===
+........................................................................ [ 10%]
+........................................................................ [ 20%]
+........................................................................ [ 30%]
+........................................................................ [ 40%]
+........................................................................ [ 50%]
+........................................................................ [ 60%]
+........................................................................ [ 70%]
+........................................................................ [ 80%]
+........................................................................ [ 90%]
+.......................................................................  [100%]
+719 passed, 2303 deselected in 21.01s
+
+=== DATA QUALITY AUDIT ===
+FUTURE_DATE_FILES=4
+FUTURE_DATE|D:\Projects\Hisse-Robotu\backend\app\ui\bist_daily_market_dashboard.py
+FUTURE_DATE|D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py
+FUTURE_DATE|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py
+FUTURE_DATE|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py
+PARTIAL_BAR_FILES=16
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\analysis\technical_confirmation.py
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\analysis\trade_plan.py
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\backtest\portfolio_backtest.py
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\data\bist_official_daily.py
+PARTIAL_BAR|D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py
+LAST_CLOSE_FILES=3
+LAST_CLOSE|D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py
+LAST_CLOSE|D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py
+LAST_CLOSE|D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py
+FRESHNESS_FILES=17
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_quality.py
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\analysis\sector_reference.py
+FRESHNESS|D:\Projects\Hisse-Robotu\backend\app\data\data_freshness.py
+PROVIDER_TIME_FILES=117
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\analysis\bist_daily_market.py
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\analysis\bist_universe.py
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\analysis\divergence_analysis.py
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\analysis\fundamental_analysis.py
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\analysis\kap_fundamental_service.py
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py
+PROVIDER_TIME|D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py
+FUTURE_DATE_SUSPECTS=27
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=114|def _download_single_symbol( symbol: str, *, start_date: date, end_date: date, ) -> pd.DataFrame: data = yf.download( symbol, start=start_date.isoformat(), end=(end_date + timedelta(days=1)).isoformat(), interval="1d", auto_adjust=True, progress=False, threads=False, ) if data is None or data.empty: return pd.DataFrame() if isinstance(data.columns, pd.MultiIndex): if symbol in data.columns.get_level_values(-1): data = data.xs(symbol, axis=1, level=-1, drop_level=True) elif symbol in data.columns.get_level_values(0): data = data.xs(symbol, axis=1, level=0, drop_level=True) expected = ["Open", "High", "Low", "Close", "Volume"] missing = [column for column in expected if column not in data.colu
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=120|data = yf.download( symbol, start=start_date.isoformat(), end=(end_date + timedelta(days=1)).isoformat(), interval="1d", auto_adjust=True, progress=False, threads=False, )
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=120|yf.download( symbol, start=start_date.isoformat(), end=(end_date + timedelta(days=1)).isoformat(), interval="1d", auto_adjust=True, progress=False, threads=False, )
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=123|end=(end_date + timedelta(days=1)).isoformat()
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=123|(end_date + timedelta(days=1)).isoformat()
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=123|(end_date + timedelta(days=1)).isoformat
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=123|end_date + timedelta(days=1)
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=123|timedelta(days=1)
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=38|def _tek_sembol_verisi_indir( symbol: str, *, start_date: date, end_date: date, ) -> pd.DataFrame: data = yf.download( symbol, start=start_date.isoformat(), end=(end_date + timedelta(days=1)).isoformat(), interval="1d", auto_adjust=True, progress=False, threads=False, ) if data is None or data.empty: return pd.DataFrame() if isinstance(data.columns, pd.MultiIndex): if symbol in data.columns.get_level_values(-1): data = data.xs(symbol, axis=1, level=-1, drop_level=True) elif symbol in data.columns.get_level_values(0): data = data.xs(symbol, axis=1, level=0, drop_level=True) required = ["Open", "High", "Low", "Close", "Volume"] if any(column not in data.columns for column in required): return 
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=85|def on_yukselis_toplu_dogrulama_formu() -> None: st.header("Ön Yükseliş Toplu Tarihsel Doğrulama") st.caption( "Ön Yükseliş Hazırlık Motorunu çok sayıda kesim tarihinde doğrular. " "Kesim sonrası fiyatlar aday üretiminde kullanılmaz; yalnızca ileri " "performans ölçümünde kullanılır." ) with st.sidebar: st.subheader("Toplu doğrulama ayarları") universe_name = st.selectbox( "Evren", options=ON_YUKSELIS_EVRENLERI, index=ON_YUKSELIS_EVRENLERI.index(OZEL_LISTE), key="prebreakout_validation_universe", ) raw_symbols = DEFAULT_SYMBOLS if universe_name == OZEL_LISTE: raw_symbols = st.text_area( "Hisse listesi", value=DEFAULT_SYMBOLS, height=120, key="prebreakout_validation_symbols", ) result_limit =
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=44|data = yf.download( symbol, start=start_date.isoformat(), end=(end_date + timedelta(days=1)).isoformat(), interval="1d", auto_adjust=True, progress=False, threads=False, )
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=93|with st.sidebar: st.subheader("Toplu doğrulama ayarları") universe_name = st.selectbox( "Evren", options=ON_YUKSELIS_EVRENLERI, index=ON_YUKSELIS_EVRENLERI.index(OZEL_LISTE), key="prebreakout_validation_universe", ) raw_symbols = DEFAULT_SYMBOLS if universe_name == OZEL_LISTE: raw_symbols = st.text_area( "Hisse listesi", value=DEFAULT_SYMBOLS, height=120, key="prebreakout_validation_symbols", ) result_limit = st.selectbox( "Her kesimde gösterilecek sonuç", options=SONUC_LIMITLERI, index=1, key="prebreakout_validation_result_limit", ) default_end = date.today() - timedelta(days=30) default_start = default_end - timedelta(days=180) start_date = st.date_input( "Başlangıç tarihi", value=default_
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=44|yf.download( symbol, start=start_date.isoformat(), end=(end_date + timedelta(days=1)).isoformat(), interval="1d", auto_adjust=True, progress=False, threads=False, )
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=118|default_start = default_end - timedelta(days=180)
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=47|end=(end_date + timedelta(days=1)).isoformat()
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=118|default_end - timedelta(days=180)
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=47|(end_date + timedelta(days=1)).isoformat()
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=118|timedelta(days=180)
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=47|(end_date + timedelta(days=1)).isoformat
+FUTURE_SUSPECT|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=47|end_date + timedelta(days=1)
+LAST_CLOSE_OCCURRENCES=3
+LAST_CLOSE|D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py|LINE=447|PARTIAL_CONTEXT=False
+LAST_CLOSE|D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py|LINE=595|PARTIAL_CONTEXT=False
+LAST_CLOSE|D:\Projects\Hisse-Robotu\backend\app\analysis\position_monitor.py|LINE=458|PARTIAL_CONTEXT=True
+SAFE_MUTATIONS=0
+DECISION=DATA_QUALITY_CONTRACTS_FOUND_NO_SAFE_AUTOFIX
+FLAGS=FUTURE_DATE_LOGIC_REQUIRES_REVIEW
+MUTATED_FILES=0
+PRODUCTION_MUTATION=YOK

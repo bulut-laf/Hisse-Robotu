@@ -1,0 +1,75 @@
+﻿{
+    "project":  "Hisse Robotu",
+    "version":  "1.1.0",
+    "suggested_git_tag":  "v1.1.0",
+    "generated_at_utc":  "2026-07-29T11:22:01.5332899Z",
+    "project_root":  "D:\\Projects\\Hisse-Robotu",
+    "status":  "PASSED",
+    "targeted_tests":  "\u0000",
+    "full_regression":  "\u0000",
+    "system_check":  "\u0000",
+    "syntax_check":  "Python sözdizimi kontrolü başarılı (komut çıktı üretmedi).",
+    "source_archive":  "Hisse-Robotu-v1.1.0-source.zip",
+    "source_archive_sha256":  "0632f268871dbf7aa7020b074d3fe7ece08b73a31fc1f932d0d4f5d81de25366",
+    "source_archive_hash_file":  "Hisse-Robotu-v1.1.0-source.zip.sha256",
+    "backup_directory":  "D:\\Projects\\Hisse-Robotu\\backups\\v1.1-kapanis-20260729-142003",
+    "log_directory":  "D:\\Projects\\Hisse-Robotu\\releases\\v1.1-kapanis-loglari-20260729-142003",
+    "installed_files":  [
+                            {
+                                "relative_path":  "KULLANIM.md",
+                                "sha256":  "cebcec669867fa7529c33014188cc36341c883770476b14671fbf08b614fd3a8"
+                            },
+                            {
+                                "relative_path":  "KULLANIM_KILAVUZU.md",
+                                "sha256":  "cebcec669867fa7529c33014188cc36341c883770476b14671fbf08b614fd3a8"
+                            },
+                            {
+                                "relative_path":  "PROJECT_NOTES.md",
+                                "sha256":  "53e28e320d885e6abb8e6f9ec5e28415e780348c620a2cd08c422697643f4974"
+                            },
+                            {
+                                "relative_path":  "VERSION",
+                                "sha256":  "1575e1af4a95f12f70b4ee6a6adce8160953d93ea17dc2611b90883ccc3ad3b8"
+                            },
+                            {
+                                "relative_path":  "backend\\dashboard.py",
+                                "sha256":  "aae3d5141f794452e6d231053cc59566a32592cbf52717986c818d56933068ad"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\compliance\\dashboard_vbts_manager.py",
+                                "sha256":  "387e1e566c6a495daffcaa718e4b5e717ef261031d3b51a40a4d45ae4cec249b"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\diagnostics\\system_check.py",
+                                "sha256":  "b9d9d4b8348d8310f1651da69f39249309bee9851f4e8050b3ea0385eb0f2227"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_dashboard_vbts_management_panel.py",
+                                "sha256":  "eb60b0bd8ba111c64cbf63a496356bcd8706a590aad2753a95ef4f91e982a3ee"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_sprint42_vbts_ui_repair.py",
+                                "sha256":  "94bc2d8a26815c34497e5b3b6563eff97fc8b4ac31679b53f232b2744e5982d1"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_system_check.py",
+                                "sha256":  "f63c079b9bf29e2f1d3bebfa0cd940e3e95c649ec9c31436727364eb567fef58"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_v11_closeout_dashboard_lock.py",
+                                "sha256":  "88568efddff6df601b1e757aea73f7aa980e4ba1100caedd4b230303fae34cde"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_v11_closeout_documentation.py",
+                                "sha256":  "32c277230fe0ee4b88c416f5d45c54be2a4bbbf296a7988c95e1baca0d5f0f32"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_v11_closeout_vbts_manager.py",
+                                "sha256":  "f2b10b1f20581e7275ebb90e3ecdbb02778562fe83daf524b12f4c9131c74306"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_v11_closeout_version.py",
+                                "sha256":  "77ea546bb1421b779e1a2826d1ab4e00684b2aebe29c420ee85f4aeec533aa4d"
+                            }
+                        ]
+}

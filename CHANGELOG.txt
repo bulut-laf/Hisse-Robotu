@@ -1,0 +1,14 @@
+TURBO-14.9
+
+Gerçek delayed_data_pilot.py üzerinden ilerleme paketi.
+
+Kaynak:
+- delayed_data_pilot.py
+
+Karar ayrımı:
+- Son geçerli veri kullanılıyor
+- Yeni veri geldi, yeniden değerlendirme gerekli
+- Güvenilir veri yok
+
+Not:
+Mevcut üretim akışına minimum bağlama öncesi doğrulama.

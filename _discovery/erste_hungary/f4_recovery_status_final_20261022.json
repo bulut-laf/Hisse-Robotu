@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-10-22T10:25:37+03:00",
+  "reference_date": "2026-10-22",
+  "purpose": "Read-only F4 evidence recovery status",
+  "sources": {
+    "prior_audit": "f4_recovery_final_audit_20261021.json",
+    "history_coverage": "f4_erstemarket_history_coverage_20261022.json",
+    "price_momentum": "f4_price_momentum_evidence_20261022.json",
+    "surface": "f1_f2_f3_f4_evidence_surface_20261020.json"
+  },
+  "prior_audit": {
+    "total_records": 96,
+    "verified_fresh_records": 0,
+    "final_status_counts": {
+      "STALE_DATA_REJECTED": 81,
+      "IDENTITY_OR_NO_DATA_UNRESOLVED": 15
+    }
+  },
+  "price_history": {
+    "status_counts": {
+      "FRESH_CANDIDATE": 81,
+      "STALE_SERIES": 15
+    },
+    "f4_surface_updated": false,
+    "production_mutation": false
+  },
+  "price_momentum": {
+    "status_counts": {
+      "COMPUTED": 81
+    },
+    "f4_surface_updated": false,
+    "production_mutation": false
+  },
+  "surface": {
+    "row_count": 929,
+    "f4_status_counts_detected": {
+      "UNAVAILABLE": 651,
+      "NEUTRAL": 122,
+      "CAUTION": 51,
+      "POSITIVE": 105
+    }
+  },
+  "decision": {
+    "price_momentum_substitutes_for_net_flow": false,
+    "f4_reclassified": false,
+    "f4_surface_updated": false,
+    "production_mutation": false,
+    "rank_history_mutation": false,
+    "automatic_trade_authority": "NONE",
+    "forced_fill": false,
+    "next_blocker": "Fresh, identity-verified net fund flow evidence is still required."
+  }
+}

@@ -1,0 +1,44 @@
+﻿==========================================================================================
+FILE=backend/app/analysis/technical_confirmation.py
+EXISTS=True
+CLASS|TrendlineBreakoutResult|FIELDS=durum:str;yon:str;cizgi_tipi:str;cizgi_degeri:float | None;onceki_cizgi_degeri:float | None;pivot_sayisi:int;kapanis_teyidi:bool;erken_uyari:bool;hacim_orani:float | None;hacim_teyidi:bool
+CLASS|MomentumConfirmation|FIELDS=rsi14:float;macd:float;macd_sinyal:float;macd_histogram:float;histogram_gucleniyor:bool;durum:str
+CLASS|TimeframeConfirmationResult|FIELDS=ad:str;interval:str;son_zaman:pd.Timestamp;kapanis:float;destek:float | None;direnc:float | None;destek_gucu:str | None;direnc_gucu:str | None;kirilim:TrendlineBreakoutResult;ortalamalar:MovingAverageConfirmation;momentum:MomentumConfirmation;skor:int;yon:str;pozitif_nedenler:tuple[str, ...];riskler:tuple[str, ...]
+CLASS|MultiTimeframeTechnicalConfirmation|FIELDS=sembol:str;veri_kimligi:str;analiz_kimligi:str;haftalik:TimeframeConfirmationResult;gunluk:TimeframeConfirmationResult;saatlik:TimeframeConfirmationResult;teyit_skoru:int;teyit_durumu:str;pozitif_nedenler:tuple[str, ...];riskler:tuple[str, ...]
+CLASS|_TrendLine|FIELDS=tip:str;ilk:_Pivot;son:_Pivot
+FUNC|teknik_teyit_analizi_yap|ARGS=paket: MultiTimeframeDataBundle|RET=MultiTimeframeTechnicalConfirmation
+RETURN|teknik_teyit_analizi_yap|MultiTimeframeTechnicalConfirmation(sembol=paket.sembol, veri_kimligi=paket.veri_kimligi, analiz_kimligi=analiz_kimligi, haftalik=haftalik, gunluk=gunluk, saatlik=saatlik, teyit_skoru=int(teyit_skoru), teyit_durumu=teyit_durumu, pozitif_nedenler=pozitif_nedenler, riskler=riskler)
+FUNC|zaman_dilimi_teyidini_hesapla|ARGS=snapshot: TimeframeSnapshot, pivot_genisligi: int=2, hacim_esigi: float=1.5|RET=TimeframeConfirmationResult
+RETURN|zaman_dilimi_teyidini_hesapla|TimeframeConfirmationResult(ad=snapshot.ad, interval=snapshot.interval, son_zaman=pd.Timestamp(gecerli.index[-1]), kapanis=float(son['Close']), destek=None if seviyeler.destek is None else seviyeler.destek.fiyat, direnc=None if seviyeler.direnc is None else seviyeler.direnc.fiyat, destek_gucu=None if seviyeler.destek is None else seviyeler.destek.guc, direnc_gucu=None if seviyeler.direnc is None else seviyeler.direnc.guc, kirilim=kirilim, ortalamalar=ortalamalar, momentum=momentum, skor=skor, yon=_yon_belirle(skor), pozitif_nedenler=tuple(pozitif_nedenler), riskler=tuple(riskler))
+FUNC|_momentum_teyidini_hesapla|ARGS=onceki: pd.Series, son: pd.Series|RET=MomentumConfirmation
+RETURN|_momentum_teyidini_hesapla|MomentumConfirmation(rsi14=rsi14, macd=macd, macd_sinyal=macd_sinyal, macd_histogram=histogram, histogram_gucleniyor=histogram_gucleniyor, durum=durum)
+FUNC|_trend_cizgisi_kirilimini_hesapla|ARGS=veri: pd.DataFrame, pivot_genisligi: int, hacim_esigi: float|RET=TrendlineBreakoutResult
+RETURN|_trend_cizgisi_kirilimini_hesapla|TrendlineBreakoutResult(durum=KIRILIM_YOK, yon=NOTR, cizgi_tipi=mevcut_cizgi.tip, cizgi_degeri=mevcut_cizgi.deger(son_konum), onceki_cizgi_degeri=mevcut_cizgi.deger(onceki_konum), pivot_sayisi=len(tepeler) if direnc_cizgisi is not None else len(dipler), kapanis_teyidi=False, erken_uyari=False, hacim_orani=hacim_orani, hacim_teyidi=False)
+RETURN|_trend_cizgisi_kirilimini_hesapla|TrendlineBreakoutResult(durum=TREND_CIZGISI_YOK, yon=NOTR, cizgi_tipi='Yok', cizgi_degeri=None, onceki_cizgi_degeri=None, pivot_sayisi=max(len(tepeler), len(dipler)), kapanis_teyidi=False, erken_uyari=False, hacim_orani=hacim_orani, hacim_teyidi=False)
+FUNC|_uygun_trend_cizgisini_bul|ARGS=pivotlar: list[_Pivot], azalan: bool, tip: str|RET=_TrendLine | None
+RETURN|_uygun_trend_cizgisini_bul|_TrendLine(tip=tip, ilk=ilk, son=son)
+FUNC|_hacim_orani_hesapla|ARGS=veri: pd.DataFrame|RET=float | None
+RETURN|_hacim_orani_hesapla|float(veri['Volume'].iloc[-1]) / ortalama
+FUNC|_zaman_dilimi_skorunu_hesapla|ARGS=kapanis: float, ortalamalar: MovingAverageConfirmation, momentum: MomentumConfirmation, kirilim: TrendlineBreakoutResult|RET=tuple[int, list[str], list[str]]
+RETURN|_zaman_dilimi_skorunu_hesapla|(min(100, int(skor)), pozitif, riskler)
+==========================================================================================
+FILE=backend/app/analysis/momentum_discovery.py
+EXISTS=True
+CLASS|MomentumDiscoveryError|FIELDS=
+CLASS|MomentumDiscoveryRequest|FIELDS=evren:str;maksimum_aday:int;minimum_skor:int;ozel_semboller:tuple[str, ...];internetten_evren_guncelle:bool;piyasa_rejimi:str | None
+CLASS|MomentumCandidate|FIELDS=sembol:str;analiz_tarihi:str;kapanis:float;momentum_skoru:int;sinif:str;goreceli_guc_puani:int;fiyat_ivmesi_puani:int;hacim_birikimi_puani:int;kirilim_hazirligi_puani:int;trend_puani:int;likidite_puani:int;risk_kalitesi_puani:int;getiri_5g:float;getiri_20g:float;getiri_60g:float;hacim_orani:float;yirmi_gunluk_zirve_uzakligi:float;ortalama_tl_hacim:float;rsi14:float;atr_yuzde:float;teknik_skor:int;teknik_gorunum:str;risk_odul_orani:float;risk_odul_uygun:bool;kirilim:bool;sikisma:bool;asiri_uzamis:bool;pozitif_nedenler:tuple[str, ...];riskler:tuple[str, ...];yakin_direnc:float;goreceli_guc_egimi:float;hacim_egimi:float;rsi_egimi:float;macd_histogram_egimi:float;hazirlik_durumu:str;listedeki_gun:int;ilk_gorulme_tarihi:str;ilk_gorulme_fiyati:float;ilk_gorulmeden_getiri:float;kirilim_tetik_seviyesi:float;sinyal_gecmisi:tuple[str, ...];kalici_hazirlik:bool;son_hazirlik_sinyali_tarihi:str;son_guclu_sinyal_tarihi:str;izleme_disi_nedeni:str
+CLASS|MomentumFailure|FIELDS=sembol:str;hata:str
+CLASS|MomentumDiscoveryResult|FIELDS=evren_adi:str;evren_kaynagi:str;evren_tarihi:str;evren_sembol_sayisi:int;basarili_sayisi:int;adaylar:tuple[MomentumCandidate, ...];asiri_yukselmisler:tuple[MomentumCandidate, ...];izleme_disi:tuple[MomentumCandidate, ...];hatalar:tuple[MomentumFailure, ...];kayit_yolu:str | None;veri_tazeligi:BatchDataFreshnessResult | None;piyasa_rejimi:str | None;trend_politikasi_elenenler:tuple[MomentumCandidate, ...];on_tazelik_kontrolu:bool;on_tazelik_referans_sembol:str | None;toplu_tarama_baslatildi:bool;indirilen_sembol_sayisi:int;analiz_edilen_sembol_sayisi:int;veri_hatasi_sayisi:int;toplam_sure_saniye:float;yeniden_deneme_sayisi:int;veri_kaynagi:str;tazelik_kilit_asamasi:str;sonraki_kontrol_zamani:str
+CLASS|MomentumDiscoveryEngine|FIELDS=
+CLASS|MomentumDiscoveryService|FIELDS=
+FUNC|momentum_aday_tablosu|ARGS=sonuc: MomentumDiscoveryResult|RET=tuple[dict[str, object], ...]
+FUNC|_ham_momentum_olcutleri|ARGS=veri: pd.DataFrame|RET=dict[str, object]
+RETURN|_ham_momentum_olcutleri|{'analiz_tarihi': str(pd.Timestamp(veri.index[-1]).date()), 'kapanis': float(close.iloc[-1]), 'getiri_5': getiri_5, 'onceki_getiri_5': onceki_getiri_5, 'getiri_20': getiri_20, 'getiri_60': getiri_60, 'goreceli_ham': 0.45 * getiri_5 + 0.4 * getiri_20 + 0.15 * getiri_60, 'goreceli_egim_ham': goreceli_egim, 'hacim_orani': hacim_orani, 'yukselis_hacim_orani': yukselis_hacim_orani, 'son5_hacim_orani': son5_hacim_orani, 'hacim_egimi': hacim_egimi, 'yakin_direnc': yakin_direnc, 'zirve_uzakligi': zirve_uzakligi, 'kirilim': kirilim, 'sikisma': sikisma, 'sikisma_orani': sikisma_orani, 'atr_sikisma_orani': atr_sikisma_orani, 'ema9': float(ema9.iloc[-1]), 'ema21': ema21_deger, 'ema55': float(ema55.iloc[...
+==========================================================================================
+FILE=backend/app/analysis/stock_analyzer.py
+EXISTS=True
+==========================================================================================
+FILE=backend/app/analysis/technical_decision_matrix.py
+EXISTS=True
+==========================================================================================
+FIN_PROD_V5_REV5_TECHNICAL_CONTRACT=PASS

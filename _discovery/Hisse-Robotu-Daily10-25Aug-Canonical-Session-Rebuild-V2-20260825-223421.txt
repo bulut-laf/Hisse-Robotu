@@ -1,0 +1,27 @@
+=== HISSE ROBOTU — 25 AUG CANONICAL RANKING MEMORY SESSION REBUILD V2 ===
+RESULT=PYTHON_STAGE_FAIL
+ROLLBACK=SUCCESS
+PRODUCTION_STATUS=PRE_REBUILD_RESTORED
+PYTHON_EXITCODE=1
+
+=== EXISTING MEMORY ===
+OBSERVATIONS_BEFORE=138
+SHA_BEFORE=58be0d4fdd727ced589c54b4875cf18fa538c4a5b3b78e03231be9843e1d980e
+BYTES_BEFORE=22111
+
+=== UNIVERSE CONTRACT ===
+BASELINE17_EXACT=PASS
+PREVIOUS_TERMINAL_UNIVERSE_ACCEPTANCE=PROVEN
+PROVEN_EVIDENCE=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Daily10-PostIntegration-6Session-Acceptance-V1-FIX1-20260825-203809.txt
+LEDGER_RECONCILIATION=PASS
+CURRENT_TERMINAL_SNAPSHOT_REQUIRED=NO
+UNIVERSE25_COUNT=582
+
+=== NATIVE STDERR (NON-FATAL UNLESS EXITCODE != 0) ===
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\hisse_daily10_25aug_canonical_session_rebuild_v2.py", line 364, in <module>
+    if parse_observation_date(item.as_of) == TERMINAL_DATE
+       ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Temp\hisse_daily10_25aug_canonical_session_rebuild_v2.py", line 64, in parse_observation_date
+    raise ValueError(f"Unsupported ranking-memory date: {value!r}")
+ValueError: Unsupported ranking-memory date: 'Ki\u015fisel liste'

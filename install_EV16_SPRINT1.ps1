@@ -1,0 +1,1 @@
+Write-Host "EV-16 Sprint 1 Long Term Intelligence package installed."

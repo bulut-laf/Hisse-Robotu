@@ -1,0 +1,1241 @@
+﻿
+### D:\Projects\Hisse-Robotu\backend\app\market_context\ai_analysis_engine.py
+
+from __future__ import annotations
+
+from typing import Any
+
+
+def prepare_ai_analysis_request(
+    daily_package: dict[str, Any],
+) -> dict[str, Any]:
+    """Gerçek AI yorumlama katmanı için istek hazırlığı.
+
+    Bu sürüm AI çağrısı yapmaz.
+    Sadece standart analiz girdisi oluşturur.
+    """
+
+    return {
+        "ready": True,
+        "context": daily_package,
+        "instruction": "Analyze market context only.",
+    }
+
+### D:\Projects\Hisse-Robotu\backend\app\market_context\ai_dashboard_provider.py
+
+from __future__ import annotations
+
+from typing import Any
+
+
+def build_ai_dashboard_payload(
+    evaluation: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """AI dashboard görünümü için veri sağlayıcı hazırlığı.
+
+    Sunum verisi üretir.
+    Karar veya işlem sinyali üretmez.
+    """
+
+    if not evaluation:
+        return {
+            "available": False,
+            "summary": None,
+            "positive_items": [],
+            "risk_items": [],
+            "change_items": [],
+        }
+
+    return {
+        "available": True,
+        "summary": evaluation.get("summary"),
+        "positive_items": list(evaluation.get("positive_items", [])),
+        "risk_items": list(evaluation.get("risk_items", [])),
+        "change_items": list(evaluation.get("change_items", [])),
+    }
+
+### D:\Projects\Hisse-Robotu\backend\app\market_context\ai_live_evaluation.py
+
+from __future__ import annotations
+
+import json
+from typing import Any
+
+from backend.app.market_context.ai_output_validator import validate_ai_output
+from backend.app.market_context.ai_prompt_contract import AIPromptContract
+from backend.app.market_context.ai_provider import (
+    AIProviderConfig,
+    AIProviderError,
+    build_provider,
+)
+
+
+def build_live_evaluation_prompt(daily_package: dict[str, Any]) -> str:
+    contract = AIPromptContract().to_dict()
+    return (
+        "Aşağıdaki Hisse Robotu piyasa bağlamını değerlendir.\n\n"
+        "KURALLAR:\n"
+        f"- Rol: {contract['role']}\n"
+        f"- Kapsam: {contract['scope']}\n"
+        f"- Dil: {contract['language']}\n"
+        f"- Kanıt: {contract['evidence_policy']}\n"
+        f"- Belirsizlik: {contract['uncertainty_policy']}\n"
+        f"- Çelişki: {contract['conflict_policy']}\n"
+        f"- Risk ayrımı: {contract['risk_classification_policy']}\n"
+        f"- Güvenlik: {contract['safety_policy']}\n"
+        "- Girdinin dili Türkçe olmak zorunda değildir. "
+        "Yabancı dildeki finansal metinleri anlamını koruyarak değerlendir.\n"
+        "- Orijinal kaynakta bulunmayan hedef fiyat, olay, veri veya gerekçe ekleme.\n"
+        "- Yalnızca istenen yapılandırılmış alanları üret.\n\n"
+        "PIYASA_BAGLAMI_JSON:\n"
+        + json.dumps(
+            daily_package,
+            ensure_ascii=False,
+            sort_keys=True,
+            default=str,
+        )
+    )
+
+
+def evaluate_daily_package_with_ai(
+    daily_package: dict[str, Any],
+    *,
+    config: AIProviderConfig | None = None,
+    provider=None,
+) -> dict[str, Any]:
+    if not isinstance(daily_package, dict) or not daily_package:
+        return {
+            "ok": False,
+            "status": "invalid_input",
+            "provider": "",
+            "model": "",
+            "output": {},
+            "error": "Günlük AI paketi boş veya geçersiz.",
+        }
+
+    selected_provider = provider or build_provider(config)
+    prompt = build_live_evaluation_prompt(daily_package)
+
+    try:
+        result = selected_provider.evaluate(prompt)
+    except AIProviderError as exc:
+        cfg = getattr(selected_provider, "config", None)
+        return {
+            "ok": False,
+            "status": "provider_error",
+            "provider": getattr(cfg, "provider", ""),
+            "model": getattr(cfg, "model", ""),
+            "output": {},
+            "error": str(exc),
+        }
+
+    if not validate_ai_output(result.output):
+        return {
+            "ok": False,
+            "status": "rejected",
+            "provider": result.provider,
+            "model": result.model,
+            "output": {},
+            "elapsed_seconds": result.elapsed_seconds,
+            "error": "AI çıktısı güvenlik doğrulamasını geçemedi.",
+        }
+
+    return {
+        "ok": True,
+        "status": "accepted",
+        "provider": result.provider,
+        "model": result.model,
+        "output": result.output,
+        "elapsed_seconds": result.elapsed_seconds,
+        "error": "",
+    }
+
+### D:\Projects\Hisse-Robotu\backend\app\market_context\ai_provider.py
+
+from __future__ import annotations
+
+import json
+import os
+import time
+from dataclasses import dataclass
+from typing import Any, Callable
+from urllib import error, request
+
+
+class AIProviderError(RuntimeError):
+    """AI sağlayıcı çağrısı güvenle tamamlanamadığında kullanılır."""
+
+
+@dataclass(frozen=True, slots=True)
+class AIProviderConfig:
+    provider: str = "gemini"
+    model: str = ""
+    timeout_seconds: float = 45.0
+    max_retries: int = 1
+
+    @classmethod
+    def from_environment(cls) -> "AIProviderConfig":
+        provider = os.getenv("HISSE_ROBOTU_AI_PROVIDER", "gemini").strip().lower()
+        if provider == "gemini":
+            model = os.getenv("HISSE_ROBOTU_GEMINI_MODEL", "gemini-3.5-flash-lite").strip()
+        elif provider == "openai":
+            model = os.getenv("HISSE_ROBOTU_OPENAI_MODEL", "gpt-5.6-luna").strip()
+        else:
+            model = ""
+        return cls(
+            provider=provider,
+            model=model,
+            timeout_seconds=float(os.getenv("HISSE_ROBOTU_AI_TIMEOUT", "45")),
+            max_retries=int(os.getenv("HISSE_ROBOTU_AI_MAX_RETRIES", "1")),
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class AIProviderResult:
+    provider: str
+    model: str
+    output: dict[str, Any]
+    elapsed_seconds: float
+
+
+Transport = Callable[[str, dict[str, str], dict[str, Any], float], dict[str, Any]]
+
+OUTPUT_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "summary": {"type": ["string", "null"]},
+        "positive_factors": {"type": "array", "items": {"type": "string"}},
+        "risk_factors": {"type": "array", "items": {"type": "string"}},
+        "stock_specific_risks": {"type": "array", "items": {"type": "string"}},
+        "aligned_points": {"type": "array", "items": {"type": "string"}},
+        "conflicting_points": {"type": "array", "items": {"type": "string"}},
+        "watch_items": {"type": "array", "items": {"type": "string"}},
+    },
+    "required": [
+        "summary",
+        "positive_factors",
+        "risk_factors",
+        "stock_specific_risks",
+        "aligned_points",
+        "conflicting_points",
+        "watch_items",
+    ],
+    "additionalProperties": False,
+}
+
+
+def _default_transport(url, headers, payload, timeout):
+    body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+    req = request.Request(url=url, data=body, headers=headers, method="POST")
+    try:
+        with request.urlopen(req, timeout=timeout) as response:
+            raw = response.read().decode("utf-8")
+    except error.HTTPError as exc:
+        detail = ""
+        try:
+            detail = exc.read().decode("utf-8", errors="replace")
+        except Exception:
+            pass
+        raise AIProviderError(f"AI sağlayıcı HTTP hatası: {exc.code}. {detail[:500]}") from exc
+    except (error.URLError, TimeoutError) as exc:
+        raise AIProviderError(f"AI sağlayıcı bağlantı hatası: {exc}") from exc
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise AIProviderError("AI sağlayıcı geçerli JSON yanıtı döndürmedi.") from exc
+    if not isinstance(data, dict):
+        raise AIProviderError("AI sağlayıcı yanıtı nesne biçiminde değil.")
+    return data
+
+
+def _json_output_from_text(text: str) -> dict[str, Any]:
+    try:
+        value = json.loads(text)
+    except json.JSONDecodeError as exc:
+        raise AIProviderError("AI modeli yapılandırılmış JSON çıktı üretmedi.") from exc
+    if not isinstance(value, dict):
+        raise AIProviderError("AI modeli JSON nesnesi yerine farklı bir değer döndürdü.")
+    return value
+
+
+def _gemini_output(response: dict[str, Any]) -> dict[str, Any]:
+    candidates = response.get("candidates")
+    if not isinstance(candidates, list) or not candidates:
+        raise AIProviderError("Gemini yanıtında aday çıktı bulunamadı.")
+    parts = candidates[0].get("content", {}).get("parts", [])
+    texts = [
+        p.get("text", "")
+        for p in parts
+        if isinstance(p, dict) and isinstance(p.get("text"), str)
+    ]
+    text = "".join(texts).strip()
+    if not text:
+        raise AIProviderError("Gemini boş metin çıktısı döndürdü.")
+    return _json_output_from_text(text)
+
+
+def _openai_output(response: dict[str, Any]) -> dict[str, Any]:
+    direct = response.get("output_text")
+    if isinstance(direct, str) and direct.strip():
+        return _json_output_from_text(direct.strip())
+    output = response.get("output")
+    if not isinstance(output, list):
+        raise AIProviderError("OpenAI yanıtında output alanı bulunamadı.")
+    texts = []
+    for item in output:
+        if not isinstance(item, dict):
+            continue
+        for part in item.get("content", []):
+            if isinstance(part, dict) and isinstance(part.get("text"), str):
+                texts.append(part["text"])
+    text = "".join(texts).strip()
+    if not text:
+        raise AIProviderError("OpenAI boş metin çıktısı döndürdü.")
+    return _json_output_from_text(text)
+
+
+def _call_with_retry(call, max_retries):
+    last_error = None
+    for attempt in range(max_retries + 1):
+        try:
+            return call()
+        except AIProviderError as exc:
+            last_error = exc
+            if attempt >= max_retries:
+                break
+            time.sleep(min(0.5 * (attempt + 1), 1.5))
+    raise AIProviderError(str(last_error or "AI sağlayıcı çağrısı başarısız."))
+
+
+class GeminiProvider:
+    def __init__(self, config: AIProviderConfig, *, transport: Transport = _default_transport):
+        self.config = config
+        self.transport = transport
+
+    def evaluate(self, prompt: str) -> AIProviderResult:
+        api_key = os.getenv("GEMINI_API_KEY", "").strip()
+        if not api_key:
+            raise AIProviderError("GEMINI_API_KEY tanımlı değil.")
+        if not self.config.model:
+            raise AIProviderError("Gemini model adı tanımlı değil.")
+        url = (
+            "https://generativelanguage.googleapis.com/"
+            f"v1beta/models/{self.config.model}:generateContent"
+        )
+        payload = {
+            "contents": [{"role": "user", "parts": [{"text": prompt}]}],
+            "generationConfig": {
+                "temperature": 0.2,
+                "responseMimeType": "application/json",
+                "responseJsonSchema": OUTPUT_SCHEMA,
+            },
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key,
+        }
+        started = time.perf_counter()
+        response = _call_with_retry(
+            lambda: self.transport(
+                url, headers, payload, self.config.timeout_seconds
+            ),
+            self.config.max_retries,
+        )
+        return AIProviderResult(
+            provider="gemini",
+            model=self.config.model,
+            output=_gemini_output(response),
+            elapsed_seconds=round(time.perf_counter() - started, 3),
+        )
+
+
+class OpenAIProvider:
+    def __init__(self, config: AIProviderConfig, *, transport: Transport = _default_transport):
+        self.config = config
+        self.transport = transport
+
+    def evaluate(self, prompt: str) -> AIProviderResult:
+        api_key = os.getenv("OPENAI_API_KEY", "").strip()
+        if not api_key:
+            raise AIProviderError("OPENAI_API_KEY tanımlı değil.")
+        if not self.config.model:
+            raise AIProviderError("OpenAI model adı tanımlı değil.")
+        payload = {
+            "model": self.config.model,
+            "input": prompt,
+            "text": {
+                "format": {
+                    "type": "json_schema",
+                    "name": "market_context_evaluation",
+                    "schema": OUTPUT_SCHEMA,
+                    "strict": True,
+                }
+            },
+        }
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {api_key}",
+        }
+        started = time.perf_counter()
+        response = _call_with_retry(
+            lambda: self.transport(
+                "https://api.openai.com/v1/responses",
+                headers,
+                payload,
+                self.config.timeout_seconds,
+            ),
+            self.config.max_retries,
+        )
+        return AIProviderResult(
+            provider="openai",
+            model=self.config.model,
+            output=_openai_output(response),
+            elapsed_seconds=round(time.perf_counter() - started, 3),
+        )
+
+
+def build_provider(config: AIProviderConfig | None = None, *, transport: Transport = _default_transport):
+    cfg = config or AIProviderConfig.from_environment()
+    if cfg.provider == "gemini":
+        return GeminiProvider(cfg, transport=transport)
+    if cfg.provider == "openai":
+        return OpenAIProvider(cfg, transport=transport)
+    raise AIProviderError(
+        "Desteklenmeyen AI sağlayıcısı. Geçerli değerler: gemini, openai."
+    )
+
+  backend\dashboard.py:386:    "Başarı Karşılaştırması",
+  backend\dashboard.py:387:    "BIST Toplu Tarama",
+  backend\dashboard.py:388:    "Çoklu Hisse Portföyü",
+  backend\dashboard.py:389:    "Gecikmeli Veri Pilotu",
+  backend\dashboard.py:390:    "Gölge Portföy",
+> backend\dashboard.py:391:    "Güncel Teknik Analiz",
+  backend\dashboard.py:392:    "Günlük Operasyon Paneli",
+  backend\dashboard.py:393:    "Haftalık Performans Raporu",
+  backend\dashboard.py:394:    "İşlem Kayıp Analizi",
+  backend\dashboard.py:395:    "Momentum Keşif",
+  backend\dashboard.py:396:    "Ön Yükseliş Hazırlık",
+  backend\dashboard.py:397:    "Ön Yükseliş Toplu Doğrulama",
+  backend\dashboard.py:398:    "Piyasa Rejimi",
+  backend\dashboard.py:399:    "Seans Öncesi Bağlam",
+  backend\dashboard.py:400:    "Sinyal Sonuçları",
+  backend\dashboard.py:401:    "Tek Hisse",
+  backend\dashboard.py:402:    "Temel Analiz",
+  backend\dashboard.py:403:    "V1.3 Kalibrasyon Kararı",
+  backend\dashboard.py:404:)
+  backend\dashboard.py:405:TARAMA_PROFILLERI = {
+  backend\dashboard.py:406:    "Gevşek": "gevsek",
+  backend\dashboard.py:639:
+  backend\dashboard.py:640:def gecmis_kaydi_etiketi(kayit: 
+BacktestHistoryRecord) -> str:
+  backend\dashboard.py:641:    tur = {
+  backend\dashboard.py:642:        TEK_HISSE_ANALIZI: "Tek 
+Hisse",
+  backend\dashboard.py:643:        PORTFOY_ANALIZI: "Portföy",
+> backend\dashboard.py:644:        GUNCEL_TEKNIK_ANALIZ: 
+"Güncel Teknik Analiz",
+  backend\dashboard.py:645:    }.get(kayit.analiz_turu, 
+kayit.analiz_turu)
+  backend\dashboard.py:646:    semboller = ", 
+".join(kayit.semboller)
+  backend\dashboard.py:647:    return (
+  backend\dashboard.py:648:        
+f"{gecmis_zamani_yaz(kayit.kaydedilme_zamani)} · "
+  backend\dashboard.py:649:        f"{tur} · {semboller}"
+  backend\dashboard.py:650:    )
+  backend\dashboard.py:651:
+  backend\dashboard.py:652:
+  backend\dashboard.py:653:def karsilastirma_degeri_yaz(
+  backend\dashboard.py:654:    metrik: HistoryComparisonMetric,
+  backend\dashboard.py:655:    deger: float,
+  backend\dashboard.py:656:) -> str:
+  backend\dashboard.py:657:    if metrik.birim == "para":
+  backend\dashboard.py:658:        return para_yaz(deger)
+  backend\dashboard.py:659:    if metrik.birim == "yuzde":
+  backend\dashboard.py:1051:
+  backend\dashboard.py:1052:
+  backend\dashboard.py:1053:def 
+guncel_analiz_gecmis_kaydi_goster(
+  backend\dashboard.py:1054:    kayit: BacktestHistoryRecord,
+  backend\dashboard.py:1055:) -> None:
+> backend\dashboard.py:1056:    """Kaydedilmiş güncel teknik 
+analiz sonucunu yeniden gösterir."""
+  backend\dashboard.py:1057:
+  backend\dashboard.py:1058:    fiyat = 
+_gecmis_alt_sozluk(kayit, "fiyat_verisi")
+  backend\dashboard.py:1059:    teknik = 
+_gecmis_alt_sozluk(kayit, "teknik_teyit")
+  backend\dashboard.py:1060:    plan = 
+_gecmis_alt_sozluk(kayit, "islem_plani")
+  backend\dashboard.py:1061:    pozisyon = 
+_gecmis_alt_sozluk(kayit, "risk_ve_pozisyon")
+  backend\dashboard.py:1062:    kimlikler = 
+_gecmis_alt_sozluk(kayit, "kimlikler")
+  backend\dashboard.py:1063:
+  backend\dashboard.py:1064:    st.success(kayit.baslik)
+  backend\dashboard.py:1065:    st.caption(
+  backend\dashboard.py:1066:        f"Kaydedilme: 
+{gecmis_zamani_yaz(kayit.kaydedilme_zamani)} · "
+  backend\dashboard.py:1067:        f"{kayit.donem}"
+  backend\dashboard.py:1068:    )
+  backend\dashboard.py:1069:    metrik_izgarasi_goster(
+  backend\dashboard.py:1070:        (
+  backend\dashboard.py:1071:            ("Fiyat verisi", 
+str(fiyat.get("durum") or "—")),
+  backend\dashboard.py:1143:
+  backend\dashboard.py:1144:    with st.sidebar:
+  backend\dashboard.py:1145:        st.header("Analiz geçmişi")
+  backend\dashboard.py:1146:        tur_etiketi = st.selectbox(
+  backend\dashboard.py:1147:            "Kayıt türü",
+> backend\dashboard.py:1148:            options=("Tümü", "Tek 
+Hisse", "Portföy", "Güncel Teknik Analiz"),
+  backend\dashboard.py:1149:            index=0,
+  backend\dashboard.py:1150:        )
+  backend\dashboard.py:1151:        arama = st.text_input(
+  backend\dashboard.py:1152:            "Geçmişte ara",
+  backend\dashboard.py:1153:            value="",
+  backend\dashboard.py:1154:            placeholder="Sembol, 
+başlık veya kimlik",
+  backend\dashboard.py:1155:        )
+  backend\dashboard.py:1156:        siralama_etiketi = 
+st.selectbox(
+  backend\dashboard.py:1157:            "Sıralama",
+  backend\dashboard.py:1158:            options=(
+  backend\dashboard.py:1159:                "En yeni kayıt",
+  backend\dashboard.py:1160:                "En eski kayıt",
+  backend\dashboard.py:1161:                "Toplam getiri: 
+yüksekten düşüğe",
+  backend\dashboard.py:1162:                "Maksimum düşüş: 
+düşükten yükseğe",
+  backend\dashboard.py:1163:                "Sembol: A-Z",
+  backend\dashboard.py:1186:
+  backend\dashboard.py:1187:    tur_esleme = {
+  backend\dashboard.py:1188:        "Tümü": None,
+  backend\dashboard.py:1189:        "Tek Hisse": 
+TEK_HISSE_ANALIZI,
+  backend\dashboard.py:1190:        "Portföy": PORTFOY_ANALIZI,
+> backend\dashboard.py:1191:        "Güncel Teknik Analiz": 
+GUNCEL_TEKNIK_ANALIZ,
+  backend\dashboard.py:1192:    }
+  backend\dashboard.py:1193:    depo = BacktestHistoryStore()
+  backend\dashboard.py:1194:    try:
+  backend\dashboard.py:1195:        tum_kayitlar = 
+depo.kayitlari_listele(
+  backend\dashboard.py:1196:            
+analiz_turu=tur_esleme[tur_etiketi],
+  backend\dashboard.py:1197:            limit=500,
+  backend\dashboard.py:1198:        )
+  backend\dashboard.py:1199:    except (BacktestHistoryError, 
+ValueError) as hata:
+  backend\dashboard.py:1200:        st.error(str(hata))
+  backend\dashboard.py:1201:        return
+  backend\dashboard.py:1202:
+  backend\dashboard.py:1203:    sembol_secenekleri = 
+kayit_sembolleri(tum_kayitlar)
+  backend\dashboard.py:1204:    tarih_araligi = 
+kayit_tarih_araligi(tum_kayitlar)
+  backend\dashboard.py:1205:    with st.sidebar:
+  backend\dashboard.py:1206:        secili_semboller = 
+st.multiselect(
+  backend\dashboard.py:1930:
+  backend\dashboard.py:1931:def 
+guncel_analiz_sonucu_goster(sonuc: LiveAnalysisResult) -> None:
+  backend\dashboard.py:1932:    teknik = sonuc.teknik_teyit
+  backend\dashboard.py:1933:    plan = sonuc.islem_plani
+  backend\dashboard.py:1934:
+> backend\dashboard.py:1935:    st.subheader(f"{teknik.sembol} 
+güncel teknik analiz")
+  backend\dashboard.py:1936:    metrik_izgarasi_goster(
+  backend\dashboard.py:1937:        (
+  backend\dashboard.py:1938:            ("Teknik teyit skoru", 
+f"{teknik.teyit_skoru}/100"),
+  backend\dashboard.py:1939:            ("Teyit durumu", 
+teknik.teyit_durumu),
+  backend\dashboard.py:1940:            ("İşlem kararı", 
+plan.karar),
+  backend\dashboard.py:1941:            ("Plan tipi", 
+plan.plan_tipi),
+  backend\dashboard.py:1942:            ("Son kapanış", 
+para_yaz(plan.son_kapanis)),
+  backend\dashboard.py:1943:            ("ATR14", 
+f"{para_yaz(plan.atr14)} · %{plan.atr_yuzde:.2f}"),
+  backend\dashboard.py:1944:        )
+  backend\dashboard.py:1945:    )
+  backend\dashboard.py:1946:
+  backend\dashboard.py:1947:    (
+  backend\dashboard.py:1948:        zaman_tab,
+  backend\dashboard.py:1949:        teyit_tab,
+  backend\dashboard.py:1950:        uyumsuzluk_tab,
+  backend\dashboard.py:2221:        )
+  backend\dashboard.py:2222:
+  backend\dashboard.py:2223:
+  backend\dashboard.py:2224:def guncel_teknik_analiz_formu() -> 
+None:
+  backend\dashboard.py:2225:    with st.sidebar:
+> backend\dashboard.py:2226:        st.header("Güncel teknik 
+analiz")
+  backend\dashboard.py:2227:        with 
+st.form("guncel_teknik_analiz_formu"):
+  backend\dashboard.py:2228:            sembol = st.text_input(
+  backend\dashboard.py:2229:                "Hisse sembolü",
+  backend\dashboard.py:2230:                value="THYAO",
+  backend\dashboard.py:2231:                help="BIST uzantısı 
+yazılmazsa .IS otomatik eklenir.",
+  backend\dashboard.py:2232:            )
+  backend\dashboard.py:2233:            sermaye = 
+st.number_input(
+  backend\dashboard.py:2234:                "Sermaye",
+  backend\dashboard.py:2235:                min_value=1_000.0,
+  backend\dashboard.py:2236:                value=100_000.0,
+  backend\dashboard.py:2237:                step=10_000.0,
+  backend\dashboard.py:2238:            )
+  backend\dashboard.py:2239:            risk_yuzde = 
+st.number_input(
+  backend\dashboard.py:2240:                "İşlem başına azami 
+risk (%)",
+  backend\dashboard.py:2241:                min_value=0.10,
+  backend\dashboard.py:2273:    if not 
+veri_tazeligi_kilidi_goster(sonuc.veri_tazeligi):
+  backend\dashboard.py:2274:        return
+  backend\dashboard.py:2275:    
+guncel_analiz_sonucu_goster(sonuc)
+  backend\dashboard.py:2276:    kayit = gecmise_kaydet(sonuc)
+  backend\dashboard.py:2277:    if kayit is not None:
+> backend\dashboard.py:2278:        st.caption("Güncel teknik 
+analiz, Analiz Geçmişi'ne kaydedildi.")
+  backend\dashboard.py:2279:
+  backend\dashboard.py:2280:
+  backend\dashboard.py:2281:def 
+momentum_aday_ayrintisi_goster(aday: MomentumCandidate) -> None:
+  backend\dashboard.py:2282:    st.subheader(
+  backend\dashboard.py:2283:        
+f"{aday.sembol.removesuffix('.IS')} · "
+  backend\dashboard.py:2284:        f"{aday.momentum_skoru}/100 
+· {aday.sinif}"
+  backend\dashboard.py:2285:    )
+  backend\dashboard.py:2286:    metrik_izgarasi_goster(
+  backend\dashboard.py:2287:        (
+  backend\dashboard.py:2288:            ("Momentum 
+potansiyeli", f"{aday.momentum_skoru}/100"),
+  backend\dashboard.py:2289:            ("Mevcut teknik skor", 
+f"{aday.teknik_skor}/100"),
+  backend\dashboard.py:2290:            ("Hacim oranı", 
+f"{aday.hacim_orani:.2f}x"),
+  backend\dashboard.py:2291:            ("Hacim eğimi", 
+f"{aday.hacim_egimi:.2f}x"),
+  backend\dashboard.py:2292:            ("Yakın direnç", 
+f"{aday.yakin_direnc:.2f}"),
+  backend\dashboard.py:2293:            ("Kırılım tetiği", 
+f"{aday.kirilim_tetik_seviyesi:.2f}"),
+  backend\dashboard.py:2542:        f"Evren kaynağı: 
+{sonuc.evren_kaynagi} · "
+  backend\dashboard.py:2543:        f"Bileşen tarihi: 
+{sonuc.evren_tarihi}"
+  backend\dashboard.py:2544:    )
+  backend\dashboard.py:2545:    st.info(
+  backend\dashboard.py:2546:        "Momentum skoru bir erken 
+keşif ölçüsüdür; doğrudan alım kararı "
+> backend\dashboard.py:2547:        "değildir. C sınıfı adaylar 
+bile ayrıntılı Güncel Teknik Analiz "
+  backend\dashboard.py:2548:        "ekranında yeniden 
+doğrulanmalıdır. KAP/haber katalizörü bu sürümde "
+  backend\dashboard.py:2549:        "otomatik puanlanmaz ve 
+ayrıca kontrol edilmelidir."
+  backend\dashboard.py:2550:    )
+  backend\dashboard.py:2551:
+  backend\dashboard.py:2552:    kayitlar = 
+momentum_aday_tablosu(sonuc)
+  backend\dashboard.py:2553:    if not kayitlar:
+  backend\dashboard.py:2554:        st.warning(
+  backend\dashboard.py:2555:            "Seçilen minimum skoru 
+ve A/B/C sınıflarını karşılayan aday "
+  backend\dashboard.py:2556:            "bulunamadı. Minimum 
+skoru azaltmak yerine evreni ve piyasa "
+  backend\dashboard.py:2557:            "koşullarını yeniden 
+değerlendirin."
+  backend\dashboard.py:2558:        )
+  backend\dashboard.py:2559:    else:
+  backend\dashboard.py:2560:        st.dataframe(
+  backend\dashboard.py:2561:            pd.DataFrame(kayitlar),
+  backend\dashboard.py:2562:            width="stretch",
+  backend\dashboard.py:7471:    )
+  backend\dashboard.py:7472:
+  backend\dashboard.py:7473:    st.markdown("#### Hızlı erişim")
+  backend\dashboard.py:7474:    st.info(
+  backend\dashboard.py:7475:        "Sol menüden sırasıyla 
+Gecikmeli Veri Pilotu, BIST Toplu Tarama, "
+> backend\dashboard.py:7476:        "Güncel Teknik Analiz, 
+Temel Analiz ve Sinyal Sonuçları ekranlarını "
+  backend\dashboard.py:7477:        "açın."
+  backend\dashboard.py:7478:    )
+  backend\dashboard.py:7479:
+  backend\dashboard.py:7480:    if st.button(
+  backend\dashboard.py:7481:        "Operasyon panelini yenile",
+  backend\dashboard.py:7482:        
+key="daily_operation_refresh",
+  backend\dashboard.py:7483:        width="stretch",
+  backend\dashboard.py:7484:    ):
+  backend\dashboard.py:7485:        st.rerun()
+  backend\dashboard.py:7486:
+  backend\dashboard.py:7487:
+  backend\dashboard.py:7488:
+  backend\dashboard.py:7489:def 
+_gunluk_ai_karar_destegi_goster() -> None:
+  backend\dashboard.py:7490:    """Arşivlenmiş AI 
+değerlendirmesini günlük operasyonda gösterir."""
+  backend\dashboard.py:7491:
+  backend\dashboard.py:8447:    elif analiz_modu == "Seans 
+Öncesi Bağlam":
+  backend\dashboard.py:8448:        
+render_market_context_dashboard(
+  backend\dashboard.py:8449:            st,
+  backend\dashboard.py:8450:            
+project_root=Path(__file__).resolve().parents[1],
+  backend\dashboard.py:8451:        )
+> backend\dashboard.py:8452:    elif analiz_modu == "Güncel 
+Teknik Analiz":
+  backend\dashboard.py:8453:        guncel_teknik_analiz_formu()
+  backend\dashboard.py:8454:    elif analiz_modu == "Temel 
+Analiz":
+  backend\dashboard.py:8455:        temel_analiz_formu()
+  backend\dashboard.py:8456:    elif analiz_modu == "Piyasa 
+Rejimi":
+  backend\dashboard.py:8457:        piyasa_rejimi_formu()
+  backend\dashboard.py:8458:    elif analiz_modu == "Momentum 
+Keşif":
+  backend\dashboard.py:8459:        momentum_kesif_formu()
+  backend\dashboard.py:8460:    elif analiz_modu == "Ön 
+Yükseliş Hazırlık":
+  backend\dashboard.py:8461:        on_yukselis_hazirlik_formu()
+  backend\dashboard.py:8462:    elif analiz_modu == "Ön 
+Yükseliş Toplu Doğrulama":
+  backend\dashboard.py:8463:        
+on_yukselis_toplu_dogrulama_formu()
+  backend\dashboard.py:8464:    elif analiz_modu == "BIST Toplu 
+Tarama":
+  backend\dashboard.py:8465:        bist_toplu_tarama_formu()
+  backend\dashboard.py:8466:    elif analiz_modu == "Açık 
+Pozisyon İzleme":
+  backend\dashboard.py:8467:        acik_pozisyon_izleme_formu()
+  backend\app\history\backtest_history.py:359:
+  backend\app\history\backtest_history.py:360:    def 
+guncel_analiz_kaydet(
+  backend\app\history\backtest_history.py:361:        self,
+  backend\app\history\backtest_history.py:362:        sonuc: 
+LiveAnalysisResult,
+  backend\app\history\backtest_history.py:363:    ) -> 
+BacktestHistoryRecord:
+> backend\app\history\backtest_history.py:364:        """Güncel 
+teknik analiz sonucunu yeniden açılabilir biçimde saklar."""
+  backend\app\history\backtest_history.py:365:
+  backend\app\history\backtest_history.py:366:        if not 
+isinstance(sonuc, LiveAnalysisResult):
+  backend\app\history\backtest_history.py:367:            raise 
+TypeError(
+  backend\app\history\backtest_history.py:368:                
+"Güncel analiz geçmiş sonucu LiveAnalysisResult olmalıdır."
+  backend\app\history\backtest_history.py:369:            )
+  backend\app\history\backtest_history.py:370:
+  backend\app\history\backtest_history.py:371:        teknik = 
+sonuc.teknik_teyit
+  backend\app\history\backtest_history.py:372:        plan = 
+sonuc.islem_plani
+  backend\app\history\backtest_history.py:373:        tazelik = 
+sonuc.veri_tazeligi
+  backend\app\history\backtest_history.py:374:        istek = 
+sonuc.istek
+  backend\app\history\backtest_history.py:375:        
+kaydedilme_zamani = _zaman_metin(self._saat())
+  backend\app\history\backtest_history.py:376:        
+fiyat_veri_tarihi = (
+  backend\app\history\backtest_history.py:377:            None
+  backend\app\history\backtest_history.py:378:            if 
+tazelik is None or tazelik.son_veri_tarihi is None
+  backend\app\history\backtest_history.py:379:            else 
+str(tazelik.son_veri_tarihi)
+  backend\app\history\backtest_history.py:380:        )
+  backend\app\history\backtest_history.py:381:        donem = (
+  backend\app\history\backtest_history.py:382:            
+f"Fiyat veri tarihi: {fiyat_veri_tarihi}"
+  backend\app\history\backtest_history.py:383:            if 
+fiyat_veri_tarihi is not None
+> backend\app\history\backtest_history.py:384:            else 
+"Güncel teknik analiz"
+  backend\app\history\backtest_history.py:385:        )
+  backend\app\history\backtest_history.py:386:
+  backend\app\history\backtest_history.py:387:        pozisyon 
+= plan.pozisyon
+  backend\app\history\backtest_history.py:388:        
+ozel_bilgiler: dict[str, object] = {
+  backend\app\history\backtest_history.py:389:            
+"kaydedilme_zamani": kaydedilme_zamani,
+  backend\app\history\backtest_history.py:390:            
+"sembol": teknik.sembol,
+  backend\app\history\backtest_history.py:391:            
+"fiyat_verisi": {
+  backend\app\history\backtest_history.py:392:                
+"durum": None if tazelik is None else tazelik.durum,
+  backend\app\history\backtest_history.py:393:                
+"son_veri_tarihi": fiyat_veri_tarihi,
+  backend\app\history\backtest_history.py:394:                
+"beklenen_tarih": (
+  backend\app\history\backtest_history.py:395:                  
+  None if tazelik is None else str(tazelik.beklenen_tarih)
+  backend\app\history\backtest_history.py:396:                ),
+  backend\app\history\backtest_history.py:397:                
+"is_gunu_gecikmesi": (
+  backend\app\history\backtest_history.py:398:                  
+  None if tazelik is None else tazelik.is_gunu_gecikmesi
+  backend\app\history\backtest_history.py:399:                ),
+  backend\app\history\backtest_history.py:476:        )
+  backend\app\history\backtest_history.py:477:        kayit = 
+BacktestHistoryRecord(
+  backend\app\history\backtest_history.py:478:            
+kayit_kimligi=kayit_kimligi,
+  backend\app\history\backtest_history.py:479:            
+analiz_turu=GUNCEL_TEKNIK_ANALIZ,
+  backend\app\history\backtest_history.py:480:            
+kaydedilme_zamani=kaydedilme_zamani,
+> backend\app\history\backtest_history.py:481:            
+baslik=f"{teknik.sembol} · Güncel Teknik Analiz",
+  backend\app\history\backtest_history.py:482:            
+semboller=(teknik.sembol,),
+  backend\app\history\backtest_history.py:483:            
+donem=donem,
+  backend\app\history\backtest_history.py:484:            
+tamamlanan_islem_sayisi=0,
+  backend\app\history\backtest_history.py:485:            
+atlanan_islem_sayisi=0,
+  backend\app\history\backtest_history.py:486:            
+bitis_sermayesi=0.0,
+  backend\app\history\backtest_history.py:487:            
+toplam_getiri_yuzde=0.0,
+  backend\app\history\backtest_history.py:488:            
+maksimum_dusus_yuzde=0.0,
+  backend\app\history\backtest_history.py:489:            
+guncel_dusus_yuzde=0.0,
+  backend\app\history\backtest_history.py:490:            
+kar_faktoru=None,
+  backend\app\history\backtest_history.py:491:            
+kazanma_yuzde=None,
+  backend\app\history\backtest_history.py:492:            
+ortalama_sermaye_kullanim_yuzde=None,
+  backend\app\history\backtest_history.py:493:            
+maksimum_pozisyon=(
+  backend\app\history\backtest_history.py:494:                
+None if pozisyon is None else pozisyon.lot_sayisi
+  backend\app\history\backtest_history.py:495:            ),
+  backend\app\history\backtest_history.py:496:            
+analiz_kimligi=teknik.analiz_kimligi,
+  backend\app\history\backtest_history_comparison.py:70:        
+raise BacktestHistoryComparisonError(
+  backend\app\history\backtest_history_comparison.py:71:        
+    "Aynı analiz geçmişi kaydı kendisiyle karşılaştırılamaz."
+  backend\app\history\backtest_history_comparison.py:72:        
+)
+  backend\app\history\backtest_history_comparison.py:73:    if 
+ilk.analiz_turu not in (TEK_HISSE_ANALIZI, PORTFOY_ANALIZI):
+  backend\app\history\backtest_history_comparison.py:74:        
+raise BacktestHistoryComparisonError(
+> backend\app\history\backtest_history_comparison.py:75:        
+    "Güncel teknik analiz kayıtları performans 
+karşılaştırmasına uygun değildir."
+  backend\app\history\backtest_history_comparison.py:76:        
+)
+  backend\app\history\backtest_history_comparison.py:77:    if 
+ilk.analiz_turu != ikinci.analiz_turu:
+  backend\app\history\backtest_history_comparison.py:78:        
+raise BacktestHistoryComparisonError(
+  backend\app\history\backtest_history_comparison.py:79:        
+    "Yalnızca aynı tür analiz geçmişi kayıtları 
+karşılaştırılabilir."
+  backend\app\history\backtest_history_comparison.py:80:        
+)
+  backend\app\history\backtest_history_comparison.py:81:
+  backend\app\history\backtest_history_comparison.py:82:    
+semboller_ayni = ilk.semboller == ikinci.semboller
+  backend\app\history\backtest_history_comparison.py:83:    
+donem_ayni = ilk.donem == ikinci.donem
+  backend\app\history\backtest_history_comparison.py:84:    
+veri_ayni = ilk.veri_kimligi == ikinci.veri_kimligi
+  backend\app\history\backtest_history_comparison.py:85:    
+ayarlar_ayni = ilk.ayar_kimligi == ikinci.ayar_kimligi
+  backend\app\history\backtest_history_comparison.py:86:    
+dogrudan = semboller_ayni and donem_ayni and veri_ayni
+  backend\app\history\backtest_history_comparison.py:87:
+  backend\app\history\backtest_history_comparison.py:88:    
+uyarilar: list[str] = []
+  backend\app\history\backtest_history_comparison.py:89:    if 
+not semboller_ayni:
+  backend\app\history\backtest_history_comparison.py:90:        
+uyarilar.append(
+  backend\app\market_context\ai_provider.py:21:
+  backend\app\market_context\ai_provider.py:22:    @classmethod
+  backend\app\market_context\ai_provider.py:23:    def 
+from_environment(cls) -> "AIProviderConfig":
+  backend\app\market_context\ai_provider.py:24:        provider 
+= os.getenv("HISSE_ROBOTU_AI_PROVIDER", 
+"gemini").strip().lower()
+  backend\app\market_context\ai_provider.py:25:        if 
+provider == "gemini":
+> backend\app\market_context\ai_provider.py:26:            
+model = os.getenv("HISSE_ROBOTU_GEMINI_MODEL", 
+"gemini-3.5-flash-lite").strip()
+  backend\app\market_context\ai_provider.py:27:        elif 
+provider == "openai":
+  backend\app\market_context\ai_provider.py:28:            
+model = os.getenv("HISSE_ROBOTU_OPENAI_MODEL", 
+"gpt-5.6-luna").strip()
+  backend\app\market_context\ai_provider.py:29:        else:
+  backend\app\market_context\ai_provider.py:30:            
+model = ""
+  backend\app\market_context\ai_provider.py:31:        return 
+cls(
+  backend\app\market_context\ai_provider.py:32:            
+provider=provider,
+  backend\app\market_context\ai_provider.py:33:            
+model=model,
+  backend\app\market_context\ai_provider.py:34:            
+timeout_seconds=float(os.getenv("HISSE_ROBOTU_AI_TIMEOUT", 
+"45")),
+  backend\app\market_context\ai_provider.py:35:            
+max_retries=int(os.getenv("HISSE_ROBOTU_AI_MAX_RETRIES", "1")),
+  backend\app\market_context\ai_provider.py:36:        )
+  backend\app\market_context\ai_provider.py:37:
+  backend\app\market_context\ai_provider.py:38:
+  backend\app\market_context\ai_provider.py:39:@dataclass(frozen
+=True, slots=True)
+  backend\app\market_context\ai_provider.py:40:class 
+AIProviderResult:
+  backend\app\market_context\ai_provider.py:41:    provider: str
+  backend\app\ui\live_analysis_dashboard.py:34:    """Güncel 
+analiz ekranı sonucu hazırlanamadığında kullanılır."""
+  backend\app\ui\live_analysis_dashboard.py:35:
+  backend\app\ui\live_analysis_dashboard.py:36:
+  backend\app\ui\live_analysis_dashboard.py:37:@dataclass(frozen
+=True)
+  backend\app\ui\live_analysis_dashboard.py:38:class 
+LiveAnalysisRequest:
+> backend\app\ui\live_analysis_dashboard.py:39:    """Güncel 
+teknik analiz ve işlem planı için kullanıcı girdileri."""
+  backend\app\ui\live_analysis_dashboard.py:40:
+  backend\app\ui\live_analysis_dashboard.py:41:    sembol: str
+  backend\app\ui\live_analysis_dashboard.py:42:    sermaye: 
+float = 100_000.0
+  backend\app\ui\live_analysis_dashboard.py:43:    
+azami_risk_orani: float = 0.01
+  backend\app\ui\live_analysis_dashboard.py:44:
+  backend\app\ui\live_analysis_dashboard.py:45:    def 
+__post_init__(self) -> None:
+  backend\app\ui\live_analysis_dashboard.py:46:        
+object.__setattr__(self, "sembol", 
+bist_sembolunu_hazirla(self.sembol))
+  backend\app\ui\live_analysis_dashboard.py:47:        if 
+self.sermaye <= 0:
+  backend\app\ui\live_analysis_dashboard.py:48:            
+raise ValueError("Sermaye pozitif olmalıdır.")
+  backend\app\ui\live_analysis_dashboard.py:49:        if not 0 
+< self.azami_risk_orani <= 1:
+  backend\app\ui\live_analysis_dashboard.py:50:            
+raise ValueError("Azami risk oranı 0 ile 1 arasında olmalıdır.")
+  backend\app\ui\live_analysis_dashboard.py:51:
+  backend\app\ui\live_analysis_dashboard.py:52:
+  backend\app\ui\live_analysis_dashboard.py:53:@dataclass(frozen
+=True)
+  backend\app\ui\live_analysis_dashboard.py:54:class 
+LiveAnalysisResult:
+  backend\app\ui\live_analysis_dashboard.py:101:TradePlanEngine 
+= Callable[..., TradePlan]
+  backend\app\ui\live_analysis_dashboard.py:102:PositionMonitorE
+ngine = Callable[..., PositionMonitoringResult]
+  backend\app\ui\live_analysis_dashboard.py:103:
+  backend\app\ui\live_analysis_dashboard.py:104:
+  backend\app\ui\live_analysis_dashboard.py:105:class 
+LiveAnalysisDashboardService:
+> backend\app\ui\live_analysis_dashboard.py:106:    """Veriyi 
+bir kez indirip güncel teknik analiz ve planı birlikte 
+üretir."""
+  backend\app\ui\live_analysis_dashboard.py:107:
+  backend\app\ui\live_analysis_dashboard.py:108:    def 
+__init__(
+  backend\app\ui\live_analysis_dashboard.py:109:        self,
+  backend\app\ui\live_analysis_dashboard.py:110:        
+veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+  backend\app\ui\live_analysis_dashboard.py:111:        
+teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+  backend\app\ui\live_analysis_dashboard.py:112:        
+plan_motoru: TradePlanEngine = islem_plani_olustur,
+  backend\app\ui\live_analysis_dashboard.py:113:    ) -> None:
+  backend\app\ui\live_analysis_dashboard.py:114:        
+self._veri_getirici = veri_getirici
+  backend\app\ui\live_analysis_dashboard.py:115:        
+self._teknik_motoru = teknik_motoru
+  backend\app\ui\live_analysis_dashboard.py:116:        
+self._plan_motoru = plan_motoru
+  backend\app\ui\live_analysis_dashboard.py:117:
+  backend\app\ui\live_analysis_dashboard.py:118:    def 
+calistir(self, istek: LiveAnalysisRequest) -> 
+LiveAnalysisResult:
+  backend\app\ui\live_analysis_dashboard.py:119:        try:
+  backend\app\ui\live_analysis_dashboard.py:120:            
+paket = self._veri_getirici(istek.sembol)
+  backend\app\ui\live_analysis_dashboard.py:121:            if 
+self._veri_getirici is coklu_zaman_dilimi_verisi_getir:
+  backend\tests\test_ai_provider.py:23:def 
+test_default_provider_is_gemini(monkeypatch):
+  backend\tests\test_ai_provider.py:24:    
+monkeypatch.delenv("HISSE_ROBOTU_AI_PROVIDER", raising=False)
+  backend\tests\test_ai_provider.py:25:    
+monkeypatch.delenv("HISSE_ROBOTU_GEMINI_MODEL", raising=False)
+  backend\tests\test_ai_provider.py:26:    config = 
+AIProviderConfig.from_environment()
+  backend\tests\test_ai_provider.py:27:    assert 
+config.provider == "gemini"
+> backend\tests\test_ai_provider.py:28:    assert config.model 
+== "gemini-3.5-flash-lite"
+  backend\tests\test_ai_provider.py:29:
+  backend\tests\test_ai_provider.py:30:
+  backend\tests\test_ai_provider.py:31:def test_gemini_provider_
+uses_structured_json_and_api_key(monkeypatch):
+  backend\tests\test_ai_provider.py:32:    
+monkeypatch.setenv("GEMINI_API_KEY", "test-key")
+  backend\tests\test_ai_provider.py:33:    captured = {}
+  backend\tests\test_ai_provider.py:34:
+  backend\tests\test_ai_provider.py:35:    def transport(url, 
+headers, payload, timeout):
+  backend\tests\test_ai_provider.py:36:        
+captured.update(url=url, headers=headers, payload=payload, 
+timeout=timeout)
+  backend\tests\test_ai_provider.py:37:        import json
+  backend\tests\test_ai_provider.py:38:        return {
+  backend\tests\test_ai_provider.py:39:            
+"candidates": [
+  backend\tests\test_ai_provider.py:40:                
+{"content": {"parts": [{"text": json.dumps(SAFE_OUTPUT)}]}}
+  backend\tests\test_ai_provider.py:41:            ]
+  backend\tests\test_ai_provider.py:42:        }
+  backend\tests\test_ai_provider.py:43:
+  backend\tests\test_ai_provider.py:44:    provider = 
+GeminiProvider(
+  backend\tests\test_ai_provider.py:45:        AIProviderConfig(
+  backend\tests\test_ai_provider.py:46:            
+provider="gemini",
+> backend\tests\test_ai_provider.py:47:            
+model="gemini-3.5-flash-lite",
+  backend\tests\test_ai_provider.py:48:            
+max_retries=0,
+  backend\tests\test_ai_provider.py:49:        ),
+  backend\tests\test_ai_provider.py:50:        
+transport=transport,
+  backend\tests\test_ai_provider.py:51:    )
+  backend\tests\test_ai_provider.py:52:    result = 
+provider.evaluate("test prompt")
+  backend\tests\test_ai_provider.py:53:    assert result.output 
+== SAFE_OUTPUT
+  backend\tests\test_ai_provider.py:54:    assert 
+captured["headers"]["x-goog-api-key"] == "test-key"
+  backend\tests\test_ai_provider.py:55:    assert (
+  backend\tests\test_ai_provider.py:56:        
+captured["payload"]["generationConfig"]["responseMimeType"]
+  backend\tests\test_ai_provider.py:57:        == 
+"application/json"
+  backend\tests\test_ai_provider.py:58:    )
+  backend\tests\test_ai_provider.py:59:
+  backend\tests\test_ai_provider.py:60:
+  backend\tests\test_ai_provider.py:61:def 
+test_openai_provider_is_explicit_opt_in(monkeypatch):
+  backend\tests\test_ai_provider.py:62:    
+monkeypatch.setenv("OPENAI_API_KEY", "test-openai-key")
+  backend\tests\test_ai_provider.py:85:def 
+test_missing_gemini_key_fails_safely(monkeypatch):
+  backend\tests\test_ai_provider.py:86:    
+monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+  backend\tests\test_ai_provider.py:87:    provider = 
+GeminiProvider(
+  backend\tests\test_ai_provider.py:88:        AIProviderConfig(
+  backend\tests\test_ai_provider.py:89:            
+provider="gemini",
+> backend\tests\test_ai_provider.py:90:            
+model="gemini-3.5-flash-lite",
+  backend\tests\test_ai_provider.py:91:            
+max_retries=0,
+  backend\tests\test_ai_provider.py:92:        )
+  backend\tests\test_ai_provider.py:93:    )
+  backend\tests\test_ai_provider.py:94:    with 
+pytest.raises(AIProviderError):
+  backend\tests\test_ai_provider.py:95:        
+provider.evaluate("test")
+  backend\tests\test_ai_provider.py:96:
+  backend\tests\test_ai_provider.py:97:
+  backend\tests\test_ai_provider.py:98:def 
+test_no_automatic_paid_fallback():
+  backend\tests\test_ai_provider.py:99:    provider = 
+build_provider(
+  backend\tests\test_ai_provider.py:100:        
+AIProviderConfig(
+  backend\tests\test_ai_provider.py:101:            
+provider="gemini",
+> backend\tests\test_ai_provider.py:102:            
+model="gemini-3.5-flash-lite",
+  backend\tests\test_ai_provider.py:103:        )
+  backend\tests\test_ai_provider.py:104:    )
+  backend\tests\test_ai_provider.py:105:    assert 
+isinstance(provider, GeminiProvider)
+  backend\tests\test_dashboard_analysis_menu_order.py:12:    
+"Başarı Karşılaştırması",
+  backend\tests\test_dashboard_analysis_menu_order.py:13:    
+"BIST Toplu Tarama",
+  backend\tests\test_dashboard_analysis_menu_order.py:14:    
+"Çoklu Hisse Portföyü",
+  backend\tests\test_dashboard_analysis_menu_order.py:15:    
+"Gecikmeli Veri Pilotu",
+  backend\tests\test_dashboard_analysis_menu_order.py:16:    
+"Gölge Portföy",
+> backend\tests\test_dashboard_analysis_menu_order.py:17:    
+"Güncel Teknik Analiz",
+  backend\tests\test_dashboard_analysis_menu_order.py:18:    
+"Günlük Operasyon Paneli",
+  backend\tests\test_dashboard_analysis_menu_order.py:19:    
+"Haftalık Performans Raporu",
+  backend\tests\test_dashboard_analysis_menu_order.py:20:    
+"İşlem Kayıp Analizi",
+  backend\tests\test_dashboard_analysis_menu_order.py:21:    
+"Momentum Keşif",
+  backend\tests\test_dashboard_analysis_menu_order.py:22:    
+"Ön Yükseliş Hazırlık",
+  backend\tests\test_dashboard_analysis_menu_order.py:23:    
+"Ön Yükseliş Toplu Doğrulama",
+  backend\tests\test_dashboard_analysis_menu_order.py:24:    
+"Piyasa Rejimi",
+  backend\tests\test_dashboard_analysis_menu_order.py:25:    
+"Seans Öncesi Bağlam",
+  backend\tests\test_dashboard_analysis_menu_order.py:26:    
+"Sinyal Sonuçları",
+  backend\tests\test_dashboard_analysis_menu_order.py:27:    
+"Tek Hisse",
+  backend\tests\test_dashboard_analysis_menu_order.py:28:    
+"Temel Analiz",
+  backend\tests\test_dashboard_analysis_menu_order.py:29:    
+"V1.3 Kalibrasyon Kararı",
+  backend\tests\test_dashboard_analysis_menu_order.py:30:)
+  backend\tests\test_dashboard_analysis_menu_order.py:31:
+  backend\tests\test_dashboard_analysis_menu_order.py:32:
+  backend\tests\test_live_analysis_dashboard.py:187:
+  backend\tests\test_live_analysis_dashboard.py:188:
+  backend\tests\test_live_analysis_dashboard.py:189:def 
+test_dashboard_yeni_analiz_modlarini_sunar() -> None:
+  backend\tests\test_live_analysis_dashboard.py:190:    kaynak 
+= DASHBOARD_DOSYASI.read_text(encoding="utf-8")
+  backend\tests\test_live_analysis_dashboard.py:191:
+> backend\tests\test_live_analysis_dashboard.py:192:    assert 
+'"Güncel Teknik Analiz"' in kaynak
+  backend\tests\test_live_analysis_dashboard.py:193:    assert 
+'"Açık Pozisyon İzleme"' in kaynak
+  backend\tests\test_live_analysis_dashboard.py:194:
+  backend\tests\test_live_analysis_dashboard.py:195:
+  backend\tests\test_live_analysis_dashboard.py:196:def 
+test_dashboard_yeni_form_ve_sonuc_fonksiyonlarini_icerir() -> 
+None:
+  backend\tests\test_live_analysis_dashboard.py:197:    agac = 
+ast.parse(DASHBOARD_DOSYASI.read_text(encoding="utf-8"))
+  backend\tests\test_live_analysis_dashboard.py:198:    
+fonksiyonlar = {
+  backend\tests\test_live_analysis_dashboard.py:199:        
+dugum.name
+  backend\tests\test_live_analysis_dashboard.py:200:        for 
+dugum in agac.body
+  backend\tests\test_live_analysis_dashboard.py:201:        if 
+isinstance(dugum, ast.FunctionDef)
+  backend\tests\test_live_analysis_dashboard.py:202:    }
+  backend\tests\test_live_analysis_dashboard.py:203:
+  backend\tests\test_live_analysis_dashboard.py:204:    assert {
+  backend\tests\test_live_analysis_dashboard.py:205:        
+"guncel_teknik_analiz_formu",
+  backend\tests\test_live_analysis_dashboard.py:206:        
+"guncel_analiz_sonucu_goster",
+  backend\tests\test_live_analysis_dashboard.py:207:        
+"acik_pozisyon_izleme_formu",
+  backend\tests\test_live_analysis_history.py:235:
+  backend\tests\test_live_analysis_history.py:236:def 
+test_dashboard_guncel_analizi_gecmise_baglar() -> None:
+  backend\tests\test_live_analysis_history.py:237:    kaynak = 
+DASHBOARD_DOSYASI.read_text(encoding="utf-8")
+  backend\tests\test_live_analysis_history.py:238:
+  backend\tests\test_live_analysis_history.py:239:    assert 
+"depo.guncel_analiz_kaydet(sonuc)" in kaynak
+> backend\tests\test_live_analysis_history.py:240:    assert 
+"Güncel teknik analiz, Analiz Geçmişi'ne kaydedildi." in kaynak
+> backend\tests\test_live_analysis_history.py:241:    assert 
+'"Güncel Teknik Analiz": GUNCEL_TEKNIK_ANALIZ' in kaynak
+  backend\tests\test_live_analysis_history.py:242:    assert 
+"guncel_analiz_gecmis_kaydi_goster" in kaynak
+  backend\tests\test_sprint142_hardening.py:46:
+  backend\tests\test_sprint142_hardening.py:47:def 
+test_default_gemini_model(monkeypatch):
+  backend\tests\test_sprint142_hardening.py:48:    
+monkeypatch.delenv("HISSE_ROBOTU_AI_PROVIDER", raising=False)
+  backend\tests\test_sprint142_hardening.py:49:    
+monkeypatch.delenv("HISSE_ROBOTU_GEMINI_MODEL", raising=False)
+  backend\tests\test_sprint142_hardening.py:50:    config = 
+AIProviderConfig.from_environment()
+> backend\tests\test_sprint142_hardening.py:51:    assert 
+config.model == "gemini-3.5-flash-lite"
+  backend\tests\test_sprint142_hardening.py:52:
+  backend\tests\test_sprint142_hardening.py:53:def 
+test_ai_schema_has_stock_specific_risks():
+  backend\tests\test_sprint142_hardening.py:54:    assert 
+"stock_specific_risks" in OUTPUT_SCHEMA["properties"]
+  backend\tests\test_sprint142_hardening.py:55:    assert 
+"stock_specific_risks" in OUTPUT_SCHEMA["required"]
+  backend\tests\test_system_check.py:285:
+  backend\tests\test_system_check.py:286:def 
+test_kullanim_kilavuzu_ana_akislar_ve_kontrol_komutunu_icerir() 
+-> None:
+  backend\tests\test_system_check.py:287:    kaynak = 
+KULLANIM.read_text(encoding="utf-8")
+  backend\tests\test_system_check.py:288:
+  backend\tests\test_system_check.py:289:    assert 
+"backend.run_system_check" in kaynak
+> backend\tests\test_system_check.py:290:    assert "Güncel 
+Teknik Analiz" in kaynak
+  backend\tests\test_system_check.py:291:    assert "BIST Toplu 
+Tarama" in kaynak
+  backend\tests\test_system_check.py:292:    assert "Açık 
+Pozisyon İzleme" in kaynak
+  backend\tests\test_system_check.py:293:    assert "İşlem 
+Kayıp Analizi" in kaynak
+  backend\tests\test_system_check.py:294:    assert "Analiz 
+Geçmişi" in kaynak
+  backend\tests\test_v11_closeout_documentation.py:2:
+  backend\tests\test_v11_closeout_documentation.py:3:
+  backend\tests\test_v11_closeout_documentation.py:4:ROOT = 
+Path(__file__).resolve().parents[2]
+  backend\tests\test_v11_closeout_documentation.py:5:REQUIRED = 
+(
+  backend\tests\test_v11_closeout_documentation.py:6:    
+"backend.run_system_check",
+> backend\tests\test_v11_closeout_documentation.py:7:    
+"Güncel Teknik Analiz",
+  backend\tests\test_v11_closeout_documentation.py:8:    "BIST 
+Toplu Tarama",
+  backend\tests\test_v11_closeout_documentation.py:9:    "Açık 
+Pozisyon İzleme",
+  backend\tests\test_v11_closeout_documentation.py:10:    
+"İşlem Kayıp Analizi",
+  backend\tests\test_v11_closeout_documentation.py:11:    
+"Analiz Geçmişi",
+  backend\tests\test_v11_closeout_documentation.py:12:)
+  backend\tests\test_v11_closeout_documentation.py:13:
+  backend\tests\test_v11_closeout_documentation.py:14:
+  backend\tests\test_v11_closeout_documentation.py:15:def 
+test_v11_kullanim_kilavuzlari_ana_akislari_icerir() -> None:
+  backend\tests\test_v11_closeout_documentation.py:16:    for 
+relative_path in ("KULLANIM.md", "KULLANIM_KILAVUZU.md"):
+  backend\tests\test_v11_closeout_documentation.py:17:        
+content = (ROOT / relative_path).read_text(encoding="utf-8")
+  backend\tests\test_v11_closeout_documentation.py:18:        
+missing = [item for item in REQUIRED if item not in content]
+  backend\tests\test_v11_closeout_documentation.py:19:        
+assert not missing, f"{relative_path} eksik ifadeler: {missing}"
+
+

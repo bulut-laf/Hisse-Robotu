@@ -1,0 +1,974 @@
+{
+  "created_at_utc": "2026-10-22T06:50:32.673649+00:00",
+  "input_count": 96,
+  "status_counts": {
+    "FRESH_CANDIDATE": 81,
+    "STALE_SERIES": 15
+  },
+  "results": [
+    {
+      "isin": "AT0000605324",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "7241",
+      "returned_isin": "AT0000605324",
+      "points": 7819,
+      "first_date_utc": "2005-03-01",
+      "last_date_utc": "2026-10-21",
+      "last_value": 138.6
+    },
+    {
+      "isin": "AT0000605332",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4142",
+      "returned_isin": "AT0000605332",
+      "points": 5345,
+      "first_date_utc": "2005-03-01",
+      "last_date_utc": "2026-10-21",
+      "last_value": 216.37
+    },
+    {
+      "isin": "AT0000627476",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "362",
+      "returned_isin": "AT0000627476",
+      "points": 5435,
+      "first_date_utc": "2004-09-03",
+      "last_date_utc": "2026-10-21",
+      "last_value": 394131.32
+    },
+    {
+      "isin": "AT0000639067",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "762",
+      "returned_isin": "AT0000639067",
+      "points": 5682,
+      "first_date_utc": "2003-09-01",
+      "last_date_utc": "2026-10-21",
+      "last_value": 203.03
+    },
+    {
+      "isin": "AT0000658968",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "5842",
+      "returned_isin": "AT0000658968",
+      "points": 5871,
+      "first_date_utc": "2003-01-20",
+      "last_date_utc": "2026-10-21",
+      "last_value": 197.58
+    },
+    {
+      "isin": "AT0000673181",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "722",
+      "returned_isin": "AT0000673181",
+      "points": 5790,
+      "first_date_utc": "2002-09-23",
+      "last_date_utc": "2026-10-21",
+      "last_value": 116.41
+    },
+    {
+      "isin": "AT0000673199",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "5892",
+      "returned_isin": "AT0000673199",
+      "points": 5937,
+      "first_date_utc": "2002-09-23",
+      "last_date_utc": "2026-10-21",
+      "last_value": 144.85
+    },
+    {
+      "isin": "AT0000673249",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "292",
+      "returned_isin": "AT0000673249",
+      "points": 5949,
+      "first_date_utc": "2002-09-23",
+      "last_date_utc": "2026-10-21",
+      "last_value": 174.17
+    },
+    {
+      "isin": "AT0000673306",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "682",
+      "returned_isin": "AT0000673306",
+      "points": 5947,
+      "first_date_utc": "2002-09-23",
+      "last_date_utc": "2026-10-21",
+      "last_value": 200.44
+    },
+    {
+      "isin": "AT0000673322",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "11752",
+      "returned_isin": "AT0000673322",
+      "points": 5947,
+      "first_date_utc": "2002-09-23",
+      "last_date_utc": "2026-10-21",
+      "last_value": 21.04
+    },
+    {
+      "isin": "AT0000673355",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "282",
+      "returned_isin": "AT0000673355",
+      "points": 5955,
+      "first_date_utc": "2002-09-23",
+      "last_date_utc": "2026-10-21",
+      "last_value": 126.97
+    },
+    {
+      "isin": "AT0000673371",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "712",
+      "returned_isin": "AT0000673371",
+      "points": 5944,
+      "first_date_utc": "2002-09-23",
+      "last_date_utc": "2026-10-21",
+      "last_value": 1223.12
+    },
+    {
+      "isin": "AT0000A00G88",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "272",
+      "returned_isin": "AT0000A00G88",
+      "points": 4921,
+      "first_date_utc": "2006-03-21",
+      "last_date_utc": "2026-10-21",
+      "last_value": 42286.61
+    },
+    {
+      "isin": "AT0000A00G96",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "302",
+      "returned_isin": "AT0000A00G96",
+      "points": 5003,
+      "first_date_utc": "2006-07-14",
+      "last_date_utc": "2026-10-21",
+      "last_value": 55975.71
+    },
+    {
+      "isin": "AT0000A00GA2",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4132",
+      "returned_isin": "AT0000A00GA2",
+      "points": 5079,
+      "first_date_utc": "2006-03-21",
+      "last_date_utc": "2026-10-21",
+      "last_value": 7639.83
+    },
+    {
+      "isin": "AT0000A00GC8",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "322",
+      "returned_isin": "AT0000A00GC8",
+      "points": 5051,
+      "first_date_utc": "2006-05-02",
+      "last_date_utc": "2026-10-21",
+      "last_value": 72529.29
+    },
+    {
+      "isin": "AT0000A00GE4",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "332",
+      "returned_isin": "AT0000A00GE4",
+      "points": 4998,
+      "first_date_utc": "2006-07-25",
+      "last_date_utc": "2026-10-21",
+      "last_value": 133196.65
+    },
+    {
+      "isin": "AT0000A00GF1",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "342",
+      "returned_isin": "AT0000A00GF1",
+      "points": 5042,
+      "first_date_utc": "2006-03-21",
+      "last_date_utc": "2026-10-21",
+      "last_value": 73770.45
+    },
+    {
+      "isin": "AT0000A00GK1",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "742",
+      "returned_isin": "AT0000A00GK1",
+      "points": 5004,
+      "first_date_utc": "2006-07-07",
+      "last_date_utc": "2026-10-21",
+      "last_value": 366.65
+    },
+    {
+      "isin": "AT0000A00GL9",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "692",
+      "returned_isin": "AT0000A00GL9",
+      "points": 5010,
+      "first_date_utc": "2006-07-07",
+      "last_date_utc": "2026-10-21",
+      "last_value": 154.07
+    },
+    {
+      "isin": "LU0012181748",
+      "status": "STALE_SERIES",
+      "instrument_id": "3172",
+      "returned_isin": "LU0012181748",
+      "points": 6900,
+      "first_date_utc": "1990-12-31",
+      "last_date_utc": "2026-10-16",
+      "last_value": 15171
+    },
+    {
+      "isin": "LU0012182399",
+      "status": "STALE_SERIES",
+      "instrument_id": "3272",
+      "returned_isin": "LU0012182399",
+      "points": 7152,
+      "first_date_utc": "1994-09-19",
+      "last_date_utc": "2026-10-16",
+      "last_value": 540.52
+    },
+    {
+      "isin": "LU0051128774",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "5072",
+      "returned_isin": "LU0051128774",
+      "points": 7986,
+      "first_date_utc": "1994-07-04",
+      "last_date_utc": "2026-10-20",
+      "last_value": 3490.45
+    },
+    {
+      "isin": "LU0069970746",
+      "status": "STALE_SERIES",
+      "instrument_id": "3182",
+      "returned_isin": "LU0069970746",
+      "points": 6615,
+      "first_date_utc": "1996-10-04",
+      "last_date_utc": "2026-10-16",
+      "last_value": 34366
+    },
+    {
+      "isin": "LU0075938133",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2982",
+      "returned_isin": "LU0075938133",
+      "points": 6531,
+      "first_date_utc": "1997-06-04",
+      "last_date_utc": "2026-10-20",
+      "last_value": 197.26
+    },
+    {
+      "isin": "LU0086913042",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3112",
+      "returned_isin": "LU0086913042",
+      "points": 6548,
+      "first_date_utc": "1998-05-06",
+      "last_date_utc": "2026-10-20",
+      "last_value": 178.25
+    },
+    {
+      "isin": "LU0086914362",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3032",
+      "returned_isin": "LU0086914362",
+      "points": 6549,
+      "first_date_utc": "1998-05-06",
+      "last_date_utc": "2026-10-20",
+      "last_value": 179.86
+    },
+    {
+      "isin": "LU0089276934",
+      "status": "STALE_SERIES",
+      "instrument_id": "7321",
+      "returned_isin": "LU0089276934",
+      "points": 6025,
+      "first_date_utc": "1998-10-15",
+      "last_date_utc": "2026-10-12",
+      "last_value": 506.14
+    },
+    {
+      "isin": "LU0089291651",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2912",
+      "returned_isin": "LU0089291651",
+      "points": 6612,
+      "first_date_utc": "1998-01-02",
+      "last_date_utc": "2026-10-20",
+      "last_value": 276.6
+    },
+    {
+      "isin": "LU0099625146",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3102",
+      "returned_isin": "LU0099625146",
+      "points": 6031,
+      "first_date_utc": "1999-11-12",
+      "last_date_utc": "2026-10-20",
+      "last_value": 130.08
+    },
+    {
+      "isin": "LU0111491469",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3052",
+      "returned_isin": "LU0111491469",
+      "points": 5227,
+      "first_date_utc": "2003-09-29",
+      "last_date_utc": "2026-10-20",
+      "last_value": 151.36
+    },
+    {
+      "isin": "LU0111548326",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3012",
+      "returned_isin": "LU0111548326",
+      "points": 5987,
+      "first_date_utc": "2000-09-22",
+      "last_date_utc": "2026-10-20",
+      "last_value": 353.39
+    },
+    {
+      "isin": "LU0111549480",
+      "status": "STALE_SERIES",
+      "instrument_id": "3282",
+      "returned_isin": "LU0111549480",
+      "points": 5758,
+      "first_date_utc": "2001-04-02",
+      "last_date_utc": "2026-10-07",
+      "last_value": 324.12
+    },
+    {
+      "isin": "LU0113302664",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "972",
+      "returned_isin": "LU0113302664",
+      "points": 6141,
+      "first_date_utc": "1994-07-04",
+      "last_date_utc": "2026-10-20",
+      "last_value": 3100.31
+    },
+    {
+      "isin": "LU0113303043",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "932",
+      "returned_isin": "LU0113303043",
+      "points": 6139,
+      "first_date_utc": "1994-07-05",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1814.22
+    },
+    {
+      "isin": "LU0113304017",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "902",
+      "returned_isin": "LU0113304017",
+      "points": 7027,
+      "first_date_utc": "1997-11-07",
+      "last_date_utc": "2026-10-20",
+      "last_value": 106.98
+    },
+    {
+      "isin": "LU0113305253",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "912",
+      "returned_isin": "LU0113305253",
+      "points": 6104,
+      "first_date_utc": "1997-11-07",
+      "last_date_utc": "2026-10-20",
+      "last_value": 320.29
+    },
+    {
+      "isin": "LU0113311731",
+      "status": "STALE_SERIES",
+      "instrument_id": "1112",
+      "returned_isin": "LU0113311731",
+      "points": 5191,
+      "first_date_utc": "2000-03-24",
+      "last_date_utc": "2022-07-01",
+      "last_value": 30.77645118
+    },
+    {
+      "isin": "LU0119216801",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "5062",
+      "returned_isin": "LU0119216801",
+      "points": 6635,
+      "first_date_utc": "1999-10-03",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1787.34
+    },
+    {
+      "isin": "LU0121174428",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "1022",
+      "returned_isin": "LU0121174428",
+      "points": 6827,
+      "first_date_utc": "1998-01-26",
+      "last_date_utc": "2026-10-20",
+      "last_value": 2008.49
+    },
+    {
+      "isin": "LU0121175821",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "952",
+      "returned_isin": "LU0121175821",
+      "points": 7082,
+      "first_date_utc": "1997-12-01",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1832.99
+    },
+    {
+      "isin": "LU0121204431",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "1172",
+      "returned_isin": "LU0121204431",
+      "points": 6264,
+      "first_date_utc": "2000-07-11",
+      "last_date_utc": "2026-10-20",
+      "last_value": 624.72
+    },
+    {
+      "isin": "LU0121204944",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "922",
+      "returned_isin": "LU0121204944",
+      "points": 6177,
+      "first_date_utc": "1999-10-04",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1584.23
+    },
+    {
+      "isin": "LU0127786860",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "872",
+      "returned_isin": "LU0127786860",
+      "points": 6362,
+      "first_date_utc": "1999-04-07",
+      "last_date_utc": "2026-10-20",
+      "last_value": 991.03
+    },
+    {
+      "isin": "LU0131210360",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2992",
+      "returned_isin": "LU0131210360",
+      "points": 5626,
+      "first_date_utc": "2001-07-17",
+      "last_date_utc": "2026-10-20",
+      "last_value": 192.75
+    },
+    {
+      "isin": "LU0146259923",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "852",
+      "returned_isin": "LU0146259923",
+      "points": 6477,
+      "first_date_utc": "2000-05-22",
+      "last_date_utc": "2026-10-20",
+      "last_value": 797.07
+    },
+    {
+      "isin": "LU0154245756",
+      "status": "STALE_SERIES",
+      "instrument_id": "3292",
+      "returned_isin": "LU0154245756",
+      "points": 4507,
+      "first_date_utc": "2006-01-31",
+      "last_date_utc": "2026-10-16",
+      "last_value": 393.86
+    },
+    {
+      "isin": "LU0177332227",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3092",
+      "returned_isin": "LU0177332227",
+      "points": 5117,
+      "first_date_utc": "2003-10-24",
+      "last_date_utc": "2026-10-20",
+      "last_value": 292.05
+    },
+    {
+      "isin": "LU0190304583",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3022",
+      "returned_isin": "LU0190304583",
+      "points": 5003,
+      "first_date_utc": "2004-04-21",
+      "last_date_utc": "2026-10-20",
+      "last_value": 143.93
+    },
+    {
+      "isin": "LU0205352882",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "882",
+      "returned_isin": "LU0205352882",
+      "points": 5419,
+      "first_date_utc": "2004-12-15",
+      "last_date_utc": "2026-10-20",
+      "last_value": 669.54
+    },
+    {
+      "isin": "LU0205423220",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "862",
+      "returned_isin": "LU0205423220",
+      "points": 5014,
+      "first_date_utc": "2006-04-17",
+      "last_date_utc": "2026-10-20",
+      "last_value": 882.42
+    },
+    {
+      "isin": "LU0212178916",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3072",
+      "returned_isin": "LU0212178916",
+      "points": 4212,
+      "first_date_utc": "2007-09-25",
+      "last_date_utc": "2026-10-20",
+      "last_value": 339.02
+    },
+    {
+      "isin": "LU0214495557",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "892",
+      "returned_isin": "LU0214495557",
+      "points": 5249,
+      "first_date_utc": "2005-03-31",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1073.03
+    },
+    {
+      "isin": "LU0249332619",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3162",
+      "returned_isin": "LU0249332619",
+      "points": 4625,
+      "first_date_utc": "2006-07-26",
+      "last_date_utc": "2026-10-20",
+      "last_value": 131.7
+    },
+    {
+      "isin": "LU0250170304",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "992",
+      "returned_isin": "LU0250170304",
+      "points": 4896,
+      "first_date_utc": "2006-10-24",
+      "last_date_utc": "2026-10-20",
+      "last_value": 509.07
+    },
+    {
+      "isin": "LU0250183208",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "1002",
+      "returned_isin": "LU0250183208",
+      "points": 4987,
+      "first_date_utc": "2006-06-05",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1389.09
+    },
+    {
+      "isin": "LU0265266980",
+      "status": "STALE_SERIES",
+      "instrument_id": "2922",
+      "returned_isin": "LU0265266980",
+      "points": 4248,
+      "first_date_utc": "2006-12-13",
+      "last_date_utc": "2026-10-16",
+      "last_value": 120.82
+    },
+    {
+      "isin": "LU0265288877",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3002",
+      "returned_isin": "LU0265288877",
+      "points": 4741,
+      "first_date_utc": "2006-12-19",
+      "last_date_utc": "2026-10-20",
+      "last_value": 29.11
+    },
+    {
+      "isin": "LU0265291665",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3122",
+      "returned_isin": "LU0265291665",
+      "points": 4288,
+      "first_date_utc": "2006-12-13",
+      "last_date_utc": "2026-10-20",
+      "last_value": 204.29
+    },
+    {
+      "isin": "LU0265293521",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "6552",
+      "returned_isin": "LU0265293521",
+      "points": 3881,
+      "first_date_utc": "2006-09-13",
+      "last_date_utc": "2026-10-20",
+      "last_value": 253
+    },
+    {
+      "isin": "LU0282388437",
+      "status": "STALE_SERIES",
+      "instrument_id": "7331",
+      "returned_isin": "LU0282388437",
+      "points": 4088,
+      "first_date_utc": "2008-04-09",
+      "last_date_utc": "2026-10-16",
+      "last_value": 187.02
+    },
+    {
+      "isin": "LU0325598166",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2942",
+      "returned_isin": "LU0325598166",
+      "points": 4189,
+      "first_date_utc": "2007-10-30",
+      "last_date_utc": "2026-10-20",
+      "last_value": 119.85
+    },
+    {
+      "isin": "LU0332192888",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2232",
+      "returned_isin": "LU0332192888",
+      "points": 4365,
+      "first_date_utc": "2008-12-04",
+      "last_date_utc": "2026-10-20",
+      "last_value": 6135.93
+    },
+    {
+      "isin": "LU0332193340",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2222",
+      "returned_isin": "LU0332193340",
+      "points": 4440,
+      "first_date_utc": "2008-06-25",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1351.01
+    },
+    {
+      "isin": "LU0347711466",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "3152",
+      "returned_isin": "LU0347711466",
+      "points": 4078,
+      "first_date_utc": "2008-04-09",
+      "last_date_utc": "2026-10-20",
+      "last_value": 387.5
+    },
+    {
+      "isin": "LU0370038597",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2672",
+      "returned_isin": "LU0370038597",
+      "points": 4458,
+      "first_date_utc": "2008-09-29",
+      "last_date_utc": "2026-10-20",
+      "last_value": 582.24
+    },
+    {
+      "isin": "LU0370038670",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "2682",
+      "returned_isin": "LU0370038670",
+      "points": 4458,
+      "first_date_utc": "2008-09-29",
+      "last_date_utc": "2026-10-20",
+      "last_value": 447.72
+    },
+    {
+      "isin": "LU0509951199",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4522",
+      "returned_isin": "LU0509951199",
+      "points": 3919,
+      "first_date_utc": "2010-12-10",
+      "last_date_utc": "2026-10-20",
+      "last_value": 234359.58
+    },
+    {
+      "isin": "LU0509951272",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4532",
+      "returned_isin": "LU0509951272",
+      "points": 3910,
+      "first_date_utc": "2010-12-22",
+      "last_date_utc": "2026-10-20",
+      "last_value": 107556.73
+    },
+    {
+      "isin": "LU0509951355",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4602",
+      "returned_isin": "LU0509951355",
+      "points": 3998,
+      "first_date_utc": "2010-07-20",
+      "last_date_utc": "2026-10-20",
+      "last_value": 225216.04
+    },
+    {
+      "isin": "LU0509951439",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4542",
+      "returned_isin": "LU0509951439",
+      "points": 3973,
+      "first_date_utc": "2010-09-03",
+      "last_date_utc": "2026-10-20",
+      "last_value": 131386.79
+    },
+    {
+      "isin": "LU0509951512",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4552",
+      "returned_isin": "LU0509951512",
+      "points": 3801,
+      "first_date_utc": "2010-12-28",
+      "last_date_utc": "2026-10-20",
+      "last_value": 166400.1
+    },
+    {
+      "isin": "LU0509951603",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4562",
+      "returned_isin": "LU0509951603",
+      "points": 4011,
+      "first_date_utc": "2010-07-20",
+      "last_date_utc": "2026-10-20",
+      "last_value": 88189.27
+    },
+    {
+      "isin": "LU0546914242",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "1192",
+      "returned_isin": "LU0546914242",
+      "points": 7650,
+      "first_date_utc": "1996-11-27",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1919
+    },
+    {
+      "isin": "LU0546915215",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "792",
+      "returned_isin": "LU0546915215",
+      "points": 5914,
+      "first_date_utc": "2003-07-28",
+      "last_date_utc": "2026-10-20",
+      "last_value": 4812.23
+    },
+    {
+      "isin": "LU0546915488",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4502",
+      "returned_isin": "LU0546915488",
+      "points": 4058,
+      "first_date_utc": "2010-09-07",
+      "last_date_utc": "2026-10-20",
+      "last_value": 125228.25
+    },
+    {
+      "isin": "LU0546916882",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "832",
+      "returned_isin": "LU0546916882",
+      "points": 7111,
+      "first_date_utc": "1998-12-31",
+      "last_date_utc": "2026-10-20",
+      "last_value": 150.11
+    },
+    {
+      "isin": "LU0546918151",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "1202",
+      "returned_isin": "LU0546918151",
+      "points": 6505,
+      "first_date_utc": "2001-04-27",
+      "last_date_utc": "2026-10-20",
+      "last_value": 492.99
+    },
+    {
+      "isin": "LU0546918409",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "822",
+      "returned_isin": "LU0546918409",
+      "points": 7067,
+      "first_date_utc": "1999-03-01",
+      "last_date_utc": "2026-10-20",
+      "last_value": 180.14
+    },
+    {
+      "isin": "LU0546919555",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4512",
+      "returned_isin": "LU0546919555",
+      "points": 4050,
+      "first_date_utc": "2010-09-09",
+      "last_date_utc": "2026-10-20",
+      "last_value": 122837.17
+    },
+    {
+      "isin": "LU0546920561",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "4672",
+      "returned_isin": "LU0546920561",
+      "points": 7264,
+      "first_date_utc": "1998-05-15",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1518.71
+    },
+    {
+      "isin": "LU0548664886",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "812",
+      "returned_isin": "LU0548664886",
+      "points": 6479,
+      "first_date_utc": "2001-05-18",
+      "last_date_utc": "2026-10-20",
+      "last_value": 529.22
+    },
+    {
+      "isin": "LU0823380802",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "5962",
+      "returned_isin": "LU0823380802",
+      "points": 2991,
+      "first_date_utc": "2013-05-27",
+      "last_date_utc": "2026-10-20",
+      "last_value": 247.88
+    },
+    {
+      "isin": "LU0823386163",
+      "status": "STALE_SERIES",
+      "instrument_id": "5972",
+      "returned_isin": "LU0823386163",
+      "points": 2934,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-12",
+      "last_value": 141.03
+    },
+    {
+      "isin": "LU0823388615",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "5992",
+      "returned_isin": "LU0823388615",
+      "points": 2925,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-20",
+      "last_value": 115.66
+    },
+    {
+      "isin": "LU0823397368",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "6002",
+      "returned_isin": "LU0823397368",
+      "points": 2982,
+      "first_date_utc": "2013-05-27",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1066.34
+    },
+    {
+      "isin": "LU0823399810",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "6012",
+      "returned_isin": "LU0823399810",
+      "points": 3013,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-20",
+      "last_value": 347.95
+    },
+    {
+      "isin": "LU0823401574",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "6122",
+      "returned_isin": "LU0823401574",
+      "points": 3015,
+      "first_date_utc": "2013-05-27",
+      "last_date_utc": "2026-10-20",
+      "last_value": 870.57
+    },
+    {
+      "isin": "LU0823403356",
+      "status": "STALE_SERIES",
+      "instrument_id": "6042",
+      "returned_isin": "LU0823403356",
+      "points": 2010,
+      "first_date_utc": "2013-05-17",
+      "last_date_utc": "2023-07-03",
+      "last_value": 55.33
+    },
+    {
+      "isin": "LU0823404248",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "6132",
+      "returned_isin": "LU0823404248",
+      "points": 3036,
+      "first_date_utc": "2013-05-27",
+      "last_date_utc": "2026-10-20",
+      "last_value": 64.43
+    },
+    {
+      "isin": "LU0823410997",
+      "status": "STALE_SERIES",
+      "instrument_id": "6072",
+      "returned_isin": "LU0823410997",
+      "points": 2935,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-16",
+      "last_value": 457.62
+    },
+    {
+      "isin": "LU0823413587",
+      "status": "STALE_SERIES",
+      "instrument_id": "6082",
+      "returned_isin": "LU0823413587",
+      "points": 3018,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-16",
+      "last_value": 922.28
+    },
+    {
+      "isin": "LU0823414635",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "6112",
+      "returned_isin": "LU0823414635",
+      "points": 2993,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-20",
+      "last_value": 508.83
+    },
+    {
+      "isin": "LU0823416762",
+      "status": "FRESH_CANDIDATE",
+      "instrument_id": "6092",
+      "returned_isin": "LU0823416762",
+      "points": 3000,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-20",
+      "last_value": 1893.67
+    },
+    {
+      "isin": "LU0823426308",
+      "status": "STALE_SERIES",
+      "instrument_id": "6032",
+      "returned_isin": "LU0823426308",
+      "points": 2897,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-16",
+      "last_value": 459.49
+    },
+    {
+      "isin": "LU0823428932",
+      "status": "STALE_SERIES",
+      "instrument_id": "6052",
+      "returned_isin": "LU0823428932",
+      "points": 2906,
+      "first_date_utc": "2013-05-24",
+      "last_date_utc": "2026-10-16",
+      "last_value": 195.69
+    }
+  ],
+  "f4_surface_updated": false,
+  "production_mutation": false,
+  "automatic_trade_authority": "NONE",
+  "forced_fill": false
+}

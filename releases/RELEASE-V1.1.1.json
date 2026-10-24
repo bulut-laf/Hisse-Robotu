@@ -1,0 +1,80 @@
+﻿{
+    "project":  "Hisse Robotu",
+    "version":  "1.1.1",
+    "suggested_git_tag":  "v1.1.1",
+    "generated_at_utc":  "2026-07-29T13:25:20.4015821Z",
+    "project_root":  "D:\\Projects\\Hisse-Robotu",
+    "status":  "PASSED",
+    "maintenance":  "GГјncel Teknik Analiz sonuГ§larД±nД± Analiz GeГ§miЕџi\u0027ne kaydetme",
+    "targeted_tests":  "\u0000",
+    "full_regression":  "\u0000",
+    "system_check":  "\u0000",
+    "syntax_check":  "Python sГ¶zdizimi kontrolГј baЕџarД±lД± (komut Г§Д±ktД± Гјretmedi).",
+    "source_archive":  "Hisse-Robotu-v1.1.1-source.zip",
+    "source_archive_sha256":  "8e3853803ee626fc286abdb782f271979fab56f4c54237c07f28605cdc70a42e",
+    "source_archive_hash_file":  "Hisse-Robotu-v1.1.1-source.zip.sha256",
+    "backup_directory":  "D:\\Projects\\Hisse-Robotu\\backups\\v1.1.1-bakim-20260729-162234",
+    "log_directory":  "D:\\Projects\\Hisse-Robotu\\releases\\v1.1.1-bakim-loglari-20260729-162234",
+    "installed_files":  [
+                            {
+                                "relative_path":  "KULLANIM.md",
+                                "sha256":  "a35eebf046ede9d232bd6fb9ea32ee1f8e02598c03517c78396b6a99024238a4"
+                            },
+                            {
+                                "relative_path":  "KULLANIM_KILAVUZU.md",
+                                "sha256":  "a35eebf046ede9d232bd6fb9ea32ee1f8e02598c03517c78396b6a99024238a4"
+                            },
+                            {
+                                "relative_path":  "PROJECT_NOTES.md",
+                                "sha256":  "56c69187ca8d2041f5fa1422fc6dc068816cc2998e8c5002515998ba1dba994c"
+                            },
+                            {
+                                "relative_path":  "VERSION",
+                                "sha256":  "cc52f678848b814373757b460383bf61960e4943c203735adde0a350b3e50989"
+                            },
+                            {
+                                "relative_path":  "backend\\dashboard.py",
+                                "sha256":  "bd64a63ad80383bb4c30bb62d4d6286fa5312d53074039578a22b2aa472268ea"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\diagnostics\\system_check.py",
+                                "sha256":  "e8b8b5828fc4f5e37e5688bdb72664b376230ffc5ccbdc32c17ff9b0482a7cce"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\history\\backtest_history.py",
+                                "sha256":  "f66ba5039be38819c9874bcdfcfaf0d3152b0b26e35fbe6d62a3f027d28254e8"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\history\\backtest_history_comparison.py",
+                                "sha256":  "6fa8243d730a079f8d31654a2c022e7cde39df48f987810610c06f3285dcae52"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\history\\backtest_history_pagination.py",
+                                "sha256":  "18a19180340b52b1c30ac335e7a97de8fe058bb15c2f6bb3e11630d82e432883"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\history\\backtest_history_summary.py",
+                                "sha256":  "383d288950471b898dbb309d50e37db6b1a48b2b920591cf72115a9bc77357f0"
+                            },
+                            {
+                                "relative_path":  "backend\\app\\ui\\live_analysis_dashboard.py",
+                                "sha256":  "682ac65968ab8cebe772fa391ab11d9dc100407a554c99027d4dd67795c5c16e"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_live_analysis_history.py",
+                                "sha256":  "956205013aad73521db624e25cdb570c12a90029baf0e2f7ddeeedb2fa101a06"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_manual_vbts_setup_assets.py",
+                                "sha256":  "0314c54363ec0bf23fbe4de55fdc40e673383fbc3d3aa79aeb112d582e91573c"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_system_check.py",
+                                "sha256":  "942886ca22c9c52ac080b2d0c187639efddcc118583b4d7057c8d02bcd72afed"
+                            },
+                            {
+                                "relative_path":  "backend\\tests\\test_v11_closeout_version.py",
+                                "sha256":  "eb2e29b5d49650f421c0dd2e963a8f5c6cd23b713534d502ab7743be31e33565"
+                            }
+                        ]
+}

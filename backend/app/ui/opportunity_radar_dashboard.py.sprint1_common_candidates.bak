@@ -1,0 +1,107 @@
+from __future__ import annotations
+
+import pandas as pd
+import streamlit as st
+
+from backend.app.opportunity_radar import OpportunityRadarResult, run_opportunity_radar
+
+
+def _render_table(title: str, frame: pd.DataFrame, empty_message: str) -> None:
+    st.markdown(f"### {title}")
+    if frame.empty:
+        st.info(empty_message)
+        return
+    st.dataframe(frame, hide_index=True, width="stretch")
+
+
+def render_opportunity_radar() -> None:
+    st.header("Fırsat Radarı")
+    st.caption(
+        "Tek taramada Haftalık Ön Yükseliş, Aylık Güçlü Trend ve "
+        "Aylık Erken Trend adaylarını aynı BIST Tüm veri hattından üretir. "
+        "Haftalık Validated etiketi geçmiş out-of-sample profile dayanır. "
+        "Aylık katmanda kapanmış ay eşleşmesi Validated Profile Match, "
+        "açık ay eşleşmesi Ay İçi Geçici Match olarak gösterilir."
+    )
+
+    result_limit = st.selectbox(
+        "Her radar için gösterilecek azami aday",
+        options=(10, 25, 50),
+        index=1,
+        key="opportunity_radar_limit",
+    )
+    run_requested = st.button(
+        "Taramayı Başlat",
+        type="primary",
+        width="stretch",
+        key="opportunity_radar_run",
+    )
+
+    cache_key = "opportunity_radar_last_result"
+    if run_requested:
+        try:
+            with st.spinner("BIST Tüm tek veri hattı üzerinden Fırsat Radarı çalışıyor..."):
+                result = run_opportunity_radar(result_limit=int(result_limit))
+        except Exception as exc:
+            st.error(f"Fırsat Radarı çalıştırılamadı: {exc}")
+            return
+        st.session_state[cache_key] = result
+    else:
+        result = st.session_state.get(cache_key)
+        if result is None:
+            return
+
+    if not isinstance(result, OpportunityRadarResult):
+        st.session_state.pop(cache_key, None)
+        return
+
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("Evren", result.universe_name)
+    c2.metric("Evren sembolü", result.universe_count)
+    c3.metric("Verisi hazır", result.data_success_count)
+    c4.metric("Veri hatası", len(result.data_failures))
+    st.caption(
+        f"Evren kaynağı: {result.universe_source} · Evren tarihi: {result.universe_date}"
+    )
+
+    _render_table(
+        "Haftalık Ön Yükseliş",
+        result.weekly,
+        "Güncel W2/W3 adayı bulunamadı.",
+    )
+    _render_table(
+        "Aylık Güçlü Trend",
+        result.monthly_strong,
+        "Aylık güçlü trend koşullarını geçen aday bulunamadı.",
+    )
+    _render_table(
+        "Aylık Erken Trend",
+        result.monthly_early,
+        "Aylık erken trend koşullarını geçen aday bulunamadı.",
+    )
+
+    with st.expander("Audit / Export", expanded=False):
+        if not result.weekly.empty:
+            st.download_button(
+                "Haftalık radar CSV",
+                data=result.weekly.to_csv(index=False).encode("utf-8-sig"),
+                file_name="firsat_radari_haftalik.csv",
+                mime="text/csv",
+                key="opportunity_radar_weekly_csv",
+            )
+        if not result.monthly_strong.empty:
+            st.download_button(
+                "Aylık güçlü trend CSV",
+                data=result.monthly_strong.to_csv(index=False).encode("utf-8-sig"),
+                file_name="firsat_radari_aylik_guclu_trend.csv",
+                mime="text/csv",
+                key="opportunity_radar_monthly_strong_csv",
+            )
+        if not result.monthly_early.empty:
+            st.download_button(
+                "Aylık erken trend CSV",
+                data=result.monthly_early.to_csv(index=False).encode("utf-8-sig"),
+                file_name="firsat_radari_aylik_erken_trend.csv",
+                mime="text/csv",
+                key="opportunity_radar_monthly_early_csv",
+            )

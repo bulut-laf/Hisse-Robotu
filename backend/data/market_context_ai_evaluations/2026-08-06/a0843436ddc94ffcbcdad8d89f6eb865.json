@@ -1,0 +1,54 @@
+{
+  "review_id": "a0843436ddc94ffcbcdad8d89f6eb865",
+  "date": "2026-08-06",
+  "created_at": "2026-08-06T08:24:48Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 3.206,
+  "report_count": 8,
+  "sources": [
+    "ICBC",
+    "Yatırım Finansman"
+  ],
+  "document_ids": [
+    "9cf5125ad2fa453ebf65400ce3f4a87a",
+    "8d4169a784bc426dbe179faae1dd1321",
+    "37561fa8136249b897218439daa433d8",
+    "7d9d94a69d7e4ad786ed1029e20f2922",
+    "38fe732d45b74055aa565faf1b0ceea4",
+    "e760cd6f30fb468da6bfc45b209123b5",
+    "e6bd63738c7e462380e2b5a245a629d5",
+    "49c0c20e97a44652b693eb50ba9d6256"
+  ],
+  "output": {
+    "summary": "06.08.2026 tarihli raporlarda BIST100 endeksinin güne pozitif bir başlangıç yapması beklenirken, küresel piyasalarda risk iştahının karışık olduğu belirtilmiştir. Trump'ın anlaşma sinyali sonrasında petrol fiyatlarında düşüş eğilimi sürmekte, ABD iş gücü piyasası verileri Fed'in faiz artırımı beklentilerini zayıflatmaktadır. Bilanço odaklı hisse bazlı hareketlerin ön planda olduğu görülmektedir.",
+    "positive_factors": [
+      "BIST100 endeksinin güne pozitif başlangıç yapması beklenmektedir",
+      "Türkiye'nin 5 yıllık CDS priminin 240 baz puanın altında seyrederek 229,44 seviyesinde bulunması",
+      "Petrol fiyatlarındaki geri çekilmenin endeks üzerindeki baskıyı hafifletmesi",
+      "ABD'de zayıf gelen istihdam verilerinin Fed'in ilave faiz artırımı beklentilerini zayıflatması"
+    ],
+    "risk_factors": [
+      "TCMB'nin sıkı likidite yönetimini koruması (gecelik fonlama maliyeti %30,55, haftalık swap faizi %31,18)",
+      "Enflasyon dinamikleri ve kontrollü kur politikası",
+      "İhracat ağırlıklı şirketlerin kârlılığını olumsuz etkileyen euro-enflasyon makası"
+    ],
+    "stock_specific_risks": [
+      "Otomotiv operasyonlarında zayıf talep nedeniyle faaliyet kârlılığı üzerinde baskı oluşması",
+      "ARCLK'nin performansının zayıf talep, olumsuz ürün karması, fiyat baskısı ve yoğun rekabetten olumsuz etkilenmesi",
+      "TTKOM tarafında düşük marjlı inşaat gelirlerinin artması, ekipman ve teknoloji satış maliyetlerindeki yükseliş ile ticari giderlerin artması"
+    ],
+    "aligned_points": [
+      "BIST100 endeksinin güne hafif alıcılı veya dengeli/pozitif başlaması beklenmektedir",
+      "PETKM ve TTKOM gibi şirketlerin ikinci çeyrek finansal sonuçlarının takip edildiği ve piyasa beklentilerine yakın ya da üzerinde net kâr açıkladıkları belirtilmiştir"
+    ],
+    "conflicting_points": [
+      "ICBC raporunda BIST100 endeksinin güne pozitif başlangıç yapması beklenirken, Yatırım Finansman raporunda açılış beklentisi dengeli ve risk modu sınırlı temkinli olarak ifade edilmiştir"
+    ],
+    "watch_items": [
+      "EREGL'in 2026 yılı 2. çeyrek finansal sonuçlarının açıklanması",
+      "ABD haftalık işsizlik maaşı başvuruları ve Avrupa bölgesi perakende satışlar verileri",
+      "BIST100 endeksinde 13.900 ve 14.200 direnç seviyeleri ile 13.564 ve 13.230 destek seviyeleri"
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+﻿{
+    "requestedUri":  "https://www.tefas.gov.tr/api/funds/fonGnlBlgSiraliGetir",
+    "method":  "POST_JSON",
+    "httpStatus":  400,
+    "errorType":  "System.Net.WebException",
+    "error":  "The remote server returned an error: (400) Bad Request.",
+    "responseBody":  "{\"timestamp\":\"2026-09-01T21:47:08.100+03:00\",\"status\":400,\"error\":\"Bad Request\",\"path\":\"/v17/fug/fonport/portal/service/fonGnlBlgSiraliGetir\"}"
+}

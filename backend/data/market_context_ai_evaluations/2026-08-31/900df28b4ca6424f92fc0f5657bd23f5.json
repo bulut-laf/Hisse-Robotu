@@ -1,0 +1,45 @@
+{
+  "review_id": "900df28b4ca6424f92fc0f5657bd23f5",
+  "date": "2026-08-31",
+  "created_at": "2026-08-31T09:58:21Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 3.67,
+  "report_count": 2,
+  "sources": [
+    "ICBC"
+  ],
+  "document_ids": [
+    "36413500cd3b480d885896e23ec8c631",
+    "6573471eaf2e4004b63db82a811cdfc6"
+  ],
+  "output": {
+    "summary": "Piyasalarda negatif temkinli bir risk modu hakimdir; Fed Başkanı Kevin Warsh'ın şahin mesajları ve ABD-İran gerilimi ile Brent petrolün 90 dolar üzerine çıkması risk iştahını baskılamaktadır. BIST 100 endeksi haftaya negatif açılış beklentisiyle başlarken, SPK fon düzenlemesindeki belirsizliğin bitmesi likit ve yüksek fiili dolaşımlı hisseleri öne çıkarmaktadır. Teknik olarak BIST 100'de 14.250 puan üzerinde ana trend pozitif korunurken, 14.700-14.730 bandının hacimli aşılması beklenmektedir. Döviz tarafında USDTRY 48.26 seviyelerinde seyrederken TL likidite sıkışmasına işaret eden valör bazlı hareketler görülmektedir. Ayrıca KAP bildirimlerinde çok sayıda şirket hamlesi, halka arz ve borçlanma araçları duyuruları yer almıştır.",
+    "positive_factors": [
+      "SPK Fon Rehberi ile fon düzenlemesindeki belirsizliğin sona ermesi orta vadede piyasa sağlığı açısından olumlu değerlendirilmektedir.",
+      "Likit ve yüksek fiili dolaşımlı büyük hisselerde göreceli pozitif ayrışma beklentisi bulunmaktadır.",
+      "BIST 100 endeksinde 14.250 puan üzerinde ana trend görünümü pozitif kalmaya devam etmektedir.",
+      "Türkiye'nin 5 yıllık CDS primi 2 bp gerileyerek 217,50 bp seviyesine gerilemiştir."
+    ],
+    "risk_factors": [
+      "Fed Başkanı Kevin Warsh'ın Jackson Hole'daki şahin mesajları ve eylül toplantısında faiz artırımı ihtimalinin güçlenmesi.",
+      "ABD-İran geriliminin yeniden tırmanması ve Brent petrolün %2'nin üzerinde yükselişle 90 dolar üzerine çıkması.",
+      "Küresel tahvil faizlerinin yükselmesi (ABD 2 yıllık %4,33, 10 yıllık %4,73'e yaklaşmıştır).",
+      "Kısa vadeli TL likidite sıkışması ve valör bazlı O/N oranlarındaki artış."
+    ],
+    "stock_specific_risks": [
+      "Serbest fon yoğunluğu yüksek ve düşük fiili dolaşımlı hisselerde limit aşımı nedeniyle yaşanabilecek kısa vadeli pozisyon azaltımı baskısı.",
+      "HEKTS bağlı ortaklığı Ferbis'in halka arz sürecinin piyasa koşulları nedeniyle ertelenmesi."
+    ],
+    "aligned_points": [
+      "Her iki kaynak da 31.08.2026 tarihli piyasa verilerini ve KAP duyurularını / strateji planlarını ele almaktadır."
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "BIST 100 teknik seviyeleri (Destek: 14.500, 14.400, 14.250; Direnç: 14.700, 14.800, 14.900)",
+      "VIOP XU030 Ağustos vadeli kontrat kritik direnç ve destek seviyeleri",
+      "İngiltere Yaz Banka Tatili, Türkiye 2Ç GSYİH ve İşsizlik Oranı, Almanya TÜFE verileri",
+      "KAP'ta bildirilen şirket gelişmeleri, pay geri alımları ve VBTS kapsamına alınan hisseler (AKFIS, TKNKA, PRZMA)"
+    ]
+  }
+}

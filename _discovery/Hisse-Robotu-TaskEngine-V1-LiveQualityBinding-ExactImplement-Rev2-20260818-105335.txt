@@ -1,0 +1,41 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818105335
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-TaskEngine-V1-LiveQualityBinding-ExactImplement-Rev2.ps1
+Process ID: 14996
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+=== TASK ENGINE V1 LIVE QUALITY BINDING EXACT IMPLEMENT REV2 ===
+MODE=FAIL_CLOSED
+RCA=PREVIOUS_RESOLVER_ONLY_READ_DICT_LITERALS
+FIX=READ_CONSTRUCTOR_KEYWORDS_ATTRIBUTES_SUBSCRIPTS_IDENTIFIERS
+RULE=REUSE_EXISTING_DAILY_OPERATION_STATE
+RULE=NO_NEW_SIGNAL_SCORE_DUPLICATE_ENGINE_STORE
+RULE=ONE_FULL_REGRESSION_ONLY
+
+
+=== EXACT CONTRACT RESOLUTION + MUTATION ===
+
+
+=== FAILURE ===
+ERROR=EXACT_CONTRACT_RESOLUTION_OR_MUTATION_FAIL
+ROLLBACK=NOT_NEEDED_NO_MUTATION
+PRODUCTION_STATUS=UNCHANGED
+NEXT=EXACT_RCA_ONLY_NO_NEW_PATCH
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-TaskEngine-V1-LiveQualityBinding-ExactImplement-Rev2-20260818-105335.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818105338
+**********************

@@ -1,0 +1,93 @@
+{
+  "schema_version": "financial-intelligence-v1-3-official-kap-bank-financial-acquisition-contract-v1",
+  "status": "PASS",
+  "existing_target_files": [
+    "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_flow.py",
+    "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py",
+    "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py"
+  ],
+  "required_present": {
+    "kap_flow_rows": true,
+    "import_kap_financial_xls_bytes": true
+  },
+  "definitions": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_flow.py",
+      "name": "kap_flow_rows",
+      "line_start": 204,
+      "line_end": 224,
+      "snippet": "def kap_flow_rows(brief: KAPFlowBrief) -> list[dict[str, object]]:\n    return [\n        {\n            \"Yayın zamanı\": item.published_at.astimezone(ISTANBUL).strftime(\n                \"%Y-%m-%d %H:%M\"\n            ),\n            \"Önem\": item.importance_score,\n            \"Hisse\": \", \".join(item.symbols) or \"—\",\n            \"Portföy teması\": \", \".join(item.portfolio_symbols) or \"—\",\n            \"Tür\": item.event_type,\n            \"Bildirim\": item.headline,\n            \"Olay\": item.event_title,\n            \"KAP doğrulaması\": (\n                \"Kaynak adı\" if item.source_match == \"source_name\" else \"kap.org.tr\"\n            ),\n            \"Referans\": item.source_reference or \"—\",\n            \"Olay kimliği\": item.event_id,\n            \"Haber kimliği\": item.news_id,\n        }\n        for item in brief.disclosures\n    ]"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py",
+      "name": "import_kap_financial_xls_bytes",
+      "line_start": 237,
+      "line_end": 304,
+      "snippet": "def import_kap_financial_xls_bytes(payload: bytes, *, source_name: str = \"report.xls\") -> KapFinancialImportResult:\n    try:\n        text = payload.decode(\"utf-8-sig\")\n    except UnicodeDecodeError as exc:\n        raise KapFinancialXlsError(\"KAP XLS UTF-8 HTML olarak okunamadı.\") from exc\n\n    identity = _extract_meta(text, source_name)\n    parser = _FinancialHtmlParser()\n    parser.feed(text)\n    if not parser.tables:\n        raise KapFinancialXlsError(\"KAP finansal tablo blokları bulunamadı.\")\n\n    facts: list[CanonicalFinancialFact] = []\n    unmapped: set[str] = set()\n\n    for table_index, table in enumerate(parser.tables):\n        rows = table[\"rows\"]\n        if not rows:\n            continue\n        header_cells = [c for c in rows[0] if \"context-header\" in c.get(\"class\", \"\")]\n        period_labels = [_clean_text(c.get(\"text\", [])) for c in header_cells]\n        first_label = \"\"\n        for row in rows[1:]:\n            if len(row) > 1:\n                candidate = _clean_text(row[1].get(\"text\", []))\n                if candidate:\n                    first_label = candidate\n                    break\n        statement = _statement_name(table_index, first_label)\n\n        for row in rows[1:]:\n            if len(row) < 2:\n                continue\n            label = _clean_text(row[1].get(\"text\", []))\n            if not label:\n                continue\n            value_cells = [c for c in row if \"taxonomy-context-value\" in c.get(\"class\", \"\")]\n            if not value_cells:\n                continue\n            metric = _LABEL_TO_METRIC.get(_norm_label(label))\n            if metric is None and any(_parse_decimal(c) is not None for c in value_cells):\n                unmapped.add(label)\n            note_ref = None\n            if len(row) > 2 and \"taxonomy-footnote-cell\" in row[2].get(\"class\", \"\"):\n                note_ref = _clean_text(row[2].get(\"text\", [])) or None\n            for index, cell in enumerate(value_cells):\n                value = _parse_decimal(cell)\n                if value is None:\n                    continue\n                period_label = period_labels[index] if index < len(period_labels) else f\"COLUMN_{index + 1}\"\n                facts.append(CanonicalFinancialFact(\n                    statement=statement,\n                    metric_code=metric,\n                    source_label=label,\n                    period_label=period_label,\n                    value=value,\n                    note_ref=note_ref,\n                ))\n\n    if not facts:\n        raise KapFinancialXlsError(\"KAP raporundan sayısal finansal gerçek çıkarılamadı.\")\n\n    return KapFinancialImportResult(\n        identity=identity,\n        facts=tuple(facts),\n        unmapped_labels=tuple(sorted(unmapped)),\n        source_sha256=hashlib.sha256(payload).hexdigest(),\n    )"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py",
+      "name": "import_kap_financial_xls",
+      "line_start": 307,
+      "line_end": 311,
+      "snippet": "def import_kap_financial_xls(path: str | Path) -> KapFinancialImportResult:\n    file_path = Path(path)\n    if not file_path.is_file():\n        raise KapFinancialXlsError(f\"KAP XLS bulunamadı: {file_path}\")\n    return import_kap_financial_xls_bytes(file_path.read_bytes(), source_name=file_path.name)"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "name": "_default_fetch",
+      "line_start": 51,
+      "line_end": 56,
+      "snippet": "def _default_fetch(url: str, timeout_seconds: int) -> tuple[bytes, str, str]:\n    # Reuse the hardened KAP transport contract without exposing a second\n    # general-purpose HTTP client.\n    from .kap_portfolio_ingestion import _default_fetch as kap_fetch\n\n    return kap_fetch(url, timeout_seconds)"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "name": "_validate_disclosures_url",
+      "line_start": 59,
+      "line_end": 72,
+      "snippet": "def _validate_disclosures_url(url: str) -> str:\n    value = str(url or \"\").strip()\n    parsed = urlparse(value)\n    if parsed.scheme.lower() != \"https\":\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_HTTPS_REQUIRED\")\n    if (parsed.hostname or \"\").lower() not in {\"kap.org.tr\", \"www.kap.org.tr\"}:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_HOST_NOT_ALLOWED\")\n    if parsed.username or parsed.password or parsed.port not in (None, 443):\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_AUTH_OR_PORT_NOT_ALLOWED\")\n    if parsed.path.rstrip(\"/\").lower() != \"/tr/api/disclosures\":\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_PATH_INVALID\")\n    if parsed.query or parsed.fragment:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_PATH_INVALID\")\n    return value"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "name": "_fetch_targeted_fund_disclosures",
+      "line_start": 271,
+      "line_end": 329,
+      "snippet": "def _fetch_targeted_fund_disclosures(\n    fund_codes: Iterable[str],\n    timeout_seconds: int,\n) -> object:\n    from datetime import date, timedelta\n    import json\n    from urllib.request import Request\n\n    resolved = _resolve_kap_fund_oids(\n        fund_codes,\n        timeout_seconds,\n    )\n    if not resolved:\n        return []\n\n    today = date.today()\n    start = today - timedelta(days=365)\n\n    payload = {\n        \"fromDate\": start.isoformat(),\n        \"toDate\": today.isoformat(),\n        \"fundTypeList\": sorted({\n            fund_type for fund_type, _oid in resolved\n        }),\n        \"mkkMemberOidList\": [],\n        \"fundOidList\": [\n            oid for _fund_type, oid in resolved\n        ],\n        \"passiveFundOidList\": [],\n        \"disclosureClass\": \"\",\n        \"isLate\": \"\",\n        \"subjectList\": [],\n        \"discIndex\": [],\n        \"fromSrc\": False,\n        \"srcCategory\": \"\",\n    }\n\n    request = Request(\n        \"https://www.kap.org.tr/tr/api/disclosure/funds/byCriteria\",\n        data=json.dumps(\n            payload,\n            ensure_ascii=False,\n            separators=(\",\", \":\"),\n        ).encode(\"utf-8\"),\n        headers={\n            \"User-Agent\": \"Mozilla/5.0\",\n            \"Accept\": \"application/json, text/plain, */*\",\n            \"Content-Type\": \"application/json\",\n            \"Origin\": \"https://www.kap.org.tr\",\n            \"Referer\": \"https://www.kap.org.tr/tr/bildirim-sorgu\",\n        },\n        method=\"POST\",\n    )\n    decoded = _json_request(request, timeout_seconds)\n    if not isinstance(decoded, list):\n        raise KapFundPortfolioError(\n            \"KAP_DISCOVERY_JSON_NOT_LIST\"\n        )\n    return decoded"
+    }
+  ],
+  "endpoint_lines": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "line": 19,
+      "text": "KAP_DISCLOSURES_URL = \"https://www.kap.org.tr/tr/api/disclosures\""
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "line": 68,
+      "text": "if parsed.path.rstrip(\"/\").lower() != \"/tr/api/disclosures\":"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "line": 339,
+      "text": "disclosures_url: str = KAP_DISCLOSURES_URL,"
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "line": 354,
+      "text": "and disclosures_url == KAP_DISCLOSURES_URL"
+    }
+  ],
+  "detail_url_lines": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "line": 184,
+      "text": "detail_url=f\"https://www.kap.org.tr/tr/Bildirim/{notification_id}\","
+    }
+  ],
+  "live_acquisition_ready": true,
+  "production_evidence": false,
+  "bank_activation_ready": false,
+  "blockers": [],
+  "mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

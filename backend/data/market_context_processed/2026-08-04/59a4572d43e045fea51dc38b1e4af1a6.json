@@ -1,0 +1,29 @@
+{
+  "document_id": "59a4572d43e045fea51dc38b1e4af1a6",
+  "source": "ICBC",
+  "document_date": "2026-08-04",
+  "imported_at": "2026-08-03T08:16:25Z",
+  "input_type": "text",
+  "raw_text": "BIST100 endeksinin güne temkinli ancak pozitif bir başlangıç yapmasını bekliyoruz.\nAğustos vadeli BIST30 kontratı cuma akşam seansını 27 puan artıda tamamladı.\nAsya piyasaları ve ABD vadeli endeksleri pozitif seyrediyor.\nBIST100 için 13.200 ve 12.966 destek;\n13.635–13.721, 13.872–14.085 ve 14.228 direnç olarak izleniyor.",
+  "content_hash": "c0bf659d39b3b25868279d67d7a18d5b4fdd34653a82a876c82ca76502034415",
+  "index_outlook": "Temkinli / Pozitif",
+  "supports": [
+    "13.200",
+    "12.966"
+  ],
+  "resistances": [
+    "13.635–13.721",
+    "13.872–14.085",
+    "14.228"
+  ],
+  "external_market_outlook": "Pozitif",
+  "futures_outlook": "Pozitif",
+  "macro_risks": [],
+  "sector_impacts": [],
+  "stock_news": [],
+  "notes": [],
+  "archive_date": "2026-08-04",
+  "archive_status": "archived",
+  "ai_eligible": true,
+  "ai_review_status": "not_reviewed"
+}

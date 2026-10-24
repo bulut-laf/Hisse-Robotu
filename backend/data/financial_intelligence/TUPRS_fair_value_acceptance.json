@@ -1,0 +1,403 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_PRODUCTION_ACCEPTANCE",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "current_price": "385",
+  "input_basis": {
+    "base_year": 2025,
+    "base_revenue": "830356131000",
+    "base_nwc": "9384882000",
+    "net_debt": "-141818592000",
+    "diluted_shares": "1926795598",
+    "cyclicality": "HIGH",
+    "assumption_source": "TUPRS_KAP_2023_2025_MID_CYCLE_CALIBRATION_V1",
+    "assumption_notes": [
+      "Base revenue is 2025 full-year KAP revenue; no 2026 H1 annualization is used.",
+      "Base operating NWC proxy = 2025 trade receivables + inventories - trade payables.",
+      "EBIT margin scenarios are normalized around 2023-2025 KAP operating-margin history, not the stronger 2026 H1 margin.",
+      "Depreciation and capex ratios are anchored to 2025 KAP cash-flow data.",
+      "Discount rates and terminal growth are explicit analytical real-basis assumptions for an inflation-adjusted financial-statement framework, not KAP facts.",
+      "Secondary EV/Sales multiples are analytical normalized multiples, not peer-market observations.",
+      "This calibration is read-only and must not mutate AL/SAT, scanner, ranking, portfolio or existing scores."
+    ]
+  },
+  "forecast": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "bear": {
+      "name": "BEAR",
+      "base_year": 2025,
+      "base_revenue": "830356131000",
+      "years": [
+        {
+          "year": 2026,
+          "revenue": "805445447070.00",
+          "ebit": "32217817882.80000",
+          "nopat": "24163363412.1000000",
+          "depreciation": "13692572600.19000",
+          "capex": "20941581623.82000",
+          "nwc": "12081681706.05000",
+          "delta_nwc": "2696799706.05000",
+          "fcff": "14217554682.4200000"
+        },
+        {
+          "year": 2027,
+          "revenue": "805445447070.0000",
+          "ebit": "33828708776.9400000",
+          "nopat": "25371531582.705000000",
+          "depreciation": "13692572600.1900000",
+          "capex": "20941581623.8200000",
+          "nwc": "12081681706.0500000",
+          "delta_nwc": "0E-7",
+          "fcff": "18122522559.075000000"
+        },
+        {
+          "year": 2028,
+          "revenue": "813499901540.700000",
+          "ebit": "36607495569.331500000",
+          "nopat": "27455621676.99862500000",
+          "depreciation": "13829498326.191900000",
+          "capex": "21150997440.058200000",
+          "nwc": "12202498523.110500000",
+          "delta_nwc": "120816817.060500000",
+          "fcff": "20013305746.07182500000"
+        },
+        {
+          "year": 2029,
+          "revenue": "821634900556.10700000",
+          "ebit": "36973570525.02481500000",
+          "nopat": "27730177893.7686112500000",
+          "depreciation": "13967793309.45381900000",
+          "capex": "21362507414.45878200000",
+          "nwc": "12324523508.34160500000",
+          "delta_nwc": "122024985.23110500000",
+          "fcff": "20213438803.5325432500000"
+        },
+        {
+          "year": 2030,
+          "revenue": "829851249561.6680700000",
+          "ebit": "37343306230.2750631500000",
+          "nopat": "28007479672.706297362500000",
+          "depreciation": "14107471242.5483571900000",
+          "capex": "21576132488.6033698200000",
+          "nwc": "12447768743.4250210500000",
+          "delta_nwc": "123245235.0834160500000",
+          "fcff": "20415573191.567868682500000"
+        }
+      ],
+      "assumptions": {
+        "revenue_growth": [
+          "-0.03",
+          "0.00",
+          "0.01",
+          "0.01",
+          "0.01"
+        ],
+        "ebit_margin": [
+          "0.040",
+          "0.042",
+          "0.045",
+          "0.045",
+          "0.045"
+        ],
+        "tax_rate": "0.25",
+        "depreciation_to_revenue": "0.017",
+        "capex_to_revenue": "0.026",
+        "nwc_to_revenue": "0.015"
+      }
+    },
+    "base": {
+      "name": "BASE",
+      "base_year": 2025,
+      "base_revenue": "830356131000",
+      "years": [
+        {
+          "year": 2026,
+          "revenue": "846963253620.00",
+          "ebit": "44042089188.24000",
+          "nopat": "33031566891.1800000",
+          "depreciation": "14398375311.54000",
+          "capex": "19480154833.26000",
+          "nwc": "9316595789.82000",
+          "delta_nwc": "-68286210.18000",
+          "fcff": "28018073579.6400000"
+        },
+        {
+          "year": 2027,
+          "revenue": "863902518692.4000",
+          "ebit": "47514638528.0820000",
+          "nopat": "35635978896.061500000",
+          "depreciation": "14686342817.7708000",
+          "capex": "19869757929.9252000",
+          "nwc": "9502927705.6164000",
+          "delta_nwc": "186331915.7964000",
+          "fcff": "30266231868.110700000"
+        },
+        {
+          "year": 2028,
+          "revenue": "881180569066.248000",
+          "ebit": "50227292436.776136000",
+          "nopat": "37670469327.58210200000",
+          "depreciation": "14980069674.126216000",
+          "capex": "20267153088.523704000",
+          "nwc": "9692986259.728728000",
+          "delta_nwc": "190058554.112328000",
+          "fcff": "32193327359.07228600000"
+        },
+        {
+          "year": 2029,
+          "revenue": "898804180447.57296000",
+          "ebit": "51231838285.51165872000",
+          "nopat": "38423878714.1337440400000",
+          "depreciation": "15279671067.60874032000",
+          "capex": "20672496150.29417808000",
+          "nwc": "9886845984.92330256000",
+          "delta_nwc": "193859725.19457456000",
+          "fcff": "32837193906.2537317200000"
+        },
+        {
+          "year": 2030,
+          "revenue": "916780264056.5244192000",
+          "ebit": "52256475051.2218918944000",
+          "nopat": "39192356288.416418920800000",
+          "depreciation": "15585264488.9609151264000",
+          "capex": "21085946073.3000616416000",
+          "nwc": "10084582904.6217686112000",
+          "delta_nwc": "197736919.6984660512000",
+          "fcff": "33493937784.378806354400000"
+        }
+      ],
+      "assumptions": {
+        "revenue_growth": [
+          "0.02",
+          "0.02",
+          "0.02",
+          "0.02",
+          "0.02"
+        ],
+        "ebit_margin": [
+          "0.052",
+          "0.055",
+          "0.057",
+          "0.057",
+          "0.057"
+        ],
+        "tax_rate": "0.25",
+        "depreciation_to_revenue": "0.017",
+        "capex_to_revenue": "0.023",
+        "nwc_to_revenue": "0.011"
+      }
+    },
+    "bull": {
+      "name": "BULL",
+      "base_year": 2025,
+      "base_revenue": "830356131000",
+      "years": [
+        {
+          "year": 2026,
+          "revenue": "871873937550.00",
+          "ebit": "61031175628.50000",
+          "nopat": "45773381721.3750000",
+          "depreciation": "14821856938.35000",
+          "capex": "21796848438.75000",
+          "nwc": "6974991500.40000",
+          "delta_nwc": "-2409890499.60000",
+          "fcff": "41208280720.5750000"
+        },
+        {
+          "year": 2027,
+          "revenue": "906748895052.0000",
+          "ebit": "65285920443.7440000",
+          "nopat": "48964440332.808000000",
+          "depreciation": "15414731215.8840000",
+          "capex": "22668722376.3000000",
+          "nwc": "7253991160.4160000",
+          "delta_nwc": "278999660.0160000",
+          "fcff": "41431449512.376000000"
+        },
+        {
+          "year": 2028,
+          "revenue": "933951361903.560000",
+          "ebit": "70046352142.767000000",
+          "nopat": "52534764107.07525000000",
+          "depreciation": "15877173152.360520000",
+          "capex": "23348784047.589000000",
+          "nwc": "7471610895.228480000",
+          "delta_nwc": "217619734.812480000",
+          "fcff": "44845533477.03429000000"
+        },
+        {
+          "year": 2029,
+          "revenue": "961969902760.66680000",
+          "ebit": "72147742707.05001000000",
+          "nopat": "54110807030.2875075000000",
+          "depreciation": "16353488346.93133560000",
+          "capex": "24049247569.01667000000",
+          "nwc": "7695759222.08533440000",
+          "delta_nwc": "224148326.85685440000",
+          "fcff": "46190899481.3453187000000"
+        },
+        {
+          "year": 2030,
+          "revenue": "986019150329.68347000000",
+          "ebit": "73951436274.72626025000000",
+          "nopat": "55463577206.0446951875000000",
+          "depreciation": "16762325555.60461899000000",
+          "capex": "24650478758.24208675000000",
+          "nwc": "7888153202.63746776000000",
+          "delta_nwc": "192393980.55213336000000",
+          "fcff": "47383030022.8550940675000000"
+        }
+      ],
+      "assumptions": {
+        "revenue_growth": [
+          "0.05",
+          "0.04",
+          "0.03",
+          "0.03",
+          "0.025"
+        ],
+        "ebit_margin": [
+          "0.070",
+          "0.072",
+          "0.075",
+          "0.075",
+          "0.075"
+        ],
+        "tax_rate": "0.25",
+        "depreciation_to_revenue": "0.017",
+        "capex_to_revenue": "0.025",
+        "nwc_to_revenue": "0.008"
+      }
+    },
+    "confidence": "MEDIUM",
+    "warnings": []
+  },
+  "dcf": {
+    "bear": {
+      "method": "FCFF",
+      "scenario": "BEAR",
+      "enterprise_value": "138233037600.5748400614392569",
+      "equity_value": "280051629600.5748400614392569",
+      "fair_value_per_share": "145.3457906439408629277132368",
+      "terminal_value": "145825522796.9133477321428571",
+      "terminal_value_share": "0.5478951220289885737347340091",
+      "discount_rate": "0.14",
+      "terminal_growth": "0.00",
+      "warnings": []
+    },
+    "base": {
+      "method": "FCFF",
+      "scenario": "BASE",
+      "enterprise_value": "286436514753.9220649182225505",
+      "equity_value": "428255106753.9220649182225505",
+      "fair_value_per_share": "222.2628633771261423227636783",
+      "terminal_value": "307535246929.296312890400000",
+      "terminal_value_share": "0.6092231583590172949940123467",
+      "discount_rate": "0.12",
+      "terminal_growth": "0.01",
+      "warnings": []
+    },
+    "bull": {
+      "method": "FCFF",
+      "scenario": "BULL",
+      "enterprise_value": "488571142176.8955580943867346",
+      "equity_value": "630389734176.8955580943867346",
+      "fair_value_per_share": "327.1700095387572906912914457",
+      "terminal_value": "534375283035.53244976125000",
+      "terminal_value_share": "0.6639068667153280193195269594",
+      "discount_rate": "0.105",
+      "terminal_growth": "0.015",
+      "warnings": []
+    }
+  },
+  "model_inputs": {
+    "bear": [
+      {
+        "name": "FCFF_DCF_BEAR",
+        "fair_value_per_share": "145.3457906439408629277132368",
+        "weight": "0.65",
+        "confidence": "LOW"
+      },
+      {
+        "name": "EV_SALES_BEAR",
+        "fair_value_per_share": "211.5079328305586050025841921",
+        "weight": "0.35",
+        "confidence": "LOW"
+      }
+    ],
+    "base": [
+      {
+        "name": "FCFF_DCF_BASE",
+        "fair_value_per_share": "222.2628633771261423227636783",
+        "weight": "0.65",
+        "confidence": "MEDIUM"
+      },
+      {
+        "name": "EV_SALES_BASE",
+        "fair_value_per_share": "271.8411920826902366630796091",
+        "weight": "0.35",
+        "confidence": "MEDIUM"
+      }
+    ],
+    "bull": [
+      {
+        "name": "FCFF_DCF_BULL",
+        "fair_value_per_share": "327.1700095387572906912914457",
+        "weight": "0.65",
+        "confidence": "MEDIUM"
+      },
+      {
+        "name": "EV_SALES_BULL",
+        "fair_value_per_share": "366.6505994788970864152866930",
+        "weight": "0.35",
+        "confidence": "MEDIUM"
+      }
+    ]
+  },
+  "composite_fair_value": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "bear_value": "168.5025404092570726539180712",
+    "base_value": "239.6152784240735753418742541",
+    "bull_value": "340.9882160178062191946897823",
+    "weighted_models": [
+      [
+        "FCFF_DCF_BASE",
+        "222.2628633771261423227636783",
+        "0.65"
+      ],
+      [
+        "EV_SALES_BASE",
+        "271.8411920826902366630796091",
+        "0.35"
+      ]
+    ],
+    "confidence": "MEDIUM",
+    "dispersion": "0.2069080445605803988697029727",
+    "warnings": [
+      "HIGH_MODEL_DISPERSION"
+    ]
+  },
+  "margin_of_safety": {
+    "symbol": "TUPRS",
+    "as_of_date": "2026-08-04",
+    "current_price": "385",
+    "base_fair_value": "239.6152784240735753418742541",
+    "required_margin_of_safety": "0.25",
+    "attractive_entry_price": "179.7114588180551815064056906",
+    "upside_downside_to_base": "-0.3776226534439647393717551842",
+    "current_margin_of_safety": "-0.606742285100130612308512974",
+    "status": "VERY_EXPENSIVE"
+  },
+  "required_margin_of_safety": "0.25",
+  "production_rules": [
+    "No forecast is invented by the engine; all forward assumptions are explicit inputs.",
+    "At least two independent valuation models are required per scenario by the existing composite engine.",
+    "Current price is not used to manufacture fair value.",
+    "Cyclical companies should use normalized/mid-cycle assumptions rather than peak-period annualization.",
+    "Terminal growth must remain below the discount rate.",
+    "No AL/SAT, scanner, ranking, portfolio or existing score is mutated."
+  ]
+}

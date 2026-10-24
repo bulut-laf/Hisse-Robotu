@@ -1,0 +1,25 @@
+﻿........................................................................ [  9%]
+........................................................................ [ 18%]
+........................................................................ [ 27%]
+........................................................................ [ 36%]
+........................................................................ [ 45%]
+........................................................................ [ 54%]
+........................................................................ [ 63%]
+........................................................................ [ 72%]
+........................................................................ [ 81%]
+........................................................................ [ 90%]
+........................................................................ [ 99%]
+.                                                                        [100%]
+793 passed, 2229 deselected in 56.84s
+DAILY_OPS_CANDIDATES=7
+DAILY_OPS|SCORE=4|FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py|FUNCTION=build_daily_operation_summary|LINE=68
+DAILY_OPS|SCORE=4|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py|FUNCTION=render_news_center_dashboard|LINE=185
+DAILY_OPS|SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py|FUNCTION=render_daily_news_operations_panel|LINE=28
+DAILY_OPS|SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=on_yukselis_hazirlik_formu|LINE=210
+DAILY_OPS|SCORE=3|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=_render_daily_operations_hub|LINE=812
+DAILY_OPS|SCORE=2|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=_render_operation_archive_history|LINE=865
+DAILY_OPS|SCORE=2|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|FUNCTION=_render_operational_health|LINE=1011
+TOP_SCORE=4
+TOP_SCORE_TIES=2
+DECISION=BLOCKED_DAILY_OPS_SEAM_AMBIGUOUS
+PRODUCTION_MUTATION=YOK

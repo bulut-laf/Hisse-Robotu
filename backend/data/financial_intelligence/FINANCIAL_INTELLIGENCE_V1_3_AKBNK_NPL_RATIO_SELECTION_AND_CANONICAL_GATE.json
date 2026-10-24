@@ -1,0 +1,41 @@
+{
+  "schema_version": "financial-intelligence-v1-3-akbnk-npl-ratio-selection-and-canonical-gate-v1",
+  "status": "PASS_FAIL_CLOSED",
+  "symbol": "AKBNK",
+  "sector_model": "BANK",
+  "selected_metric": "ASSET_QUALITY.npl_ratio",
+  "selected_value": "3.5",
+  "selection_semantics": "Akbank’ın takipteki krediler oranı 30 Haziran 2026 tarihi itibarıyla %3,5 seviyesinde gerçekleşmiştir.",
+  "canonical_facts": {
+    "CAPITAL_ADEQUACY.capital_adequacy_ratio": "16.38",
+    "GROWTH_QUALITY.deposit_growth": "15.53624447357414877283324310",
+    "GROWTH_QUALITY.net_income_growth": "38.19044937039868045218650680",
+    "CAPITAL_ADEQUACY.tier1_capital_ratio": "13.33",
+    "ASSET_QUALITY.npl_ratio": "3.5"
+  },
+  "mapped_metric_count": 5,
+  "mapped_metric_paths": [
+    "ASSET_QUALITY.npl_ratio",
+    "CAPITAL_ADEQUACY.capital_adequacy_ratio",
+    "CAPITAL_ADEQUACY.tier1_capital_ratio",
+    "GROWTH_QUALITY.deposit_growth",
+    "GROWTH_QUALITY.net_income_growth"
+  ],
+  "canonical_adapter_status": "BLOCKED",
+  "canonical_adapter_blocker": "AS_OF_MISSING",
+  "canonical_payload_ready": false,
+  "production_evidence": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "missing_to_zero": false,
+  "industrial_threshold_reuse": false,
+  "production_mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO",
+  "scanner_mutation": "NO",
+  "ranking_mutation": "NO",
+  "portfolio_mutation": "NO",
+  "blockers": [
+    "BANK_CANONICAL_ADAPTER_NOT_READY:AS_OF_MISSING"
+  ]
+}

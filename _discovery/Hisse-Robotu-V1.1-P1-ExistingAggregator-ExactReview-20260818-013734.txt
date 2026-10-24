@@ -1,0 +1,41 @@
+﻿=== P1 EXISTING AGGREGATOR EXACT REVIEW ===
+AGGREGATOR_CANDIDATES=20
+AGG|SCORE=29|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_score.py|LINE=13|NAME=skoru_hesapla|ENGINES=momentum,prebreakout|QUALITY=trend,relative_strength,momentum,volume,resistance,risk_reward|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=21|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py|LINE=111|NAME=classify_early_radar|ENGINES=momentum,prebreakout|QUALITY=trend,momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=21|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_engine.py|LINE=43|NAME=on_yukselis_hazirligini_analiz_et|ENGINES=momentum,prebreakout|QUALITY=relative_strength,momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=21|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_models.py|LINE=61|NAME=PreBreakoutScore|ENGINES=momentum,prebreakout|QUALITY=trend,momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=19|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=238|NAME=momentum_kalibrasyonunu_hesapla|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=19|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=641|NAME=esik_onerilerini_tarihsel_dogrula|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=19|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=726|NAME=dogrulanmis_esik_politikasi_olustur|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=19|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_live_watch.py|LINE=59|NAME=canli_sinyal_olustur|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=19|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_release_readiness.py|LINE=31|NAME=on_yukselis_surum_hazirligini_degerlendir|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=19|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_stage.py|LINE=24|NAME=asamayi_belirle|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=19|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_threshold_policy.py|LINE=12|NAME=PreBreakoutThresholdPolicy|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=16|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=620|NAME=kalibrasyon_esik_onerilerini_tabloya_cevir|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=True|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=16|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=702|NAME=esik_dogrulamalarini_tabloya_cevir|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=True|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=15|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=94|NAME=PreBreakoutThresholdRecommendation|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=False|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=15|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=107|NAME=PreBreakoutThresholdValidationRow|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=False|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=15|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_live_watch.py|LINE=21|NAME=PreBreakoutLiveSignal|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=False|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=14|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=551|NAME=kalibrasyon_esik_onerilerini_hesapla|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=False|PERSIST=False|SCORING=True|THRESHOLD_MUTATION=True
+AGG|SCORE=13|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=280|NAME=momentum_kalibrasyonunu_tabloya_cevir|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=True|PERSIST=False|SCORING=False|THRESHOLD_MUTATION=False
+AGG|SCORE=13|FILE=D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=210|NAME=on_yukselis_hazirlik_formu|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=True|UI_ONLY=True|PERSIST=True|SCORING=True|THRESHOLD_MUTATION=False
+AGG|SCORE=12|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=40|NAME=PreBreakoutMomentumCalibrationRow|ENGINES=momentum,prebreakout|QUALITY=momentum|RETURNS=False|UI_ONLY=False|PERSIST=False|SCORING=False|THRESHOLD_MUTATION=False
+REUSABLE_AGGREGATORS=1
+REUSE|FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_score.py|LINE=13|NAME=skoru_hesapla|ENGINES=momentum,prebreakout|QUALITY=trend,relative_strength,momentum,volume,resistance,risk_reward|SCORE=29
+P1_DECISION=EXACT_EXISTING_AGGREGATOR_REUSE_READY
+P1_SELECTED=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_score.py::skoru_hesapla
+NEXT=Use the existing aggregator as the shared quality context; add de-duplication semantics there without changing engine thresholds.
+PRODUCTION_MUTATION=YOK
+STATIC_EXIT_CODE=0
+
+=== TARGET TESTS ===
+........................................................................ [ 13%]
+........................................................................ [ 26%]
+........................................................................ [ 40%]
+........................................................................ [ 53%]
+........................................................................ [ 67%]
+........................................................................ [ 80%]
+........................................................................ [ 93%]
+.................................                                        [100%]
+537 passed, 2485 deselected in 13.42s
+PYTEST_EXIT_CODE=0

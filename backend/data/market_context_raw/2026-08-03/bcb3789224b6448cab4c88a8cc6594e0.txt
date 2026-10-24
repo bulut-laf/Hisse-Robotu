@@ -1,0 +1,147 @@
+Uluslararası Piyasalar Haftalık Pozisyon Raporu 03.08.2026 
+Fonlar Petrolde Alıcı Konumunu Korurken Döviz Çaprazlarında Satıcı Tarafta 
+ 
+ABD Emtia Vadeli İşlemler Kom isyonu (CFTC) tarafından yayımlanan 22 - 28 Temmuz 2026 haftasına ilişkin Commitment of Traders (COT) raporu, küresel 
+piyasalarda büyük spekülatif fonların risk iştahının varlık grupları arasında farklılaştığını ortaya koydu. Hafta boyunca yat ırımcıların odağında Fed, Japonya 
+Merkez Bankası (BoJ) ve İngiltere Merkez Bankası (BoE) toplantıları yer alırken, aynı zamanda ABD büyüme verisi, çekirdek PCE  enflasyonu ve Euro Bölgesi 
+enflasyon verileri öncesinde fonların pozisy onlarında dikkat çekici değişimler yaşandı. Piyasalar ın, merkez bankalarının faiz patikasına ilişkin vereceği yeni 
+sinyallere odaklandığı haftada yatırımcıların daha seçici bir pozisyonlanmaya yöneldiği görüldü. 
+ 
+Enerji piyasalarında ise iyimser görünümün korunduğu dikkat çekti. WTI ham petrolde ticari olmayan yatırımcıların hem yeni uzun pozisyon açmaları hem de 
+kısa pozisyonlarını azaltmaları, büyük fonların petrol fiyatlarında yukarı yönlü beklentilerini güçlendirdiğini gösterdi. Jeo politik risklerin arz tarafında 
+oluşturduğu belirsizlikler ve küresel enerji piyasasına yönelik temkinli görünüm, petrol tarafındaki alım iştahını destekleyen unsurlar arasında yer aldı. 
+ 
+Ons altın tarafında ise görünüm pozitif kalmaya devam etmekle birlikte, fonların son haftada daha temkinli hareket ettiği görüldü. Ticari olmayan yatırımcılar 
+net uzun pozisyonlarını azaltırken, bu hareketin hem uzun pozisyonların bir kısmının kapatılması hem de kısa pozisyonların ar tırılmasıyla gerçekleşmesi, 
+yükseliş beklentisinin tamamen sona ermediğini ancak kâr realizasyonlarının öne çıktığını gösterdi. Özellikle yoğun veri akışı ve merkez bankası kararları 
+öncesinde yatırımcıların risklerini dengelemeye yönelmesi, altın piyasasında daha ihtiyatlı bir pozisyonlanmayı beraberinde getirdi. 
+ 
+Döviz piyasasında ise en dikkat çekici değişim Euro tarafında yaşandı. Büyük spekülatif fonlar hem uzun pozisyonlarını azaltırken hem de kısa pozisyonlarını 
+artırarak net kısa pozisyonlarını belirgin şekilde büyüttü. Bu tablo, dolar lehine pozisyonlanmanın güç kazandığını ve Euro üzerindeki aşağı yönlü beklentilerin 
+yeniden ön plana çıktığını gösteriyor. Özellikle Fed’in para politikasına ilişkin belirsizliklerin devam etmesi ve yatırımcıların güvenli liman olarak dolar talebini 
+koruması, Euro üzerindeki baskının artmasına neden oldu. 31 Temmuz’da ABD Hazine Bakanlığı’nın Japonya ile koordineli yen müdahalesinin etkilerini ise 
+önümüzdeki haftanın raporunda görmeyi bekleriz. EUR’ya paralel JPY’de satışlar pozisyonlanmayı yeni düşük seviyelere itti.   
+ 
+22 - 28 Temmuz haftasında COT verileri yatırımcıların tek yönlü bir risk alma eğiliminden ziyade varlık bazlı ayrışan bir strateji izlediğine işaret ediyor. Fonlar 
+petrol piyasasında yükseliş beklentil erini güçlendirirken, altın tarafında daha temkinli bir duruş sergilemeyi tercih etti. Euro ve JPY vadeli işlemlerinde ise 
+satış yönlü pozisyonlanmanın hız kazanması dikkat çekti. Bu hafta açıklanacak ABD istihdam verileri  bu pozisyonlanmanın kalıcı bir trende dönüşüp 
+dönüşmeyeceği açısından belirleyici olacak. 
+ 
+Tanımlar: 
+➢ Non-Commercial – Ticari olmayan: Büyük yatırım fonları, bazı büyük yatırımcılar ve finans şirketlerinin kâr etmek amacıyla aldığı spekülatif pozisyonları 
+ifade eder. 
+➢ Commercial – Ticari: Bunlar genellikle hedge amaçlı pozisyon alan kuruluşlardır. 
+➢ Long – Uzun: CFTC’ye bildirilen net alım pozisyonlarının miktarını ifade eder. 
+➢ Short – Kısa: CFTC’ye bildirilen net satım pozisyonlarının miktarını ifade eder. 
+➢ Open interest- Açık pozisyonlar: Bu bölüm kapatılmamış olan pozisyonların net miktarını ifade eder. 
+➢ Non-reportable positions - Rapor edilmeyen pozisyonlar: Bu rakam da CFTC raporlama kriterlerine uymayan traderların ellerindeki toplam pozisyon 
+miktarını vermektedir. 
+➢ Number of traders - Toplam trader sayısı: CFTC ye raporlama yapan toplam trader sayısını ifade etmektedir. 
+➢ Reportable positions – Raporlanabilen pozisyon sayısı: CFTC’ye raporlaması yapılan toplam açık veya kapalı pozisyon sayısıdır. 
+ 
+Non-commercial, ticari olmayan spekülatörlerin pozisyonları piyasalarda en çok baz alınan veri setlerinden biridir. Ticari kuruluşlar, hedge amaçlı pozisyon 
+aldıkları için piyasanın hangi yöne gideceğinden bağımsız olarak hareket ederler. Spekülatif pozisyonlar ise kâr elde etme amacı nedeniyle piyasa konusunda 
+strateji yürütürler. Genel anlamıyla spekülatörlerin pozisyonlarına bağlı olarak piyasanın yönü hakkında fikir sahibi olunabilir. Ancak büyük yatırımcıların kısa 
+vadeli olarak pozisyon değiştirmemesi nedeniyle bu pozisyonların etkisinin uzun vadede ol abileceği göz ardı edilmemelidir. Bu nedenle fiyat hareketlerini 
+yorumlarken pozisyonların vadesi büyük önem taşır. 
+ 
+Genel bir piyasadan bahsettiğimiz için spekülatif pozisyonların karşılanması için küçük yatırımcılara ve ticari olmayan şirke tlerin işlemlerine ihtiyaç vardır. 
+Spekülatörler bu pozisyonları göz önünde bulundurarak kendi pozisyonlarına şekil verirler. Bu yüzden ticari (Commercial) işle m yapanların pozisyon 
+büyüklükleri bize trendin gücü hakkında bilgi verebilir. Ticari işlem yapanların pozisyonları yeterince karşılanmıyorsa bu durum trend yönüne dair oluşan bir 
+zayıflamanın habercisidir. 
+ 
+Diğer taraftan ticari olmayan yani spekülatif amaçlı pozisyonların artmasına karşılık açık pozisyon sayısının azalması da piy asada bir realizasyon (düzeltme) 
+geleceğine işaret olabilir. Genel yön değişimlerinde genellikle spekülatif pozisyonlar (Non -Commercial) ve ticari (Commercial ) pozisyonlar yer değiştirir. 
+Örnek verecek olursak; spekülatif pozisyonlarda long pozisyon sayısı azalırsa ve aynı dönemde ticari pozisyonlarda long pozisyon sayısı artıyorsa, bu durum 
+piyasanın aşağı yönlü gitme olasılığının artması olarak yorumlanabilir. Bu dönemlerde açık pozisyonlarda önce bir azalma görü lür daha sonra açık pozisyon 
+sayısı hızlıca artmaya başlar. Yön değişimlerinin bir diğer tipik belirtisi de net pozisyon sayısıyla fiyat arasındaki uyumsuzluktur.
+
+Uluslararası Piyasalar Haftalık Pozisyon Raporu 03.08.2026 
+ 
+  
+EURUSD COT Raporu Net Pozisyon Dağılımı 
+ 
+Euro vadeli işlemlerinde spekülatif pozisyonlanma zayıf görünümünü korurken, son haftada satış yönlü eğilim daha da belirginleşti. Ticari 
+olmayan uzun pozisyonlar 15.490 kontrat azalarak 204.975 kontrata gerilerken, kısa po zisyonlar 15.619 kontrat artışla 277.422 kontrata 
+yükseldi. Böylece ana takip göstergemiz olan ticari olmayan net pozisyonlar 31.109 kontrat artışla -72.447 kontrata geriledi. Net 
+pozisyondaki bu sert bozulmanın hem uzun pozisyon tasfiyesinden hem de yeni kısa pozisyon açılışlarından kaynaklanması, büyük spekülatif 
+fonların Euro’ya yönelik aşağı yönlü beklentilerini güçlendirdiğini gösteriyor. Opsiyonların da dahil edildiği birleşik veride de benzer görünüm 
+dikkat çekiyor. Ticari olmayan uzun pozisyonlar 17.584 kontrat azalırken, kısa pozisyonlar 17.779 kontrat arttı ve net kısa pozisyonlar 35.363 
+kontrat artışla-100.540 kontrata geriledi. Vadeli işlemler ve opsiyon piyasasında eş zamanlı görülen bu değişim, fonların Euro üzerindeki 
+satış yönlü pozisyonlanmasını hızlandırdığına işaret ediyor. Ticari pozisyonlanma tarafında ise hedge pozisyonlarında dikkat çekici bir artış 
+görüldü. Kurumsal grubun vadeli net uzun pozisyonu 33.739 kontrat artışla 51.714 kontrata, vadeli ve opsiyon birleşik net uzun pozisyonu 
+ise 39.592 kontrat artışla 78.849 kontrata yükseldi. Ticari yatırımcıların pozisyonları ağırlıklı olarak kur riskinden korunma amacı taşıdığı için 
+bu hareket doğrudan yükseliş beklentisi olarak değerlendirilmemelidir. Buna karşın ticari olmayan yat ırımcıların net kısa pozisyonlarını 
+artırması, piyasa yönü açısından daha belirleyici bir sinyal veriyor.  Euro lehine pozisyonlar önemli ölçüde azalarak dolar lehine daha güçlü 
+bir pozisyonlanmaya yönelim sürüyor.
+
+Uluslararası Piyasalar Haftalık Pozisyon Raporu 03.08.2026 
+ 
+  
+ALTIN COT Raporu Net Pozisyon Dağılımı 
+Ons altın için pozitif görünüm korunurken, spekülatif fonların son haftada kâr realizasyonlarını artırmasıyla yükseli ş ivmesinin zayıfladığ ı 
+görülüyor. Net uzun pozisyonlar halen güçlü seviyelerde bulunurken, hem uzun pozisyonların azaltılması hem de kısa pozisyonların artması, 
+fonların yeni makroekonomik gelişmeler öncesinde risklerini azaltmayı tercih ettiğine işare t ediyor.  Sonuç olarak, ticari olmayan 
+yatırımcıların net uzun pozisyonları azaldı. Bu durum, büyük spekülatif fonların ons altına yönelik yükseliş beklentisini kor umasına rağmen 
+kısa vadede daha temkinli bir pozisyonlanmaya yöneldiğini gösteriyor. Ticari olmayan fonlar uzun pozisyonları 5.163 kontrat azalarak 219.622 
+kontrata gerilerken, kısa pozisyonları 3.323 kontrat artışla 37.552 kontrata yükseldi. Böylece ana takip göstergemiz olan ticari olmayan net 
+uzun pozisyonlar 8.486 kontrat azalarak 182.070 kontrata geriledi. Net uzun pozisyonlardaki düşüşün hem uzun pozisyonların azaltılması 
+hem de kısa pozisyonların artırılmasıyla gerçekleşmesi, spekülatif fonların yükseliş beklentisini korumakla birlikte daha temkinli bir duruş 
+sergilemeye başladığını gösteriyor.
+
+Uluslararası Piyasalar Haftalık Pozisyon Raporu 03.08.2026 
+ 
+  
+WTI PETROL COT Raporu Net Pozisyon Dağılımı 
+22 – 28 Temmuz haftasına ait rapor WTI ham petrol için pozitif görünümün güçlenmeye devam ettiğini gösteriyor. Ticari olmayan fonların 
+net uzun pozisyonlarındaki artış, büyük fonların petrol fiyatlarında yükseliş beklentisini desteklediğini ortaya koyarken, bu hareketin hem 
+yeni uzun pozisyon açılışları hem de kısa pozisyon kapanışlarıyla gerçekleşmesi pozitif sinyalin gücünü artırıyor. Mevcut poz isyonlanma, 
+spekülatif fonların petrol piyasasında yukarı yönlü trendin devamına yönelik beklentilerini koruduğuna işaret ediyor. Ticari olmayan fonların 
+net uzun pozisyonları arttı. Bu durum, spekülatif fonların WTI ham petrol fiyatlarına yönelik yükseliş beklentilerini güçlendirdiğini ve orta 
+vadede pozitif görünüm ü desteklemeye devam ettiğini gösteriyor.  Ticari olmayan spekülatörler uzun pozisyonları 4.810 kontrat artışla 
+314.992 kontrata yükselirken, kısa pozisyonları 3.609 kontrat azalarak 194.884 kontrata geriledi. Böylece ana takip gösterg emiz olan ticari 
+olmayan net uzun pozisyonlar 8.419 kontrat artışla 120.108 kontrata yükseldi. Net uzun pozisyonlardaki artışın hem yeni uzun pozisyon 
+açılışları hem de mevcut kısa pozisyonların kapatılmasıyla desteklenmesi, spekülatif fonların petrol piyasasına yönelik iyimserliğini artırdığını 
+ve yükseliş beklentilerinin güç kazandığını gösteriyor.
+
+Uluslararası Piyasalar Haftalık Pozisyon Raporu 03.08.2026 
+ 
+ 
+Yatırım Finansman Menkul Değerler 
+Meclis-i Mebusan Cad. 81 Fındıklı 34427 Beyoğlu/İstanbul   
+Tel: 0850 723 59 59 Faks: +90 (212) 282 15 50 – 51 
+ 
+Strateji ve Yatırım Danışmanlığı Müdürlüğü 
+ 
+yatirimdanismanligi@yf.com.tr  +90 (212) 334 98 38  
+         
+Hizmet Noktalarımız 
+ 
+Genel Müdürlük  +90 (212) 317 69 00  Merkez           +90 (212) 334 98 00  
+Antalya  +90 (242) 243 02 01  Ankara           +90 (312) 417 30 46  
+Bodrum                    +90 (252) 999 14 04  Bursa   +90 (224) 224 47 47   
+Caddebostan       +90 (216) 302 88 00  Denizli   +90 (258) 999 19 75          
+İzmir          +90 (232) 441 80 72  Samsun                                +90 (362) 431 46 71           
+Ulus                +90 (212) 263 00 24   Çorlu   +90 (282) 888 96 50 
+Adana                                   +90 (322) 422 55 90 
+ 
+UYARI NOTU: 
+Bu e-posta mesajı ve ekleri gönderildiği kişi ya da kuruma özeldir ve gizlidir. Hiçbir şekilde üçüncü kişilere açıklanamaz ya da 
+yayınlanamaz. Yetkili alıcılardan biri değilseniz, bu mesajın herhangi bir şekilde ifşa edilmesi, kullanılması,  kopyalanması, 
+yayılması veya mesajda yer alan hususlarla ilgili olarak herhangi bir işlem yapılmasının kesinlikle yasak olduğunu bildiririz . 
+Eğer mesajın alıcısı veya alıcısına iletmekten sorumlu kişi değilseniz lütfen mesajı sisteminizden siliniz ve gönd ereni uyarınız. 
+Gönderen ve Yatırım Finansman Menkul Değerler A.Ş., bu mesajın içerdiği bilgilerin doğruluğu, güncelliği ve eksiksiz olduğu 
+konusunda bir garanti vermemektedir, içerik Yatırım Finansman Menkul Değerler A.Ş. tarafından her zaman değiştirileb ilir. 
+Bu e-posta yer alan bilgiler “Yatırım Finansman Menkul Değerler A.Ş.” tarafından genel bilgilendirme amacı ile her türlü veri, 
+yorum ve değerlendirmeler hazırlandığı tarih itibariyle mevcut piyasa koşulları ve güvenilirliğine inanılan kaynaklara 
+dayanılarak hazırlanmıştır. Bu kaynakların kullanılması nedeni ile ortaya çıkabilecek hatalardan Yatırım Finansman Menkul 
+Değerler A.Ş sorumlu değildir.  Burada yer alan yatırım bilgi, yorum ve tavsiyeleri yatırım danışmanlığı kapsamında değildir.  
+Yatırım danışmanlığı hizmeti, kişilerin risk ve getiri tercihleri dikkate alınarak kişiye özel sunulmaktadır. Burada yer alan ve 
+hiçbir şekilde yönlendirici nitelikte olmayan içerik, yorum ve tavsiyeler ise genel nitelikte olup, yorum ve tavsiyede 
+bulunanların kişisel  görüşlerine dayanmaktadır. Bu tavsiyeler mali durumunuz ile risk ve getiri tercihlerinize uygun 
+olmayabilir. Bu nedenle, sadece burada yer alan bilgilere dayanılarak yatırım kararı verilmesi beklentilerinize uygun sonuçla r 
+doğurmayabilir. Bu e-posta içeriğinde yer alan çeşitli bilgi ve görüşlere dayanılarak yapılacak ileriye dönük yatırımlar ve ticari 
+işlemlerin sonuçlarından ya da ortaya çıkabilecek zararlardan Yatırım Finansman Menkul Değerler A.Ş. sorumlu tutulamaz. 
+Mesajın içeriğinden, iletilmesinden, alınmasından, saklanmasından, gizliliğinin korunamamasından, virüs içermesinden ve 
+sisteminizde yaratabileceği zararlardan Yatırım Finansman Menkul Değerler A.Ş. sorumlu tutulamaz. Yatırım Finansman bu 
+mesajın içeriği ve ekleri ile ilgili olarak hukuki açıdan herhangi bir sorumluluk kabul etmemektedir. Teşekkür ederiz.

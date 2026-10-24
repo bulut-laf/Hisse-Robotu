@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "mode": "READ_ONLY_EXACT_FIRST_LEGACY_FALLBACK_V5_REV7A",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "market_context": {
+    "technical_trend": "15",
+    "relative_strength": "20",
+    "volume_liquidity": "10",
+    "catalyst": null,
+    "entry_risk": null,
+    "earnings_surprise": null
+  },
+  "metric_evidence": {
+    "technical_trend": {
+      "status": "EXACT_MOMENTUM_CANDIDATE_FIELD",
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_momentum_candidate_2026-08-04.json",
+      "object_path": "$.candidate",
+      "key": "trend_puani",
+      "value": "15"
+    },
+    "relative_strength": {
+      "status": "EXACT_MOMENTUM_CANDIDATE_FIELD",
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_momentum_candidate_2026-08-04.json",
+      "object_path": "$.candidate",
+      "key": "goreceli_guc_puani",
+      "value": "20"
+    },
+    "volume_liquidity": {
+      "status": "EXACT_MOMENTUM_CANDIDATE_FIELD",
+      "source": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_momentum_candidate_2026-08-04.json",
+      "object_path": "$.candidate",
+      "key": "likidite_puani",
+      "value": "10"
+    },
+    "catalyst": null,
+    "entry_risk": null,
+    "earnings_surprise": null
+  },
+  "price_reference": {
+    "market_symbol": "TUPRS.IS",
+    "date": "2026-08-04",
+    "close": "290.25",
+    "point_in_time_cutoff": "2026-08-04",
+    "volume": "30714332.0"
+  },
+  "source_refs": [
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V2_TUPRS_MANIFEST.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V3_LIVE_BATCH.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V4_CANONICAL_COVERAGE.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_canonical_investability_evidence.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_fair_value_acceptance.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_acceptance.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_production_closure.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_investability_runtime_wiring.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_long_term_evidence_completion.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_2026-08-04.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_market_ownership_acceptance.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_momentum_candidate_2026-08-04.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\TUPRS_ttm_acceptance.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+    "D:\\Projects\\Hisse-Robotu\\backend\\data\\market_context_processed\\2026-08-06\\e6bd63738c7e462380e2b5a245a629d5.json"
+  ],
+  "excluded_future_sources": [],
+  "data_quality": "READY",
+  "blockers": [],
+  "warnings": [
+    "FUTURE_MARKET_ROWS_EXCLUDED"
+  ],
+  "strict_rules": [
+    "No metric is guessed.",
+    "Missing metrics remain null.",
+    "Price reference must be on or before as_of_date.",
+    "Future market rows are excluded.",
+    "No AL/SAT authority.",
+    "No scanner/ranking/watchlist mutation.",
+    "No portfolio mutation.",
+    "Future-dated evidence is excluded before metric extraction.",
+    "Safely excluded future sources do not by themselves block readiness.",
+    "Existing technical scores are reused exactly; no recomputation or reweighting.",
+    "MomentumCandidate mapping is explicit: trend_puani / goreceli_guc_puani / likidite_puani.",
+    "teknik_skor is not used as technical_trend when exact MomentumCandidate artifact exists.",
+    "Legacy generic canonical fallback is used only when exact historical artifact is absent."
+  ],
+  "schema_version": "fin-prod-v5-short-term-canonical-context-v7a"
+}

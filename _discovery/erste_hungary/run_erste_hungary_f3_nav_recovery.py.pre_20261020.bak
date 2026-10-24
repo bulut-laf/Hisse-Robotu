@@ -1,0 +1,386 @@
+from __future__ import annotations
+
+from collections import Counter
+from datetime import date, datetime, timezone
+from decimal import Decimal
+from http.cookiejar import CookieJar
+from pathlib import Path
+from urllib.request import build_opener, HTTPCookieProcessor, Request
+import json
+import sys
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "backend"))
+
+from backend.app.funds.analysis_engine import analyze_fund
+from backend.app.funds.evidence_mapper import map_fund_evidence
+from backend.app.funds.international.erste_hungary_f2_bridge import (
+    build_f1_f2_f3_input,
+)
+from backend.app.funds.international.erste_hungary_f3_bridge import (
+    category_volatility_percentiles,
+)
+from backend.app.funds.international.erste_hungary_f3_nav_recovery import (
+    F3_NAV_RECOVERY_VERSION,
+    qualified_max_drawdown_1y,
+)
+
+DISC = ROOT / "_discovery" / "erste_hungary"
+META = DISC / "bulk_metadata_daily_2026-09-25.jsonl"
+F1 = DISC / "f1_evidence_bridge_v1_latest.json"
+F2_CACHE = DISC / "f2_bulk_progress_v1.jsonl"
+OLD_EVIDENCE = DISC / "f1_f2_f3_evidence_v1_latest.json"
+
+OUTPUT = DISC / "f1_f2_f3_evidence_v2_latest.json"
+SUMMARY = DISC / "f1_f2_f3_evidence_v2_summary_latest.json"
+RECOVERY = DISC / "f3_nav_recovery_v1_latest.json"
+
+REFERENCE_DATE = date(2026, 9, 25)
+BASE = "https://www.erstemarket.hu"
+
+CATEGORY_MAP = {
+    "R\u00e9szv\u00e9ny": "EQUITY",
+    "K\u00f6tv\u00e9ny": "BOND",
+    "Abszol\u00fat hozam\u00fa": "ABSOLUTE_RETURN",
+    "Vegyes": "MIXED",
+    "P\u00e9nzpiac": "MONEY_MARKET",
+    "Nyersanyag": "COMMODITY",
+    "Ingatlan": "REAL_ESTATE",
+    "Alapok alapja": "FUND_OF_FUNDS",
+    "Sz\u00e1rmaztatott": "DERIVATIVE",
+}
+
+meta_rows = [
+    json.loads(line)
+    for line in META.read_text(encoding="utf-8").splitlines()
+    if line.strip()
+]
+for row in meta_rows:
+    row["category_normalized"] = CATEGORY_MAP.get(row.get("category_raw"))
+
+meta_by_isin = {
+    str(r["isin"]).strip().upper(): r
+    for r in meta_rows
+}
+
+f1_rows = json.loads(F1.read_text(encoding="utf-8"))
+old_rows = json.loads(OLD_EVIDENCE.read_text(encoding="utf-8"))
+
+f2_cache_rows = [
+    json.loads(line)
+    for line in F2_CACHE.read_text(encoding="utf-8").splitlines()
+    if line.strip()
+]
+f2_cache = {}
+for row in f2_cache_rows:
+    f2_cache[str(row["isin"]).strip().upper()] = row
+
+vol_pct = category_volatility_percentiles(meta_rows)
+
+targets = [
+    str(row["isin"]).strip().upper()
+    for row in old_rows
+    if str(row.get("f3_state")) == "UNAVAILABLE"
+]
+
+jar = CookieJar()
+opener = build_opener(HTTPCookieProcessor(jar))
+common = {
+    "User-Agent": "Mozilla/5.0 Hisse-Robotu-Erste-FH8-v1",
+    "Accept-Language": "hu-HU,hu;q=0.9,en;q=0.8",
+}
+
+
+def fetch_chart(isin: str, instrument_id: str) -> dict:
+    comparison = (
+        BASE
+        + "/befektetesi_alapok/osszehasonlitas?funds="
+        + isin
+    )
+
+    with opener.open(
+        Request(comparison, headers=common),
+        timeout=45,
+    ) as response:
+        response.read()
+
+    headers = {
+        **common,
+        "Accept": "application/json, text/javascript, */*; q=0.01",
+        "X-Requested-With": "XMLHttpRequest",
+        "Referer": comparison,
+    }
+
+    with opener.open(
+        Request(
+            BASE + "/funds/chart/" + instrument_id,
+            headers=headers,
+        ),
+        timeout=45,
+    ) as response:
+        raw = response.read().decode("utf-8", errors="replace")
+
+    obj = json.loads(raw)
+    returned = str(obj.get("isin") or "").strip().upper()
+
+    if returned != isin:
+        raise ValueError(f"ISIN_MISMATCH:{returned}!={isin}")
+
+    return obj
+
+
+def parse_points(obj: dict):
+    points = []
+    for item in obj.get("series") or []:
+        if not isinstance(item, list) or len(item) < 2:
+            continue
+        try:
+            dt = datetime.fromtimestamp(
+                float(item[0]) / 1000,
+                tz=timezone.utc,
+            )
+            nav = Decimal(str(item[1]))
+        except Exception:
+            continue
+        points.append((dt, nav))
+
+    points.sort(key=lambda x: x[0])
+    return points
+
+
+recovery = {}
+reason_counts = Counter()
+
+for isin in targets:
+    cache = f2_cache.get(isin, {})
+    instrument_id = cache.get("instrument_id")
+
+    if not instrument_id:
+        recovery[isin] = {
+            "isin": isin,
+            "status": "UNAVAILABLE",
+            "reason": "NO_INSTRUMENT_ID",
+            "max_drawdown_1y": None,
+        }
+        reason_counts["NO_INSTRUMENT_ID"] += 1
+        continue
+
+    try:
+        obj = fetch_chart(isin, str(instrument_id))
+        points = parse_points(obj)
+        result = qualified_max_drawdown_1y(
+            points,
+            reference_date=REFERENCE_DATE,
+        )
+
+        recovery[isin] = {
+            "isin": isin,
+            "status": (
+                "RECOVERED"
+                if result.value is not None
+                else "UNAVAILABLE"
+            ),
+            "reason": result.reason,
+            "max_drawdown_1y": (
+                None
+                if result.value is None
+                else str(result.value)
+            ),
+            "latest_date": (
+                None
+                if result.latest_date is None
+                else result.latest_date.isoformat()
+            ),
+            "target_start_date": (
+                None
+                if result.target_start_date is None
+                else result.target_start_date.isoformat()
+            ),
+            "start_observation_date": (
+                None
+                if result.start_observation_date is None
+                else result.start_observation_date.isoformat()
+            ),
+            "start_lag_days": result.start_lag_days,
+            "freshness_days": result.freshness_days,
+            "window_points": result.window_points,
+            "series_count": len(points),
+        }
+        reason_counts[result.reason] += 1
+
+    except Exception as exc:
+        recovery[isin] = {
+            "isin": isin,
+            "status": "UNAVAILABLE",
+            "reason": f"{type(exc).__name__}:{exc}",
+            "max_drawdown_1y": None,
+        }
+        reason_counts["FETCH_OR_PARSE_FAILURE"] += 1
+
+
+RECOVERY.write_text(
+    json.dumps(
+        list(recovery.values()),
+        ensure_ascii=False,
+        indent=2,
+    ),
+    encoding="utf-8",
+)
+
+rows = []
+class_counts = Counter()
+f3_counts = Counter()
+eligibility_counts = Counter()
+trade_counts = Counter()
+
+for f1 in f1_rows:
+    isin = str(f1["isin"]).strip().upper()
+    meta = meta_by_isin[isin]
+    cache = f2_cache[isin]
+
+    def dec(value):
+        return None if value in (None, "", "-") else Decimal(str(value))
+
+    official_dd = dec(meta.get("max_drawdown_1y"))
+    recovered = recovery.get(isin)
+
+    if official_dd is not None:
+        dd = official_dd
+        dd_source = "OFFICIAL_METADATA"
+    elif recovered and recovered.get("status") == "RECOVERED":
+        dd = Decimal(str(recovered["max_drawdown_1y"]))
+        dd_source = "NAV_SERIES_QUALIFIED_1Y"
+    else:
+        dd = None
+        dd_source = "UNAVAILABLE"
+
+    value = build_f1_f2_f3_input(
+        isin=isin,
+        category_id=f1["category_id"],
+        category_rank_percentile=Decimal(
+            str(f1["category_rank_percentile"])
+        ),
+        category_rank_change=int(f1["category_rank_change"]),
+        return_1m=dec(cache.get("return_1m")),
+        return_3m=dec(cache.get("return_3m")),
+        return_6m=dec(cache.get("return_6m")),
+        volatility_percentile=vol_pct.get(isin),
+        max_drawdown_1y=dd,
+    )
+
+    mapped = map_fund_evidence(value)
+
+    f2 = next(x for x in mapped.evidence if x.family == "F2")
+    f3 = next(x for x in mapped.evidence if x.family == "F3")
+    result = analyze_fund(mapped)
+
+    def state_name(state):
+        return state.value if hasattr(state, "value") else str(state)
+
+    classification = (
+        result.classification.value
+        if hasattr(result.classification, "value")
+        else str(result.classification)
+    )
+
+    f3_state = state_name(f3.state)
+
+    class_counts[classification] += 1
+    f3_counts[f3_state] += 1
+    eligibility_counts[str(result.eligibility_reason)] += 1
+    trade_counts[str(result.automatic_trade_authority)] += 1
+
+    rows.append({
+        "isin": isin,
+        "canonical_fund_id": result.canonical_fund_id,
+        "category_id": result.category_id,
+        "return_1m": cache.get("return_1m"),
+        "return_3m": cache.get("return_3m"),
+        "return_6m": cache.get("return_6m"),
+        "max_drawdown_1y": None if dd is None else str(dd),
+        "max_drawdown_1y_source": dd_source,
+        "f1_state": f1["f1_state"],
+        "f2_state": state_name(f2.state),
+        "f3_state": f3_state,
+        "classification": classification,
+        "eligibility_reason": result.eligibility_reason,
+        "automatic_trade_authority": result.automatic_trade_authority,
+        "forced_fill": result.forced_fill,
+    })
+
+
+OUTPUT.write_text(
+    json.dumps(rows, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
+
+recovered_rows = [
+    r for r in recovery.values()
+    if r.get("status") == "RECOVERED"
+]
+
+summary = {
+    "version": F3_NAV_RECOVERY_VERSION,
+    "reference_date": REFERENCE_DATE.isoformat(),
+    "target_count": len(targets),
+    "recovered_count": len(recovered_rows),
+    "unavailable_count": len(targets) - len(recovered_rows),
+    "reason_counts": dict(reason_counts),
+    "f3_state_counts": dict(f3_counts),
+    "class_counts": dict(class_counts),
+    "eligibility_counts": dict(eligibility_counts),
+    "trade_authority_counts": dict(trade_counts),
+}
+
+SUMMARY.write_text(
+    json.dumps(summary, ensure_ascii=False, indent=2),
+    encoding="utf-8",
+)
+
+print("F3_NAV_RECOVERY_VERSION=" + F3_NAV_RECOVERY_VERSION)
+print("REFERENCE_DATE=" + REFERENCE_DATE.isoformat())
+print("TARGET_COUNT=" + str(len(targets)))
+print("RECOVERED_COUNT=" + str(len(recovered_rows)))
+print("UNAVAILABLE_COUNT=" + str(len(targets) - len(recovered_rows)))
+print(
+    "RECOVERY_REASON_COUNTS="
+    + json.dumps(dict(reason_counts), ensure_ascii=False, sort_keys=True)
+)
+
+for row in recovered_rows:
+    print(
+        "RECOVERED="
+        + row["isin"]
+        + "|maxdd1y=" + str(row["max_drawdown_1y"])
+        + "|latest=" + str(row.get("latest_date"))
+        + "|freshness_days=" + str(row.get("freshness_days"))
+        + "|start_lag_days=" + str(row.get("start_lag_days"))
+        + "|window_points=" + str(row.get("window_points"))
+    )
+
+print(
+    "F3_STATE_COUNTS="
+    + json.dumps(dict(f3_counts), ensure_ascii=False)
+)
+print(
+    "CLASS_COUNTS="
+    + json.dumps(dict(class_counts), ensure_ascii=False)
+)
+print(
+    "ELIGIBILITY_COUNTS="
+    + json.dumps(dict(eligibility_counts), ensure_ascii=False)
+)
+print(
+    "TRADE_AUTHORITY_COUNTS="
+    + json.dumps(dict(trade_counts), ensure_ascii=False)
+)
+print("OUTPUT_JSON=_discovery/erste_hungary/f1_f2_f3_evidence_v2_latest.json")
+print("SUMMARY_JSON=_discovery/erste_hungary/f1_f2_f3_evidence_v2_summary_latest.json")
+print("RECOVERY_JSON=_discovery/erste_hungary/f3_nav_recovery_v1_latest.json")
+print("TEFAS_MUTATION=NO")
+print("PRODUCTION_STORE_MUTATION=NO")
+print("AL_SAT_MUTATION=NO")
+print("FORCED_FILL=NO")
+print("TRADE_AUTHORITY=NONE")
+print("STATUS_FINAL=SUCCESS")

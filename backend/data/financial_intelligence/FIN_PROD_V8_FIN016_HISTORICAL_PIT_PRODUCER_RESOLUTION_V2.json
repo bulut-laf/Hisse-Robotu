@@ -1,0 +1,67 @@
+{
+  "schema_version": "fin-prod-v8-fin016-historical-pit-producer-resolution-v2",
+  "mode": "READ_ONLY_PRODUCER_RESOLUTION",
+  "status": "NO_EXACT_PRODUCTION_OBSERVATION_PRODUCER",
+  "primary": null,
+  "blocker": "HISTORICAL_PIT_OBSERVATION_PRODUCER_MISSING",
+  "rules": [
+    "VALIDATOR_ONLY_MODULES_ARE_NOT_DATA_SOURCES",
+    "TESTS_ARE_NOT_PRODUCTION_SOURCES",
+    "POINT_IN_TIME_OBSERVATION_MUST_BE_CONSTRUCTED_FROM_REAL_EXISTING_EVIDENCE",
+    "NO_SYNTHETIC_PRODUCTION_CALIBRATION",
+    "NO_FUZZY_FIELD_MAPPING"
+  ],
+  "production_candidates": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v8_fin016_historical_pit_producer_resolver_v2.py",
+      "constructor_calls": [],
+      "semantic": {
+        "point_in_time_constructor": false,
+        "forward_return": true,
+        "publication_date": true,
+        "observation_date": true,
+        "outcome_semantics": true
+      }
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\models\\investability_models.py",
+      "constructor_calls": [],
+      "semantic": {
+        "point_in_time_constructor": false,
+        "forward_return": true,
+        "publication_date": true,
+        "observation_date": true,
+        "outcome_semantics": true
+      }
+    }
+  ],
+  "artifact_candidates": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence_acceptance_TUPRS_2026_2.json",
+      "hits": {
+        "score": true,
+        "forward_return": false,
+        "publication_date": true,
+        "observation_date": true
+      }
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V5_COMPACT_CONTRACT.json",
+      "hits": {
+        "score": true,
+        "forward_return": true,
+        "publication_date": true,
+        "observation_date": true
+      }
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FIN_PROD_V8_FIN016_HISTORICAL_PIT_EXACT_SOURCE_RESOLUTION.json",
+      "hits": {
+        "score": true,
+        "forward_return": true,
+        "publication_date": true,
+        "observation_date": true
+      }
+    }
+  ]
+}

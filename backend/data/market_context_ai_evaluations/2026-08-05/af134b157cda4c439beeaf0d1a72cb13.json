@@ -1,0 +1,41 @@
+{
+  "review_id": "af134b157cda4c439beeaf0d1a72cb13",
+  "date": "2026-08-05",
+  "created_at": "2026-08-05T14:20:42Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 13.521,
+  "report_count": 4,
+  "sources": [
+    "ICBC",
+    "whatsapp",
+    "ykb"
+  ],
+  "document_ids": [
+    "471864c44a59468e96b291362fde3242",
+    "89a439c087214a588a6660606b45ad59",
+    "e5f58041191d447196eb7c2006a94521",
+    "871ffa0787e14f3091bce22c07b15820"
+  ],
+  "output": {
+    "summary": "05.08.2026 tarihli raporlarda, XU100 endeksinin bir önceki günü yüzde 2.07 artışla 13687.93 seviyesinde kapattığı ve bu sabah karışık açılış ile 13500-13780 bandında işlem aktivitesi beklediği belirtilmiştir. Kaynaklarda Kardemir (KRDMD) ve Petkim (PETKM) hisseleri için değerlendirmelere yer verilmiştir.",
+    "positive_factors": [
+      "Endeksin bir önceki günü yüzde 2.07 değişimle pozitif kapatması",
+      "Endeks için 13700 ilk hedef/direnç seviyesine yakın kapanış gerçekleşmesi",
+      "Geri çekilmelerde 13500 - 13580 bandının alım yönünde izlenmesi"
+    ],
+    "risk_factors": [
+      "İlk direnç olan 13780 seviyesinde kar realizasyonlarının görülme ihtimali"
+    ],
+    "stock_specific_risks": [],
+    "aligned_points": [
+      "Kardemir (KRDMD) hissesi için farklı kaynaklarda (WhatsApp ve YKB) alım yönlü değerlendirmeler bulunması"
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "XU100 endeksi için 13500 - 13580 destek bandı",
+      "XU100 endeksi için 13780 ve 13900 direnç seviyeleri",
+      "PETKM ve AKBNK hisselerine yönelik paylaşılan teknik seviyeler"
+    ]
+  }
+}

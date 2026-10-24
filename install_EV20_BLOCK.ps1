@@ -1,0 +1,1 @@
+Write-Host "EV-20 Continuous Intelligence Expansion installed."

@@ -1,0 +1,12 @@
+﻿........................................................................ [ 48%]
+........................................................................ [ 96%]
+......                                                                   [100%]
+150 passed, 2872 deselected in 8.53s
+VALIDATION_IMPORTED_SYMBOLS=PreBreakoutValidationConfig,dogrulama_ozeti,toplu_tarihsel_dogrulama
+DASHBOARD_FUNCTION_COUNT=1
+REAL_VALIDATION_RESULT_CANDIDATES=3
+REAL_RESULT|LINE=224|VAR=validation_config|CALL=PreBreakoutValidationConfig
+REAL_RESULT|LINE=246|VAR=summary|CALL=dogrulama_ozeti
+REAL_RESULT|LINE=232|VAR=records|CALL=toplu_tarihsel_dogrulama
+DECISION=BLOCKED_REAL_VALIDATION_RESULT_NOT_UNIQUE
+PRODUCTION_MUTATION=YOK

@@ -1,0 +1,9 @@
+﻿================================================================================
+FILE=backend/app/analysis/market_regime.py
+EXISTS=True
+--------------------------------------------------------------------------------
+NAME=piyasa_rejimini_analiz_et
+TYPE=FunctionDef
+LINES=361-440
+SIGNATURE=sembol: str, *, downloader: DataDownloader | None=None, ikincil_downloader: DataDownloader | None=None, saatlik_veri_dene: bool=True, yeniden_deneme_politikasi: MarketRegimeRetryPolicy=MarketRegimeRetryPolicy()
+RETURN_ANNOTATION=MarketRegimeResult

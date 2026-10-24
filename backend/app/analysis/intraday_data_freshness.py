@@ -1,0 +1,88 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Literal
+
+from backend.app.data.delayed_data_pilot import (
+    DelayedDataSnapshot,
+    DelayedDataPilotConfig,
+    GUN_ICI_ON_IZLEME,
+)
+
+
+DataFreshnessState = Literal[
+    "DATA_GUNCEL",
+    "DATA_GECIKMELI",
+    "DATA_YETERSIZ",
+    "DATA_KILITLI",
+]
+
+
+@dataclass(frozen=True)
+class IntradayDataFreshness:
+    symbol: str
+    state: DataFreshnessState
+    measured_delay_minutes: float | None
+    missing_bar_count: int
+    latest_bar_completed: bool
+    locked: bool
+    preview_only: bool
+    reason: str
+
+
+def evaluate_intraday_data_freshness(
+    snapshot: DelayedDataSnapshot,
+    *,
+    preview_counts_as_delayed: bool = True,
+    config: DelayedDataPilotConfig | None = None,
+) -> IntradayDataFreshness:
+    config = config or DelayedDataPilotConfig()
+
+    def build_result(
+        state: DataFreshnessState,
+        reason: str,
+    ) -> IntradayDataFreshness:
+        return IntradayDataFreshness(
+            symbol=snapshot.symbol,
+            state=state,
+            measured_delay_minutes=snapshot.measured_delay_minutes,
+            missing_bar_count=snapshot.missing_bar_count,
+            latest_bar_completed=snapshot.latest_bar_completed,
+            locked=snapshot.locked,
+            preview_only=snapshot.preview_only,
+            reason=reason,
+        )
+
+    if snapshot.locked:
+        return build_result("DATA_KILITLI", "Veri kilitli.")
+
+    if snapshot.measured_delay_minutes is None:
+        return build_result("DATA_YETERSIZ", "Gecikme olcumu yok.")
+
+    if snapshot.missing_bar_count > 0:
+        return build_result("DATA_YETERSIZ", "Eksik 5m bar var.")
+
+    # Varsayılan olarak önizleme verisi güncel kabul edilmez.
+    if snapshot.preview_only:
+        is_accepted_intraday_preview = (
+            not preview_counts_as_delayed
+            and snapshot.status == GUN_ICI_ON_IZLEME
+        )
+        if not is_accepted_intraday_preview:
+            return build_result(
+                "DATA_GECIKMELI",
+                "Veri preview modunda.",
+            )
+
+    maximum_acceptable_delay = (
+        snapshot.expected_delay_minutes + config.delay_tolerance_minutes
+    )
+
+    if snapshot.measured_delay_minutes > maximum_acceptable_delay:
+        return build_result(
+            "DATA_GECIKMELI",
+            "Olculen veri gecikmesi kabul edilen siniri asiyor.",
+        )
+
+    return build_result("DATA_GUNCEL", "Veri kullanilabilir.")
+

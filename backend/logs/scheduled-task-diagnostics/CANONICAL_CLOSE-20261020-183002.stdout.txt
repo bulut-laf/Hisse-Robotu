@@ -1,0 +1,14 @@
+{
+  "phase": "CANONICAL_CLOSE",
+  "run_date": "2026-10-20",
+  "observed_at": "2026-10-20T18:30:08.456473+03:00",
+  "status": "SUCCESS",
+  "candidate_count": 5,
+  "detail_rows": [],
+  "delegated_legacy_phase": "EVENING",
+  "preview_only": false,
+  "canonical": true,
+  "ranking_write_allowed": true,
+  "profile_write_allowed": true,
+  "al_sat_decision_allowed": true
+}

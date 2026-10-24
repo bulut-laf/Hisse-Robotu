@@ -1,0 +1,41 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818111337
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-TaskEngine-V1-LiveQualityBinding-ExactCallChainImplement.ps1
+Process ID: 28936
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+=== TASK ENGINE V1 LIVE QUALITY BINDING EXACT CALL CHAIN IMPLEMENT ===
+MODE=FAIL_CLOSED
+SOURCE=PROVEN_CALL_CHAIN
+RULE=NO_GENERIC_RESOLVER
+RULE=REUSE_DAILY_OPERATION_SUMMARY_AND_OPERATION_TASK
+RULE=NO_NEW_SIGNAL_SCORE_DUPLICATE_ENGINE_STORE
+RULE=TARGET_TEST_PLUS_ONE_FULL_REGRESSION
+
+
+=== EXACT CALL CHAIN CONTRACT + MUTATION ===
+
+
+=== FAILURE ===
+ERROR=EXACT_CALL_CHAIN_IMPLEMENT_PREMUTATION_GUARD_FAIL
+ROLLBACK=NOT_NEEDED_NO_MUTATION
+PRODUCTION_STATUS=UNCHANGED
+NEXT=EXACT_RCA_ONLY_NO_NEW_PATCH
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-TaskEngine-V1-LiveQualityBinding-ExactCallChainImplement-20260818-111337.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818111340
+**********************

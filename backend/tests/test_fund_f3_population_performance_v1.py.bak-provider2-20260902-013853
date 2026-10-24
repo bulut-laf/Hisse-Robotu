@@ -1,0 +1,293 @@
+﻿from datetime import datetime, timezone
+from threading import Lock
+from time import sleep
+
+import backend.app.funds.f3_production_population as runtime
+import backend.app.funds.tefas_history_population as history_population
+
+from backend.app.funds.store import (
+    FundObservationJsonStore,
+)
+
+
+def universe_row(code):
+    return {
+        "fonkod": code,
+    }
+
+
+def history_row(
+    code,
+    day,
+    price,
+):
+    return {
+        "fonKodu": code,
+        "fonUnvan": "TEST",
+        "kategoriDerece": 0,
+        "kategoriFonSay": 29,
+        "tarih": day,
+        "fiyat": price,
+    }
+
+
+class CountingStore(
+    FundObservationJsonStore
+):
+    def __init__(
+        self,
+        path,
+    ):
+        super().__init__(path)
+        self.upsert_calls = 0
+
+    def upsert(
+        self,
+        observations,
+    ):
+        self.upsert_calls += 1
+
+        return super().upsert(
+            observations
+        )
+
+
+def test_fifty_funds_use_one_store_write(
+    tmp_path,
+    monkeypatch,
+):
+    store = CountingStore(
+        tmp_path
+        / "observations.json"
+    )
+
+    codes = tuple(
+        f"F{index:03d}"
+        for index in range(50)
+    )
+
+    monkeypatch.setattr(
+        runtime,
+        "fetch_tefas_universe_rows",
+        lambda: tuple(
+            universe_row(code)
+            for code in codes
+        ),
+    )
+
+    monkeypatch.setattr(
+        history_population,
+        "fetch_tefas_fund_history_rows",
+        lambda code, **kwargs: (
+            history_row(
+                code,
+                "2026-08-01",
+                "100",
+            ),
+            history_row(
+                code,
+                "2026-08-02",
+                "101",
+            ),
+            history_row(
+                code,
+                "2026-08-03",
+                "102",
+            ),
+        ),
+    )
+
+    result = (
+        runtime
+        .populate_next_f3_production_batch(
+            batch_size=50,
+            worker_count=5,
+            store=store,
+        )
+    )
+
+    assert len(
+        result.succeeded_funds
+    ) == 50
+
+    assert result.observation_count == 150
+
+    # Critical performance contract.
+    assert store.upsert_calls == 1
+
+
+def test_worker_count_never_exceeds_five(
+    tmp_path,
+    monkeypatch,
+):
+    store = CountingStore(
+        tmp_path
+        / "observations.json"
+    )
+
+    codes = tuple(
+        f"W{index:03d}"
+        for index in range(20)
+    )
+
+    monkeypatch.setattr(
+        runtime,
+        "fetch_tefas_universe_rows",
+        lambda: tuple(
+            universe_row(code)
+            for code in codes
+        ),
+    )
+
+    lock = Lock()
+
+    active = 0
+    maximum_active = 0
+
+    def fake_fetch(
+        code,
+        **kwargs,
+    ):
+        nonlocal active
+        nonlocal maximum_active
+
+        with lock:
+            active += 1
+            maximum_active = max(
+                maximum_active,
+                active,
+            )
+
+        sleep(0.02)
+
+        with lock:
+            active -= 1
+
+        return (
+            history_row(
+                code,
+                "2026-08-01",
+                "100",
+            ),
+            history_row(
+                code,
+                "2026-08-02",
+                "101",
+            ),
+            history_row(
+                code,
+                "2026-08-03",
+                "102",
+            ),
+        )
+
+    monkeypatch.setattr(
+        history_population,
+        "fetch_tefas_fund_history_rows",
+        fake_fetch,
+    )
+
+    runtime.populate_next_f3_production_batch(
+        batch_size=20,
+        worker_count=5,
+        store=store,
+    )
+
+    assert maximum_active <= 5
+    assert maximum_active > 1
+
+
+def test_one_fetch_failure_keeps_successful_batch_write(
+    tmp_path,
+    monkeypatch,
+):
+    store = CountingStore(
+        tmp_path
+        / "observations.json"
+    )
+
+    monkeypatch.setattr(
+        runtime,
+        "fetch_tefas_universe_rows",
+        lambda: (
+            universe_row("AAA"),
+            universe_row("BBB"),
+            universe_row("CCC"),
+        ),
+    )
+
+    def fake_fetch(
+        code,
+        **kwargs,
+    ):
+        if code == "BBB":
+            raise RuntimeError(
+                "TEST_FAILURE"
+            )
+
+        return (
+            history_row(
+                code,
+                "2026-08-01",
+                "100",
+            ),
+            history_row(
+                code,
+                "2026-08-02",
+                "101",
+            ),
+            history_row(
+                code,
+                "2026-08-03",
+                "102",
+            ),
+        )
+
+    monkeypatch.setattr(
+        history_population,
+        "fetch_tefas_fund_history_rows",
+        fake_fetch,
+    )
+
+    result = (
+        runtime
+        .populate_next_f3_production_batch(
+            batch_size=3,
+            worker_count=5,
+            store=store,
+        )
+    )
+
+    assert result.status == "PARTIAL"
+
+    assert result.succeeded_funds == (
+        "AAA",
+        "CCC",
+    )
+
+    assert len(
+        result.failed_funds
+    ) == 1
+
+    # Still only one JSON rewrite.
+    assert store.upsert_calls == 1
+
+
+def test_worker_count_above_five_is_rejected(
+    tmp_path,
+):
+    import pytest
+
+    store = CountingStore(
+        tmp_path
+        / "observations.json"
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="F3_WORKER_COUNT_INVALID",
+    ):
+        runtime.populate_next_f3_production_batch(
+            worker_count=6,
+            store=store,
+        )

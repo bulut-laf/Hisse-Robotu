@@ -1,0 +1,139 @@
+from __future__ import annotations
+
+from datetime import date, datetime
+from typing import Any, Callable, Mapping
+
+import pandas as pd
+
+from backend.app.analysis.eod_candidate_output_archive import EodCandidateOutputJsonStore
+from backend.app.analysis.eod_candidate_performance import (
+    EodCandidatePerformanceJsonStore,
+    calculate_eod_candidate_performance,
+)
+from backend.app.data.batch_market_data import toplu_fiyat_verisi_getir
+
+
+def _clean_symbol(value: object) -> str:
+    return str(value or "").strip().upper().removesuffix(".IS")
+
+
+def _frame_rows(frame: object) -> dict[date, dict[str, float]]:
+    if not isinstance(frame, pd.DataFrame) or frame.empty:
+        return {}
+    normalized = frame.copy()
+    if isinstance(normalized.columns, pd.MultiIndex):
+        normalized.columns = normalized.columns.get_level_values(0)
+    columns = {str(col).casefold(): col for col in normalized.columns}
+    if not all(name in columns for name in ("high", "low", "close")):
+        return {}
+    rows: dict[date, dict[str, float]] = {}
+    for index, row in normalized.iterrows():
+        try:
+            day = pd.Timestamp(index).date()
+            values = {
+                name: float(row[columns[name]])
+                for name in ("high", "low", "close")
+            }
+        except (TypeError, ValueError, KeyError):
+            continue
+        if all(value > 0 for value in values.values()):
+            rows[day] = values
+    return rows
+
+
+def settle_latest_eod_candidate_performance(
+    *,
+    current_date: str,
+    eod_store: EodCandidateOutputJsonStore | None = None,
+    outcome_store: EodCandidatePerformanceJsonStore | None = None,
+    market_data_fetcher: Callable[..., Any] = toplu_fiyat_verisi_getir,
+) -> dict[str, Any]:
+    """Settle the latest EOD archive into a separate performance archive.
+
+    Measurement-only. Does not alter candidate selection or AL/BEKLE decisions.
+    """
+    today = date.fromisoformat(str(current_date)[:10])
+    source_store = eod_store or EodCandidateOutputJsonStore()
+    target_store = outcome_store or EodCandidatePerformanceJsonStore()
+    source_payload = source_store.load()
+    source_records = source_payload.get("records", [])
+    source = source_records[-1] if source_records else None
+
+    if not isinstance(source, dict):
+        return {"status": "NO_EOD_ARCHIVE"}
+    run_date = str(source.get("run_date", ""))[:10]
+    try:
+        base_date = date.fromisoformat(run_date)
+    except ValueError:
+        return {"status": "SOURCE_RUN_DATE_INVALID", "run_date": run_date}
+
+    symbols_raw = source.get("buy_candidate_symbols", [])
+    if not isinstance(symbols_raw, list):
+        return {"status": "SOURCE_CANDIDATES_INVALID", "run_date": run_date}
+    symbols = tuple(dict.fromkeys(
+        _clean_symbol(symbol) for symbol in symbols_raw if _clean_symbol(symbol)
+    ))
+    if not symbols:
+        record = calculate_eod_candidate_performance(
+            run_date=run_date,
+            candidate_symbols=(),
+            reference_prices={},
+            price_history={},
+        )
+        target_store.save_record(record)
+        return {"status": record["status"], "run_date": run_date, "candidate_count": 0}
+
+    if today <= base_date:
+        return {
+            "status": "WAITING_FOR_FUTURE_SESSIONS",
+            "run_date": run_date,
+            "candidate_count": len(symbols),
+        }
+
+    try:
+        market = market_data_fetcher(
+            symbols,
+            islem_gunu=40,
+            indirme_donemi="3mo",
+            bugun=today,
+        )
+    except Exception as exc:
+        return {
+            "status": "DATA_UNAVAILABLE",
+            "run_date": run_date,
+            "candidate_count": len(symbols),
+            "detail": str(exc),
+        }
+
+    raw_frames = dict(getattr(market, "veriler", {}) or {})
+    frames = {_clean_symbol(symbol): _frame_rows(frame) for symbol, frame in raw_frames.items()}
+    reference_prices: dict[str, float] = {}
+    future_history: dict[str, dict[str, dict[str, float]]] = {}
+
+    for symbol in symbols:
+        rows = frames.get(symbol, {})
+        base_row = rows.get(base_date)
+        if base_row is not None:
+            reference_prices[symbol] = base_row["close"]
+        future_history[symbol] = {
+            day.isoformat(): row for day, row in rows.items() if day > base_date
+        }
+
+    record = calculate_eod_candidate_performance(
+        run_date=run_date,
+        candidate_symbols=symbols,
+        reference_prices=reference_prices,
+        price_history=future_history,
+    )
+    record["source_created_at"] = source.get("created_at")
+    record["evaluated_as_of"] = today.isoformat()
+    target_store.save_record(record, recorded_at=datetime.now().astimezone())
+    return {
+        "status": record["status"],
+        "run_date": run_date,
+        "candidate_count": len(symbols),
+        "complete_count": sum(
+            1 for item in record["candidates"] if item.get("status") == "COMPLETE"
+        ),
+        "archive_path": str(target_store.path),
+    }

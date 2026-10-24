@@ -1,0 +1,82 @@
+{
+  "version": "FH9-F4-PARSER-V18",
+  "fund_count": 7,
+  "parsed_count": 0,
+  "f4_positive_or_caution_count": 0,
+  "production_mutation": false,
+  "trade_authority": "NONE",
+  "forced_fill": false,
+  "semantic_proxy": false,
+  "results": [
+    {
+      "isin": "AT0000627476",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000627476",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": []
+    },
+    {
+      "isin": "AT0000A00G88",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00G88",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": []
+    },
+    {
+      "isin": "AT0000A00GA2",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GA2",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": []
+    },
+    {
+      "isin": "AT0000A00G96",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00G96",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": []
+    },
+    {
+      "isin": "AT0000A00GC8",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GC8",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": []
+    },
+    {
+      "isin": "AT0000A00GE4",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GE4",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": []
+    },
+    {
+      "isin": "AT0000A00GF1",
+      "url": "https://www.bamosz.hu/alapoldal?isin=AT0000A00GF1",
+      "source": "BAMOSZ",
+      "semantic_proxy": false,
+      "http_status": 200,
+      "status": "INSUFFICIENT_VALID_DAILY_ROWS",
+      "valid_row_count": 0,
+      "records": []
+    }
+  ]
+}

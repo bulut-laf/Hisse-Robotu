@@ -1,0 +1,19 @@
+{
+  "version": "erste-hungary-f3-evidence-bridge-v1",
+  "result_count": 929,
+  "f3_state_counts": {
+    "EvidenceState.CAUTION": 205,
+    "EvidenceState.POSITIVE": 347,
+    "EvidenceState.NEUTRAL": 345,
+    "EvidenceState.UNAVAILABLE": 32
+  },
+  "class_counts": {
+    "X": 929
+  },
+  "eligibility_counts": {
+    "INSUFFICIENT_INDEPENDENT_EVIDENCE": 929
+  },
+  "trade_authority_counts": {
+    "NONE": 929
+  }
+}

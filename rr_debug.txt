@@ -1,0 +1,91 @@
+﻿--- RISK ENGINE ---
+
+    risk_tutari = giris_fiyati - stop_loss
+    odul_tutari = hedef_fiyat - giris_fiyati
+
+    if risk_tutari <= 0:
+        raise RiskEngineError(
+            "Risk tutarı sıfırdan büyük olmalıdır."
+        )
+
+    risk_odul_orani = odul_tutari / risk_tutari
+
+    atr_yuzde = atr / giris_fiyati * 100
+    risk_notu = volatilite_notu_belirle(atr_yuzde)
+
+    filtreyi_gecti = (
+    risk_odul_orani > minimum_risk_odul
+    or math.isclose(
+        risk_odul_orani,
+        minimum_risk_odul,
+        rel_tol=1e-9,
+        abs_tol=1e-9,
+    )
+)
+
+    return RiskPlan(
+        giris_fiyati=float(giris_fiyati),
+--- STOCK ANALYZER ---
+        )
+
+        atr = float(
+            son["ATR14"]
+        )
+
+        if destek_direnc.direnc is not None:
+            risk_plani = yapisal_risk_plani_olustur(
+                giris_fiyati=giris_fiyati,
+                atr=atr,
+                hedef_fiyati=float(
+                    destek_direnc.direnc.fiyat
+                ),
+                stop_atr_katsayisi=1.50,
+                minimum_risk_odul=2.00,
+            )
+
+            hedef_kaynagi = "Yakın direnç"
+
+        else:
+            risk_plani = risk_plani_olustur(
+                giris_fiyati=giris_fiyati,
+                atr=atr,
+                stop_atr_katsayisi=1.50,
+                hedef_atr_katsayisi=2.00,
+                minimum_risk_odul=2.00,
+            )
+
+            hedef_kaynagi = (
+                "ATR tahmini — direnç bulunamadı"
+            )
+
+        sinyal = sinyal_uret(
+            veri=gecerli_veri,
+            risk_plani=risk_plani,
+        )
+--- SCAN FILTER ---
+
+    if (
+        sonuc.hacim_orani
+        < kriterler.minimum_hacim_orani
+    ):
+        nedenler.append(
+            f"Hacim oranı {sonuc.hacim_orani:.2f}x; "
+            f"minimum {kriterler.minimum_hacim_orani:.2f}x "
+            "gerekli."
+        )
+
+    if (
+        kriterler.risk_odul_filtresi_gerekli
+        and not sonuc.risk_plani.filtreyi_gecti
+    ):
+        nedenler.append(
+            "Risk/ödül filtresini geçemedi."
+        )
+
+    if (
+        sonuc.sinyal.karar
+        not in kriterler.izin_verilen_gorunumler
+    ):
+        nedenler.append(
+            "Teknik görünüm izin verilen grupta değil: "
+            f"{sonuc.sinyal.karar}."

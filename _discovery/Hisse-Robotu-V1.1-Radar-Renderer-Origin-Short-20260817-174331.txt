@@ -1,0 +1,3 @@
+﻿FILE=D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py LINE=17 TEXT=def render_opportunity_radar() -> None:
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=32 TEXT=from backend.app.ui.opportunity_radar_dashboard import render_opportunity_radar
+FILE=D:\Projects\Hisse-Robotu\backend\dashboard.py LINE=9153 TEXT=render_opportunity_radar()

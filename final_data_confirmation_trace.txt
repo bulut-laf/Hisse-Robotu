@@ -1,0 +1,307 @@
+﻿--- STOCK ANALYZER ---
+
+from dataclasses import asdict, dataclass
+from typing import Any
+
+import pandas as pd
+
+from ..data.market_data import (
+    MarketDataError,
+    fiyat_verisi_getir,
+)
+from ..indicators.technical_indicators import (
+    IndicatorError,
+    teknik_gostergeleri_ekle,
+)
+from ..risk.risk_engine import (
+    RiskEngineError,
+    RiskPlan,
+    risk_plani_olustur,
+)
+from ..risk.structural_risk import (
+    yapisal_risk_plani_olustur,
+)
+from .signal_engine import (
+    SignalEngineError,
+    SignalResult,
+    sinyal_uret,
+)
+from .support_resistance import (
+    SupportResistanceError,
+    SupportResistanceResult,
+    destek_direnc_bul,
+)
+from .volume_analysis import (
+    VolumeAnalysisError,
+    hacim_gostergelerini_ekle,
+)
+
+
+class StockAnalyzerError(Exception):
+    """Bütünleşik hisse analizi sırasında oluşan özel hata."""
+
+
+@dataclass(frozen=True)
+class StockAnalysisResult:
+    """Tek bir hisse için üretilen bütünleşik analiz sonucu."""
+
+    sembol: str
+    analiz_tarihi: str
+
+    kapanis: float
+    hacim: int
+
+    ema9: float
+    ema21: float
+    rsi14: float
+
+    macd: float
+    macd_sinyal: float
+    macd_histogram: float
+
+    atr14: float
+    atr_yuzde: float
+
+    hacim_orani: float
+    hacim_durumu: str
+
+    destek_direnc: SupportResistanceResult
+    hedef_kaynagi: str
+
+    risk_plani: RiskPlan
+    sinyal: SignalResult
+
+    def sozluge_donustur(self) -> dict[str, Any]:
+        """
+        Sonucu API ve tablo katmanında kullanılabilecek
+        sözlük biçimine dönüştürür.
+        """
+        return asdict(self)
+
+
+class StockAnalyzer:
+    """
+    Piyasa verisi, teknik göstergeler, hacim, destek/direnç,
+    risk ve sinyal modüllerini tek servis altında birleştirir.
+
+    analiz_et:
+        Güncel piyasa verisini indirerek analiz yapar.
+
+    veriden_analiz_et:
+        Yalnızca kendisine verilen fiyat penceresini analiz eder.
+        Geçmiş backtest çalışmalarında bu metot kullanılır.
+    """
+
+    def analiz_et(
+        self,
+        sembol: str,
+    ) -> StockAnalysisResult:
+        """
+        Piyasa verisini indirerek güncel hisse analizi yapar.
+        """
+        temiz_sembol = self._sembolu_temizle(
+            sembol
+        )
+
+        try:
+            fiyat_verisi = fiyat_verisi_getir(
+                sembol=temiz_sembol,
+                islem_gunu=160,
+                indirme_donemi="1y",
+                yalnizca_tamamlanmis_gunler=True,
+            )
+
+        except (
+            ValueError,
+            MarketDataError,
+        ) as hata:
+            raise StockAnalyzerError(
+                f"{temiz_sembol} analiz edilemedi: {hata}"
+            ) from hata
+
+        return self.veriden_analiz_et(
+            sembol=temiz_sembol,
+            fiyat_verisi=fiyat_verisi,
+        )
+
+--- LIVE ANALYSIS ---
+
+
+class LiveAnalysisDashboardService:
+    """Veriyi bir kez indirip güncel teknik analiz ve planı birlikte üretir."""
+
+    def __init__(
+        self,
+        veri_getirici: DataLoader = coklu_zaman_dilimi_verisi_getir,
+        teknik_motoru: TechnicalEngine = teknik_teyit_analizi_yap,
+        plan_motoru: TradePlanEngine = islem_plani_olustur,
+    ) -> None:
+        self._veri_getirici = veri_getirici
+        self._teknik_motoru = teknik_motoru
+        self._plan_motoru = plan_motoru
+
+    def calistir(self, istek: LiveAnalysisRequest) -> LiveAnalysisResult:
+        try:
+            paket = self._veri_getirici(istek.sembol)
+            teknik_teyit = self._teknik_motoru(paket)
+            veri_tazeligi = None
+            if hasattr(paket, "getir"):
+                veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+                    paket.getir("Günlük").veri
+                )
+            islem_plani = self._plan_motoru(
+                paket=paket,
+                teknik_teyit=teknik_teyit,
+                sermaye=istek.sermaye,
+                azami_risk_orani=istek.azami_risk_orani,
+            )
+        except (
+            MultiTimeframeDataError,
+            TechnicalConfirmationError,
+            TradePlanError,
+            ValueError,
+        ) as hata:
+            raise LiveAnalysisDashboardError(str(hata)) from hata
+
+        return LiveAnalysisResult(
+            paket=paket,
+            teknik_teyit=teknik_teyit,
+            islem_plani=islem_plani,
+            veri_tazeligi=veri_tazeligi,
+            istek=istek,
+        )
+
+
+class OpenPositionDashboardService:
+    """Aynı veri ve teknik teyitle açık pozisyon izleme sonucu üretir."""
+
+    def __init__(
+--- TECH CONF VALIDATION ---
+        gunluk=gunluk,
+        saatlik=saatlik,
+        teyit_skoru=int(teyit_skoru),
+        teyit_durumu=teyit_durumu,
+        pozitif_nedenler=pozitif_nedenler,
+        riskler=riskler,
+    )
+
+
+def zaman_dilimi_teyidini_hesapla(
+    snapshot: TimeframeSnapshot,
+    pivot_genisligi: int = 2,
+    hacim_esigi: float = 1.50,
+) -> TimeframeConfirmationResult:
+    """Tek zaman dilimi için trend, kırılım ve gösterge teyidi hesaplar."""
+    if pivot_genisligi < 1:
+        raise ValueError("Pivot genişliği en az 1 olmalıdır.")
+    if hacim_esigi <= 1:
+        raise ValueError("Hacim teyit eşiği 1'den büyük olmalıdır.")
+
+    gostergeli = _gostergeleri_hazirla(snapshot)
+    gecerli = gostergeli.dropna(subset=list(_GOSTERGE_SUTUNLARI))
+    if len(gecerli) < 2:
+        raise TechnicalConfirmationError(
+            f"{snapshot.ad} teknik teyidi için SMA200 dahil en az iki "
+            "geçerli gösterge satırı gereklidir."
+        )
+
+    son = gecerli.iloc[-1]
+    onceki = gecerli.iloc[-2]
+
+    ortalamalar = _hareketli_ortalama_teyidini_hesapla(onceki, son)
+    momentum = _momentum_teyidini_hesapla(onceki, son)
+    kirilim = _trend_cizgisi_kirilimini_hesapla(
+        veri=snapshot.veri,
+        pivot_genisligi=pivot_genisligi,
+        hacim_esigi=hacim_esigi,
+    )
+
+    try:
+        seviyeler = destek_direnc_bul(
+            snapshot.veri,
+            bakis_periyodu=min(120, len(snapshot.veri)),
+            pivot_genisligi=pivot_genisligi,
+        )
+    except (SupportResistanceError, ValueError) as hata:
+--- TECH CONF SMA ---
+        pozitif_nedenler=tuple(pozitif_nedenler),
+        riskler=tuple(riskler),
+    )
+
+
+def _gostergeleri_hazirla(snapshot: TimeframeSnapshot) -> pd.DataFrame:
+    try:
+        sonuc = teknik_gostergeleri_ekle(snapshot.veri)
+    except (IndicatorError, ValueError) as hata:
+        raise TechnicalConfirmationError(
+            f"{snapshot.ad} göstergeleri hesaplanamadı: {hata}"
+        ) from hata
+
+    sonuc = sonuc.copy()
+    sonuc["EMA55"] = ema(sonuc["Close"], 55)
+    sonuc["SMA50"] = sonuc["Close"].rolling(50, min_periods=50).mean()
+    sonuc["SMA200"] = sonuc["Close"].rolling(200, min_periods=200).mean()
+    onceki_hacim_ortalamasi = (
+        sonuc["Volume"].shift(1).rolling(20, min_periods=20).mean()
+    )
+    sonuc["Hacim_Orani_20"] = sonuc["Volume"] / onceki_hacim_ortalamasi
+    return sonuc
+
+
+def _hareketli_ortalama_teyidini_hesapla(
+    onceki: pd.Series,
+    son: pd.Series,
+) -> MovingAverageConfirmation:
+    ema9_21 = _kesisim_durumu(
+        onceki_hizli=float(onceki["EMA9"]),
+        onceki_yavas=float(onceki["EMA21"]),
+        hizli=float(son["EMA9"]),
+        yavas=float(son["EMA21"]),
+    )
+    ema21_55 = _kesisim_durumu(
+        onceki_hizli=float(onceki["EMA21"]),
+        onceki_yavas=float(onceki["EMA55"]),
+        hizli=float(son["EMA21"]),
+        yavas=float(son["EMA55"]),
+    )
+
+    onceki_sma50 = float(onceki["SMA50"])
+    onceki_sma200 = float(onceki["SMA200"])
+    sma50 = float(son["SMA50"])
+    sma200 = float(son["SMA200"])
+
+    golden_cross = onceki_sma50 <= onceki_sma200 and sma50 > sma200
+    death_cross = onceki_sma50 >= onceki_sma200 and sma50 < sma200
+
+    if golden_cross:
+        uzun_vade = GOLDEN_CROSS
+    elif death_cross:
+        uzun_vade = DEATH_CROSS
+    elif sma50 > sma200:
+        uzun_vade = UZUN_VADE_POZITIF
+    elif sma50 < sma200:
+        uzun_vade = UZUN_VADE_NEGATIF
+    else:
+        uzun_vade = UZUN_VADE_ESIT
+
+    return MovingAverageConfirmation(
+        ema9=float(son["EMA9"]),
+        ema21=float(son["EMA21"]),
+        ema55=float(son["EMA55"]),
+        sma50=sma50,
+        sma200=sma200,
+        ema9_21_durumu=ema9_21,
+        ema21_55_durumu=ema21_55,
+        uzun_vade_durumu=uzun_vade,
+        golden_cross=golden_cross,
+        death_cross=death_cross,
+    )
+
+
+def _kesisim_durumu(
+    onceki_hizli: float,
+    onceki_yavas: float,
+    hizli: float,
+    yavas: float,
+) -> str:
+    if onceki_hizli <= onceki_yavas and hizli > yavas:

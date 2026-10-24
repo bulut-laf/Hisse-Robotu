@@ -1,0 +1,172 @@
+{
+  "artifact_type": "HISTORICAL_NAV_ACCESS_PROBE",
+  "observation_date": "2026-10-07",
+  "sample_size": 20,
+  "success_with_target_date": 20,
+  "results": [
+    {
+      "isin": "AT0000494893",
+      "instrument_id": "2522",
+      "nav_points": 5153,
+      "target_date_found": true,
+      "nav_target_date": 374.54,
+      "error": null
+    },
+    {
+      "isin": "AT0000605324",
+      "instrument_id": "7241",
+      "nav_points": 7811,
+      "target_date_found": true,
+      "nav_target_date": 137.1,
+      "error": null
+    },
+    {
+      "isin": "AT0000605332",
+      "instrument_id": "4142",
+      "nav_points": 5337,
+      "target_date_found": true,
+      "nav_target_date": 214.65,
+      "error": null
+    },
+    {
+      "isin": "AT0000627476",
+      "instrument_id": "362",
+      "nav_points": 5427,
+      "target_date_found": true,
+      "nav_target_date": 407220.87,
+      "error": null
+    },
+    {
+      "isin": "AT0000639067",
+      "instrument_id": "762",
+      "nav_points": 5674,
+      "target_date_found": true,
+      "nav_target_date": 212.26,
+      "error": null
+    },
+    {
+      "isin": "AT0000658968",
+      "instrument_id": "5842",
+      "nav_points": 5863,
+      "target_date_found": true,
+      "nav_target_date": 196.88,
+      "error": null
+    },
+    {
+      "isin": "AT0000658976",
+      "instrument_id": "7261",
+      "nav_points": 6054,
+      "target_date_found": true,
+      "nav_target_date": 164.37,
+      "error": null
+    },
+    {
+      "isin": "AT0000658984",
+      "instrument_id": "7471",
+      "nav_points": 6082,
+      "target_date_found": true,
+      "nav_target_date": 136.61,
+      "error": null
+    },
+    {
+      "isin": "AT0000673165",
+      "instrument_id": "7192",
+      "nav_points": 5953,
+      "target_date_found": true,
+      "nav_target_date": 705.89,
+      "error": null
+    },
+    {
+      "isin": "AT0000673181",
+      "instrument_id": "722",
+      "nav_points": 5782,
+      "target_date_found": true,
+      "nav_target_date": 119.58,
+      "error": null
+    },
+    {
+      "isin": "AT0000673199",
+      "instrument_id": "5892",
+      "nav_points": 5929,
+      "target_date_found": true,
+      "nav_target_date": 144.14,
+      "error": null
+    },
+    {
+      "isin": "AT0000673215",
+      "instrument_id": "7371",
+      "nav_points": 3063,
+      "target_date_found": true,
+      "nav_target_date": 108.95,
+      "error": null
+    },
+    {
+      "isin": "AT0000673249",
+      "instrument_id": "292",
+      "nav_points": 5941,
+      "target_date_found": true,
+      "nav_target_date": 173.92,
+      "error": null
+    },
+    {
+      "isin": "AT0000673280",
+      "instrument_id": "5852",
+      "nav_points": 5274,
+      "target_date_found": true,
+      "nav_target_date": 216.81,
+      "error": null
+    },
+    {
+      "isin": "AT0000673306",
+      "instrument_id": "682",
+      "nav_points": 5939,
+      "target_date_found": true,
+      "nav_target_date": 199.99,
+      "error": null
+    },
+    {
+      "isin": "AT0000673322",
+      "instrument_id": "11752",
+      "nav_points": 5939,
+      "target_date_found": true,
+      "nav_target_date": 20.81,
+      "error": null
+    },
+    {
+      "isin": "AT0000673355",
+      "instrument_id": "282",
+      "nav_points": 5947,
+      "target_date_found": true,
+      "nav_target_date": 126.82,
+      "error": null
+    },
+    {
+      "isin": "AT0000673371",
+      "instrument_id": "712",
+      "nav_points": 5936,
+      "target_date_found": true,
+      "nav_target_date": 1259.61,
+      "error": null
+    },
+    {
+      "isin": "AT0000673389",
+      "instrument_id": "2582",
+      "nav_points": 4488,
+      "target_date_found": true,
+      "nav_target_date": 363.44,
+      "error": null
+    },
+    {
+      "isin": "AT0000A00G88",
+      "instrument_id": "272",
+      "nav_points": 4913,
+      "target_date_found": true,
+      "nav_target_date": 43603.85,
+      "error": null
+    }
+  ],
+  "rank_history_write": false,
+  "production_decisions_modified": false,
+  "trade_authority": "NONE",
+  "forced_fill": false
+}

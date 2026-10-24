@@ -1,0 +1,252 @@
+from datetime import datetime, timezone
+from decimal import Decimal
+
+import pytest
+
+from backend.app.funds.contracts import DataQualityState
+from backend.app.funds.store import FundObservationJsonStore
+import backend.app.funds.tefas_history_population as population
+
+
+STAMP = datetime(
+    2026,
+    9,
+    2,
+    12,
+    0,
+    tzinfo=timezone.utc,
+)
+
+
+def row(
+    code: str,
+    day: str,
+    price: object,
+) -> dict[str, object]:
+    return {
+        "fonKodu": code,
+        "fonUnvan": "TEST",
+        "kategoriDerece": 0,
+        "kategoriFonSay": 29,
+        "tarih": day,
+        "fiyat": price,
+    }
+
+
+def test_verified_history_maps_to_existing_daily_observation_contract():
+    observations = population.history_rows_to_observations(
+        (
+            row("AU1", "2026-08-03", 1.099958),
+            row("AU1", "2026-08-04", 1.111404),
+        ),
+        fund_code="AU1",
+        fetched_at=STAMP,
+        source_as_of=STAMP,
+    )
+
+    assert len(observations) == 2
+
+    first = observations[0]
+
+    assert first.canonical_fund_id == "fund:tefas:AU1"
+    assert first.observation_date.isoformat() == "2026-08-03"
+    assert first.unit_price == Decimal("1.099958")
+
+    assert first.fund_size is None
+    assert first.investor_count is None
+    assert first.shares_outstanding is None
+    assert first.daily_return is None
+
+    assert first.provider == "TEFAS"
+    assert first.data_quality_state is DataQualityState.PARTIAL
+
+
+def test_existing_store_is_idempotently_reused(
+    tmp_path,
+    monkeypatch,
+):
+    calls = []
+
+    def fake_fetch(
+        fund_code,
+        *,
+        period=1,
+        timeout_seconds=10,
+    ):
+        calls.append(
+            (
+                fund_code,
+                period,
+                timeout_seconds,
+            )
+        )
+
+        return (
+            row(fund_code, "2026-08-03", "100"),
+            row(fund_code, "2026-08-04", "101"),
+            row(fund_code, "2026-08-05", "102"),
+        )
+
+    monkeypatch.setattr(
+        population,
+        "fetch_tefas_fund_history_rows",
+        fake_fetch,
+    )
+
+    store = FundObservationJsonStore(
+        tmp_path / "funds" / "observations.json"
+    )
+
+    first = population.populate_tefas_history_batch(
+        ("BBB", "AAA"),
+        store=store,
+        fetched_at=STAMP,
+        source_as_of=STAMP,
+    )
+
+    second = population.populate_tefas_history_batch(
+        ("AAA", "BBB"),
+        store=store,
+        fetched_at=STAMP,
+        source_as_of=STAMP,
+    )
+
+    assert first.requested_funds == 2
+    assert first.fetched_funds == 2
+    assert first.observation_count == 6
+    assert first.inserted == 6
+
+    assert second.inserted == 0
+    assert second.updated == 0
+    assert second.unchanged == 6
+    assert second.total_records == 6
+
+    # Deterministic normalized fetch order.
+    assert calls[:2] == [
+        ("AAA", 12, 10),
+        ("BBB", 12, 10),
+    ]
+
+
+def test_duplicate_fund_codes_are_collapsed(
+    tmp_path,
+    monkeypatch,
+):
+    calls = []
+
+    def fake_fetch(
+        fund_code,
+        *,
+        period=1,
+        timeout_seconds=10,
+    ):
+        calls.append(fund_code)
+
+        return (
+            row(fund_code, "2026-08-03", "100"),
+            row(fund_code, "2026-08-04", "101"),
+            row(fund_code, "2026-08-05", "102"),
+        )
+
+    monkeypatch.setattr(
+        population,
+        "fetch_tefas_fund_history_rows",
+        fake_fetch,
+    )
+
+    store = FundObservationJsonStore(
+        tmp_path / "observations.json"
+    )
+
+    result = population.populate_tefas_history_batch(
+        ("au1", "AU1", " au1 "),
+        store=store,
+        fetched_at=STAMP,
+        source_as_of=STAMP,
+    )
+
+    assert result.requested_funds == 1
+    assert calls == ["AU1"]
+
+
+def test_batch_limit_blocks_accidental_full_universe_traversal(
+    tmp_path,
+):
+    store = FundObservationJsonStore(
+        tmp_path / "observations.json"
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="F3_BATCH_LIMIT_EXCEEDED",
+    ):
+        population.populate_tefas_history_batch(
+            ("AAA", "BBB", "CCC"),
+            store=store,
+            maximum_funds=2,
+            fetched_at=STAMP,
+            source_as_of=STAMP,
+        )
+
+
+def test_fetch_failure_occurs_before_any_store_write(
+    tmp_path,
+    monkeypatch,
+):
+    def fake_fetch(
+        fund_code,
+        *,
+        period=1,
+        timeout_seconds=10,
+    ):
+        if fund_code == "BBB":
+            raise RuntimeError("NETWORK_TEST_FAILURE")
+
+        return (
+            row(fund_code, "2026-08-03", "100"),
+            row(fund_code, "2026-08-04", "101"),
+            row(fund_code, "2026-08-05", "102"),
+        )
+
+    monkeypatch.setattr(
+        population,
+        "fetch_tefas_fund_history_rows",
+        fake_fetch,
+    )
+
+    path = tmp_path / "observations.json"
+
+    store = FundObservationJsonStore(path)
+
+    with pytest.raises(
+        RuntimeError,
+        match="NETWORK_TEST_FAILURE",
+    ):
+        population.populate_tefas_history_batch(
+            ("AAA", "BBB"),
+            store=store,
+            fetched_at=STAMP,
+            source_as_of=STAMP,
+        )
+
+    # No half-written persistent batch.
+    assert not path.exists()
+
+
+def test_timezone_is_required(
+    tmp_path,
+):
+    store = FundObservationJsonStore(
+        tmp_path / "observations.json"
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="TIMEZONE_AWARE",
+    ):
+        population.populate_tefas_history_batch(
+            ("AAA",),
+            store=store,
+            fetched_at=datetime(2026, 9, 2, 12, 0),
+            source_as_of=STAMP,
+        )

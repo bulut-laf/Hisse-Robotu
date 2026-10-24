@@ -1,0 +1,23 @@
+diff --git a/backend/app/compliance/dashboard_vbts_manager.py b/backend/app/compliance/dashboard_vbts_manager.py
+--- a/backend/app/compliance/dashboard_vbts_manager.py
++++ b/backend/app/compliance/dashboard_vbts_manager.py
+@@ -964,12 +964,17 @@ def validate_vbts_system_health(
+             messages.append(str(exc))
+             healthy = False
+     else:
+-        active_csv_status = "Yok"
+-        if any(record.status() == STATUS_ACTIVE for record in registry_records):
++        active_registry_records = tuple(
++            record for record in registry_records if record.status() == STATUS_ACTIVE
++        )
++        if active_registry_records:
++            active_csv_status = "Yok"
+             messages.append(
+                 "Aktif kayıt bulunduğu hâlde vbts_guncel.csv mevcut değildir."
+             )
+             healthy = False
++        else:
++            active_csv_status = "Sağlıklı · 0 aktif kayıt"
+ 
+     backups = tuple(
+         path

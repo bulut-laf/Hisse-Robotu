@@ -1,0 +1,33 @@
+{
+  "review_id": "d0919c4a914e4cb998729e5798a9502a",
+  "date": "2026-08-03",
+  "created_at": "2026-08-03T19:32:46Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 1.458,
+  "report_count": 1,
+  "sources": [
+    "ICBC"
+  ],
+  "document_ids": [
+    "26611014ec69436e94d75005877bde90"
+  ],
+  "output": {
+    "summary": "2026-08-03 tarihli ICBC raporuna göre, BIST100 endeksinin güne temkinli ancak pozitif başlaması beklenmektedir. Ağustos vadeli BIST30 kontratı cuma akşam seansını artıda tamamlarken, Asya piyasaları ve ABD vadeli endeksleri de pozitif bir seyir izlemektedir.",
+    "positive_factors": [
+      "Ağustos vadeli BIST30 kontratının cuma akşam seansını 27 puan artıda tamamlaması",
+      "Asya piyasalarının pozitif seyretmesi",
+      "ABD vadeli endekslerinin pozitif seyretmesi",
+      "BIST100 endeksinin güne temkinli ancak pozitif bir başlangıç yapmasının beklenmesi"
+    ],
+    "risk_factors": [],
+    "aligned_points": [
+      "Dış piyasalar ve vadeli kontrat görünümünün pozitif olması"
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "BIST100 için 13.200 ve 12.966 destek seviyeleri",
+      "BIST100 için 13.635–13.721, 13.872–14.085 ve 14.228 direnç seviyeleri"
+    ]
+  }
+}

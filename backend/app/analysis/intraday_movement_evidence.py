@@ -1,0 +1,291 @@
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Literal
+
+import pandas as pd
+
+
+MovementState = Literal[
+    "POZITIF",
+    "NEGATIF",
+    "NOTR",
+    "YETERSIZ_VERI",
+]
+
+MovementStructure = Literal[
+    "POZITIF_SUREKLI",
+    "TOPARLANIYOR",
+    "TOPARLANMA_ZAYIF",
+    "NEGATIF_SUREKLI",
+    "NOTR",
+    "YETERSIZ_VERI",
+]
+
+VolumeState = Literal[
+    "DESTEKLIYOR",
+    "ZAYIF",
+    "NOTR",
+    "YETERSIZ_VERI",
+]
+
+ReboundState = Literal[
+    "VAR",
+    "YOK",
+    "YETERSIZ_VERI",
+]
+
+
+@dataclass(frozen=True)
+class IntradayMovementEvidence:
+    symbol: str
+    bar_count: int
+    last_price: float | None
+    price_change_5m_pct: float | None
+    price_change_15m_pct: float | None
+    price_change_30m_pct: float | None
+    volume_ratio_5m: float | None
+    day_high: float | None
+    day_low: float | None
+    day_position_pct: float | None
+    rebound_from_day_low_pct: float | None
+    movement_state: MovementState
+    movement_structure: MovementStructure
+    volume_state: VolumeState
+    rebound_state: ReboundState
+    data_sufficient: bool
+    error: str | None = None
+
+
+_REQUIRED_COLUMNS = {"Open", "High", "Low", "Close", "Volume"}
+
+
+def _prepare_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    if frame is None or frame.empty:
+        raise ValueError("5m veri bos.")
+
+    missing = _REQUIRED_COLUMNS.difference(frame.columns)
+    if missing:
+        raise ValueError(
+            "5m veride eksik kolonlar: "
+            + ", ".join(sorted(missing))
+        )
+
+    result = frame.copy()
+
+    for column in _REQUIRED_COLUMNS:
+        result[column] = pd.to_numeric(
+            result[column],
+            errors="coerce",
+        )
+
+    result = result.dropna(
+        subset=["Open", "High", "Low", "Close", "Volume"]
+    )
+
+    if result.empty:
+        raise ValueError("Gecerli 5m bar bulunamadi.")
+
+    return result
+
+
+def _pct_change(current: float, previous: float) -> float | None:
+    if previous == 0:
+        return None
+
+    return ((current / previous) - 1.0) * 100.0
+
+
+def _movement_state(
+    change_5m: float | None,
+    change_15m: float | None,
+) -> MovementState:
+    if change_5m is None or change_15m is None:
+        return "YETERSIZ_VERI"
+
+    if change_5m > 0 and change_15m > 0:
+        return "POZITIF"
+
+    if change_5m < 0 and change_15m < 0:
+        return "NEGATIF"
+
+    return "NOTR"
+
+
+def _movement_structure(
+    change_5m: float | None,
+    change_15m: float | None,
+    change_30m: float | None,
+) -> MovementStructure:
+    if (
+        change_5m is None
+        or change_15m is None
+        or change_30m is None
+    ):
+        return "YETERSIZ_VERI"
+
+    if (
+        change_5m > 0
+        and change_15m > 0
+        and change_30m > 0
+    ):
+        return "POZITIF_SUREKLI"
+
+    if (
+        change_5m < 0
+        and change_15m < 0
+        and change_30m < 0
+    ):
+        return "NEGATIF_SUREKLI"
+
+    if (
+        change_5m > 0
+        and change_15m > 0
+        and change_30m < 0
+    ):
+        return "TOPARLANIYOR"
+
+    if (
+        change_5m > 0
+        and change_15m < 0
+        and change_30m < 0
+    ):
+        return "TOPARLANMA_ZAYIF"
+
+    return "NOTR"
+
+def _volume_state(
+    volume_ratio: float | None,
+) -> VolumeState:
+    if volume_ratio is None:
+        return "YETERSIZ_VERI"
+
+    if volume_ratio >= 1.20:
+        return "DESTEKLIYOR"
+
+    if volume_ratio < 0.80:
+        return "ZAYIF"
+
+    return "NOTR"
+
+
+def _rebound_state(
+    rebound_pct: float | None,
+) -> ReboundState:
+    if rebound_pct is None:
+        return "YETERSIZ_VERI"
+
+    if rebound_pct >= 0.50:
+        return "VAR"
+
+    return "YOK"
+
+
+def build_intraday_movement_evidence(
+    symbol: str,
+    frame: pd.DataFrame,
+) -> IntradayMovementEvidence:
+    normalized_symbol = str(symbol).upper().strip()
+
+    try:
+        data = _prepare_frame(frame)
+    except ValueError as error:
+        return IntradayMovementEvidence(
+            symbol=normalized_symbol,
+            bar_count=0,
+            last_price=None,
+            price_change_5m_pct=None,
+            price_change_15m_pct=None,
+            price_change_30m_pct=None,
+            volume_ratio_5m=None,
+            day_high=None,
+            day_low=None,
+            day_position_pct=None,
+            rebound_from_day_low_pct=None,
+            movement_state="YETERSIZ_VERI",
+            movement_structure="YETERSIZ_VERI",
+            volume_state="YETERSIZ_VERI",
+            rebound_state="YETERSIZ_VERI",
+            data_sufficient=False,
+            error=str(error),
+        )
+
+    bar_count = len(data)
+
+    close = data["Close"]
+    volume = data["Volume"]
+
+    last_price = float(close.iloc[-1])
+
+    change_5m = (
+        _pct_change(last_price, float(close.iloc[-2]))
+        if bar_count >= 2
+        else None
+    )
+
+    change_15m = (
+        _pct_change(last_price, float(close.iloc[-4]))
+        if bar_count >= 4
+        else None
+    )
+
+    change_30m = (
+        _pct_change(last_price, float(close.iloc[-7]))
+        if bar_count >= 7
+        else None
+    )
+
+    volume_ratio = None
+
+    if bar_count >= 7:
+        baseline = float(volume.iloc[-7:-1].mean())
+
+        if baseline > 0:
+            volume_ratio = float(volume.iloc[-1]) / baseline
+
+    day_high = float(data["High"].max())
+    day_low = float(data["Low"].min())
+
+    day_position = None
+
+    if day_high > day_low:
+        day_position = (
+            (last_price - day_low)
+            / (day_high - day_low)
+        ) * 100.0
+
+    rebound_from_low = None
+
+    if day_low > 0:
+        rebound_from_low = (
+            (last_price - day_low)
+            / day_low
+        ) * 100.0
+
+    return IntradayMovementEvidence(
+        symbol=normalized_symbol,
+        bar_count=bar_count,
+        last_price=last_price,
+        price_change_5m_pct=change_5m,
+        price_change_15m_pct=change_15m,
+        price_change_30m_pct=change_30m,
+        volume_ratio_5m=volume_ratio,
+        day_high=day_high,
+        day_low=day_low,
+        day_position_pct=day_position,
+        rebound_from_day_low_pct=rebound_from_low,
+        movement_state=_movement_state(
+            change_5m,
+            change_15m,
+        ),
+        movement_structure=_movement_structure(
+            change_5m,
+            change_15m,
+            change_30m,
+        ),
+        volume_state=_volume_state(volume_ratio),
+        rebound_state=_rebound_state(rebound_from_low),
+        data_sufficient=bar_count >= 7,
+        error=None,
+    )
+

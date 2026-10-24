@@ -1,0 +1,176 @@
+{
+  "source": "_discovery\\erste_hungary\\f4_bamosz_failed_response_diagnostics_20261021.json",
+  "total": 15,
+  "status_counts": {
+    "NO_DAILY_DATA_IDENTITY_UNVERIFIED": 15
+  },
+  "results": [
+    {
+      "requested_isin": "LU0509951272",
+      "requested_name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP HUF",
+      "returned_fund_name": "ING Energia Részvény",
+      "http_status": 200,
+      "response_bytes": 764,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0509951199",
+      "requested_name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP HUF",
+      "returned_fund_name": "ING IT Részvény",
+      "http_status": 200,
+      "response_bytes": 759,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0509951355",
+      "requested_name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP HUF",
+      "returned_fund_name": "ING Globális Magas Osztalékhozamú Részvény",
+      "http_status": 200,
+      "response_bytes": 786,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0509951603",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - X CAP HUF",
+      "returned_fund_name": "ING Latin-Amerikai Részvény",
+      "http_status": 200,
+      "response_bytes": 771,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0509951439",
+      "requested_name": "GOLDMAN SACHS GLOBAL EQUITY IMPACT OPPORTUNITIES - X CAP HUF",
+      "returned_fund_name": "ING Globális Lehetőségek Részvény",
+      "http_status": 200,
+      "response_bytes": 777,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0509951512",
+      "requested_name": "GOLDMAN SACHS GREATER CHINA EQUITY - X CAP HUF",
+      "returned_fund_name": "ING Kínai Részvény",
+      "http_status": 200,
+      "response_bytes": 762,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546915215",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP EUR (HEDGED I)",
+      "returned_fund_name": "ING Fejlődő Piaci Kötvény (keménydeviza)",
+      "http_status": 200,
+      "response_bytes": 791,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546914242",
+      "requested_name": "GOLDMAN SACHS ASIAN DEBT (HARD CURRENCY) - X CAP USD",
+      "returned_fund_name": "ING Ázsiai Kötvény",
+      "http_status": 200,
+      "response_bytes": 762,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546915488",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP HUF",
+      "returned_fund_name": "ING Fejlődő Piaci Kötvény (keménydeviza)",
+      "http_status": 200,
+      "response_bytes": 784,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546916882",
+      "requested_name": "GOLDMAN SACHS EUROMIX BOND - X CAP EUR",
+      "returned_fund_name": "ING Euromix Kötvény",
+      "http_status": 200,
+      "response_bytes": 763,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546918151",
+      "requested_name": "GOLDMAN SACHS EURO BOND - X CAP EUR",
+      "returned_fund_name": "ING Euro Kötvény",
+      "http_status": 200,
+      "response_bytes": 760,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546918409",
+      "requested_name": "GOLDMAN SACHS EURO CREDIT - X CAP EUR",
+      "returned_fund_name": "ING Euro Vállalati Kötvény",
+      "http_status": 200,
+      "response_bytes": 770,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546920561",
+      "requested_name": "GOLDMAN SACHS US DOLLAR CREDIT - X CAP USD",
+      "returned_fund_name": "ING USD Vállalati Kötvény",
+      "http_status": 200,
+      "response_bytes": 769,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0548664886",
+      "requested_name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP EUR (HEDGED III) (Former NN)",
+      "returned_fund_name": "ING Globális Magashozamú Kötvény",
+      "http_status": 200,
+      "response_bytes": 783,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    },
+    {
+      "requested_isin": "LU0546919555",
+      "requested_name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP HUF (Former NN)",
+      "returned_fund_name": "ING Globális Magashozamú Kötvény",
+      "http_status": 200,
+      "response_bytes": 776,
+      "header_candidate_index": null,
+      "daily_data_rows": 0,
+      "status": "NO_DAILY_DATA_IDENTITY_UNVERIFIED",
+      "identity_verified": false
+    }
+  ],
+  "identity_rule": "BAMOSZ CSV response does not expose the requested ISIN in the captured metadata; fund identity cannot be confirmed from this response alone.",
+  "production_mutation": false
+}

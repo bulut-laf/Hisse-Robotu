@@ -1,0 +1,12 @@
+﻿........................................................................ [ 48%]
+........................................................................ [ 96%]
+......                                                                   [100%]
+150 passed, 2872 deselected in 9.21s
+DASHBOARD_FUNCTION_COUNT=1
+EXACT_TOPLU_RESULT_CANDIDATES=1
+EXACT_RESULT|LINE=232|VAR=records
+REAL_VALIDATION_RESULT_VAR=records|LINE=232
+CURRENT_PERSIST_CALLS=1
+CURRENT_PERSIST_ARG=records
+DECISION=ALREADY_CORRECTLY_WIRED
+PRODUCTION_MUTATION=YOK

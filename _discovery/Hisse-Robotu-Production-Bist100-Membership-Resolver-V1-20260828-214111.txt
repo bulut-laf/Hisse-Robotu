@@ -1,0 +1,2435 @@
+HISSE ROBOTU — PRODUCTION BIST100 MEMBERSHIP RESOLVER V1
+==================================================================================
+PRODUCTION_FILES_SCANNED=485
+
+=== MARKETSCANREQUEST ===
+PATH=backend\app\analysis\market_scanner.py:56
+class MarketScanRequest:
+    """Güncel BIST taraması için kullanıcı tercihleri."""
+
+    evren: str = EVREN_IZLEME_LISTESI
+    profil_adi: str = "dengeli"
+    maksimum_aday: int = 15
+    ozel_semboller: tuple[str, ...] = ()
+    internetten_evren_guncelle: bool = True
+    sektor_baglami_aktif: bool = False
+
+    def __post_init__(self) -> None:
+        if self.evren not in TARAMA_EVRENLERI:
+            raise ValueError(f"Geçersiz tarama evreni: {self.evren}")
+
+        if not 1 <= self.maksimum_aday <= 100:
+            raise ValueError(
+                "Maksimum aday sayısı 1 ile 100 arasında olmalıdır."
+            )
+
+        profil_al(self.profil_adi)
+
+=== SCANNER CALISTIR IMPLEMENTATIONS ===
+PATH=backend\app\analysis\market_scanner.py:146
+def calistir(
+        self,
+        istek: MarketScanRequest,
+        ilerleme_bildirimi: ProgressCallback | None = None,
+    ) -> MarketScanResult:
+        vbts_engellenen_semboller: tuple[str, ...] = ()
+        vbts_engelleme_nedenleri: dict[str, tuple[str, ...]] = {}
+        vbts_dogrulama_uyarisi = self._vbts_warning
+
+        try:
+            semboller, evren_kaynagi, evren_tarihi = (
+                tarama_evreni_yukle(
+                    istek,
+                    evren_repository=self._evren_repository,
+                    izleme_listesi_yolu=self._izleme_listesi_yolu,
+                )
+            )
+
+            if self._vbts_scan_filter is not None:
+                if self._vbts_control_date is None:
+                    raise ValueError(
+                        "VBTS kontrol tarihi belirtilmelidir."
+                    )
+
+                if self._vbts_control_time is None:
+                    raise ValueError(
+                        "VBTS kontrol zamanı belirtilmelidir."
+                    )
+
+                try:
+                    vbts_sonucu = self._vbts_scan_filter.apply(
+                        symbols=semboller,
+                        control_date=self._vbts_control_date,
+                        control_time=self._vbts_control_time,
+                    )
+                except VbtsDatasetNotUsableError:
+                    if self._vbts_hard_block:
+                        raise
+
+                    vbts_dogrulama_uyarisi = (
+                        "VBTS veri paketi güncel ve doğrulanmış değil. "
+                        "Tarama devam etti; dosyada bilinen aktif tedbirler "
+                        "uyarı olarak gösterilir, yeni tedbirler eksik olabilir."
+                    )
+                    vbts_sonucu = self._vbts_scan_filter.apply_known_measures(
+                        symbols=semboller,
+                        control_date=self._vbts_control_date,
+                    )
+                    vbts_engellenen_semboller = vbts_sonucu.blocked_symbols
+                    vbts_engelleme_nedenleri = dict(vbts_sonucu.block_reasons)
+                else:
+                    vbts_engellenen_semboller = vbts_sonucu.blocked_symbols
+                    vbts_engelleme_nedenleri = dict(vbts_sonucu.block_reasons)
+                    if self._vbts_hard_block:
+                        semboller = vbts_sonucu.allowed_symbols
+
+            profil = profil_al(istek.profil_adi)
+
+            tarama = self._tarayici.tara(
+                semboller=semboller,
+                ilerleme_bildirimi=ilerleme_bildirimi,
+            )
+
+            filtrelenmis = tarama_sonucunu_filtrele(
+                tarama=tarama,
+                kriterler=profil.kriterler,
+            )
+
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+
+            raise MarketScannerError(str(hata)) from hata
+
+        adaylar = tuple(
+            filtrelenmis.adaylar[: istek.maksimum_aday]
+        )
+
+        sektor_baglamlari: dict[str, CandidateSectorContext] = {}
+        sektor_baglami_uyarisi: str | None = None
+        sektor_referans_evreni: str | None = None
+
+        if istek.sektor_baglami_aktif and adaylar:
+            sektor_referans_evreni = _sektor_referans_evrenini_sec(
+                istek.evren
+            )
+            sembol_listesi = tuple(aday.sembol for aday in adaylar)
+
+            try:
+                if self._sector_context_provider is not None:
+                    sektor_paketi = self._sector_context_provider(
+                        sembol_listesi,
+                        sektor_referans_evreni,
+                    )
+                else:
+                    sektor_paketi = build_live_candidate_sector_contexts(
+                        sembol_listesi,
+                        reference_universe=sektor_referans_evreni,
+                        repository=self._evren_repository,
+                    )
+
+                sektor_baglamlari = dict(sektor_paketi.contexts)
+                sektor_referans_evreni = sektor_paketi.reference_universe
+
+                if sektor_paketi.errors:
+                    sektor_baglami_uyarisi = (
+                        "Sektör bağlamı kısmen üretildi; "
+                        f"{len(sektor_paketi.errors)} sektör/üyelik "
+                        "sınırlaması kaydedildi. Teknik tarama sonucu "
+                        "değiştirilmedi."
+                    )
+            except Exception as hata:
+                if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                    raise
+                sektor_baglami_uyarisi = (
+                    "Sektör bağlamı üretilemedi: "
+                    f"{hata}. Teknik tarama sonucu değiştirilmedi."
+                )
+
+        tum_sonuclar = tuple(tarama.basarili_sonuclar)
+
+        tazelik_verileri = {
+            sonuc.sembol: pd.DataFrame(
+                {"Close": [sonuc.kapanis]},
+                index=pd.to_datetime([sonuc.analiz_tarihi]),
+            )
+            for sonuc in tum_sonuclar
+        }
+
+        veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+            tazelik_verileri
+        )
+
+        return MarketScanResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=evren_kaynagi,
+            evren_tarihi=evren_tarihi,
+            evren_sembol_sayisi=len(semboller),
+            profil=profil,
+            filtrelenmis=filtrelenmis,
+            adaylar=adaylar,
+            tum_sonuclar=tuple(tarama.basarili_sonuclar),
+            veri_tazeligi=veri_tazeligi,
+            vbts_engellenen_semboller=vbts_engellenen_semboller,
+            vbts_engelleme_nedenleri=vbts_engelleme_nedenleri,
+            vbts_dogrulama_uyarisi=vbts_dogrulama_uyarisi,
+            sektor_baglamlari=sektor_baglamlari,
+            sektor_baglami_uyarisi=sektor_baglami_uyarisi,
+            sektor_referans_evreni=sektor_referans_evreni,
+        )
+PATH=backend\app\analysis\momentum_discovery.py:312
+def calistir(
+        self,
+        istek: MomentumDiscoveryRequest,
+        ilerleme_bildirimi: ProgressCallback | None = None,
+        durum_bildirimi: StatusCallback | None = None,
+    ) -> MomentumDiscoveryResult:
+        baslangic_zamani = perf_counter()
+
+        def durum_bildir(mesaj: str) -> None:
+            if durum_bildirimi is not None:
+                durum_bildirimi(mesaj)
+
+        try:
+            durum_bildir("Tarama evreni hazırlanıyor...")
+            market_istegi = MarketScanRequest(
+                evren=istek.evren,
+                profil_adi="gevsek",
+                maksimum_aday=istek.maksimum_aday,
+                ozel_semboller=istek.ozel_semboller,
+                internetten_evren_guncelle=istek.internetten_evren_guncelle,
+            )
+            semboller, kaynak, tarih = tarama_evreni_yukle(
+                market_istegi,
+                evren_repository=self._evren_repository,
+                izleme_listesi_yolu=self._izleme_listesi_yolu,
+            )
+            on_tazelik_referans_sembol: str | None = None
+            if self._veri_tazeligi_kilidi_aktif:
+                on_tazelik_referans_sembol = semboller[0]
+                durum_bildir(
+                    f"{on_tazelik_referans_sembol} ile ön tazelik kontrolü yapılıyor..."
+                )
+                on_yeniden_deneme = 0
+                while True:
+                    on_veri_sonucu = self._on_tazelik_getirici(
+                        on_tazelik_referans_sembol,
+                        islem_gunu=5,
+                        indirme_donemi="1mo",
+                    )
+                    on_veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+                        on_veri_sonucu.veriler
+                    )
+                    if not on_veri_tazeligi.kilitli:
+                        break
+                    if (
+                        on_yeniden_deneme
+                        >= self._on_tazelik_azami_yeniden_deneme
+                    ):
+                        break
+                    on_yeniden_deneme += 1
+                    durum_bildir(
+                        "Referans sembol verisi güncel değil; "
+                        f"kontrollü yeniden deneme "
+                        f"{on_yeniden_deneme}/"
+                        f"{self._on_tazelik_azami_yeniden_deneme}..."
+                    )
+
+                if on_veri_tazeligi.kilitli:
+                    on_hatalar = tuple(
+                        MomentumFailure(
+                            sembol=hata.sembol,
+                            hata=hata.hata,
+                        )
+                        for hata in on_veri_sonucu.hatalar
+                    )
+                    return MomentumDiscoveryResult(
+                        evren_adi=istek.evren,
+                        evren_kaynagi=kaynak,
+                        evren_tarihi=tarih,
+                        evren_sembol_sayisi=len(semboller),
+                        basarili_sayisi=0,
+                        adaylar=(),
+                        asiri_yukselmisler=(),
+                        izleme_disi=(),
+                        hatalar=on_hatalar,
+                        veri_tazeligi=on_veri_tazeligi,
+                        piyasa_rejimi=istek.piyasa_rejimi,
+                        on_tazelik_kontrolu=True,
+                        on_tazelik_referans_sembol=(
+                            on_tazelik_referans_sembol
+                        ),
+                        toplu_tarama_baslatildi=False,
+                        indirilen_sembol_sayisi=len(
+                            on_veri_sonucu.veriler
+                        ),
+                        analiz_edilen_sembol_sayisi=0,
+                        veri_hatasi_sayisi=len(on_veri_sonucu.hatalar),
+                        toplam_sure_saniye=round(
+                            perf_counter() - baslangic_zamani,
+                            3,
+                        ),
+                        yeniden_deneme_sayisi=on_yeniden_deneme,
+                        veri_kaynagi="birincil referans veri yolu",
+                        tazelik_kilit_asamasi=(
+                            on_veri_tazeligi.kilit_asamasi
+                        ),
+                        sonraki_kontrol_zamani=(
+                            on_veri_tazeligi.sonraki_kontrol_zamani.isoformat()
+                            if on_veri_tazeligi.sonraki_kontrol_zamani
+                            is not None
+                            else ""
+                        ),
+                    )
+
+            durum_bildir(
+                f"{len(semboller)} sembol için toplu fiyat verisi indiriliyor..."
+            )
+            veri_sonucu = self._veri_getirici(
+                semboller,
+                islem_gunu=160,
+                indirme_donemi="1y",
+            )
+            veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+                veri_sonucu.veriler
+            )
+
+            kullanilabilir_veriler = dict(veri_sonucu.veriler)
+            tazelik_hatalari: list[MomentumFailure] = []
+
+            if self._veri_tazeligi_kilidi_aktif:
+                kullanilabilir_veriler = {}
+                for sembol, veri in veri_sonucu.veriler.items():
+                    sembol_tazeligi = toplu_veri_tazeligini_degerlendir(
+                        {sembol: veri}
+                    )
+                    if sembol_tazeligi.kilitli:
+                        tazelik_hatalari.append(
+                            MomentumFailure(
+                                sembol=sembol,
+                                hata=(
+                                    "Tazelik nedeniyle analiz dışı bırakıldı. "
+                                    f"Son veri: {sembol_tazeligi.en_yeni_tarih or '-'}; "
+                                    f"beklenen: {sembol_tazeligi.beklenen_tarih}."
+                                ),
+                            )
+                        )
+                        continue
+                    kullanilabilir_veriler[sembol] = veri
+
+            if (
+                self._veri_tazeligi_kilidi_aktif
+                and veri_tazeligi.kilitli
+            ):
+                tum_adaylar: tuple[MomentumCandidate, ...] = ()
+                motor_hatalari: tuple[MomentumFailure, ...] = tuple(
+                    tazelik_hatalari
+                )
+            else:
+                if tazelik_hatalari:
+                    durum_bildir(
+                        f"{len(tazelik_hatalari)} sembol tazelik nedeniyle "
+                        "analiz dışı bırakıldı; güncel sembollerle devam ediliyor..."
+                    )
+                durum_bildir("Momentum motoru çalışıyor...")
+                tum_adaylar, motor_hatalari = self._motor.analiz_et(
+                    kullanilabilir_veriler,
+                    ilerleme_bildirimi=ilerleme_bildirimi,
+                )
+                motor_hatalari = tuple(tazelik_hatalari) + motor_hatalari
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+            raise MomentumDiscoveryError(str(hata)) from hata
+
+        # Tüm adaylar geçmişle zenginleştirilir. Böylece bir hisse günlük
+        # koşullarda kısa süreli İzleme Dışı kalsa bile önceki E0-E3
+        # hazırlık sinyalleri kaybolmaz ve Kalıcı Hazırlık adayı olabilir.
+        zengin = tuple(self._gecmis_deposu.zenginlestir(tum_adaylar))
+
+        gorunen_adaylar = tuple(
+            aday
+            for aday in zengin
+            if aday.sinif in GORUNEN_SINIFLAR
+            and (
+                aday.momentum_skoru >= istek.minimum_skor
+                or aday.sinif == SINIF_KALICI_HAZIRLIK
+            )
+        )
+
+        politika_elenenler: tuple[MomentumCandidate, ...] = ()
+        if istek.piyasa_rejimi is not None:
+            durum_bildir(
+                f"{istek.piyasa_rejimi} piyasa rejimi filtresi uygulanıyor..."
+            )
+            politika = rejime_gore_trend_politikasi(istek.piyasa_rejimi)
+            uygun_adaylar: list[MomentumCandidate] = []
+            elenen_adaylar: list[MomentumCandidate] = []
+
+            for aday in gorunen_adaylar:
+                karar = trend_adayini_degerlendir(aday, politika)
+                if karar.uygun:
+                    uygun_adaylar.append(aday)
+                    continue
+
+                politika_nedeni = " ".join(karar.nedenler)
+                mevcut_neden = aday.izleme_disi_nedeni.strip()
+                birlesik_neden = " ".join(
+                    parca
+                    for parca in (mevcut_neden, politika_nedeni)
+                    if parca
+                )
+                elenen_adaylar.append(
+                    replace(
+                        aday,
+                        izleme_disi_nedeni=birlesik_neden,
+                    )
+                )
+
+            gorunen_adaylar = tuple(uygun_adaylar)
+            politika_elenenler = tuple(elenen_adaylar)
+
+        adaylar = gorunen_adaylar[: istek.maksimum_aday]
+        asiri = tuple(
+            aday for aday in zengin if aday.sinif == SINIF_ASIRI_YUKSELMIS
+        )[: istek.maksimum_aday]
+        izleme_disi = tuple(
+            aday for aday in zengin if aday.sinif == SINIF_IZLEME_DISI
+        )
+
+        kayit_yolu: str | None = None
+        try:
+            if zengin:
+                kayit_yolu = str(self._gecmis_deposu.kaydet(zengin))
+        except OSError:
+            kayit_yolu = None
+
+        veri_hatalari = tuple(
+            MomentumFailure(sembol=hata.sembol, hata=hata.hata)
+            for hata in veri_sonucu.hatalar
+        )
+        return MomentumDiscoveryResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=kaynak,
+            evren_tarihi=tarih,
+            evren_sembol_sayisi=len(semboller),
+            basarili_sayisi=len(zengin),
+            adaylar=adaylar,
+            asiri_yukselmisler=asiri,
+            izleme_disi=izleme_disi,
+            hatalar=veri_hatalari + motor_hatalari,
+            kayit_yolu=kayit_yolu,
+            veri_tazeligi=veri_tazeligi,
+            piyasa_rejimi=istek.piyasa_rejimi,
+            trend_politikasi_elenenler=politika_elenenler,
+            on_tazelik_kontrolu=(
+                self._veri_tazeligi_kilidi_aktif
+            ),
+            on_tazelik_referans_sembol=on_tazelik_referans_sembol,
+            toplu_tarama_baslatildi=True,
+            indirilen_sembol_sayisi=len(veri_sonucu.veriler),
+            analiz_edilen_sembol_sayisi=len(zengin),
+            veri_hatasi_sayisi=len(veri_hatalari + motor_hatalari),
+            toplam_sure_saniye=round(
+                perf_counter() - baslangic_zamani,
+                3,
+            ),
+            yeniden_deneme_sayisi=(
+                on_yeniden_deneme
+                if self._veri_tazeligi_kilidi_aktif
+                else 0
+            ),
+            veri_kaynagi="birincil toplu veri yolu",
+            tazelik_kilit_asamasi=veri_tazeligi.kilit_asamasi,
+            sonraki_kontrol_zamani=(
+                veri_tazeligi.sonraki_kontrol_zamani.isoformat()
+                if veri_tazeligi.sonraki_kontrol_zamani is not None
+                else ""
+            ),
+        )
+PATH=backend\app\analysis\momentum_walk_forward.py:349
+def calistir(self, istek: MomentumWalkForwardRequest) -> MomentumWalkForwardResult:
+        try:
+            market_istegi = MarketScanRequest(
+                evren=istek.evren,
+                profil_adi="gevsek",
+                maksimum_aday=istek.maksimum_aday,
+                ozel_semboller=istek.ozel_semboller,
+                internetten_evren_guncelle=istek.internetten_evren_guncelle,
+            )
+            semboller, kaynak, tarih = tarama_evreni_yukle(
+                market_istegi,
+                evren_repository=self._evren_repository,
+                izleme_listesi_yolu=self._izleme_listesi_yolu,
+            )
+            veri_sonucu = self._veri_getirici(
+                semboller,
+                islem_gunu=420,
+                indirme_donemi="2y",
+            )
+            # Otomatik sınıf zinciri, hesap yükünü sınırlamak için küçük özel/
+            # kayıtlı listelerde hazırlanır. Büyük evrenlerde kesim sınıfı ve
+            # ileri performans yine eksiksiz hesaplanır.
+            gecmis_olustur = len(semboller) <= 10
+            tum_sonuclar, motor_hatalari = self._motor.calistir(
+                veri_sonucu.veriler,
+                kesim_tarihi=istek.kesim_tarihi,
+                ufuklar=istek.ufuklar,
+                sinyal_gecmisi_olustur=gecmis_olustur,
+                sinyal_gecmisi_adim_sayisi=istek.sinyal_gecmisi_adim_sayisi,
+                sinyal_gecmisi_adim_bari=istek.sinyal_gecmisi_adim_bari,
+            )
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+            raise MomentumWalkForwardError(str(hata)) from hata
+
+        gorunen = tuple(
+            sonuc
+            for sonuc in tum_sonuclar
+            if sonuc.aday.sinif != SINIF_IZLEME_DISI
+            and (
+                sonuc.aday.momentum_skoru >= istek.minimum_skor
+                or sonuc.aday.sinif == SINIF_KALICI_HAZIRLIK
+            )
+        )[: istek.maksimum_aday]
+        izleme_disi = tuple(
+            sonuc for sonuc in tum_sonuclar if sonuc.aday.sinif == SINIF_IZLEME_DISI
+        )
+        veri_hatalari = tuple(
+            MomentumFailure(sembol=hata.sembol, hata=hata.hata)
+            for hata in veri_sonucu.hatalar
+        )
+        return MomentumWalkForwardResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=kaynak,
+            evren_tarihi=tarih,
+            kesim_tarihi=istek.kesim_tarihi,
+            evren_sembol_sayisi=len(semboller),
+            basarili_sayisi=len(tum_sonuclar),
+            sonuclar=gorunen,
+            izleme_disi=izleme_disi,
+            hatalar=veri_hatalari + motor_hatalari,
+            sinyal_gecmisi_hesaplandi=gecmis_olustur,
+        )
+
+=== CALISTIR CALLED NAMES ===
+DataFrame;MarketScanRequest;MarketScanResult;MarketScannerError;MomentumDiscoveryError;MomentumDiscoveryResult;MomentumFailure;MomentumWalkForwardError;MomentumWalkForwardResult;ValueError;_on_tazelik_getirici;_sector_context_provider;_sektor_referans_evrenini_sec;_veri_getirici;analiz_et;append;apply;apply_known_measures;build_live_candidate_sector_contexts;calistir;dict;durum_bildir;durum_bildirimi;isinstance;isoformat;items;join;kaydet;len;perf_counter;profil_al;rejime_gore_trend_politikasi;replace;round;str;strip;tara;tarama_evreni_yukle;tarama_sonucunu_filtrele;to_datetime;toplu_veri_tazeligini_degerlendir;trend_adayini_degerlendir;tuple;zenginlestir
+
+=== RESOLVER CANDIDATES ===
+SCORE=6|PATH=backend\app\analysis\market_scanner.py:299|FUNC=_sektor_referans_evrenini_sec|BIST100=True|CALLED_BY_CALISTIR=True|ARGS=tarama_evreni
+def _sektor_referans_evrenini_sec(tarama_evreni: str) -> str:
+    """
+    Sektör gücü için kontrollü referans evren seçer.
+
+    BIST 30 kendi bileşenleriyle; diğer tarama türleri ise maliyet ve
+    karşılaştırılabilirlik nedeniyle BIST 100 sektör bağlamıyla değerlendirilir.
+    """
+    if tarama_evreni == "BIST 30":
+        return "BIST 30"
+    return "BIST 100"
+SCORE=6|PATH=backend\app\sector_analysis\sector_candidate_context.py:155|FUNC=build_live_candidate_sector_contexts|BIST100=True|CALLED_BY_CALISTIR=True|ARGS=symbols;reference_universe;repository
+def build_live_candidate_sector_contexts(
+    symbols: Iterable[str],
+    *,
+    reference_universe: str = "BIST 100",
+    repository: BistUniverseRepository | None = None,
+) -> CandidateSectorContextBundle:
+    """
+    Canlı sektör güç haritasını oluşturup adaylarla eşleştirir.
+
+    Üyelik verisi aynı repository/cache zincirinden okunur. Sektör analizi
+    başarısız olursa çağıran katman teknik taramayı yine de koruyabilir.
+    """
+    repo = repository or BistUniverseRepository()
+
+    try:
+        strength_map = build_sector_member_strength_map(
+            reference_universe=reference_universe,
+            repository=repo,
+            # Ana tarama zaten resmi BIST üyelik kaynağını yenileyebildiği için
+            # aynı işlemde ikinci bir internet üyelik çağrısı yapmıyoruz.
+            refresh_membership=False,
+        )
+    except (SectorMemberStrengthError, BistUniverseError, ValueError) as exc:
+        raise SectorMemberStrengthError(
+            f"Aday sektör bağlamı üretilemedi: {exc}"
+        ) from exc
+
+    return build_candidate_sector_contexts(
+        symbols,
+        strength_map=strength_map,
+        repository=repo,
+    )
+SCORE=5|PATH=backend\app\analysis\market_scanner.py:146|FUNC=calistir|BIST100=False|CALLED_BY_CALISTIR=True|ARGS=self;istek;ilerleme_bildirimi
+def calistir(
+        self,
+        istek: MarketScanRequest,
+        ilerleme_bildirimi: ProgressCallback | None = None,
+    ) -> MarketScanResult:
+        vbts_engellenen_semboller: tuple[str, ...] = ()
+        vbts_engelleme_nedenleri: dict[str, tuple[str, ...]] = {}
+        vbts_dogrulama_uyarisi = self._vbts_warning
+
+        try:
+            semboller, evren_kaynagi, evren_tarihi = (
+                tarama_evreni_yukle(
+                    istek,
+                    evren_repository=self._evren_repository,
+                    izleme_listesi_yolu=self._izleme_listesi_yolu,
+                )
+            )
+
+            if self._vbts_scan_filter is not None:
+                if self._vbts_control_date is None:
+                    raise ValueError(
+                        "VBTS kontrol tarihi belirtilmelidir."
+                    )
+
+                if self._vbts_control_time is None:
+                    raise ValueError(
+                        "VBTS kontrol zamanı belirtilmelidir."
+                    )
+
+                try:
+                    vbts_sonucu = self._vbts_scan_filter.apply(
+                        symbols=semboller,
+                        control_date=self._vbts_control_date,
+                        control_time=self._vbts_control_time,
+                    )
+                except VbtsDatasetNotUsableError:
+                    if self._vbts_hard_block:
+                        raise
+
+                    vbts_dogrulama_uyarisi = (
+                        "VBTS veri paketi güncel ve doğrulanmış değil. "
+                        "Tarama devam etti; dosyada bilinen aktif tedbirler "
+                        "uyarı olarak gösterilir, yeni tedbirler eksik olabilir."
+                    )
+                    vbts_sonucu = self._vbts_scan_filter.apply_known_measures(
+                        symbols=semboller,
+                        control_date=self._vbts_control_date,
+                    )
+                    vbts_engellenen_semboller = vbts_sonucu.blocked_symbols
+                    vbts_engelleme_nedenleri = dict(vbts_sonucu.block_reasons)
+                else:
+                    vbts_engellenen_semboller = vbts_sonucu.blocked_symbols
+                    vbts_engelleme_nedenleri = dict(vbts_sonucu.block_reasons)
+                    if self._vbts_hard_block:
+                        semboller = vbts_sonucu.allowed_symbols
+
+            profil = profil_al(istek.profil_adi)
+
+            tarama = self._tarayici.tara(
+                semboller=semboller,
+                ilerleme_bildirimi=ilerleme_bildirimi,
+            )
+
+            filtrelenmis = tarama_sonucunu_filtrele(
+                tarama=tarama,
+                kriterler=profil.kriterler,
+            )
+
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+
+            raise MarketScannerError(str(hata)) from hata
+
+        adaylar = tuple(
+            filtrelenmis.adaylar[: istek.maksimum_aday]
+        )
+
+        sektor_baglamlari: dict[str, CandidateSectorContext] = {}
+        sektor_baglami_uyarisi: str | None = None
+        sektor_referans_evreni: str | None = None
+
+        if istek.sektor_baglami_aktif and adaylar:
+            sektor_referans_evreni = _sektor_referans_evrenini_sec(
+                istek.evren
+            )
+            sembol_listesi = tuple(aday.sembol for aday in adaylar)
+
+            try:
+                if self._sector_context_provider is not None:
+                    sektor_paketi = self._sector_context_provider(
+                        sembol_listesi,
+                        sektor_referans_evreni,
+                    )
+                else:
+                    sektor_paketi = build_live_candidate_sector_contexts(
+                        sembol_listesi,
+                        reference_universe=sektor_referans_evreni,
+                        repository=self._evren_repository,
+                    )
+
+                sektor_baglamlari = dict(sektor_paketi.contexts)
+                sektor_referans_evreni = sektor_paketi.reference_universe
+
+                if sektor_paketi.errors:
+                    sektor_baglami_uyarisi = (
+                        "Sektör bağlamı kısmen üretildi; "
+                        f"{len(sektor_paketi.errors)} sektör/üyelik "
+                        "sınırlaması kaydedildi. Teknik tarama sonucu "
+                        "değiştirilmedi."
+                    )
+            except Exception as hata:
+                if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                    raise
+                sektor_baglami_uyarisi = (
+                    "Sektör bağlamı üretilemedi: "
+                    f"{hata}. Teknik tarama sonucu değiştirilmedi."
+                )
+
+        tum_sonuclar = tuple(tarama.basarili_sonuclar)
+
+        tazelik_verileri = {
+            sonuc.sembol: pd.DataFrame(
+                {"Close": [sonuc.kapanis]},
+                index=pd.to_datetime([sonuc.analiz_tarihi]),
+            )
+            for sonuc in tum_sonuclar
+        }
+
+        veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+            tazelik_verileri
+        )
+
+        return MarketScanResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=evren_kaynagi,
+            evren_tarihi=evren_tarihi,
+            evren_sembol_sayisi=len(semboller),
+            profil=profil,
+            filtrelenmis=filtrelenmis,
+            adaylar=adaylar,
+            tum_sonuclar=tuple(tarama.basarili_sonuclar),
+            veri_tazeligi=veri_tazeligi,
+            vbts_engellenen_semboller=vbts_engellenen_semboller,
+            vbts_engelleme_nedenleri=vbts_engelleme_nedenleri,
+            vbts_dogrulama_uyarisi=vbts_dogrulama_uyarisi,
+            sektor_baglamlari=sektor_baglamlari,
+            sektor_baglami_uyarisi=sektor_baglami_uyarisi,
+            sektor_referans_evreni=sektor_referans_evreni,
+        )
+SCORE=5|PATH=backend\app\analysis\market_scanner.py:311|FUNC=tarama_evreni_yukle|BIST100=False|CALLED_BY_CALISTIR=True|ARGS=istek;evren_repository;izleme_listesi_yolu
+def tarama_evreni_yukle(
+    istek: MarketScanRequest,
+    *,
+    evren_repository: BistUniverseRepository | None = None,
+    izleme_listesi_yolu: str | Path | None = None,
+) -> tuple[tuple[str, ...], str, str]:
+    """BIST, kayıtlı liste veya özel liste evrenini ortak biçimde çözer."""
+
+    backend = Path(__file__).resolve().parents[2]
+    repository = evren_repository or BistUniverseRepository()
+
+    watchlist_path = (
+        Path(izleme_listesi_yolu)
+        if izleme_listesi_yolu
+        else backend / "watchlists" / "favoriler.txt"
+    )
+
+    if istek.evren in EVREN_KODLARI:
+        evren: BistUniverse = repository.evreni_yukle(
+            istek.evren,
+            internetten_guncelle=istek.internetten_evren_guncelle,
+        )
+
+        return evren.semboller, evren.kaynak, evren.tarih
+
+    if istek.evren == EVREN_IZLEME_LISTESI:
+        liste = izleme_listesi_yukle(watchlist_path)
+
+        return (
+            sembolleri_normalize_et(liste.semboller),
+            liste.kaynak,
+            "Kişisel liste",
+        )
+
+    semboller = sembolleri_normalize_et(
+        istek.ozel_semboller
+    )
+
+    if not semboller:
+        raise ValueError(
+            "Özel liste için en az bir hisse sembolü girilmelidir."
+        )
+
+    return semboller, "Kullanıcı girdisi", "Anlık"
+SCORE=5|PATH=backend\app\analysis\momentum_discovery.py:312|FUNC=calistir|BIST100=False|CALLED_BY_CALISTIR=True|ARGS=self;istek;ilerleme_bildirimi;durum_bildirimi
+def calistir(
+        self,
+        istek: MomentumDiscoveryRequest,
+        ilerleme_bildirimi: ProgressCallback | None = None,
+        durum_bildirimi: StatusCallback | None = None,
+    ) -> MomentumDiscoveryResult:
+        baslangic_zamani = perf_counter()
+
+        def durum_bildir(mesaj: str) -> None:
+            if durum_bildirimi is not None:
+                durum_bildirimi(mesaj)
+
+        try:
+            durum_bildir("Tarama evreni hazırlanıyor...")
+            market_istegi = MarketScanRequest(
+                evren=istek.evren,
+                profil_adi="gevsek",
+                maksimum_aday=istek.maksimum_aday,
+                ozel_semboller=istek.ozel_semboller,
+                internetten_evren_guncelle=istek.internetten_evren_guncelle,
+            )
+            semboller, kaynak, tarih = tarama_evreni_yukle(
+                market_istegi,
+                evren_repository=self._evren_repository,
+                izleme_listesi_yolu=self._izleme_listesi_yolu,
+            )
+            on_tazelik_referans_sembol: str | None = None
+            if self._veri_tazeligi_kilidi_aktif:
+                on_tazelik_referans_sembol = semboller[0]
+                durum_bildir(
+                    f"{on_tazelik_referans_sembol} ile ön tazelik kontrolü yapılıyor..."
+                )
+                on_yeniden_deneme = 0
+                while True:
+                    on_veri_sonucu = self._on_tazelik_getirici(
+                        on_tazelik_referans_sembol,
+                        islem_gunu=5,
+                        indirme_donemi="1mo",
+                    )
+                    on_veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+                        on_veri_sonucu.veriler
+                    )
+                    if not on_veri_tazeligi.kilitli:
+                        break
+                    if (
+                        on_yeniden_deneme
+                        >= self._on_tazelik_azami_yeniden_deneme
+                    ):
+                        break
+                    on_yeniden_deneme += 1
+                    durum_bildir(
+                        "Referans sembol verisi güncel değil; "
+                        f"kontrollü yeniden deneme "
+                        f"{on_yeniden_deneme}/"
+                        f"{self._on_tazelik_azami_yeniden_deneme}..."
+                    )
+
+                if on_veri_tazeligi.kilitli:
+                    on_hatalar = tuple(
+                        MomentumFailure(
+                            sembol=hata.sembol,
+                            hata=hata.hata,
+                        )
+                        for hata in on_veri_sonucu.hatalar
+                    )
+                    return MomentumDiscoveryResult(
+                        evren_adi=istek.evren,
+                        evren_kaynagi=kaynak,
+                        evren_tarihi=tarih,
+                        evren_sembol_sayisi=len(semboller),
+                        basarili_sayisi=0,
+                        adaylar=(),
+                        asiri_yukselmisler=(),
+                        izleme_disi=(),
+                        hatalar=on_hatalar,
+                        veri_tazeligi=on_veri_tazeligi,
+                        piyasa_rejimi=istek.piyasa_rejimi,
+                        on_tazelik_kontrolu=True,
+                        on_tazelik_referans_sembol=(
+                            on_tazelik_referans_sembol
+                        ),
+                        toplu_tarama_baslatildi=False,
+                        indirilen_sembol_sayisi=len(
+                            on_veri_sonucu.veriler
+                        ),
+                        analiz_edilen_sembol_sayisi=0,
+                        veri_hatasi_sayisi=len(on_veri_sonucu.hatalar),
+                        toplam_sure_saniye=round(
+                            perf_counter() - baslangic_zamani,
+                            3,
+                        ),
+                        yeniden_deneme_sayisi=on_yeniden_deneme,
+                        veri_kaynagi="birincil referans veri yolu",
+                        tazelik_kilit_asamasi=(
+                            on_veri_tazeligi.kilit_asamasi
+                        ),
+                        sonraki_kontrol_zamani=(
+                            on_veri_tazeligi.sonraki_kontrol_zamani.isoformat()
+                            if on_veri_tazeligi.sonraki_kontrol_zamani
+                            is not None
+                            else ""
+                        ),
+                    )
+
+            durum_bildir(
+                f"{len(semboller)} sembol için toplu fiyat verisi indiriliyor..."
+            )
+            veri_sonucu = self._veri_getirici(
+                semboller,
+                islem_gunu=160,
+                indirme_donemi="1y",
+            )
+            veri_tazeligi = toplu_veri_tazeligini_degerlendir(
+                veri_sonucu.veriler
+            )
+
+            kullanilabilir_veriler = dict(veri_sonucu.veriler)
+            tazelik_hatalari: list[MomentumFailure] = []
+
+            if self._veri_tazeligi_kilidi_aktif:
+                kullanilabilir_veriler = {}
+                for sembol, veri in veri_sonucu.veriler.items():
+                    sembol_tazeligi = toplu_veri_tazeligini_degerlendir(
+                        {sembol: veri}
+                    )
+                    if sembol_tazeligi.kilitli:
+                        tazelik_hatalari.append(
+                            MomentumFailure(
+                                sembol=sembol,
+                                hata=(
+                                    "Tazelik nedeniyle analiz dışı bırakıldı. "
+                                    f"Son veri: {sembol_tazeligi.en_yeni_tarih or '-'}; "
+                                    f"beklenen: {sembol_tazeligi.beklenen_tarih}."
+                                ),
+                            )
+                        )
+                        continue
+                    kullanilabilir_veriler[sembol] = veri
+
+            if (
+                self._veri_tazeligi_kilidi_aktif
+                and veri_tazeligi.kilitli
+            ):
+                tum_adaylar: tuple[MomentumCandidate, ...] = ()
+                motor_hatalari: tuple[MomentumFailure, ...] = tuple(
+                    tazelik_hatalari
+                )
+            else:
+                if tazelik_hatalari:
+                    durum_bildir(
+                        f"{len(tazelik_hatalari)} sembol tazelik nedeniyle "
+                        "analiz dışı bırakıldı; güncel sembollerle devam ediliyor..."
+                    )
+                durum_bildir("Momentum motoru çalışıyor...")
+                tum_adaylar, motor_hatalari = self._motor.analiz_et(
+                    kullanilabilir_veriler,
+                    ilerleme_bildirimi=ilerleme_bildirimi,
+                )
+                motor_hatalari = tuple(tazelik_hatalari) + motor_hatalari
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+            raise MomentumDiscoveryError(str(hata)) from hata
+
+        # Tüm adaylar geçmişle zenginleştirilir. Böylece bir hisse günlük
+        # koşullarda kısa süreli İzleme Dışı kalsa bile önceki E0-E3
+        # hazırlık sinyalleri kaybolmaz ve Kalıcı Hazırlık adayı olabilir.
+        zengin = tuple(self._gecmis_deposu.zenginlestir(tum_adaylar))
+
+        gorunen_adaylar = tuple(
+            aday
+            for aday in zengin
+            if aday.sinif in GORUNEN_SINIFLAR
+            and (
+                aday.momentum_skoru >= istek.minimum_skor
+                or aday.sinif == SINIF_KALICI_HAZIRLIK
+            )
+        )
+
+        politika_elenenler: tuple[MomentumCandidate, ...] = ()
+        if istek.piyasa_rejimi is not None:
+            durum_bildir(
+                f"{istek.piyasa_rejimi} piyasa rejimi filtresi uygulanıyor..."
+            )
+            politika = rejime_gore_trend_politikasi(istek.piyasa_rejimi)
+            uygun_adaylar: list[MomentumCandidate] = []
+            elenen_adaylar: list[MomentumCandidate] = []
+
+            for aday in gorunen_adaylar:
+                karar = trend_adayini_degerlendir(aday, politika)
+                if karar.uygun:
+                    uygun_adaylar.append(aday)
+                    continue
+
+                politika_nedeni = " ".join(karar.nedenler)
+                mevcut_neden = aday.izleme_disi_nedeni.strip()
+                birlesik_neden = " ".join(
+                    parca
+                    for parca in (mevcut_neden, politika_nedeni)
+                    if parca
+                )
+                elenen_adaylar.append(
+                    replace(
+                        aday,
+                        izleme_disi_nedeni=birlesik_neden,
+                    )
+                )
+
+            gorunen_adaylar = tuple(uygun_adaylar)
+            politika_elenenler = tuple(elenen_adaylar)
+
+        adaylar = gorunen_adaylar[: istek.maksimum_aday]
+        asiri = tuple(
+            aday for aday in zengin if aday.sinif == SINIF_ASIRI_YUKSELMIS
+        )[: istek.maksimum_aday]
+        izleme_disi = tuple(
+            aday for aday in zengin if aday.sinif == SINIF_IZLEME_DISI
+        )
+
+        kayit_yolu: str | None = None
+        try:
+            if zengin:
+                kayit_yolu = str(self._gecmis_deposu.kaydet(zengin))
+        except OSError:
+            kayit_yolu = None
+
+        veri_hatalari = tuple(
+            MomentumFailure(sembol=hata.sembol, hata=hata.hata)
+            for hata in veri_sonucu.hatalar
+        )
+        return MomentumDiscoveryResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=kaynak,
+            evren_tarihi=tarih,
+            evren_sembol_sayisi=len(semboller),
+            basarili_sayisi=len(zengin),
+            adaylar=adaylar,
+            asiri_yukselmisler=asiri,
+            izleme_disi=izleme_disi,
+            hatalar=veri_hatalari + motor_hatalari,
+            kayit_yolu=kayit_yolu,
+            veri_tazeligi=veri_tazeligi,
+            piyasa_rejimi=istek.piyasa_rejimi,
+            trend_politikasi_elenenler=politika_elenenler,
+            on_tazelik_kontrolu=(
+                self._veri_tazeligi_kilidi_aktif
+            ),
+            on_tazelik_referans_sembol=on_tazelik_referans_sembol,
+            toplu_tarama_baslatildi=True,
+            indirilen_sembol_sayisi=len(veri_sonucu.veriler),
+            analiz_edilen_sembol_sayisi=len(zengin),
+            veri_hatasi_sayisi=len(veri_hatalari + motor_hatalari),
+            toplam_sure_saniye=round(
+                perf_counter() - baslangic_zamani,
+                3,
+            ),
+            yeniden_deneme_sayisi=(
+                on_yeniden_deneme
+                if self._veri_tazeligi_kilidi_aktif
+                else 0
+            ),
+            veri_kaynagi="birincil toplu veri yolu",
+            tazelik_kilit_asamasi=veri_tazeligi.kilit_asamasi,
+            sonraki_kontrol_zamani=(
+                veri_tazeligi.sonraki_kontrol_zamani.isoformat()
+                if veri_tazeligi.sonraki_kontrol_zamani is not None
+                else ""
+            ),
+        )
+SCORE=5|PATH=backend\app\analysis\momentum_walk_forward.py:349|FUNC=calistir|BIST100=False|CALLED_BY_CALISTIR=True|ARGS=self;istek
+def calistir(self, istek: MomentumWalkForwardRequest) -> MomentumWalkForwardResult:
+        try:
+            market_istegi = MarketScanRequest(
+                evren=istek.evren,
+                profil_adi="gevsek",
+                maksimum_aday=istek.maksimum_aday,
+                ozel_semboller=istek.ozel_semboller,
+                internetten_evren_guncelle=istek.internetten_evren_guncelle,
+            )
+            semboller, kaynak, tarih = tarama_evreni_yukle(
+                market_istegi,
+                evren_repository=self._evren_repository,
+                izleme_listesi_yolu=self._izleme_listesi_yolu,
+            )
+            veri_sonucu = self._veri_getirici(
+                semboller,
+                islem_gunu=420,
+                indirme_donemi="2y",
+            )
+            # Otomatik sınıf zinciri, hesap yükünü sınırlamak için küçük özel/
+            # kayıtlı listelerde hazırlanır. Büyük evrenlerde kesim sınıfı ve
+            # ileri performans yine eksiksiz hesaplanır.
+            gecmis_olustur = len(semboller) <= 10
+            tum_sonuclar, motor_hatalari = self._motor.calistir(
+                veri_sonucu.veriler,
+                kesim_tarihi=istek.kesim_tarihi,
+                ufuklar=istek.ufuklar,
+                sinyal_gecmisi_olustur=gecmis_olustur,
+                sinyal_gecmisi_adim_sayisi=istek.sinyal_gecmisi_adim_sayisi,
+                sinyal_gecmisi_adim_bari=istek.sinyal_gecmisi_adim_bari,
+            )
+        except Exception as hata:
+            if isinstance(hata, (KeyboardInterrupt, SystemExit)):
+                raise
+            raise MomentumWalkForwardError(str(hata)) from hata
+
+        gorunen = tuple(
+            sonuc
+            for sonuc in tum_sonuclar
+            if sonuc.aday.sinif != SINIF_IZLEME_DISI
+            and (
+                sonuc.aday.momentum_skoru >= istek.minimum_skor
+                or sonuc.aday.sinif == SINIF_KALICI_HAZIRLIK
+            )
+        )[: istek.maksimum_aday]
+        izleme_disi = tuple(
+            sonuc for sonuc in tum_sonuclar if sonuc.aday.sinif == SINIF_IZLEME_DISI
+        )
+        veri_hatalari = tuple(
+            MomentumFailure(sembol=hata.sembol, hata=hata.hata)
+            for hata in veri_sonucu.hatalar
+        )
+        return MomentumWalkForwardResult(
+            evren_adi=istek.evren,
+            evren_kaynagi=kaynak,
+            evren_tarihi=tarih,
+            kesim_tarihi=istek.kesim_tarihi,
+            evren_sembol_sayisi=len(semboller),
+            basarili_sayisi=len(tum_sonuclar),
+            sonuclar=gorunen,
+            izleme_disi=izleme_disi,
+            hatalar=veri_hatalari + motor_hatalari,
+            sinyal_gecmisi_hesaplandi=gecmis_olustur,
+        )
+SCORE=4|PATH=backend\dashboard.py:3187|FUNC=momentum_kesif_formu|BIST100=True|CALLED_BY_CALISTIR=False|ARGS=
+def momentum_kesif_formu() -> None:
+    with st.sidebar:
+        st.header("Momentum keşif")
+        st.caption(
+            "BIST evrenini göreceli güç, fiyat ivmesi, hacim birikimi, "
+            "sıkışma ve kırılım hazırlığıyla tarar."
+        )
+        # Geriye dönük kaynak-test uyumluluğu için eski anahtar okunur;
+        # güvenlik kararında kullanılmaz. Geçerli kaynak yalnızca tarihli
+        # PIYASA_REJIMI_BAGLAMI_KEY bağlamıdır.
+        _eski_rejim_uyumluluk = st.session_state.get("aktif_piyasa_rejimi")
+        rejim_baglami, rejim_baglami_hatasi = (
+            piyasa_rejimi_baglami_dogrula(
+                st.session_state.get(PIYASA_REJIMI_BAGLAMI_KEY)
+            )
+        )
+        kayitli_rejim = (
+            str(rejim_baglami["rejim"])
+            if rejim_baglami is not None
+            else None
+        )
+        rejim_secenekleri = (
+            "Kapalı",
+            REJIM_POZITIF,
+            REJIM_SECICI,
+            REJIM_RISKLI,
+        )
+        varsayilan_rejim = (
+            kayitli_rejim
+            if kayitli_rejim in rejim_secenekleri
+            else "Kapalı"
+        )
+        piyasa_rejimi_secimi = st.selectbox(
+            "Piyasa rejimi filtresi",
+            options=rejim_secenekleri,
+            index=rejim_secenekleri.index(varsayilan_rejim),
+            disabled=rejim_baglami is None,
+            help=(
+                "Yalnızca bugün üretilmiş, güncel ve doğrulanmış piyasa "
+                "rejimi otomatik kullanılabilir."
+            ),
+            key="momentum_piyasa_rejimi",
+        )
+        if rejim_baglami is not None:
+            st.caption(
+                "Rejim bağlamı: "
+                f"{rejim_baglami['kaynak']} · "
+                f"{tarih_saat_yaz(rejim_baglami['analiz_tarihi'])} · "
+                f"Güven: {rejim_baglami['guven_duzeyi']}"
+            )
+        elif rejim_baglami_hatasi:
+            st.caption("Rejim filtresi kapalı: " + rejim_baglami_hatasi)
+        # Bu kontroller form dışında tutulur. Streamlit formundaki widget değişiklikleri
+        # gönderimden önce yeniden çalıştırılmadığı için, tarih alanı işaretli kutuya
+        # rağmen pasif kalabiliyordu. Form dışındaki kontroller anında tepki verir.
+        evren = st.selectbox(
+            "Keşif evreni",
+            options=TARAMA_EVRENLERI,
+            index=TARAMA_EVRENLERI.index("BIST Tüm"),
+            key="momentum_evreni",
+        )
+        ozel_liste = st.text_area(
+            "Özel keşif listesi",
+            value="THYAO, ASELS, TUPRS, SAHOL, KCHOL",
+            height=90,
+            help=(
+                "Bu alan yalnızca Özel Liste evreninde kullanılır. "
+                "Virgül, boşluk veya yeni satırla ayırabilirsiniz."
+            ),
+        )
+        minimum_skor = st.slider(
+            "Minimum momentum skoru",
+            min_value=40,
+            max_value=85,
+            value=55,
+        )
+        maksimum_aday = st.slider(
+            "Gösterilecek aday sayısı",
+            min_value=5,
+            max_value=50,
+            value=25,
+        )
+        internetten_guncelle = st.checkbox(
+            "BIST evrenini resmi kaynaktan güncelle",
+            value=True,
+            disabled=(
+                evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+            ),
+        )
+        yeniden_oynat = st.checkbox(
+            "Tarihsel yeniden oynatma (walk-forward)",
+            value=False,
+            help=(
+                "Kesim tarihinden sonraki fiyatları aday üretiminden gizler ve "
+                "adayların sonraki 5/10/20 günlük performansını ölçer."
+            ),
+            key="momentum_yeniden_oynat",
+        )
+        kesim_tarihi = st.date_input(
+            "Kesim tarihi",
+            value=date.today() - timedelta(days=45),
+            max_value=date.today() - timedelta(days=1),
+            disabled=not yeniden_oynat,
+            key="momentum_kesim_tarihi",
+        )
+        calistirildi = st.button(
+            "Tarihsel testi başlat" if yeniden_oynat else "Momentum keşfini başlat",
+            type="primary",
+            width="stretch",
+            key="momentum_kesif_calistir",
+        )
+
+    semboller = ozel_sembol_metinini_ayristir(ozel_liste)
+    momentum_toplu_tarihsel_export_goster(
+        semboller=tuple(semboller),
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+    )
+    aktif_rejim = (
+        None
+        if (
+            rejim_baglami is None
+            or piyasa_rejimi_secimi == "Kapalı"
+        )
+        else piyasa_rejimi_secimi
+    )
+    discovery_imzasi = momentum_kesif_oturum_imzasi(
+        evren=evren,
+        semboller=semboller,
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+        piyasa_rejimi=aktif_rejim,
+        rejim_baglami_imzasi=piyasa_rejimi_baglami_imzasi(
+            rejim_baglami
+        ),
+    )
+    replay_imzasi = momentum_walk_forward_oturum_imzasi(
+        evren=evren,
+        semboller=semboller,
+        minimum_skor=int(minimum_skor),
+        maksimum_aday=int(maksimum_aday),
+        internetten_guncelle=bool(internetten_guncelle),
+        kesim_tarihi=kesim_tarihi,
+    )
+
+    if rejim_baglami is None:
+        st.warning(
+            "Piyasa rejimi filtresi otomatik olarak Kapalı tutuluyor. "
+            + str(rejim_baglami_hatasi)
+        )
+    else:
+        st.info(
+            "Doğrulanmış piyasa rejimi bağlamı: "
+            f"{rejim_baglami['rejim']} · "
+            f"Kaynak {rejim_baglami['kaynak']} · "
+            f"Veri {tarih_saat_yaz(rejim_baglami['analiz_tarihi'])} · "
+            f"Güven {rejim_baglami['guven_duzeyi']}"
+        )
+
+    if not calistirildi:
+        kayitli_replay = st.session_state.get(MOMENTUM_REPLAY_RESULT_KEY)
+        kayitli_imza = st.session_state.get(MOMENTUM_REPLAY_SIGNATURE_KEY)
+        if (
+            yeniden_oynat
+            and kayitli_imza == replay_imzasi
+            and isinstance(kayitli_replay, MomentumWalkForwardResult)
+        ):
+            # Güncel seans düğmesi Streamlit yeniden çalışması başlatır.
+            # Tarihsel sonuç oturumda saklanmazsa bu yeniden çalışmada sonuç
+            # ekranı kaybolur ve düğme olayı işlenemez.
+            momentum_walk_forward_sonucu_goster(kayitli_replay)
+            return
+        kayitli_sonuc = st.session_state.get(
+            MOMENTUM_DISCOVERY_RESULT_KEY
+        )
+        kayitli_discovery_imzasi = st.session_state.get(
+            MOMENTUM_DISCOVERY_SIGNATURE_KEY
+        )
+        if (
+            not yeniden_oynat
+            and kayitli_discovery_imzasi == discovery_imzasi
+            and isinstance(kayitli_sonuc, MomentumDiscoveryResult)
+        ):
+            momentum_kesif_sonucu_goster(kayitli_sonuc)
+            return
+
+        if (
+            kayitli_discovery_imzasi is not None
+            and kayitli_discovery_imzasi != discovery_imzasi
+        ):
+            st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+            st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+            st.info(
+                "Momentum ayarları değiştiği için önceki sonuç geçersiz "
+                "kılındı. Yeni ayarlarla taramayı başlatın."
+            )
+            return
+
+        st.info(
+            "Keşif evrenini seçip sol menüdeki başlat düğmesine basın. "
+            "Tarihsel yeniden oynatma, gelecek veriyi gizleyerek erken uyarı "
+            "başarısını ölçer."
+        )
+        return
+
+    if yeniden_oynat:
+        st.session_state.pop(MOMENTUM_DISCOVERY_RESULT_KEY, None)
+        st.session_state.pop(MOMENTUM_DISCOVERY_SIGNATURE_KEY, None)
+        try:
+            istek_replay = MomentumWalkForwardRequest(
+                evren=evren,
+                kesim_tarihi=kesim_tarihi.isoformat(),
+                maksimum_aday=int(maksimum_aday),
+                minimum_skor=int(minimum_skor),
+                ozel_semboller=semboller,
+                internetten_evren_guncelle=bool(internetten_guncelle),
+            )
+            with st.spinner(
+                f"{istek_replay.evren} {istek_replay.kesim_tarihi} "
+                "tarihinde yeniden oynatılıyor..."
+            ):
+                replay_sonucu = MomentumWalkForwardService().calistir(istek_replay)
+        except (ValueError, TypeError, MomentumWalkForwardError) as hata:
+            st.error(str(hata))
+            return
+        st.session_state[MOMENTUM_REPLAY_RESULT_KEY] = replay_sonucu
+        st.session_state[MOMENTUM_REPLAY_SIGNATURE_KEY] = replay_imzasi
+        momentum_walk_forward_sonucu_goster(replay_sonucu)
+        return
+
+    st.session_state.pop(MOMENTUM_REPLAY_RESULT_KEY, None)
+    st.session_state.pop(MOMENTUM_REPLAY_SIGNATURE_KEY, None)
+    ilerleme = st.progress(0, text="Momentum keşfi hazırlanıyor...")
+    durum = st.empty()
+
+    def ilerleme_bildir(sira: int, toplam: int, sembol: str) -> None:
+        oran = min(max(sira / toplam, 0.0), 1.0)
+        ilerleme.progress(
+            oran,
+            text=f"[{sira}/{toplam}] {sembol} momentum analizi...",
+        )
+        durum.caption(f"Son işlenen hisse: {sembol}")
+
+    def durum_bildir(mesaj: str) -> None:
+        durum.info(mesaj)
+
+    try:
+        istek = MomentumDiscoveryRequest(
+            evren=evren,
+            maksimum_aday=int(maksimum_aday),
+            minimum_skor=int(minimum_skor),
+            ozel_semboller=semboller,
+            internetten_evren_guncelle=bool(internetten_guncelle),
+            piyasa_rejimi=(
+                aktif_rejim
+            ),
+        )
+        with st.spinner(f"{istek.evren} momentum potansiyeli taranıyor..."):
+            sonuc = MomentumDiscoveryService().calistir(
+                istek,
+                ilerleme_bildirimi=ilerleme_bildir,
+                durum_bildirimi=durum_bildir,
+            )
+    except (ValueError, TypeError, MomentumDiscoveryError) as hata:
+        ilerleme.empty()
+        durum.empty()
+        st.error(str(hata))
+        return
+
+    if sonuc.veri_tazeligi is not None and sonuc.veri_tazeligi.kilitli:
+        ilerleme.progress(
+            1.0,
+            text="Veri tazeliği kilidi nedeniyle tarama durduruldu.",
+        )
+    else:
+        ilerleme.progress(1.0, text="Momentum keşfi tamamlandı.")
+    durum.empty()
+    st.session_state[MOMENTUM_DISCOVERY_RESULT_KEY] = sonuc
+    st.session_state[MOMENTUM_DISCOVERY_SIGNATURE_KEY] = discovery_imzasi
+    momentum_kesif_sonucu_goster(sonuc)
+SCORE=4|PATH=backend\dashboard.py:4493|FUNC=bist_toplu_tarama_formu|BIST100=True|CALLED_BY_CALISTIR=False|ARGS=
+def bist_toplu_tarama_formu() -> None:
+    # BIST_TOPLU_TARAMA_V11_ROLE_CLARITY
+    st.header("BIST Toplu Tarama — Genel Teknik Aday Havuzu")
+    st.caption(
+        "Seçilen evrendeki hisseleri günlük teknik skor, hacim, risk/getiri, VBTS ve isteğe bağlı temel kalite filtresiyle sıralar."
+    )
+    st.info(
+        "Fırsat Radarı doğrulanmış haftalık/aylık profil eşleşmelerini öne çıkarır; "
+        "BIST Toplu Tarama ise daha geniş, profil-seçilebilir genel teknik aday havuzu üretir. "
+        "Bu ekran kesin alım tavsiyesi vermez; seçilen aday Güncel Teknik Analiz veya AL-SAT ile derinleştirilir."
+    )
+    bildirim = st.session_state.pop("vbts_yonetim_bildirimi", None)
+    if bildirim:
+        st.success(bildirim)
+
+    vbts_operasyonel_hazir = vbts_yonetim_paneli_goster()
+    vbts_kaynak_hazir = kap_vbts_durum_karti_goster()
+    manuel_vbts_durum_paneli_goster()
+
+    vbts_hazirlik_hatasi: str | None = None
+    hazir_tarama_servisi: BistMarketScannerService | None = None
+    try:
+        hazir_tarama_servisi = build_dashboard_market_scanner(
+            vbts_hard_block=False,
+        )
+    except DashboardMarketScannerSourceError as hata:
+        vbts_hazirlik_hatasi = str(hata)
+
+    if (
+        not vbts_operasyonel_hazir
+        or not vbts_kaynak_hazir
+        or vbts_hazirlik_hatasi
+    ):
+        st.warning(
+            "VBTS tam doğrulanamadı. Toplu tarama kilitlenmez; "
+            "teknik sonuçlar üretilir ancak VBTS tedbir bilgileri "
+            "eksik veya eski olabilir."
+        )
+        if vbts_hazirlik_hatasi:
+            st.caption(vbts_hazirlik_hatasi)
+
+    with st.sidebar:
+        st.header("BIST toplu tarama")
+        st.caption(
+            "Seçilen evrendeki hisseleri günlük teknik skor, hacim ve "
+            "risk/getiri koşullarıyla topluca sıralar."
+        )
+        with st.form("bist_toplu_tarama_formu"):
+            evren = st.selectbox(
+                "Tarama evreni",
+                options=TARAMA_EVRENLERI,
+                index=0,
+            )
+            ozel_liste = st.text_area(
+                "Özel hisse listesi",
+                value="THYAO, ASELS, TUPRS, SAHOL, KCHOL",
+                height=90,
+                help=(
+                    "Virgül, boşluk veya yeni satırla ayırabilirsiniz. "
+                    "Bu alan yalnızca Özel Liste evreninde kullanılır."
+                ),
+            )
+            profil_etiketi = st.selectbox(
+                "Tarama profili",
+                options=tuple(TARAMA_PROFILLERI),
+                index=1,
+                help=(
+                    "Dengeli profil skor, hacim ve pozitif/nötr "
+                    "teknik görünümü uygular. Risk/getiri işlem hazırlığı "
+                    "aşamasında ayrıca değerlendirilir."
+                ),
+            )
+            maksimum_aday = st.slider(
+                "Gösterilecek aday sayısı",
+                min_value=1,
+                max_value=50,
+                value=15,
+            )
+            internetten_guncelle = st.checkbox(
+                "BIST evrenini resmi kaynaktan güncelle",
+                value=True,
+                disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+            )
+            temel_filtre_aktif = st.checkbox(
+                "Temel kalite filtresini kullan",
+                value=False,
+                help=(
+                    "Varsayılan olarak kapalıdır. Açıldığında önce "
+                    "kayıtlı ve güncel temel kalite skorları kullanılır."
+                ),
+            )
+            minimum_temel_skor = st.slider(
+                "Minimum temel kalite skoru",
+                min_value=0,
+                max_value=100,
+                value=60,
+                # RPV1_SPRINT02_UPLOADER_ALWAYS_AVAILABLE
+                disabled=False,
+            )
+            temel_filtre_dosyasi = st.file_uploader(
+                "Temel skorları güncellemek için bilanço dosyası",
+                type=("csv", "json"),
+                disabled=not temel_filtre_aktif,
+                key="bist_temel_filtre_dosyasi",
+                help=(
+                    "İsteğe bağlıdır. Dosya yüklenmezse yerel depodaki "
+                    "güncel temel kalite skorları kullanılır."
+                ),
+            )
+            calistirildi = st.form_submit_button(
+                "Toplu taramayı başlat",
+                type="primary",
+                width="stretch",
+                disabled=hazir_tarama_servisi is None,
+            )
+
+    if not calistirildi:
+        onceki_tarama = st.session_state.get("bist_toplu_tarama_son_sonuc")
+        if onceki_tarama is not None:
+            bist_toplu_tarama_sonucu_goster(
+                onceki_tarama["sonuc"],
+                temel_skorlar=onceki_tarama.get("temel_skorlar", {}),
+                temel_filtre_aktif=bool(onceki_tarama.get("temel_filtre_aktif", False)),
+                minimum_temel_skor=int(onceki_tarama.get("minimum_temel_skor", 60)),
+            )
+            st.caption("Son toplu tarama sonucu korunuyor. Yeni tarama başlatılana kadar aday listesi sıfırlanmaz.")
+            return
+        st.info(
+            "Tarama evrenini ve profili seçip sol menüdeki "
+            "‘Toplu taramayı başlat’ düğmesine basın."
+        )
+        st.caption(
+            "BIST Tüm seçeneği yüzlerce hisse içerdiğinden diğer "
+            "evrenlere göre daha uzun sürebilir."
+        )
+        return
+
+    if hazir_tarama_servisi is None:
+        st.error(
+            "Toplu tarama servisi hazırlanamadı. "
+            "Bu durum VBTS kilidi değildir; servis kurulumu kontrol edilmelidir."
+        )
+        return
+
+    # RPV1_SPRINT02_INPUT_CONTEXT
+    research_profile_periods = ()
+    research_profile_contexts = {}
+    if temel_filtre_dosyasi is not None:
+        try:
+            _rp_bytes = temel_filtre_dosyasi.getvalue()
+            _rp_suffix = Path(temel_filtre_dosyasi.name).suffix.lower()
+            research_profile_periods = (
+                periods_from_csv_bytes(_rp_bytes)
+                if _rp_suffix == ".csv"
+                else periods_from_json_bytes(_rp_bytes)
+            )
+            research_profile_contexts = research_profile_contexts_from_bytes(
+                _rp_bytes,
+                suffix=_rp_suffix,
+            )
+        except (FundamentalDataError, ValueError, TypeError, UnicodeError) as hata:
+            st.warning(f"Research Profiles temel verisi okunamadı: {hata}")
+            research_profile_periods = ()
+            research_profile_contexts = {}
+
+    temel_skorlar: dict = {}
+    if temel_filtre_aktif:
+        temel_skorlar = kayitli_temel_skorlari_yukle()
+
+        if temel_filtre_dosyasi is not None:
+            try:
+                temel_icerik = temel_filtre_dosyasi.getvalue()
+                if (
+                    Path(temel_filtre_dosyasi.name).suffix.lower()
+                    == ".csv"
+                ):
+                    temel_donemler = periods_from_csv_bytes(
+                        temel_icerik
+                    )
+                else:
+                    temel_donemler = periods_from_json_bytes(
+                        temel_icerik
+                    )
+
+                for temel_sembol in sorted(
+                    {item.symbol for item in temel_donemler}
+                ):
+                    sembol_donemleri = [
+                        item
+                        for item in temel_donemler
+                        if item.symbol == temel_sembol
+                    ]
+                    sembol_tazeligi = (
+                        evaluate_fundamental_freshness(
+                            sembol_donemleri
+                        )
+                    )
+                    if sembol_tazeligi.locked:
+                        continue
+
+                    sembol_snapshot = build_fundamental_snapshot(
+                        sembol_donemleri
+                    )
+                    skor = calculate_fundamental_quality(
+                        sembol_snapshot,
+                        sembol_tazeligi,
+                    )
+                    if skor.locked or skor.total_score is None:
+                        continue
+
+                    temel_skor_deposu().save(
+                        periods=sembol_donemleri,
+                        score=skor,
+                    )
+                    temel_skorlar[temel_sembol] = skor
+            except (
+                FundamentalDataError,
+                FundamentalScoreStoreError,
+                ValueError,
+                TypeError,
+                UnicodeError,
+            ) as hata:
+                st.error(
+                    f"Temel filtre dosyası doğrulanamadı: {hata}"
+                )
+                return
+
+        if not temel_skorlar:
+            st.error(
+                "Temel kalite filtresi için güncel kayıtlı skor "
+                "bulunamadı. Temel Analiz ekranında bilanço dosyası "
+                "yükleyerek skorları kaydedin."
+            )
+            return
+
+    ilerleme = st.progress(0, text="Tarama hazırlanıyor...")
+    durum = st.empty()
+
+    def ilerleme_bildir(sira: int, toplam: int, sembol: str) -> None:
+        oran = min(max(sira / toplam, 0.0), 1.0)
+        ilerleme.progress(
+            oran,
+            text=f"[{sira}/{toplam}] {sembol} analiz ediliyor...",
+        )
+        durum.caption(f"Son işlenen hisse: {sembol}")
+
+    try:
+        istek = MarketScanRequest(
+            evren=evren,
+            profil_adi=TARAMA_PROFILLERI[profil_etiketi],
+            maksimum_aday=int(maksimum_aday),
+            ozel_semboller=ozel_sembol_metinini_ayristir(ozel_liste),
+            internetten_evren_guncelle=bool(internetten_guncelle),
+            sektor_baglami_aktif=True,
+        )
+        with st.spinner(f"{istek.evren} güncel verilerle taranıyor..."):
+            tarama_servisi = hazir_tarama_servisi
+            sonuc = tarama_servisi.calistir(
+                istek,
+                ilerleme_bildirimi=ilerleme_bildir,
+            )
+    except (
+        ValueError,
+        TypeError,
+        MarketScannerError,
+        DashboardMarketScannerSourceError,
+    ) as hata:
+        ilerleme.empty()
+        durum.empty()
+        st.error(str(hata))
+        return
+
+    ilerleme.progress(1.0, text="Toplu tarama tamamlandı.")
+    durum.empty()
+    # RPV1_SPRINT02_BUILD_BUNDLE — uses same successful scan results; no rescan.
+    _rp_successful_symbols = tuple(
+        item.sembol for item in tuple(getattr(sonuc, "tum_sonuclar", ()) or ())
+    )
+    research_profiles_bundle = build_daily_research_profiles(
+        successful_symbols=_rp_successful_symbols,
+        periods=research_profile_periods,
+        contexts=research_profile_contexts,
+        as_of=research_profile_as_of_from_scan(sonuc, fallback=date.today()),
+    )
+
+    # RPV1_SPRINT03_PROFILE_MEMORY_WRITE
+    try:
+        _rp_memory_write = persist_research_profile_bundle(
+            research_profiles_bundle,
+            universe_name=sonuc.evren_adi,
+        )
+        if _rp_memory_write.status == "WARMING_UP":
+            st.caption(
+                "Research Profile Memory: WARMING UP · "
+                "forward-only ilk geçerli seans bekleniyor."
+            )
+        elif _rp_memory_write.status == "WRITTEN":
+            st.caption(
+                f"Research Profile Memory: {_rp_memory_write.appended} "
+                "forward observation eklendi."
+            )
+    except (ValueError, TypeError, OSError) as hata:
+        st.warning(
+            "Research Profile Memory yazılamadı; tarama ve AL/SAT sonucu "
+            f"değiştirilmedi: {hata}"
+        )
+
+    if st.button(
+        "Günlük Operasyon Paneline Git",
+        key="bist_toplu_tarama_gunluk_operasyon_gecis",
+    ):
+        st.session_state["analiz_modu"] = "Günlük Operasyon Paneli"
+        st.rerun()
+
+    st.session_state["bist_toplu_tarama_son_sonuc"] = {
+        "sonuc": sonuc,
+        "temel_skorlar": temel_skorlar,
+        "temel_filtre_aktif": bool(temel_filtre_aktif),
+        "minimum_temel_skor": int(minimum_temel_skor),
+    }
+    bist_toplu_tarama_sonucu_goster(
+        sonuc,
+        temel_skorlar=temel_skorlar,
+        temel_filtre_aktif=bool(temel_filtre_aktif),
+        minimum_temel_skor=int(minimum_temel_skor),
+        research_profiles_bundle=research_profiles_bundle,
+    )
+SCORE=3|PATH=backend\app\sector_analysis\sector_member_strength.py:438|FUNC=build_sector_member_strength_map|BIST100=True|CALLED_BY_CALISTIR=False|ARGS=sectors;reference_universe;benchmark_symbol;repository;loader;bars;minimum_members;minimum_coverage;refresh_membership
+def build_sector_member_strength_map(
+    *,
+    sectors: Iterable[SectorMemberDefinition] = DEFAULT_MEMBER_SECTORS,
+    reference_universe: str = "BIST 100",
+    benchmark_symbol: str = BENCHMARK_SYMBOL,
+    repository: BistUniverseRepository | None = None,
+    loader: MarketDataLoader = fiyat_verisi_getir,
+    bars: int = 90,
+    minimum_members: int = 3,
+    minimum_coverage: float = 0.60,
+    refresh_membership: bool = True,
+) -> SectorMemberStrengthMap:
+    """
+    Sektör gücünü Yahoo sektör endekslerinden değil, resmî BIST sektör
+    üyelikleri ve üyelerin gerçek fiyatlarından üretir.
+
+    Varsayılan olarak sektör üyeleri BIST 100 ile kesiştirilir. Böylece
+    BIST 100 aday taramasında kullanılan bağlam, aynı yatırım evreninden
+    üretilir. Sonuç bir hard filtre değildir.
+    """
+    if bars < 60:
+        raise ValueError("Sektör üye analizi için en az 60 bar istenmelidir.")
+    if minimum_members < 1:
+        raise ValueError("minimum_members en az 1 olmalıdır.")
+    if not 0 < minimum_coverage <= 1:
+        raise ValueError("minimum_coverage 0 ile 1 arasında olmalıdır.")
+
+    repo = repository or BistUniverseRepository()
+
+    try:
+        reference = repo.evreni_yukle(
+            reference_universe,
+            internetten_guncelle=refresh_membership,
+        )
+    except (ValueError, BistUniverseError) as exc:
+        raise SectorMemberStrengthError(
+            f"{reference_universe} üyeleri yüklenemedi: {exc}"
+        ) from exc
+
+    reference_symbols = set(reference.semboller)
+
+    benchmark_frame = _load_frame(
+        benchmark_symbol,
+        loader=loader,
+        bars=bars,
+    )
+    benchmark_date = pd.Timestamp(benchmark_frame.index[-1]).date()
+
+    frame_cache: dict[str, pd.DataFrame | Exception] = {}
+    results: list[SectorMemberStrengthResult] = []
+    errors: list[str] = []
+
+    for definition in tuple(sectors):
+        try:
+            sector_universe = repo.endeks_bilesenlerini_yukle(
+                definition.code,
+                endeks_adi=definition.name,
+                # Referans evreni yükleme adımı güncel dosyayı cache'e yazdı.
+                # Aynı çalışmada her sektör için yeniden internet çağrısı yapma.
+                internetten_guncelle=False,
+            )
+            members = tuple(
+                symbol
+                for symbol in sector_universe.semboller
+                if symbol in reference_symbols
+            )
+            if not members:
+                raise SectorMemberStrengthError(
+                    f"{reference_universe} referans evreninde üye yok."
+                )
+
+            results.append(
+                _aggregate_sector(
+                    definition,
+                    members=members,
+                    benchmark_frame=benchmark_frame,
+                    loader=loader,
+                    frame_cache=frame_cache,
+                    bars=bars,
+                    minimum_members=minimum_members,
+                    minimum_coverage=minimum_coverage,
+                )
+            )
+        except (
+            BistUniverseError,
+            SectorMemberStrengthError,
+            ValueError,
+        ) as exc:
+            errors.append(f"{definition.code}: {exc}")
+        except Exception as exc:
+            errors.append(
+                f"{definition.code}: Beklenmeyen sektör analizi hatası: {exc}"
+            )
+
+    if not results:
+        raise SectorMemberStrengthError(
+            "Hiçbir sektör için üye-hisse tabanlı güç sonucu üretilemedi."
+        )
+
+    ordered = sorted(
+        results,
+        key=lambda item: (
+            item.strength_score,
+            item.relative_composite,
+            item.coverage_ratio,
+        ),
+        reverse=True,
+    )
+    ranked = tuple(
+        replace(item, rank=rank)
+        for rank, item in enumerate(ordered, start=1)
+    )
+
+    return SectorMemberStrengthMap(
+        reference_universe=reference_universe,
+        benchmark_symbol=benchmark_symbol,
+        analysis_date=benchmark_date,
+        items=ranked,
+        errors=tuple(errors),
+    )
+SCORE=1|PATH=backend\app\analysis\bist_daily_market.py:55|FUNC=_sonuc_olustur|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=evren;semboller;evren_adi
+def _sonuc_olustur(evren, semboller: list[str], *, evren_adi: str) -> BistDailyMarketResult:
+    batch = toplu_fiyat_verisi_getir(
+        semboller,
+        islem_gunu=2,
+        indirme_donemi="1mo",
+        parca_boyutu=40,
+    )
+
+    satirlar: list[dict[str, object]] = []
+    for sembol, frame in batch.veriler.items():
+        satir = _gunluk_satir(sembol, frame)
+        if satir is not None:
+            satirlar.append(satir)
+
+    tablo = pd.DataFrame(satirlar)
+    if not tablo.empty:
+        tablo = tablo.sort_values(
+            ["Günlük Değişim %", "Hisse"],
+            ascending=[False, True],
+        ).reset_index(drop=True)
+
+    return BistDailyMarketResult(
+        tablo=tablo,
+        evren_adi=evren_adi,
+        evren_sembol_sayisi=len(semboller),
+        veri_hazir=len(batch.veriler),
+        veri_hatasi=len(batch.hatalar),
+        evren_kaynagi=evren.kaynak,
+        evren_tarihi=evren.tarih,
+        kaynak_sirasi=batch.kaynak_sirasi,
+        kaynak_hatalari=batch.kaynak_hatalari,
+        hatalar=batch.hatalar,
+    )
+SCORE=1|PATH=backend\app\analysis\bist_daily_market.py:90|FUNC=bist_gunluk_piyasa_olustur|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=evren_adi;internetten_guncelle
+def bist_gunluk_piyasa_olustur(
+    *,
+    evren_adi: str = "BIST Tüm",
+    internetten_guncelle: bool = False,
+) -> BistDailyMarketResult:
+    evren = BistUniverseRepository().evreni_yukle(
+        evren_adi,
+        internetten_guncelle=internetten_guncelle,
+    )
+    return _sonuc_olustur(evren, list(evren.semboller), evren_adi=evren.ad)
+SCORE=1|PATH=backend\app\analysis\bist_daily_market.py:160|FUNC=sembol_eslesmeleri|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=token;universe_symbols;company_names
+def sembol_eslesmeleri(
+    token: str,
+    universe_symbols: list[str],
+    *,
+    company_names: dict[str, str] | None = None,
+) -> list[str]:
+    q = token.strip().upper().removesuffix(".IS")
+    if not q:
+        return []
+
+    canonical = [s.removesuffix(".IS") for s in universe_symbols]
+
+    exact = sorted({s for s in canonical if s == q})
+    if exact:
+        return exact
+
+    starts = sorted({s for s in canonical if s.startswith(q)})
+    if starts:
+        return starts
+
+    contains = sorted({s for s in canonical if q in s})
+    if contains:
+        return contains
+
+    if not company_names:
+        return []
+
+    normalized_names = {
+        symbol.removesuffix(".IS").upper(): str(name).strip().upper()
+        for symbol, name in company_names.items()
+        if str(symbol).strip() and str(name).strip()
+    }
+
+    name_exact = sorted({s for s in canonical if normalized_names.get(s) == q})
+    if name_exact:
+        return name_exact
+
+    name_starts = sorted({
+        s for s in canonical
+        if normalized_names.get(s, "").startswith(q)
+    })
+    if name_starts:
+        return name_starts
+
+    return sorted({
+        s for s in canonical
+        if q in normalized_names.get(s, "")
+    })
+SCORE=1|PATH=backend\app\analysis\bist_universe.py:71|FUNC=evreni_yukle|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=self;evren_adi;internetten_guncelle
+def evreni_yukle(
+        self,
+        evren_adi: str,
+        internetten_guncelle: bool = True,
+    ) -> BistUniverse:
+        if evren_adi not in EVREN_KODLARI:
+            raise ValueError(
+                f"Bilinmeyen BIST evreni: {evren_adi}. "
+                f"Geçerli seçenekler: {', '.join(EVREN_KODLARI)}"
+            )
+
+        return self.endeks_bilesenlerini_yukle(
+            EVREN_KODLARI[evren_adi],
+            endeks_adi=evren_adi,
+            internetten_guncelle=internetten_guncelle,
+        )
+SCORE=1|PATH=backend\app\analysis\bist_universe.py:88|FUNC=endeks_bilesenlerini_yukle|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=self;endeks_kodu;endeks_adi;internetten_guncelle
+def endeks_bilesenlerini_yukle(
+        self,
+        endeks_kodu: str,
+        *,
+        endeks_adi: str | None = None,
+        internetten_guncelle: bool = True,
+    ) -> BistUniverse:
+        """
+        Resmî BIST bileşen dosyasından istenen endeksin hisselerini yükler.
+
+        Bu yöntem BIST 30/50/100 gibi tarama evrenlerinin yanında XBANK,
+        XHOLD, XULAS ve XKMYA gibi sektör endeksleri için de kullanılabilir.
+        """
+        kod = str(endeks_kodu).strip().upper()
+        if not kod or not kod.replace("_", "").isalnum():
+            raise ValueError(f"Geçersiz BIST endeks kodu: {endeks_kodu!r}")
+
+        ad = (endeks_adi or kod).strip() or kod
+        hatalar: list[str] = []
+
+        if internetten_guncelle:
+            try:
+                veri = self._indirici(RESMI_BIST_BILESEN_URL)
+                evren = bist_bilesen_csvsini_ayristir(
+                    veri,
+                    evren_adi=ad,
+                    endeks_kodu=kod,
+                    kaynak="Borsa İstanbul güncel CSV",
+                    resmi_kaynaktan_guncel=True,
+                )
+                self._onbellegi_yaz(veri)
+                return evren
+            except (OSError, URLError, ValueError, BistUniverseError) as hata:
+                hatalar.append(f"Güncel kaynak: {hata}")
+
+        for yol, kaynak in (
+            (self._onbellek_yolu, "Yerel BIST önbelleği"),
+            (self._snapshot_yolu, "Paketlenmiş BIST anlık görüntüsü"),
+        ):
+            try:
+                veri = yol.read_bytes()
+                return bist_bilesen_csvsini_ayristir(
+                    veri,
+                    evren_adi=ad,
+                    endeks_kodu=kod,
+                    kaynak=kaynak,
+                    resmi_kaynaktan_guncel=False,
+                )
+            except (OSError, ValueError, BistUniverseError) as hata:
+                hatalar.append(f"{kaynak}: {hata}")
+
+        raise BistUniverseError(
+            f"{kod} bileşenleri yüklenemedi. " + " | ".join(hatalar)
+        )
+SCORE=1|PATH=backend\app\analysis\bist_universe.py:152|FUNC=bist_bilesen_csvsini_ayristir|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=veri;evren_adi;endeks_kodu;kaynak;resmi_kaynaktan_guncel
+def bist_bilesen_csvsini_ayristir(
+    veri: bytes | str,
+    evren_adi: str,
+    endeks_kodu: str,
+    kaynak: str,
+    resmi_kaynaktan_guncel: bool,
+) -> BistUniverse:
+    """Borsa İstanbul'un noktalı virgüllü bileşen CSV'sini ayrıştırır."""
+    metin = veri.decode("utf-8-sig") if isinstance(veri, bytes) else veri
+    satirlar = csv.reader(StringIO(metin), delimiter=";")
+
+    semboller: list[str] = []
+    gorulenler: set[str] = set()
+    tarihler: set[str] = set()
+
+    for satir in satirlar:
+        if len(satir) < 6:
+            continue
+        if satir[2].strip().upper() != endeks_kodu:
+            continue
+
+        bilesen_kodu = satir[0].strip().upper()
+        if not bilesen_kodu.endswith(".E"):
+            continue
+
+        yahoo_sembolu = f"{bilesen_kodu.removesuffix('.E')}.IS"
+        if yahoo_sembolu in gorulenler:
+            continue
+
+        gorulenler.add(yahoo_sembolu)
+        semboller.append(yahoo_sembolu)
+
+        tarih = satir[5].strip()
+        if tarih:
+            tarihler.add(tarih)
+
+    if not semboller:
+        raise BistUniverseError(
+            f"{endeks_kodu} için geçerli hisse bileşeni bulunamadı."
+        )
+
+    tarih_metni = ", ".join(sorted(tarihler)) if tarihler else "Bilinmiyor"
+
+    return BistUniverse(
+        ad=evren_adi,
+        endeks_kodu=endeks_kodu,
+        semboller=tuple(semboller),
+        tarih=tarih_metni,
+        kaynak=kaynak,
+        resmi_kaynaktan_guncel=resmi_kaynaktan_guncel,
+    )
+SCORE=1|PATH=backend\app\analysis\historical_research_replay.py:101|FUNC=replay_canonical_research|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=as_of;symbols;profile_name;universe_source;base_fetcher
+def replay_canonical_research(
+    *,
+    as_of: date,
+    symbols: Iterable[str],
+    profile_name: str = "dengeli",
+    universe_source: str = HISTORICAL_REPLAY_UNIVERSE_SOURCE,
+    base_fetcher: BatchDataFetcher = toplu_fiyat_verisi_getir,
+) -> HistoricalResearchReplayResult:
+    """Replay one Research session without persistence or trading authority."""
+
+    normalized_symbols = sembolleri_normalize_et(tuple(symbols))
+    if not normalized_symbols:
+        raise ValueError("Historical replay requires at least one universe symbol.")
+
+    profile = profil_al(profile_name)
+    source = str(universe_source or "").strip()
+    if not source:
+        raise ValueError("Historical replay requires a stable universe_source.")
+
+    cut_fetcher = build_cut_date_fetcher(
+        as_of,
+        base_fetcher=base_fetcher,
+    )
+
+    scanner = BatchStockScanner(veri_getirici=cut_fetcher)
+    scan = scanner.tara(normalized_symbols)
+
+    filtered = tarama_sonucunu_filtrele(
+        tarama=scan,
+        kriterler=profile.kriterler,
+    )
+
+    # IMPORTANT: use the complete canonical filtered Research order, not
+    # MarketScanResult.adaylar / maximum-display slice.
+    candidates = tuple(filtered.adaylar)
+
+    future_dates: list[date] = []
+    stale_analysis_count = 0
+
+    for candidate in candidates:
+        candidate_date = _analysis_date(candidate.analiz_tarihi)
+        if candidate_date > as_of:
+            future_dates.append(candidate_date)
+        elif candidate_date < as_of:
+            stale_analysis_count += 1
+
+    if future_dates:
+        latest = max(future_dates)
+        raise ValueError(
+            "Historical replay future leakage detected: "
+            f"cut={as_of.isoformat()} latest_analysis={latest.isoformat()}"
+        )
+
+    rows = tuple(
+        {
+            "Sıra": rank,
+            "Hisse": candidate.sembol.removesuffix(".IS"),
+            "Skor": candidate.sinyal.skor,
+        }
+        for rank, candidate in enumerate(candidates, start=1)
+    )
+
+    ranks = tuple(int(row["Sıra"]) for row in rows)
+    if ranks != tuple(range(1, len(rows) + 1)):
+        raise ValueError("Historical Research ranks are not contiguous.")
+
+    row_symbols = tuple(str(row["Hisse"]) for row in rows)
+    if len(row_symbols) != len(set(row_symbols)):
+        raise ValueError("Historical Research rows contain duplicate symbols.")
+
+    observations = observations_from_research_rows(
+        rows=rows,
+        as_of=as_of.isoformat(),
+        universe_source=source,
+        profile_name=profile_name,
+    )
+
+    if len(observations) != len(rows):
+        raise ValueError(
+            "Historical Research row/observation count mismatch: "
+            f"{len(rows)} != {len(observations)}"
+        )
+
+    return HistoricalResearchReplayResult(
+        as_of=as_of.isoformat(),
+        universe_source=source,
+        profile_name=profile_name,
+        input_universe_size=len(normalized_symbols),
+        successful_scan_count=len(scan.basarili_sonuclar),
+        failed_scan_count=len(scan.hatalar),
+        ranked_research_count=len(rows),
+        stale_analysis_count=stale_analysis_count,
+        rows=rows,
+        observations=observations,
+        scan_result=scan,
+    )
+SCORE=1|PATH=backend\app\analysis\ranking_memory.py:30|FUNC=observations_from_research_rows|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=rows;as_of;universe_source;profile_name
+def observations_from_research_rows(*, rows, as_of, universe_source, profile_name):
+    materialized = tuple(rows)
+    ranked_universe_size = len(materialized)
+
+    if ranked_universe_size == 0:
+        return ()
+
+    observations = []
+
+    for row in materialized:
+        symbol = _clean_symbol(
+            row.get("Hisse")
+            or row.get("hisse")
+            or row.get("symbol")
+            or row.get("Symbol")
+        )
+
+        rank = _coerce_rank(
+            row.get("Sıra")
+            or row.get("Sira")
+            or row.get("rank")
+            or row.get("Rank")
+        )
+
+        if not symbol or rank is None:
+            continue
+
+        observations.append(
+            RankObservation(
+                as_of=str(as_of),
+                symbol=symbol,
+                rank=rank,
+                ranked_universe_size=ranked_universe_size,
+                universe_source=str(universe_source or ""),
+                profile_name=str(profile_name or ""),
+            )
+        )
+
+    return tuple(observations)
+SCORE=1|PATH=backend\app\analysis\research_profile_memory.py:72|FUNC=profile_observations_from_bundle|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=bundle;recorded_at;universe_name
+def profile_observations_from_bundle(
+    bundle: DailyResearchProfileBundle,
+    *,
+    recorded_at: str | None = None,
+    universe_name: str = CANONICAL_PROFILE_MEMORY_UNIVERSE,
+) -> tuple[ResearchProfileObservation, ...]:
+    stamp = recorded_at or datetime.now(timezone.utc).isoformat()
+    output = []
+    for item in bundle.items:
+        for result in item.results:
+            output.append(
+                ResearchProfileObservation(
+                    as_of=bundle.as_of.isoformat(),
+                    symbol=_clean_symbol(item.symbol),
+                    research_profile=result.profile.value,
+                    state=result.state.value,
+                    direction=result.direction.value,
+                    reasons=tuple(result.reasons),
+                    warnings=tuple(result.warnings),
+                    universe_name=universe_name,
+                    successful_universe_size=bundle.successful_symbol_count,
+                    recorded_at=stamp,
+                )
+            )
+    return tuple(output)
+SCORE=1|PATH=backend\app\prebreakout\prebreakout_universe.py:56|FUNC=on_yukselis_evrenini_yukle|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=evren_adi;ozel_liste;repository;internetten_guncelle
+def on_yukselis_evrenini_yukle(
+    evren_adi: str,
+    ozel_liste: str = "",
+    *,
+    repository: BistUniverseRepository | None = None,
+    internetten_guncelle: bool = True,
+) -> PreBreakoutUniverseSelection:
+    if evren_adi == OZEL_LISTE:
+        semboller = sembolleri_hazirla(ozel_liste)
+        if not semboller:
+            raise ValueError("Özel liste için en az bir hisse sembolü girilmelidir.")
+        return PreBreakoutUniverseSelection(
+            ad=OZEL_LISTE,
+            semboller=semboller,
+            kaynak="Kullanıcı girdisi",
+            tarih="Anlık",
+        )
+
+    if evren_adi not in ON_YUKSELIS_EVRENLERI:
+        raise ValueError(f"Bilinmeyen ön yükseliş evreni: {evren_adi}")
+
+    universe = (repository or BistUniverseRepository()).evreni_yukle(
+        evren_adi,
+        internetten_guncelle=internetten_guncelle,
+    )
+    return PreBreakoutUniverseSelection(
+        ad=universe.ad,
+        semboller=universe.semboller,
+        kaynak=universe.kaynak,
+        tarih=universe.tarih,
+    )
+SCORE=1|PATH=backend\app\ui\momentum_batch_history_integration.py:17|FUNC=momentum_batch_scan_day|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=cut_date;universe;minimum_skor;maksimum_aday;ozel_semboller;internetten_guncelle
+def momentum_batch_scan_day(
+    cut_date: date,
+    universe: str,
+    *,
+    minimum_skor: int,
+    maksimum_aday: int,
+    ozel_semboller: tuple[str, ...],
+    internetten_guncelle: bool,
+) -> Sequence[Mapping[str, object]]:
+    """
+    Sprint-135 uyumluluk fonksiyonu.
+    Tek günlük Momentum Walk-Forward sonucunu batch export satırlarına dönüştürür.
+    """
+    request = MomentumWalkForwardRequest(
+        evren=common_universe_mapper(universe),
+        kesim_tarihi=cut_date.isoformat(),
+        maksimum_aday=int(maksimum_aday),
+        minimum_skor=int(minimum_skor),
+        ozel_semboller=ozel_semboller,
+        internetten_evren_guncelle=bool(internetten_guncelle),
+    )
+    result = MomentumWalkForwardService().calistir(request)
+    return tuple(dict(row) for row in walk_forward_tablosu(result))
+SCORE=1|PATH=backend\app\ui\momentum_batch_history_integration.py:56|FUNC=scan_day|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=cut_date;universe
+def scan_day(cut_date: date, universe: str):
+        return momentum_batch_scan_day(
+            cut_date,
+            universe,
+            minimum_skor=minimum_skor,
+            maksimum_aday=maksimum_aday,
+            ozel_semboller=ozel_semboller,
+            internetten_guncelle=internetten_guncelle,
+        )
+SCORE=1|PATH=backend\app\ui\momentum_batch_history_integration.py:95|FUNC=scan_day|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=self;cut_date;universe
+def scan_day(
+        self,
+        cut_date: date,
+        universe: str,
+    ) -> Sequence[Mapping[str, object]]:
+        request = MomentumWalkForwardRequest(
+            evren=common_universe_mapper(universe),
+            kesim_tarihi=cut_date.isoformat(),
+            maksimum_aday=self.maksimum_aday,
+            minimum_skor=self.minimum_skor,
+            ozel_semboller=self.ozel_semboller,
+            internetten_evren_guncelle=self.internetten_guncelle,
+        )
+        result = self._service.calistir(request)
+        return tuple(dict(row) for row in walk_forward_tablosu(result))
+SCORE=1|PATH=backend\dashboard.py:3142|FUNC=momentum_walk_forward_oturum_imzasi|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=evren;semboller;minimum_skor;maksimum_aday;internetten_guncelle;kesim_tarihi
+def momentum_walk_forward_oturum_imzasi(
+    *,
+    evren: str,
+    semboller: list[str],
+    minimum_skor: int,
+    maksimum_aday: int,
+    internetten_guncelle: bool,
+    kesim_tarihi: date,
+) -> tuple[object, ...]:
+    """Yeniden oynatma sonucunun mevcut sol menü ayarlarıyla eşleşmesini sağlar."""
+
+    return (
+        evren,
+        tuple(semboller),
+        int(minimum_skor),
+        int(maksimum_aday),
+        bool(internetten_guncelle),
+        kesim_tarihi.isoformat(),
+    )
+SCORE=1|PATH=backend\dashboard.py:3164|FUNC=momentum_kesif_oturum_imzasi|BIST100=False|CALLED_BY_CALISTIR=False|ARGS=evren;semboller;minimum_skor;maksimum_aday;internetten_guncelle;piyasa_rejimi;rejim_baglami_imzasi
+def momentum_kesif_oturum_imzasi(
+    *,
+    evren: str,
+    semboller: list[str],
+    minimum_skor: int,
+    maksimum_aday: int,
+    internetten_guncelle: bool,
+    piyasa_rejimi: str | None,
+    rejim_baglami_imzasi: tuple[object, ...] | None,
+) -> tuple[object, ...]:
+    """Momentum sonucunu yalnızca aynı ayarlarla yeniden gösterir."""
+
+    return (
+        evren,
+        tuple(semboller),
+        int(minimum_skor),
+        int(maksimum_aday),
+        bool(internetten_guncelle),
+        piyasa_rejimi,
+        rejim_baglami_imzasi,
+    )
+
+=== PRODUCTION BIST100 RAW REFS ===
+backend\dashboard.py:3273: evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")
+backend\dashboard.py:4075: f"{sonuc.sektor_referans_evreni or 'BIST 100'} referansı · "
+backend\dashboard.py:4574: disabled=(evren not in ("BIST 30", "BIST 100", "BIST 500", "BIST Tüm")),
+backend\dashboard.py:5690: """XU100, XU030 ve XUTUM için günlük/haftalık piyasa rejimini gösterir."""
+backend\dashboard.py:5707: "XU100, XU030 ve XUTUM analizini başlatmak için "
+backend\dashboard.py:5735: + ". BIST 100 ana rejimi kullanılabilir; güven düzeyi "
+backend\dashboard.py:5741: ("BIST 100 rejimi", ana.rejim),
+backend\dashboard.py:8260: evren="BIST 100",
+backend\dashboard.py:8267: with st.spinner("Günlük karar listesi için BIST 100 otomatik taranıyor..."):
+backend\app\opportunity_radar.py:536: strong_reasons.append("6 aylık göreli performans XU100 üzerinde.")
+backend\app\opportunity_radar.py:584: early_reasons.append("3 aylık göreli güç XU100'e karşı iyileşiyor.")
+backend\app\opportunity_radar.py:632: "XU100.IS",
+backend\scripts\sector_market_check.py:21: f"Sektörel piyasa gücü — XU100 karşılaştırması — "
+backend\scripts\sector_member_strength_check.py:22: default="BIST 100",
+backend\scripts\sector_member_strength_check.py:23: choices=("BIST 30", "BIST 50", "BIST 100", "BIST 500", "BIST Tüm"),
+backend\scripts\sector_member_strength_check.py:39: f"XU100 karşılaştırması — {result.analysis_date.isoformat()}"
+backend\app\analysis\bist_universe.py:19: "BIST 100": "XU100",
+backend\app\analysis\market_regime.py:27: "XU100": "BIST 100",
+backend\app\analysis\market_regime.py:32: "XU100": "XU100.IS",
+backend\app\analysis\market_regime.py:37: "XU100": "XU100", "XU100.IS": "XU100", "BIST100": "XU100",
+backend\app\analysis\market_regime.py:117: "Desteklenmeyen endeks sembolü. Geçerli değerler: XU100, XU030, XUTUM."
+backend\app\analysis\market_regime.py:444: semboller: tuple[str,...] = ("XU100","XU030","XUTUM"),
+backend\app\analysis\market_regime.py:463: if endeks_sembolunu_hazirla(sembol) == "XU100":
+backend\app\analysis\market_scanner.py:44: "BIST 100",
+backend\app\analysis\market_scanner.py:304: karşılaştırılabilirlik nedeniyle BIST 100 sektör bağlamıyla değerlendirilir.
+backend\app\analysis\market_scanner.py:308: return "BIST 100"
+backend\app\analysis\momentum_walk_forward.py:32: evren: str = "BIST 100"
+backend\app\diagnostics\system_check.py:669: "BIST 100": 100,
+backend\app\history\batch_historical_export.py:20: universe: str = "BIST100"
+backend\app\history\replay_batch_adapter.py:55: "bist100": "BIST 100",
+backend\app\market_context\daily_market_briefing.py:32: "BIST100",
+backend\app\market_context\parser.py:66: if "bist100" in s.casefold() or "endeks" in s.casefold():
+backend\app\news_center\classifier.py:205: r"\bxu100\b",
+backend\app\operations\daily_buy_decision_scheduled_runner.py:183: evren="BIST 100",
+backend\app\prebreakout\prebreakout_universe.py:15: "BIST 100",
+backend\app\sector_analysis\sector_candidate_context.py:158: reference_universe: str = "BIST 100",
+backend\app\sector_analysis\sector_market_strength.py:86: BENCHMARK_SYMBOL = "XU100.IS"
+backend\app\sector_analysis\sector_market_strength.py:166: "Sektör ve XU100 için en az 60 ortak işlem günü gerekir."
+backend\app\sector_analysis\sector_market_strength.py:178: # sektörün XU100'e göre üstün performansını kademeli olarak ödüllendirir.
+backend\app\sector_analysis\sector_market_strength.py:292: """Tek bir sektör endeksini XU100'e göre değerlendirir.
+backend\app\sector_analysis\sector_market_strength.py:310: f"XU100 tarihi {benchmark_last}. Güncel sektör karşılaştırması yapılamadı."
+backend\app\sector_analysis\sector_market_strength.py:391: """Sektörleri teknik güç ve XU100'e göre göreceli güçle sıralar."""
+backend\app\sector_analysis\sector_member_strength.py:107: BENCHMARK_SYMBOL = "XU100.IS"
+backend\app\sector_analysis\sector_member_strength.py:292: # BIST 100 kesişiminde bazı gerçek sektörlerin doğal olarak yalnızca
+backend\app\sector_analysis\sector_member_strength.py:441: reference_universe: str = "BIST 100",
+backend\app\sector_analysis\sector_member_strength.py:454: Varsayılan olarak sektör üyeleri BIST 100 ile kesiştirilir. Böylece
+backend\app\sector_analysis\sector_member_strength.py:455: BIST 100 aday taramasında kullanılan bağlam, aynı yatırım evreninden
+backend\app\ui\batch_historical_export_ui.py:91: universe_options: tuple[str, ...] = ("BIST100", "BIST Tüm"),
+backend\app\ui\bist_daily_market_dashboard.py:194: "BIST Tüm, XU100, XU50, XU30 ve Özel Liste için son tamamlanmış günlük OHLCV verisini gösterir. "
+backend\app\ui\bist_daily_market_dashboard.py:201: "XU100": "BIST 100",
+backend\app\ui\market_regime_dashboard.py:44: return next(item for item in self.sonuclar if item.sembol == "XU100")
+backend\app\ui\market_regime_dashboard.py:50: kod for kod in ("XU100", "XU030", "XUTUM")
+backend\app\ui\market_regime_dashboard.py:77: """Ana BIST 100 sonucundan tarihli ve doğrulanabilir rejim bağlamı üretir."""
+backend\app\ui\market_regime_dashboard.py:88: "BIST 100 rejim verisi tazelik kilidinde."
+backend\app\ui\market_regime_dashboard.py:125: if not sonuclar or not any(item.sembol == "XU100" for item in sonuclar):
+backend\app\ui\market_regime_dashboard.py:126: raise MarketRegimeDashboardError("BIST 100 piyasa rejimi sonucu üretilemedi.")
+backend\app\ui\momentum_batch_history_integration.py:71: universe_options=("BIST100", "BIST Tüm"),
+backend\app\ui\sprint136_batch_history_ui.py:113: options=["BIST100", "BIST Tüm"],
+
+=== MARKETSCANRESULT ===
+PATH=backend\app\analysis\market_scanner.py:79
+FIELDS=evren_adi;evren_kaynagi;evren_tarihi;evren_sembol_sayisi;profil;filtrelenmis;adaylar;tum_sonuclar;veri_tazeligi;vbts_engellenen_semboller;vbts_engelleme_nedenleri;vbts_dogrulama_uyarisi;sektor_baglamlari;sektor_baglami_uyarisi;sektor_referans_evreni
+DECORATORS=dataclass
+class MarketScanResult:
+    """Kullanıcıya gösterilecek toplu tarama sonucu."""
+
+    evren_adi: str
+    evren_kaynagi: str
+    evren_tarihi: str
+    evren_sembol_sayisi: int
+    profil: ScanProfile
+    filtrelenmis: FilteredScanResult
+    adaylar: tuple[StockAnalysisResult, ...]
+    # RPV1_SPRINT02_SUCCESSFUL_RESULTS — same canonical scan, read-only exposure.
+    tum_sonuclar: tuple[StockAnalysisResult, ...] = ()
+    veri_tazeligi: BatchDataFreshnessResult | None = None
+    vbts_engellenen_semboller: tuple[str, ...] = ()
+    vbts_engelleme_nedenleri: dict[str, tuple[str, ...]] | None = None
+    vbts_dogrulama_uyarisi: str | None = None
+    sektor_baglamlari: dict[str, CandidateSectorContext] | None = None
+    sektor_baglami_uyarisi: str | None = None
+    sektor_referans_evreni: str | None = None
+
+    @property
+    def gosterilen_aday_sayisi(self) -> int:
+        return len(self.adaylar)
+
+=== RESULT ADAPTERS ===
+NONE
+
+=== DECISION ===
+BEST_PROVIDER=backend\app\analysis\market_scanner.py:299|_sektor_referans_evrenini_sec
+BEST_PROVIDER_SCORE=6
+BLOCKERS=NONE
+WARNINGS=NO_EXISTING_RESULT_ADAPTER_MINIMAL_DATACLASS_VIEW_ADAPTER_REQUIRED
+DECISION=READY_FOR_SINGLE_SCAN_REUSE_IMPLEMENTATION
+NEXT=IMPLEMENT_MINIMAL_RESULT_VIEW_ADAPTER_AND_INJECTED_SCAN_RESULT
+
+NO_BACKUP_FILES_INCLUDED=YES
+SECOND_SCANNER=NO
+NEW_STORE=NO
+AL_SAT_AUTHORITY_CHANGE=NO

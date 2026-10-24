@@ -1,0 +1,704 @@
+{
+  "schema_version": "financial-intelligence-v1-3-bank-financial-source-disambiguation-v2",
+  "status": "PASS",
+  "candidate_count": 149,
+  "credible_candidate_count": 59,
+  "selected_source": {
+    "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_FINANCIAL_SOURCE_DISAMBIGUATION_V2.json",
+    "suffix": ".json",
+    "symbols": [
+      "AKBNK",
+      "GARAN",
+      "HALKB",
+      "ISCTR",
+      "SKBNK",
+      "TSKB",
+      "VAKBN",
+      "YKBNK"
+    ],
+    "financial_terms": [
+      "kredi",
+      "roa",
+      "kap"
+    ],
+    "score": 92,
+    "bytes": 16476,
+    "has_publication_date": true,
+    "has_as_of": false,
+    "has_canonical_facts": true
+  },
+  "top_candidates": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\financial_intelligence\\FINANCIAL_INTELLIGENCE_V1_3_BANK_FINANCIAL_SOURCE_DISAMBIGUATION_V2.json",
+      "suffix": ".json",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kredi",
+        "roa",
+        "kap"
+      ],
+      "score": 92,
+      "bytes": 16476,
+      "has_publication_date": true,
+      "has_as_of": false,
+      "has_canonical_facts": true
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\cache\\bist_endeks_bilesenleri.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kredi",
+        "kap"
+      ],
+      "score": 70,
+      "bytes": 431750,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\resources\\bist_endeks_bilesenleri.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kredi",
+        "kap"
+      ],
+      "score": 70,
+      "bytes": 424891,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\research\\sector_internal_ignition\\sector_membership_snapshot_2026-08-05.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "roa",
+        "kap"
+      ],
+      "score": 70,
+      "bytes": 30802,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "C:\\Users\\user\\Downloads\\Aylik-Radar-Validation-V1-Rev2\\01_aylik_tarihsel_sinyaller_rev2.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 3804964,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "C:\\Users\\user\\Downloads\\Aylik-Radar-Validation-V1\\00_aylik_veri_hatalari_v1.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 26458,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "C:\\Users\\user\\Downloads\\Haftalik-On-Yukselis-V1-Rev1-Sonuclar\\00_veri_envanteri.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 15683,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-27.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30661,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\07\\2026-07-31.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30316,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-03.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30352,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-04.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30449,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-05.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30463,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-06.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30485,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-07.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30514,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-10.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30487,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-11.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30528,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-12.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30689,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-13.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30538,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-14.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30557,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-17.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30484,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-18.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30617,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-19.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30629,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-20.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30683,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-21.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30815,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-24.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30737,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-25.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30753,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-26.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30800,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-27.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30661,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-28.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30706,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\data\\bist_official_daily\\canonical\\2026\\08\\2026-08-31.csv",
+      "suffix": ".csv",
+      "symbols": [
+        "AKBNK",
+        "GARAN",
+        "HALKB",
+        "ISCTR",
+        "SKBNK",
+        "TSKB",
+        "VAKBN",
+        "YKBNK"
+      ],
+      "financial_terms": [
+        "kap"
+      ],
+      "score": 67,
+      "bytes": 30753,
+      "has_publication_date": false,
+      "has_as_of": false,
+      "has_canonical_facts": false
+    }
+  ],
+  "canonical_producer_ready": false,
+  "production_evidence": false,
+  "activation_ready": false,
+  "blockers": [],
+  "mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

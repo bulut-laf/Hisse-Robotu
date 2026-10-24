@@ -1,0 +1,810 @@
+=== HISSE ROBOTU тАФ SCHEDULED DATA + PHASE CAPABILITY PREFLIGHT V2 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+
+PRODUCTION_PY_FILES=692
+PRODUCTION_PS1_FILES=256
+
+=== 1. PRICE / MARKET DATA PROVIDER INVENTORY ===
+PROVIDER_FILE=_live_data_sma200_fix_backup_20260804_163723\backend\app\analysis\stock_analyzer.py
+PROVIDER_FILE=_live_data_sma200_fix_backup_20260804_163723\backend\app\analysis\technical_confirmation.py
+PROVIDER_FILE=_sprint144a_backup_20260804_133045\backend\app\data\bist_official_daily.py
+PROVIDER_FILE=_sprint144b_backup_20260804_134024\backend\app\data\bist_official_daily.py
+PROVIDER_FILE=_sprint144b_rev1_backup_20260804_134638\backend\app\data\bist_official_archive.py
+PROVIDER_FILE=_sprint144b_rev1_backup_20260804_134638\backend\app\data\bist_official_daily.py
+PROVIDER_FILE=_sprint144b_rev1_backup_20260804_134638\backend\tools\verify_bist_official_live.py
+PROVIDER_FILE=_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py
+PROVIDER_FILE=_sprint144f_backup_20260804_155907\stock_analyzer.py
+PROVIDER_FILE=_sprint145_backup_20260804_170940\backend\dashboard.py
+PROVIDER_FILE=_sprint146_backup_20260804_193700\backend\dashboard.py
+PROVIDER_FILE=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py
+PROVIDER_FILE=_sprint148c_backup_20260804_221041\backend\dashboard.py
+PROVIDER_FILE=_v11_backup_outcome_health_20260817-152436\dashboard.py
+PROVIDER_FILE=backend\app\analysis\automatic_signal_tracking.py
+PROVIDER_FILE=backend\app\analysis\fundamental_score_history.py
+PROVIDER_FILE=backend\app\analysis\loss_analysis.py
+PROVIDER_FILE=backend\app\analysis\market_regime.py
+PROVIDER_FILE=backend\app\analysis\momentum_discovery.py
+PROVIDER_FILE=backend\app\analysis\multi_timeframe_analysis.py
+PROVIDER_FILE=backend\app\analysis\shadow_portfolio.py
+PROVIDER_FILE=backend\app\analysis\stock_analyzer.py
+PROVIDER_FILE=backend\app\analysis\technical_confirmation.py
+PROVIDER_FILE=backend\app\data\batch_market_data.py
+PROVIDER_FILE=backend\app\data\bist_official_archive.py
+PROVIDER_FILE=backend\app\data\bist_official_batch_bridge.py
+PROVIDER_FILE=backend\app\data\bist_official_daily.py
+PROVIDER_FILE=backend\app\data\data_source_recovery.py
+PROVIDER_FILE=backend\app\data\delayed_data_pilot.py
+PROVIDER_FILE=backend\app\data\market_data.py
+PROVIDER_FILE=backend\app\data\multi_timeframe_data.py
+PROVIDER_FILE=backend\app\diagnostics\system_check.py
+PROVIDER_FILE=backend\app\history\backtest_history.py
+PROVIDER_FILE=backend\app\history\backtest_history_backup.py
+PROVIDER_FILE=backend\app\history\backtest_history_comparison.py
+PROVIDER_FILE=backend\app\history\backtest_history_filter.py
+PROVIDER_FILE=backend\app\history\backtest_history_pagination.py
+PROVIDER_FILE=backend\app\history\backtest_history_summary.py
+PROVIDER_FILE=backend\app\history\batch_historical_export.py
+PROVIDER_FILE=backend\app\history\momentum_history.py
+PROVIDER_FILE=backend\app\history\replay_batch_adapter.py
+PROVIDER_FILE=backend\app\history\resilient_batch_replay.py
+PROVIDER_FILE=backend\app\history\scan_history.py
+PROVIDER_FILE=backend\app\history\scan_history_reader.py
+PROVIDER_FILE=backend\app\market_context\ai_dashboard_provider.py
+PROVIDER_FILE=backend\app\market_context\ai_history.py
+PROVIDER_FILE=backend\app\market_context\ai_history_view.py
+PROVIDER_FILE=backend\app\market_context\ai_provider.py
+PROVIDER_FILE=backend\app\market_context\ai_stock_chat.py
+PROVIDER_FILE=backend\app\opportunity_radar.py
+PROVIDER_FILE=backend\app\prebreakout\prebreakout_daily_rank_history.py
+PROVIDER_FILE=backend\app\prebreakout\prebreakout_features.py
+PROVIDER_FILE=backend\app\prebreakout\prebreakout_v2_decision_history.py
+PROVIDER_FILE=backend\app\reporting\fundamental_report_archive.py
+PROVIDER_FILE=backend\app\ui\batch_historical_export_ui.py
+PROVIDER_FILE=backend\app\ui\bist_daily_market_dashboard.py
+PROVIDER_FILE=backend\app\ui\current_session_snapshot.py
+PROVIDER_FILE=backend\app\ui\momentum_batch_history_integration.py
+PROVIDER_FILE=backend\app\ui\prebreakout_dashboard.py
+PROVIDER_FILE=backend\app\ui\prebreakout_validation_dashboard.py
+PROVIDER_FILE=backend\app\ui\sprint136_batch_history_ui.py
+PROVIDER_FILE=backend\check_market_data.py
+PROVIDER_FILE=backend\dashboard.backup_before_navigation_fix.py
+PROVIDER_FILE=backend\dashboard.py
+PROVIDER_FILE=backend\run_scan_history.py
+PROVIDER_FILE=backend\tools\verify_bist_official_batch_merge.py
+PROVIDER_FILE=backend\tools\verify_bist_official_live.py
+PROVIDER_FILE=backups\analiz-menusu-20260802-144119\backend\dashboard.py
+PROVIDER_FILE=backups\analiz-menusu-20260802-152148\backend\dashboard.py
+PROVIDER_FILE=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py
+PROVIDER_FILE=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_validation_dashboard.py
+PROVIDER_FILE=backups\v1.1-kapanis-20260729-142003\backend\app\diagnostics\system_check.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-155549\backend\app\diagnostics\system_check.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_comparison.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_pagination.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_summary.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-162234\backend\app\diagnostics\system_check.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_comparison.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_pagination.py
+PROVIDER_FILE=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_summary.py
+PROVIDER_FILE=bist_daily_market_dashboard.py
+PROVIDER_FILE=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py
+PROVIDER_FILE=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py
+PROVIDER_FILE=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\batch_market_data.py
+PROVIDER_FILE=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py
+PROVIDER_FILE=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\market_data.py
+PROVIDER_FILE=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py
+PROVIDER_FILE=Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py
+PROVIDER_FILE=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py
+PROVIDER_FILE=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py
+PROVIDER_FILE=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py
+PROVIDER_FILE=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py
+PROVIDER_FILE=Sprint60_Rev1_temel_skor_gecmisi\backend\app\analysis\fundamental_score_history.py
+PROVIDER_FILE=Sprint65_Rev1_temel_rapor_arsivi\backend\app\reporting\fundamental_report_archive.py
+PROVIDER_FILE=Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\app\reporting\fundamental_report_archive.py
+PROVIDER_FILE=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py
+PROVIDER_FILE=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py
+PROVIDER_FILE=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py
+PROVIDER_FILE=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py
+PROVIDER_FILE=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py
+PROVIDER_FILE=Sprint78_Rev1_golge_portfoy\backend\app\analysis\shadow_portfolio.py
+PROVIDER_FILE=Sprint78_Rev1_golge_portfoy\backend\dashboard.py
+PROVIDER_FILE=Sprint79_Rev1_haftalik_performans_raporu\backend\dashboard.py
+PROVIDER_FILE=Sprint80_Rev1_basari_karsilastirmasi\backend\dashboard.py
+PROVIDER_FILE=Sprint80_Rev2_basari_karsilastirmasi\backend\dashboard.py
+PROVIDER_FILE=Sprint81_Rev1_v13_kalibrasyon_snapshot\backend\dashboard.py
+PROVIDER_FILE=Sprint81_Rev2_v13_kalibrasyon_snapshot\backend\dashboard.py
+PROVIDER_FILE=Sprint82_Rev1_On_Yukselis_Hazirlik_Motoru\backend\app\prebreakout\prebreakout_features.py
+PROVIDER_FILE=Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\backend\app\ui\prebreakout_dashboard.py
+PROVIDER_FILE=Sprint85_Rev1_Momentum_Kapisi_Performans_Etiketi\backend\app\ui\prebreakout_dashboard.py
+PROVIDER_FILE=Sprint85_Rev2_Momentum_Kapisi_Performans_Etiketi\backend\app\ui\prebreakout_dashboard.py
+PROVIDER_FILE=Sprint87_Rev1_Toplu_Tarihsel_Dogrulama_Streamlit\backend\app\ui\prebreakout_validation_dashboard.py
+PROVIDER_FILE=Veri_Tazelik_Rev1_toplu_end_tarihi_duzeltmesi\backend\app\data\batch_market_data.py
+PROVIDER_FILE=Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\batch_market_data.py
+PROVIDER_FILE=Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\market_data.py
+PROVIDER_DEF=_sprint144a_backup_20260804_133045\backend\app\data\bist_official_daily.py:95|FunctionDef|_default_fetch
+PROVIDER_DEF=_sprint144a_backup_20260804_133045\backend\app\data\bist_official_daily.py:113|FunctionDef|download_bulletin_zip
+PROVIDER_DEF=_sprint144a_backup_20260804_133045\backend\app\data\bist_official_daily.py:206|FunctionDef|_validate_ohlcv
+PROVIDER_DEF=_sprint144b_backup_20260804_134024\backend\app\data\bist_official_daily.py:95|FunctionDef|_default_fetch
+PROVIDER_DEF=_sprint144b_backup_20260804_134024\backend\app\data\bist_official_daily.py:113|FunctionDef|download_bulletin_zip
+PROVIDER_DEF=_sprint144b_backup_20260804_134024\backend\app\data\bist_official_daily.py:206|FunctionDef|_validate_ohlcv
+PROVIDER_DEF=_sprint144b_rev1_backup_20260804_134638\backend\app\data\bist_official_daily.py:95|FunctionDef|_default_fetch
+PROVIDER_DEF=_sprint144b_rev1_backup_20260804_134638\backend\app\data\bist_official_daily.py:113|FunctionDef|download_bulletin_zip
+PROVIDER_DEF=_sprint144b_rev1_backup_20260804_134638\backend\app\data\bist_official_daily.py:204|FunctionDef|_validate_ohlcv
+PROVIDER_DEF=_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py:13|ClassDef|BatchMarketDataError
+PROVIDER_DEF=_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py:18|ClassDef|BatchMarketDataFailure
+PROVIDER_DEF=_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py:26|ClassDef|BatchMarketDataResult
+PROVIDER_DEF=backend\app\analysis\automatic_signal_tracking.py:51|FunctionDef|_normalize_price_frame
+PROVIDER_DEF=backend\app\analysis\automatic_signal_tracking.py:87|FunctionDef|fetch_signal_price_history
+PROVIDER_DEF=backend\app\analysis\fundamental_score_history.py:100|FunctionDef|history_rows
+PROVIDER_DEF=backend\app\analysis\market_regime.py:43|ClassDef|MarketRegimeError
+PROVIDER_DEF=backend\app\analysis\market_regime.py:59|ClassDef|MarketRegimeResult
+PROVIDER_DEF=backend\app\analysis\market_regime.py:92|ClassDef|MarketRegimeRetryPolicy
+PROVIDER_DEF=backend\app\analysis\market_regime.py:101|ClassDef|MarketRegimeDownloadResult
+PROVIDER_DEF=backend\app\analysis\shadow_portfolio.py:379|FunctionDef|_normalize_history
+PROVIDER_DEF=backend\app\analysis\shadow_portfolio.py:129|FunctionDef|current_price
+PROVIDER_DEF=backend\app\data\batch_market_data.py:19|ClassDef|BatchMarketDataError
+PROVIDER_DEF=backend\app\data\batch_market_data.py:24|ClassDef|BatchMarketDataFailure
+PROVIDER_DEF=backend\app\data\batch_market_data.py:32|ClassDef|BatchMarketDataResult
+PROVIDER_DEF=backend\app\data\bist_official_daily.py:96|FunctionDef|_default_fetch
+PROVIDER_DEF=backend\app\data\bist_official_daily.py:114|FunctionDef|download_bulletin_zip
+PROVIDER_DEF=backend\app\data\bist_official_daily.py:205|FunctionDef|_validate_ohlcv
+PROVIDER_DEF=backend\app\data\data_source_recovery.py:25|ClassDef|RecoveredMarketData
+PROVIDER_DEF=backend\app\data\data_source_recovery.py:114|FunctionDef|recover_daily_market_data
+PROVIDER_DEF=backend\app\data\delayed_data_pilot.py:120|FunctionDef|_normalize_intraday_frame
+PROVIDER_DEF=backend\app\data\delayed_data_pilot.py:257|FunctionDef|fetch_delayed_snapshot
+PROVIDER_DEF=backend\app\data\delayed_data_pilot.py:82|FunctionDef|price_change_percent
+PROVIDER_DEF=backend\app\data\market_data.py:13|ClassDef|MarketDataError
+PROVIDER_DEF=backend\app\history\backtest_history.py:44|ClassDef|BacktestHistoryError
+PROVIDER_DEF=backend\app\history\backtest_history.py:49|ClassDef|HistoryArtifact
+PROVIDER_DEF=backend\app\history\backtest_history.py:79|ClassDef|BacktestHistoryRecord
+PROVIDER_DEF=backend\app\history\backtest_history.py:216|ClassDef|BacktestHistoryStore
+PROVIDER_DEF=backend\app\history\backtest_history_backup.py:29|ClassDef|BacktestHistoryBackupError
+PROVIDER_DEF=backend\app\history\backtest_history_backup.py:68|ClassDef|BacktestHistoryBackupService
+PROVIDER_DEF=backend\app\history\backtest_history_comparison.py:20|ClassDef|BacktestHistoryComparisonError
+PROVIDER_DEF=backend\app\history\backtest_history_comparison.py:25|ClassDef|HistoryComparisonMetric
+PROVIDER_DEF=backend\app\history\backtest_history_comparison.py:39|ClassDef|BacktestHistoryComparison
+PROVIDER_DEF=backend\app\history\backtest_history_filter.py:11|ClassDef|BacktestHistoryFilter
+PROVIDER_DEF=backend\app\history\backtest_history_pagination.py:29|ClassDef|BacktestHistoryPage
+PROVIDER_DEF=backend\app\history\backtest_history_summary.py:16|ClassDef|BacktestHistorySummary
+PROVIDER_DEF=backend\app\history\backtest_history_summary.py:35|ClassDef|BacktestHistoryPerformancePoint
+PROVIDER_DEF=backend\app\history\momentum_history.py:44|ClassDef|MomentumHistoryStore
+PROVIDER_DEF=backend\app\history\scan_history.py:16|ClassDef|ScanHistoryError
+PROVIDER_DEF=backend\app\history\scan_history.py:21|ClassDef|ScanHistorySaveResult
+PROVIDER_DEF=backend\app\history\scan_history.py:42|ClassDef|ScanHistoryRepository
+PROVIDER_DEF=backend\app\history\scan_history_reader.py:55|ClassDef|ScanHistoryReader
+PROVIDER_DEF=backend\app\market_context\ai_history.py:10|ClassDef|AIEvaluationHistory
+PROVIDER_DEF=backend\app\market_context\ai_history.py:32|FunctionDef|load_ai_evaluation_history
+PROVIDER_DEF=backend\app\market_context\ai_history_view.py:13|FunctionDef|build_ai_history_view
+PROVIDER_DEF=backend\app\market_context\ai_stock_chat.py:195|FunctionDef|_history_for_prompt
+PROVIDER_DEF=backend\app\opportunity_radar.py:35|FunctionDef|_normalize_ohlcv
+PROVIDER_DEF=backend\app\prebreakout\prebreakout_v2_decision_history.py:24|ClassDef|DecisionHistoryRecord
+PROVIDER_DEF=backend\app\ui\batch_historical_export_ui.py:28|FunctionDef|download_button
+PROVIDER_DEF=backend\app\ui\bist_daily_market_dashboard.py:17|FunctionDef|_format_price
+PROVIDER_DEF=backend\app\ui\bist_daily_market_dashboard.py:191|FunctionDef|render_bist_daily_market
+PROVIDER_DEF=backend\app\ui\momentum_batch_history_integration.py:42|FunctionDef|render_momentum_batch_history_panel
+PROVIDER_DEF=backend\app\ui\prebreakout_dashboard.py:114|FunctionDef|_download_single_symbol
+PROVIDER_DEF=backend\app\ui\prebreakout_dashboard.py:868|FunctionDef|_render_operation_archive_history
+PROVIDER_DEF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:123|FunctionDef|_download_single_symbol
+PROVIDER_DEF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:834|FunctionDef|_render_operation_archive_history
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history.py:35|ClassDef|BacktestHistoryError
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history.py:40|ClassDef|HistoryArtifact
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history.py:70|ClassDef|BacktestHistoryRecord
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history.py:198|ClassDef|BacktestHistoryStore
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_comparison.py:20|ClassDef|BacktestHistoryComparisonError
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_comparison.py:25|ClassDef|HistoryComparisonMetric
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_comparison.py:39|ClassDef|BacktestHistoryComparison
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_pagination.py:29|ClassDef|BacktestHistoryPage
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_summary.py:15|ClassDef|BacktestHistorySummary
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-155549\backend\app\history\backtest_history_summary.py:34|ClassDef|BacktestHistoryPerformancePoint
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history.py:35|ClassDef|BacktestHistoryError
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history.py:40|ClassDef|HistoryArtifact
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history.py:70|ClassDef|BacktestHistoryRecord
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history.py:198|ClassDef|BacktestHistoryStore
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_comparison.py:20|ClassDef|BacktestHistoryComparisonError
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_comparison.py:25|ClassDef|HistoryComparisonMetric
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_comparison.py:39|ClassDef|BacktestHistoryComparison
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_pagination.py:29|ClassDef|BacktestHistoryPage
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_summary.py:15|ClassDef|BacktestHistorySummary
+PROVIDER_DEF=backups\v1.1.1-bakim-20260729-162234\backend\app\history\backtest_history_summary.py:34|ClassDef|BacktestHistoryPerformancePoint
+PROVIDER_DEF=bist_daily_market_dashboard.py:17|FunctionDef|_format_price
+PROVIDER_DEF=bist_daily_market_dashboard.py:191|FunctionDef|render_bist_daily_market
+PROVIDER_DEF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:42|ClassDef|MarketRegimeError
+PROVIDER_DEF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:58|ClassDef|MarketRegimeResult
+PROVIDER_DEF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:89|ClassDef|MarketRegimeRetryPolicy
+PROVIDER_DEF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:98|ClassDef|MarketRegimeDownloadResult
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:43|ClassDef|MarketRegimeError
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:59|ClassDef|MarketRegimeResult
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:92|ClassDef|MarketRegimeRetryPolicy
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:101|ClassDef|MarketRegimeDownloadResult
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\batch_market_data.py:12|ClassDef|BatchMarketDataError
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\batch_market_data.py:17|ClassDef|BatchMarketDataFailure
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\batch_market_data.py:25|ClassDef|BatchMarketDataResult
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:25|ClassDef|RecoveredMarketData
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\data_source_recovery.py:113|FunctionDef|recover_daily_market_data
+PROVIDER_DEF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\market_data.py:13|ClassDef|MarketDataError
+PROVIDER_DEF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:43|ClassDef|MarketRegimeError
+PROVIDER_DEF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:59|ClassDef|MarketRegimeResult
+PROVIDER_DEF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:92|ClassDef|MarketRegimeRetryPolicy
+PROVIDER_DEF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:101|ClassDef|MarketRegimeDownloadResult
+PROVIDER_DEF=Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:25|ClassDef|RecoveredMarketData
+PROVIDER_DEF=Sprint53_Rev2_test_uyumluluk\backend\app\data\data_source_recovery.py:114|FunctionDef|recover_daily_market_data
+PROVIDER_DEF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:43|ClassDef|MarketRegimeError
+PROVIDER_DEF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:59|ClassDef|MarketRegimeResult
+PROVIDER_DEF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:92|ClassDef|MarketRegimeRetryPolicy
+PROVIDER_DEF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:101|ClassDef|MarketRegimeDownloadResult
+PROVIDER_DEF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py:25|ClassDef|RecoveredMarketData
+PROVIDER_DEF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py:114|FunctionDef|recover_daily_market_data
+PROVIDER_DEF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:43|ClassDef|MarketRegimeError
+PROVIDER_DEF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:59|ClassDef|MarketRegimeResult
+PROVIDER_DEF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:92|ClassDef|MarketRegimeRetryPolicy
+PROVIDER_DEF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:101|ClassDef|MarketRegimeDownloadResult
+PROVIDER_DEF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py:25|ClassDef|RecoveredMarketData
+PROVIDER_DEF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\data\data_source_recovery.py:114|FunctionDef|recover_daily_market_data
+PROVIDER_DEF=Sprint60_Rev1_temel_skor_gecmisi\backend\app\analysis\fundamental_score_history.py:100|FunctionDef|history_rows
+PROVIDER_DEF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:120|FunctionDef|_normalize_intraday_frame
+PROVIDER_DEF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:252|FunctionDef|fetch_delayed_snapshot
+PROVIDER_DEF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:82|FunctionDef|price_change_percent
+PROVIDER_DEF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:51|FunctionDef|_normalize_price_frame
+PROVIDER_DEF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:87|FunctionDef|fetch_signal_price_history
+PROVIDER_DEF=Sprint78_Rev1_golge_portfoy\backend\app\analysis\shadow_portfolio.py:379|FunctionDef|_normalize_history
+PROVIDER_DEF=Sprint78_Rev1_golge_portfoy\backend\app\analysis\shadow_portfolio.py:129|FunctionDef|current_price
+PROVIDER_DEF=Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\backend\app\ui\prebreakout_dashboard.py:43|FunctionDef|_download_single_symbol
+PROVIDER_DEF=Sprint85_Rev1_Momentum_Kapisi_Performans_Etiketi\backend\app\ui\prebreakout_dashboard.py:44|FunctionDef|_download_single_symbol
+PROVIDER_DEF=Sprint85_Rev2_Momentum_Kapisi_Performans_Etiketi\backend\app\ui\prebreakout_dashboard.py:44|FunctionDef|_download_single_symbol
+PROVIDER_DEF=Veri_Tazelik_Rev1_toplu_end_tarihi_duzeltmesi\backend\app\data\batch_market_data.py:13|ClassDef|BatchMarketDataError
+PROVIDER_DEF=Veri_Tazelik_Rev1_toplu_end_tarihi_duzeltmesi\backend\app\data\batch_market_data.py:18|ClassDef|BatchMarketDataFailure
+PROVIDER_DEF=Veri_Tazelik_Rev1_toplu_end_tarihi_duzeltmesi\backend\app\data\batch_market_data.py:26|ClassDef|BatchMarketDataResult
+PROVIDER_DEF=Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\batch_market_data.py:13|ClassDef|BatchMarketDataError
+PROVIDER_DEF=Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\batch_market_data.py:18|ClassDef|BatchMarketDataFailure
+PROVIDER_DEF=Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\batch_market_data.py:26|ClassDef|BatchMarketDataResult
+PROVIDER_DEF=Veri_Tazelik_Rev2_seans_kapanisi_duzeltmesi\backend\app\data\market_data.py:13|ClassDef|MarketDataError
+PROVIDER_FILES=117
+
+=== 2. INTRADAY / INTERVAL CAPABILITY EVIDENCE ===
+INTRADAY_REF=_live_data_sma200_fix_backup_20260804_163723\backend\app\analysis\technical_confirmation.py:285|interval=snapshot.interval,
+INTRADAY_REF=_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py:105|interval="1d",
+INTRADAY_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7257|refresh_minutes = st.selectbox(
+INTRADAY_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7272|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7293|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7310|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7344|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7423|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7424|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7260|refresh_minutes = st.selectbox(
+INTRADAY_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7275|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7296|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7313|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7347|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7426|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7427|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7304|refresh_minutes = st.selectbox(
+INTRADAY_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7319|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7340|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7357|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7391|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7470|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7471|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7305|refresh_minutes = st.selectbox(
+INTRADAY_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7320|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7341|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7358|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7392|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7471|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7472|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7588|refresh_minutes = st.selectbox(
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7603|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7624|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7628|f"{snapshot.expected_delay_minutes} dk",
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7680|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7776|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7777|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:8220|"delay": _price_suggestion.measured_delay_minutes,
+INTRADAY_REF=backend\app\analysis\automatic_signal_tracking.py:103|interval="1d",
+INTRADAY_REF=backend\app\analysis\market_regime.py:133|interval=interval,
+INTRADAY_REF=backend\app\analysis\market_regime.py:145|if interval == "1d":
+INTRADAY_REF=backend\app\analysis\market_regime.py:203|interval="1d",
+INTRADAY_REF=backend\app\analysis\market_regime.py:215|interval="1d",
+INTRADAY_REF=backend\app\analysis\market_regime.py:396|saatlik=_indir(yahoo,period="60d",interval="1h",downloader=downloader)
+INTRADAY_REF=backend\app\analysis\multi_timeframe_analysis.py:247|interval=snapshot.interval,
+INTRADAY_REF=backend\app\analysis\shadow_portfolio.py:478|interval="1d",
+INTRADAY_REF=backend\app\analysis\technical_confirmation.py:309|interval=snapshot.interval,
+INTRADAY_REF=backend\app\data\batch_market_data.py:141|interval="1d",
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:32|expected_delay_minutes: int = 15
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:33|delay_tolerance_minutes: int = 12
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:34|refresh_interval_minutes: int = 5
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:37|finalization_wait_minutes: int = 20
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:38|interval: str = "5m"
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:42|if self.expected_delay_minutes < 0:
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:46|if self.delay_tolerance_minutes < 0:
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:50|if self.refresh_interval_minutes not in (1, 2, 5, 10, 15):
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:54|if self.finalization_wait_minutes < 0:
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:65|measured_delay_minutes: float
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:66|expected_delay_minutes: int
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:97|measured_delay_minutes: float
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:98|expected_delay_minutes: int
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:120|def _normalize_intraday_frame(frame: pd.DataFrame) -> pd.DataFrame:
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:176|interval_minutes: int,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:183|expected = timedelta(minutes=interval_minutes)
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:198|measured_delay_minutes: float,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:215|minutes=config.finalization_wait_minutes
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:218|config.expected_delay_minutes
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:219|+ config.delay_tolerance_minutes
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:225|if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:239|- timedelta(minutes=config.expected_delay_minutes)
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:246|if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:251|if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:275|interval=config.interval,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:287|frame = _normalize_intraday_frame(raw)
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:301|measured_delay_minutes=measured_delay,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:310|measured_delay_minutes=round(measured_delay, 2),
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:311|expected_delay_minutes=config.expected_delay_minutes,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:324|interval_minutes=int(config.interval.removesuffix("m")),
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:352|measured_delay_minutes=snapshot.measured_delay_minutes,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:353|expected_delay_minutes=snapshot.expected_delay_minutes,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:421|"├Цl├з├╝len gecikme (dk)": item.measured_delay_minutes,
+INTRADAY_REF=backend\app\data\delayed_data_pilot.py:422|"Beklenen gecikme (dk)": item.expected_delay_minutes,
+INTRADAY_REF=backend\app\data\market_data.py:58|interval="1d",
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:19|DESTEKLENEN_ARALIKLAR = ("1h", "1d", "1wk")
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:64|temiz_interval = self.interval.strip()
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:96|interval="1h",
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:103|interval="1d",
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:110|interval="1wk",
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:212|interval=ayar.interval,
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:235|interval=ayar.interval,
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:251|interval=ayar.interval,
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:356|guvenlik = timedelta(minutes=seans.kapanis_guvenlik_dakikasi)
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:358|if interval == "1h":
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:367|if interval == "1d":
+INTRADAY_REF=backend\app\data\multi_timeframe_data.py:374|if interval == "1wk":
+INTRADAY_REF=backend\app\diagnostics\system_check.py:920|(SAATLIK, "1h", "h", 300, "2026-01-02"),
+INTRADAY_REF=backend\app\diagnostics\system_check.py:947|interval=interval,
+INTRADAY_REF=backend\app\ui\current_session_snapshot.py:78|interval="5m",
+INTRADAY_REF=backend\app\ui\prebreakout_dashboard.py:124|interval="1d",
+INTRADAY_REF=backend\app\ui\prebreakout_validation_dashboard.py:48|interval="1d",
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:7801|refresh_minutes = st.selectbox(
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:7816|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:7837|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:7841|f"{snapshot.expected_delay_minutes} dk",
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:7893|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:8104|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:8105|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=backend\dashboard.backup_before_navigation_fix.py:8554|"delay": _price_suggestion.measured_delay_minutes,
+INTRADAY_REF=backend\dashboard.py:7981|refresh_minutes = st.selectbox(
+INTRADAY_REF=backend\dashboard.py:7996|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=backend\dashboard.py:8017|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=backend\dashboard.py:8021|f"{snapshot.expected_delay_minutes} dk",
+INTRADAY_REF=backend\dashboard.py:8073|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=backend\dashboard.py:9024|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=backend\dashboard.py:9025|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=backend\dashboard.py:9474|"delay": _price_suggestion.measured_delay_minutes,
+INTRADAY_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7243|refresh_minutes = st.selectbox(
+INTRADAY_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7258|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7279|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7296|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7330|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7409|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7410|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7247|refresh_minutes = st.selectbox(
+INTRADAY_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7262|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7283|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7300|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7334|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7413|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7414|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:133|interval="1d",
+INTRADAY_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_validation_dashboard.py:57|interval="1d",
+INTRADAY_REF=backups\v1.1-kapanis-20260729-142003\backend\app\diagnostics\system_check.py:920|(SAATLIK, "1h", "h", 300, "2026-01-02"),
+INTRADAY_REF=backups\v1.1-kapanis-20260729-142003\backend\app\diagnostics\system_check.py:947|interval=interval,
+INTRADAY_REF=backups\v1.1.1-bakim-20260729-155549\backend\app\diagnostics\system_check.py:920|(SAATLIK, "1h", "h", 300, "2026-01-02"),
+INTRADAY_REF=backups\v1.1.1-bakim-20260729-155549\backend\app\diagnostics\system_check.py:947|interval=interval,
+INTRADAY_REF=backups\v1.1.1-bakim-20260729-162234\backend\app\diagnostics\system_check.py:920|(SAATLIK, "1h", "h", 300, "2026-01-02"),
+INTRADAY_REF=backups\v1.1.1-bakim-20260729-162234\backend\app\diagnostics\system_check.py:947|interval=interval,
+INTRADAY_REF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:128|interval=interval,
+INTRADAY_REF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:140|if interval == "1d":
+INTRADAY_REF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:174|if interval == "1d" and not temiz.empty:
+INTRADAY_REF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:207|interval="1d",
+INTRADAY_REF=Sprint52_Rev2_test_uyumluluk_duzeltmesi\backend\app\analysis\market_regime.py:394|saatlik=_indir(yahoo,period="60d",interval="1h",downloader=downloader)
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:133|interval=interval,
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:145|if interval == "1d":
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:179|if interval == "1d" and not temiz.empty:
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:208|interval="1d",
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:220|interval="1d",
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\analysis\market_regime.py:396|saatlik=_indir(yahoo,period="60d",interval="1h",downloader=downloader)
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\batch_market_data.py:93|interval="1d",
+INTRADAY_REF=Sprint53_Rev1_ikincil_kaynak_onbellek\backend\app\data\market_data.py:58|interval="1d",
+INTRADAY_REF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:133|interval=interval,
+INTRADAY_REF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:145|if interval == "1d":
+INTRADAY_REF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:179|if interval == "1d" and not temiz.empty:
+INTRADAY_REF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:208|interval="1d",
+INTRADAY_REF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:220|interval="1d",
+INTRADAY_REF=Sprint53_Rev2_test_uyumluluk\backend\app\analysis\market_regime.py:401|saatlik=_indir(yahoo,period="60d",interval="1h",downloader=downloader)
+INTRADAY_REF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:133|interval=interval,
+INTRADAY_REF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:145|if interval == "1d":
+INTRADAY_REF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:179|if interval == "1d" and not temiz.empty:
+INTRADAY_REF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:208|interval="1d",
+INTRADAY_REF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:220|interval="1d",
+INTRADAY_REF=Sprint53_Rev3_runtime_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:400|saatlik=_indir(yahoo,period="60d",interval="1h",downloader=downloader)
+INTRADAY_REF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:133|interval=interval,
+INTRADAY_REF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:145|if interval == "1d":
+INTRADAY_REF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:179|if interval == "1d" and not temiz.empty:
+INTRADAY_REF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:208|interval="1d",
+INTRADAY_REF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:220|interval="1d",
+INTRADAY_REF=Sprint53_Rev4_cift_yol_tazelik_uyumlulugu\backend\app\analysis\market_regime.py:401|saatlik=_indir(yahoo,period="60d",interval="1h",downloader=downloader)
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:32|expected_delay_minutes: int = 15
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:33|delay_tolerance_minutes: int = 12
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:34|refresh_interval_minutes: int = 5
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:37|finalization_wait_minutes: int = 20
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:38|interval: str = "5m"
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:42|if self.expected_delay_minutes < 0:
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:46|if self.delay_tolerance_minutes < 0:
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:50|if self.refresh_interval_minutes not in (1, 2, 5, 10, 15):
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:54|if self.finalization_wait_minutes < 0:
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:65|measured_delay_minutes: float
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:66|expected_delay_minutes: int
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:97|measured_delay_minutes: float
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:98|expected_delay_minutes: int
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:120|def _normalize_intraday_frame(frame: pd.DataFrame) -> pd.DataFrame:
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:176|interval_minutes: int,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:183|expected = timedelta(minutes=interval_minutes)
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:198|measured_delay_minutes: float,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:215|minutes=config.finalization_wait_minutes
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:218|config.expected_delay_minutes
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:219|+ config.delay_tolerance_minutes
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:225|if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:239|- timedelta(minutes=config.expected_delay_minutes)
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:246|if same_day and measured_delay_minutes <= maximum_acceptable_delay:
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:270|interval=config.interval,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:282|frame = _normalize_intraday_frame(raw)
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:296|measured_delay_minutes=measured_delay,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:305|measured_delay_minutes=round(measured_delay, 2),
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:306|expected_delay_minutes=config.expected_delay_minutes,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:319|interval_minutes=int(config.interval.removesuffix("m")),
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:347|measured_delay_minutes=snapshot.measured_delay_minutes,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:348|expected_delay_minutes=snapshot.expected_delay_minutes,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:416|"├Цl├з├╝len gecikme (dk)": item.measured_delay_minutes,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\app\data\delayed_data_pilot.py:417|"Beklenen gecikme (dk)": item.expected_delay_minutes,
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6978|refresh_minutes = st.selectbox(
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6993|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:7014|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:7031|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:7065|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6984|refresh_minutes = st.selectbox(
+INTRADAY_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6999|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:7020|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:7037|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:7071|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:7142|if summary.delayed_data_age_minutes is None
+INTRADAY_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:7143|else f"{summary.delayed_data_age_minutes:.1f} dk",
+INTRADAY_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:103|interval="1d",
+INTRADAY_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:7170|refresh_minutes = st.selectbox(
+INTRADAY_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:7185|refresh_interval_minutes=int(refresh_minutes),
+INTRADAY_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:7206|f"{snapshot.measured_delay_minutes:.1f} dk",
+INTRADAY_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:7223|f"{snapshot.expected_delay_minutes} dk"
+INTRADAY_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:7257|run_every=timedelta(minutes=int(refresh_minutes))
+INTRADAY_REFS=220
+EXPLICIT_INTRADAY_INTERVAL_CONTRACT=YES
+GENERIC_INTERVAL_PARAMETER=YES
+
+=== 3. CURRENT-DAY BAR FILTER / CLOSE SAFETY ===
+CLOSE_REF=_sprint144c_backup_20260804_143925\backend\app\data\batch_market_data.py:181|referans_gun = bugun or date.today()
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:2888|bugun_degeri = bugun or date.today()
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:2933|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:2934|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:3089|value=date.today() - timedelta(days=45),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:3090|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:3568|value=date.today(),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:3574|value=date.today() + timedelta(days=30),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:6623|value=date.today(),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:6801|value=date.today() - timedelta(days=30),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7509|if not context.current_day:
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7847|value=date.today(),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:7951|value=date.today(),
+CLOSE_REF=_sprint145_backup_20260804_170940\backend\dashboard.py:8011|value=date.today(),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:2891|bugun_degeri = bugun or date.today()
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:2936|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:2937|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:3092|value=date.today() - timedelta(days=45),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:3093|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:3571|value=date.today(),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:3577|value=date.today() + timedelta(days=30),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:6626|value=date.today(),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:6804|value=date.today() - timedelta(days=30),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7512|if not context.current_day:
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7850|value=date.today(),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:7954|value=date.today(),
+CLOSE_REF=_sprint146_backup_20260804_193700\backend\dashboard.py:8014|value=date.today(),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:2891|bugun_degeri = bugun or date.today()
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:2936|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:2937|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:3092|value=date.today() - timedelta(days=45),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:3093|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:3571|value=date.today(),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:3577|value=date.today() + timedelta(days=30),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6670|value=date.today(),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:6848|value=date.today() - timedelta(days=30),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7556|if not context.current_day:
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7894|value=date.today(),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:7998|value=date.today(),
+CLOSE_REF=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py:8058|value=date.today(),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:2891|bugun_degeri = bugun or date.today()
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:2936|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:2937|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:3092|value=date.today() - timedelta(days=45),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:3093|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:3571|value=date.today(),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:3577|value=date.today() + timedelta(days=30),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:6671|value=date.today(),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:6849|value=date.today() - timedelta(days=30),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7557|if not context.current_day:
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7895|value=date.today(),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:7999|value=date.today(),
+CLOSE_REF=_sprint148c_backup_20260804_221041\backend\dashboard.py:8059|value=date.today(),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:2934|bugun_degeri = bugun or date.today()
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:2979|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:2980|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:3135|value=date.today() - timedelta(days=45),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:3136|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:3614|value=date.today(),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:3620|value=date.today() + timedelta(days=30),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:6945|value=date.today(),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7123|value=date.today() - timedelta(days=30),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:7869|if not context.current_day:
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:8285|observed_on=date.today(),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:8407|exit_date=date.today(),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:8503|value=date.today(),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:8607|value=date.today(),
+CLOSE_REF=_v11_backup_outcome_health_20260817-152436\dashboard.py:8677|value=date.today(),
+CLOSE_REF=backend\app\analysis\automatic_signal_tracking.py:95|resolved_end = end_date or date.today()
+CLOSE_REF=backend\app\analysis\automatic_signal_tracking.py:199|today: date | None = None,
+CLOSE_REF=backend\app\analysis\automatic_signal_tracking.py:224|end_date=today or date.today(),
+CLOSE_REF=backend\app\analysis\automatic_signal_tracking.py:238|today: date | None = None,
+CLOSE_REF=backend\app\analysis\automatic_signal_tracking.py:251|end_date=today or date.today(),
+CLOSE_REF=backend\app\analysis\loss_analysis.py:78|evaluation_date = evaluation_date or (ordered[-1].exit_date if ordered else date.today())
+CLOSE_REF=backend\app\analysis\shadow_portfolio.py:463|today: date | None = None,
+CLOSE_REF=backend\app\analysis\shadow_portfolio.py:468|end_date = today or date.today()
+CLOSE_REF=backend\app\data\batch_market_data.py:106|lambda symbols, today: load_latest_official_daily(
+CLOSE_REF=backend\app\data\batch_market_data.py:108|today,
+CLOSE_REF=backend\app\data\batch_market_data.py:221|referans_gun = bugun or date.today()
+CLOSE_REF=backend\app\data\market_data.py:118|tamamlanm─▒┼Я veridir. Bu nedenle ─░stanbul saati 18:30 ve sonras─▒nda bug├╝nk├╝
+CLOSE_REF=backend\app\data\market_data.py:119|g├╝nl├╝k bar korunur; 18:30 ├╢ncesinde ise g├╝n i├зi k─▒smi mum analizden ├з─▒kar─▒l─▒r.
+CLOSE_REF=backend\app\prebreakout\prebreakout_v2_decision_history.py:65|recorded_on=recorded_on or date.today().isoformat(),
+CLOSE_REF=backend\app\reporting\fundamental_report_archive.py:258|today: date | None = None,
+CLOSE_REF=backend\app\reporting\fundamental_report_archive.py:265|reference = today or date.today()
+CLOSE_REF=backend\app\reporting\fundamental_report_archive.py:291|today: date | None = None,
+CLOSE_REF=backend\app\reporting\fundamental_report_archive.py:303|reference = today or date.today()
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:265|value=date.today() - timedelta(days=30),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:266|max_value=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:354|end_date = date.today()
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:438|date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:461|end_date=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:478|as_of_date=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:519|end_date=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:535|as_of_date=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:822|today = date.today().isoformat()
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:823|todays_signals = [signal for signal in signals if signal.signal_date == today]
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:830|col2.metric("Bug├╝nk├╝ yeni aday", len(todays_signals))
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:978|end_date=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:1021|run_date = date.today().isoformat()
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:1036|expected_run_date=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_dashboard.py:1060|price_data = _download_single_symbol(signal.symbol, start_date=start_day, end_date=date.today())
+CLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:117|default_end = date.today() - timedelta(days=30)
+CLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:123|max_value=date.today(),
+CLOSE_REF=backend\app\ui\prebreakout_validation_dashboard.py:129|max_value=date.today(),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:2943|bugun_degeri = bugun or date.today()
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:2988|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:2989|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3144|value=date.today() - timedelta(days=45),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3145|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3623|value=date.today(),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:3629|value=date.today() + timedelta(days=30),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:7158|value=date.today(),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:7336|value=date.today() - timedelta(days=30),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:8203|if not context.current_day:
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:8619|observed_on=date.today(),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:8741|exit_date=date.today(),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:8837|value=date.today(),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:8941|value=date.today(),
+CLOSE_REF=backend\dashboard.backup_before_navigation_fix.py:9011|value=date.today(),
+CLOSE_REF=backend\dashboard.py:3086|bugun_degeri = bugun or date.today()
+CLOSE_REF=backend\dashboard.py:3131|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=backend\dashboard.py:3132|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=backend\dashboard.py:3287|value=date.today() - timedelta(days=45),
+CLOSE_REF=backend\dashboard.py:3288|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=backend\dashboard.py:3766|value=date.today(),
+CLOSE_REF=backend\dashboard.py:3772|value=date.today() + timedelta(days=30),
+CLOSE_REF=backend\dashboard.py:4775|as_of=research_profile_as_of_from_scan(sonuc, fallback=date.today()),
+CLOSE_REF=backend\dashboard.py:7338|value=date.today(),
+CLOSE_REF=backend\dashboard.py:7516|value=date.today() - timedelta(days=30),
+CLOSE_REF=backend\dashboard.py:8154|"Windows g├╢revleri kuruldu─Яunda sistem hafta i├зi 18:20'de seans sonu, "
+CLOSE_REF=backend\dashboard.py:8166|if st.button("18:20 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r", key="retry_evening_daily_buy_decision"):
+CLOSE_REF=backend\dashboard.py:8216|"18:20 EOD ve 09:00 Morning ko┼Яular─▒n─▒ scheduler durumu, audit kayd─▒ ve "
+CLOSE_REF=backend\dashboard.py:9123|if not context.current_day:
+CLOSE_REF=backend\dashboard.py:9539|observed_on=date.today(),
+CLOSE_REF=backend\dashboard.py:9661|exit_date=date.today(),
+CLOSE_REF=backend\dashboard.py:9757|value=date.today(),
+CLOSE_REF=backend\dashboard.py:9861|value=date.today(),
+CLOSE_REF=backend\dashboard.py:9931|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:2874|bugun_degeri = bugun or date.today()
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:2919|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:2920|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:3075|value=date.today() - timedelta(days=45),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:3076|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:3554|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:3560|value=date.today() + timedelta(days=30),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:6609|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:6787|value=date.today() - timedelta(days=30),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7638|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7742|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-144119\backend\dashboard.py:7802|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:2878|bugun_degeri = bugun or date.today()
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:2923|default_start_date=date.today() - timedelta(days=35),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:2924|default_end_date=date.today() - timedelta(days=1),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:3079|value=date.today() - timedelta(days=45),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:3080|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:3558|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:3564|value=date.today() + timedelta(days=30),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:6613|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:6791|value=date.today() - timedelta(days=30),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7642|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7746|value=date.today(),
+CLOSE_REF=backups\analiz-menusu-20260802-152148\backend\dashboard.py:7806|value=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:260|value=date.today() - timedelta(days=30),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:261|max_value=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:334|end_date = date.today()
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:407|date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:430|end_date=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:447|as_of_date=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:488|end_date=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:504|as_of_date=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:788|today = date.today().isoformat()
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:789|todays_signals = [signal for signal in signals if signal.signal_date == today]
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:796|col2.metric("Bug├╝nk├╝ yeni aday", len(todays_signals))
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:944|end_date=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:987|run_date = date.today().isoformat()
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:1002|expected_run_date=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_dashboard.py:1026|price_data = _download_single_symbol(signal.symbol, start_date=start_day, end_date=date.today())
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_validation_dashboard.py:112|default_end = date.today() - timedelta(days=30)
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_validation_dashboard.py:118|max_value=date.today(),
+CLOSE_REF=backups\on-yukselis-evren-secimi-20260802-135244\backend\app\ui\prebreakout_validation_dashboard.py:124|max_value=date.today(),
+CLOSE_REF=Sprint65_Rev1_temel_rapor_arsivi\backend\app\reporting\fundamental_report_archive.py:244|today: date | None = None,
+CLOSE_REF=Sprint65_Rev1_temel_rapor_arsivi\backend\app\reporting\fundamental_report_archive.py:256|reference = today or date.today()
+CLOSE_REF=Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\app\reporting\fundamental_report_archive.py:258|today: date | None = None,
+CLOSE_REF=Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\app\reporting\fundamental_report_archive.py:265|reference = today or date.today()
+CLOSE_REF=Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\app\reporting\fundamental_report_archive.py:291|today: date | None = None,
+CLOSE_REF=Sprint66_Rev1_rapor_arsivi_arama_disari_aktarim\backend\app\reporting\fundamental_report_archive.py:303|reference = today or date.today()
+CLOSE_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:2815|bugun_degeri = bugun or date.today()
+CLOSE_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:2997|value=date.today() - timedelta(days=45),
+CLOSE_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:2998|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:3470|value=date.today(),
+CLOSE_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:3476|value=date.today() + timedelta(days=30),
+CLOSE_REF=Sprint75_Rev1_gecikmeli_veri_pilotu\backend\dashboard.py:6522|value=date.today() - timedelta(days=30),
+CLOSE_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:2821|bugun_degeri = bugun or date.today()
+CLOSE_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:3003|value=date.today() - timedelta(days=45),
+CLOSE_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:3004|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:3476|value=date.today(),
+CLOSE_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:3482|value=date.today() + timedelta(days=30),
+CLOSE_REF=Sprint76_Rev1_gunluk_operasyon_paneli\backend\dashboard.py:6528|value=date.today() - timedelta(days=30),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:95|resolved_end = end_date or date.today()
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:199|today: date | None = None,
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:224|end_date=today or date.today(),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:238|today: date | None = None,
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\app\analysis\automatic_signal_tracking.py:251|end_date=today or date.today(),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:2826|bugun_degeri = bugun or date.today()
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:3008|value=date.today() - timedelta(days=45),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:3009|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:3481|value=date.today(),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:3487|value=date.today() + timedelta(days=30),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6536|value=date.today(),
+CLOSE_REF=Sprint77_Rev1_otomatik_sinyal_kaydi\backend\dashboard.py:6714|value=date.today() - timedelta(days=30),
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\app\analysis\shadow_portfolio.py:463|today: date | None = None,
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\app\analysis\shadow_portfolio.py:468|end_date = today or date.today()
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:2839|bugun_degeri = bugun or date.today()
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:3021|value=date.today() - timedelta(days=45),
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:3022|max_value=date.today() - timedelta(days=1),
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:3494|value=date.today(),
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:3500|value=date.today() + timedelta(days=30),
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6549|value=date.today(),
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:6727|value=date.today() - timedelta(days=30),
+CLOSE_REF=Sprint78_Rev1_golge_portfoy\backend\dashboard.py:7578|value=date.today(),
+CLOSE_REFS=220
+TODAY_BAR_FILTER_CONTRACT=YES
+EXPLICIT_18_20_CUTOFF=YES
+EXPLICIT_18_30_CUTOFF=YES
+
+=== 4. SCHEDULED RUNNER PHASE MODEL ===
+RUNNER_FILE=backend\app\analysis\daily_buy_decision_operational_closeout.py
+RUNNER_FILE=backend\app\analysis\daily_buy_decision_output_archive.py
+RUNNER_FILE=backend\app\operations\daily_buy_decision_scheduled_runner.py
+PHASE_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:9|PHASE_SCHEDULE = {"MORNING": (9, 0), "EVENING": (18, 20)}
+PHASE_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:10|PHASE_LABELS = {"MORNING": "09:00 Sabah", "EVENING": "18:20 Seans Sonu"}
+PHASE_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:89|for phase in ("MORNING", "EVENING"):
+PHASE_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:90|label = PHASE_LABELS[phase]
+PHASE_REF=backend\app\analysis\daily_buy_decision_output_archive.py:110|def save_snapshot(self, snapshot: DailyBuyDecisionSnapshot) -> DecisionOutputArchiveRecord:
+PHASE_REF=backend\app\analysis\daily_buy_decision_output_archive.py:190|phase: str = "MORNING",
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:14|VALID_PHASES = ("EVENING", "MORNING")
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:15|PHASE_SCHEDULE = {"MORNING": (9, 0), "EVENING": (18, 20)}
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:138|if value not in VALID_PHASES:
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:220|DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:302|def scheduler_status_rows(store: ScheduledRunJsonStore | None = None) -> tuple[dict[str, object], ...]:
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:305|for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:332|for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:408|phase_label = {"EVENING": "Seans sonu", "MORNING": "09:00"}
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:426|def scheduler_daily_chain_rows(
+PHASE_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:459|parser.add_argument("--phase", required=True, choices=VALID_PHASES)
+PHASE_REFS=16
+TWO_PHASE_ASSUMPTION_PRESENT=YES
+GENERIC_PHASE_PERSISTENCE_PRESENT=YES
+
+=== 5. EXISTING WINDOWS TASK INSTALLER ===
+INSTALLER_FILE=scripts\install_daily_buy_decision_tasks.ps1
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:21|$eveningAction = New-ScheduledTaskAction `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:23|-Argument "-m $module --phase EVENING" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:25|$eveningTrigger = New-ScheduledTaskTrigger `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:28|-At 18:20
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:30|$morningAction = New-ScheduledTaskAction `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:32|-Argument "-m $module --phase MORNING" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:34|$morningTrigger = New-ScheduledTaskTrigger `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:37|-At 09:00
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:39|Register-ScheduledTask `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:40|-TaskName "HisseRobotu-EOD-DailyDecision" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:41|-Action $eveningAction `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:42|-Trigger $eveningTrigger `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:46|Register-ScheduledTask `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:47|-TaskName "HisseRobotu-0900-DailyDecision" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:48|-Action $morningAction `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:49|-Trigger $morningTrigger `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:50|-Description "Hisse Robotu 09:00 sabah yeniden de─Яerlendirme" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:53|Write-Host "Kuruldu: HisseRobotu-EOD-DailyDecision (18:20 hafta i├зi)"
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:54|Write-Host "Kuruldu: HisseRobotu-0900-DailyDecision (09:00 hafta i├зi)"
+
+=== 6. MORNING GAP / OPEN PRICE DATA REQUIREMENTS ===
+MORNING_REF=backend\app\analysis\eod_morning_board_delta.py:48|readiness = str(getattr(new, "entry_readiness", "-") or "-").upper()
+MORNING_REF=backend\app\analysis\eod_morning_board_delta.py:59|old_ready = str(getattr(old, "entry_readiness", "-") or "-").upper()
+MORNING_REF=backend\app\analysis\eod_morning_board_delta.py:60|new_ready = str(getattr(new, "entry_readiness", "-") or "-").upper()
+MORNING_REF=backend\app\analysis\jump_candidate_entry_readiness.py:53|def evaluate_jump_candidate_entry_readiness(
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:9|from backend.app.analysis.jump_candidate_entry_readiness import (
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:10|evaluate_jump_candidate_entry_readiness,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:37|entry_readiness: str = "-"
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:38|entry_readiness_reason: str = ""
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:178|_entry_readiness = evaluate_jump_candidate_entry_readiness(candidate)
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:211|entry_readiness=_entry_readiness.state,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:212|entry_readiness_reason=" ┬╖ ".join(_entry_readiness.reasons),
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:213|entry_extension_atr=_entry_readiness.extension_atr,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:234|"Giri┼Я haz─▒rl─▒─Я─▒": card.entry_readiness,
+MORNING_REF=backend\app\analysis\morning_candidate_flow.py:235|"Giri┼Я haz─▒rl─▒─Я─▒ nedeni": card.entry_readiness_reason,
+MORNING_REF=backend\app\analysis\morning_final_action_board.py:15|entry_readiness: str
+MORNING_REF=backend\app\analysis\morning_final_action_board.py:62|entry_readiness=str(getattr(card, "entry_readiness", "-") or "-").upper(),
+MORNING_REF=backend\app\analysis\morning_final_action_board.py:82|entry_readiness=item.entry_readiness,
+MORNING_REF=backend\app\analysis\morning_final_action_board.py:105|"Giri┼Я haz─▒rl─▒─Я─▒": item.entry_readiness,
+MORNING_GAP_LOGIC=YES
+MORNING_LIVE_OPEN_PRICE_SEAM=NO
+
+=== 7. CAPABILITY DECISION ===
+17_20_PRECLOSE_CAPABILITY=PROVIDER_CAPABILITY_PRESENT_ADAPTER_REQUIRED
+10_05_POSTOPEN_CAPABILITY=PROVIDER_CAPABILITY_PRESENT_ADAPTER_REQUIRED
+CANONICAL_CLOSE_CAPABILITY=18:30_EXPLICIT_SOURCE_CUTOFF_FOUND
+SCHEDULER_PHASE_MODEL=EXISTING_RUNNER_TWO_PHASE_HARDCODED
+08_45_ROLE=PREOPEN_CONTEXT_ONLY
+08_45_REAL_GAP_DECISION=NO
+DECISION=READY_FOR_NARROW_DATA_ADAPTER_AND_EXISTING_SCHEDULER_PATCH
+NEXT=IMPLEMENT_WITHOUT_NEW_ENGINE_OR_STORE
+
+SAFETY:
+NEW_ENGINE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+PARALLEL_SCHEDULER=NO
+17:20_CANONICAL_RANKING_WRITE=NO
+17:20_PROFILE_MEMORY_WRITE=NO
+17:20_AL_SAT_DECISION=NO
+08:45_AL_SAT_DECISION=NO
+
+=== PREFLIGHT COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO

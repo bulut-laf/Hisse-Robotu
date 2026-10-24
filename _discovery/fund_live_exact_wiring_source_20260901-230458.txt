@@ -1,0 +1,605 @@
+﻿FUND_LIVE_EXACT_WIRING_SOURCE
+
+===== FILE_BEGIN .\backend\app\funds\contracts.py =====
+0001: from __future__ import annotations
+0002: 
+0003: from dataclasses import asdict, dataclass, fields, is_dataclass
+0004: from datetime import date, datetime, timezone
+0005: from decimal import Decimal
+0006: from enum import Enum
+0007: from typing import Any, Mapping
+0008: 
+0009: FUND_SCHEMA_VERSION = "fund-data-contract-v1"
+0010: 
+0011: 
+0012: class DataQualityState(str, Enum):
+0013:     VALID = "VALID"
+0014:     PARTIAL = "PARTIAL"
+0015:     STALE = "STALE"
+0016:     INVALID = "INVALID"
+0017:     UNAVAILABLE = "UNAVAILABLE"
+0018: 
+0019: 
+0020: class FreshnessState(str, Enum):
+0021:     CURRENT = "CURRENT"
+0022:     STALE = "STALE"
+0023:     UNKNOWN = "UNKNOWN"
+0024: 
+0025: 
+0026: def _utc(value: datetime, name: str) -> None:
+0027:     if value.tzinfo is None or value.utcoffset() is None:
+0028:         raise ValueError(f"{name} timezone-aware olmalıdır.")
+0029: 
+0030: 
+0031: def _fund_id(value: str) -> str:
+0032:     clean = value.strip()
+0033:     if not clean:
+0034:         raise ValueError("canonical_fund_id boş olamaz.")
+0035:     return clean
+0036: 
+0037: 
+0038: @dataclass(frozen=True, slots=True)
+0039: class FundIdentity:
+0040:     fund_code: str
+0041:     fund_name: str
+0042:     canonical_fund_id: str
+0043:     category_id: str | None
+0044:     category_name: str | None
+0045:     provider: str
+0046:     provider_fund_id: str
+0047:     currency: str
+0048:     is_active: bool
+0049:     as_of_date: date
+0050: 
+0051:     def __post_init__(self) -> None:
+0052:         object.__setattr__(self, "canonical_fund_id", _fund_id(self.canonical_fund_id))
+0053:         if not self.fund_code or not self.provider or not self.provider_fund_id:
+0054:             raise ValueError("Fon kodu ve sağlayıcı kimliği zorunludur.")
+0055: 
+0056: 
+0057: @dataclass(frozen=True, slots=True)
+0058: class FundDailyObservation:
+0059:     canonical_fund_id: str
+0060:     observation_date: date
+0061:     unit_price: Decimal | None
+0062:     fund_size: Decimal | None
+0063:     investor_count: int | None
+0064:     shares_outstanding: Decimal | None
+0065:     daily_return: Decimal | None
+0066:     provider: str
+0067:     fetched_at: datetime
+0068:     source_as_of: datetime
+0069:     data_quality_state: DataQualityState
+0070: 
+0071:     def __post_init__(self) -> None:
+0072:         object.__setattr__(self, "canonical_fund_id", _fund_id(self.canonical_fund_id))
+0073:         _utc(self.fetched_at, "fetched_at")
+0074:         _utc(self.source_as_of, "source_as_of")
+0075:         if self.observation_date > datetime.now(timezone.utc).date():
+0076:             raise ValueError("leri tarihli fon gözlemi kabul edilmez.")
+0077: 
+0078: 
+0079: @dataclass(frozen=True, slots=True)
+0080: class FundPortfolioObservation:
+0081:     canonical_fund_id: str
+0082:     observation_date: date
+0083:     asset_allocation: Mapping[str, Decimal] | None
+0084:     major_holdings: tuple[str, ...] | None
+0085:     cash_ratio: Decimal | None
+0086:     equity_ratio: Decimal | None
+0087:     fixed_income_ratio: Decimal | None
+0088:     foreign_asset_ratio: Decimal | None
+0089:     precious_metal_ratio: Decimal | None
+0090:     other_ratio: Decimal | None
+0091:     provider: str
+0092:     fetched_at: datetime
+0093:     data_quality_state: DataQualityState
+0094: 
+0095:     def __post_init__(self) -> None:
+0096:         object.__setattr__(self, "canonical_fund_id", _fund_id(self.canonical_fund_id))
+0097:         _utc(self.fetched_at, "fetched_at")
+0098: 
+0099: 
+0100: @dataclass(frozen=True, slots=True)
+0101: class FundCostAndMetadata:
+0102:     canonical_fund_id: str
+0103:     management_fee: Decimal | None
+0104:     total_expense_ratio: Decimal | None
+0105:     risk_value: str | None
+0106:     benchmark: str | None
+0107:     inception_date: date | None
+0108:     settlement_terms: str | None
+0109:     minimum_transaction_amount: Decimal | None
+0110:     umbrella_fund: str | None
+0111:     founder: str | None
+0112:     manager: str | None
+0113:     tax_metadata: str | None
+0114:     provider: str
+0115:     source_as_of: datetime
+0116:     data_quality_state: DataQualityState
+0117: 
+0118:     def __post_init__(self) -> None:
+0119:         object.__setattr__(self, "canonical_fund_id", _fund_id(self.canonical_fund_id))
+0120:         _utc(self.source_as_of, "source_as_of")
+0121: 
+0122: 
+0123: @dataclass(frozen=True, slots=True)
+0124: class FundCategoryMembership:
+0125:     canonical_fund_id: str
+0126:     category_id: str | None
+0127:     category_name: str | None
+0128:     provider_category_label: str | None
+0129:     effective_from: date
+0130:     effective_to: date | None
+0131:     provider: str
+0132:     source_as_of: datetime
+0133:     mapping_state: str = "MAPPED"
+0134: 
+0135:     def __post_init__(self) -> None:
+0136:         object.__setattr__(self, "canonical_fund_id", _fund_id(self.canonical_fund_id))
+0137:         _utc(self.source_as_of, "source_as_of")
+0138:         if self.category_id is None and self.mapping_state != "UNMAPPED":
+0139:             raise ValueError("Kategori kimliği yoksa mapping_state UNMAPPED olmalıdır.")
+0140: 
+0141: 
+0142: FundRecord = FundIdentity | FundDailyObservation | FundPortfolioObservation | FundCostAndMetadata | FundCategoryMembership
+0143: 
+0144: 
+0145: @dataclass(frozen=True, slots=True)
+0146: class FundDataEnvelope:
+0147:     provider: str
+0148:     requested_at: datetime
+0149:     fetched_at: datetime
+0150:     source_as_of: datetime
+0151:     records: tuple[FundRecord, ...]
+0152:     warnings: tuple[str, ...] = ()
+0153:     validation_errors: tuple[str, ...] = ()
+0154:     completeness: Decimal = Decimal("1")
+0155:     freshness_state: FreshnessState = FreshnessState.UNKNOWN
+0156:     provenance: Mapping[str, str] | None = None
+0157:     schema_version: str = FUND_SCHEMA_VERSION
+0158: 
+0159:     def __post_init__(self) -> None:
+0160:         for name in ("requested_at", "fetched_at", "source_as_of"):
+0161:             _utc(getattr(self, name), name)
+0162:         if self.schema_version != FUND_SCHEMA_VERSION:
+0163:             raise ValueError("Desteklenmeyen fon veri sözleşmesi sürümü.")
+0164:         if not Decimal("0") <= self.completeness <= Decimal("1"):
+0165:             raise ValueError("completeness 0-1 aralığında olmalıdır.")
+0166: 
+0167: 
+0168: def to_primitive(value: Any) -> Any:
+0169:     if isinstance(value, Enum):
+0170:         return value.value
+0171:     if isinstance(value, (date, datetime)):
+0172:         return value.isoformat()
+0173:     if isinstance(value, Decimal):
+0174:         return str(value)
+0175:     if is_dataclass(value):
+0176:         payload = {f.name: to_primitive(getattr(value, f.name)) for f in fields(value)}
+0177:         payload["record_type"] = type(value).__name__
+0178:         return payload
+0179:     if isinstance(value, Mapping):
+0180:         return {str(k): to_primitive(v) for k, v in sorted(value.items())}
+0181:     if isinstance(value, (tuple, list)):
+0182:         return [to_primitive(item) for item in value]
+0183:     return value
+===== FILE_END .\backend\app\funds\contracts.py =====
+
+===== FILE_BEGIN .\backend\app\funds\store.py =====
+0001: from __future__ import annotations
+0002: 
+0003: import hashlib
+0004: import json
+0005: from dataclasses import dataclass
+0006: from pathlib import Path
+0007: from typing import Iterable
+0008: 
+0009: from .contracts import FundDailyObservation, to_primitive
+0010: 
+0011: 
+0012: class FundStoreError(RuntimeError):
+0013:     pass
+0014: 
+0015: 
+0016: @dataclass(frozen=True, slots=True)
+0017: class FundStoreResult:
+0018:     inserted: int
+0019:     updated: int
+0020:     unchanged: int
+0021:     total_records: int
+0022: 
+0023: 
+0024: class FundObservationJsonStore:
+0025:     """Stock store'dan ayrı namespace kullanan atomik, idempotent fon deposu."""
+0026: 
+0027:     def __init__(self, path: str | Path) -> None:
+0028:         self.path = Path(path)
+0029: 
+0030:     def _read(self) -> dict[str, dict[str, object]]:
+0031:         if not self.path.exists():
+0032:             return {}
+0033:         try:
+0034:             payload = json.loads(self.path.read_text(encoding="utf-8"))
+0035:         except Exception as exc:
+0036:             raise FundStoreError("Fon gözlem deposu okunamadı.") from exc
+0037:         if not isinstance(payload, dict):
+0038:             raise FundStoreError("Fon gözlem deposu nesne biçiminde olmalıdır.")
+0039:         return payload
+0040: 
+0041:     @staticmethod
+0042:     def _key(item: FundDailyObservation) -> str:
+0043:         return f"{item.canonical_fund_id}|{item.observation_date.isoformat()}"
+0044: 
+0045:     def upsert(self, observations: Iterable[FundDailyObservation]) -> FundStoreResult:
+0046:         existing = self._read()
+0047:         inserted = updated = unchanged = 0
+0048:         for item in sorted(observations, key=self._key):
+0049:             key = self._key(item)
+0050:             record = to_primitive(item)
+0051:             digest = hashlib.sha256(json.dumps(
+0052:                 record, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+0053:             ).encode("utf-8")).hexdigest()
+0054:             stored = existing.get(key)
+0055:             if stored is None:
+0056:                 inserted += 1
+0057:             elif stored.get("_digest") == digest:
+0058:                 unchanged += 1
+0059:                 continue
+0060:             else:
+0061:                 updated += 1
+0062:             existing[key] = {**record, "_digest": digest}
+0063:         self.path.parent.mkdir(parents=True, exist_ok=True)
+0064:         temp = self.path.with_suffix(self.path.suffix + ".tmp")
+0065:         temp.write_text(json.dumps(existing, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+0066:         temp.replace(self.path)
+0067:         return FundStoreResult(inserted, updated, unchanged, len(existing))
+0068: 
+0069:     def list_records(self) -> tuple[dict[str, object], ...]:
+0070:         return tuple(self._read()[key] for key in sorted(self._read()))
+===== FILE_END .\backend\app\funds\store.py =====
+
+===== FILE_BEGIN .\backend\app\funds\evidence_mapper.py =====
+0001: from __future__ import annotations
+0002: 
+0003: from dataclasses import dataclass
+0004: from decimal import Decimal
+0005: from enum import Enum
+0006: from typing import Mapping
+0007: 
+0008: 
+0009: class EvidenceState(str, Enum):
+0010:     POSITIVE = "POSITIVE"
+0011:     NEUTRAL = "NEUTRAL"
+0012:     CAUTION = "CAUTION"
+0013:     UNAVAILABLE = "UNAVAILABLE"
+0014: 
+0015: 
+0016: @dataclass(frozen=True, slots=True)
+0017: class FundEvidenceInput:
+0018:     canonical_fund_id: str
+0019:     category_id: str | None
+0020:     category_rank_percentile: Decimal | None
+0021:     category_rank_change: int | None
+0022:     return_1m: Decimal | None
+0023:     return_3m: Decimal | None
+0024:     return_6m: Decimal | None
+0025:     volatility_percentile: Decimal | None
+0026:     max_drawdown: Decimal | None
+0027:     fund_size_change: Decimal | None
+0028:     investor_change: Decimal | None
+0029:     net_flow_ratio: Decimal | None
+0030:     total_expense_ratio: Decimal | None
+0031:     regime_fit: Decimal | None
+0032:     allocation_known: bool
+0033: 
+0034: 
+0035: @dataclass(frozen=True, slots=True)
+0036: class FundEvidence:
+0037:     family: str
+0038:     state: EvidenceState
+0039:     facts: tuple[str, ...]
+0040:     missing_fields: tuple[str, ...] = ()
+0041: 
+0042: 
+0043: @dataclass(frozen=True, slots=True)
+0044: class FundEvidenceMap:
+0045:     canonical_fund_id: str
+0046:     category_id: str | None
+0047:     category_mapping_state: str
+0048:     evidence: tuple[FundEvidence, ...]
+0049: 
+0050:     @property
+0051:     def available_family_count(self) -> int:
+0052:         return sum(item.state is not EvidenceState.UNAVAILABLE for item in self.evidence)
+0053: 
+0054: 
+0055: def _fmt(value: Decimal) -> str:
+0056:     return format(value.normalize(), "f")
+0057: 
+0058: 
+0059: def _missing(family: str, *names: str) -> FundEvidence:
+0060:     return FundEvidence(family, EvidenceState.UNAVAILABLE, (), tuple(sorted(names)))
+0061: 
+0062: 
+0063: def _f1(value: FundEvidenceInput) -> FundEvidence:
+0064:     if value.category_id is None:
+0065:         return _missing("F1", "category_id")
+0066:     if value.category_rank_percentile is None or value.category_rank_change is None:
+0067:         missing = tuple(name for name, item in (
+0068:             ("category_rank_percentile", value.category_rank_percentile),
+0069:             ("category_rank_change", value.category_rank_change),
+0070:         ) if item is None)
+0071:         return _missing("F1", *missing)
+0072:     percentile = value.category_rank_percentile
+0073:     change = value.category_rank_change
+0074:     state = (
+0075:         EvidenceState.POSITIVE if percentile >= Decimal("0.70") and change > 0
+0076:         else EvidenceState.CAUTION if percentile < Decimal("0.30") or change < -2
+0077:         else EvidenceState.NEUTRAL
+0078:     )
+0079:     return FundEvidence("F1", state, (f"category_percentile={_fmt(percentile)}", f"rank_change={change}"))
+0080: 
+0081: 
+0082: def _f2(value: FundEvidenceInput) -> FundEvidence:
+0083:     returns = (value.return_1m, value.return_3m, value.return_6m)
+0084:     names = ("return_1m", "return_3m", "return_6m")
+0085:     if any(item is None for item in returns):
+0086:         return _missing("F2", *(name for name, item in zip(names, returns) if item is None))
+0087:     assert all(item is not None for item in returns)
+0088:     numeric = tuple(item for item in returns if item is not None)
+0089:     state = (
+0090:         EvidenceState.POSITIVE if all(item > 0 for item in numeric)
+0091:         else EvidenceState.CAUTION if sum(item < 0 for item in numeric) >= 2
+0092:         else EvidenceState.NEUTRAL
+0093:     )
+0094:     return FundEvidence("F2", state, tuple(f"{name}={_fmt(item)}" for name, item in zip(names, numeric)))
+0095: 
+0096: 
+0097: def _f3(value: FundEvidenceInput) -> FundEvidence:
+0098:     if value.volatility_percentile is None or value.max_drawdown is None:
+0099:         return _missing("F3", *(name for name, item in (
+0100:             ("volatility_percentile", value.volatility_percentile), ("max_drawdown", value.max_drawdown)
+0101:         ) if item is None))
+0102:     vol, drawdown = value.volatility_percentile, value.max_drawdown
+0103:     state = (
+0104:         EvidenceState.POSITIVE if vol <= Decimal("0.50") and drawdown >= Decimal("-0.10")
+0105:         else EvidenceState.CAUTION if vol >= Decimal("0.80") or drawdown <= Decimal("-0.20")
+0106:         else EvidenceState.NEUTRAL
+0107:     )
+0108:     return FundEvidence("F3", state, (f"volatility_percentile={_fmt(vol)}", f"max_drawdown={_fmt(drawdown)}"))
+0109: 
+0110: 
+0111: def _f4(value: FundEvidenceInput) -> FundEvidence:
+0112:     values = (value.fund_size_change, value.investor_change, value.net_flow_ratio)
+0113:     names = ("fund_size_change", "investor_change", "net_flow_ratio")
+0114:     available = [(name, item) for name, item in zip(names, values) if item is not None]
+0115:     if len(available) < 2:
+0116:         return _missing("F4", *(name for name, item in zip(names, values) if item is None))
+0117:     positives = sum(item > 0 for _, item in available)
+0118:     negatives = sum(item < 0 for _, item in available)
+0119:     state = EvidenceState.POSITIVE if positives >= 2 else EvidenceState.CAUTION if negatives >= 2 else EvidenceState.NEUTRAL
+0120:     return FundEvidence("F4", state, tuple(f"{name}={_fmt(item)}" for name, item in available),
+0121:                         tuple(name for name, item in zip(names, values) if item is None))
+0122: 
+0123: 
+0124: def _f5(value: FundEvidenceInput) -> FundEvidence:
+0125:     if value.total_expense_ratio is None or value.regime_fit is None or not value.allocation_known:
+0126:         missing = [name for name, item in (
+0127:             ("total_expense_ratio", value.total_expense_ratio), ("regime_fit", value.regime_fit)
+0128:         ) if item is None]
+0129:         if not value.allocation_known:
+0130:             missing.append("allocation")
+0131:         return _missing("F5", *missing)
+0132:     cost, fit = value.total_expense_ratio, value.regime_fit
+0133:     state = (
+0134:         EvidenceState.POSITIVE if cost <= Decimal("0.02") and fit >= Decimal("0.70")
+0135:         else EvidenceState.CAUTION if cost >= Decimal("0.04") or fit < Decimal("0.30")
+0136:         else EvidenceState.NEUTRAL
+0137:     )
+0138:     return FundEvidence("F5", state, (f"total_expense_ratio={_fmt(cost)}", f"regime_fit={_fmt(fit)}"))
+0139: 
+0140: 
+0141: def map_fund_evidence(value: FundEvidenceInput) -> FundEvidenceMap:
+0142:     if not value.canonical_fund_id.strip():
+0143:         raise ValueError("canonical_fund_id boş olamaz.")
+0144:     return FundEvidenceMap(
+0145:         canonical_fund_id=value.canonical_fund_id.strip(),
+0146:         category_id=value.category_id,
+0147:         category_mapping_state="MAPPED" if value.category_id else "UNMAPPED",
+0148:         evidence=(_f1(value), _f2(value), _f3(value), _f4(value), _f5(value)),
+0149:     )
+===== FILE_END .\backend\app\funds\evidence_mapper.py =====
+
+===== FILE_BEGIN .\backend\app\funds\analysis_engine.py =====
+0001: from __future__ import annotations
+0002: 
+0003: from dataclasses import dataclass
+0004: from enum import Enum
+0005: 
+0006: from .evidence_mapper import EvidenceState, FundEvidenceMap
+0007: 
+0008: FUND_ANALYSIS_ENGINE_VERSION = "fund-analysis-v1"
+0009: 
+0010: 
+0011: class FundAnalysisClass(str, Enum):
+0012:     A = "A"  # GL / NCELKL
+0013:     B = "B"  # GELŞEN
+0014:     C = "C"  # ZLE
+0015:     D = "D"  # ZAYIFLAYAN
+0016:     X = "X"  # UYGUN DEL
+0017: 
+0018: 
+0019: CLASS_LABELS = {
+0020:     FundAnalysisClass.A: "GL / NCELKL",
+0021:     FundAnalysisClass.B: "GELŞEN",
+0022:     FundAnalysisClass.C: "ZLE",
+0023:     FundAnalysisClass.D: "ZAYIFLAYAN",
+0024:     FundAnalysisClass.X: "UYGUN DEL",
+0025: }
+0026: 
+0027: 
+0028: @dataclass(frozen=True, slots=True)
+0029: class FundAnalysisResult:
+0030:     canonical_fund_id: str
+0031:     category_id: str | None
+0032:     classification: FundAnalysisClass
+0033:     class_label: str
+0034:     positive_families: tuple[str, ...]
+0035:     neutral_families: tuple[str, ...]
+0036:     caution_families: tuple[str, ...]
+0037:     unavailable_families: tuple[str, ...]
+0038:     eligibility_reason: str
+0039:     explanation: str
+0040:     automatic_trade_authority: str = "NONE"
+0041:     forced_fill: bool = False
+0042:     engine_version: str = FUND_ANALYSIS_ENGINE_VERSION
+0043: 
+0044: 
+0045: def analyze_fund(evidence_map: FundEvidenceMap) -> FundAnalysisResult:
+0046:     buckets = {
+0047:         state: tuple(item.family for item in evidence_map.evidence if item.state is state)
+0048:         for state in EvidenceState
+0049:     }
+0050:     positive = buckets[EvidenceState.POSITIVE]
+0051:     neutral = buckets[EvidenceState.NEUTRAL]
+0052:     caution = buckets[EvidenceState.CAUTION]
+0053:     unavailable = buckets[EvidenceState.UNAVAILABLE]
+0054:     available_count = len(positive) + len(neutral) + len(caution)
+0055: 
+0056:     if evidence_map.category_mapping_state != "MAPPED":
+0057:         classification = FundAnalysisClass.X
+0058:         reason = "CATEGORY_UNMAPPED"
+0059:     elif available_count < 3:
+0060:         classification = FundAnalysisClass.X
+0061:         reason = "INSUFFICIENT_INDEPENDENT_EVIDENCE"
+0062:     elif len(caution) >= 2 or ("F1" in caution and "F2" in caution):
+0063:         classification = FundAnalysisClass.D
+0064:         reason = "MULTI_FAMILY_WEAKENING"
+0065:     elif (
+0066:         available_count >= 4
+0067:         and len(positive) >= 4
+0068:         and ("F1" in positive or "F2" in positive)
+0069:         and not caution
+0070:     ):
+0071:         classification = FundAnalysisClass.A
+0072:         reason = "BROAD_STRENGTH_WITH_RELATIVE_OR_TREND_CONFIRMATION"
+0073:     elif available_count >= 3 and len(positive) >= 2 and len(caution) <= 1:
+0074:         classification = FundAnalysisClass.B
+0075:         reason = "DEVELOPING_MULTI_FAMILY_SUPPORT"
+0076:     else:
+0077:         classification = FundAnalysisClass.C
+0078:         reason = "OBSERVATION_REQUIRED"
+0079: 
+0080:     explanation = (
+0081:         f"{CLASS_LABELS[classification]} · pozitif={','.join(positive) or '-'} · "
+0082:         f"nötr={','.join(neutral) or '-'} · dikkat={','.join(caution) or '-'} · "
+0083:         f"eksik={','.join(unavailable) or '-'}"
+0084:     )
+0085:     return FundAnalysisResult(
+0086:         canonical_fund_id=evidence_map.canonical_fund_id,
+0087:         category_id=evidence_map.category_id,
+0088:         classification=classification,
+0089:         class_label=CLASS_LABELS[classification],
+0090:         positive_families=positive,
+0091:         neutral_families=neutral,
+0092:         caution_families=caution,
+0093:         unavailable_families=unavailable,
+0094:         eligibility_reason=reason,
+0095:         explanation=explanation,
+0096:     )
+0097: 
+0098: 
+0099: def analyze_funds(items: tuple[FundEvidenceMap, ...]) -> tuple[FundAnalysisResult, ...]:
+0100:     """Input sırasından bağımsız deterministic çıktı; sınıf kotası/fill yoktur."""
+0101:     unique: dict[str, FundEvidenceMap] = {}
+0102:     for item in items:
+0103:         if item.canonical_fund_id in unique:
+0104:             raise ValueError(f"DUPLICATE_FUND:{item.canonical_fund_id}")
+0105:         unique[item.canonical_fund_id] = item
+0106:     return tuple(analyze_fund(unique[key]) for key in sorted(unique))
+===== FILE_END .\backend\app\funds\analysis_engine.py =====
+
+===== FILE_BEGIN .\backend\app\ui\fund_analysis_center.py =====
+0001: from __future__ import annotations
+0002: 
+0003: from typing import Any, Iterable
+0004: 
+0005: from backend.app.funds.analysis_engine import FundAnalysisResult
+0006: 
+0007: 
+0008: def fund_analysis_rows(results: Iterable[FundAnalysisResult]) -> tuple[dict[str, object], ...]:
+0009:     return tuple({
+0010:         "Fon": item.canonical_fund_id, "Kategori": item.category_id or "EŞLEŞMEMŞ",
+0011:         "Sınıf": item.classification.value, "Durum": item.class_label,
+0012:         "Pozitif": ", ".join(item.positive_families) or "-",
+0013:         "Nötr": ", ".join(item.neutral_families) or "-",
+0014:         "Dikkat": ", ".join(item.caution_families) or "-",
+0015:         "Eksik": ", ".join(item.unavailable_families) or "-",
+0016:         "Gerekçe": item.eligibility_reason,
+0017:     } for item in sorted(results, key=lambda x: (x.classification.value, x.canonical_fund_id)))
+0018: 
+0019: 
+0020: def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] = ()) -> None:
+0021:     items = tuple(results)
+0022:     st.subheader("Fon Analiz Merkezi")
+0023:     st.caption("TEFAS/fon araştırma dikeyidir. BIST taraması çalıştırmaz; otomatik AL/SAT üretmez.")
+0024:     counts = {key: sum(item.classification.value == key for item in items) for key in "ABCDX"}
+0025:     for column, key in zip(st.columns(5), "ABCDX"):
+0026:         column.metric(key, counts[key])
+0027:     selected = st.multiselect("Fon sınıfı", options=tuple("ABCDX"), default=tuple("ABCDX"), key="fund_analysis_class_filter")
+0028:     rows = [row for row in fund_analysis_rows(items) if row["Sınıf"] in selected]
+0029:     if rows:
+0030:         st.dataframe(rows, width="stretch", hide_index=True)
+0031:     else:
+0032:         st.info("Henüz gösterilecek canonical fon analiz sonucu yok.")
+0033:     st.caption("Forward takip: 1H / 1A / 3A · outcome tuning kapalı · AL/SAT authority: NONE")
+===== FILE_END .\backend\app\ui\fund_analysis_center.py =====
+
+===== COMPOSITION_CALLERS =====
+fund_analysis_center | backend\app\ui\fund_analysis_center.py:L20 | def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] = ()) -> None:
+fund_analysis_center | backend\tests\test_fund_analysis_center_ui_v1.py:L2 | from backend.app.ui.fund_analysis_center import fund_analysis_rows, render_fund_analysis_center
+fund_analysis_center | backend\tests\test_fund_analysis_center_ui_v1.py:L30 | empty = Stub(); render_fund_analysis_center(empty, ())
+fund_analysis_center | backend\tests\test_fund_analysis_center_ui_v1.py:L31 | full = Stub(); render_fund_analysis_center(full, (item(),))
+render_fund_analysis_center | backend\app\ui\fund_analysis_center.py:L20 | def render_fund_analysis_center(st: Any, results: Iterable[FundAnalysisResult] = ()) -> None:
+render_fund_analysis_center | backend\tests\test_fund_analysis_center_ui_v1.py:L2 | from backend.app.ui.fund_analysis_center import fund_analysis_rows, render_fund_analysis_center
+render_fund_analysis_center | backend\tests\test_fund_analysis_center_ui_v1.py:L30 | empty = Stub(); render_fund_analysis_center(empty, ())
+render_fund_analysis_center | backend\tests\test_fund_analysis_center_ui_v1.py:L31 | full = Stub(); render_fund_analysis_center(full, (item(),))
+analyze_funds( | backend\app\funds\analysis_engine.py:L99 | def analyze_funds(items: tuple[FundEvidenceMap, ...]) -> tuple[FundAnalysisResult, ...]:
+analyze_funds( | backend\tests\test_fund_analysis_engine_v1.py:L62 | output = analyze_funds((first, second))
+analyze_funds( | backend\tests\test_fund_analysis_engine_v1.py:L70 | analyze_funds((item, item))
+map_fund_evidence( | backend\app\funds\evidence_mapper.py:L141 | def map_fund_evidence(value: FundEvidenceInput) -> FundEvidenceMap:
+map_fund_evidence( | backend\tests\test_fund_analysis_engine_v1.py:L23 | return analyze_fund(map_fund_evidence(source(**changes)))
+map_fund_evidence( | backend\tests\test_fund_analysis_engine_v1.py:L60 | first = map_fund_evidence(source(canonical_fund_id="fund:tefas:BBB"))
+map_fund_evidence( | backend\tests\test_fund_analysis_engine_v1.py:L61 | second = map_fund_evidence(source(canonical_fund_id="fund:tefas:AAA"))
+map_fund_evidence( | backend\tests\test_fund_analysis_engine_v1.py:L68 | item = map_fund_evidence(source())
+map_fund_evidence( | backend\tests\test_fund_evidence_mapper_v1.py:L20 | result = map_fund_evidence(sample())
+map_fund_evidence( | backend\tests\test_fund_evidence_mapper_v1.py:L27 | result = map_fund_evidence(sample(category_id=None))
+map_fund_evidence( | backend\tests\test_fund_evidence_mapper_v1.py:L33 | result = map_fund_evidence(sample(return_3m=None))
+map_fund_evidence( | backend\tests\test_fund_evidence_mapper_v1.py:L39 | partial = map_fund_evidence(sample(net_flow_ratio=None)).evidence[3]
+map_fund_evidence( | backend\tests\test_fund_evidence_mapper_v1.py:L40 | unavailable = map_fund_evidence(sample(net_flow_ratio=None, investor_change=None)).evidence[3]
+map_fund_evidence( | backend\tests\test_fund_evidence_mapper_v1.py:L46 | result = map_fund_evidence(sample(
+map_fund_evidence( | backend\tests\test_fund_evidence_mapper_v1.py:L57 | assert map_fund_evidence(sample()) == map_fund_evidence(sample())
+FundEvidenceInput( | backend\tests\test_fund_analysis_engine_v1.py:L11 | value = FundEvidenceInput(
+FundEvidenceInput( | backend\tests\test_fund_evidence_mapper_v1.py:L8 | value = FundEvidenceInput(
+FundObservationJsonStore( | backend\tests\test_fund_data_contract_v1.py:L73 | store = FundObservationJsonStore(tmp_path / "funds" / "observations.json")
+.upsert( | backend\app\analysis\kap_fundamental_service.py:L78 | self._store.upsert(package.periods)
+.upsert( | backend\tests\test_fundamental_store.py:L40 | result = store.upsert([period()])
+.upsert( | backend\tests\test_fundamental_store.py:L48 | store.upsert([period()])
+.upsert( | backend\tests\test_fundamental_store.py:L50 | result = store.upsert([period()])
+.upsert( | backend\tests\test_fundamental_store.py:L58 | store.upsert([period()])
+.upsert( | backend\tests\test_fundamental_store.py:L60 | result = store.upsert([period(revenue=1100)])
+.upsert( | backend\tests\test_fund_data_contract_v1.py:L75 | first = store.upsert([observation])
+.upsert( | backend\tests\test_fund_data_contract_v1.py:L76 | second = store.upsert([observation])
+.list_records( | backend\dashboard.backup_before_navigation_fix.py:L5436 | tum_kayitlar = depo.list_records()
+.list_records( | backend\dashboard.backup_before_navigation_fix.py:L7951 | trade_records = trade_store.list_records()
+.list_records( | backend\dashboard.py:L5616 | tum_kayitlar = depo.list_records()
+.list_records( | backend\dashboard.py:L8132 | trade_records = trade_store.list_records()
+.list_records( | backend\app\history\trade_journal.py:L204 | records = list(self.list_records())
+.list_records( | backend\app\history\trade_journal.py:L211 | existing = {item.record_id: item for item in self.list_records()}
+.list_records( | backend\app\history\trade_journal.py:L220 | records = list(self.list_records())
+.list_records( | backend\app\operations\daily_buy_decision_scheduled_runner.py:L167 | trades = trade_store.list_records()
+.list_records( | backend\tests\test_fund_data_contract_v1.py:L78 | saved = store.list_records()[0]
+.list_records( | backend\tests\test_trade_journal.py:L74 | assert [item.record_id for item in store.list_records()] == ["ilk", "ikinci"]
+.list_records( | backend\tests\test_trade_journal.py:L77 | assert [item.record_id for item in store.list_records()] == ["ikinci"]
+.list_records( | backend\tests\test_trade_journal.py:L125 | assert len(store.list_records()) == 1

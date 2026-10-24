@@ -1,0 +1,28 @@
+﻿
+backend\app\data\batch_market_data.py:13:    load_latest_official_daily,
+backend\app\data\batch_market_data.py:14:    merge_official_daily_bar,
+backend\app\data\batch_market_data.py:106:            lambda symbols, today: 
+load_latest_official_daily(
+backend\app\data\batch_market_data.py:178:                temiz_veri = 
+merge_official_daily_bar(
+backend\app\data\bist_official_batch_bridge.py:34:def merge_official_daily_bar(
+backend\app\data\bist_official_batch_bridge.py:111:def load_latest_official_daily(
+backend\app\data\bist_official_batch_bridge.py:207:    "load_latest_official_daily",
+backend\app\data\bist_official_batch_bridge.py:208:    "merge_official_daily_bar",
+backend\app\data\live_official_data_bridge.py:8:    load_latest_official_daily,
+backend\app\data\live_official_data_bridge.py:9:    merge_official_daily_bar,
+backend\app\data\live_official_data_bridge.py:32:        result = 
+load_latest_official_daily((normalized,))
+backend\app\data\live_official_data_bridge.py:36:        return 
+merge_official_daily_bar(historical, official)
+backend\tests\test_bist_official_batch_bridge.py:11:    merge_official_daily_bar,
+backend\tests\test_bist_official_batch_bridge.py:48:    merged = 
+merge_official_daily_bar(yahoo, official)
+backend\tests\test_bist_official_batch_bridge.py:59:    merged = 
+merge_official_daily_bar(yahoo, official)
+backend\tests\test_bist_official_batch_bridge.py:70:    merged = 
+merge_official_daily_bar(yahoo, official, max_rows=3)
+backend\tests\test_live_data_and_weekly_sma200_fix.py:71:        
+"load_latest_official_daily",
+
+

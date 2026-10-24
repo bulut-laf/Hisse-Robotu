@@ -1,0 +1,41 @@
+﻿........................................................................ [ 10%]
+........................................................................ [ 21%]
+........................................................................ [ 32%]
+........................................................................ [ 43%]
+........................................................................ [ 54%]
+........................................................................ [ 65%]
+........................................................................ [ 76%]
+........................................................................ [ 86%]
+........................................................................ [ 97%]
+...............                                                          [100%]
+663 passed, 2359 deselected in 18.98s
+DATE_RENDER_CANDIDATES=15
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=26|universe_date: str
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=727|return OpportunityRadarResult( universe_name=universe.ad, universe_source=universe.kaynak, universe_date=universe.tarih, universe_count=len(universe.semboller), data_success_count=len(batch.veriler), data_failures=batch.hatalar, weekly=weekly, monthly_strong=monthly_strong, monthly_early=monthly_early, )
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=727|OpportunityRadarResult( universe_name=universe.ad, universe_source=universe.kaynak, universe_date=universe.tarih, universe_count=len(universe.semboller), data_success_count=len(batch.veriler), data_failures=batch.hatalar, weekly=weekly, monthly_strong=monthly_strong, monthly_early=monthly_early, )
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\bist_daily_market_dashboard.py|LINE=47|st.caption( f"Evren kaynağı: {result.evren_kaynagi} · " f"Evren tarihi: {result.evren_tarihi} · " f"Veri kaynak sırası: {', '.join(result.kaynak_sirasi)}" )
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\bist_daily_market_dashboard.py|LINE=48|f"Evren kaynağı: {result.evren_kaynagi} · " f"Evren tarihi: {result.evren_tarihi} · " f"Veri kaynak sırası: {', '.join(result.kaynak_sirasi)}"
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py|LINE=63|st.caption( f"Evren kaynağı: {result.universe_source} · Evren tarihi: {result.universe_date}" )
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py|LINE=64|f"Evren kaynağı: {result.universe_source} · Evren tarihi: {result.universe_date}"
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=309|universe_date = str(cached_run["universe_date"])
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=322|universe_date = universe.tarih
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=375|st.session_state[cache_key] = { "signature": run_signature, "rows": tuple(rows), "details": tuple(details), "replay_results": tuple(replay_results), "errors": tuple(errors), "symbols": symbols, "universe_source": universe_source, "universe_date": universe_date, }
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=399|full_table.insert(0, "Evren tarihi", universe_date)
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=408|st.caption( f"Evren kaynağı: {universe_source} · Evren tarihi: {universe_date}" )
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=309|str(cached_run["universe_date"])
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=409|f"Evren kaynağı: {universe_source} · Evren tarihi: {universe_date}"
+DATE_RENDER|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_validation_dashboard.py|LINE=311|display_table.insert(0, "Evren tarihi", universe.tarih)
+DATE_DEFINITIONS=9
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py|LINE=26|universe_date: str
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\analysis\bist_daily_market.py|LINE=22|evren_tarihi: str
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py|LINE=84|evren_tarihi: str
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\analysis\market_scanner.py|LINE=154|semboller, evren_kaynagi, evren_tarihi = ( tarama_evreni_yukle( istek, evren_repository=self._evren_repository, izleme_listesi_yolu=self._izleme_listesi_yolu, ) )
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_discovery.py|LINE=157|evren_tarihi: str
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\analysis\momentum_walk_forward.py|LINE=94|evren_tarihi: str
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=309|universe_date = str(cached_run["universe_date"])
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=322|universe_date = universe.tarih
+DATE_DEF|D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py|LINE=375|st.session_state[cache_key] = { "signature": run_signature, "rows": tuple(rows), "details": tuple(details), "replay_results": tuple(replay_results), "errors": tuple(errors), "symbols": symbols, "universe_source": universe_source, "universe_date": universe_date, }
+EXACT_PLUS_ONE_DATE_ASSIGNMENTS=0
+DECISION=NO_EXPLICIT_PLUS_ONE_PRESENTATION_BUG_FOUND
+MUTATED_FILES=0
+PRODUCTION_MUTATION=YOK

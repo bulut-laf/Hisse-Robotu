@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\rpv1_real_fundamental_rp03_qa_20260826-212559.py", line 11, in <module>
+    as_of = date.fromisoformat(sys.argv[3])
+                               ~~~~~~~~^^^
+IndexError: list index out of range

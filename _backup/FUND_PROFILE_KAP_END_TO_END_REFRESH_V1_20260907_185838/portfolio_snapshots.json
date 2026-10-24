@@ -1,0 +1,2083 @@
+{
+  "fund:tefas:370001|2026-06-30|KAP": {
+    "_digest": "e5168580c7de1ac0a04affc132c6880292aa46ef622dd1c5f8e8a268d7fa4320",
+    "canonical_fund_id": "fund:tefas:370001",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:09:25.222900+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [],
+    "provider": "KAP",
+    "publication_date": "2026-07-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "f175722dd9a5dd9ad639d4b112092831694af5435d12e345550fc2dec2c5ee36",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1628517"
+  },
+  "fund:tefas:370001|2026-07-31|KAP": {
+    "_digest": "ea063f2d76e0850f22f0d1adfb7f2a2a293abb3a7736c9491254c110c5e6a6d8",
+    "canonical_fund_id": "fund:tefas:370001",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:09:03.869123+00:00",
+    "portfolio_date": "2026-07-31",
+    "positions": [],
+    "provider": "KAP",
+    "publication_date": "2026-08-10",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "24730b1d2207496320dc19585d66aeb6d3e33a44d6d7d5e44fb8e572327f47d5",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1646743"
+  },
+  "fund:tefas:ACC|2026-06-30|KAP": {
+    "_digest": "d6f5acd830cabea0be6cf90da38cd6621672527790652fb02fe448cea243d6f6",
+    "canonical_fund_id": "fund:tefas:ACC",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T19:01:50.158496+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "AKBANK T.A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "9240000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0486",
+        "shares_held": "120000.00",
+        "symbol": "AKBNK"
+      },
+      {
+        "asset_name": "BETA ENERJİ VE TEKNOLOJİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "400000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0021",
+        "shares_held": "10000.00",
+        "symbol": "BETAE"
+      },
+      {
+        "asset_name": "BİM BİRLEŞİK MAĞAZALA R A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "7305000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0385",
+        "shares_held": "20000.00",
+        "symbol": "BIMAS"
+      },
+      {
+        "asset_name": "COCA- COLA İÇECEK A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "8305000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0437",
+        "shares_held": "100000.00",
+        "symbol": "CCOLA"
+      },
+      {
+        "asset_name": "GARANTI BANKASI",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "5520000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0291",
+        "shares_held": "40000.00",
+        "symbol": "GARAN"
+      },
+      {
+        "asset_name": "T.IŞ BANKASI A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "8145500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0429",
+        "shares_held": "550000.00",
+        "symbol": "ISCTR"
+      },
+      {
+        "asset_name": "KOÇ HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "7740000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0407",
+        "shares_held": "40000.00",
+        "symbol": "KCHOL"
+      },
+      {
+        "asset_name": "YAPI KREDİ KORAY GAYRİMEN KUL YATIRIM ORTAKLIĞI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "17730000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0933",
+        "shares_held": "1500000.00",
+        "symbol": "KGYO"
+      },
+      {
+        "asset_name": "A1 CAPITAL YATIRIM MENKUL DEĞERLER A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "5393500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0284",
+        "shares_held": "70000.00",
+        "symbol": "MEGMT"
+      },
+      {
+        "asset_name": "MİGROS TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "8034000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0423",
+        "shares_held": "12000.00",
+        "symbol": "MGROS"
+      },
+      {
+        "asset_name": "Platform Turizm Taşımacılık Gıda İnşaat Temizlik Hizmetleri Sanayi ve Ticaret A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "1922.08",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "82.00",
+        "symbol": "PLTUR"
+      },
+      {
+        "asset_name": "RÖNESAN S GAYRİMEN KUL Y.O",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "3868000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0204",
+        "shares_held": "20000.00",
+        "symbol": "RGYAS"
+      },
+      {
+        "asset_name": "HACI ÖMER SABANCI HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "9896250.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0521",
+        "shares_held": "101500.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "SASA POLYESTE R SANAYİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "7350000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0387",
+        "shares_held": "3000000.00",
+        "symbol": "SASA"
+      },
+      {
+        "asset_name": "TAV HAVALİMA NLARI HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "2822500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0149",
+        "shares_held": "10000.00",
+        "symbol": "TAVHL"
+      },
+      {
+        "asset_name": "TURKCELL İLETİŞİM HİZMETLE Rİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "8592000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0452",
+        "shares_held": "80000.00",
+        "symbol": "TCELL"
+      },
+      {
+        "asset_name": "Kıraç Galvaniz Telekomüni kasyon Metal Makine İnşaat Elektrik Sanayi Ve Ticaret A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "18040000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0948",
+        "shares_held": "110000.00",
+        "symbol": "TCKRC"
+      },
+      {
+        "asset_name": "TURK HAVA YOLLARI A.O.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "9780000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0515",
+        "shares_held": "30000.00",
+        "symbol": "THYAO"
+      },
+      {
+        "asset_name": "TAPDİ OKSİJEN ÖZEL SAĞLIK VE EĞİTİM HİZMETLE Rİ SANAYİ TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "19.65",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.78",
+        "symbol": "TNZTP"
+      },
+      {
+        "asset_name": "T.SINAİ KALKINMA BANKASI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "0.02",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.00",
+        "symbol": "TSKB"
+      },
+      {
+        "asset_name": "TÜRK TELEKOMÜ NİKASYON A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "8718800.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0459",
+        "shares_held": "142000.00",
+        "symbol": "TTKOM"
+      },
+      {
+        "asset_name": "TUPRAS- TURKIYE PETROL RAFINELE RI A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "9327500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0491",
+        "shares_held": "41000.00",
+        "symbol": "TUPRS"
+      },
+      {
+        "asset_name": "TÜRKİYE VAKIFLAR BANKASI T.A.O.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "4253600.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0224",
+        "shares_held": "130000.00",
+        "symbol": "VAKBN"
+      },
+      {
+        "asset_name": "YİĞİT AKÜ MALZEMEL ERİ NAKLİYAT TURİZM İNŞAAT SANAYİ VE TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "2390.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "100.00",
+        "symbol": "YIGIT"
+      },
+      {
+        "asset_name": "YAPI VE KREDİ BANKASI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:ACC",
+        "market_value": "8028000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0423",
+        "shares_held": "200000.00",
+        "symbol": "YKBNK"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-03",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "0cd11c5c4885c9bdd9d4339473477322ffbb19cc6fabdb6fd14741f6084ea748",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1624221"
+  },
+  "fund:tefas:AP5|2026-05-31|KAP": {
+    "_digest": "783833b15d546067eba45810bd13be28f459ae855b19410a259137e8527f3bc0",
+    "canonical_fund_id": "fund:tefas:AP5",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-04T10:47:52.007936+00:00",
+    "portfolio_date": "2026-05-31",
+    "positions": [
+      {
+        "asset_name": "SABANCI HOLDING A.Ş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "441600.00",
+        "portfolio_date": "2026-05-31",
+        "portfolio_weight": "0.4566",
+        "shares_held": "4800.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "525525.00",
+        "portfolio_date": "2026-05-31",
+        "portfolio_weight": "0.5434",
+        "shares_held": "8580.00",
+        "symbol": "TTKOM"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-06-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "575504f4075852d4fef3e7f5d29a130e6aa508da6cffb4f16bb86bb469fd5cce",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1614366"
+  },
+  "fund:tefas:AP5|2026-06-30|KAP": {
+    "_digest": "9a636157f45f34c0dfd0b093e83b45130295828cd3b8b5f7a2962b5ba52b04cd",
+    "canonical_fund_id": "fund:tefas:AP5",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-04T11:35:27.308218+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "SABANCI HOLDING A.Ş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "468000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.4757",
+        "shares_held": "4800.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "515760.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.5243",
+        "shares_held": "8400.00",
+        "symbol": "TTKOM"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "741291e5607c1d09c50f7cc98f0e0c6d0f4356bd72e9b6325747f5dc6cb3fd05",
+    "source_reference": "manual-upload:AP5_FON_HAZIRAN_2026_PORTFOY_DAGILIM_RAPORU_CLEAN.pdf"
+  },
+  "fund:tefas:FYD|2026-06-30|KAP": {
+    "_digest": "d48e99fbcb1223bbabc31a5f23bd0a34dfb624b1d50aeb6f8bfcb8c277705601",
+    "canonical_fund_id": "fund:tefas:FYD",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T19:01:51.738550+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "AG ANADOLU GRUBU HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "100805887.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.029",
+        "shares_held": "2915150.00",
+        "symbol": "AGHOL"
+      },
+      {
+        "asset_name": "AKBANK T.A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "149640260.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.043",
+        "shares_held": "1943380.00",
+        "symbol": "AKBNK"
+      },
+      {
+        "asset_name": "ASELSAN ELEKTRON İK SANAYİ VE TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "276562350.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0795",
+        "shares_held": "801630.00",
+        "symbol": "ASELS"
+      },
+      {
+        "asset_name": "ASTOR ENERJİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "184038400.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0529",
+        "shares_held": "665600.00",
+        "symbol": "ASTOR"
+      },
+      {
+        "asset_name": "BETA ENERJİ VE TEKNOLOJİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "200000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0001",
+        "shares_held": "5000.00",
+        "symbol": "BETAE"
+      },
+      {
+        "asset_name": "BİM BİRLEŞİK MAĞAZALA R A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "266186895.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0765",
+        "shares_held": "728780.00",
+        "symbol": "BIMAS"
+      },
+      {
+        "asset_name": "COCA- COLA İÇECEK A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "90782785.50",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0261",
+        "shares_held": "1093110.00",
+        "symbol": "CCOLA"
+      },
+      {
+        "asset_name": "EMLAK KONUT GAYRİMEN KUL YATIRIM ORTAKLIĞI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "120567088.40",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0346",
+        "shares_held": "5830130.00",
+        "symbol": "EKGYO"
+      },
+      {
+        "asset_name": "ENKA INSAAT VE SANAYI A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "118716995.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0341",
+        "shares_held": "1311790.00",
+        "symbol": "ENKAI"
+      },
+      {
+        "asset_name": "TÜRKİYE GARANTİ BANKASI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "134087700.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0385",
+        "shares_held": "971650.00",
+        "symbol": "GARAN"
+      },
+      {
+        "asset_name": "GÜLERMA K AĞIR SANAYİ İNŞAAT ve TAAHHÜT A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "153398388.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0441",
+        "shares_held": "893930.00",
+        "symbol": "GLRMK"
+      },
+      {
+        "asset_name": "TÜRKİYE İŞ BANKASI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "143907585.20",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0414",
+        "shares_held": "9716920.00",
+        "symbol": "ISCTR"
+      },
+      {
+        "asset_name": "KOÇ HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "191222312.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0550",
+        "shares_held": "3303650.00",
+        "symbol": "KCHOL"
+      },
+      {
+        "asset_name": "MİGROS TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "39031850.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0112",
+        "shares_held": "58300.00",
+        "symbol": "MGROS"
+      },
+      {
+        "asset_name": "MEDİCAL PARK SAĞLIK HİZMETLE Rİ A.Ş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "62672500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.018",
+        "shares_held": "145750.00",
+        "symbol": "MPARK"
+      },
+      {
+        "asset_name": "OTOKAR OTOMOTİV VE SAVUNMA SANAYİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "73023255.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.021",
+        "shares_held": "194340.00",
+        "symbol": "OTKAR"
+      },
+      {
+        "asset_name": "ÖZAK GAYRİMEN KUL YATIRIM ORTAKLIĞI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "44816660.36",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0129",
+        "shares_held": "2885812.00",
+        "symbol": "OZKGY"
+      },
+      {
+        "asset_name": "HACI ÖMER SABANCI HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "330008975.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0949",
+        "shares_held": "64957610.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TAV HAVALİMA NLARI HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "134384870.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0386",
+        "shares_held": "476120.00",
+        "symbol": "TAVHL"
+      },
+      {
+        "asset_name": "TURKCELL İLETİŞİM HİZMETLE Rİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "73055628.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.021",
+        "shares_held": "680220.00",
+        "symbol": "TCELL"
+      },
+      {
+        "asset_name": "TURK HAVA YOLLARI A.O.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "182142720.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0523",
+        "shares_held": "558720.00",
+        "symbol": "THYAO"
+      },
+      {
+        "asset_name": "TORUNLAR GAYRİMEN KUL YATIRIM ORTAKLIĞI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "63160000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0182",
+        "shares_held": "631600.00",
+        "symbol": "TRGYO"
+      },
+      {
+        "asset_name": "TUPRAS- TURKIYE PETROL RAFINELE RI A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:FYD",
+        "market_value": "468097296.74",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.1345",
+        "shares_held": "4858451.00",
+        "symbol": "TUPRS"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "f4add2e1b6d549b60aa56c9a3e7e63029e50ee0f2339ad4d065aa4dd5877da33",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1628238"
+  },
+  "fund:tefas:PUH|2026-07-31|KAP": {
+    "_digest": "9852ee67ce145b9cb802f0b9700f53a1459acab3ddda3eed67381d8cd4efee62",
+    "canonical_fund_id": "fund:tefas:PUH",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:09:11.262958+00:00",
+    "portfolio_date": "2026-07-31",
+    "positions": [],
+    "provider": "KAP",
+    "publication_date": "2026-08-05",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "ab5f15f8fb064420a7d3c95bd10a3ab08f7f270e8fb8174f25f656531436c6aa",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1643356"
+  },
+  "fund:tefas:TKF|2026-06-30|KAP": {
+    "_digest": "be3a6ca1f54969191187c053f221f5c112038a0d8ec8563db26c229e5f1217dd",
+    "canonical_fund_id": "fund:tefas:TKF",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:39:29.793947+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "AKİŞ GYO A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "22090000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0214",
+        "shares_held": "2350000.00",
+        "symbol": "AKSGY"
+      },
+      {
+        "asset_name": "ALARKO HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "35541000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0344",
+        "shares_held": "330000.00",
+        "symbol": "ALARK"
+      },
+      {
+        "asset_name": "ANADOLU HAYAT EMEKLİLİK A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "30870000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0299",
+        "shares_held": "300000.00",
+        "symbol": "ANHYT"
+      },
+      {
+        "asset_name": "ANADOLU ANONİM TÜRK SİGORTA ŞİRKETİ",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "16416000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0159",
+        "shares_held": "600000.00",
+        "symbol": "ANSGR"
+      },
+      {
+        "asset_name": "ASELSAN ELEKTRON İK SANAYİ VE TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "17250000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0167",
+        "shares_held": "50000.00",
+        "symbol": "ASELS"
+      },
+      {
+        "asset_name": "BETA ENERJİ VE TEKNOLOJİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "2000000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0019",
+        "shares_held": "50000.00",
+        "symbol": "BETAE"
+      },
+      {
+        "asset_name": "BORUSAN MANNESM AN BORU SANAYİ VE TİCARET A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "23358230.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0226",
+        "shares_held": "41342.00",
+        "symbol": "BRSAN"
+      },
+      {
+        "asset_name": "COCA- COLA İÇECEK A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "22423500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0217",
+        "shares_held": "270000.00",
+        "symbol": "CCOLA"
+      },
+      {
+        "asset_name": "DOGAN SIRKETLER GRUBU HOLDING A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "32800000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0317",
+        "shares_held": "1600000.00",
+        "symbol": "DOHOL"
+      },
+      {
+        "asset_name": "EMLAK KONUT GAYRİMEN KUL YATIRIM ORTAKLIĞI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "49725039.32",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0481",
+        "shares_held": "2404499.00",
+        "symbol": "EKGYO"
+      },
+      {
+        "asset_name": "GARANTI BANKASI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "27600000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0267",
+        "shares_held": "200000.00",
+        "symbol": "GARAN"
+      },
+      {
+        "asset_name": "GLOBAL YATIRIM HOLDING A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "43704000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0423",
+        "shares_held": "2400000.00",
+        "symbol": "GLYHO"
+      },
+      {
+        "asset_name": "KOÇ HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "38700000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0374",
+        "shares_held": "200000.00",
+        "symbol": "KCHOL"
+      },
+      {
+        "asset_name": "Limak Doğu Anadolu Çimento Sanayi ve Ticaret A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "23580000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0228",
+        "shares_held": "900000.00",
+        "symbol": "LMKDC"
+      },
+      {
+        "asset_name": "MAKİM MAKİNA TEKNOLOJİ LERİ SANAYİ VE TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "30480000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0295",
+        "shares_held": "1600000.00",
+        "symbol": "MAKIM"
+      },
+      {
+        "asset_name": "MİGROS TİCARET A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "16737500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0162",
+        "shares_held": "25000.00",
+        "symbol": "MGROS"
+      },
+      {
+        "asset_name": "MLP SAGLIK HIZMETLE RI A.S",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "34400000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0333",
+        "shares_held": "80000.00",
+        "symbol": "MPARK"
+      },
+      {
+        "asset_name": "HACI ÖMER SABANCI HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "87750000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0848",
+        "shares_held": "900000.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TAV HAVALİMA NLARI HOLDİNG A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "87497500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0847",
+        "shares_held": "310000.00",
+        "symbol": "TAVHL"
+      },
+      {
+        "asset_name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "23634000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0229",
+        "shares_held": "180000.00",
+        "symbol": "TBORG"
+      },
+      {
+        "asset_name": "TURKCELL İLETİŞİM HİZMETLE Rİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "48330000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0468",
+        "shares_held": "450000.00",
+        "symbol": "TCELL"
+      },
+      {
+        "asset_name": "TURK HAVA YOLLARI A.O.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "52160000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0505",
+        "shares_held": "160000.00",
+        "symbol": "THYAO"
+      },
+      {
+        "asset_name": "TÜRK ALTIN İŞLETMELE Rİ A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "40534738.02",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0392",
+        "shares_held": "869471.00",
+        "symbol": "TRALT"
+      },
+      {
+        "asset_name": "T.SINAİ KALKINMA BANKASI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "14850000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0144",
+        "shares_held": "1250000.00",
+        "symbol": "TSKB"
+      },
+      {
+        "asset_name": "TUPRAS- TURKIYE PETROL RAFINELE RI A.S.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "63602857.50",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0615",
+        "shares_held": "279573.00",
+        "symbol": "TUPRS"
+      },
+      {
+        "asset_name": "YAPI VE KREDİ BANKASI A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:TKF",
+        "market_value": "41477424.66",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0401",
+        "shares_held": "1033319.00",
+        "symbol": "YKBNK"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "29a32eebefb4ad8ec18dae08942fe2ddb05b77df722a01fb63058291cebd5453",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1629271"
+  },
+  "fund:tefas:YHS|2026-06-30|KAP": {
+    "_digest": "19f6de4e74e3a1ac081554a29582a3dd5055e227b75d44e91c8bf9e499926858",
+    "canonical_fund_id": "fund:tefas:YHS",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:39:36.124958+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "Akbank",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "120138891.80",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0333",
+        "shares_held": "1560245.35",
+        "symbol": "AKBNK"
+      },
+      {
+        "asset_name": "Aksigorta",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "0.03",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.00",
+        "symbol": "AKGRT"
+      },
+      {
+        "asset_name": "Alarko Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "66.77",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.62",
+        "symbol": "ALARK"
+      },
+      {
+        "asset_name": "Albaraka Türk Katılım Bankası",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "2.63",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.33",
+        "symbol": "ALBRK"
+      },
+      {
+        "asset_name": "Anadolu Sigorta",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "49342910.96",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0137",
+        "shares_held": "1803468.97",
+        "symbol": "ANSGR"
+      },
+      {
+        "asset_name": "Aselsan",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "284625000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.079",
+        "shares_held": "825000.00",
+        "symbol": "ASELS"
+      },
+      {
+        "asset_name": "Astor Enerji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "96775000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0269",
+        "shares_held": "350000.00",
+        "symbol": "ASTOR"
+      },
+      {
+        "asset_name": "BİM Birleşik Mağazalar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "210018750.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0583",
+        "shares_held": "575000.00",
+        "symbol": "BIMAS"
+      },
+      {
+        "asset_name": "Boğaziçi Beton Sanayi",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "52866261.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0147",
+        "shares_held": "2783900.00",
+        "symbol": "BOBET"
+      },
+      {
+        "asset_name": "Coca Cola",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "121491436.55",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0337",
+        "shares_held": "1462871.00",
+        "symbol": "CCOLA"
+      },
+      {
+        "asset_name": "Deva Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "42.92",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.60",
+        "symbol": "DEVA"
+      },
+      {
+        "asset_name": "Doğan Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "7.79",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.38",
+        "symbol": "DOHOL"
+      },
+      {
+        "asset_name": "Emlak Konut GYO",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "33886702.96",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0094",
+        "shares_held": "1638622.00",
+        "symbol": "EKGYO"
+      },
+      {
+        "asset_name": "Enka İnşaat",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "63350089.32",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0176",
+        "shares_held": "700000.99",
+        "symbol": "ENKAI"
+      },
+      {
+        "asset_name": "Ereğli Demir ve Çelik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "111320021.37",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0309",
+        "shares_held": "2750000.53",
+        "symbol": "EREGL"
+      },
+      {
+        "asset_name": "Europower Enerji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "50721619.65",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0141",
+        "shares_held": "604909.00",
+        "symbol": "EUPWR"
+      },
+      {
+        "asset_name": "Ford Otomotiv",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "76095000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0211",
+        "shares_held": "900000.00",
+        "symbol": "FROTO"
+      },
+      {
+        "asset_name": "Türkiye Garanti Bankası",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "96600000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0268",
+        "shares_held": "700000.00",
+        "symbol": "GARAN"
+      },
+      {
+        "asset_name": "GİRİŞİM ELEKTRİK",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "34977728.50",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0097",
+        "shares_held": "489199.00",
+        "symbol": "GESAN"
+      },
+      {
+        "asset_name": "Gülermak Ağır Sanayi İnşaat",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "72930000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0202",
+        "shares_held": "425000.00",
+        "symbol": "GLRMK"
+      },
+      {
+        "asset_name": "Gübre Fabrikaları",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "150535000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0418",
+        "shares_held": "340000.00",
+        "symbol": "GUBRF"
+      },
+      {
+        "asset_name": "İş Bankası",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "10.87",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.73",
+        "symbol": "ISCTR"
+      },
+      {
+        "asset_name": "İş GYO",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "22.47",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.91",
+        "symbol": "ISGYO"
+      },
+      {
+        "asset_name": "Koç Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "58050000.77",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0161",
+        "shares_held": "300000.00",
+        "symbol": "KCHOL"
+      },
+      {
+        "asset_name": "Kardemir (D)",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "144956556.33",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0402",
+        "shares_held": "3642124.53",
+        "symbol": "KRDMD"
+      },
+      {
+        "asset_name": "Mavi Giyim",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "52696000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0146",
+        "shares_held": "1400000.00",
+        "symbol": "MAVI"
+      },
+      {
+        "asset_name": "MLP Sağlık Hizmetleri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "60823070.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0169",
+        "shares_held": "141449.00",
+        "symbol": "MPARK"
+      },
+      {
+        "asset_name": "Odaş Elektrik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "0.97",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.12",
+        "symbol": "ODAS"
+      },
+      {
+        "asset_name": "Oyak Çimento",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "46.43",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "2.27",
+        "symbol": "OYAKC"
+      },
+      {
+        "asset_name": "Özak GYO",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "64449500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0179",
+        "shares_held": "4150000.00",
+        "symbol": "OZKGY"
+      },
+      {
+        "asset_name": "Peker GYO",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "67.75",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "4.85",
+        "symbol": "PEKGY"
+      },
+      {
+        "asset_name": "Petkim",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "11.73",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.61",
+        "symbol": "PETKM"
+      },
+      {
+        "asset_name": "Pegasus",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "171.60",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.98",
+        "symbol": "PGSUS"
+      },
+      {
+        "asset_name": "Pasifik GYO",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "50460000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.014",
+        "shares_held": "14500000.00",
+        "symbol": "PSGYO"
+      },
+      {
+        "asset_name": "Rönesans Gayrimenkul Yatırım",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "159555000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0443",
+        "shares_held": "825000.00",
+        "symbol": "RGYAS"
+      },
+      {
+        "asset_name": "Sabancı Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "52.07",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.53",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "Sasa Polyester",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "83300003.68",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0231",
+        "shares_held": "34000001.50",
+        "symbol": "SASA"
+      },
+      {
+        "asset_name": "Şişe Cam",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "19.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.43",
+        "symbol": "SISE"
+      },
+      {
+        "asset_name": "Şok Marketler",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "64820000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.018",
+        "shares_held": "1400000.00",
+        "symbol": "SOKM"
+      },
+      {
+        "asset_name": "Turkcell İletişim",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "69810102.14",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0194",
+        "shares_held": "650000.95",
+        "symbol": "TCELL"
+      },
+      {
+        "asset_name": "Türk Hava Yolları",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "220050000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0611",
+        "shares_held": "675000.00",
+        "symbol": "THYAO"
+      },
+      {
+        "asset_name": "Tekfen Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "84.92",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.63",
+        "symbol": "TKFEN"
+      },
+      {
+        "asset_name": "Tofaş Otomobil Fabrikaları",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "74833425.44",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0208",
+        "shares_held": "242965.67",
+        "symbol": "TOASO"
+      },
+      {
+        "asset_name": "Turcas Petrol",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "26.68",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.62",
+        "symbol": "TRCAS"
+      },
+      {
+        "asset_name": "TR Anadolu Metal Madencilik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "63825000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0177",
+        "shares_held": "575000.00",
+        "symbol": "TRMET"
+      },
+      {
+        "asset_name": "T.S.K.B.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "10.87",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "0.92",
+        "symbol": "TSKB"
+      },
+      {
+        "asset_name": "Tüpraş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "170625000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0474",
+        "shares_held": "750000.00",
+        "symbol": "TUPRS"
+      },
+      {
+        "asset_name": "Türkiye Vakıflar Bankası",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "67076008.38",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0186",
+        "shares_held": "2050000.26",
+        "symbol": "VAKBN"
+      },
+      {
+        "asset_name": "Yapı ve Kredi Bankası",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHS",
+        "market_value": "190665008.59",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0529",
+        "shares_held": "4750000.21",
+        "symbol": "YKBNK"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-07",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "006ac94ac35a57c5933d100c44e02d3b9e7a237be77bdef8d274a2f6bf72b7ef",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1626168"
+  },
+  "fund:tefas:YHZ|2026-06-30|KAP": {
+    "_digest": "20fb53dc493be075b96468ef3d52b35b52c9d6b998d9f2079a1f3df6e4f3203d",
+    "canonical_fund_id": "fund:tefas:YHZ",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:39:44.562461+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "Alcatel Lucent Teletaş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "13651250.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0103",
+        "shares_held": "81500.00",
+        "symbol": "ALCTL"
+      },
+      {
+        "asset_name": "Altınay Savunma Teknolojileri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "29225016.07",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0221",
+        "shares_held": "1750000.96",
+        "symbol": "ALTNY"
+      },
+      {
+        "asset_name": "ARD Grup Bilişim Teknolojileri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "72000014.94",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0546",
+        "shares_held": "1200000.25",
+        "symbol": "ARDYZ"
+      },
+      {
+        "asset_name": "Arena Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "4113013.71",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0031",
+        "shares_held": "150000.50",
+        "symbol": "ARENA"
+      },
+      {
+        "asset_name": "Aselsan",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "258750000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.1961",
+        "shares_held": "750000.00",
+        "symbol": "ASELS"
+      },
+      {
+        "asset_name": "ATP Ticari Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "15350588.70",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0116",
+        "shares_held": "71265.50",
+        "symbol": "ATATP"
+      },
+      {
+        "asset_name": "Aztek Teknoloji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "8676000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0066",
+        "shares_held": "1800000.00",
+        "symbol": "AZTEK"
+      },
+      {
+        "asset_name": "Despec Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "2770300.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0021",
+        "shares_held": "65000.00",
+        "symbol": "DESPC"
+      },
+      {
+        "asset_name": "Datagate Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "6105000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0046",
+        "shares_held": "50000.00",
+        "symbol": "DGATE"
+      },
+      {
+        "asset_name": "Dof Robotik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "27345000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0207",
+        "shares_held": "150000.00",
+        "symbol": "DOFRB"
+      },
+      {
+        "asset_name": "E-Data Teknoloji Pazarlama",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "10868396.19",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0082",
+        "shares_held": "576267.03",
+        "symbol": "EDATA"
+      },
+      {
+        "asset_name": "Empa Elektronik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "11280000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0085",
+        "shares_held": "160000.00",
+        "symbol": "EMPAE"
+      },
+      {
+        "asset_name": "Escort Teknoloji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "17790000.66",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0135",
+        "shares_held": "3000000.11",
+        "symbol": "ESCOM"
+      },
+      {
+        "asset_name": "Fonet Bilgi Teknolojileri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "21320000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0162",
+        "shares_held": "4000000.00",
+        "symbol": "FONET"
+      },
+      {
+        "asset_name": "Forte Bilgi İletişim",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "9180000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.007",
+        "shares_held": "100000.00",
+        "symbol": "FORTE"
+      },
+      {
+        "asset_name": "Hitit Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "23568038.49",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0179",
+        "shares_held": "600000.98",
+        "symbol": "HTTBT"
+      },
+      {
+        "asset_name": "İndeks Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "59129695.82",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0448",
+        "shares_held": "5200500.95",
+        "symbol": "INDES"
+      },
+      {
+        "asset_name": "Ingram Micro Bilişim Sistemleri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "5449511.25",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0041",
+        "shares_held": "13235.00",
+        "symbol": "INGRM"
+      },
+      {
+        "asset_name": "Karel Elektronik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "11452505.29",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0087",
+        "shares_held": "1018000.47",
+        "symbol": "KAREL"
+      },
+      {
+        "asset_name": "Kafein Yazılım Hizmetleri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "9845490.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0075",
+        "shares_held": "1069000.00",
+        "symbol": "KFEIN"
+      },
+      {
+        "asset_name": "Kron Telekomünikasyon",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "13016655.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0099",
+        "shares_held": "520250.00",
+        "symbol": "KRONT"
+      },
+      {
+        "asset_name": "Link Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "8080590.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0061",
+        "shares_held": "1127000.00",
+        "symbol": "LINK"
+      },
+      {
+        "asset_name": "Logo Yazılım",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "41220000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0312",
+        "shares_held": "300000.00",
+        "symbol": "LOGO"
+      },
+      {
+        "asset_name": "Mackolik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "9228800.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.007",
+        "shares_held": "280000.00",
+        "symbol": "MACKO"
+      },
+      {
+        "asset_name": "Manas Enerji Yönetimi",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "24432010.99",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0185",
+        "shares_held": "800000.36",
+        "symbol": "MANAS"
+      },
+      {
+        "asset_name": "Metropal Kurumsal Hizmetler",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "13412562.50",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0102",
+        "shares_held": "80075.00",
+        "symbol": "MCARD"
+      },
+      {
+        "asset_name": "Mia Teknoloji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "69730000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0528",
+        "shares_held": "1900000.00",
+        "symbol": "MIATK"
+      },
+      {
+        "asset_name": "Mobiltel İletişim Hizmetleri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "9542517.40",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0072",
+        "shares_held": "712660.00",
+        "symbol": "MOBTL"
+      },
+      {
+        "asset_name": "Matriks Bilgi Dağıtım Hizmetleri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "14349847.20",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0109",
+        "shares_held": "489755.88",
+        "symbol": "MTRKS"
+      },
+      {
+        "asset_name": "Netaş Telekom",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "6841600.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0052",
+        "shares_held": "106900.00",
+        "symbol": "NETAS"
+      },
+      {
+        "asset_name": "Netcad Yazılım",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "31295648.50",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0237",
+        "shares_held": "206845.00",
+        "symbol": "NETCD"
+      },
+      {
+        "asset_name": "Obase Bilgisayar",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "2528580.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0019",
+        "shares_held": "67000.00",
+        "symbol": "OBASE"
+      },
+      {
+        "asset_name": "Odine Solutions Teknoloji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "249470000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.1891",
+        "shares_held": "130000.00",
+        "symbol": "ODINE"
+      },
+      {
+        "asset_name": "Onur Yüksek Teknoloji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "6395000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0048",
+        "shares_held": "100000.00",
+        "symbol": "ONRYT"
+      },
+      {
+        "asset_name": "Papilon Savunma",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "15874440.75",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.012",
+        "shares_held": "1007901.00",
+        "symbol": "PAPIL"
+      },
+      {
+        "asset_name": "Pasifik Teknoloji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "45080022.02",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0342",
+        "shares_held": "2000000.98",
+        "symbol": "PATEK"
+      },
+      {
+        "asset_name": "Penta Teknoloji Ürünleri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "8597080.20",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0065",
+        "shares_held": "631210.00",
+        "symbol": "PENTA"
+      },
+      {
+        "asset_name": "Plastikkart",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "4898800.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0037",
+        "shares_held": "37000.00",
+        "symbol": "PKART"
+      },
+      {
+        "asset_name": "Reeder Teknoloji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "4660683.17",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0035",
+        "shares_held": "718133.00",
+        "symbol": "REEDR"
+      },
+      {
+        "asset_name": "Smartiks Yazılım",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "4553047.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0035",
+        "shares_held": "142550.00",
+        "symbol": "SMART"
+      },
+      {
+        "asset_name": "VBT Yazılım",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YHZ",
+        "market_value": "5527099.60",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0042",
+        "shares_held": "191780.00",
+        "symbol": "VBTYZ"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-07",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "81ed581d43b570a9279ed10a761224d8192fac2f6342dda7e02ae111bfc5ff22",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1626023"
+  },
+  "fund:tefas:YMH|2026-06-30|KAP": {
+    "_digest": "c8b11c33517bf412fc2ff2f3770bf1eba84269b4d382e42fdfff96668bc510e1",
+    "canonical_fund_id": "fund:tefas:YMH",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-05T17:39:37.672593+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "Akbank",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "66797500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.1481",
+        "shares_held": "867500.00",
+        "symbol": "AKBNK"
+      },
+      {
+        "asset_name": "Aksa Enerji",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "24797500.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.055",
+        "shares_held": "305200.00",
+        "symbol": "AKSEN"
+      },
+      {
+        "asset_name": "Alarko Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "2864820.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0064",
+        "shares_held": "26600.00",
+        "symbol": "ALARK"
+      },
+      {
+        "asset_name": "Doğan Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "16078150.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0356",
+        "shares_held": "784300.00",
+        "symbol": "DOHOL"
+      },
+      {
+        "asset_name": "Enka İnşaat",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "4868900.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0108",
+        "shares_held": "53800.00",
+        "symbol": "ENKAI"
+      },
+      {
+        "asset_name": "Ereğli Demir ve Çelik",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "8885360.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0197",
+        "shares_held": "219500.00",
+        "symbol": "EREGL"
+      },
+      {
+        "asset_name": "Ford Otomotiv",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "5698670.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0126",
+        "shares_held": "67400.00",
+        "symbol": "FROTO"
+      },
+      {
+        "asset_name": "Türkiye Garanti Bankası",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "22563000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.05",
+        "shares_held": "163500.00",
+        "symbol": "GARAN"
+      },
+      {
+        "asset_name": "Gübre Fabrikaları",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "2169475.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0048",
+        "shares_held": "4900.00",
+        "symbol": "GUBRF"
+      },
+      {
+        "asset_name": "Hektaş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "14850.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "4500.00",
+        "symbol": "HEKTS"
+      },
+      {
+        "asset_name": "Koç Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "74091150.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.1643",
+        "shares_held": "382900.00",
+        "symbol": "KCHOL"
+      },
+      {
+        "asset_name": "Oyak Çimento",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "8204100.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0182",
+        "shares_held": "400200.00",
+        "symbol": "OYAKC"
+      },
+      {
+        "asset_name": "Petkim",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "514059.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0011",
+        "shares_held": "26900.00",
+        "symbol": "PETKM"
+      },
+      {
+        "asset_name": "Sabancı Holding",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "41613000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0923",
+        "shares_held": "426800.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "Şişe Cam",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "5905190.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0131",
+        "shares_held": "133300.00",
+        "symbol": "SISE"
+      },
+      {
+        "asset_name": "Şok Marketler",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "435220.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.001",
+        "shares_held": "9400.00",
+        "symbol": "SOKM"
+      },
+      {
+        "asset_name": "Tav Havalimanları",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "56450.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0001",
+        "shares_held": "200.00",
+        "symbol": "TAVHL"
+      },
+      {
+        "asset_name": "Turkcell İletişim",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "14595660.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0324",
+        "shares_held": "135900.00",
+        "symbol": "TCELL"
+      },
+      {
+        "asset_name": "Türk Hava Yolları",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "44955400.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0997",
+        "shares_held": "137900.00",
+        "symbol": "THYAO"
+      },
+      {
+        "asset_name": "Türk Altın İşletmeleri",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "37296.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0001",
+        "shares_held": "800.00",
+        "symbol": "TRALT"
+      },
+      {
+        "asset_name": "T.S.K.B.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "42768.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0001",
+        "shares_held": "3600.00",
+        "symbol": "TSKB"
+      },
+      {
+        "asset_name": "Tüpraş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "45500000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.1009",
+        "shares_held": "200000.00",
+        "symbol": "TUPRS"
+      },
+      {
+        "asset_name": "Ülker Bisküvi",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "109230.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0002",
+        "shares_held": "1100.00",
+        "symbol": "ULKER"
+      },
+      {
+        "asset_name": "Türkiye Vakıflar Bankası",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "981600.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.0022",
+        "shares_held": "30000.00",
+        "symbol": "VAKBN"
+      },
+      {
+        "asset_name": "Vestel",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:YMH",
+        "market_value": "20624.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.00",
+        "shares_held": "800.00",
+        "symbol": "VESTL"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-07",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "3b64aefac5c9567701e6ba776355cd0cb3aabc401de2749e4496c54b7bb462bc",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1626079"
+  }
+}

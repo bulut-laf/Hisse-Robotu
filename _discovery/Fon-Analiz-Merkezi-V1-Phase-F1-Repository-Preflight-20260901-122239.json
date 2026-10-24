@@ -1,0 +1,1859 @@
+{
+  "contract": "FON_ANALIZ_MERKEZI_V1_PHASE_F1_REPOSITORY_PREFLIGHT",
+  "generated_at": "2026-09-01T12:22:39.393574",
+  "root": "D:\\Projects\\Hisse-Robotu",
+  "read_only": true,
+  "proof": {
+    "existing_store_seam": true,
+    "typed_record_precedent": true,
+    "observer_runtime_seam": true,
+    "phase_runner_present": true,
+    "research_ui_seam": true,
+    "external_http_seam": true,
+    "existing_tefas_implementation": false,
+    "forward_outcome_seam": true,
+    "scheduler_present": true
+  },
+  "likely_paths": {
+    "store": [
+      "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+      "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+      "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+      "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+      "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+      "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V3.ps1",
+      "Hisse-Robotu-Daily10-Canonical-CutDate-Replay-DryRun-V1.ps1",
+      "Hisse-Robotu-Daily10-Full-Research-Capture-V1.ps1",
+      "Hisse-Robotu-Daily10-Historical-Replay-Adapter-V1-FIX1.ps1",
+      "Hisse-Robotu-Daily10-Historical-Replay-Adapter-V1.ps1"
+    ],
+    "observer_runtime": [
+      "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+      "backend\\tests\\test_next_day_outcome_runtime_adapter.py",
+      "backend\\tests\\test_next_day_runtime_observer.py",
+      "backend\\tests\\test_weekly_opportunity_v1.py",
+      "backend\\app\\analysis\\next_day_runtime_observer.py",
+      "backend\\app\\analysis\\weekly_opportunity_runtime.py",
+      "backend\\dashboard.py",
+      "scripts\\install_daily_buy_decision_tasks.ps1",
+      "_discovery\\Hisse-Robotu-Canonical-Bist-Tum-Single-Scan-Reuse-Design-Gate-V1-20260828-212544.txt",
+      "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt"
+    ],
+    "phase_runner": [
+      "scripts\\install_daily_buy_decision_tasks.ps1",
+      "_discovery\\Hisse-Robotu-Canonical-Bist-Tum-Single-Scan-Reuse-Design-Gate-V1-20260828-212544.txt",
+      "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+      "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-172027.txt",
+      "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt"
+    ],
+    "ui": [
+      "risk_filter_trace.txt",
+      "backend\\dashboard.backup_before_navigation_fix.py",
+      "backend\\dashboard.py",
+      "Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\\Kur-Hisse-Robotu-Sprint-84.ps1",
+      "Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\\patch_dashboard_sprint84.py",
+      "Sprint85_Rev1_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+      "Sprint85_Rev2_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+      "Sprint87_Rev1_Toplu_Tarihsel_Dogrulama_Streamlit\\patch_dashboard_sprint87.py",
+      "_discovery\\Hisse-Robotu-Next-Day-Discovery-Development-Preflight-V1-20260828-211824.txt",
+      "_discovery\\Hisse-Robotu-Scheduled-Data-Phase-Capability-Preflight-V2-20260827-171437.txt"
+    ],
+    "http_provider": [
+      "apply_sprint38_dashboard_kap_wiring.py",
+      "apply_sprint39_dashboard_manual_vbts_wiring.py",
+      "dashboard.sprint44.py",
+      "dashboard.sprint45.py",
+      "dashboard.sprint46.py",
+      "sprint144c_integration_context.txt",
+      "backend\\dashboard.backup_before_navigation_fix.py",
+      "backend\\dashboard.py",
+      "_discovery\\Hisse-Robotu-V1.1-Data-Freshness-Recovery-Exact-20260817-153839.txt",
+      "ai_chat_integration_trace.txt"
+    ],
+    "outcome": [
+      "backend\\tests\\test_next_day_observation_memory.py",
+      "backend\\tests\\test_next_day_outcome_runtime_adapter.py",
+      "backend\\app\\analysis\\next_day_observation_memory.py",
+      "backend\\app\\analysis\\next_day_outcome_runtime_adapter.py",
+      "Close-Teknik-Analiz-V1.2.ps1",
+      "dashboard.sprint44.py"
+    ],
+    "tefas": []
+  },
+  "decisions": {
+    "NEW_BIST_SCANNER": "NO",
+    "SECOND_BIST_UNIVERSE_TRAVERSAL": "NO",
+    "NEXT_DAY_MUTATION": "NO",
+    "WEEKLY_STOCK_MUTATION": "NO",
+    "AL_SAT_AUTHORITY": "NONE",
+    "FUND_UNIVERSE": "TEFAS_OR_EQUIVALENT_FUND_PROVIDER",
+    "FUND_RESEARCH_VERTICAL": "SEPARATE_WITHIN_SAME_APP",
+    "TARGET_UI": "ARASTIRMA__FON_ANALIZ_MERKEZI",
+    "TARGET_OUTCOMES": "1W__1M__3M",
+    "OUTCOME_TUNING": "NO",
+    "NO_FORCED_FILL": "YES"
+  },
+  "blockers": [],
+  "warnings": [
+    "TEFAS_EXISTING_IMPLEMENTATION_NOT_FOUND_EXPECTED_FOR_NEW_VERTICAL"
+  ],
+  "decision": "READY_FOR_PHASE_F2_DATA_CONTRACT",
+  "hits": {
+    "rank_observation_store": [
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 423,
+        "text": "RankObservationJsonlStore,"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 429,
+        "text": "_daily10_rank_history = RankObservationJsonlStore().list()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 419,
+        "text": "RankObservationJsonlStore,"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 425,
+        "text": "_daily10_rank_history = RankObservationJsonlStore().list()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 67,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 96,
+        "text": "store = RankObservationJsonlStore()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 88,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 107,
+        "text": "store = RankObservationJsonlStore()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 90,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 109,
+        "text": "store = RankObservationJsonlStore()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V3.ps1",
+        "line": 91,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V3.ps1",
+        "line": 110,
+        "text": "store = RankObservationJsonlStore()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-Canonical-CutDate-Replay-DryRun-V1.ps1",
+        "line": 74,
+        "text": "RankObservationJsonlStore,"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-Canonical-CutDate-Replay-DryRun-V1.ps1",
+        "line": 397,
+        "text": "existing_history = RankObservationJsonlStore().list()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-Full-Research-Capture-V1.ps1",
+        "line": 203,
+        "text": "assert \"RankObservationJsonlStore().append_snapshot\" in source"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-Historical-Replay-Adapter-V1-FIX1.ps1",
+        "line": 399,
+        "text": "# Adapter does not receive or construct RankObservationJsonlStore;"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-Historical-Replay-Adapter-V1-FIX1.ps1",
+        "line": 401,
+        "text": "assert \"RankObservationJsonlStore\" not in replay.__dict__"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-Historical-Replay-Adapter-V1.ps1",
+        "line": 399,
+        "text": "# Adapter does not receive or construct RankObservationJsonlStore;"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-Historical-Replay-Adapter-V1.ps1",
+        "line": 401,
+        "text": "assert \"RankObservationJsonlStore\" not in replay.__dict__"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-PostIntegration-6Session-Acceptance-V1-FIX1.ps1",
+        "line": 75,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      }
+    ],
+    "ranking_memory": [
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 11,
+        "text": "$Memory = Join-Path $ProjectRoot \"backend\\app\\analysis\\ranking_memory.py\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 422,
+        "text": "from backend.app.analysis.ranking_memory import ("
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 11,
+        "text": "$Memory = Join-Path $ProjectRoot \"backend\\app\\analysis\\ranking_memory.py\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 418,
+        "text": "from backend.app.analysis.ranking_memory import ("
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 9,
+        "text": "$MemoryFile = Join-Path $ProjectRoot \"data\\ranking_memory\\rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 34,
+        "text": "Write-Host \"RANKING_MEMORY_WRITE=NO\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 67,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 93,
+        "text": "memory_path = root / \"data\" / \"ranking_memory\" / \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 100,
+        "text": "raise RuntimeError(\"PREFLIGHT_BLOCKED:NO_EXISTING_RANKING_MEMORY\")"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 347,
+        "text": "\"RANKING_MEMORY_UNCHANGED=YES\","
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 625,
+        "text": "raise RuntimeError(\"READ_ONLY_GUARD_FAIL:RANKING_MEMORY_CHANGED\")"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 627,
+        "text": "print(\"RANKING_MEMORY_UNCHANGED=YES\")"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 696,
+        "text": "Write-Host \"RANKING_MEMORY_UNCHANGED=YES\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 9,
+        "text": "$MemoryFile = Join-Path $ProjectRoot \"data\\ranking_memory\\rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 17,
+        "text": "(Join-Path $ProjectRoot \"backend\\app\\analysis\\ranking_memory.py\"),"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 32,
+        "text": "$backupMemory = Join-Path $rollback \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 88,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 106,
+        "text": "memory_path = root / \"data\" / \"ranking_memory\" / \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 111,
+        "text": "raise RuntimeError(\"REBUILD_BLOCKED:NO_EXISTING_RANKING_MEMORY\")"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 773,
+        "text": "print(\"RANKING_MEMORY_25AUG_CANONICAL=YES\")"
+      }
+    ],
+    "typed_record_next_day": [
+      {
+        "path": "_discovery\\Next-Day-Phase7A-Typed-Ledger-V1-20260829-140818.txt",
+        "line": 6,
+        "text": "SELECTION_RECORD_TYPE=next_day_selection_v1"
+      },
+      {
+        "path": "_discovery\\Next-Day-Phase7A-Typed-Ledger-V1-20260829-140818.txt",
+        "line": 7,
+        "text": "OUTCOME_RECORD_TYPE=next_day_outcome_v1"
+      },
+      {
+        "path": "backend\\app\\analysis\\next_day_observation_memory.py",
+        "line": 25,
+        "text": "SELECTION_RECORD_TYPE = \"next_day_selection_v1\""
+      },
+      {
+        "path": "backend\\app\\analysis\\next_day_observation_memory.py",
+        "line": 26,
+        "text": "OUTCOME_RECORD_TYPE = \"next_day_outcome_v1\""
+      }
+    ],
+    "typed_record_weekly": [
+      {
+        "path": "backend\\app\\analysis\\weekly_opportunity_memory.py",
+        "line": 20,
+        "text": "SNAPSHOT_RECORD_TYPE = \"weekly_opportunity_v1\""
+      },
+      {
+        "path": "backend\\app\\analysis\\weekly_opportunity_memory.py",
+        "line": 21,
+        "text": "OUTCOME_RECORD_TYPE = \"weekly_outcome_v1\""
+      }
+    ],
+    "persist_final_outcome": [
+      {
+        "path": "backend\\tests\\test_next_day_observation_memory.py",
+        "line": 17,
+        "text": "persist_final_outcome,"
+      },
+      {
+        "path": "backend\\tests\\test_next_day_observation_memory.py",
+        "line": 127,
+        "text": "assert persist_final_outcome("
+      },
+      {
+        "path": "backend\\tests\\test_next_day_observation_memory.py",
+        "line": 133,
+        "text": "assert persist_final_outcome("
+      },
+      {
+        "path": "backend\\tests\\test_next_day_outcome_runtime_adapter.py",
+        "line": 212,
+        "text": "assert \"persist_final_outcome\" in source"
+      },
+      {
+        "path": "backend\\app\\analysis\\next_day_observation_memory.py",
+        "line": 359,
+        "text": "def persist_final_outcome("
+      },
+      {
+        "path": "backend\\app\\analysis\\next_day_outcome_runtime_adapter.py",
+        "line": 13,
+        "text": "persist_final_outcome,"
+      },
+      {
+        "path": "backend\\app\\analysis\\next_day_outcome_runtime_adapter.py",
+        "line": 368,
+        "text": "persistence = persist_final_outcome(outcome, store=memory)"
+      }
+    ],
+    "observer_next_day": [
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 113,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:94|state = _norm(getattr(context, \\\"visibility_state\\\", getattr(context, \\\"state\\\", \\\"\\\")))\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 114,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:98|return float(getattr(context, \\\"rank_change\\\")) > 0\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 115,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:212|change = float(getattr(context, \\\"rank_change\\\"))\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 157,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:148|\\\"DUSUS TREND\\\", \\\"YAPI BOZUL\\\", \\\"STRUCTURE BREAKDOWN\\\", \\\"ASAGI KIRIL\\\",\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 158,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:241|levels = getattr(item, \\\"destek_direnc\\\", None)\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 178,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:225|momentum_values[symbol] = float(getattr(signal, \\\"momentum_puani\\\"))\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 236,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:8|evaluate_jump_candidate_entry_readiness,\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 237,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:230|readiness = evaluate_jump_candidate_entry_readiness(item)\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 406,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:134|rebound = any(x in n for x in (\\\"REBOUND\\\", \\\"TEPKI YUKSEL\\\", \\\"TEPKI HAREK\\\", \\\"REAKSIYON\\\"))\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 407,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:135|if rebound and any(x in n for x in (\\\"TRAP\\\", \\\"TUZAK\\\", \\\"FAIL\\\", \\\"BASARISIZ\\\", \\\"KIRILGAN\\\")):\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 408,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:137|if rebound:\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 409,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:172|freshness = getattr(scan_result, \\\"veri_tazeligi\\\", None)\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 410,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:173|freshness_valid = bool(freshness is not None and not bool(getattr(freshness, \\\"kilitli\\\", True)))\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 411,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:266|\\\"extension\\\": ext,\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 412,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:267|\\\"rebound\\\": reb,\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 536,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:116|_readiness_positive|args=state\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 537,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:123|_extension|args=state;reasons\","
+      },
+      {
+        "path": "_discovery\\Weekly-Opportunity-W1-Repository-Preflight-V1-20260830-101410.json",
+        "line": 538,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py:161|build_next_day_candidate_evidence|args=scan_result;visibility_contexts\","
+      },
+      {
+        "path": "backend\\tests\\test_next_day_outcome_runtime_adapter.py",
+        "line": 217,
+        "text": "\"backend/app/analysis/next_day_runtime_observer.py\""
+      },
+      {
+        "path": "backend\\tests\\test_next_day_runtime_observer.py",
+        "line": 8,
+        "text": "import backend.app.analysis.next_day_runtime_observer as observer"
+      }
+    ],
+    "daily_runner": [
+      {
+        "path": "backend\\dashboard.py",
+        "line": 204,
+        "text": "from backend.app.operations.daily_buy_decision_scheduled_runner import ("
+      },
+      {
+        "path": "scripts\\install_daily_buy_decision_tasks.ps1",
+        "line": 10,
+        "text": "$legacyModule = \"backend.app.operations.daily_buy_decision_scheduled_runner\""
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Bist-Tum-Single-Scan-Reuse-Design-Gate-V1-20260828-212544.txt",
+        "line": 38,
+        "text": "DEFAULT_RUNTIME_PATH=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Bist-Tum-Single-Scan-Reuse-Design-Gate-V1-20260828-212544.txt",
+        "line": 312,
+        "text": "backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:183: evren=\"BIST 100\","
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Bist-Tum-Single-Scan-Reuse-Design-Gate-V1-20260828-212544.txt",
+        "line": 330,
+        "text": "EXECUTE_SCHEDULED_RUN_PATH=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 11,
+        "text": "--- DEF=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:225|execute_scheduled_run ---"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 91,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:225|FUNC=execute_scheduled_run|DEPTH=0|CALLS=ScheduledRunAuditJsonStore;ScheduledRunJsonStore;ScheduledRunRecord;_default_runtime;_normalize_phase;append;candidate_snapshot;date;decisions;getattr;isoformat;len;load;now;operation_summary;persist_decision_snapshot;save;scan;str;tuple;type;visibility_contexts"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 92,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:143|FUNC=_default_runtime|DEPTH=1|CALLS=DailyBuyDecisionJsonStore;DecisionOutputArchiveJsonStore;DelayedDataPilotStore;MarketScanRequest;Runtime;ShadowPortfolioStore;SignalOutcomeJsonStore;TradeJournalStore;build_current_visibility_context;build_daily_buy_decision_snapshot;build_daily_buy_decisions;build_daily_operation_summary;build_dashboard_market_scanner;build_morning_operation_snapshot;calistir;list;list_records;tuple"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 93,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:136|FUNC=_normalize_phase|DEPTH=1|CALLS=ValueError;str"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 95,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:116|FUNC=append|DEPTH=1|CALLS=append;asdict;dumps;list;load;mkdir;write_text"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 96,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:35|FUNC=candidate_snapshot|DEPTH=1|CALLS="
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 97,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:198|FUNC=candidate_snapshot|DEPTH=1|CALLS=build_morning_operation_snapshot"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 98,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:36|FUNC=decisions|DEPTH=1|CALLS="
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 99,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:206|FUNC=decisions|DEPTH=1|CALLS=build_daily_buy_decisions;tuple"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 105,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:44|FUNC=load|DEPTH=1|CALLS=ScheduledRunRecord;dict;exists;get;loads;read_text;str;tuple"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 106,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:98|FUNC=load|DEPTH=1|CALLS=ScheduledRunRecord;append;dict;exists;get;isinstance;loads;read_text;tuple"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 107,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:32|FUNC=operation_summary|DEPTH=1|CALLS="
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 108,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:160|FUNC=operation_summary|DEPTH=1|CALLS=DelayedDataPilotStore;ShadowPortfolioStore;SignalOutcomeJsonStore;TradeJournalStore;build_daily_operation_summary;list;list_records"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 109,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:37|FUNC=persist_decision_snapshot|DEPTH=1|CALLS="
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 110,
+        "text": "NODE=backend\\app\\operations\\daily_buy_decision_scheduled_runner.py:209|FUNC=persist_decision_snapshot|DEPTH=1|CALLS=DailyBuyDecisionJsonStore;DecisionOutputArchiveJsonStore;build_daily_buy_decision_snapshot"
+      }
+    ],
+    "phase_runner": [
+      {
+        "path": "scripts\\install_daily_buy_decision_tasks.ps1",
+        "line": 9,
+        "text": "$module = \"backend.app.operations.scheduled_operation_phase_runner\""
+      },
+      {
+        "path": "scripts\\install_daily_buy_decision_tasks.ps1",
+        "line": 16,
+        "text": "$runnerPath = Join-Path $ProjectRoot \"backend\\app\\operations\\scheduled_operation_phase_runner.py\""
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Bist-Tum-Single-Scan-Reuse-Design-Gate-V1-20260828-212544.txt",
+        "line": 8,
+        "text": "CONCRETE_PATH=backend\\app\\operations\\scheduled_operation_phase_runner.py"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-171850.txt",
+        "line": 94,
+        "text": "NODE=backend\\app\\operations\\scheduled_operation_phase_runner.py:104|FUNC=_normalize_phase|DEPTH=1|CALLS=ScheduledOperationPhaseError;str"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Close-To-Ranking-Writer-Trace-V1-20260828-172027.txt",
+        "line": 94,
+        "text": "NODE=backend\\app\\operations\\scheduled_operation_phase_runner.py:104|FUNC=_normalize_phase|DEPTH=1|CALLS=ScheduledOperationPhaseError;str"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 21,
+        "text": "TASK=HisseRobotu-0845-PreOpen|STATE=Ready|LAST=11/30/1999 12:00:00 AM|RESULT=267011|NEXT=8/31/2026 8:45:45 AM|ACTION=D:\\Projects\\Hisse-Robotu\\.venv\\Scripts\\python.exe -m backend.app.operations.scheduled_operation_phase_runner --phase PREOPEN"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 23,
+        "text": "TASK=HisseRobotu-1020-PostOpen|STATE=Ready|LAST=11/30/1999 12:00:00 AM|RESULT=267011|NEXT=8/31/2026 10:20:20 AM|ACTION=D:\\Projects\\Hisse-Robotu\\.venv\\Scripts\\python.exe -m backend.app.operations.scheduled_operation_phase_runner --phase POSTOPEN"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 24,
+        "text": "TASK=HisseRobotu-1720-PreClose|STATE=Ready|LAST=11/30/1999 12:00:00 AM|RESULT=267011|NEXT=8/28/2026 5:20:20 PM|ACTION=D:\\Projects\\Hisse-Robotu\\.venv\\Scripts\\python.exe -m backend.app.operations.scheduled_operation_phase_runner --phase PRECLOSE"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 25,
+        "text": "TASK=HisseRobotu-1830-CanonicalClose|STATE=Ready|LAST=11/30/1999 12:00:00 AM|RESULT=267011|NEXT=8/28/2026 6:30:30 PM|ACTION=D:\\Projects\\Hisse-Robotu\\.venv\\Scripts\\python.exe -m backend.app.operations.scheduled_operation_phase_runner --phase CANONICAL_CLOSE"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 99,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:30|CANONICAL_CLOSE = \"CANONICAL_CLOSE\""
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 100,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:36|CANONICAL_CLOSE,"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 101,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:43|CANONICAL_CLOSE: (18, 30),"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 102,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:90|def canonical_close("
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 103,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:137|if phase == CANONICAL_CLOSE and clock < time(18, 30):"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 104,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:139|\"CANONICAL_CLOSE 18:30 öncesinde çalıştırılamaz.\""
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 105,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:214|def _latest_evening_record(self) -> Any | None:"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 106,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:215|return DecisionOutputArchiveJsonStore().latest(\"EVENING\")"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 107,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:222|record = self._latest_evening_record()"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 108,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:257|record = self._latest_evening_record()"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Canonical-Ranking-Memory-Continuity-Check-V1-20260828-170510.txt",
+        "line": 109,
+        "text": "REF=backend\\app\\operations\\scheduled_operation_phase_runner.py:354|def canonical_close("
+      }
+    ],
+    "weekly_runtime": [
+      {
+        "path": "backend\\tests\\test_weekly_opportunity_v1.py",
+        "line": 31,
+        "text": "from backend.app.analysis.weekly_opportunity_runtime import ("
+      },
+      {
+        "path": "backend\\tests\\test_weekly_opportunity_v1.py",
+        "line": 32,
+        "text": "observe_weekly_opportunity_runtime,"
+      },
+      {
+        "path": "backend\\tests\\test_weekly_opportunity_v1.py",
+        "line": 162,
+        "text": "\"backend.app.analysis.weekly_opportunity_runtime.settle_weekly_outcomes\","
+      },
+      {
+        "path": "backend\\tests\\test_weekly_opportunity_v1.py",
+        "line": 166,
+        "text": "result = observe_weekly_opportunity_runtime("
+      },
+      {
+        "path": "backend\\tests\\test_weekly_opportunity_v1.py",
+        "line": 179,
+        "text": "result2 = observe_weekly_opportunity_runtime("
+      },
+      {
+        "path": "backend\\tests\\test_weekly_opportunity_v1.py",
+        "line": 241,
+        "text": "import backend.app.analysis.weekly_opportunity_runtime as runtime"
+      },
+      {
+        "path": "backend\\app\\analysis\\next_day_runtime_observer.py",
+        "line": 18,
+        "text": "from backend.app.analysis.weekly_opportunity_runtime import observe_weekly_opportunity_runtime"
+      },
+      {
+        "path": "backend\\app\\analysis\\next_day_runtime_observer.py",
+        "line": 312,
+        "text": "observe_weekly_opportunity_runtime("
+      },
+      {
+        "path": "backend\\app\\analysis\\weekly_opportunity_runtime.py",
+        "line": 15,
+        "text": "CONTRACT_ID = \"WEEKLY_OPPORTUNITY_RUNTIME_V1\""
+      },
+      {
+        "path": "backend\\app\\analysis\\weekly_opportunity_runtime.py",
+        "line": 82,
+        "text": "def observe_weekly_opportunity_runtime("
+      }
+    ],
+    "ui_prebreakout": [
+      {
+        "path": "risk_filter_trace.txt",
+        "line": 102,
+        "text": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\prebreakout_dashboard.py:165: \"Risk/ödül\": None if features is None else round(features.risk_odul, 2),"
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 29,
+        "text": "from backend.app.ui.prebreakout_dashboard import on_yukselis_hazirlik_formu"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 43,
+        "text": "from backend.app.ui.prebreakout_dashboard import on_yukselis_hazirlik_formu"
+      },
+      {
+        "path": "Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\\Kur-Hisse-Robotu-Sprint-84.ps1",
+        "line": 17,
+        "text": "\"$PackageRoot\\backend\\app\\ui\\prebreakout_dashboard.py\" `"
+      },
+      {
+        "path": "Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\\Kur-Hisse-Robotu-Sprint-84.ps1",
+        "line": 18,
+        "text": "\"$UiTarget\\prebreakout_dashboard.py\" `"
+      },
+      {
+        "path": "Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\\Kur-Hisse-Robotu-Sprint-84.ps1",
+        "line": 22,
+        "text": "\"test_prebreakout_dashboard.py\","
+      },
+      {
+        "path": "Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\\Kur-Hisse-Robotu-Sprint-84.ps1",
+        "line": 38,
+        "text": "backend/tests/test_prebreakout_dashboard.py `"
+      },
+      {
+        "path": "Sprint84_Rev1_On_Yukselis_Streamlit_Ekrani\\patch_dashboard_sprint84.py",
+        "line": 9,
+        "text": "\"from backend.app.ui.prebreakout_dashboard import \""
+      },
+      {
+        "path": "Sprint85_Rev1_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 20,
+        "text": "Copy-Item \"$PackageRoot\\backend\\app\\ui\\prebreakout_dashboard.py\" \"$UiTarget\\prebreakout_dashboard.py\" -Force"
+      },
+      {
+        "path": "Sprint85_Rev1_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 26,
+        "text": "\"test_prebreakout_dashboard_performance_label.py\""
+      },
+      {
+        "path": "Sprint85_Rev1_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 43,
+        "text": "backend/tests/test_prebreakout_dashboard.py `"
+      },
+      {
+        "path": "Sprint85_Rev1_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 47,
+        "text": "backend/tests/test_prebreakout_dashboard_performance_label.py `"
+      },
+      {
+        "path": "Sprint85_Rev2_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 20,
+        "text": "Copy-Item \"$PackageRoot\\backend\\app\\ui\\prebreakout_dashboard.py\" \"$UiTarget\\prebreakout_dashboard.py\" -Force"
+      },
+      {
+        "path": "Sprint85_Rev2_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 26,
+        "text": "\"test_prebreakout_dashboard_performance_label.py\""
+      },
+      {
+        "path": "Sprint85_Rev2_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 43,
+        "text": "backend/tests/test_prebreakout_dashboard.py `"
+      },
+      {
+        "path": "Sprint85_Rev2_Momentum_Kapisi_Performans_Etiketi\\Kur-Hisse-Robotu-Sprint-85.ps1",
+        "line": 47,
+        "text": "backend/tests/test_prebreakout_dashboard_performance_label.py `"
+      },
+      {
+        "path": "Sprint87_Rev1_Toplu_Tarihsel_Dogrulama_Streamlit\\patch_dashboard_sprint87.py",
+        "line": 14,
+        "text": "\"from backend.app.ui.prebreakout_dashboard import \""
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Next-Day-Discovery-Development-Preflight-V1-20260828-211824.txt",
+        "line": 41,
+        "text": "OHLC_FILES=backend\\app\\analysis\\bist_daily_market.py;backend\\app\\analysis\\market_regime.py;backend\\app\\backtest\\analysis_context.py;backend\\app\\backtest\\backtest_engine.py;backend\\app\\backtest\\historical_signal_generator.py;backend\\app\\data\\bist_official_archive.py;backend\\app\\data\\bist_official_batch_bridge.py;backend\\app\\data\\bist_official_daily.py;backend\\app\\data\\data_source_recovery.py;backend\\app\\data\\delayed_data_pilot.py;backend\\app\\data\\market_data.py;backend\\app\\diagnostics\\system_chec"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Scheduled-Data-Phase-Capability-Preflight-V2-20260827-171437.txt",
+        "line": 70,
+        "text": "PROVIDER_FILE=backend\\app\\ui\\prebreakout_dashboard.py"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Scheduled-Data-Phase-Capability-Preflight-V2-20260827-171437.txt",
+        "line": 81,
+        "text": "PROVIDER_FILE=backups\\on-yukselis-evren-secimi-20260802-135244\\backend\\app\\ui\\prebreakout_dashboard.py"
+      }
+    ],
+    "ui_research_label": [
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2660,
+        "text": "\"teknik analizde doğrulanacak araştırma adaylarını sıralar.\""
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 2787,
+        "text": "\"teknik analizde doğrulanacak araştırma adaylarını sıralar.\""
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 2865,
+        "text": "\"teknik analizde doğrulanacak araştırma adaylarını sıralar.\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 357,
+        "text": "assert 'st.markdown(\"#### Bugünün 10 Araştırma Adayı\")' in source"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 372,
+        "text": "st.markdown(\"#### Bugünün 10 Araştırma Adayı\")"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 374,
+        "text": "\"İlk 5 mevcut operasyon/karar adayını aynen korur. Ek 5 araştırma adayı, \""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 356,
+        "text": "assert 'st.markdown(\"#### Bugünün 10 Araştırma Adayı\")' in source"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 370,
+        "text": "st.markdown(\"#### Bugünün 10 Araştırma Adayı\")"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 372,
+        "text": "\"İlk 5 mevcut operasyon/karar adayını aynen korur. Ek 5 araştırma adayı, \""
+      },
+      {
+        "path": "KULLANIM.md",
+        "line": 3,
+        "text": "Hisse Robotu kişisel araştırma, teknik analiz ve risk karar desteği amacıyla geliştirilmiştir. Emir göndermez. Sonuçlar yatırım tavsiyesi değildir."
+      },
+      {
+        "path": "KULLANIM_KILAVUZU.md",
+        "line": 3,
+        "text": "Hisse Robotu kişisel araştırma, teknik analiz ve risk karar desteği amacıyla geliştirilmiştir. Emir göndermez. Sonuçlar yatırım tavsiyesi değildir."
+      },
+      {
+        "path": "SPRINT_164_NOTES.md",
+        "line": 4,
+        "text": "araştırma için hızlı ve güvenli biçimde filtrelenebilir hale getirmek."
+      },
+      {
+        "path": "SPRINT_34_NOTES.md",
+        "line": 5,
+        "text": "BIST hisselerini tek tek yazıp analiz etmek yerine, seçilen hisse evrenini topluca taramak ve teknik araştırma adaylarını sıralamak."
+      },
+      {
+        "path": "SPRINT_35_NOTES.md",
+        "line": 19,
+        "text": "A/B/C sınıfları araştırma ve doğrulama listesidir. Nihai karar Güncel Teknik Analiz, risk/getiri ve pozisyon planı üzerinden verilir. D sınıfı peşinden koşulmaması gereken aşırı uzamış hisseleri ayırır."
+      },
+      {
+        "path": "SPRINT_35_REV1_NOTES.md",
+        "line": 5,
+        "text": "GRSEL benzeri güçlü hareketleri yalnızca kırılım gerçekleştikten sonra değil, sıkışma, hacim birikimi ve direnç yaklaşımı aşamalarında araştırma adayı olarak göstermek."
+      },
+      {
+        "path": "SPRINT_35_REV2_NOTES.md",
+        "line": 20,
+        "text": "Momentum ve hazırlık sınıfları araştırma amaçlıdır; kesin alım veya satım tavsiyesi değildir. Kalıcı hazırlık, yalnızca adayın izleme listesinden erken düşmesini önler. İşlem için Güncel Teknik Analiz teyidi ve uygun risk/getiri planı gerekir."
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 3922,
+        "text": "\"teknik analizde doğrulanacak araştırma adaylarını sıralar.\""
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 8034,
+        "text": "\"Araştırma önceliği\","
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 8080,
+        "text": "\"Early Visibility yalnız araştırma bağlamı ekler; teknik skoru \""
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 546,
+        "text": "\"Araştırma\","
+      }
+    ],
+    "streamlit": [
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 229,
+        "text": "req = request.Request(url=url, data=body, headers=headers, method=\"POST\")"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 231,
+        "text": "with request.urlopen(req, timeout=timeout) as response:"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 475,
+        "text": "backend\\dashboard.py:1064:    st.success(kayit.baslik)"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 476,
+        "text": "backend\\dashboard.py:1065:    st.caption("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 486,
+        "text": "backend\\dashboard.py:1144:    with st.sidebar:"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 487,
+        "text": "backend\\dashboard.py:1145:        st.header(\"Analiz geçmişi\")"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 488,
+        "text": "backend\\dashboard.py:1146:        tur_etiketi = st.selectbox("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 494,
+        "text": "backend\\dashboard.py:1151:        arama = st.text_input("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 501,
+        "text": "st.selectbox("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 530,
+        "text": "backend\\dashboard.py:1200:        st.error(str(hata))"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 537,
+        "text": "backend\\dashboard.py:1205:    with st.sidebar:"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 539,
+        "text": "st.multiselect("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 546,
+        "text": "> backend\\dashboard.py:1935:    st.subheader(f\"{teknik.sembol}"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 574,
+        "text": "backend\\dashboard.py:2225:    with st.sidebar:"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 575,
+        "text": "> backend\\dashboard.py:2226:        st.header(\"Güncel teknik"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 578,
+        "text": "st.form(\"guncel_teknik_analiz_formu\"):"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 579,
+        "text": "backend\\dashboard.py:2228:            sembol = st.text_input("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 586,
+        "text": "st.number_input("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 593,
+        "text": "st.number_input("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 604,
+        "text": "> backend\\dashboard.py:2278:        st.caption(\"Güncel teknik"
+      }
+    ],
+    "requests": [
+      {
+        "path": "apply_sprint38_dashboard_kap_wiring.py",
+        "line": 19,
+        "text": "if \"import requests\\n\" not in source:"
+      },
+      {
+        "path": "apply_sprint38_dashboard_kap_wiring.py",
+        "line": 24,
+        "text": "anchor + \"\\nimport requests\\n\","
+      },
+      {
+        "path": "apply_sprint38_dashboard_kap_wiring.py",
+        "line": 28,
+        "text": "source = \"import requests\\n\" + source"
+      },
+      {
+        "path": "apply_sprint38_dashboard_kap_wiring.py",
+        "line": 61,
+        "text": "http_get=requests.get,"
+      },
+      {
+        "path": "apply_sprint39_dashboard_manual_vbts_wiring.py",
+        "line": 41,
+        "text": "'                http_get=requests.get,\\n'"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 7,
+        "text": "import requests"
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 7,
+        "text": "import requests"
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 7,
+        "text": "import requests"
+      },
+      {
+        "path": "sprint144c_integration_context.txt",
+        "line": 17,
+        "text": "from urllib.request import urlopen"
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 12,
+        "text": "import urllib.request"
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 3829,
+        "text": "with urllib.request.urlopen(health_url, timeout=1.5) as response:"
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 3860,
+        "text": "with urllib.request.urlopen(health_url, timeout=1.0) as response:"
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 3870,
+        "text": "request = urllib.request.Request("
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 3877,
+        "text": "with urllib.request.urlopen(request, timeout=5) as response:"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 12,
+        "text": "import urllib.request"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 3972,
+        "text": "with urllib.request.urlopen(health_url, timeout=1.5) as response:"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 4003,
+        "text": "with urllib.request.urlopen(health_url, timeout=1.0) as response:"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 4013,
+        "text": "request = urllib.request.Request("
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 4020,
+        "text": "with urllib.request.urlopen(request, timeout=5) as response:"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-V1.1-Data-Freshness-Recovery-Exact-20260817-153839.txt",
+        "line": 251,
+        "text": "12 | INDENT= 0 | from urllib.request import urlopen"
+      }
+    ],
+    "provider_client": [
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 24,
+        "text": "### D:\\Projects\\Hisse-Robotu\\backend\\app\\market_context\\ai_dashboard_provider.py"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 66,
+        "text": "from backend.app.market_context.ai_provider import ("
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 67,
+        "text": "AIProviderConfig,"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 68,
+        "text": "AIProviderError,"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 69,
+        "text": "build_provider,"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 103,
+        "text": "config: AIProviderConfig | None = None,"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 104,
+        "text": "provider=None,"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 110,
+        "text": "\"provider\": \"\","
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 116,
+        "text": "selected_provider = provider or build_provider(config)"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 120,
+        "text": "result = selected_provider.evaluate(prompt)"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 121,
+        "text": "except AIProviderError as exc:"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 122,
+        "text": "cfg = getattr(selected_provider, \"config\", None)"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 125,
+        "text": "\"status\": \"provider_error\","
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 126,
+        "text": "\"provider\": getattr(cfg, \"provider\", \"\"),"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 136,
+        "text": "\"provider\": result.provider,"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 146,
+        "text": "\"provider\": result.provider,"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 153,
+        "text": "### D:\\Projects\\Hisse-Robotu\\backend\\app\\market_context\\ai_provider.py"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 165,
+        "text": "class AIProviderError(RuntimeError):"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 170,
+        "text": "class AIProviderConfig:"
+      },
+      {
+        "path": "ai_chat_integration_trace.txt",
+        "line": 171,
+        "text": "provider: str = \"gemini\""
+      }
+    ],
+    "tefas": [],
+    "fund_words": [
+      {
+        "path": "KULLANIM_KILAVUZU.md",
+        "line": 227,
+        "text": "backend\\data\\fundamental_scores.json"
+      },
+      {
+        "path": "KULLANIM_KILAVUZU.md",
+        "line": 258,
+        "text": "backend\\data\\fundamental_report_archive.json"
+      },
+      {
+        "path": "KULLANIM_KILAVUZU.md",
+        "line": 277,
+        "text": "backend\\data\\fundamental_analysis_settings.json"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 44,
+        "text": "backend\\tests\\test_fundamental_v1_closeout.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 45,
+        "text": "backend\\tests\\test_fundamental_models.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 46,
+        "text": "backend\\tests\\test_fundamental_data.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 47,
+        "text": "backend\\tests\\test_fundamental_store.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 48,
+        "text": "backend\\tests\\test_fundamental_analysis.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 49,
+        "text": "backend\\tests\\test_fundamental_quality.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 50,
+        "text": "backend\\tests\\test_fundamental_score_store.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 51,
+        "text": "backend\\tests\\test_fundamental_score_history.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 55,
+        "text": "backend\\tests\\test_fundamental_report.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 56,
+        "text": "backend\\tests\\test_fundamental_report_archive.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 57,
+        "text": "backend\\tests\\test_fundamental_report_archive_filter.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 58,
+        "text": "backend\\tests\\test_fundamental_settings.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_KAPANIS.md",
+        "line": 59,
+        "text": "backend\\tests\\test_fundamental_settings_integration.py `"
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_MANIFEST.json",
+        "line": 10,
+        "text": "\"fundamental_ratios\","
+      },
+      {
+        "path": "TEMEL_ANALIZ_V1_MANIFEST.json",
+        "line": 24,
+        "text": "\"fundamental_filter_default_enabled\": false,"
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 34,
+        "text": "from backend.app.analysis.fundamental_analysis import ("
+      },
+      {
+        "path": "backend\\dashboard.backup_before_navigation_fix.py",
+        "line": 35,
+        "text": "build_fundamental_snapshot,"
+      }
+    ],
+    "outcome_words": [
+      {
+        "path": "Close-Teknik-Analiz-V1.2.ps1",
+        "line": 27,
+        "text": "\"backend/tests/test_signal_outcome_tracking.py\","
+      },
+      {
+        "path": "Close-Teknik-Analiz-V1.2.ps1",
+        "line": 28,
+        "text": "\"backend/tests/test_signal_outcome_tracking_dashboard.py\","
+      },
+      {
+        "path": "Close-Teknik-Analiz-V1.2.ps1",
+        "line": 31,
+        "text": "\"backend/tests/test_walk_forward_calibration.py\","
+      },
+      {
+        "path": "Close-Teknik-Analiz-V1.2.ps1",
+        "line": 32,
+        "text": "\"backend/tests/test_walk_forward_calibration_dashboard.py\","
+      },
+      {
+        "path": "Close-Teknik-Analiz-V1.2.ps1",
+        "line": 161,
+        "text": "\"signal outcome tracking\","
+      },
+      {
+        "path": "Close-Teknik-Analiz-V1.2.ps1",
+        "line": 163,
+        "text": "\"walk-forward calibration\""
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 148,
+        "text": "from backend.app.analysis.momentum_walk_forward import ("
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 149,
+        "text": "MomentumWalkForwardError,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 150,
+        "text": "MomentumWalkForwardRequest,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 151,
+        "text": "MomentumWalkForwardResult,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 152,
+        "text": "MomentumWalkForwardService,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 154,
+        "text": "walk_forward_izleme_disi_tablosu,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 155,
+        "text": "walk_forward_tablosu,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2035,
+        "text": "def momentum_walk_forward_sonucu_goster(sonuc: MomentumWalkForwardResult) -> None:"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2059,
+        "text": "kayitlar = walk_forward_tablosu(sonuc)"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2086,
+        "text": "key=\"momentum_walk_forward_aday_ayrintisi\","
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2103,
+        "text": "\"Bu karttaki gün içi veri, tarihsel aday üretimine ve walk-forward \""
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2173,
+        "text": "izleme_disi = walk_forward_izleme_disi_tablosu(sonuc)"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2195,
+        "text": "MOMENTUM_REPLAY_RESULT_KEY = \"momentum_walk_forward_sonucu\""
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 2196,
+        "text": "MOMENTUM_REPLAY_SIGNATURE_KEY = \"momentum_walk_forward_imzasi\""
+      }
+    ],
+    "jsonl": [
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 423,
+        "text": "RankObservationJsonlStore,"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 429,
+        "text": "_daily10_rank_history = RankObservationJsonlStore().list()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 419,
+        "text": "RankObservationJsonlStore,"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 425,
+        "text": "_daily10_rank_history = RankObservationJsonlStore().list()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 9,
+        "text": "$MemoryFile = Join-Path $ProjectRoot \"data\\ranking_memory\\rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 67,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 93,
+        "text": "memory_path = root / \"data\" / \"ranking_memory\" / \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 96,
+        "text": "store = RankObservationJsonlStore()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 9,
+        "text": "$MemoryFile = Join-Path $ProjectRoot \"data\\ranking_memory\\rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 32,
+        "text": "$backupMemory = Join-Path $rollback \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 88,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 106,
+        "text": "memory_path = root / \"data\" / \"ranking_memory\" / \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 107,
+        "text": "store = RankObservationJsonlStore()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V1.ps1",
+        "line": 567,
+        "text": "# Parse raw JSONL so every unrelated line can be preserved byte-for-byte."
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 9,
+        "text": "$MemoryFile = Join-Path $ProjectRoot \"data\\ranking_memory\\rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 32,
+        "text": "$backupMemory = Join-Path $rollback \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 90,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 108,
+        "text": "memory_path = root / \"data\" / \"ranking_memory\" / \"rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 109,
+        "text": "store = RankObservationJsonlStore()"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-25Aug-Canonical-Session-Rebuild-V2.ps1",
+        "line": 604,
+        "text": "# Parse raw JSONL so every unrelated line can be preserved byte-for-byte."
+      }
+    ],
+    "scheduler": [
+      {
+        "path": "backend\\dashboard.py",
+        "line": 208,
+        "text": "scheduler_audit_rows,"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 209,
+        "text": "scheduler_daily_chain_rows,"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 210,
+        "text": "scheduler_health_rows,"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 211,
+        "text": "scheduler_status_rows,"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8154,
+        "text": "\"Windows görevleri kurulduğunda sistem hafta içi 18:20'de seans sonu, \""
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8158,
+        "text": "_scheduler_store = ScheduledRunJsonStore()"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8160,
+        "text": "pd.DataFrame(scheduler_health_rows(_scheduler_store)),"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8168,
+        "text": "_retry_evening = retry_failed_or_missing_run(\"EVENING\", store=_scheduler_store)"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8177,
+        "text": "_retry_morning = retry_failed_or_missing_run(\"MORNING\", store=_scheduler_store)"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8190,
+        "text": "_audit_rows = scheduler_audit_rows(_audit_store, limit=50)"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8201,
+        "text": "_chain_rows = scheduler_daily_chain_rows(_scheduler_store, limit_days=14)"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8210,
+        "text": "except (OSError, ValueError, TypeError) as _scheduler_status_error:"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8211,
+        "text": "st.caption(f\"Otomatik koşu durumu okunamadı: {_scheduler_status_error}\")"
+      },
+      {
+        "path": "backend\\dashboard.py",
+        "line": 8216,
+        "text": "\"18:20 EOD ve 09:00 Morning koşularını scheduler durumu, audit kaydı ve \""
+      },
+      {
+        "path": "scripts\\install_daily_buy_decision_tasks.ps1",
+        "line": 21,
+        "text": "# Existing Windows Task Scheduler framework, upgraded to four operation phases."
+      },
+      {
+        "path": "scripts\\install_daily_buy_decision_tasks.ps1",
+        "line": 23,
+        "text": "# No parallel scheduler is created."
+      },
+      {
+        "path": "scripts\\install_daily_buy_decision_tasks.ps1",
+        "line": 129,
+        "text": "Write-Host \"PARALLEL_SCHEDULER=NO\""
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Baseline-Regression-Failure-Family-Report-20260828-004309.txt",
+        "line": 5,
+        "text": "SCHEDULER_MUTATION=NO"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Baseline-Regression-Failure-Family-Report-20260828-004309.txt",
+        "line": 131,
+        "text": "DO_NOT_PATCH_SCHEDULER=YES"
+      },
+      {
+        "path": "_discovery\\Hisse-Robotu-Baseline-Regression-Failure-Family-Report-20260828-004309.txt",
+        "line": 138,
+        "text": "SCHEDULER_MUTATION=NO"
+      }
+    ],
+    "risk_plan": [
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 1721,
+        "text": "(\"Stop-loss\", opsiyonel_fiyat_yaz(plan.stop_loss)),"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 1739,
+        "text": "\"Alt\": plan.stop_loss,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 1740,
+        "text": "\"Üst\": plan.stop_loss,"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 1869,
+        "text": "(\"Risk/Getiri\", f\"1:{aday.risk_odul_orani:.2f}\"),"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 3418,
+        "text": "stop_loss=_opsiyonel_fiyat(float(stop)),"
+      },
+      {
+        "path": "dashboard.sprint44.py",
+        "line": 3562,
+        "text": "stop_loss=_opsiyonel_fiyat(float(stop)),"
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 1726,
+        "text": "(\"Stop-loss\", opsiyonel_fiyat_yaz(plan.stop_loss)),"
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 1744,
+        "text": "\"Alt\": plan.stop_loss,"
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 1745,
+        "text": "\"Üst\": plan.stop_loss,"
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 1874,
+        "text": "(\"Risk/Getiri\", f\"1:{aday.risk_odul_orani:.2f}\"),"
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 3545,
+        "text": "stop_loss=_opsiyonel_fiyat(float(stop)),"
+      },
+      {
+        "path": "dashboard.sprint45.py",
+        "line": 3689,
+        "text": "stop_loss=_opsiyonel_fiyat(float(stop)),"
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 1729,
+        "text": "(\"Stop-loss\", opsiyonel_fiyat_yaz(plan.stop_loss)),"
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 1747,
+        "text": "\"Alt\": plan.stop_loss,"
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 1748,
+        "text": "\"Üst\": plan.stop_loss,"
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 1877,
+        "text": "(\"Risk/Getiri\", f\"1:{aday.risk_odul_orani:.2f}\"),"
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 3623,
+        "text": "stop_loss=_opsiyonel_fiyat(float(stop)),"
+      },
+      {
+        "path": "dashboard.sprint46.py",
+        "line": 3767,
+        "text": "stop_loss=_opsiyonel_fiyat(float(stop)),"
+      },
+      {
+        "path": "final_data_confirmation_trace.txt",
+        "line": 18,
+        "text": "RiskPlan,"
+      },
+      {
+        "path": "final_data_confirmation_trace.txt",
+        "line": 71,
+        "text": "risk_plani: RiskPlan"
+      }
+    ],
+    "research_rank": [
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 10,
+        "text": "$Trajectory = Join-Path $ProjectRoot \"backend\\app\\analysis\\ranking_trajectory.py\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 11,
+        "text": "$Memory = Join-Path $ProjectRoot \"backend\\app\\analysis\\ranking_memory.py\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 127,
+        "text": "from backend.app.analysis.ranking_trajectory import RankTrajectory"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 189,
+        "text": "improves monotonically inside the configured research rank band."
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 195,
+        "text": "4) current Research rank ascending"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 277,
+        "text": "from backend.app.analysis.ranking_trajectory import RankTrajectory"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 422,
+        "text": "from backend.app.analysis.ranking_memory import ("
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1-FIX1.ps1",
+        "line": 425,
+        "text": "from backend.app.analysis.ranking_trajectory import ("
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 10,
+        "text": "$Trajectory = Join-Path $ProjectRoot \"backend\\app\\analysis\\ranking_trajectory.py\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 11,
+        "text": "$Memory = Join-Path $ProjectRoot \"backend\\app\\analysis\\ranking_memory.py\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 126,
+        "text": "from backend.app.analysis.ranking_trajectory import RankTrajectory"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 188,
+        "text": "improves monotonically inside the configured research rank band."
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 194,
+        "text": "4) current Research rank ascending"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 276,
+        "text": "from backend.app.analysis.ranking_trajectory import RankTrajectory"
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 418,
+        "text": "from backend.app.analysis.ranking_memory import ("
+      },
+      {
+        "path": "Hisse-Robotu-Daily-10-Trajectory-V1.ps1",
+        "line": 421,
+        "text": "from backend.app.analysis.ranking_trajectory import ("
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 9,
+        "text": "$MemoryFile = Join-Path $ProjectRoot \"data\\ranking_memory\\rank_observations.jsonl\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 34,
+        "text": "Write-Host \"RANKING_MEMORY_WRITE=NO\""
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 67,
+        "text": "from backend.app.analysis.ranking_memory import RankObservationJsonlStore"
+      },
+      {
+        "path": "Hisse-Robotu-Daily10-18To24-History-Inventory-Preflight-V1.ps1",
+        "line": 93,
+        "text": "memory_path = root / \"data\" / \"ranking_memory\" / \"rank_observations.jsonl\""
+      }
+    ]
+  }
+}

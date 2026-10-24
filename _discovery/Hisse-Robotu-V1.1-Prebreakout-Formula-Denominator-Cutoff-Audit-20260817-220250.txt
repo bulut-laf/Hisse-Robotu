@@ -1,0 +1,70 @@
+﻿=== EXACT SOURCE CONTRACTS ===
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py
+FUNCTION=_performance|LINE=131
+FUNCTION=asama_kalibrasyonunu_hesapla|LINE=150
+FUNCTION=asama_kalibrasyonunu_tabloya_cevir|LINE=202
+FUNCTION=momentum_kalibrasyonunu_hesapla|LINE=238
+FUNCTION=momentum_kalibrasyonunu_tabloya_cevir|LINE=280
+FUNCTION=kalibrasyon_ozetini_hesapla|LINE=310
+FUNCTION=_wilson_interval|LINE=346
+FUNCTION=asama_guven_araliklarini_hesapla|LINE=369
+FUNCTION=asama_guven_araliklarini_tabloya_cevir|LINE=414
+FUNCTION=lider_duyarlilik_senaryolarini_hesapla|LINE=434
+FUNCTION=lider_duyarlilik_senaryolarini_tabloya_cevir|LINE=529
+FUNCTION=kalibrasyon_esik_onerilerini_hesapla|LINE=551
+FUNCTION=kalibrasyon_esik_onerilerini_tabloya_cevir|LINE=620
+FUNCTION=esik_onerilerini_tarihsel_dogrula|LINE=641
+FUNCTION=esik_dogrulamalarini_tabloya_cevir|LINE=702
+FUNCTION=dogrulanmis_esik_politikasi_olustur|LINE=726
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py
+FUNCTION=uygun_kesim_tarihleri|LINE=73
+FUNCTION=sembol_tarihsel_dogrulama|LINE=95
+FUNCTION=toplu_tarihsel_dogrulama|LINE=130
+FUNCTION=dogrulama_ozeti|LINE=166
+FUNCTION=__post_init__|LINE=28
+FILE=D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation_report.py
+FUNCTION=dogrulama_kayitlarini_tabloya_cevir|LINE=11
+FUNCTION=dogrulama_ozetini_tabloya_cevir|LINE=63
+FUNCTION=asama_bazli_ozet|LINE=87
+FORMULA_CONTRACTS=33
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=24|successful_count: int
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=26|false_positive_count: int
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=27|success_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=45|successful_count: int
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=46|success_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=58|best_stage_success_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=67|successful_count: int
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=68|success_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=112|baseline_success_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=114|candidate_success_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=115|success_rate_delta_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=321|best = max( reliable, key=lambda row: (row.success_rate_pct, row.measured_count, row.stage), default=None, )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=352|proportion = successful / measured
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=391|reliable = sorted( (item for item in values if item.sample_sufficient), key=lambda item: ( -item.confidence_low_pct, -item.success_rate_pct, -item.measured_count, item.stage, ), )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=159|successful = sum( label == PreBreakoutPerformanceLabel.BASARILI for _, label in measured )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=167|false_positive = sum( label == PreBreakoutPerformanceLabel.YANLIS_POZITIF for _, label in measured )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=253|successful = sum( label == PreBreakoutPerformanceLabel.BASARILI for _, label in measured )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=378|low, high = _wilson_interval(row.successful_count, row.measured_count)
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=580|best_band = max( bands, key=lambda item: ( item.success_rate_pct, item.measured_count, _band_lower_bound(item.momentum_band), ), default=None, )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=663|baseline_successful = sum(r.successful_count for r in rows)
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=668|candidate_successful = sum(r.successful_count for r in candidate)
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=669|baseline_rate = _rate(baseline_successful, baseline_count)
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=670|candidate_rate = _rate(candidate_successful, candidate_count)
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_calibration.py|LINE=672|confidence_low, _ = _wilson_interval( candidate_successful, candidate_count )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|LINE=54|successful: int
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|LINE=56|false_positive: int
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|LINE=60|success_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|LINE=61|false_positive_rate_pct: float
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|LINE=171|successful = labels.count(PreBreakoutPerformanceLabel.BASARILI)
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|LINE=173|false_positive = labels.count( PreBreakoutPerformanceLabel.YANLIS_POZITIF )
+FORMULA|D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_validation.py|LINE=189|evaluated_candidates = successful + limited + false_positive
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\hr_prebreakout_formula_088f9898f84c4884a31d5e29015e98c4.py", line 79, in <module>
+    print(f"FORMULA|{p}|LINE={line}|{src}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u015f' in position 155: character maps to <undefined>
+EXIT_CODE=1

@@ -1,0 +1,11 @@
+﻿D:\Projects\Hisse-Robotu\backend\app\opportunity_radar.py:612: def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_candidate_flow.py:117: def build_morning_candidate_cards(
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_operation_snapshot.py:9: build_morning_candidate_cards,
+D:\Projects\Hisse-Robotu\backend\app\analysis\morning_operation_snapshot.py:45: cards = build_morning_candidate_cards(
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:7: class TodaysFiveCandidatesView:
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:13: def build_todays_five_candidates_view(
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:15: ) -> TodaysFiveCandidatesView:
+D:\Projects\Hisse-Robotu\backend\app\analysis\todays_five_candidates_view.py:21: return TodaysFiveCandidatesView(
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:6: from backend.app.opportunity_radar import OpportunityRadarResult, run_opportunity_radar
+D:\Projects\Hisse-Robotu\backend\app\ui\opportunity_radar_dashboard.py:44: result = run_opportunity_radar(result_limit=int(result_limit))
+D:\Projects\Hisse-Robotu\backend\dashboard.py:46: from backend.app.ui.opportunity_radar_dashboard import render_opportunity_radar

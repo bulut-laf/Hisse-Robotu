@@ -1,0 +1,80 @@
+﻿TEFAS_PROVIDER_ACTIVATION_PREFLIGHT
+TIMESTAMP=20260901-192652
+LIVE_REPORT=D:\Projects\Hisse-Robotu\_discovery\tefas_live_contract_v3_20260901-185204.json
+
+[UNIVERSE]
+ENDPOINT=fonGetiriBazliBilgiGetir
+HTTP_STATUS=200
+ROW_COUNT=2137
+FIRST_ROW_KEYS=fonKodu,fonUnvan,fonTurAciklama,tefasDurum,getiri1a,getiri3a,getiri6a,getiri1y,getiriyb,getiri3y,getiri5y,getiriOrani,riskDegeri
+ERROR=
+
+[DETAIL]
+ENDPOINT=fonBilgiGetir
+HTTP_STATUS=200
+ROW_COUNT=
+FIRST_ROW_KEYS=
+ERROR=
+
+[HISTORY]
+ENDPOINT=fonFiyatBilgiGetir
+HTTP_STATUS=200
+ROW_COUNT=22
+FIRST_ROW_KEYS=fonKodu,fonUnvan,kategoriDerece,kategoriFonSay,tarih,fiyat
+ERROR=
+
+[REPOSITORY_HITS]
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:13 | class TefasProviderError(RuntimeError):
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:13 | class TefasProviderError(RuntimeError):
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:17 | def canonical_tefas_fund_id(provider_fund_id: object) -> str:
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:17 | def canonical_tefas_fund_id(provider_fund_id: object) -> str:
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:18 | return f"fund:tefas:{normalize_fund_code(provider_fund_id)}"
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:18 | return f"fund:tefas:{normalize_fund_code(provider_fund_id)}"
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:21 | def fetch_tefas_bytes(url: str, timeout_seconds: int = 10) -> bytes:
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:21 | def fetch_tefas_bytes(url: str, timeout_seconds: int = 10) -> bytes:
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:24 | error_type=TefasProviderError, source_label="TEFAS",
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:24 | error_type=TefasProviderError, source_label="TEFAS",
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:29 | def map_tefas_rows(
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:29 | def map_tefas_rows(
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:41 | raise TefasProviderError(f"DUPLICATE_FUND_OBSERVATION:{code}:{observed}")
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:41 | raise TefasProviderError(f"DUPLICATE_FUND_OBSERVATION:{code}:{observed}")
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:43 | canonical_id = canonical_tefas_fund_id(row.get("provider_fund_id", code))
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:43 | canonical_id = canonical_tefas_fund_id(row.get("provider_fund_id", code))
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:52 | category_name=category_name, provider="TEFAS",
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:52 | category_name=category_name, provider="TEFAS",
+tefas | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:65 | provider="TEFAS", fetched_at=fetched_at, source_as_of=source_as_of,
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\funds\tefas_adapter.py:65 | provider="TEFAS", fetched_at=fetched_at, source_as_of=source_as_of,
+tefas | D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:23 | st.caption("TEFAS/fon araştırma dikeyidir. BIST taraması çalıştırmaz; otomatik AL/SAT üretmez.")
+TEFAS | D:\Projects\Hisse-Robotu\backend\app\ui\fund_analysis_center.py:23 | st.caption("TEFAS/fon araştırma dikeyidir. BIST taraması çalıştırmaz; otomatik AL/SAT üretmez.")
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:6 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.A, "GL / NCELKL",
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_center_ui_v1.py:6 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.A, "GL / NCELKL",
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:12 | canonical_fund_id="fund:tefas:AAA", category_id="equity",
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:12 | canonical_fund_id="fund:tefas:AAA", category_id="equity",
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:60 | first = map_fund_evidence(source(canonical_fund_id="fund:tefas:BBB"))
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:60 | first = map_fund_evidence(source(canonical_fund_id="fund:tefas:BBB"))
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:61 | second = map_fund_evidence(source(canonical_fund_id="fund:tefas:AAA"))
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:61 | second = map_fund_evidence(source(canonical_fund_id="fund:tefas:AAA"))
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:63 | assert tuple(item.canonical_fund_id for item in output) == ("fund:tefas:AAA", "fund:tefas:BBB")
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_analysis_engine_v1.py:63 | assert tuple(item.canonical_fund_id for item in output) == ("fund:tefas:AAA", "fund:tefas:BBB")
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:9 | from backend.app.funds.tefas_adapter import TefasProviderError, map_tefas_rows
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:9 | from backend.app.funds.tefas_adapter import TefasProviderError, map_tefas_rows
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:25 | return map_tefas_rows([row(**changes)], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:25 | return map_tefas_rows([row(**changes)], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:53 | with pytest.raises(TefasProviderError, match="DUPLICATE"):
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:53 | with pytest.raises(TefasProviderError, match="DUPLICATE"):
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:54 | map_tefas_rows([row(), row()], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:54 | map_tefas_rows([row(), row()], requested_at=STAMP, fetched_at=STAMP, source_as_of=STAMP)
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:79 | assert saved["provider"] == "TEFAS"
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:79 | assert saved["provider"] == "TEFAS"
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:80 | assert saved["canonical_fund_id"].startswith("fund:tefas:")
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_data_contract_v1.py:80 | assert saved["canonical_fund_id"].startswith("fund:tefas:")
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:9 | canonical_fund_id="fund:tefas:TST", category_id="debt",
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_evidence_mapper_v1.py:9 | canonical_fund_id="fund:tefas:TST", category_id="debt",
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:9 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.B, "GELŞEN", ("F1", "F2"), ("F3",), (), (), "DEV", "x")
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:9 | return FundAnalysisResult("fund:tefas:AAA", "equity", FundAnalysisClass.B, "GELŞEN", ("F1", "F2"), ("F3",), (), (), "DEV", "x")
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:13 | prices = (FundPricePoint("fund:tefas:AAA", date(2026, 1, 8), Decimal("110")),)
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_outcome_v1.py:13 | prices = (FundPricePoint("fund:tefas:AAA", date(2026, 1, 8), Decimal("110")),)
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:10 | return FundAnalysisResult(f"fund:tefas:{code}", "equity", cls, cls.value, ("F1", "F2"), (), (), (), "TEST", "x")
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:10 | return FundAnalysisResult(f"fund:tefas:{code}", "equity", cls, cls.value, ("F1", "F2"), (), (), (), "TEST", "x")
+tefas | D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:16 | assert tuple(x.canonical_fund_id for x in snapshot.results) == ("fund:tefas:AAA", "fund:tefas:BBB")
+TEFAS | D:\Projects\Hisse-Robotu\backend\tests\test_fund_weekly_snapshot_v1.py:16 | assert tuple(x.canonical_fund_id for x in snapshot.results) == ("fund:tefas:AAA", "fund:tefas:BBB")

@@ -1,0 +1,12 @@
+﻿PUBLIC_CONTRACTS_BEGIN
+CLASS=DelayedDataPilotError
+CLASS=DelayedDataPilotConfig
+CLASS=DelayedDataSnapshot
+CLASS=PilotLogRecord
+FUNCTION=normalize_symbol ARGS=symbol:REQ
+FUNCTION=fetch_delayed_snapshot ARGS=symbol:REQ
+FUNCTION=snapshot_to_record ARGS=snapshot:REQ
+CLASS=DelayedDataPilotStore
+FUNCTION=pilot_rows ARGS=records:REQ
+FUNCTION=pilot_to_csv ARGS=records:REQ
+PUBLIC_CONTRACTS_END

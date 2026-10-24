@@ -1,0 +1,102 @@
+from app.analysis.financial_intelligence_bank_model_contract import (
+    BANK_COMPONENTS,
+    BANK_REQUIRED_METRICS,
+)
+from app.analysis.financial_intelligence_bank_production_source_onboarding import (
+    evaluate_bank_production_source,
+)
+
+
+def _record():
+    facts = {}
+
+    for component in BANK_COMPONENTS:
+        for metric in BANK_REQUIRED_METRICS[component]:
+            facts[f"{component}.{metric}"] = 1.0
+
+    return {
+        "source_type": "KAP",
+        "source_uri": "kap://bank/sample",
+        "symbol": "BANKX",
+        "sector_model": "BANK",
+        "as_of": "2026-06-30",
+        "publication_date": "2026-08-05",
+        "canonical_facts": facts,
+        "evidence_hash": "sha256:abc123",
+    }
+
+
+def test_real_source_contract_passes():
+    result = evaluate_bank_production_source(
+        _record()
+    )
+
+    assert result.status == "PASS"
+    assert result.production_evidence is True
+    assert result.activation_ready is True
+    assert result.canonical_input_ready is True
+    assert result.scoring_ready is True
+
+
+def test_synthetic_source_is_rejected():
+    record = _record()
+    record["source_type"] = "SYNTHETIC"
+
+    result = evaluate_bank_production_source(
+        record
+    )
+
+    assert result.status == "BLOCKED"
+    assert result.production_evidence is False
+    assert result.activation_ready is False
+    assert result.blocker == (
+        "NON_PRODUCTION_SOURCE_TYPE:SYNTHETIC"
+    )
+
+
+def test_future_publication_is_rejected():
+    record = _record()
+    record["as_of"] = "2026-06-30"
+    record["publication_date"] = "2026-09-01"
+
+    # Bank canonical PIT boundary owns the publication-date rule.
+    result = evaluate_bank_production_source(
+        record
+    )
+
+    assert result.status == "BLOCKED"
+    assert result.production_evidence is False
+    assert result.activation_ready is False
+    assert result.blocker == "FUTURE_PUBLICATION_FORBIDDEN"
+
+
+def test_missing_hash_is_rejected():
+    record = _record()
+    record["evidence_hash"] = ""
+
+    result = evaluate_bank_production_source(
+        record
+    )
+
+    assert result.status == "BLOCKED"
+    assert result.production_evidence is False
+    assert result.blocker == "EVIDENCE_HASH_MISSING"
+
+
+def test_missing_canonical_metric_is_rejected():
+    record = _record()
+    record["canonical_facts"].pop(
+        "CAPITAL_ADEQUACY.capital_adequacy_ratio"
+    )
+
+    result = evaluate_bank_production_source(
+        record
+    )
+
+    assert result.status == "BLOCKED"
+    assert result.production_evidence is False
+    assert result.activation_ready is False
+    assert (
+        "CAPITAL_ADEQUACY.capital_adequacy_ratio"
+        in result.blocker
+    )

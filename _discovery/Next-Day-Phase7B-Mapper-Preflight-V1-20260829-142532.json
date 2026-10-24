@@ -1,0 +1,163 @@
+{
+  "contract_id": "NEXT_DAY_PHASE7B_CORRECTED_SINGLE_SCAN_MAPPER_PREFLIGHT_V1",
+  "mode": "READ_ONLY",
+  "corrected_single_scan": true,
+  "unique_scan_call_count": 1,
+  "scan_sites": [
+    {
+      "line": 261,
+      "column": 22,
+      "end_line": 261,
+      "end_column": 35,
+      "assigned_to": "scan_result",
+      "source": "engine.scan()"
+    }
+  ],
+  "scan_result_name": "scan_result",
+  "candidate_snapshot_reuses_same_scan": true,
+  "canonical_close_delegates_evening": true,
+  "market_scan_result": {
+    "fields": [
+      "adaylar",
+      "evren_adi",
+      "evren_kaynagi",
+      "evren_sembol_sayisi",
+      "evren_tarihi",
+      "filtrelenmis",
+      "profil",
+      "sektor_baglami_uyarisi",
+      "sektor_baglamlari",
+      "sektor_referans_evreni",
+      "tum_sonuclar",
+      "vbts_dogrulama_uyarisi",
+      "vbts_engelleme_nedenleri",
+      "vbts_engellenen_semboller",
+      "veri_tazeligi"
+    ],
+    "properties": [
+      "gosterilen_aday_sayisi"
+    ],
+    "full_result_exposed": true
+  },
+  "stock_analysis_fields": [
+    "analiz_tarihi",
+    "atr14",
+    "atr_yuzde",
+    "destek_direnc",
+    "ema21",
+    "ema9",
+    "hacim",
+    "hacim_durumu",
+    "hacim_orani",
+    "hedef_kaynagi",
+    "kapanis",
+    "macd",
+    "macd_histogram",
+    "macd_sinyal",
+    "risk_plani",
+    "rsi14",
+    "sembol",
+    "sinyal"
+  ],
+  "signal_result_fields": [
+    "hacim_puani",
+    "karar",
+    "momentum_puani",
+    "pozitif_nedenler",
+    "risk_puani",
+    "riskler",
+    "skor",
+    "trend_puani"
+  ],
+  "rank_trajectory_fields": [
+    "as_of",
+    "comparable",
+    "current_rank",
+    "current_universe_size",
+    "gain_1s",
+    "gain_3s",
+    "gain_5s",
+    "lifecycle",
+    "normalized_3s",
+    "normalized_current",
+    "normalized_gain_3s",
+    "rank_1s",
+    "rank_3s",
+    "rank_5s",
+    "symbol",
+    "week_start_rank",
+    "zone_events"
+  ],
+  "batch_freshness_fields": [
+    "aciklama",
+    "beklenen_tarih",
+    "durum",
+    "en_eski_tarih",
+    "en_yeni_tarih",
+    "eski_sembol",
+    "guncel_sembol",
+    "kilit_asamasi",
+    "kilitli",
+    "son_veri_tarihi",
+    "sonraki_kontrol_zamani",
+    "toplam_sembol",
+    "veri_yok_sembol"
+  ],
+  "next_day_candidate_fields": [
+    "canonical_date",
+    "data_ready",
+    "evidence_families",
+    "explanation",
+    "extension",
+    "freshness_valid",
+    "hard_contradictions",
+    "migration_rank",
+    "next_action",
+    "readiness_rank",
+    "rebound",
+    "relative_strength_rank",
+    "research_rank",
+    "research_valid",
+    "security_lock",
+    "single_factor_domination",
+    "soft_contradictions",
+    "symbol",
+    "universe_comparable",
+    "warnings"
+  ],
+  "mapping": {
+    "F1": "PROVEN",
+    "F2": "PROVEN",
+    "F3": "PROVEN",
+    "F4": "PARTIAL",
+    "F5": "PROVEN",
+    "freshness_gate": "PROVEN",
+    "security_lock_gate": "PROVEN",
+    "universe_comparable_gate": "PROVEN",
+    "research_rank_source": "PROVEN",
+    "readiness_ordinal_source": "PARTIAL",
+    "migration_ordinal_source": "PROVEN",
+    "relative_strength_ordinal_source": "PROVEN",
+    "frozen_schema": "PROVEN"
+  },
+  "blockers": [
+    "F4_EXACT_POSITIVE_READINESS_AUTHORITY_NOT_PROVEN"
+  ],
+  "warnings": [
+    "F4_MAPPER_AUTHORITY_PARTIAL",
+    "READINESS_ORDINAL_REQUIRES_MINIMAL_EXISTING_CONTEXT_ADAPTER"
+  ],
+  "decision": "STOP_MAPPING_CONTRACT_GAP",
+  "next": "RESOLVE_ONLY_LISTED_MAPPING_GAPS",
+  "preservation": {
+    "production_mutation": false,
+    "scheduler_mutation": false,
+    "scanner_invocation": false,
+    "second_scanner": false,
+    "second_universe_traversal": false,
+    "new_store": false,
+    "new_score": false,
+    "outcome_tuning": false,
+    "al_sat_authority": false
+  }
+}

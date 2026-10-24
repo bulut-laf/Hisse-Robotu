@@ -1,0 +1,46 @@
+﻿D:\Projects\Hisse-Robotu\backend\tests\test_daily_buy_decision_output_archive_v1.py:32: entry_readiness="GİRİŞE HAZIR",
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_final_action_board_v1.py:13: entry_readiness: str = "GİRİŞE HAZIR"
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_final_action_board_v1.py:48: assert item.entry_readiness == "TEYİT BEKLİYOR"
+D:\Projects\Hisse-Robotu\backend\tests\test_eod_morning_board_delta_v1.py:14: entry_readiness=readiness,
+D:\Projects\Hisse-Robotu\backend\tests\test_high_conviction_buy_gate_v1.py:17: entry_readiness: str = "-"
+D:\Projects\Hisse-Robotu\backend\tests\test_high_conviction_buy_gate_v1.py:79: def test_jump_candidate_requires_quality_and_entry_readiness():
+D:\Projects\Hisse-Robotu\backend\tests\test_high_conviction_buy_gate_v1.py:80: card = Card("AAA", selection_source="SICRAMA", jump_quality="UYGUN", entry_readiness="TEYİT BEKLİYOR")
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:3: from backend.app.analysis.jump_candidate_entry_readiness import (
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:8: evaluate_jump_candidate_entry_readiness,
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:11: build_morning_candidate_cards,
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:34: def test_entry_readiness_ready():
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:35: result = evaluate_jump_candidate_entry_readiness(candidate())
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:41: def test_entry_readiness_waits_for_confirmation():
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:42: result = evaluate_jump_candidate_entry_readiness(candidate(score=66, volume=1.05))
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:47: def test_entry_readiness_marks_early_when_quality_not_complete():
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:48: result = evaluate_jump_candidate_entry_readiness(candidate(score=55, volume=0.8))
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:52: def test_entry_readiness_marks_overextended():
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:53: result = evaluate_jump_candidate_entry_readiness(candidate(close=106.0, ema9=100.0, atr=2.0))
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:58: def test_morning_card_exposes_entry_readiness():
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:60: cards = build_morning_candidate_cards(scan, limit=1)
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_entry_readiness_v1.py:61: assert cards[0].entry_readiness == READY
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_r1.py:4: from backend.app.analysis.morning_candidate_flow import build_morning_candidate_cards
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_r1.py:48: cards = build_morning_candidate_cards(
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_v1.py:4: merge_jump_and_scan_candidates,
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_v1.py:7: build_morning_candidate_cards,
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_v1.py:49: merged = merge_jump_and_scan_candidates(candidates, visibility, limit=5)
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_v1.py:60: merged = merge_jump_and_scan_candidates(candidates, visibility, limit=5)
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_v1.py:72: merged = merge_jump_and_scan_candidates(
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_priority_merge_v1.py:80: cards = build_morning_candidate_cards(
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_quality_filter_v1.py:4: from backend.app.analysis.morning_candidate_flow import build_morning_candidate_cards
+D:\Projects\Hisse-Robotu\backend\tests\test_jump_candidate_quality_filter_v1.py:67: cards = build_morning_candidate_cards(
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_candidate_flow.py:4: build_morning_candidate_cards,
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_candidate_flow.py:43: cards = build_morning_candidate_cards(scan_result, limit=5)
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_candidate_flow.py:56: cards = build_morning_candidate_cards(
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_candidate_flow.py:78: cards = build_morning_candidate_cards(
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_candidate_flow.py:95: cards = build_morning_candidate_cards(scan_result)
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_final_action_board_v1.py:13: entry_readiness: str = "GİRİŞE HAZIR"
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_final_action_board_v1.py:48: assert item.entry_readiness == "TEYİT BEKLİYOR"
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_revalidation_candidate_replacement_v1.py:26: entry_readiness=readiness,
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_revalidation_decision_change_reason_v1.py:38: entry_readiness=readiness,
+D:\Projects\Hisse-Robotu\backend\tests\test_morning_revalidation_decision_change_reason_v1.py:61: def test_morning_revalidation_explains_bekle_to_al_from_entry_readiness():
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_runtime_observer.py:53: monkeypatch.setattr(observer, "evaluate_jump_candidate_entry_readiness", lambda item: _ready())
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_runtime_observer.py:70: monkeypatch.setattr(observer, "evaluate_jump_candidate_entry_readiness", lambda item: _ready())
+D:\Projects\Hisse-Robotu\backend\tests\test_next_day_runtime_observer.py:82: monkeypatch.setattr(observer, "evaluate_jump_candidate_entry_readiness", lambda item: _ready())
+D:\Projects\Hisse-Robotu\backend\tests\test_ranking_movement_visibility.py:76: from backend.app.analysis.morning_candidate_flow import build_morning_candidate_cards
+D:\Projects\Hisse-Robotu\backend\tests\test_ranking_movement_visibility.py:117: cards = build_morning_candidate_cards(

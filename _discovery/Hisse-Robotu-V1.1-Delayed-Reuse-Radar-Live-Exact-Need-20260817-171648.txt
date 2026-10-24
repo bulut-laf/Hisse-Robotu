@@ -1,0 +1,132 @@
+﻿SURFACE=OPPORTUNITY_RADAR TERM=close LINE=40 TEXT=needed = {"open": "Open", "high": "High", "low": "Low", "close": "Close"}
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=49 TEXT=out = out.dropna(subset=["Open", "High", "Low", "Close"]).sort_index()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=50 TEXT=return out[(out["High"] >= out["Low"]) & (out["Close"] >= out["Low"]) & (out["Close"] <= out["High"])]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=70 TEXT="Close": d["Close"].resample("W-FRI").last(),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=73 TEXT=).dropna(subset=["Open", "High", "Low", "Close"])
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=79 TEXT=z["EMA20"] = z["Close"].ewm(span=20, adjust=False).mean()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=80 TEXT=z["EMA50"] = z["Close"].ewm(span=50, adjust=False).mean()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=82 TEXT=z["RSI14"] = _rsi(z["Close"])
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=85 TEXT=prev_close = z["Close"].shift(1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=89 TEXT=(z["High"] - prev_close).abs(),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=90 TEXT=(z["Low"] - prev_close).abs(),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=95 TEXT=z["ATRPct"] = 100 * z["ATR14"] / z["Close"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=100 TEXT=z["DistResPct"] = 100 * (z["Res26"] - z["Close"]) / z["Close"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=101 TEXT=z["Breakout26"] = z["Close"] > z["Res26"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=103 TEXT=r6 = (z["High"].rolling(6).max() - z["Low"].rolling(6).min()) / z["Close"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=105 TEXT=z["AboveEMA20"] = z["Close"] >= z["EMA20"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=106 TEXT=z["AboveEMA50"] = z["Close"] >= z["EMA50"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=144 TEXT=& (z["Close"] >= z["EMA20"] * 0.97)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=198 TEXT=columns={"Open":"open","High":"high","Low":"low","Close":"close","Volume":"volume"}
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=203 TEXT=close=("close","last"), volume=("volume","sum"),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=211 TEXT=x["ema6"] = x["close"].ewm(span=6, adjust=False, min_periods=6).mean()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=212 TEXT=x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=213 TEXT=x["ema24"] = x["close"].ewm(span=24, adjust=False, min_periods=24).mean()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=214 TEXT=x["rsi14"] = _rsi(x["close"], 14)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=215 TEXT=prev = x["close"].shift(1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=222 TEXT=x["atr_pct"] = 100 * x["atr14"] / x["close"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=224 TEXT=x["ret_3m"] = 100 * (x["close"] / x["close"].shift(3) - 1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=225 TEXT=x["ret_6m"] = 100 * (x["close"] / x["close"].shift(6) - 1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=229 TEXT=(x["close"] > x["ema6"])
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=236 TEXT=(x["close"] > x["ema6"])
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=283 TEXT=return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=290 TEXT="snapshot": "CURRENT_PARTIAL" if is_partial else "CURRENT_CLOSED",
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=293 TEXT=closed_row = z.iloc[-2] if is_partial and len(z) >= 2 else z.iloc[-1]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=294 TEXT=closed = {
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=295 TEXT="snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=296 TEXT="matches": _monthly_profile_matches(closed_row, edges, profiles),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=298 TEXT=return current, closed
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=301 TEXT=def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=303 TEXT=closed_matches = list(closed.get("matches", []))
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=307 TEXT=elif closed_matches:
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=308 TEXT=chosen = closed_matches
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=341 TEXT={"snapshot":"LAST_CLOSED","matches":[]},
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=345 TEXT=current, closed = _monthly_profile_snapshots(daily, edges, profiles)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=346 TEXT=payloads.append(_monthly_profile_status(current, closed))
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=350 TEXT={"snapshot":"LAST_CLOSED","matches":[]},
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=395 TEXT="Kapanış": float(r["Close"]),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=458 TEXT=Close=("Close", "last"),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=462 TEXT=return m.dropna(subset=["Open", "High", "Low", "Close"])
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=469 TEXT=close, high, low, volume = m["Close"], m["High"], m["Low"], m["Volume"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=470 TEXT=ema6 = close.ewm(span=6, adjust=False).mean()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=471 TEXT=ema12 = close.ewm(span=12, adjust=False).mean()
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=472 TEXT=rsi = _rsi(close, 6)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=473 TEXT=prev_close = close.shift(1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=474 TEXT=tr = pd.concat([high-low, (high-prev_close).abs(), (low-prev_close).abs()], axis=1).max(axis=1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=480 TEXT=ret3 = float(close.iloc[last] / close.iloc[max(0, last-3)] - 1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=481 TEXT=ret6 = float(close.iloc[last] / close.iloc[max(0, last-6)] - 1)
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=487 TEXT=bc = bm["Close"]
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=492 TEXT=dist = float(100 * (res12.iloc[-1] - close.iloc[-1]) / close.iloc[-1]) if pd.notna(res12.iloc[-1]) else np.nan
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=494 TEXT=atr_pct = float(100 * atr.iloc[-1] / close.iloc[-1]) if pd.notna(atr.iloc[-1]) else np.nan
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=501 TEXT="close": float(close.iloc[-1]),
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=528 TEXT=if x["close"] > x["ema6"] > x["ema12"]:
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=569 TEXT=close_near_ema = x["close"] >= x["ema6"] * 0.97
+SURFACE=OPPORTUNITY_RADAR TERM=close LINE=570 TEXT=if close_near_ema:
+SURFACE=OPPORTUNITY_RADAR TERM=timestamp LINE=205 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+SURFACE=OPPORTUNITY_RADAR TERM=timestamp LINE=285 TEXT=last_daily = pd.Timestamp(d.index.max()).normalize()
+SURFACE=OPPORTUNITY_RADAR TERM=timestamp LINE=286 TEXT=current_end = last_daily.to_period("M").to_timestamp(how="end").normalize()
+SURFACE=OPPORTUNITY_RADAR TERM=timestamp LINE=461 TEXT=m.index = m.index.to_timestamp(how="end").normalize()
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=26 TEXT=universe_date: str
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=44 TEXT=out = pd.DataFrame(index=pd.to_datetime(x.index))
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=156 TEXT=def _load_validated_profiles() -> tuple[pd.DataFrame, pd.DataFrame]:
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=159 TEXT="Validated profil dosyalari kurulu degil. "
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=171 TEXT=raise RuntimeError("Validated quantile dosyasi beklenen kolonlari tasimiyor.")
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=173 TEXT=raise RuntimeError("Validated profil dosyasi beklenen kolonlari tasimiyor.")
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=178 TEXT=def _load_monthly_validated_profiles() -> tuple[pd.DataFrame, pd.DataFrame]:
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=180 TEXT=raise RuntimeError("Aylik validated profil dosyalari kurulu degil.")
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=309 TEXT=status = "Validated Profile Match"
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=312 TEXT=status = "Henüz Validate Değil"
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=316 TEXT="Durum": status, "Profile Match Count": 0, "Validated Quality": 0.0,
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=323 TEXT="Validated Quality": round(sum(float(x["quality"]) for x in chosen), 2),
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=396 TEXT="Hafta": w.index[-1].date().isoformat(),
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=422 TEXT=base.update(
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=424 TEXT="Validated Profile Count": len(matched),
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=425 TEXT="Validated Quality": round(sum(qualities), 2),
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=426 TEXT="Validated Quality Max": round(max(qualities), 2),
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=429 TEXT="Durum": "Validated",
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=437 TEXT=base.update(
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=439 TEXT="Validated Profile Count": 0,
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=440 TEXT="Validated Quality": 0.0,
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=441 TEXT="Validated Quality Max": 0.0,
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=444 TEXT="Durum": "Henüz Validate Değil",
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=445 TEXT="Neden seçildi?": f"{stage} hazırlık koşulları var; muhafazakâr validated profile eşleşmedi.",
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=517 TEXT="month": m.index[-1].date().isoformat(),
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=556 TEXT="Durum": "Henüz Validate Değil",
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=599 TEXT="Durum": "Henüz Validate Değil",
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=613 TEXT=edges, profiles = _load_validated_profiles()
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=614 TEXT=monthly_edges, monthly_profiles = _load_monthly_validated_profiles()
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=663 TEXT=weekly["_validated"] = (weekly["Durum"] == "Validated").astype(int)
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=665 TEXT=["_validated", "Validated Profile Count", "Validated Quality", "Weekly Score"],
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=667 TEXT=).drop(columns=["_validated"]).reset_index(drop=True)
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=668 TEXT=weekly.insert(0, "Validated Öncelik", np.arange(1, len(weekly) + 1))
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=687 TEXT=monthly_symbols.update(str(x) for x in monthly_strong["Hisse"])
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=689 TEXT=monthly_symbols.update(str(x) for x in monthly_early["Hisse"])
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=714 TEXT={"Validated Profile Match": 2, "Ay İçi Geçici Match": 1}
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=717 TEXT=["_validation_priority", "Profile Match Count", "Validated Quality", "Aylık Skor"],
+SURFACE=OPPORTUNITY_RADAR TERM=date LINE=730 TEXT=universe_date=universe.tarih,
+SURFACE=OPPORTUNITY_RADAR TERM=Fiyat LINE=10 TEXT=from backend.app.data.batch_market_data import BatchMarketDataFailure, toplu_fiyat_verisi_getir
+SURFACE=OPPORTUNITY_RADAR TERM=Fiyat LINE=11 TEXT=from backend.app.data.market_data import fiyat_verisi_getir
+SURFACE=OPPORTUNITY_RADAR TERM=Fiyat LINE=530 TEXT=strong_reasons.append("Aylık fiyat EMA6 ve EMA12 üzerinde; ortalamalar yukarı sıralı.")
+SURFACE=OPPORTUNITY_RADAR TERM=Fiyat LINE=572 TEXT=early_reasons.append("Fiyat aylık EMA6 çevresinde/üzerinde.")
+SURFACE=OPPORTUNITY_RADAR TERM=Fiyat LINE=622 TEXT=batch = toplu_fiyat_verisi_getir(
+SURFACE=OPPORTUNITY_RADAR TERM=Fiyat LINE=631 TEXT=benchmark = fiyat_verisi_getir(
+SURFACE=OPPORTUNITY_RADAR TERM=Fiyat LINE=694 TEXT=monthly_batch = toplu_fiyat_verisi_getir(
+SURFACE=LIVE_ANALYSIS TERM=veri_tazeligi LINE=24 TEXT=from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+SURFACE=LIVE_ANALYSIS TERM=veri_tazeligi LINE=60 TEXT=veri_tazeligi: DataFreshnessResult | None = None
+SURFACE=LIVE_ANALYSIS TERM=veri_tazeligi LINE=127 TEXT=veri_tazeligi = None
+SURFACE=LIVE_ANALYSIS TERM=veri_tazeligi LINE=129 TEXT=veri_tazeligi = gunluk_veri_tazeligini_degerlendir(
+SURFACE=LIVE_ANALYSIS TERM=veri_tazeligi LINE=150 TEXT=veri_tazeligi=veri_tazeligi,
+SURFACE=LIVE_ANALYSIS TERM=freshness LINE=24 TEXT=from ..data.data_freshness import DataFreshnessResult, gunluk_veri_tazeligini_degerlendir
+SURFACE=LIVE_ANALYSIS TERM=freshness LINE=60 TEXT=veri_tazeligi: DataFreshnessResult | None = None
+SURFACE=LIVE_ANALYSIS TERM=Güncel LINE=34 TEXT="""Güncel analiz ekranı sonucu hazırlanamadığında kullanılır."""
+SURFACE=LIVE_ANALYSIS TERM=Güncel LINE=39 TEXT="""Güncel teknik analiz ve işlem planı için kullanıcı girdileri."""
+SURFACE=LIVE_ANALYSIS TERM=Güncel LINE=106 TEXT="""Veriyi bir kez indirip güncel teknik analiz ve planı birlikte üretir."""
+SURFACE=LIVE_ANALYSIS TERM=Fiyat LINE=70 TEXT=giris_fiyati: float
+SURFACE=LIVE_ANALYSIS TERM=Fiyat LINE=84 TEXT=giris_fiyati=float(self.giris_fiyati),
+SUMMARY SURFACE=OPPORTUNITY_RADAR STATE=DAILY_CLOSE_CONTEXT_ONLY USES_CLOSE=True USES_PRICE=False FRESHNESS=False TIME=True
+SUMMARY SURFACE=LIVE_ANALYSIS STATE=NO_PRICE_CONTEXT_PROVEN USES_CLOSE=False USES_PRICE=False FRESHNESS=True TIME=False
+DASHBOARD_RADAR_WIRING=True
+DASHBOARD_LIVE_WIRING=True
+DASHBOARD_DELAYED_VISIBILITY=True
+DECISION=SELECTIVE_DELAYED_REUSE_PRODUCT_GAP_PLAUSIBLE
+NEXT=Inspect exact render/call boundary only for listed surfaces before any patch.
+PRODUCTION_MUTATION=YOK

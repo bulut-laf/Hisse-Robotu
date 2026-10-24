@@ -1,0 +1,150 @@
+diff --git a/backend/app/funds/fund_profile.py b/backend/app/funds/fund_profile.py
+index d20570a..9656d85 100644
+--- a/backend/app/funds/fund_profile.py
++++ b/backend/app/funds/fund_profile.py
+@@ -25,6 +25,9 @@ class FundProfileReadModel:
+     returns: Mapping[str, Decimal | None]
+     latest_portfolio: FundPortfolioSnapshot | None
+     observation_count: int
++    price_history: tuple[tuple[date, Decimal], ...]
++    fund_size_history: tuple[tuple[date, Decimal], ...]
++    investor_history: tuple[tuple[date, int], ...]
+ 
+ 
+ def _decimal(value: object) -> Decimal | None:
+@@ -144,6 +147,22 @@ def build_fund_profile_read_model(
+         except (InvalidOperation, ValueError):
+             investor_count = None
+ 
++    price_history = tuple((observed, price) for observed, price, _ in history)
++    fund_size_history: list[tuple[date, Decimal]] = []
++    investor_history: list[tuple[date, int]] = []
++    for observed, _price, raw in history:
++        size = _decimal(raw.get("fund_size"))
++        if size is not None and size >= 0:
++            fund_size_history.append((observed, size))
++        raw_investors = raw.get("investor_count")
++        if raw_investors not in (None, ""):
++            try:
++                count = int(Decimal(str(raw_investors)))
++            except (InvalidOperation, ValueError):
++                count = -1
++            if count >= 0:
++                investor_history.append((observed, count))
++
+     return FundProfileReadModel(
+         canonical_fund_id=fund_id,
+         fund_code=fund_id.rsplit(":", 1)[-1],
+@@ -156,4 +175,7 @@ def build_fund_profile_read_model(
+         returns=returns,
+         latest_portfolio=_latest_portfolio(portfolio_store, fund_id),
+         observation_count=len(history),
++        price_history=price_history,
++        fund_size_history=tuple(fund_size_history),
++        investor_history=tuple(investor_history),
+     )
+diff --git a/backend/app/ui/fund_analysis_center.py b/backend/app/ui/fund_analysis_center.py
+index f1b525b..556f08b 100644
+--- a/backend/app/ui/fund_analysis_center.py
++++ b/backend/app/ui/fund_analysis_center.py
+@@ -301,6 +301,26 @@ def _render_selected_fund_profile(
+             f"kayıtlı fiyat gözlemi: {profile.observation_count}"
+         )
+ 
++    if hasattr(st, "line_chart") and profile.price_history:
++        st.markdown("#### Fiyat & Büyüklük Geçmişi")
++        st.line_chart(
++            [{"Tarih": day.isoformat(), "Fiyat": float(value)} for day, value in profile.price_history],
++            x="Tarih",
++            y="Fiyat",
++        )
++        if profile.fund_size_history:
++            st.line_chart(
++                [{"Tarih": day.isoformat(), "Fon Toplam Değeri": float(value)} for day, value in profile.fund_size_history],
++                x="Tarih",
++                y="Fon Toplam Değeri",
++            )
++        if profile.investor_history:
++            st.line_chart(
++                [{"Tarih": day.isoformat(), "Yatırımcı": value} for day, value in profile.investor_history],
++                x="Tarih",
++                y="Yatırımcı",
++            )
++
+     if profile.latest_portfolio is None:
+         st.info("Bu fon için henüz KAP portföy snapshot'ı yok.")
+     else:
+@@ -314,6 +334,42 @@ def _render_selected_fund_profile(
+         if rows:
+             st.dataframe(rows, width="stretch", hide_index=True)
+ 
++        comparable = sorted(
++            (
++                item for item in portfolio_store.list_snapshots()
++                if item.canonical_fund_id == selected and item.provider == latest.provider
++            ),
++            key=lambda item: (item.portfolio_date, item.publication_date, item.ingested_at),
++        )
++        if len(comparable) >= 2:
++            change_set = compare_portfolio_snapshots(comparable[-2], comparable[-1])
++            st.markdown("#### Son Portföy Değişimi")
++            counts = {
++                kind: sum(1 for item in change_set.changes if item.kind == kind)
++                for kind in PositionChangeKind
++            }
++            change_cols = st.columns(5)
++            change_cols[0].metric("Yeni giriş", counts[PositionChangeKind.NEW_ENTRY])
++            change_cols[1].metric("Artırılan", counts[PositionChangeKind.INCREASED])
++            change_cols[2].metric("Azaltılan", counts[PositionChangeKind.REDUCED])
++            change_cols[3].metric("Tam çıkış", counts[PositionChangeKind.FULL_EXIT])
++            change_cols[4].metric("Belirsiz", counts[PositionChangeKind.UNKNOWN])
++            change_rows = portfolio_change_rows(change_set)
++            if change_rows:
++                st.dataframe(change_rows, width="stretch", hide_index=True)
++
++    st.markdown("#### Veri Tazeliği")
++    freshness_cols = st.columns(3)
++    freshness_cols[0].metric(
++        "TEFAS",
++        "-" if profile.observation_date is None else profile.observation_date.isoformat(),
++    )
++    freshness_cols[1].metric(
++        "KAP Portföy",
++        "-" if profile.latest_portfolio is None else profile.latest_portfolio.portfolio_date.isoformat(),
++    )
++    freshness_cols[2].metric("Otomatik yenileme", "6 saat")
++
+     return selected
+ 
+ def _render_portfolio_tracking(
+diff --git a/backend/tests/test_fund_analysis_center_ui_v1.py b/backend/tests/test_fund_analysis_center_ui_v1.py
+index c542eb8..ee9a0c3 100644
+--- a/backend/tests/test_fund_analysis_center_ui_v1.py
++++ b/backend/tests/test_fund_analysis_center_ui_v1.py
+@@ -158,3 +158,12 @@ def test_full_production_refresh_ui_contract_is_explicit_and_non_trading():
+     assert "KAP FDO + Baskı Riskini Tam Güncelle" in source
+     assert "network_enabled=True" in source
+     assert "KAP/MKK dışı FDO tahmin edilmez" in source
++
++
++def test_profile_live_ux_completion_contract_present():
++    from pathlib import Path
++    source = (Path(__file__).resolve().parents[1] / "app" / "ui" / "fund_analysis_center.py").read_text(encoding="utf-8")
++    assert "Fiyat & Büyüklük Geçmişi" in source
++    assert "Son Portföy Değişimi" in source
++    assert "Veri Tazeliği" in source
++    assert "Otomatik yenileme" in source
+diff --git a/backend/tests/test_fund_profile_auto_refresh_v1.py b/backend/tests/test_fund_profile_auto_refresh_v1.py
+index 4dd25f8..8d698cc 100644
+--- a/backend/tests/test_fund_profile_auto_refresh_v1.py
++++ b/backend/tests/test_fund_profile_auto_refresh_v1.py
+@@ -50,6 +50,9 @@ def test_profile_reads_latest_price_size_investors_and_returns(tmp_path):
+     assert profile.returns["1A"] == Decimal("1.40") / Decimal("1.30") - Decimal("1")
+     assert profile.returns["3A"] == Decimal("1.40") / Decimal("1.20") - Decimal("1")
+     assert profile.returns["YTD"] is None
++    assert profile.price_history[-1] == (date(2026, 9, 1), Decimal("1.40"))
++    assert profile.fund_size_history[-1] == (date(2026, 9, 1), Decimal("1500000"))
++    assert profile.investor_history[-1] == (date(2026, 9, 1), 1250)
+ 
+ 
+ def test_profile_invalid_id_fails_closed(tmp_path):

@@ -1,0 +1,408 @@
+=== HISSE ROBOTU тАФ EXISTING AUTOMATION REUSE PREFLIGHT V1 REV1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+
+=== 1. RANKED EXISTING AUTOMATION FILES ===
+AUTOMATION_FILE_SCORE=22|FILE=backend\dashboard.py
+AUTOMATION_FILE_SCORE=20|FILE=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py
+AUTOMATION_FILE_SCORE=19|FILE=scripts\install_daily_buy_decision_tasks.ps1
+AUTOMATION_FILE_SCORE=13|FILE=backend\app\analysis\daily_buy_decision_operational_closeout.py
+AUTOMATION_FILE_SCORE=12|FILE=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py
+AUTOMATION_FILE_SCORE=8|FILE=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py
+AUTOMATION_FILE_SCORE=7|FILE=backend\app\operations\daily_buy_decision_scheduled_runner.py
+AUTOMATION_FILE_SCORE=7|FILE=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py
+AUTOMATION_FILE_SCORE=7|FILE=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py
+AUTOMATION_FILE_SCORE=7|FILE=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py
+AUTOMATION_FILE_SCORE=6|FILE=backend\app\analysis\eod_morning_board_delta.py
+AUTOMATION_FILE_SCORE=6|FILE=backend\tests\test_daily_buy_decision_operational_closeout_v1.py
+AUTOMATION_FILE_SCORE=6|FILE=backend\tests\test_eod_morning_board_delta_v1.py
+AUTOMATION_FILE_SCORE=6|FILE=backend\tests\test_research_profile_memory_v1.py
+AUTOMATION_FILE_SCORE=5|FILE=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py
+AUTOMATION_FILE_SCORE=5|FILE=backend\tests\test_daily_operation_ai_context.py
+AUTOMATION_FILE_SCORE=5|FILE=backend\tests\test_scan_history.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\daily_buy_decision_output_archive.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\tests\test_daily_buy_decision_operational_closeout_dashboard_v1.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py
+AUTOMATION_FILES_FOUND=20
+
+=== 2. EXACT AUTOMATION DEFINITIONS / REFERENCES ===
+DEF=backend\dashboard.py:8000|FunctionDef|render_delayed_snapshot
+REF=backend\dashboard.py:100|WeeklyPerformanceArchive,
+REF=backend\dashboard.py:191|from backend.app.analysis.daily_buy_decision_output_archive import (
+REF=backend\dashboard.py:192|DecisionOutputArchiveJsonStore,
+REF=backend\dashboard.py:193|daily_decision_archive_delta_rows,
+REF=backend\dashboard.py:194|decision_output_archive_rows,
+REF=backend\dashboard.py:195|decision_output_audit_rows,
+REF=backend\dashboard.py:205|ScheduledRunAuditJsonStore,
+REF=backend\dashboard.py:208|scheduler_audit_rows,
+REF=backend\dashboard.py:295|from backend.app.reporting.fundamental_report_archive import (
+REF=backend\dashboard.py:296|FundamentalReportArchiveError,
+REF=backend\dashboard.py:297|FundamentalReportArchiveFilter,
+REF=backend\dashboard.py:298|FundamentalReportJsonArchive,
+REF=backend\dashboard.py:299|archived_reports_csv_bytes,
+REF=backend\dashboard.py:300|archived_reports_pdf_bytes,
+REF=backend\dashboard.py:301|compare_archived_reports,
+REF=backend\dashboard.py:302|report_archive_rows,
+REF=backend\dashboard.py:304|search_archived_reports,
+REF=backend\dashboard.py:434|audit_events_csv_bytes,
+REF=backend\dashboard.py:435|audit_display_rows,
+REF=backend\dashboard.py:445|read_audit_events,
+REF=backend\dashboard.py:3522|("Denetim g├╝nl├╝─Я├╝", health.audit_status),
+REF=backend\dashboard.py:3547|st.caption(f"Denetim g├╝nl├╝─Я├╝: {operational.audit_log_path}")
+REF=backend\dashboard.py:3597|audit_events = read_audit_events(csv_path, limit=50)
+REF=backend\dashboard.py:3606|audit_events = ()
+REF=backend\dashboard.py:3702|if audit_events:
+REF=backend\dashboard.py:3704|pd.DataFrame(audit_display_rows(audit_events)),
+REF=backend\dashboard.py:3711|if audit_events:
+REF=backend\dashboard.py:3714|data=audit_events_csv_bytes(audit_events),
+REF=backend\dashboard.py:6045|.report_archive_maximum_age_days
+REF=backend\dashboard.py:6063|if value == temel_ayarlar.default_archive_sort
+REF=backend\dashboard.py:6106|report_archive_maximum_age_days=int(
+REF=backend\dashboard.py:6109|default_archive_sort=siralama_etiketleri[
+REF=backend\dashboard.py:6972|rapor_arsivi = FundamentalReportJsonArchive()
+REF=backend\dashboard.py:6977|except FundamentalReportArchiveError as hata:
+REF=backend\dashboard.py:6993|.report_archive_maximum_age_days
+REF=backend\dashboard.py:6996|except FundamentalReportArchiveError as hata:
+REF=backend\dashboard.py:7054|temel_ayarlar.default_archive_sort
+REF=backend\dashboard.py:7118|search_archived_reports(
+REF=backend\dashboard.py:7120|FundamentalReportArchiveFilter(
+REF=backend\dashboard.py:7139|except FundamentalReportArchiveError as hata:
+REF=backend\dashboard.py:7151|report_archive_rows(
+REF=backend\dashboard.py:7160|arsiv_csv = archived_reports_csv_bytes(
+REF=backend\dashboard.py:7195|arsiv_pdf = archived_reports_pdf_bytes(
+REF=backend\dashboard.py:7228|report_archive_rows(arsiv_raporlari)
+REF=backend\dashboard.py:7265|compare_archived_reports(
+REF=backend\dashboard.py:7270|except FundamentalReportArchiveError as hata:
+REF=backend\dashboard.py:7308|archive_tab,
+REF=backend\dashboard.py:7685|with archive_tab:
+REF=backend\dashboard.py:8151|# DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1
+REF=backend\dashboard.py:8154|"Windows g├╢revleri kuruldu─Яunda sistem hafta i├зi 18:20'de seans sonu, "
+REF=backend\dashboard.py:8155|"09:00'da sabah yeniden de─Яerlendirme ko┼Яusunu panel a├з─▒k olmasa da ├зal─▒┼Яt─▒r─▒r."
+REF=backend\dashboard.py:8166|if st.button("18:20 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r", key="retry_evening_daily_buy_decision"):
+REF=backend\dashboard.py:8175|if st.button("09:00 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r", key="retry_morning_daily_buy_decision"):
+REF=backend\dashboard.py:8184|"Yeniden ├зal─▒┼Яt─▒rma yaln─▒z ba┼Яar─▒s─▒z/eksik ko┼Яuyu kurtar─▒r; ayn─▒ g├╝n ba┼Яar─▒l─▒ faz varsa duplicate ├╝retmez."
+REF=backend\dashboard.py:8187|# SCHEDULED_RUN_AUDIT_HISTORY_V1
+REF=backend\dashboard.py:8188|with st.expander("Otomasyon Ko┼Яu Ge├зmi┼Яi / Audit", expanded=False):
+REF=backend\dashboard.py:8189|_audit_store = ScheduledRunAuditJsonStore()
+REF=backend\dashboard.py:8190|_audit_rows = scheduler_audit_rows(_audit_store, limit=50)
+REF=backend\dashboard.py:8191|if _audit_rows:
+REF=backend\dashboard.py:8193|pd.DataFrame(_audit_rows),
+REF=backend\dashboard.py:8200|st.markdown("**EOD тЖТ 09:00 g├╝nl├╝k zincir denetimi**")
+REF=backend\dashboard.py:8209|st.caption("Hen├╝z g├╝nl├╝k EOD / 09:00 zincir kayd─▒ yok.")
+REF=backend\dashboard.py:8216|"18:20 EOD ve 09:00 Morning ko┼Яular─▒n─▒ scheduler durumu, audit kayd─▒ ve "
+REF=backend\dashboard.py:8609|DecisionOutputArchiveJsonStore().save_snapshot(_decision_snapshot)
+REF=backend\dashboard.py:8658|st.markdown("##### Ak┼Яam тЖТ 09:00 Aksiyon Fark─▒ тАФ Tek Bak─▒┼Я")
+REF=backend\dashboard.py:8660|"Seans sonu ├╢n aksiyon listesi ile 09:00 nihai karar yap─▒s─▒n─▒ read-only "
+REF=backend\dashboard.py:8666|("09:00 AL", str(_board_delta_summary.morning_buy)),
+REF=backend\dashboard.py:8682|st.caption("Ak┼Яam ve 09:00 aras─▒nda karar veya Top-5 ├╝yeli─Яi de─Яi┼Яmedi.")
+REF=backend\dashboard.py:8685|# DECISION_OUTPUT_ARCHIVE_DAILY_COMPARE_V1
+REF=backend\dashboard.py:8687|_decision_archive_store = DecisionOutputArchiveJsonStore()
+REF=backend\dashboard.py:8688|_decision_archive_records = _decision_archive_store.load()
+REF=backend\dashboard.py:8691|"EOD ve 09:00 Top-5 karar board'lar─▒ g├╝nl├╝k olarak saklan─▒r. "
+REF=backend\dashboard.py:8695|_archive_rows = decision_output_archive_rows(
+REF=backend\dashboard.py:8696|_decision_archive_records, limit=30
+REF=backend\dashboard.py:8698|if _archive_rows:
+REF=backend\dashboard.py:8700|pd.DataFrame(_archive_rows),
+REF=backend\dashboard.py:8705|_archive_dates = tuple(sorted(
+REF=backend\dashboard.py:8706|{item.run_date for item in _decision_archive_records},
+REF=backend\dashboard.py:8709|_selected_archive_date = st.selectbox(
+REF=backend\dashboard.py:8711|options=_archive_dates,
+REF=backend\dashboard.py:8712|key="daily_decision_archive_selected_date",
+REF=backend\dashboard.py:8714|_selected_date_records = _decision_archive_store.by_date(
+REF=backend\dashboard.py:8715|_selected_archive_date
+REF=backend\dashboard.py:8717|for _archive_record in _selected_date_records:
+REF=backend\dashboard.py:8719|f"**{_archive_record.run_date} ┬╖ {_archive_record.phase}**"
+REF=backend\dashboard.py:8722|pd.DataFrame(decision_output_board_rows(_archive_record)),
+REF=backend\dashboard.py:8727|st.markdown("**Son iki 09:00 g├╝n├╝ kar┼Я─▒la┼Яt─▒rmas─▒**")
+REF=backend\dashboard.py:8728|_daily_archive_delta = latest_daily_compare(
+REF=backend\dashboard.py:8729|_decision_archive_records, phase="MORNING"
+REF=backend\dashboard.py:8731|if _daily_archive_delta is not None:
+REF=backend\dashboard.py:8734|daily_decision_archive_delta_rows(_daily_archive_delta)
+REF=backend\dashboard.py:8741|"G├╝nler aras─▒ 09:00 kar┼Я─▒la┼Яt─▒rmas─▒ i├зin en az iki g├╝nl├╝k ar┼Яiv gerekir."
+REF=backend\dashboard.py:8744|st.markdown("**Karar ├з─▒kt─▒s─▒ тЖФ otomasyon audit e┼Яle┼Яmesi**")
+REF=backend\dashboard.py:8746|_decision_archive_audit = ScheduledRunAuditJsonStore().load()
+REF=backend\dashboard.py:8749|decision_output_audit_rows(
+REF=backend\dashboard.py:8750|_decision_archive_records,
+REF=backend\dashboard.py:8751|_decision_archive_audit,
+REF=backend\dashboard.py:8758|except (OSError, ValueError, TypeError) as _archive_audit_error:
+REF=backend\dashboard.py:8760|f"Karar ar┼Яivi audit e┼Яle┼Яmesi okunamad─▒: {_archive_audit_error}"
+REF=backend\dashboard.py:8764|except (OSError, ValueError, TypeError) as _decision_archive_error:
+REF=backend\dashboard.py:8765|st.caption(f"Karar ├з─▒kt─▒ ar┼Яivi okunamad─▒: {_decision_archive_error}")
+REF=backend\dashboard.py:8766|# DECISION_OUTPUT_ARCHIVE_DAILY_COMPARE_V1_END
+REF=backend\dashboard.py:8778|"giri┼Я haz─▒rl─▒─Я─▒ ve kalite kan─▒tlar─▒ de─Яi┼Яtirilmez. Sabah 09:00 "
+REF=backend\dashboard.py:8802|st.markdown("##### 09:00 Nihai Aksiyon Listesi")
+REF=backend\dashboard.py:8818|st.success("09:00 AL adaylar─▒: " + ", ".join(_morning_buy_actions))
+REF=backend\dashboard.py:8820|st.info("09:00 listesinde AL ko┼Яullar─▒n─▒ tamamlayan aday yok.")
+REF=backend\dashboard.py:9927|archive = WeeklyPerformanceArchive()
+REF=backend\dashboard.py:9979|summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+REF=backend\dashboard.py:10022|key="weekly_report_archive",
+REF=backend\dashboard.py:10026|paths = archive.save(
+REF=backend\dashboard.py:10075|with archive_tab:
+REF=backend\dashboard.py:10076|archived = archive.list()
+REF=backend\dashboard.py:10077|if not archived:
+REF=backend\dashboard.py:10089|for path in archived
+DEF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:4|FunctionDef|test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner
+REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:6|assert "DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1" in source
+REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:9|assert "18:20" in source
+REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:10|assert "09:00" in source
+REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:17|assert "18:20" in source
+REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:18|assert "09:00" in source
+REF=scripts\install_daily_buy_decision_tasks.ps1:28|-At 18:20
+REF=scripts\install_daily_buy_decision_tasks.ps1:37|-At 09:00
+REF=scripts\install_daily_buy_decision_tasks.ps1:39|Register-ScheduledTask `
+REF=scripts\install_daily_buy_decision_tasks.ps1:46|Register-ScheduledTask `
+REF=scripts\install_daily_buy_decision_tasks.ps1:50|-Description "Hisse Robotu 09:00 sabah yeniden de─Яerlendirme" `
+REF=scripts\install_daily_buy_decision_tasks.ps1:53|Write-Host "Kuruldu: HisseRobotu-EOD-DailyDecision (18:20 hafta i├зi)"
+REF=scripts\install_daily_buy_decision_tasks.ps1:54|Write-Host "Kuruldu: HisseRobotu-0900-DailyDecision (09:00 hafta i├зi)"
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:42|FunctionDef|_audit_records
+DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:50|FunctionDef|_archive_records
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:10|PHASE_LABELS = {"MORNING": "09:00 Sabah", "EVENING": "18:20 Seans Sonu"}
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:42|def _audit_records(store: object) -> tuple[object, ...]:
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:50|def _archive_records(store: object) -> tuple[object, ...]:
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:62|audit_store: object | None = None,
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:63|archive_store: object | None = None,
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:74|if audit_store is None:
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:75|from backend.app.operations.daily_buy_decision_scheduled_runner import ScheduledRunAuditJsonStore
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:76|audit_store = ScheduledRunAuditJsonStore()
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:77|if archive_store is None:
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:78|from backend.app.analysis.daily_buy_decision_output_archive import DecisionOutputArchiveJsonStore
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:79|archive_store = DecisionOutputArchiveJsonStore()
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:82|audits = _audit_records(audit_store)
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:83|archives = _archive_records(archive_store)
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:120|phase_audits = [
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:121|item for item in audits
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:126|if phase_audits:
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:127|latest_audit = max(phase_audits, key=lambda item: str(getattr(item, "finished_at", "")))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:130|f"{label} Audit",
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:132|f"{getattr(latest_audit, 'run_kind', 'SCHEDULED')} ┬╖ {getattr(latest_audit, 'status', '-')}",
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:136|missing.append(f"{label}: audit e┼Яle┼Яmesi yok")
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:137|checks.append(OperationalCloseoutCheck(f"{label} Audit", "EKS─░K", "Ba┼Яar─▒l─▒ ko┼Яuyla e┼Яle┼Яen audit kayd─▒ bulunamad─▒."))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:139|phase_archives = [
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:140|item for item in archives
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:144|if phase_archives:
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:145|latest_archive = max(phase_archives, key=lambda item: str(getattr(item, "created_at", "")))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:146|archive_count = len(tuple(getattr(latest_archive, "candidates", ()) or ()))
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:147|if archive_count == candidate_count:
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:152|f"Scheduler ile aday say─▒s─▒ e┼Яle┼Яiyor ({archive_count}).",
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:161|f"Scheduler {candidate_count} aday, ar┼Яiv {archive_count} aday.",
+REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:176|headline = "EOD тЖТ 09:00 karar zinciri, audit ve karar ar┼Яivi birlikte do─Яruland─▒."
+DEF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:4|FunctionDef|test_dashboard_exposes_automation_health_and_manual_recovery
+REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:8|assert "18:20 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r" in source
+REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:9|assert "09:00 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r" in source
+REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:10|assert "duplicate ├╝retmez" in source
+DEF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:4|FunctionDef|test_dashboard_exposes_scheduler_audit_and_daily_chain
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:4|def test_dashboard_exposes_scheduler_audit_and_daily_chain():
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:6|assert "Otomasyon Ko┼Яu Ge├зmi┼Яi / Audit" in source
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:7|assert "scheduler_audit_rows" in source
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:8|assert "EOD тЖТ 09:00 g├╝nl├╝k zincir denetimi" in source
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:19|ClassDef|ScheduledRunRecord
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:31|ClassDef|ScheduledRunRuntime
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:40|ClassDef|ScheduledRunJsonStore
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:92|ClassDef|ScheduledRunAuditJsonStore
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:225|FunctionDef|execute_scheduled_run
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:302|FunctionDef|scheduler_status_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:323|FunctionDef|scheduler_health_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:402|FunctionDef|scheduler_audit_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:426|FunctionDef|scheduler_daily_chain_rows
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:35|FunctionDef|candidate_snapshot
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:37|FunctionDef|persist_decision_snapshot
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:198|FunctionDef|candidate_snapshot
+DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:209|FunctionDef|persist_decision_snapshot
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:13|DEFAULT_AUDIT_PATH = Path("backend/data/daily_buy_decision_scheduler_audit.json")
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:92|class ScheduledRunAuditJsonStore:
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:93|"""Append-only audit trail for every scheduled/recovery attempt."""
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:95|def __init__(self, path: Path | str = DEFAULT_AUDIT_PATH) -> None:
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:217|from backend.app.analysis.daily_buy_decision_output_archive import (
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:218|DecisionOutputArchiveJsonStore,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:220|DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:232|audit_store: ScheduledRunAuditJsonStore | None = None,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:239|history_store = audit_store or ScheduledRunAuditJsonStore()
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:305|for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:332|for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:369|audit_store: ScheduledRunAuditJsonStore | None = None,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:376|history_store = audit_store or ScheduledRunAuditJsonStore()
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:396|audit_store=history_store,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:402|def scheduler_audit_rows(
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:403|audit_store: ScheduledRunAuditJsonStore | None = None,
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:407|store = audit_store or ScheduledRunAuditJsonStore()
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:408|phase_label = {"EVENING": "Seans sonu", "MORNING": "09:00"}
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:450|"09:00": morning.status if morning else "YOK",
+REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:451|"09:00 aday": morning.candidate_count if morning else 0,
+DEF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:32|FunctionDef|candidate_snapshot
+DEF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:38|FunctionDef|persist_decision_snapshot
+REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:50|assert by_name["09:00"]["Sa─Яl─▒k"] == "EKS─░K KO┼ЮU"
+REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:66|morning = next(row for row in rows if row["Ko┼Яu"] == "09:00")
+REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:72|def test_recovery_does_not_duplicate_successful_run(tmp_path):
+REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:104|morning = next(row for row in rows if row["Ko┼Яu"] == "09:00")
+DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:46|FunctionDef|test_scheduled_run_persists_evening_snapshot_and_state
+DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:73|FunctionDef|test_scheduler_status_has_both_daily_phases
+DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:36|FunctionDef|candidate_snapshot
+DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:42|FunctionDef|persist_decision_snapshot
+REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:62|def test_same_phase_same_day_is_idempotent(tmp_path):
+REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:83|assert [row["Ko┼Яu"] for row in rows] == ["Seans sonu", "09:00"]
+DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:44|FunctionDef|test_every_attempt_is_appended_to_audit_history
+DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:57|FunctionDef|test_recovery_attempt_is_distinguished_from_scheduled_run
+DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:74|FunctionDef|test_audit_rows_expose_status_candidates_buy_and_error
+DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:34|FunctionDef|candidate_snapshot
+DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:40|FunctionDef|persist_decision_snapshot
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:7|ScheduledRunAuditJsonStore,
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:11|scheduler_audit_rows,
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:44|def test_every_attempt_is_appended_to_audit_history(tmp_path):
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:46|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:48|first = execute_scheduled_run("EVENING", now=now, runtime=Runtime(), store=state, audit_store=audit)
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:49|second = execute_scheduled_run("EVENING", now=now, runtime=Runtime(), store=state, audit_store=audit)
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:52|history = audit.load()
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:63|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:65|execute_scheduled_run("MORNING", now=now, runtime=Broken(), store=state, audit_store=audit)
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:66|retry_failed_or_missing_run("MORNING", now=now, runtime=Runtime(), store=state, audit_store=audit)
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:67|history = audit.load()
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:74|def test_audit_rows_expose_status_candidates_buy_and_error(tmp_path):
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:80|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:86|audit_store=audit,
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:88|rows = scheduler_audit_rows(audit)
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:90|assert rows[0]["Ko┼Яu"] == "09:00"
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:99|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:103|runtime=Runtime(), store=state, audit_store=audit,
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:108|runtime=Runtime(), store=state, audit_store=audit,
+REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:113|runtime=Runtime(), store=state, audit_store=audit,
+DEF=backend\app\analysis\eod_morning_board_delta.py:8|ClassDef|EodMorningBoardDeltaItem
+DEF=backend\app\analysis\eod_morning_board_delta.py:19|ClassDef|EodMorningBoardDeltaSummary
+DEF=backend\app\analysis\eod_morning_board_delta.py:81|FunctionDef|build_eod_morning_board_delta
+DEF=backend\app\analysis\eod_morning_board_delta.py:180|FunctionDef|eod_morning_board_delta_rows
+REF=backend\app\analysis\eod_morning_board_delta.py:158|headline = "Ak┼Яam Top-5 ile 09:00 nihai liste ayn─▒ karar yap─▒s─▒n─▒ korudu."
+REF=backend\app\analysis\eod_morning_board_delta.py:161|f"09:00 sonucu: {morning_buy} AL ┬╖ {upgrades} g├╝├зlenen ┬╖ "
+REF=backend\app\analysis\eod_morning_board_delta.py:192|"09:00": item.morning_decision,
+DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:40|FunctionDef|archive
+DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:49|FunctionDef|test_closeout_complete_when_both_phases_audit_and_archive_match
+DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:66|FunctionDef|test_closeout_waits_before_evening_schedule_if_morning_complete
+DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:91|FunctionDef|test_closeout_incomplete_when_archive_count_mismatch
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:40|def archive(phase, count=5):
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:49|def test_closeout_complete_when_both_phases_audit_and_archive_match():
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:58|audit_store=ListStore([morning, evening]),
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:59|archive_store=ListStore([archive("MORNING"), archive("EVENING")]),
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:71|audit_store=ListStore([morning]),
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:72|archive_store=ListStore([archive("MORNING")]),
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:84|audit_store=ListStore([morning]),
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:85|archive_store=ListStore([archive("MORNING")]),
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:88|assert any("18:20 Seans Sonu" in item for item in result.missing_links)
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:91|def test_closeout_incomplete_when_archive_count_mismatch():
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:100|audit_store=ListStore([morning, evening]),
+REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:101|archive_store=ListStore([archive("MORNING", 5), archive("EVENING", 4)]),
+DEF=backend\tests\test_eod_morning_board_delta_v1.py:20|FunctionDef|_snapshot
+DEF=backend\tests\test_eod_morning_board_delta_v1.py:63|FunctionDef|test_delta_summary_returns_none_without_both_snapshots
+REF=backend\tests\test_eod_morning_board_delta_v1.py:70|assert "Ak┼Яam тЖТ 09:00 Aksiyon Fark─▒ тАФ Tek Bak─▒┼Я" in text
+REF=backend\tests\test_research_profile_memory_v1.py:79|def test_identical_same_day_revision_is_idempotent(tmp_path):
+REF=backend\tests\test_research_profile_memory_v1.py:88|first = obs("2026-08-26", "INSUFFICIENT", "2026-08-26T09:00:00+00:00")
+DEF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+DEF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:79|FunctionDef|test_loader_reads_sprint139c_archive_and_skips_broken_json
+REF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:34|record(record_date="2026-08-03", created_at="2026-08-03T19:00:00Z",
+REF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+REF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:79|def test_loader_reads_sprint139c_archive_and_skips_broken_json(tmp_path):
+DEF=backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+DEF=backend\tests\test_daily_operation_ai_context.py:79|FunctionDef|test_loader_reads_sprint139c_archive_and_skips_broken_json
+REF=backend\tests\test_daily_operation_ai_context.py:34|record(record_date="2026-08-03", created_at="2026-08-03T19:00:00Z",
+REF=backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+REF=backend\tests\test_daily_operation_ai_context.py:79|def test_loader_reads_sprint139c_archive_and_skips_broken_json(tmp_path):
+REF=backend\tests\test_scan_history.py:316|"2026-07-23T19:00:00+03:00"
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:22|ClassDef|DecisionOutputArchiveRecord
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:30|ClassDef|DailyDecisionArchiveDelta
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:42|ClassDef|DecisionOutputArchiveJsonStore
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:150|FunctionDef|compare_decision_archive_days
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:203|FunctionDef|decision_output_archive_rows
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:252|FunctionDef|daily_decision_archive_delta_rows
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:270|FunctionDef|decision_output_audit_rows
+DEF=backend\app\analysis\daily_buy_decision_output_archive.py:110|FunctionDef|save_snapshot
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:16|DEFAULT_DECISION_OUTPUT_ARCHIVE_PATH = Path(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:17|"backend/data/daily_buy_decision_output_archive.json"
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:22|class DecisionOutputArchiveRecord:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:30|class DailyDecisionArchiveDelta:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:42|class DecisionOutputArchiveJsonStore:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:43|"""Daily EOD/Morning decision-board archive.
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:49|def __init__(self, path: Path | str = DEFAULT_DECISION_OUTPUT_ARCHIVE_PATH) -> None:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:52|def load(self) -> tuple[DecisionOutputArchiveRecord, ...]:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:60|result: list[DecisionOutputArchiveRecord] = []
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:69|DecisionOutputArchiveRecord(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:82|def save(self, record: DecisionOutputArchiveRecord) -> None:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:110|def save_snapshot(self, snapshot: DailyBuyDecisionSnapshot) -> DecisionOutputArchiveRecord:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:115|record = DecisionOutputArchiveRecord(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:124|def latest(self, phase: str | None = None) -> DecisionOutputArchiveRecord | None:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:133|def by_date(self, run_date: str) -> tuple[DecisionOutputArchiveRecord, ...]:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:138|def _symbols(record: DecisionOutputArchiveRecord) -> tuple[str, ...]:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:142|def _buy_symbols(record: DecisionOutputArchiveRecord) -> tuple[str, ...]:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:150|def compare_decision_archive_days(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:151|current: DecisionOutputArchiveRecord,
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:152|previous: DecisionOutputArchiveRecord,
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:153|) -> DailyDecisionArchiveDelta:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:174|return DailyDecisionArchiveDelta(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:188|records: Iterable[DecisionOutputArchiveRecord],
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:191|) -> DailyDecisionArchiveDelta | None:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:200|return compare_decision_archive_days(filtered[0], filtered[1])
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:203|def decision_output_archive_rows(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:204|records: Iterable[DecisionOutputArchiveRecord],
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:235|record: DecisionOutputArchiveRecord,
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:252|def daily_decision_archive_delta_rows(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:253|delta: DailyDecisionArchiveDelta,
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:270|def decision_output_audit_rows(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:271|records: Iterable[DecisionOutputArchiveRecord],
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:272|audit_records: Iterable[object],
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:276|"""Join archived decision outputs with the latest scheduler audit for date/phase."""
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:277|audit_by_key: dict[tuple[str, str], object] = {}
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:278|for audit in audit_records:
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:280|str(getattr(audit, "run_date", "")),
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:281|str(getattr(audit, "phase", "")).upper(),
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:285|existing = audit_by_key.get(key)
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:286|if existing is None or str(getattr(audit, "finished_at", "")) >= str(
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:289|audit_by_key[key] = audit
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:298|audit = audit_by_key.get((item.run_date, item.phase))
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:305|"Audit": str(getattr(audit, "status", "E┼ЮLE┼ЮME YOK")),
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:306|"Ko┼Яu t├╝r├╝": str(getattr(audit, "run_kind", "-")) if audit else "-",
+REF=backend\app\analysis\daily_buy_decision_output_archive.py:307|"Audit biti┼Я": str(getattr(audit, "finished_at", "-")) if audit else "-",
+DEF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:4|FunctionDef|test_dashboard_wires_daily_decision_output_archive_and_compare
+DEF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:12|FunctionDef|test_scheduler_persists_decision_output_archive_without_dashboard
+REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:4|def test_dashboard_wires_daily_decision_output_archive_and_compare():
+REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:7|assert "DecisionOutputArchiveJsonStore().save_snapshot(_decision_snapshot)" in text
+REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:9|assert "decision_output_audit_rows" in text
+REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:12|def test_scheduler_persists_decision_output_archive_without_dashboard():
+REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:16|assert "DecisionOutputArchiveJsonStore" in text
+
+=== 3. SOURCE DECISION ===
+EXISTING_18_20=YES
+EXISTING_09_00=YES
+EXISTING_AUDIT_CONTRACT=YES
+EXISTING_ARCHIVE_CONTRACT=YES
+EXISTING_SCHEDULER_INSTALLER=YES
+PRECLOSE_REUSE_READY=YES
+SOURCE_DECISION=REUSE_EXISTING_AUTOMATION_FRAMEWORK
+SOURCE_NEXT=PATCH_EXISTING_FRAMEWORK_TO_17_20_18_20_08_45;NO_PARALLEL_SCHEDULER
+
+SAFETY:
+PARALLEL_AUTOMATION_FRAMEWORK=NO
+NEW_ENGINE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+17:20_CANONICAL_RANKING_WRITE=NO
+17:20_PROFILE_MEMORY_WRITE=NO
+17:20_AL_SAT_DECISION=NO
+18:20_CANONICAL_AUTHORITY=PRESERVED
+08:45_PRIOR_CLOSE_RANKING_REWRITE=NO
+
+=== SOURCE PREFLIGHT COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO
+
+=== 4. WINDOWS TASK SCHEDULER CURRENT STATE ===
+TASK=\Microsoft\Windows\ApplicationData\appuriverifierdaily|STATE=Ready|TRIGGERS=|ACTIONS=Execute=%windir%\system32\AppHostRegistrationVerifier.exe Args= WorkDir=|LAST_RUN=08/27/2026 13:20:20|LAST_RESULT=0|NEXT_RUN=
+MATCHING_WINDOWS_TASKS=1
+
+=== 5. FINAL DECISION EXTRACT ===
+SOURCE_DECISION=REUSE_EXISTING_AUTOMATION_FRAMEWORK
+SOURCE_NEXT=PATCH_EXISTING_FRAMEWORK_TO_17_20_18_20_08_45;NO_PARALLEL_SCHEDULER
+EXISTING_SCHEDULER_INSTALLER=YES
+PRECLOSE_REUSE_READY=YES
+READ_ONLY=YES
+MUTATION=NO
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-Rev1-20260827-165023.txt

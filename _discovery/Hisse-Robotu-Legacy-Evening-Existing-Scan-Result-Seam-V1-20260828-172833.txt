@@ -1,0 +1,43 @@
+=== HISSE ROBOTU — LEGACY EVENING EXISTING SCAN RESULT SEAM V1 ===
+MODE=READ_ONLY
+TERMINAL_OUTPUT=COMPACT
+EXECUTE_SCHEDULED_RUN_LINES=225-299
+DIRECT_CALLS=ScheduledRunAuditJsonStore;ScheduledRunJsonStore;ScheduledRunRecord;_default_runtime;_normalize_phase;datetime.now;engine.candidate_snapshot;engine.decisions;engine.operation_summary;engine.persist_decision_snapshot;engine.scan;engine.visibility_contexts;getattr;history_store.append;len;state_store.load;state_store.save;str;timestamp.date;timestamp.isoformat;tuple;type
+
+=== DIRECT RELEVANT ASSIGNMENTS ===
+ASSIGN=skipped <- ScheduledRunRecord(phase=phase_value, run_date=run_date, started_at=existing.started_at, finished_at=existing.finished_at, status='SKIPPED', candidate_count=existing.candidate_count, buy_symbols=existing.buy_symbols, detail='Aynı gün/faz için başarılı otomatik koşu zaten mevcut.', run_kind=run_kind)
+ASSIGN=scan_result <- engine.scan()
+ASSIGN=candidate_snapshot <- engine.candidate_snapshot(summary, scan_result, visibility)
+ASSIGN=cards <- tuple(getattr(candidate_snapshot, 'candidates', ()) or ())
+ASSIGN=decisions <- engine.decisions(cards)
+ASSIGN=buy_symbols <- tuple((str(getattr(item, 'symbol', '')).strip().upper() for item in decisions if str(getattr(item, 'decision', '')).strip().upper() == 'AL'))
+ASSIGN=record <- ScheduledRunRecord(phase=phase_value, run_date=run_date, started_at=started_at, finished_at=finished, status='SUCCESS', candidate_count=len(cards), buy_symbols=buy_symbols, detail='Seans sonu/sabah günlük karar koşusu tamamlandı.', run_kind=run_kind)
+ASSIGN=record <- ScheduledRunRecord(phase=phase_value, run_date=run_date, started_at=started_at, finished_at=finished, status='FAILED', candidate_count=0, buy_symbols=(), detail=f'{type(error).__name__}: {error}', run_kind=run_kind)
+
+=== DIRECT RELEVANT REFS ===
+REFS=engine.candidate_snapshot;engine.persist_decision_snapshot;engine.scan;existing.candidate_count
+
+=== ONE-HOP LOCAL FUNCTIONS ===
+FUNC=_default_runtime|LINES=143-222
+  CALLS=DailyBuyDecisionJsonStore;DecisionOutputArchiveJsonStore;MarketScanRequest;build_daily_buy_decision_snapshot;build_daily_buy_decisions;build_dashboard_market_scanner;build_morning_operation_snapshot;service.calistir
+  REFS=service.calistir
+  ASSIGN=service <- build_dashboard_market_scanner(vbts_hard_block=False)
+  ASSIGN=request <- MarketScanRequest(evren='BIST 100', profil_adi='dengeli', maksimum_aday=15, ozel_semboller=(), internetten_evren_guncelle=True, sektor_baglami_aktif=True)
+  ASSIGN=snapshot <- build_daily_buy_decision_snapshot(cards, phase=phase, now=now, decisions=decisions)
+FUNC=_normalize_phase|LINES=136-140
+  CALLS=NONE
+  REFS=NONE
+
+=== DECISION ===
+DECISION=EXISTING_FULL_SCAN_RESULT_SEAM_AVAILABLE
+NEXT=IMPLEMENT_MINIMAL_CANONICAL_RANK_SNAPSHOT_WIRING
+SCHEDULER_CHANGES_REQUIRED=NO
+NEW_STORE_REQUIRED=NO
+EXISTING_WRITER_REUSE_REQUIRED=YES
+CURRENT_FAST_MOVER_BASELINE=3418_PASS
+
+=== SAFETY ===
+READ_ONLY=YES
+SOURCE_MUTATION=NO
+SCHEDULER_MUTATION=NO
+RANKING_MEMORY_WRITE=NO

@@ -1,0 +1,19 @@
+from types import SimpleNamespace
+
+from backend.app.analysis.todays_five_candidates_view import (
+    build_todays_five_candidates_view,
+)
+
+
+def test_turbo_10_todays_five_candidates():
+    result = build_todays_five_candidates_view(
+        (
+            SimpleNamespace(symbol="TUPRS"),
+            SimpleNamespace(symbol="ASELS"),
+            SimpleNamespace(symbol="THYAO"),
+        )
+    )
+
+    assert result.candidates == ("TUPRS", "ASELS", "THYAO")
+    assert result.candidate_count == 3
+    assert result.view_state == "BUGÜNÜN 5 ADAYI HAZIR"

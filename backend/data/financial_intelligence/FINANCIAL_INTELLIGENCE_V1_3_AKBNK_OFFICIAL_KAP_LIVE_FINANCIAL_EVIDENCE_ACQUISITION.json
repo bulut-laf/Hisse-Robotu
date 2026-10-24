@@ -1,0 +1,32 @@
+{
+  "schema_version": "financial-intelligence-v1-3-akbnk-official-kap-live-financial-evidence-acquisition-v1",
+  "status": "PASS_FAIL_CLOSED",
+  "symbol": "AKBNK",
+  "notification_id": "1637884",
+  "detail_url": "https://www.kap.org.tr/tr/Bildirim/1637884",
+  "source_type": "KAP",
+  "source_uri": "https://www.kap.org.tr/tr/Bildirim/1637884",
+  "network_fetch": true,
+  "content_type": "text/html; charset=utf-8",
+  "final_url": "https://www.kap.org.tr/tr/Bildirim/1637884",
+  "evidence_hash": "sha256:3032008be9c7e742b1f523f7cf0205ba5a2e0ebce517cb8a6cfd2f15709b45bc",
+  "detail_bytes": 2421474,
+  "identity": null,
+  "canonical_fact_count": 0,
+  "unmapped_count": 0,
+  "attachment_links": [
+    "https://www.kap.org.tr/tr/api/file/download/4028328c9f52dc40019fa90343905e35"
+  ],
+  "xls_like_links": [],
+  "parser_status": "BLOCKED",
+  "parser_error": "KapFinancialXlsError:KAP rapor yıl/periyot kimliği bulunamadı.",
+  "production_evidence": false,
+  "canonical_input_ready": false,
+  "scoring_ready": false,
+  "activation_ready": false,
+  "blockers": [
+    "LIVE_KAP_DETAIL_NOT_DIRECTLY_PARSEABLE_AS_FINANCIAL_XLS"
+  ],
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO"
+}

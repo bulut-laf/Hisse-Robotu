@@ -1,0 +1,16 @@
+﻿RENDER_FUNCTION_COUNT=1
+RENDER_FUNCTION_LINE=17
+RUN_RADAR_CALL_COUNT=1
+RUN_RADAR_CALL_LINE=44
+RUN_RADAR_CALL_SOURCE=run_opportunity_radar(result_limit=int(result_limit))
+UI_CALL_COUNT=10
+STDERR:
+Traceback (most recent call last):
+  File "C:\Users\user\AppData\Local\Temp\hr_radar_renderer_callshape_85b0ffe9d11740adadbeeda8f46b867c.py", line 53, in <module>
+    print(f"UI LINE={lineno} CALL={dn} SRC={' '.join(seg.split())[:400]}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u0131' in position 63: character maps to <undefined>
+EXIT_CODE=1

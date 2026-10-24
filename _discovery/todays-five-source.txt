@@ -1,0 +1,30 @@
+﻿from __future__ import annotations
+
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
+class TodaysFiveCandidatesView:
+    candidates: tuple[str, ...]
+    candidate_count: int
+    view_state: str
+
+
+def build_todays_five_candidates_view(
+    candidates: tuple[object, ...],
+) -> TodaysFiveCandidatesView:
+    symbols = tuple(
+        str(getattr(item, "symbol", "")).upper()
+        for item in candidates[:5]
+    )
+
+    return TodaysFiveCandidatesView(
+        candidates=symbols,
+        candidate_count=len(symbols),
+        view_state=(
+            "BUGГњNГњN 5 ADAYI HAZIR"
+            if symbols
+            else "ADAY BEKLENД°YOR"
+        ),
+    )
+

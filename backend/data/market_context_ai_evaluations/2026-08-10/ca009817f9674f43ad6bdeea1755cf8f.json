@@ -1,0 +1,48 @@
+{
+  "review_id": "ca009817f9674f43ad6bdeea1755cf8f",
+  "date": "2026-08-10",
+  "created_at": "2026-08-10T06:35:49Z",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "elapsed_seconds": 3.929,
+  "report_count": 3,
+  "sources": [
+    "Yatırım Finansman"
+  ],
+  "document_ids": [
+    "050b41728b8e4b9ab191cf65f288ae9e",
+    "95a37f9f1c644947a86997c0a3c84fdf",
+    "b18d25ecb5c944749122c38b4f9bf73a"
+  ],
+  "output": {
+    "summary": "10 Ağustos 2026 tarihli piyasa brifinglerine göre, BIST 100 endeksi haftanın ilk işlem gününe pozitif bir başlangıç yapma beklentisiyle girmektedir. Cuma günü açıklanan zayıf ABD tarım dışı istihdam verisinin Fed'in Eylül ayında faiz artırma ihtimalini zayıflatması küresel risk iştahını desteklerken, ABD-İran hattındaki Hürmüz Boğazı belirsizliği ve petrol fiyatlarının 85 dolar üzerine yerleşmesi ana risk unsurları olarak öne çıkmaktadır. İç tarafta haftanın en önemli gündemi 13 Ağustos'ta yayımlanacak yılın 3. Enflasyon Raporu sunumu ve TCMB beklentileridir. Bilanço tarafında VakıfBank ve Halkbank 2Ç26 sonuçlarını açıklamış; VakıfBank 15,1 milyar TL net kâr açıklarken Halkbank 8,2 milyar TL net kârla beklentilerin üzerinde performans göstermiştir. Ayrıca Halkbank, %25 oranında bedelli sermaye artırımı ve ikincil halka arz sürecine başlanacağını duyurmuştur.",
+    "positive_factors": [
+      "Cuma günü açıklanan zayıf ABD tarım dışı istihdam verisinin Fed'in faiz artırım ihtimali fiyatlamasını törpülemesi ve küreselde risk iştahını canlı tutması",
+      "Türkiye'nin ülke risk priminde (CDS) kademeli iyileşmenin devam etmesi",
+      "VakıfBank ve Halkbank'ın 2Ç26 döneminde açıkladığı güçlü net kâr rakamları ve TÜFEX gelirlerinin katkısı"
+    ],
+    "risk_factors": [
+      "ABD-İran hattında Hürmüz Boğazı anlaşmasına ilişkin belirsizliğin sürmesi ve petrol fiyatlarının yüksek seyretmesi",
+      "Yüksek TL mevduat maliyetleri, taşıma maliyeti (carry trade) ve swap eğrisinin belirgin pozitif eğiminin orta-uzun vadeli TL riskine işaret etmesi",
+      "Yıl sonu enflasyon ve politika faizi beklentilerinin TCMB hedeflerinin üzerinde kalmaya devam etmesi"
+    ],
+    "stock_specific_risks": [
+      "VakıfBank'ın swap dahil net faiz marjı ve özkaynak karlılığı beklentilerini aşağı yönlü revize etmesi",
+      "Halkbank'ın ikincil halka arz kararının mevcut yatırımcılar açısından mekanik pay ve hisse başına kazanç (EPS) sulanması yaratabilecek olması ve aktif kalitesindeki bozulma",
+      "MSCI Global Standart Endeksi'nde olası bir revizyonda SAHOL'ün endeksten çıkarılma yönünde ilk aday olarak değerlendirilmesi ve halka açıklık düzenlemelerinin satış baskısı yaratma potansiyeli"
+    ],
+    "aligned_points": [
+      "ABD tarım dışı istihdam verilerinin zayıf gelmesiyle Fed'in faiz artırım beklentilerinin gerilediği",
+      "BIST 100 endeksinin kritik destek ve direnç seviyeleri çevresinde hareket ettiği ve açılış beklentisinin pozitif/yatay pozitif olduğu",
+      "VakıfBank ve Halkbank'ın 2Ç26 finansal sonuçlarının piyasa tarafından detaylıca değerlendirildiği"
+    ],
+    "conflicting_points": [],
+    "watch_items": [
+      "13 Ağustos 2026 tarihinde gerçekleştirilecek yılın 3. Enflasyon Raporu sunumu",
+      "Haziran ayı Sanayi Üretimi, Perakende Satışlar ve Cari İşlemler Dengesi verileri",
+      "ABD Tüketici (CPI) ve Üretici (PPI) enflasyon verileri",
+      "CCOLA ve ENJSA 2Ç26 finansal sonuçları",
+      "Halkbank ikincil halka arz ve bedelli sermaye artırımı süreçleri"
+    ]
+  }
+}

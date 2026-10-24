@@ -1,0 +1,1991 @@
+﻿SPRINT-1 ADAPTER SOURCE CONTRACTS
+
+===== backend\app\analysis\common_final_candidate_selection_v1.py =====
+   1: """Sprint-1: independent common final candidate list (V1).
+   2: 
+   3: This module deliberately does not import or modify the existing AL/SAT engine,
+   4: high-conviction gate, jump-quality gate, or entry-readiness evaluator.
+   5: 
+   6: Inputs are normalized candidate-like objects or dictionaries. Source adapters
+   7: can be wired in a later sprint after this module's contract is validated.
+   8: """
+   9: from __future__ import annotations
+  10: 
+  11: from dataclasses import dataclass
+  12: from typing import Any, Iterable, Mapping
+  13: 
+  14: 
+  15: SOURCE_PRIORITY = {
+  16:     "TEKNIK_TARAMA": 10,
+  17:     "FIRSAT_RADARI_HAFTALIK": 20,
+  18:     "FIRSAT_RADARI_AYLIK": 30,
+  19:     "SICRAMA": 40,
+  20: }
+  21: 
+  22: 
+  23: def _value(item: object, name: str, default: Any = None) -> Any:
+  24:     if isinstance(item, Mapping):
+  25:         return item.get(name, default)
+  26:     return getattr(item, name, default)
+  27: 
+  28: 
+  29: def _clean(value: Any) -> str:
+  30:     return str(value or "").strip()
+  31: 
+  32: 
+  33: @dataclass(frozen=True)
+  34: class CandidateEvidence:
+  35:     source: str
+  36:     horizon: str = ""
+  37:     status: str = ""
+  38:     reason: str = ""
+  39: 
+  40: 
+  41: @dataclass(frozen=True)
+  42: class CommonFinalCandidate:
+  43:     symbol: str
+  44:     sources: tuple[str, ...]
+  45:     horizons: tuple[str, ...]
+  46:     evidence: tuple[CandidateEvidence, ...]
+  47:     priority: int
+  48:     technical_score: float | None
+  49:     volume_ratio: float | None
+  50:     risk_reward: float | None
+  51:     entry_readiness: str
+  52:     data_status: str
+  53:     reasons: tuple[str, ...]
+  54: 
+  55: 
+  56: def _number(item: object, name: str) -> float | None:
+  57:     raw = _value(item, name)
+  58:     if raw is None or raw == "":
+  59:         return None
+  60:     try:
+  61:         return float(raw)
+  62:     except (TypeError, ValueError):
+  63:         return None
+  64: 
+  65: 
+  66: def build_common_final_candidate_list(
+  67:     candidates: Iterable[object],
+  68:     *,
+  69:     limit: int | None = None,
+  70: ) -> tuple[CommonFinalCandidate, ...]:
+  71:     """Merge normalized candidates by symbol without generating a new score.
+  72: 
+  73:     Expected fields:
+  74:       symbol (required), source, horizon, status, reason, priority,
+  75:       technical_score, volume_ratio, risk_reward, entry_readiness, data_status.
+  76: 
+  77:     Duplicate symbols are consolidated. Existing numeric values are retained
+  78:     as the maximum observed value for technical_score, volume_ratio and
+  79:     risk_reward; these are display/context fields, not a combined score.
+  80:     Lower numeric priority means earlier in the existing priority convention.
+  81:     Missing priority falls back to source order; source precedence only breaks
+  82:     ties and never upgrades an underlying AL/SAT decision.
+  83:     """
+  84:     grouped: dict[str, list[object]] = {}
+  85:     for item in candidates:
+  86:         symbol = _clean(_value(item, "symbol")).upper()
+  87:         if not symbol:
+  88:             continue
+  89:         grouped.setdefault(symbol, []).append(item)
+  90: 
+  91:     output: list[CommonFinalCandidate] = []
+  92:     for symbol, items in grouped.items():
+  93:         sources_seen: list[str] = []
+  94:         horizons_seen: list[str] = []
+  95:         evidence: list[CandidateEvidence] = []
+  96:         reasons: list[str] = []
+  97:         priorities: list[int] = []
+  98:         scores: list[float] = []
+  99:         volumes: list[float] = []
+ 100:         risk_rewards: list[float] = []
+ 101:         readiness_values: list[str] = []
+ 102:         data_values: list[str] = []
+ 103: 
+ 104:         for item in items:
+ 105:             source = _clean(_value(item, "source", "BILINMIYOR")).upper() or "BILINMIYOR"
+ 106:             horizon = _clean(_value(item, "horizon")).upper()
+ 107:             status = _clean(_value(item, "status")).upper()
+ 108:             reason = _clean(_value(item, "reason"))
+ 109:             if source not in sources_seen:
+ 110:                 sources_seen.append(source)
+ 111:             if horizon and horizon not in horizons_seen:
+ 112:                 horizons_seen.append(horizon)
+ 113:             evidence.append(CandidateEvidence(source, horizon, status, reason))
+ 114:             if reason and reason not in reasons:
+ 115:                 reasons.append(reason)
+ 116: 
+ 117:             raw_priority = _value(item, "priority")
+ 118:             try:
+ 119:                 if raw_priority is not None and raw_priority != "":
+ 120:                     priorities.append(int(raw_priority))
+ 121:             except (TypeError, ValueError):
+ 122:                 pass
+ 123: 
+ 124:             for field, bucket in (
+ 125:                 ("technical_score", scores),
+ 126:                 ("volume_ratio", volumes),
+ 127:                 ("risk_reward", risk_rewards),
+ 128:             ):
+ 129:                 value = _number(item, field)
+ 130:                 if value is not None:
+ 131:                     bucket.append(value)
+ 132: 
+ 133:             readiness = _clean(_value(item, "entry_readiness")).upper()
+ 134:             if readiness and readiness not in readiness_values:
+ 135:                 readiness_values.append(readiness)
+ 136:             data_status = _clean(_value(item, "data_status")).upper()
+ 137:             if data_status and data_status not in data_values:
+ 138:                 data_values.append(data_status)
+ 139: 
+ 140:         # Use source priority only as a deterministic fallback/tie-breaker.
+ 141:         fallback_priority = min(
+ 142:             (SOURCE_PRIORITY.get(s, 999) for s in sources_seen),
+ 143:             default=999,
+ 144:         )
+ 145:         priority = min(priorities) if priorities else fallback_priority
+ 146:         output.append(
+ 147:             CommonFinalCandidate(
+ 148:                 symbol=symbol,
+ 149:                 sources=tuple(sources_seen),
+ 150:                 horizons=tuple(horizons_seen),
+ 151:                 evidence=tuple(evidence),
+ 152:                 priority=priority,
+ 153:                 technical_score=max(scores) if scores else None,
+ 154:                 volume_ratio=max(volumes) if volumes else None,
+ 155:                 risk_reward=max(risk_rewards) if risk_rewards else None,
+ 156:                 entry_readiness=" | ".join(readiness_values),
+ 157:                 data_status=" | ".join(data_values),
+ 158:                 reasons=tuple(reasons),
+ 159:             )
+ 160:         )
+ 161: 
+ 162:     output.sort(
+ 163:         key=lambda c: (
+ 164:             c.priority,
+ 165:             -SOURCE_PRIORITY.get(c.sources[0], 0) if c.sources else 0,
+ 166:             c.symbol,
+ 167:         )
+ 168:     )
+ 169:     if limit is not None:
+ 170:         if limit < 0:
+ 171:             raise ValueError("limit must be >= 0 or None")
+ 172:         output = output[:limit]
+ 173:     return tuple(output)
+
+===== backend\app\analysis\todays_five_candidates_view.py =====
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: 
+   5: 
+   6: @dataclass(frozen=True)
+   7: class TodaysFiveCandidatesView:
+   8:     candidates: tuple[str, ...]
+   9:     candidate_count: int
+  10:     view_state: str
+  11: 
+  12: 
+  13: def build_todays_five_candidates_view(
+  14:     candidates: tuple[object, ...],
+  15: ) -> TodaysFiveCandidatesView:
+  16:     symbols = tuple(
+  17:         str(getattr(item, "symbol", "")).upper()
+  18:         for item in candidates[:5]
+  19:     )
+  20: 
+  21:     return TodaysFiveCandidatesView(
+  22:         candidates=symbols,
+  23:         candidate_count=len(symbols),
+  24:         view_state=(
+  25:             "BUGГњNГњN 5 ADAYI HAZIR"
+  26:             if symbols
+  27:             else "ADAY BEKLENД°YOR"
+  28:         ),
+  29:     )
+
+===== backend\app\analysis\morning_candidate_flow.py =====
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: from typing import Iterable
+   5: 
+   6: from backend.app.analysis.jump_candidate_quality import (
+   7:     evaluate_jump_candidate_quality,
+   8: )
+   9: from backend.app.analysis.jump_candidate_entry_readiness import (
+  10:     evaluate_jump_candidate_entry_readiness,
+  11: )
+  12: from backend.app.analysis.jump_candidate_priority_merge import (
+  13:     merge_jump_and_scan_candidates,
+  14: )
+  15: 
+  16: 
+  17: @dataclass(frozen=True)
+  18: class MorningCandidateCard:
+  19:     rank: int
+  20:     symbol: str
+  21:     technical_score: int
+  22:     technical_view: str
+  23:     research_priority: str
+  24:     visibility_state: str | None
+  25:     rank_change: int | None
+  26:     data_blocked: bool
+  27:     volume_ratio: float
+  28:     risk_reward: float
+  29:     reference_price: float | None
+  30:     positive_reasons: tuple[str, ...]
+  31:     risks: tuple[str, ...]
+  32:     operational_status: str
+  33:     selection_source: str = "TARAMA"
+  34:     selection_reason: str = ""
+  35:     jump_quality: str = "-"
+  36:     jump_quality_reason: str = ""
+  37:     entry_readiness: str = "-"
+  38:     entry_readiness_reason: str = ""
+  39:     entry_extension_atr: float | None = None
+  40:     priority_reason: str = ""
+  41: 
+  42: 
+  43: def _normalize_symbol(value: object) -> str:
+  44:     return str(value or "").strip().upper().removesuffix(".IS")
+  45: 
+  46: 
+  47: def _visibility_by_symbol(
+  48:     contexts: Iterable[object],
+  49: ) -> dict[str, object]:
+  50:     result: dict[str, object] = {}
+  51:     for context in contexts:
+  52:         symbol = _normalize_symbol(getattr(context, "symbol", ""))
+  53:         if symbol:
+  54:             result[symbol] = context
+  55:     return result
+  56: 
+  57: 
+  58: 
+  59: def _reference_price(candidate: object) -> float | None:
+  60:     for name in ("son_fiyat", "son_kapanis", "kapanis", "fiyat", "close"):
+  61:         value = getattr(candidate, name, None)
+  62:         if value in (None, ""):
+  63:             continue
+  64:         try:
+  65:             price = float(value)
+  66:         except (TypeError, ValueError):
+  67:             continue
+  68:         if price > 0:
+  69:             return price
+  70:     return None
+  71: 
+  72: 
+  73: def _operational_status(
+  74:     *,
+  75:     technical_view: str,
+  76:     research_priority: str,
+  77:     data_blocked: bool,
+  78: ) -> str:
+  79:     if data_blocked:
+  80:         return "KISMД° VERД° вЂ” Д°NCELEMEYE DEVAM"
+  81: 
+  82:     if research_priority == "HIGH":
+  83:         return "ARAЕћTIRMA Г–NCELД°ДћД° YГњKSEK"
+  84: 
+  85:     if technical_view == "Pozitif Teknik GГ¶rГјnГјm":
+  86:         return "TEKNД°K ADAY"
+  87: 
+  88:     return "TEYД°T BEKLД°YOR"
+  89: 
+  90: 
+  91: 
+  92: 
+  93: def _selection_reason(*, source: str, rank_change: int | None) -> str:
+  94:     if source == "SICRAMA":
+  95:         if rank_change is not None:
+  96:             return f"Pozitif sД±ra hareketi (+{rank_change}) nedeniyle sД±Г§rama havuzundan seГ§ildi."
+  97:         return "Pozitif sД±ra hareketi nedeniyle sД±Г§rama havuzundan seГ§ildi."
+  98:     return "Mevcut BIST Toplu Tarama sД±rasД±ndan seГ§ildi."
+  99: 
+ 100: 
+ 101: def _candidate_selection(
+ 102:     candidates: tuple[object, ...],
+ 103:     visibility: dict[str, object],
+ 104:     *,
+ 105:     limit: int,
+ 106: ) -> tuple[tuple[object, str, str], ...]:
+ 107:     merged = merge_jump_and_scan_candidates(
+ 108:         candidates,
+ 109:         visibility,
+ 110:         limit=limit,
+ 111:     )
+ 112:     return tuple(
+ 113:         (item.candidate, item.source, item.priority_reason)
+ 114:         for item in merged
+ 115:     )
+ 116: 
+ 117: def build_morning_candidate_cards(
+ 118:     scan_result: object,
+ 119:     *,
+ 120:     visibility_contexts: Iterable[object] = (),
+ 121:     limit: int = 5,
+ 122:     include_movement_pool: bool = False,
+ 123: ) -> tuple[MorningCandidateCard, ...]:
+ 124:     """
+ 125:     Mevcut BIST toplu tarama sД±rasД±nД± deДџiЕџtirmeden ilk sabah aday kartlarД±nД±
+ 126:     Гјretir.
+ 127: 
+ 128:     Bu adapter yeni skor/sinyal Гјretmez. BatchStockScanner/MarketScanResult
+ 129:     tarafД±ndan belirlenmiЕџ aday sД±rasД±nД± korur; Early Visibility yalnД±z
+ 130:     araЕџtД±rma baДџlamД± ve veri-blok durumu olarak karta eklenir.
+ 131:     """
+ 132:     if limit < 1:
+ 133:         raise ValueError("limit en az 1 olmalД±dД±r.")
+ 134: 
+ 135:     candidates = tuple(getattr(scan_result, "adaylar", ()))
+ 136:     visibility = _visibility_by_symbol(visibility_contexts)
+ 137: 
+ 138:     cards: list[MorningCandidateCard] = []
+ 139: 
+ 140:     selected = (
+ 141:         _candidate_selection(candidates, visibility, limit=limit)
+ 142:         if include_movement_pool
+ 143:         else tuple((candidate, "TARAMA", "Mevcut tarama sД±rasД± korunuyor.") for candidate in candidates[:limit])
+ 144:     )
+ 145: 
+ 146:     for rank, (candidate, selection_source, priority_reason) in enumerate(selected, start=1):
+ 147:         symbol = _normalize_symbol(getattr(candidate, "sembol", ""))
+ 148:         signal = getattr(candidate, "sinyal")
+ 149:         risk_plan = getattr(candidate, "risk_plani")
+ 150:         context = visibility.get(symbol)
+ 151: 
+ 152:         research_priority = (
+ 153:             str(getattr(context, "research_priority", "NORMAL")).upper()
+ 154:             if context is not None
+ 155:             else "NORMAL"
+ 156:         )
+ 157:         data_blocked = bool(
+ 158:             getattr(context, "data_blocked", False)
+ 159:             if context is not None
+ 160:             else False
+ 161:         )
+ 162:         visibility_state = (
+ 163:             str(getattr(context, "visibility_state"))
+ 164:             if context is not None
+ 165:             and getattr(context, "visibility_state", None) is not None
+ 166:             else None
+ 167:         )
+ 168:         rank_change = (
+ 169:             int(getattr(context, "rank_change"))
+ 170:             if context is not None
+ 171:             and getattr(context, "rank_change", None) is not None
+ 172:             else None
+ 173:         )
+ 174: 
+ 175:         technical_view = str(getattr(signal, "karar"))
+ 176: 
+ 177:         _jump_quality = evaluate_jump_candidate_quality(candidate)
+ 178:         _entry_readiness = evaluate_jump_candidate_entry_readiness(candidate)
+ 179: 
+ 180:         cards.append(
+ 181:             MorningCandidateCard(
+ 182:                 rank=rank,
+ 183:                 symbol=symbol,
+ 184:                 technical_score=int(getattr(signal, "skor")),
+ 185:                 technical_view=technical_view,
+ 186:                 research_priority=research_priority,
+ 187:                 visibility_state=visibility_state,
+ 188:                 rank_change=rank_change,
+ 189:                 data_blocked=data_blocked,
+ 190:                 volume_ratio=float(getattr(candidate, "hacim_orani")),
+ 191:                 risk_reward=float(getattr(risk_plan, "risk_odul_orani")),
+ 192:                 reference_price=_reference_price(candidate),
+ 193:                 positive_reasons=tuple(
+ 194:                     getattr(signal, "pozitif_nedenler", ())
+ 195:                 ),
+ 196:                 risks=tuple(getattr(signal, "riskler", ())),
+ 197:                 operational_status=_operational_status(
+ 198:                     technical_view=technical_view,
+ 199:                     research_priority=research_priority,
+ 200:                     data_blocked=data_blocked,
+ 201:                 ),
+ 202:                 selection_source=selection_source,
+ 203:                 selection_reason=_selection_reason(
+ 204:                     source=selection_source,
+ 205:                     rank_change=rank_change,
+ 206:                 ),
+ 207:                 jump_quality=(
+ 208:                     "UYGUN" if _jump_quality.eligible else "FД°LTRE DIЕћI"
+ 209:                 ),
+ 210:                 jump_quality_reason=" В· ".join(_jump_quality.reasons),
+ 211:                 entry_readiness=_entry_readiness.state,
+ 212:                 entry_readiness_reason=" В· ".join(_entry_readiness.reasons),
+ 213:                 entry_extension_atr=_entry_readiness.extension_atr,
+ 214:                 priority_reason=priority_reason,
+ 215:             )
+ 216:         )
+ 217: 
+ 218:     return tuple(cards)
+ 219: 
+ 220: 
+ 221: def morning_candidate_rows(
+ 222:     cards: Iterable[MorningCandidateCard],
+ 223: ) -> tuple[dict[str, object], ...]:
+ 224:     """UI/tablo katmanД± iГ§in sade, salt-okunur sabah aday satД±rlarД± Гјretir."""
+ 225:     return tuple(
+ 226:         {
+ 227:             "SД±ra": card.rank,
+ 228:             "Hisse": card.symbol,
+ 229:             "Aday kaynaДџД±": card.selection_source,
+ 230:             "SeГ§im nedeni": card.selection_reason,
+ 231:             "Top-5 Г¶ncelik nedeni": card.priority_reason,
+ 232:             "SД±Г§rama kalite kapД±sД±": card.jump_quality,
+ 233:             "SД±Г§rama kalite nedeni": card.jump_quality_reason,
+ 234:             "GiriЕџ hazД±rlД±ДџД±": card.entry_readiness,
+ 235:             "GiriЕџ hazД±rlД±ДџД± nedeni": card.entry_readiness_reason,
+ 236:             "Uzama (ATR)": (
+ 237:                 round(card.entry_extension_atr, 2)
+ 238:                 if card.entry_extension_atr is not None
+ 239:                 else "-"
+ 240:             ),
+ 241:             "Skor": card.technical_score,
+ 242:             "Teknik gГ¶rГјnГјm": card.technical_view,
+ 243:             "AraЕџtД±rma Г¶nceliДџi": card.research_priority,
+ 244:             "Erken gГ¶rГјnГјrlГјk": card.visibility_state or "-",
+ 245:             "SД±ra deДџiЕџimi": card.rank_change if card.rank_change is not None else "-",
+ 246:             "Hacim oranД±": round(card.volume_ratio, 2),
+ 247:             "Risk/Getiri": round(card.risk_reward, 2),
+ 248:             "Referans fiyat": round(card.reference_price, 4) if card.reference_price is not None else "-",
+ 249:             "Durum": card.operational_status,
+ 250:             "Nedenler": " | ".join(card.positive_reasons) or "-",
+ 251:             "Riskler": " | ".join(card.risks) or "-",
+ 252:         }
+ 253:         for card in cards
+ 254:     )
+
+===== backend\app\analysis\weekly_opportunity.py =====
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: from enum import Enum
+   5: from typing import Iterable, Mapping
+   6: 
+   7: from backend.app.analysis.next_day_selection import (
+   8:     ExtensionState,
+   9:     NextDayCandidateEvidence,
+  10:     ReboundState,
+  11: )
+  12: 
+  13: CONTRACT_ID = "WEEKLY_OPPORTUNITY_ANALYSIS_V1"
+  14: 
+  15: 
+  16: class WeeklyOpportunityStage(str, Enum):
+  17:     W0 = "W0_NO_SETUP"
+  18:     W1 = "W1_EARLY_FORMATION"
+  19:     W2 = "W2_DEVELOPING_OPPORTUNITY"
+  20:     W3 = "W3_ACTIVATION_WATCH"
+  21:     W4 = "W4_HIGH_CONVICTION_ACTIVATION_WATCH"
+  22: 
+  23: 
+  24: class WeeklyOpportunityState(str, Enum):
+  25:     CLEAN = "CLEAN"
+  26:     SOFT_CAUTION = "SOFT_CAUTION"
+  27:     BLOCKED = "BLOCKED"
+  28:     EXTENDED = "EXTENDED"
+  29: 
+  30: 
+  31: @dataclass(frozen=True)
+  32: class WeeklyPricePlan:
+  33:     current_price: float | None = None
+  34:     entry_zone_low: float | None = None
+  35:     entry_zone_high: float | None = None
+  36:     ideal_entry: float | None = None
+  37:     stop_loss: float | None = None
+  38:     target_1: float | None = None
+  39:     target_2: float | None = None
+  40:     risk_reward: float | None = None
+  41:     late_entry_above: float | None = None
+  42:     source: str = "EXISTING_CONTRACT_ONLY"
+  43: 
+  44:     @property
+  45:     def available(self) -> bool:
+  46:         return any(
+  47:             value is not None
+  48:             for value in (
+  49:                 self.entry_zone_low,
+  50:                 self.entry_zone_high,
+  51:                 self.ideal_entry,
+  52:                 self.stop_loss,
+  53:                 self.target_1,
+  54:                 self.target_2,
+  55:                 self.risk_reward,
+  56:                 self.late_entry_above,
+  57:             )
+  58:         )
+  59: 
+  60: 
+  61: @dataclass(frozen=True)
+  62: class WeeklyOpportunityEvidence:
+  63:     canonical_date: str
+  64:     symbol: str
+  65:     research_rank: int
+  66:     evidence_families: tuple[str, ...]
+  67:     data_ready: bool = True
+  68:     freshness_valid: bool = True
+  69:     security_lock: bool = False
+  70:     universe_comparable: bool = True
+  71:     research_valid: bool = True
+  72:     hard_contradictions: tuple[str, ...] = ()
+  73:     soft_contradictions: tuple[str, ...] = ()
+  74:     extension: ExtensionState = ExtensionState.CLEAN
+  75:     rebound: ReboundState = ReboundState.NO
+  76:     single_factor_domination: bool = False
+  77:     readiness_rank: int = 10**9
+  78:     migration_rank: int = 10**9
+  79:     relative_strength_rank: int = 10**9
+  80:     explanation: tuple[str, ...] = ()
+  81:     warnings: tuple[str, ...] = ()
+  82: 
+  83: 
+  84: @dataclass(frozen=True)
+  85: class WeeklyOpportunityCandidate:
+  86:     canonical_date: str
+  87:     symbol: str
+  88:     stage: WeeklyOpportunityStage
+  89:     state: WeeklyOpportunityState
+  90:     research_rank: int
+  91:     evidence_families: tuple[str, ...]
+  92:     soft_contradictions: tuple[str, ...]
+  93:     extension: ExtensionState
+  94:     rebound: ReboundState
+  95:     readiness_rank: int
+  96:     migration_rank: int
+  97:     relative_strength_rank: int
+  98:     next_day_status: str
+  99:     why_visible_now: str
+ 100:     what_must_happen_next: str
+ 101:     what_invalidates_setup: str
+ 102:     pilot_research_status: str
+ 103:     price_plan: WeeklyPricePlan
+ 104: 
+ 105: 
+ 106: @dataclass(frozen=True)
+ 107: class WeeklyOpportunityResult:
+ 108:     contract_id: str
+ 109:     canonical_date: str
+ 110:     candidates: tuple[WeeklyOpportunityCandidate, ...]
+ 111:     excluded_count: int
+ 112: 
+ 113:     @property
+ 114:     def w4(self) -> tuple[WeeklyOpportunityCandidate, ...]:
+ 115:         return tuple(x for x in self.candidates if x.stage is WeeklyOpportunityStage.W4)
+ 116: 
+ 117:     @property
+ 118:     def w3(self) -> tuple[WeeklyOpportunityCandidate, ...]:
+ 119:         return tuple(x for x in self.candidates if x.stage is WeeklyOpportunityStage.W3)
+ 120: 
+ 121:     @property
+ 122:     def w2(self) -> tuple[WeeklyOpportunityCandidate, ...]:
+ 123:         return tuple(x for x in self.candidates if x.stage is WeeklyOpportunityStage.W2)
+ 124: 
+ 125:     @property
+ 126:     def w1(self) -> tuple[WeeklyOpportunityCandidate, ...]:
+ 127:         return tuple(x for x in self.candidates if x.stage is WeeklyOpportunityStage.W1)
+ 128: 
+ 129: 
+ 130: _ALLOWED = {"F1", "F2", "F3", "F4", "F5"}
+ 131: _STAGE_ORDER = {
+ 132:     WeeklyOpportunityStage.W4: 0,
+ 133:     WeeklyOpportunityStage.W3: 1,
+ 134:     WeeklyOpportunityStage.W2: 2,
+ 135:     WeeklyOpportunityStage.W1: 3,
+ 136:     WeeklyOpportunityStage.W0: 4,
+ 137: }
+ 138: 
+ 139: 
+ 140: def weekly_evidence_from_next_day(
+ 141:     item: NextDayCandidateEvidence,
+ 142: ) -> WeeklyOpportunityEvidence:
+ 143:     return WeeklyOpportunityEvidence(
+ 144:         canonical_date=item.canonical_date,
+ 145:         symbol=item.symbol,
+ 146:         research_rank=item.research_rank,
+ 147:         evidence_families=tuple(item.evidence_families),
+ 148:         data_ready=item.data_ready,
+ 149:         freshness_valid=item.freshness_valid,
+ 150:         security_lock=item.security_lock,
+ 151:         universe_comparable=item.universe_comparable,
+ 152:         research_valid=item.research_valid,
+ 153:         hard_contradictions=tuple(item.hard_contradictions),
+ 154:         soft_contradictions=tuple(item.soft_contradictions),
+ 155:         extension=item.extension,
+ 156:         rebound=item.rebound,
+ 157:         single_factor_domination=item.single_factor_domination,
+ 158:         readiness_rank=item.readiness_rank,
+ 159:         migration_rank=item.migration_rank,
+ 160:         relative_strength_rank=item.relative_strength_rank,
+ 161:         explanation=tuple(item.explanation),
+ 162:         warnings=tuple(item.warnings),
+ 163:     )
+ 164: 
+ 165: 
+ 166: def _families(item: WeeklyOpportunityEvidence) -> tuple[str, ...]:
+ 167:     return tuple(sorted({str(x).upper() for x in item.evidence_families if str(x).upper() in _ALLOWED}))
+ 168: 
+ 169: 
+ 170: def _blocked(item: WeeklyOpportunityEvidence) -> bool:
+ 171:     return (
+ 172:         not item.data_ready
+ 173:         or not item.freshness_valid
+ 174:         or item.security_lock
+ 175:         or not item.universe_comparable
+ 176:         or not item.research_valid
+ 177:         or bool(item.hard_contradictions)
+ 178:         or item.rebound is ReboundState.TRAP
+ 179:     )
+ 180: 
+ 181: 
+ 182: def _stage(item: WeeklyOpportunityEvidence) -> tuple[WeeklyOpportunityStage, WeeklyOpportunityState]:
+ 183:     fam = set(_families(item))
+ 184:     if _blocked(item):
+ 185:         return WeeklyOpportunityStage.W0, WeeklyOpportunityState.BLOCKED
+ 186:     if item.single_factor_domination or len(fam) < 2:
+ 187:         return WeeklyOpportunityStage.W0, WeeklyOpportunityState.CLEAN
+ 188: 
+ 189:     state = WeeklyOpportunityState.CLEAN
+ 190:     if item.extension is ExtensionState.SEVERE:
+ 191:         state = WeeklyOpportunityState.EXTENDED
+ 192:     elif (
+ 193:         item.soft_contradictions
+ 194:         or item.extension is ExtensionState.MILD
+ 195:         or item.rebound is ReboundState.CAUTION
+ 196:     ):
+ 197:         state = WeeklyOpportunityState.SOFT_CAUTION
+ 198: 
+ 199:     stage = WeeklyOpportunityStage.W0
+ 200: 
+ 201:     if {"F1", "F2"}.issubset(fam):
+ 202:         stage = WeeklyOpportunityStage.W1
+ 203: 
+ 204:     if {"F1", "F2"}.issubset(fam) and ({"F3", "F5"} & fam):
+ 205:         stage = WeeklyOpportunityStage.W2
+ 206: 
+ 207:     if len(fam) >= 3 and ({"F1", "F2"} & fam) and {"F3", "F4"}.issubset(fam):
+ 208:         stage = WeeklyOpportunityStage.W3
+ 209: 
+ 210:     if (
+ 211:         {"F1", "F2", "F3", "F4"}.issubset(fam)
+ 212:         and not item.single_factor_domination
+ 213:         and not item.soft_contradictions
+ 214:         and item.extension is ExtensionState.CLEAN
+ 215:         and item.rebound is ReboundState.NO
+ 216:     ):
+ 217:         stage = WeeklyOpportunityStage.W4
+ 218: 
+ 219:     # Severe extension is still research-visible but never activation-ready.
+ 220:     if item.extension is ExtensionState.SEVERE and _STAGE_ORDER[stage] < _STAGE_ORDER[WeeklyOpportunityStage.W2]:
+ 221:         stage = WeeklyOpportunityStage.W2
+ 222: 
+ 223:     return stage, state
+ 224: 
+ 225: 
+ 226: def _why(item: WeeklyOpportunityEvidence, stage: WeeklyOpportunityStage) -> str:
+ 227:     names = {
+ 228:         "F1": "Research migration / Early Visibility",
+ 229:         "F2": "trend / structural quality",
+ 230:         "F3": "momentum / relative strength",
+ 231:         "F4": "activation readiness",
+ 232:         "F5": "volume / participation",
+ 233:     }
+ 234:     parts = [names[x] for x in _families(item)]
+ 235:     return f"{stage.value}: " + ", ".join(parts) + "."
+ 236: 
+ 237: 
+ 238: def _next(item: WeeklyOpportunityEvidence, stage: WeeklyOpportunityStage) -> str:
+ 239:     fam = set(_families(item))
+ 240:     missing = [x for x in ("F1", "F2", "F3", "F4", "F5") if x not in fam]
+ 241:     if stage is WeeklyOpportunityStage.W4:
+ 242:         return "Mevcut evidence korunmalД±; giriЕџ/risk kontratД± geГ§erli kalmalД±."
+ 243:     if "F4" in missing:
+ 244:         return "Existing F4 activation/readiness teyidi gГјГ§lenmeli."
+ 245:     if "F3" in missing:
+ 246:         return "Existing momentum/relative-strength teyidi oluЕџmalД±."
+ 247:     if "F5" in missing:
+ 248:         return "KatД±lД±m/hacim desteДџi gГјГ§lenirse kalite artar."
+ 249:     return "Mevcut yapД± bozulmadan evidence breadth korunmalД±."
+ 250: 
+ 251: 
+ 252: def _invalidate(item: WeeklyOpportunityEvidence) -> str:
+ 253:     return (
+ 254:         "Freshness/security lock, hard contradiction, rebound trap, "
+ 255:         "structure breakdown veya severe extension."
+ 256:     )
+ 257: 
+ 258: 
+ 259: def _pilot(stage: WeeklyOpportunityStage, state: WeeklyOpportunityState) -> str:
+ 260:     if state in (WeeklyOpportunityState.BLOCKED, WeeklyOpportunityState.EXTENDED):
+ 261:         return "PASS"
+ 262:     if stage is WeeklyOpportunityStage.W4:
+ 263:         return "PILOT_SHORTLIST"
+ 264:     if stage is WeeklyOpportunityStage.W3:
+ 265:         return "REVIEW"
+ 266:     if stage in (WeeklyOpportunityStage.W2, WeeklyOpportunityStage.W1):
+ 267:         return "WATCH"
+ 268:     return "PASS"
+ 269: 
+ 270: 
+ 271: def _sort_key(item: WeeklyOpportunityCandidate) -> tuple[object, ...]:
+ 272:     return (
+ 273:         _STAGE_ORDER[item.stage],
+ 274:         len(item.soft_contradictions),
+ 275:         -len(item.evidence_families),
+ 276:         item.readiness_rank,
+ 277:         item.migration_rank,
+ 278:         item.relative_strength_rank,
+ 279:         item.research_rank,
+ 280:         item.symbol,
+ 281:     )
+ 282: 
+ 283: 
+ 284: def classify_weekly_opportunities(
+ 285:     evidence: Iterable[WeeklyOpportunityEvidence | NextDayCandidateEvidence],
+ 286:     *,
+ 287:     price_plans: Mapping[str, WeeklyPricePlan] | None = None,
+ 288:     next_day_roles: Mapping[str, str] | None = None,
+ 289: ) -> WeeklyOpportunityResult:
+ 290:     materialized = tuple(evidence)
+ 291:     if not materialized:
+ 292:         raise ValueError("Weekly opportunity input cannot be empty.")
+ 293: 
+ 294:     converted = tuple(
+ 295:         weekly_evidence_from_next_day(x) if isinstance(x, NextDayCandidateEvidence) else x
+ 296:         for x in materialized
+ 297:     )
+ 298:     dates = {x.canonical_date for x in converted}
+ 299:     if len(dates) != 1:
+ 300:         raise ValueError("Weekly opportunity evidence must share one canonical date.")
+ 301: 
+ 302:     plans = {str(k).upper(): v for k, v in (price_plans or {}).items()}
+ 303:     roles = {str(k).upper(): str(v).upper() for k, v in (next_day_roles or {}).items()}
+ 304: 
+ 305:     rows: list[WeeklyOpportunityCandidate] = []
+ 306:     excluded = 0
+ 307:     for item in converted:
+ 308:         stage, state = _stage(item)
+ 309:         if stage is WeeklyOpportunityStage.W0:
+ 310:             excluded += 1
+ 311:             continue
+ 312:         fam = _families(item)
+ 313:         rows.append(
+ 314:             WeeklyOpportunityCandidate(
+ 315:                 canonical_date=item.canonical_date,
+ 316:                 symbol=item.symbol,
+ 317:                 stage=stage,
+ 318:                 state=state,
+ 319:                 research_rank=item.research_rank,
+ 320:                 evidence_families=fam,
+ 321:                 soft_contradictions=tuple(item.soft_contradictions),
+ 322:                 extension=item.extension,
+ 323:                 rebound=item.rebound,
+ 324:                 readiness_rank=item.readiness_rank,
+ 325:                 migration_rank=item.migration_rank,
+ 326:                 relative_strength_rank=item.relative_strength_rank,
+ 327:                 next_day_status=roles.get(item.symbol.upper(), "NONE"),
+ 328:                 why_visible_now=_why(item, stage),
+ 329:                 what_must_happen_next=_next(item, stage),
+ 330:                 what_invalidates_setup=_invalidate(item),
+ 331:                 pilot_research_status=_pilot(stage, state),
+ 332:                 price_plan=plans.get(item.symbol.upper(), WeeklyPricePlan()),
+ 333:             )
+ 334:         )
+ 335: 
+ 336:     ordered = tuple(sorted(rows, key=_sort_key))
+ 337:     return WeeklyOpportunityResult(
+ 338:         contract_id=CONTRACT_ID,
+ 339:         canonical_date=next(iter(dates)),
+ 340:         candidates=ordered,
+ 341:         excluded_count=excluded,
+ 342:     )
+
+===== backend\app\opportunity_radar.py =====
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: from pathlib import Path
+   5: from typing import Iterable
+   6: 
+   7: import numpy as np
+   8: import pandas as pd
+   9: 
+  10: from backend.app.data.batch_market_data import BatchMarketDataFailure, toplu_fiyat_verisi_getir
+  11: from backend.app.data.market_data import fiyat_verisi_getir
+  12: from backend.app.prebreakout.prebreakout_universe import on_yukselis_evrenini_yukle
+  13: 
+  14: 
+  15: PROFILE_DIR = Path(__file__).resolve().parents[1] / "data" / "opportunity_radar"
+  16: QUANTILE_FILE = PROFILE_DIR / "03_w2_w3_quantile_sinirlari_rev3.csv"
+  17: PASSED_PROFILE_FILE = PROFILE_DIR / "06_w2_w3_gecen_profiller_rev3.csv"
+  18: MONTHLY_QUANTILE_FILE = PROFILE_DIR / "03_aylik_quantile_sinirlari_rev2.csv"
+  19: MONTHLY_PASSED_PROFILE_FILE = PROFILE_DIR / "06_aylik_gecen_profiller_rev2.csv"
+  20: 
+  21: 
+  22: @dataclass(frozen=True)
+  23: class OpportunityRadarResult:
+  24:     universe_name: str
+  25:     universe_source: str
+  26:     universe_date: str
+  27:     universe_count: int
+  28:     data_success_count: int
+  29:     data_failures: tuple[BatchMarketDataFailure, ...]
+  30:     weekly: pd.DataFrame
+  31:     monthly_strong: pd.DataFrame
+  32:     monthly_early: pd.DataFrame
+  33: 
+  34: 
+  35: def _normalize_ohlcv(df: pd.DataFrame) -> pd.DataFrame:
+  36:     x = df.copy()
+  37:     if isinstance(x.columns, pd.MultiIndex):
+  38:         x.columns = [str(c[0]) for c in x.columns]
+  39:     cmap = {str(c).strip().lower(): c for c in x.columns}
+  40:     needed = {"open": "Open", "high": "High", "low": "Low", "close": "Close"}
+  41:     missing = [src for src in needed if src not in cmap]
+  42:     if missing:
+  43:         raise ValueError("Eksik OHLC kolonlari: " + ", ".join(missing))
+  44:     out = pd.DataFrame(index=pd.to_datetime(x.index))
+  45:     for src, dest in needed.items():
+  46:         out[dest] = pd.to_numeric(x[cmap[src]], errors="coerce")
+  47:     vol = cmap.get("volume")
+  48:     out["Volume"] = pd.to_numeric(x[vol], errors="coerce") if vol else np.nan
+  49:     out = out.dropna(subset=["Open", "High", "Low", "Close"]).sort_index()
+  50:     return out[(out["High"] >= out["Low"]) & (out["Close"] >= out["Low"]) & (out["Close"] <= out["High"])]
+  51: 
+  52: 
+  53: def _rsi(s: pd.Series, n: int = 14) -> pd.Series:
+  54:     delta = s.diff()
+  55:     up = delta.clip(lower=0)
+  56:     down = -delta.clip(upper=0)
+  57:     au = up.ewm(alpha=1 / n, adjust=False, min_periods=n).mean()
+  58:     ad = down.ewm(alpha=1 / n, adjust=False, min_periods=n).mean()
+  59:     rs = au / ad.replace(0, np.nan)
+  60:     return (100 - 100 / (1 + rs)).fillna(50.0)
+  61: 
+  62: 
+  63: def _weekly(daily: pd.DataFrame) -> pd.DataFrame:
+  64:     d = _normalize_ohlcv(daily)
+  65:     return pd.DataFrame(
+  66:         {
+  67:             "Open": d["Open"].resample("W-FRI").first(),
+  68:             "High": d["High"].resample("W-FRI").max(),
+  69:             "Low": d["Low"].resample("W-FRI").min(),
+  70:             "Close": d["Close"].resample("W-FRI").last(),
+  71:             "Volume": d["Volume"].resample("W-FRI").sum(min_count=1),
+  72:         }
+  73:     ).dropna(subset=["Open", "High", "Low", "Close"])
+  74: 
+  75: 
+  76: def _weekly_enrich(w: pd.DataFrame) -> pd.DataFrame:
+  77:     # Research V1 Rev1 W1-W4 contract is intentionally preserved.
+  78:     z = w.copy()
+  79:     z["EMA20"] = z["Close"].ewm(span=20, adjust=False).mean()
+  80:     z["EMA50"] = z["Close"].ewm(span=50, adjust=False).mean()
+  81:     z["EMA20Slope4"] = z["EMA20"] / z["EMA20"].shift(4) - 1
+  82:     z["RSI14"] = _rsi(z["Close"])
+  83:     z["RSIDelta3"] = z["RSI14"] - z["RSI14"].shift(3)
+  84: 
+  85:     prev_close = z["Close"].shift(1)
+  86:     tr = pd.concat(
+  87:         [
+  88:             z["High"] - z["Low"],
+  89:             (z["High"] - prev_close).abs(),
+  90:             (z["Low"] - prev_close).abs(),
+  91:         ],
+  92:         axis=1,
+  93:     ).max(axis=1)
+  94:     z["ATR14"] = tr.rolling(14).mean()
+  95:     z["ATRPct"] = 100 * z["ATR14"] / z["Close"]
+  96:     z["ATRContract"] = z["ATRPct"] < z["ATRPct"].rolling(8).mean()
+  97:     z["VolMA8"] = z["Volume"].rolling(8).mean()
+  98:     z["VolRatio"] = z["Volume"] / z["VolMA8"].replace(0, np.nan)
+  99:     z["Res26"] = z["High"].shift(1).rolling(26, min_periods=13).max()
+ 100:     z["DistResPct"] = 100 * (z["Res26"] - z["Close"]) / z["Close"]
+ 101:     z["Breakout26"] = z["Close"] > z["Res26"]
+ 102: 
+ 103:     r6 = (z["High"].rolling(6).max() - z["Low"].rolling(6).min()) / z["Close"]
+ 104:     z["Compression"] = r6 < r6.shift(6)
+ 105:     z["AboveEMA20"] = z["Close"] >= z["EMA20"]
+ 106:     z["AboveEMA50"] = z["Close"] >= z["EMA50"]
+ 107: 
+ 108:     trend = z["AboveEMA20"].astype(int) * 8 + z["AboveEMA50"].astype(int) * 5 + (z["EMA20Slope4"] > 0).astype(int) * 7
+ 109:     momentum = (z["RSI14"] >= 50).astype(int) * 8 + (z["RSI14"] <= 72).astype(int) * 4 + (z["RSIDelta3"] > 0).astype(int) * 8
+ 110:     compression = z["Compression"].astype(int) * 12 + z["ATRContract"].astype(int) * 8
+ 111:     proximity = np.select(
+ 112:         [
+ 113:             z["Breakout26"],
+ 114:             z["DistResPct"].between(0, 5),
+ 115:             z["DistResPct"].between(5, 12),
+ 116:             z["DistResPct"].between(12, 20),
+ 117:         ],
+ 118:         [15, 15, 10, 5],
+ 119:         default=0,
+ 120:     )
+ 121:     volume = np.select(
+ 122:         [z["VolRatio"] >= 1.5, z["VolRatio"] >= 1.1, z["VolRatio"] >= 0.8],
+ 123:         [15, 12, 7],
+ 124:         default=2,
+ 125:     )
+ 126:     z["WeeklyScore"] = ((trend + momentum + compression + proximity + volume) / 90 * 100).round(2)
+ 127: 
+ 128:     stage = pd.Series("NONE", index=z.index, dtype="object")
+ 129:     w4 = z["Breakout26"] & z["AboveEMA20"] & (z["EMA20Slope4"] > 0) & (z["RSI14"] >= 50) & (z["VolRatio"].fillna(0) >= 1.0)
+ 130:     w3 = (
+ 131:         (~w4)
+ 132:         & z["DistResPct"].between(0, 5)
+ 133:         & z["AboveEMA20"]
+ 134:         & (z["EMA20Slope4"] > 0)
+ 135:         & z["RSI14"].between(50, 72)
+ 136:         & (z["RSIDelta3"] >= 0)
+ 137:         & (z["Compression"] | z["ATRContract"])
+ 138:         & (z["VolRatio"].fillna(1) >= 0.8)
+ 139:     )
+ 140:     w2 = (
+ 141:         (~w4)
+ 142:         & (~w3)
+ 143:         & z["DistResPct"].between(5, 12)
+ 144:         & (z["Close"] >= z["EMA20"] * 0.97)
+ 145:         & (z["EMA20Slope4"] >= -0.01)
+ 146:         & (z["RSI14"] >= 45)
+ 147:         & (z["RSIDelta3"] >= 0)
+ 148:     )
+ 149:     stage[w2] = "W2"
+ 150:     stage[w3] = "W3"
+ 151:     stage[w4] = "W4"
+ 152:     z["Stage"] = stage
+ 153:     return z
+ 154: 
+ 155: 
+ 156: def _load_validated_profiles() -> tuple[pd.DataFrame, pd.DataFrame]:
+ 157:     if not QUANTILE_FILE.exists() or not PASSED_PROFILE_FILE.exists():
+ 158:         raise RuntimeError(
+ 159:             "Validated profil dosyalari kurulu degil. "
+ 160:             "Firsat Radari kurucusunu Rev3 research ciktilari mevcutken tekrar calistirin."
+ 161:         )
+ 162:     edges = pd.read_csv(QUANTILE_FILE)
+ 163:     profiles = pd.read_csv(PASSED_PROFILE_FILE)
+ 164:     required_edges = {"factor", "bin", "lower_exclusive_or_equal", "upper_inclusive"}
+ 165:     required_profiles = {
+ 166:         "stage", "factor_1", "bin_1", "factor_2", "bin_2",
+ 167:         "valid_n", "valid_median_excess_4w_pct", "valid_median_excess_8w_pct",
+ 168:         "validation_quality_score",
+ 169:     }
+ 170:     if not required_edges.issubset(edges.columns):
+ 171:         raise RuntimeError("Validated quantile dosyasi beklenen kolonlari tasimiyor.")
+ 172:     if not required_profiles.issubset(profiles.columns):
+ 173:         raise RuntimeError("Validated profil dosyasi beklenen kolonlari tasimiyor.")
+ 174:     return edges, profiles
+ 175: 
+ 176: 
+ 177: 
+ 178: def _load_monthly_validated_profiles() -> tuple[pd.DataFrame, pd.DataFrame]:
+ 179:     if not MONTHLY_QUANTILE_FILE.exists() or not MONTHLY_PASSED_PROFILE_FILE.exists():
+ 180:         raise RuntimeError("Aylik validated profil dosyalari kurulu degil.")
+ 181:     edges = pd.read_csv(MONTHLY_QUANTILE_FILE)
+ 182:     profiles = pd.read_csv(MONTHLY_PASSED_PROFILE_FILE)
+ 183:     required_edges = {"monthly_class", "factor", "bin", "lower", "upper"}
+ 184:     required_profiles = {
+ 185:         "monthly_class", "factor_1", "bin_1", "factor_2", "bin_2",
+ 186:         "valid_n", "valid_median_excess_3m_pct", "valid_median_excess_6m_pct",
+ 187:         "validation_quality_score",
+ 188:     }
+ 189:     if not required_edges.issubset(edges.columns):
+ 190:         raise RuntimeError("Aylik quantile dosyasi beklenen kolonlari tasimiyor.")
+ 191:     if not required_profiles.issubset(profiles.columns):
+ 192:         raise RuntimeError("Aylik profil dosyasi beklenen kolonlari tasimiyor.")
+ 193:     return edges, profiles
+ 194: 
+ 195: 
+ 196: def _monthly_validation_months(daily: pd.DataFrame) -> pd.DataFrame:
+ 197:     d = _normalize_ohlcv(daily).rename(
+ 198:         columns={"Open":"open","High":"high","Low":"low","Close":"close","Volume":"volume"}
+ 199:     )
+ 200:     p = d.index.to_period("M")
+ 201:     m = d.groupby(p).agg(
+ 202:         open=("open","first"), high=("high","max"), low=("low","min"),
+ 203:         close=("close","last"), volume=("volume","sum"),
+ 204:     )
+ 205:     m.index = m.index.to_timestamp(how="end").normalize()
+ 206:     return m
+ 207: 
+ 208: 
+ 209: def _monthly_validation_features(daily: pd.DataFrame) -> pd.DataFrame:
+ 210:     x = _monthly_validation_months(daily)
+ 211:     x["ema6"] = x["close"].ewm(span=6, adjust=False, min_periods=6).mean()
+ 212:     x["ema12"] = x["close"].ewm(span=12, adjust=False, min_periods=12).mean()
+ 213:     x["ema24"] = x["close"].ewm(span=24, adjust=False, min_periods=24).mean()
+ 214:     x["rsi14"] = _rsi(x["close"], 14)
+ 215:     prev = x["close"].shift(1)
+ 216:     tr = pd.concat([
+ 217:         x["high"] - x["low"],
+ 218:         (x["high"] - prev).abs(),
+ 219:         (x["low"] - prev).abs(),
+ 220:     ], axis=1).max(axis=1)
+ 221:     x["atr14"] = tr.rolling(14, min_periods=14).mean()
+ 222:     x["atr_pct"] = 100 * x["atr14"] / x["close"]
+ 223:     x["vol_ratio"] = x["volume"] / x["volume"].rolling(6, min_periods=6).mean().replace(0, np.nan)
+ 224:     x["ret_3m"] = 100 * (x["close"] / x["close"].shift(3) - 1)
+ 225:     x["ret_6m"] = 100 * (x["close"] / x["close"].shift(6) - 1)
+ 226:     x["ema6_slope"] = 100 * (x["ema6"] / x["ema6"].shift(3) - 1)
+ 227: 
+ 228:     strong = (
+ 229:         (x["close"] > x["ema6"])
+ 230:         & (x["ema6"] > x["ema12"])
+ 231:         & (x["ema12"] > x["ema24"])
+ 232:         & (x["ema6_slope"] > 0)
+ 233:         & (x["ret_3m"] > 0)
+ 234:     )
+ 235:     early = (
+ 236:         (x["close"] > x["ema6"])
+ 237:         & ((x["ema6"] >= x["ema12"]) | ((x["ema6"] < x["ema12"]) & (x["ema6_slope"] > 0)))
+ 238:         & (x["ret_3m"] > -10)
+ 239:         & (x["rsi14"].between(45, 70))
+ 240:         & (~strong)
+ 241:     )
+ 242:     x["research_class"] = np.where(strong, "GUCLU_TREND", np.where(early, "ERKEN_TREND", "DIGER"))
+ 243:     return x
+ 244: 
+ 245: 
+ 246: def _monthly_profile_matches(row: pd.Series, edges: pd.DataFrame, profiles: pd.DataFrame) -> list[dict[str, object]]:
+ 247:     cls = str(row.get("research_class", ""))
+ 248:     if cls not in {"GUCLU_TREND", "ERKEN_TREND"}:
+ 249:         return []
+ 250:     matches = []
+ 251:     for _, p in profiles[profiles["monthly_class"] == cls].iterrows():
+ 252:         ok = True
+ 253:         for factor_col, bin_col in (("factor_1","bin_1"),("factor_2","bin_2")):
+ 254:             factor = str(p[factor_col])
+ 255:             bin_name = str(p[bin_col])
+ 256:             erow = edges[
+ 257:                 (edges["monthly_class"] == cls)
+ 258:                 & (edges["factor"] == factor)
+ 259:                 & (edges["bin"] == bin_name)
+ 260:             ]
+ 261:             if erow.empty or factor not in row.index or pd.isna(row[factor]):
+ 262:                 ok = False
+ 263:                 break
+ 264:             lo = float(erow.iloc[0]["lower"])
+ 265:             hi = float(erow.iloc[0]["upper"])
+ 266:             value = float(row[factor])
+ 267:             if not ((np.isneginf(lo) or value > lo) and (np.isposinf(hi) or value <= hi)):
+ 268:                 ok = False
+ 269:                 break
+ 270:         if ok:
+ 271:             matches.append({
+ 272:                 "quality": float(p["validation_quality_score"]),
+ 273:                 "profile": f'{cls}: {p["factor_1"]}={p["bin_1"]} + {p["factor_2"]}={p["bin_2"]}',
+ 274:                 "excess3": float(p["valid_median_excess_3m_pct"]),
+ 275:                 "excess6": float(p["valid_median_excess_6m_pct"]),
+ 276:             })
+ 277:     return matches
+ 278: 
+ 279: 
+ 280: def _monthly_profile_snapshots(daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame):
+ 281:     z = _monthly_validation_features(daily)
+ 282:     if z.empty:
+ 283:         return {"snapshot":"CURRENT_PARTIAL","matches":[]}, {"snapshot":"LAST_CLOSED","matches":[]}
+ 284:     d = _normalize_ohlcv(daily)
+ 285:     last_daily = pd.Timestamp(d.index.max()).normalize()
+ 286:     current_end = last_daily.to_period("M").to_timestamp(how="end").normalize()
+ 287:     is_partial = z.index[-1] == current_end and last_daily < current_end
+ 288: 
+ 289:     current = {
+ 290:         "snapshot": "CURRENT_PARTIAL" if is_partial else "CURRENT_CLOSED",
+ 291:         "matches": _monthly_profile_matches(z.iloc[-1], edges, profiles),
+ 292:     }
+ 293:     closed_row = z.iloc[-2] if is_partial and len(z) >= 2 else z.iloc[-1]
+ 294:     closed = {
+ 295:         "snapshot": "LAST_CLOSED" if is_partial else "CURRENT_CLOSED",
+ 296:         "matches": _monthly_profile_matches(closed_row, edges, profiles),
+ 297:     }
+ 298:     return current, closed
+ 299: 
+ 300: 
+ 301: def _monthly_profile_status(current: dict[str, object], closed: dict[str, object]) -> dict[str, object]:
+ 302:     current_matches = list(current.get("matches", []))
+ 303:     closed_matches = list(closed.get("matches", []))
+ 304:     if current.get("snapshot") == "CURRENT_PARTIAL" and current_matches:
+ 305:         chosen = current_matches
+ 306:         status = "Ay Д°Г§i GeГ§ici Match"
+ 307:     elif closed_matches:
+ 308:         chosen = closed_matches
+ 309:         status = "Validated Profile Match"
+ 310:     else:
+ 311:         chosen = []
+ 312:         status = "HenГјz Validate DeДџil"
+ 313: 
+ 314:     if not chosen:
+ 315:         return {
+ 316:             "Durum": status, "Profile Match Count": 0, "Validated Quality": 0.0,
+ 317:             "GeГ§miЕџ 3A Excess %": np.nan, "GeГ§miЕџ 6A Excess %": np.nan,
+ 318:             "Validation Profili": "",
+ 319:         }
+ 320:     return {
+ 321:         "Durum": status,
+ 322:         "Profile Match Count": len(chosen),
+ 323:         "Validated Quality": round(sum(float(x["quality"]) for x in chosen), 2),
+ 324:         "GeГ§miЕџ 3A Excess %": round(max(float(x["excess3"]) for x in chosen), 2),
+ 325:         "GeГ§miЕџ 6A Excess %": round(max(float(x["excess6"]) for x in chosen), 2),
+ 326:         "Validation Profili": " | ".join(str(x["profile"]) for x in chosen),
+ 327:     }
+ 328: 
+ 329: 
+ 330: def _apply_monthly_validation(frame, validation_data, edges, profiles):
+ 331:     if frame.empty:
+ 332:         return frame
+ 333:     out = frame.copy()
+ 334:     payloads = []
+ 335:     for _, row in out.iterrows():
+ 336:         symbol = str(row["Hisse"])
+ 337:         daily = validation_data.get(symbol) or validation_data.get(symbol + ".IS")
+ 338:         if daily is None:
+ 339:             payloads.append(_monthly_profile_status(
+ 340:                 {"snapshot":"CURRENT_PARTIAL","matches":[]},
+ 341:                 {"snapshot":"LAST_CLOSED","matches":[]},
+ 342:             ))
+ 343:             continue
+ 344:         try:
+ 345:             current, closed = _monthly_profile_snapshots(daily, edges, profiles)
+ 346:             payloads.append(_monthly_profile_status(current, closed))
+ 347:         except Exception:
+ 348:             payloads.append(_monthly_profile_status(
+ 349:                 {"snapshot":"CURRENT_PARTIAL","matches":[]},
+ 350:                 {"snapshot":"LAST_CLOSED","matches":[]},
+ 351:             ))
+ 352:     p = pd.DataFrame(payloads, index=out.index)
+ 353:     for col in p.columns:
+ 354:         out[col] = p[col]
+ 355:     return out
+ 356: 
+ 357: 
+ 358: def _bin_ranges(edges: pd.DataFrame) -> dict[tuple[str, str], tuple[float, float]]:
+ 359:     result: dict[tuple[str, str], tuple[float, float]] = {}
+ 360:     for _, row in edges.iterrows():
+ 361:         lo = -np.inf if pd.isna(row["lower_exclusive_or_equal"]) else float(row["lower_exclusive_or_equal"])
+ 362:         hi = np.inf if pd.isna(row["upper_inclusive"]) else float(row["upper_inclusive"])
+ 363:         result[(str(row["factor"]), str(row["bin"]))] = (lo, hi)
+ 364:     return result
+ 365: 
+ 366: 
+ 367: def _in_bin(value: object, factor: str, bin_name: str, ranges: dict[tuple[str, str], tuple[float, float]]) -> bool:
+ 368:     if pd.isna(value):
+ 369:         return False
+ 370:     bounds = ranges.get((factor, bin_name))
+ 371:     if bounds is None:
+ 372:         return False
+ 373:     lo, hi = bounds
+ 374:     number = float(value)
+ 375:     return (np.isneginf(lo) or number > lo) and number <= hi
+ 376: 
+ 377: 
+ 378: def _weekly_row(symbol: str, daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame) -> dict[str, object] | None:
+ 379:     w = _weekly_enrich(_weekly(daily))
+ 380:     if len(w) < 26:
+ 381:         return None
+ 382:     r = w.iloc[-1]
+ 383:     stage = str(r["Stage"])
+ 384:     if stage not in {"W2", "W3"}:
+ 385:         return None
+ 386: 
+ 387:     base = {
+ 388:         "Hisse": symbol.removesuffix(".IS"),
+ 389:         "W2 / W3": stage,
+ 390:         "Weekly Score": float(r["WeeklyScore"]),
+ 391:         "DirenГ§ UzaklД±ДџД± %": float(r["DistResPct"]),
+ 392:         "RSI": float(r["RSI14"]),
+ 393:         "Hacim OranД±": float(r["VolRatio"]),
+ 394:         "ATR %": float(r["ATRPct"]),
+ 395:         "KapanД±Еџ": float(r["Close"]),
+ 396:         "Hafta": w.index[-1].date().isoformat(),
+ 397:     }
+ 398:     factor_values = {
+ 399:         "weekly_score": base["Weekly Score"],
+ 400:         "dist_res_pct": base["DirenГ§ UzaklД±ДџД± %"],
+ 401:         "rsi14": base["RSI"],
+ 402:         "vol_ratio": base["Hacim OranД±"],
+ 403:         "atr_pct": base["ATR %"],
+ 404:     }
+ 405:     ranges = _bin_ranges(edges)
+ 406:     matched: list[pd.Series] = []
+ 407:     for _, p in profiles.iterrows():
+ 408:         if stage != str(p["stage"]):
+ 409:             continue
+ 410:         f1, b1 = str(p["factor_1"]), str(p["bin_1"])
+ 411:         f2, b2 = str(p["factor_2"]), str(p["bin_2"])
+ 412:         if (
+ 413:             f1 in factor_values
+ 414:             and f2 in factor_values
+ 415:             and _in_bin(factor_values[f1], f1, b1, ranges)
+ 416:             and _in_bin(factor_values[f2], f2, b2, ranges)
+ 417:         ):
+ 418:             matched.append(p)
+ 419: 
+ 420:     if matched:
+ 421:         qualities = [float(p["validation_quality_score"]) for p in matched]
+ 422:         base.update(
+ 423:             {
+ 424:                 "Validated Profile Count": len(matched),
+ 425:                 "Validated Quality": round(sum(qualities), 2),
+ 426:                 "Validated Quality Max": round(max(qualities), 2),
+ 427:                 "GeГ§miЕџ 4H Excess %": round(max(float(p["valid_median_excess_4w_pct"]) for p in matched), 2),
+ 428:                 "GeГ§miЕџ 8H Excess %": round(max(float(p["valid_median_excess_8w_pct"]) for p in matched), 2),
+ 429:                 "Durum": "Validated",
+ 430:                 "Neden seГ§ildi?": " | ".join(
+ 431:                     f'{p["stage"]}: {p["factor_1"]}={p["bin_1"]} + {p["factor_2"]}={p["bin_2"]}'
+ 432:                     for p in matched
+ 433:                 ),
+ 434:             }
+ 435:         )
+ 436:     else:
+ 437:         base.update(
+ 438:             {
+ 439:                 "Validated Profile Count": 0,
+ 440:                 "Validated Quality": 0.0,
+ 441:                 "Validated Quality Max": 0.0,
+ 442:                 "GeГ§miЕџ 4H Excess %": np.nan,
+ 443:                 "GeГ§miЕџ 8H Excess %": np.nan,
+ 444:                 "Durum": "HenГјz Validate DeДџil",
+ 445:                 "Neden seГ§ildi?": f"{stage} hazД±rlД±k koЕџullarД± var; muhafazakГўr validated profile eЕџleЕџmedi.",
+ 446:             }
+ 447:         )
+ 448:     return base
+ 449: 
+ 450: 
+ 451: def _monthly(daily: pd.DataFrame) -> pd.DataFrame:
+ 452:     d = _normalize_ohlcv(daily)
+ 453:     period = d.index.to_period("M")
+ 454:     m = d.groupby(period).agg(
+ 455:         Open=("Open", "first"),
+ 456:         High=("High", "max"),
+ 457:         Low=("Low", "min"),
+ 458:         Close=("Close", "last"),
+ 459:         Volume=("Volume", "sum"),
+ 460:     )
+ 461:     m.index = m.index.to_timestamp(how="end").normalize()
+ 462:     return m.dropna(subset=["Open", "High", "Low", "Close"])
+ 463: 
+ 464: 
+ 465: def _monthly_metrics(daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> dict[str, object] | None:
+ 466:     m = _monthly(daily)
+ 467:     if len(m) < 12:
+ 468:         return None
+ 469:     close, high, low, volume = m["Close"], m["High"], m["Low"], m["Volume"]
+ 470:     ema6 = close.ewm(span=6, adjust=False).mean()
+ 471:     ema12 = close.ewm(span=12, adjust=False).mean()
+ 472:     rsi = _rsi(close, 6)
+ 473:     prev_close = close.shift(1)
+ 474:     tr = pd.concat([high-low, (high-prev_close).abs(), (low-prev_close).abs()], axis=1).max(axis=1)
+ 475:     atr = tr.rolling(6).mean()
+ 476:     res12 = high.shift(1).rolling(12, min_periods=6).max()
+ 477:     vol_ma6 = volume.rolling(6).mean()
+ 478: 
+ 479:     last = len(m) - 1
+ 480:     ret3 = float(close.iloc[last] / close.iloc[max(0, last-3)] - 1)
+ 481:     ret6 = float(close.iloc[last] / close.iloc[max(0, last-6)] - 1)
+ 482:     bench3 = bench6 = np.nan
+ 483:     benchmark_available = False
+ 484:     if benchmark is not None:
+ 485:         bm = _monthly(benchmark)
+ 486:         if len(bm) >= 7:
+ 487:             bc = bm["Close"]
+ 488:             bench3 = float(bc.iloc[-1] / bc.iloc[-4] - 1)
+ 489:             bench6 = float(bc.iloc[-1] / bc.iloc[-7] - 1)
+ 490:             benchmark_available = True
+ 491: 
+ 492:     dist = float(100 * (res12.iloc[-1] - close.iloc[-1]) / close.iloc[-1]) if pd.notna(res12.iloc[-1]) else np.nan
+ 493:     vol_ratio = float(volume.iloc[-1] / vol_ma6.iloc[-1]) if pd.notna(vol_ma6.iloc[-1]) and vol_ma6.iloc[-1] > 0 else np.nan
+ 494:     atr_pct = float(100 * atr.iloc[-1] / close.iloc[-1]) if pd.notna(atr.iloc[-1]) else np.nan
+ 495:     ema6_slope3 = float(ema6.iloc[-1] / ema6.iloc[-4] - 1) if len(ema6) >= 4 and ema6.iloc[-4] else 0.0
+ 496:     rsi_delta2 = float(rsi.iloc[-1] - rsi.iloc[-3]) if len(rsi) >= 3 else 0.0
+ 497:     higher_high = bool(high.tail(3).max() >= high.iloc[-6:-3].max()) if len(high) >= 6 else False
+ 498:     higher_low = bool(low.tail(3).min() > low.iloc[-6:-3].min()) if len(low) >= 6 else False
+ 499: 
+ 500:     return {
+ 501:         "close": float(close.iloc[-1]),
+ 502:         "ema6": float(ema6.iloc[-1]),
+ 503:         "ema12": float(ema12.iloc[-1]),
+ 504:         "ema6_slope3": ema6_slope3,
+ 505:         "rsi": float(rsi.iloc[-1]),
+ 506:         "rsi_delta2": rsi_delta2,
+ 507:         "dist": dist,
+ 508:         "vol_ratio": vol_ratio,
+ 509:         "atr_pct": atr_pct,
+ 510:         "ret3": ret3,
+ 511:         "ret6": ret6,
+ 512:         "excess3": ret3 - bench3 if benchmark_available else np.nan,
+ 513:         "excess6": ret6 - bench6 if benchmark_available else np.nan,
+ 514:         "benchmark_available": benchmark_available,
+ 515:         "higher_high": higher_high,
+ 516:         "higher_low": higher_low,
+ 517:         "month": m.index[-1].date().isoformat(),
+ 518:     }
+ 519: 
+ 520: 
+ 521: def _monthly_rows(symbol: str, daily: pd.DataFrame, benchmark: pd.DataFrame | None) -> tuple[dict[str, object] | None, dict[str, object] | None]:
+ 522:     x = _monthly_metrics(daily, benchmark)
+ 523:     if x is None:
+ 524:         return None, None
+ 525: 
+ 526:     strong_score = 0
+ 527:     strong_reasons: list[str] = []
+ 528:     if x["close"] > x["ema6"] > x["ema12"]:
+ 529:         strong_score += 30
+ 530:         strong_reasons.append("AylД±k fiyat EMA6 ve EMA12 Гјzerinde; ortalamalar yukarД± sД±ralД±.")
+ 531:     if x["ema6_slope3"] > 0:
+ 532:         strong_score += 15
+ 533:         strong_reasons.append("AylД±k kД±sa trend eДџimi pozitif.")
+ 534:     if x["benchmark_available"] and x["excess6"] > 0:
+ 535:         strong_score += 20
+ 536:         strong_reasons.append("6 aylД±k gГ¶reli performans XU100 Гјzerinde.")
+ 537:     if 52 <= x["rsi"] <= 75:
+ 538:         strong_score += 10
+ 539:         strong_reasons.append("AylД±k momentum gГјГ§lГј fakat aЕџД±rД± deДџil.")
+ 540:     if x["higher_high"]:
+ 541:         strong_score += 10
+ 542:         strong_reasons.append("AylД±k higher-high yapД±sД± korunuyor.")
+ 543:     if x["higher_low"]:
+ 544:         strong_score += 10
+ 545:         strong_reasons.append("AylД±k higher-low yapД±sД± korunuyor.")
+ 546:     if pd.notna(x["vol_ratio"]) and x["vol_ratio"] >= 1.0:
+ 547:         strong_score += 5
+ 548:         strong_reasons.append("AylД±k hacim 6 aylД±k ortalamanД±n Гјzerinde.")
+ 549: 
+ 550:     strong = None
+ 551:     if strong_score >= 65:
+ 552:         strong = {
+ 553:             "Hisse": symbol.removesuffix(".IS"),
+ 554:             "AylД±k SД±nД±f": "GГјГ§lГј Trend" if strong_score >= 80 else "Trend DevamД±",
+ 555:             "AylД±k Skor": strong_score,
+ 556:             "Durum": "HenГјz Validate DeДџil",
+ 557:             "3A Excess %": round(100 * x["excess3"], 2) if pd.notna(x["excess3"]) else np.nan,
+ 558:             "6A Excess %": round(100 * x["excess6"], 2) if pd.notna(x["excess6"]) else np.nan,
+ 559:             "DirenГ§ UzaklД±ДџД± %": round(x["dist"], 2) if pd.notna(x["dist"]) else np.nan,
+ 560:             "RSI": round(x["rsi"], 2),
+ 561:             "Hacim OranД±": round(x["vol_ratio"], 2) if pd.notna(x["vol_ratio"]) else np.nan,
+ 562:             "ATR %": round(x["atr_pct"], 2) if pd.notna(x["atr_pct"]) else np.nan,
+ 563:             "Ay": x["month"],
+ 564:             "Neden seГ§ildi?": " ".join(strong_reasons),
+ 565:         }
+ 566: 
+ 567:     early_score = 0
+ 568:     early_reasons: list[str] = []
+ 569:     close_near_ema = x["close"] >= x["ema6"] * 0.97
+ 570:     if close_near_ema:
+ 571:         early_score += 15
+ 572:         early_reasons.append("Fiyat aylД±k EMA6 Г§evresinde/Гјzerinde.")
+ 573:     if x["ema6_slope3"] >= -0.01:
+ 574:         early_score += 10
+ 575:         early_reasons.append("AylД±k trend eДџimi artД±k belirgin biГ§imde aЕџaДџД± deДџil.")
+ 576:     if 45 <= x["rsi"] <= 68 and x["rsi_delta2"] > 0:
+ 577:         early_score += 20
+ 578:         early_reasons.append("AylД±k RSI toparlanД±yor.")
+ 579:     if pd.notna(x["dist"]) and 0 <= x["dist"] <= 12:
+ 580:         early_score += 20
+ 581:         early_reasons.append("Ana aylД±k dirence %12 iГ§inde.")
+ 582:     if x["benchmark_available"] and x["excess3"] > 0:
+ 583:         early_score += 15
+ 584:         early_reasons.append("3 aylД±k gГ¶reli gГјГ§ XU100'e karЕџД± iyileЕџiyor.")
+ 585:     if pd.notna(x["vol_ratio"]) and x["vol_ratio"] >= 0.9:
+ 586:         early_score += 10
+ 587:         early_reasons.append("AylД±k hacim davranД±ЕџД± zayД±f deДџil.")
+ 588:     if x["higher_low"]:
+ 589:         early_score += 10
+ 590:         early_reasons.append("Erken higher-low yapД±sД± oluЕџuyor.")
+ 591: 
+ 592:     early = None
+ 593:     already_strong = strong_score >= 65
+ 594:     if early_score >= 60 and not already_strong:
+ 595:         early = {
+ 596:             "Hisse": symbol.removesuffix(".IS"),
+ 597:             "AylД±k SД±nД±f": "Yeni Trend AdayД±" if early_score >= 75 else "Erken DГ¶nГјЕџ / Birikim",
+ 598:             "AylД±k Skor": early_score,
+ 599:             "Durum": "HenГјz Validate DeДџil",
+ 600:             "3A Excess %": round(100 * x["excess3"], 2) if pd.notna(x["excess3"]) else np.nan,
+ 601:             "6A Excess %": round(100 * x["excess6"], 2) if pd.notna(x["excess6"]) else np.nan,
+ 602:             "DirenГ§ UzaklД±ДџД± %": round(x["dist"], 2) if pd.notna(x["dist"]) else np.nan,
+ 603:             "RSI": round(x["rsi"], 2),
+ 604:             "Hacim OranД±": round(x["vol_ratio"], 2) if pd.notna(x["vol_ratio"]) else np.nan,
+ 605:             "ATR %": round(x["atr_pct"], 2) if pd.notna(x["atr_pct"]) else np.nan,
+ 606:             "Ay": x["month"],
+ 607:             "Neden seГ§ildi?": " ".join(early_reasons),
+ 608:         }
+ 609:     return strong, early
+ 610: 
+ 611: 
+ 612: def run_opportunity_radar(*, result_limit: int = 50) -> OpportunityRadarResult:
+ 613:     edges, profiles = _load_validated_profiles()
+ 614:     monthly_edges, monthly_profiles = _load_monthly_validated_profiles()
+ 615:     universe = on_yukselis_evrenini_yukle(
+ 616:         "BIST TГјm",
+ 617:         internetten_guncelle=False,
+ 618:     )
+ 619: 
+ 620:     # Tek veri hatti: mevcut batch market data seam. 420 completed days gives
+ 621:     # enough current weekly/monthly structure while keeping newer listings eligible.
+ 622:     batch = toplu_fiyat_verisi_getir(
+ 623:         universe.semboller,
+ 624:         islem_gunu=420,
+ 625:         indirme_donemi="2y",
+ 626:         parca_boyutu=40,
+ 627:     )
+ 628: 
+ 629:     benchmark: pd.DataFrame | None
+ 630:     try:
+ 631:         benchmark = fiyat_verisi_getir(
+ 632:             "XU100.IS",
+ 633:             islem_gunu=420,
+ 634:             indirme_donemi="2y",
+ 635:             yalnizca_tamamlanmis_gunler=True,
+ 636:         )
+ 637:     except Exception:
+ 638:         benchmark = None
+ 639: 
+ 640:     weekly_rows: list[dict[str, object]] = []
+ 641:     strong_rows: list[dict[str, object]] = []
+ 642:     early_rows: list[dict[str, object]] = []
+ 643: 
+ 644:     for symbol, daily in batch.veriler.items():
+ 645:         try:
+ 646:             row = _weekly_row(symbol, daily, edges, profiles)
+ 647:             if row is not None:
+ 648:                 weekly_rows.append(row)
+ 649:         except Exception:
+ 650:             pass
+ 651: 
+ 652:         try:
+ 653:             strong, early = _monthly_rows(symbol, daily, benchmark)
+ 654:             if strong is not None:
+ 655:                 strong_rows.append(strong)
+ 656:             if early is not None:
+ 657:                 early_rows.append(early)
+ 658:         except Exception:
+ 659:             pass
+ 660: 
+ 661:     weekly = pd.DataFrame(weekly_rows)
+ 662:     if not weekly.empty:
+ 663:         weekly["_validated"] = (weekly["Durum"] == "Validated").astype(int)
+ 664:         weekly = weekly.sort_values(
+ 665:             ["_validated", "Validated Profile Count", "Validated Quality", "Weekly Score"],
+ 666:             ascending=[False, False, False, False],
+ 667:         ).drop(columns=["_validated"]).reset_index(drop=True)
+ 668:         weekly.insert(0, "Validated Г–ncelik", np.arange(1, len(weekly) + 1))
+ 669:         weekly = weekly.head(result_limit).copy()
+ 670: 
+ 671:     monthly_strong = pd.DataFrame(strong_rows)
+ 672:     if not monthly_strong.empty:
+ 673:         monthly_strong = monthly_strong.sort_values(
+ 674:             ["AylД±k Skor", "6A Excess %", "3A Excess %"],
+ 675:             ascending=[False, False, False],
+ 676:         ).reset_index(drop=True)
+ 677: 
+ 678:     monthly_early = pd.DataFrame(early_rows)
+ 679:     if not monthly_early.empty:
+ 680:         monthly_early = monthly_early.sort_values(
+ 681:             ["AylД±k Skor", "3A Excess %", "6A Excess %"],
+ 682:             ascending=[False, False, False],
+ 683:         ).reset_index(drop=True)
+ 684: 
+ 685:     monthly_symbols = set()
+ 686:     if not monthly_strong.empty:
+ 687:         monthly_symbols.update(str(x) for x in monthly_strong["Hisse"])
+ 688:     if not monthly_early.empty:
+ 689:         monthly_symbols.update(str(x) for x in monthly_early["Hisse"])
+ 690: 
+ 691:     validation_data = {}
+ 692:     if monthly_symbols:
+ 693:         try:
+ 694:             monthly_batch = toplu_fiyat_verisi_getir(
+ 695:                 [s if s.endswith(".IS") else s + ".IS" for s in sorted(monthly_symbols)],
+ 696:                 islem_gunu=1250,
+ 697:                 indirme_donemi="5y",
+ 698:                 parca_boyutu=40,
+ 699:             )
+ 700:             validation_data = dict(monthly_batch.veriler)
+ 701:         except Exception:
+ 702:             validation_data = {}
+ 703: 
+ 704:     monthly_strong = _apply_monthly_validation(
+ 705:         monthly_strong, validation_data, monthly_edges, monthly_profiles
+ 706:     )
+ 707:     monthly_early = _apply_monthly_validation(
+ 708:         monthly_early, validation_data, monthly_edges, monthly_profiles
+ 709:     )
+ 710: 
+ 711:     for frame in (monthly_strong, monthly_early):
+ 712:         if not frame.empty:
+ 713:             frame["_validation_priority"] = frame["Durum"].map(
+ 714:                 {"Validated Profile Match": 2, "Ay Д°Г§i GeГ§ici Match": 1}
+ 715:             ).fillna(0)
+ 716:             frame.sort_values(
+ 717:                 ["_validation_priority", "Profile Match Count", "Validated Quality", "AylД±k Skor"],
+ 718:                 ascending=[False, False, False, False],
+ 719:                 inplace=True,
+ 720:             )
+ 721:             frame.drop(columns=["_validation_priority"], inplace=True)
+ 722:             frame.reset_index(drop=True, inplace=True)
+ 723: 
+ 724:     monthly_strong = monthly_strong.head(result_limit).reset_index(drop=True)
+ 725:     monthly_early = monthly_early.head(result_limit).reset_index(drop=True)
+ 726: 
+ 727:     return OpportunityRadarResult(
+ 728:         universe_name=universe.ad,
+ 729:         universe_source=universe.kaynak,
+ 730:         universe_date=universe.tarih,
+ 731:         universe_count=len(universe.semboller),
+ 732:         data_success_count=len(batch.veriler),
+ 733:         data_failures=batch.hatalar,
+ 734:         weekly=weekly,
+ 735:         monthly_strong=monthly_strong,
+ 736:         monthly_early=monthly_early,
+ 737:     )
+
+===== backend\app\analysis\daily_buy_decision_cycle.py =====
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import asdict, dataclass
+   4: from datetime import datetime
+   5: import json
+   6: from pathlib import Path
+   7: from typing import Iterable
+   8: from zoneinfo import ZoneInfo
+   9: 
+  10: ISTANBUL = ZoneInfo("Europe/Istanbul")
+  11: DEFAULT_DAILY_BUY_DECISION_PATH = Path("backend/data/daily_buy_decision_cycle.json")
+  12: 
+  13: 
+  14: @dataclass(frozen=True)
+  15: class DailyBuyDecisionCandidate:
+  16:     rank: int
+  17:     symbol: str
+  18:     technical_score: int
+  19:     technical_view: str
+  20:     research_priority: str
+  21:     visibility_state: str | None
+  22:     rank_change: int | None
+  23:     operational_status: str
+  24:     data_blocked: bool
+  25:     decision: str | None = None
+  26:     volume_ratio: float | None = None
+  27:     risk_reward: float | None = None
+  28:     selection_source: str = "TARAMA"
+  29:     jump_quality: str = "-"
+  30:     entry_readiness: str = "-"
+  31:     decision_reasons: tuple[str, ...] = ()
+  32:     decision_cautions: tuple[str, ...] = ()
+  33: 
+  34: 
+  35: @dataclass(frozen=True)
+  36: class DailyBuyDecisionSnapshot:
+  37:     phase: str
+  38:     created_at: str
+  39:     candidates: tuple[DailyBuyDecisionCandidate, ...]
+  40: 
+  41: 
+  42: @dataclass(frozen=True)
+  43: class DailyBuyDecisionChange:
+  44:     symbol: str
+  45:     evening_rank: int | None
+  46:     morning_rank: int | None
+  47:     rank_delta: int | None
+  48:     evening_status: str | None
+  49:     morning_status: str | None
+  50:     change_reason: str
+  51:     evening_decision: str | None = None
+  52:     morning_decision: str | None = None
+  53: 
+  54: 
+  55: @dataclass(frozen=True)
+  56: class DailyBuyDecisionReplacement:
+  57:     outgoing_symbol: str
+  58:     incoming_symbol: str
+  59:     outgoing_rank: int | None
+  60:     incoming_rank: int | None
+  61:     outgoing_decision: str | None
+  62:     incoming_decision: str | None
+  63:     replacement_context: str
+  64: 
+  65: 
+  66: def resolve_daily_buy_decision_phase(now: datetime | None = None) -> str | None:
+  67:     local = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+  68:     hour = local.hour
+  69:     if hour >= 17:
+  70:         return "EVENING"
+  71:     if 7 <= hour < 12:
+  72:         return "MORNING"
+  73:     return None
+  74: 
+  75: 
+  76: def _candidate_from_card(
+  77:     card: object,
+  78:     decision: object | None = None,
+  79: ) -> DailyBuyDecisionCandidate:
+  80:     return DailyBuyDecisionCandidate(
+  81:         rank=int(getattr(card, "rank")),
+  82:         symbol=str(getattr(card, "symbol", "")).strip().upper(),
+  83:         technical_score=int(getattr(card, "technical_score")),
+  84:         technical_view=str(getattr(card, "technical_view", "")),
+  85:         research_priority=str(getattr(card, "research_priority", "NORMAL")),
+  86:         visibility_state=(
+  87:             str(getattr(card, "visibility_state"))
+  88:             if getattr(card, "visibility_state", None) is not None
+  89:             else None
+  90:         ),
+  91:         rank_change=(
+  92:             int(getattr(card, "rank_change"))
+  93:             if getattr(card, "rank_change", None) is not None
+  94:             else None
+  95:         ),
+  96:         operational_status=str(getattr(card, "operational_status", "")),
+  97:         data_blocked=bool(getattr(card, "data_blocked", False)),
+  98:         decision=(
+  99:             str(getattr(decision, "decision"))
+ 100:             if decision is not None and getattr(decision, "decision", None) is not None
+ 101:             else None
+ 102:         ),
+ 103:         volume_ratio=(
+ 104:             float(getattr(card, "volume_ratio"))
+ 105:             if getattr(card, "volume_ratio", None) is not None
+ 106:             else None
+ 107:         ),
+ 108:         risk_reward=(
+ 109:             float(getattr(card, "risk_reward"))
+ 110:             if getattr(card, "risk_reward", None) is not None
+ 111:             else None
+ 112:         ),
+ 113:         selection_source=str(getattr(card, "selection_source", "TARAMA") or "TARAMA").upper(),
+ 114:         jump_quality=str(getattr(card, "jump_quality", "-") or "-").upper(),
+ 115:         entry_readiness=str(getattr(card, "entry_readiness", "-") or "-").upper(),
+ 116:         decision_reasons=tuple(getattr(decision, "reasons", ()) or ()),
+ 117:         decision_cautions=tuple(getattr(decision, "cautions", ()) or ()),
+ 118:     )
+ 119: 
+ 120: 
+ 121: def build_daily_buy_decision_snapshot(
+ 122:     cards: Iterable[object],
+ 123:     *,
+ 124:     phase: str,
+ 125:     now: datetime | None = None,
+ 126:     decisions: Iterable[object] = (),
+ 127: ) -> DailyBuyDecisionSnapshot:
+ 128:     phase_value = str(phase).strip().upper()
+ 129:     if phase_value not in {"EVENING", "MORNING"}:
+ 130:         raise ValueError("phase EVENING veya MORNING olmalД±dД±r.")
+ 131:     timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+ 132:     decision_by_symbol = {
+ 133:         str(getattr(item, "symbol", "")).strip().upper(): item
+ 134:         for item in decisions
+ 135:         if str(getattr(item, "symbol", "")).strip()
+ 136:     }
+ 137:     candidates = tuple(cards)
+ 138:     return DailyBuyDecisionSnapshot(
+ 139:         phase=phase_value,
+ 140:         created_at=timestamp.isoformat(timespec="seconds"),
+ 141:         candidates=tuple(
+ 142:             _candidate_from_card(
+ 143:                 card,
+ 144:                 decision_by_symbol.get(str(getattr(card, "symbol", "")).strip().upper()),
+ 145:             )
+ 146:             for card in candidates
+ 147:         ),
+ 148:     )
+ 149: 
+ 150: 
+ 151: class DailyBuyDecisionJsonStore:
+ 152:     def __init__(self, path: Path | str = DEFAULT_DAILY_BUY_DECISION_PATH) -> None:
+ 153:         self.path = Path(path)
+ 154: 
+ 155:     def load(self) -> dict[str, DailyBuyDecisionSnapshot]:
+ 156:         if not self.path.exists():
+ 157:             return {}
+ 158:         raw = json.loads(self.path.read_text(encoding="utf-8"))
+ 159:         result: dict[str, DailyBuyDecisionSnapshot] = {}
+ 160:         for phase, payload in dict(raw).items():
+ 161:             candidates = tuple(
+ 162:                 DailyBuyDecisionCandidate(**item)
+ 163:                 for item in payload.get("candidates", ())
+ 164:             )
+ 165:             result[str(phase).upper()] = DailyBuyDecisionSnapshot(
+ 166:                 phase=str(payload["phase"]).upper(),
+ 167:                 created_at=str(payload["created_at"]),
+ 168:                 candidates=candidates,
+ 169:             )
+ 170:         return result
+ 171: 
+ 172:     def save(self, snapshot: DailyBuyDecisionSnapshot) -> None:
+ 173:         snapshots = self.load()
+ 174:         snapshots[snapshot.phase] = snapshot
+ 175:         self.path.parent.mkdir(parents=True, exist_ok=True)
+ 176:         payload = {
+ 177:             phase: {
+ 178:                 "phase": item.phase,
+ 179:                 "created_at": item.created_at,
+ 180:                 "candidates": [asdict(candidate) for candidate in item.candidates],
+ 181:             }
+ 182:             for phase, item in snapshots.items()
+ 183:         }
+ 184:         self.path.write_text(
+ 185:             json.dumps(payload, ensure_ascii=False, indent=2),
+ 186:             encoding="utf-8",
+ 187:         )
+ 188: 
+ 189: 
+ 190: def _fmt_number(value: float | None) -> str:
+ 191:     if value is None:
+ 192:         return "-"
+ 193:     return f"{value:.2f}"
+ 194: 
+ 195: 
+ 196: def _decision_change_reasons(
+ 197:     old: DailyBuyDecisionCandidate,
+ 198:     new: DailyBuyDecisionCandidate,
+ 199: ) -> list[str]:
+ 200:     reasons: list[str] = []
+ 201:     if old.decision != new.decision:
+ 202:         reasons.append(f"Karar {old.decision or '-'}в†’{new.decision or '-'}")
+ 203: 
+ 204:     if old.technical_view != new.technical_view:
+ 205:         reasons.append(f"Teknik gГ¶rГјnГјm deДџiЕџti ({old.technical_view}в†’{new.technical_view})")
+ 206:     if old.technical_score != new.technical_score:
+ 207:         reasons.append(f"Teknik skor {old.technical_score}в†’{new.technical_score}")
+ 208: 
+ 209:     if old.volume_ratio != new.volume_ratio:
+ 210:         old_ok = old.volume_ratio is not None and old.volume_ratio >= 1.0
+ 211:         new_ok = new.volume_ratio is not None and new.volume_ratio >= 1.0
+ 212:         if old_ok != new_ok:
+ 213:             label = "Hacim teyidi geldi" if new_ok else "Hacim teyidi kayboldu"
+ 214:             reasons.append(f"{label} ({_fmt_number(old.volume_ratio)}в†’{_fmt_number(new.volume_ratio)})")
+ 215:         else:
+ 216:             reasons.append(f"Hacim {_fmt_number(old.volume_ratio)}в†’{_fmt_number(new.volume_ratio)}")
+ 217: 
+ 218:     if old.risk_reward != new.risk_reward:
+ 219:         old_buy_ok = old.risk_reward is not None and old.risk_reward >= 1.5
+ 220:         new_buy_ok = new.risk_reward is not None and new.risk_reward >= 1.5
+ 221:         old_no_trade = old.risk_reward is not None and old.risk_reward < 1.0
+ 222:         new_no_trade = new.risk_reward is not None and new.risk_reward < 1.0
+ 223:         if old_buy_ok != new_buy_ok:
+ 224:             label = "Risk/getiri AL eЕџiДџini geГ§ti" if new_buy_ok else "Risk/getiri AL eЕџiДџinin altД±na indi"
+ 225:             reasons.append(f"{label} ({_fmt_number(old.risk_reward)}в†’{_fmt_number(new.risk_reward)})")
+ 226:         elif old_no_trade != new_no_trade:
+ 227:             label = "Risk/getiri iЕџlem eЕџiДџinin altД±na indi" if new_no_trade else "Risk/getiri iЕџlem eЕџiДџinin Гјzerine Г§Д±ktД±"
+ 228:             reasons.append(f"{label} ({_fmt_number(old.risk_reward)}в†’{_fmt_number(new.risk_reward)})")
+ 229:         else:
+ 230:             reasons.append(f"Risk/getiri {_fmt_number(old.risk_reward)}в†’{_fmt_number(new.risk_reward)}")
+ 231: 
+ 232:     if old.entry_readiness != new.entry_readiness:
+ 233:         reasons.append(f"GiriЕџ hazД±rlД±ДџД± {old.entry_readiness}в†’{new.entry_readiness}")
+ 234:     if old.jump_quality != new.jump_quality:
+ 235:         reasons.append(f"SД±Г§rama kalite kapД±sД± {old.jump_quality}в†’{new.jump_quality}")
+ 236:     if old.selection_source != new.selection_source:
+ 237:         reasons.append(f"Aday kaynaДџД± {old.selection_source}в†’{new.selection_source}")
+ 238:     if old.research_priority != new.research_priority:
+ 239:         reasons.append(f"AraЕџtД±rma Г¶nceliДџi {old.research_priority}в†’{new.research_priority}")
+ 240:     if old.visibility_state != new.visibility_state:
+ 241:         reasons.append(f"Erken gГ¶rГјnГјrlГјk {old.visibility_state or '-'}в†’{new.visibility_state or '-'}")
+ 242:     return reasons
+ 243: 
+ 244: 
+ 245: def compare_evening_morning(
+ 246:     evening: DailyBuyDecisionSnapshot | None,
+ 247:     morning: DailyBuyDecisionSnapshot | None,
+ 248: ) -> tuple[DailyBuyDecisionChange, ...]:
+ 249:     if evening is None or morning is None:
+ 250:         return ()
+ 251: 
+ 252:     evening_by_symbol = {item.symbol: item for item in evening.candidates}
+ 253:     morning_by_symbol = {item.symbol: item for item in morning.candidates}
+ 254:     symbols = list(dict.fromkeys([
+ 255:         *(item.symbol for item in evening.candidates),
+ 256:         *(item.symbol for item in morning.candidates),
+ 257:     ]))
+ 258:     changes: list[DailyBuyDecisionChange] = []
+ 259: 
+ 260:     for symbol in symbols:
+ 261:         old = evening_by_symbol.get(symbol)
+ 262:         new = morning_by_symbol.get(symbol)
+ 263:         reasons: list[str] = []
+ 264:         if old is None:
+ 265:             reasons.append("Sabah listesine yeni girdi")
+ 266:         elif new is None:
+ 267:             reasons.append("Sabah listeden Г§Д±ktД±")
+ 268:         else:
+ 269:             reasons.extend(_decision_change_reasons(old, new))
+ 270:             if old.rank != new.rank:
+ 271:                 reasons.append(f"Г–ncelik sД±rasД± {old.rank}в†’{new.rank}")
+ 272:             if old.operational_status != new.operational_status:
+ 273:                 reasons.append(
+ 274:                     f"Durum {old.operational_status}в†’{new.operational_status}"
+ 275:                 )
+ 276:             if old.rank_change != new.rank_change:
+ 277:                 reasons.append("SД±ralama hareketi gГјncellendi")
+ 278:             if old.data_blocked != new.data_blocked:
+ 279:                 reasons.append("Veri kalite durumu deДџiЕџti")
+ 280:         changes.append(
+ 281:             DailyBuyDecisionChange(
+ 282:                 symbol=symbol,
+ 283:                 evening_rank=old.rank if old else None,
+ 284:                 morning_rank=new.rank if new else None,
+ 285:                 rank_delta=(old.rank - new.rank) if old and new else None,
+ 286:                 evening_status=old.operational_status if old else None,
+ 287:                 morning_status=new.operational_status if new else None,
+ 288:                 change_reason="; ".join(reasons) if reasons else "DeДџiЕџiklik yok",
+ 289:                 evening_decision=old.decision if old else None,
+ 290:                 morning_decision=new.decision if new else None,
+ 291:             )
+ 292:         )
+ 293:     return tuple(changes)
+ 294: 
+ 295: 
+ 296: def daily_buy_decision_change_rows(
+ 297:     changes: Iterable[DailyBuyDecisionChange],
+ 298: ) -> tuple[dict[str, object], ...]:
+ 299:     return tuple(
+ 300:         {
+ 301:             "Hisse": item.symbol,
+ 302:             "AkЕџam sД±ra": item.evening_rank if item.evening_rank is not None else "-",
+ 303:             "Sabah sД±ra": item.morning_rank if item.morning_rank is not None else "-",
+ 304:             "SД±ra farkД±": item.rank_delta if item.rank_delta is not None else "-",
+ 305:             "AkЕџam karar": item.evening_decision or "-",
+ 306:             "Sabah karar": item.morning_decision or "-",
+ 307:             "AkЕџam durum": item.evening_status or "-",
+ 308:             "Sabah durum": item.morning_status or "-",
+ 309:             "DeДџiЕџim nedeni": item.change_reason,
+ 310:         }
+ 311:         for item in changes
+ 312:     )
+ 313: 
+ 314: 
+ 315: def _replacement_context(
+ 316:     outgoing: DailyBuyDecisionCandidate,
+ 317:     incoming: DailyBuyDecisionCandidate,
+ 318: ) -> str:
+ 319:     parts: list[str] = []
+ 320:     if incoming.selection_source == "SICRAMA":
+ 321:         parts.append("Sabah sД±Г§rama havuzundan listeye girdi")
+ 322:     else:
+ 323:         parts.append("Sabah tarama havuzundan listeye girdi")
+ 324: 
+ 325:     if incoming.entry_readiness not in {"", "-"}:
+ 326:         parts.append(f"GiriЕџ hazД±rlД±ДџД±: {incoming.entry_readiness}")
+ 327:     if incoming.jump_quality not in {"", "-"}:
+ 328:         parts.append(f"SД±Г§rama kalite kapД±sД±: {incoming.jump_quality}")
+ 329:     if incoming.decision:
+ 330:         parts.append(f"Sabah karar: {incoming.decision}")
+ 331: 
+ 332:     if outgoing.decision:
+ 333:         parts.append(f"Г‡Д±kan aday akЕџam kararД±: {outgoing.decision}")
+ 334:     if outgoing.entry_readiness not in {"", "-"}:
+ 335:         parts.append(f"Г‡Д±kan aday giriЕџ hazД±rlД±ДџД±: {outgoing.entry_readiness}")
+ 336: 
+ 337:     return "; ".join(parts)
+ 338: 
+ 339: 
+ 340: def compare_evening_morning_replacements(
+ 341:     evening: DailyBuyDecisionSnapshot | None,
+ 342:     morning: DailyBuyDecisionSnapshot | None,
+ 343: ) -> tuple[DailyBuyDecisionReplacement, ...]:
+ 344:     """Top-5 ГјyeliДџindeki akЕџamв†’sabah giriЕџ/Г§Д±kД±ЕџlarД± eЕџleЕџtirir."""
+ 345:     if evening is None or morning is None:
+ 346:         return ()
+ 347: 
+ 348:     evening_symbols = {item.symbol for item in evening.candidates}
+ 349:     morning_symbols = {item.symbol for item in morning.candidates}
+ 350: 
+ 351:     outgoing = [item for item in evening.candidates if item.symbol not in morning_symbols]
+ 352:     incoming = [item for item in morning.candidates if item.symbol not in evening_symbols]
+ 353: 
+ 354:     outgoing.sort(key=lambda item: item.rank)
+ 355:     incoming.sort(key=lambda item: item.rank)
+ 356: 
+ 357:     replacements: list[DailyBuyDecisionReplacement] = []
+ 358:     for old, new in zip(outgoing, incoming):
+ 359:         replacements.append(
+ 360:             DailyBuyDecisionReplacement(
+ 361:                 outgoing_symbol=old.symbol,
+ 362:                 incoming_symbol=new.symbol,
+ 363:                 outgoing_rank=old.rank,
+ 364:                 incoming_rank=new.rank,
+ 365:                 outgoing_decision=old.decision,
+ 366:                 incoming_decision=new.decision,
+ 367:                 replacement_context=_replacement_context(old, new),
+ 368:             )
+ 369:         )
+ 370:     return tuple(replacements)
+ 371: 
+ 372: 
+ 373: def daily_buy_decision_replacement_rows(
+ 374:     replacements: Iterable[DailyBuyDecisionReplacement],
+ 375: ) -> tuple[dict[str, object], ...]:
+ 376:     return tuple(
+ 377:         {
+ 378:             "Listeden Г§Д±kan": item.outgoing_symbol,
+ 379:             "AkЕџam sД±ra": item.outgoing_rank if item.outgoing_rank is not None else "-",
+ 380:             "AkЕџam karar": item.outgoing_decision or "-",
+ 381:             "Listeye giren": item.incoming_symbol,
+ 382:             "Sabah sД±ra": item.incoming_rank if item.incoming_rank is not None else "-",
+ 383:             "Sabah karar": item.incoming_decision or "-",
+ 384:             "Yer deДџiЕџimi baДџlamД±": item.replacement_context,
+ 385:         }
+ 386:         for item in replacements
+ 387:     )
+
+===== backend\app\analysis\eod_candidate_output.py =====
+   1: from dataclasses import dataclass
+   2: 
+   3: from app.analysis.eod_decision_gate import EodDecisionState
+   4: 
+   5: 
+   6: @dataclass(frozen=True)
+   7: class EodCandidateOutput:
+   8:     symbols: tuple[str, ...]
+   9: 
+  10:     @property
+  11:     def count(self) -> int:
+  12:         return len(self.symbols)
+  13: 
+  14: 
+  15: def build_eod_candidate_output(
+  16:     candidate_symbols,
+  17:     eod_decisions,
+  18: ) -> EodCandidateOutput:
+  19:     selected: list[str] = []
+  20: 
+  21:     for symbol in candidate_symbols:
+  22:         decision = eod_decisions.get(symbol)
+  23: 
+  24:         if decision is None:
+  25:             continue
+  26: 
+  27:         if decision.state == EodDecisionState.ALIS_ADAYI:
+  28:             selected.append(symbol)
+  29: 
+  30:     return EodCandidateOutput(
+  31:         symbols=tuple(selected),
+  32:     )
+
+===== backend\app\analysis\candidate_decision_card.py =====
+   1: from __future__ import annotations
+   2: 
+   3: from dataclasses import dataclass
+   4: 
+   5: 
+   6: @dataclass(frozen=True)
+   7: class CandidateDecisionCard:
+   8:     symbol: str
+   9:     reasons: tuple[str, ...]
+  10:     risks: tuple[str, ...]
+  11:     next_module: str
+  12: 
+  13: 
+  14: def build_candidate_decision_card(candidate: object) -> CandidateDecisionCard:
+  15:     return CandidateDecisionCard(
+  16:         symbol=str(getattr(candidate, "symbol", "")).upper(),
+  17:         reasons=tuple(getattr(candidate, "reasons", ())),
+  18:         risks=tuple(getattr(candidate, "risks", ())),
+  19:         next_module="GГњNCEL TEKNД°K ANALД°Z",
+  20:     )

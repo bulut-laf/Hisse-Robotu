@@ -1,0 +1,167 @@
+{
+  "status": "BLOCKED",
+  "mode": "READ_ONLY_CANONICAL_BUSINESS_QUALITY_ADAPTER_V6",
+  "symbol": "TUPRS",
+  "as_of_date": "2026-08-04",
+  "kap_xls": "C:\\Users\\user\\Downloads\\TUPRS-KAP-2026-6M\\TUPRS_1643116_2026_2.xls",
+  "canonical_code_inventory": [
+    "CAPEX",
+    "CASH_EQUIVALENTS",
+    "CASH_FROM_OPERATIONS",
+    "COGS",
+    "CURRENT_ASSETS",
+    "CURRENT_LIABILITIES",
+    "CURRENT_PORTION_LT_DEBT",
+    "DEPRECIATION_AMORTIZATION",
+    "DIVIDENDS_PAID",
+    "DIVIDENDS_RECEIVED",
+    "EQUITY_METHOD_SHARE",
+    "FINANCE_EXPENSE",
+    "FINANCE_INCOME",
+    "FINANCING_CASH_FLOW",
+    "GROSS_PROFIT",
+    "INTEREST_PAID",
+    "INTEREST_RECEIVED",
+    "INVENTORIES",
+    "INVESTING_CASH_FLOW",
+    "INVESTMENT_EXPENSE",
+    "INVESTMENT_INCOME",
+    "LONG_TERM_BORROWINGS",
+    "MONETARY_GAIN_LOSS",
+    "NET_INCOME",
+    "NONCURRENT_LIABILITIES",
+    "OPERATING_CASH_FLOW",
+    "OPERATING_PROFIT",
+    "OTHER_OPERATING_EXPENSE",
+    "OTHER_OPERATING_INCOME",
+    "PARENT_EQUITY",
+    "PARENT_NET_INCOME",
+    "PRETAX_PROFIT",
+    "REVENUE",
+    "SHORT_TERM_BORROWINGS",
+    "TAX_EXPENSE",
+    "TAX_PAID",
+    "TOTAL_ASSETS",
+    "TOTAL_EQUITY",
+    "TOTAL_LIABILITIES",
+    "TRADE_PAYABLES",
+    "TRADE_RECEIVABLES"
+  ],
+  "resolved_raw_fields": {
+    "revenue": {
+      "metric_code": "REVENUE",
+      "value": "386420235",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "period_kind": "DURATION",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "gross_profit": {
+      "metric_code": "GROSS_PROFIT",
+      "value": "61036950",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "period_kind": "DURATION",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "operating_profit": {
+      "metric_code": "OPERATING_PROFIT",
+      "value": "46833690",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "period_kind": "DURATION",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "net_income": {
+      "metric_code": "NET_INCOME",
+      "value": "46189781",
+      "period_start": "2026-04-01",
+      "period_end": "2026-06-30",
+      "period_kind": "DURATION",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_assets": {
+      "metric_code": "TOTAL_ASSETS",
+      "value": "859987516",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "period_kind": "INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "total_equity": {
+      "metric_code": "TOTAL_EQUITY",
+      "value": "463306781",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "period_kind": "INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "cash_and_equivalents": {
+      "metric_code": "CASH_EQUIVALENTS",
+      "value": "195840940",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "period_kind": "INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "current_assets": {
+      "metric_code": "CURRENT_ASSETS",
+      "value": "439480874",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "period_kind": "INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "current_liabilities": {
+      "metric_code": "CURRENT_LIABILITIES",
+      "value": "325369321",
+      "period_start": null,
+      "period_end": "2026-06-30",
+      "period_kind": "INSTANT",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "operating_cash_flow": {
+      "metric_code": "OPERATING_CASH_FLOW",
+      "value": "132366363",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "period_kind": "DURATION",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    },
+    "capital_expenditure": {
+      "metric_code": "CAPEX",
+      "value": "-11858044",
+      "period_start": "2026-01-01",
+      "period_end": "2026-06-30",
+      "period_kind": "DURATION",
+      "published_at": "2026-08-04T18:24:32",
+      "source_sha256": "4d86e78b1a5568872d3c3e16943b6c6547c559aa397a0c1cdf2718afdbd7d889"
+    }
+  },
+  "shares_evidence": null,
+  "missing_requirements": [
+    "ebitda",
+    "total_debt",
+    "shares_outstanding"
+  ],
+  "business_quality": null,
+  "blockers": [
+    "BUSINESS_QUALITY_RAW_CANONICAL_INPUTS_INCOMPLETE"
+  ],
+  "rules": [
+    "No ratio/proxy is converted back into a raw financial-statement value.",
+    "No missing field is converted to zero.",
+    "Only FIN-001/FIN-002 canonical points available as of 2026-08-04 are used.",
+    "Existing calculate_fundamental_quality is the only scoring engine."
+  ]
+}

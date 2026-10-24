@@ -1,0 +1,315 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260818103800
+Username: user-Bilgisayar\user
+RunAs User: user-Bilgisayar\user
+Configuration Name: 
+Machine: USER-BILGISAYAR (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -ExecutionPolicy Bypass -File C:\Users\user\Downloads\HR-TaskEngine-V1-Foundation-Phase-ExactRCA.ps1
+Process ID: 30536
+PSVersion: 5.1.19041.6456
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6456
+BuildVersion: 10.0.19041.6456
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+
+=== TASK ENGINE V1 FOUNDATION PHASE EXACT RCA ===
+READ_ONLY=YES
+PRODUCTION_MUTATION=NO
+PROJECT=D:\Projects\Hisse-Robotu
+FAILED_GUARD=TASK_ENGINE_FOUNDATION_PHASE_MISSING=PRE_SESSION
+RCA_GOAL=Find actual Task Engine foundation markers, phase representation, quality/task row field names, and tests.
+
+=== VERIFIED PYTHON ===
+
+
+=== ANALYSIS SEAM EXACT FUNCTION ===
+
+
+=== UI SEAM EXACT FUNCTION ===
+
+
+=== TASK ENGINE FOUNDATION MARKER SEARCH ===
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:95: stop_phase: str
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:198: stop_phase = "İlk stop"
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:228: recommended_stop, stop_phase, stop_reason = selected
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:232: stop_phase = "Stop tanımsız"
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:273: stop_phase=stop_phase,
+D:\Projects\Hisse-Robotu\backend\app\analysis\active_shadow_trader.py:397: "Stop fazı": item.stop_phase,
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:236: def task_rows(
+D:\Projects\Hisse-Robotu\backend\app\analysis\daily_operation_panel.py:236: def task_rows(
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:292: def daily_operations_event_rows(
+D:\Projects\Hisse-Robotu\backend\app\news_center\daily_operations.py:313: def daily_operations_source_rows(
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:45: movement_phase: str
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:154: movement_phase = "OLGUN"
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:166: movement_phase = "GÜÇLÜ / OLGUNLAŞIYOR"
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:170: movement_phase = "ERKEN / GELİŞİYOR"
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:174: movement_phase = "HAZIRLIK / GELİŞİYOR"
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:178: movement_phase = "NÖTR"
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:185: movement_phase=movement_phase,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar.py:197: "Hareket Fazı": output.movement_phase,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar_ui.py:23: movement_phase: str
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar_ui.py:46: movement_phase=str(output.movement_phase),
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar_ui.py:71: f"Faz: {card.movement_phase} · Olgunlaşma: {card.maturity}"
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar_ui.py:80: "Hareket Fazı": card.movement_phase,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_early_radar_ui.py:114: f"Hareket Fazı: {card.movement_phase} · "
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:6: class MovementPhase(str, Enum):
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:40: phase: MovementPhase
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:63: return MovementAgeReport(None,None,None,None,0,None,None,None,0.0,MovementPhase.YETERSIZ,
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:108: phase=MovementPhase.YORULUYOR
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:111: phase=MovementPhase.OLGUN
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:113: phase=MovementPhase.ERKEN
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:115: phase=MovementPhase.GELISIYOR
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:117: phase=MovementPhase.GUCLU
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:119: phase=MovementPhase.GELISIYOR
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:123: sessions,rv,sv,mv,move,phase,radar,warning,tuple(reasons)
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:61: maturity_min_sessions=6, maturity_move_pct=18.0, peak_score_drop=3.0):
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_movement_age.py:93: if sessions >= maturity_min_sessions or move >= maturity_move_pct:
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_finalization.py:17: class OperationPhaseStatus(str, Enum):
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_finalization.py:33: status: OperationPhaseStatus
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_finalization.py:109: status = OperationPhaseStatus.READY if failed == 0 else OperationPhaseStatus.BLOCKED
+D:\Projects\Hisse-Robotu\backend\app\prebreakout\prebreakout_operation_finalization.py:112: if status is OperationPhaseStatus.READY
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py:11: from backend.app.news_center.daily_operations import (
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py:13: daily_operations_event_rows,
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py:14: daily_operations_source_rows,
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py:45: key="news_center_daily_operations_date",
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py:130: daily_operations_event_rows(brief, timezone=timezone),
+D:\Projects\Hisse-Robotu\backend\app\ui\daily_news_operations_panel.py:139: daily_operations_source_rows(brief, timezone=timezone),
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:228: daily_operations_tab,
+D:\Projects\Hisse-Robotu\backend\app\ui\news_center_dashboard.py:262: with daily_operations_tab:
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:814: # TASK_ENGINE_V1_UI
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:814: # TASK_ENGINE_V1_UI
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:812: from backend.app.workflow.task_engine_v1 import QualityState, WorkflowPhase, build_tasks
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:448: _render_daily_operations_hub(existing_live_signals)
+D:\Projects\Hisse-Robotu\backend\app\ui\prebreakout_dashboard.py:813: def _render_daily_operations_hub(signals) -> None:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:1: # TASK_ENGINE_V1
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:1: # TASK_ENGINE_V1
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:16: class QualityState:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:32: def block_reason(state: QualityState) -> str | None:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:45: quality: QualityState,
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:8: class WorkflowPhase(str, Enum):
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:27: phase: WorkflowPhase
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:44: phase: WorkflowPhase,
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:52: if phase is WorkflowPhase.PRE_SESSION:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:54: Task("data_quality","Veri ve tazelik kontrolü","Günlük Operasyon Paneli",phase),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:55: Task("regime","Piyasa rejimini doğrula","Piyasa Rejimi",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:56: Task("news","Haber ve olay riskini kontrol et","Piyasa Haber, Olay ve Etki Merkezi",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:57: Task("pre_session","Seans öncesi bağlamı incele","Seans Öncesi Bağlam",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:58: Task("shortlist",f"Bugünkü kısa listeyi gözden geçir ({shortlist_count})","Momentum Keşif",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:61: if phase is WorkflowPhase.IN_SESSION:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:63: Task("watchlist",f"Kısa listedeki adayları izle ({shortlist_count})","Momentum Keşif",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:64: Task("technical","İşleme yaklaşan adayları teknik olarak doğrula","Güncel Teknik Analiz",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:12: WEEKLY_REVIEW = "WEEKLY_REVIEW"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:77: if phase is WorkflowPhase.WEEKLY_REVIEW:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:12: WEEKLY_REVIEW = "WEEKLY_REVIEW"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:77: if phase is WorkflowPhase.WEEKLY_REVIEW:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:9: PRE_SESSION = "PRE_SESSION"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:52: if phase is WorkflowPhase.PRE_SESSION:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:57: Task("pre_session","Seans öncesi bağlamı incele","Seans Öncesi Bağlam",phase,blocked,reason),
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:10: IN_SESSION = "IN_SESSION"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:61: if phase is WorkflowPhase.IN_SESSION:
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:11: POST_SESSION = "POST_SESSION"
+D:\Projects\Hisse-Robotu\backend\app\workflow\task_engine_v1.py:69: if phase is WorkflowPhase.POST_SESSION:
+D:\Projects\Hisse-Robotu\backend\tests\test_active_shadow_trader.py:54: assert result.stop_phase == "Başa baş"
+D:\Projects\Hisse-Robotu\backend\tests\test_active_shadow_trader.py:62: assert result.stop_phase == "Kâr koruma"
+D:\Projects\Hisse-Robotu\backend\tests\test_active_shadow_trader.py:72: assert result.stop_phase == "Trailing stop"
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:8: task_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:147: assert task_rows(result.tasks)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:148: assert "İlgili ekran" in task_rows(result.tasks)[0]
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:8: task_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:147: assert task_rows(result.tasks)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:148: assert "İlgili ekran" in task_rows(result.tasks)[0]
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:36: assert "task_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:36: assert "task_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:5: from backend.app.news_center.daily_operations import (
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:7: daily_operations_event_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:8: daily_operations_source_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:213: rows = daily_operations_event_rows(brief)
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py:221: rows = daily_operations_source_rows(brief)
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_daily_operations_hub.py:14: assert "_render_daily_operations_hub(existing_live_signals)" in source
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar.py:33: assert out.movement_phase == "ERKEN / GELİŞİYOR"
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar.py:55: assert out.movement_phase == "OLGUN"
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar_ui.py:43: movement_phase: str
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar_ui.py:55: movement_phase="ERKEN / GELİŞİYOR",
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar_ui.py:69: movement_phase="ERKEN / GELİŞİYOR",
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar_ui.py:155: movement_phase="OLGUN",
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:9: assert analyze_movement_age(()).phase is MovementPhase.YETERSIZ
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:15: assert r.phase is MovementPhase.GELISIYOR
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:27: assert r.phase is MovementPhase.OLGUN
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:35: assert r.phase is MovementPhase.YORULUYOR
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:69: assert r.phase is MovementPhase.OLGUN
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:33: r=analyze_movement_age(h,maturity_min_sessions=5)
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:68: r=analyze_movement_age(h,maturity_min_sessions=3,peak_score_drop=3)
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py:6: OperationPhaseStatus,
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py:51: assert result.status is OperationPhaseStatus.READY
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py:59: assert result.status is OperationPhaseStatus.BLOCKED
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py:66: assert result.status is OperationPhaseStatus.BLOCKED
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py:72: assert result.status is OperationPhaseStatus.BLOCKED
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py:80: assert result.status is OperationPhaseStatus.BLOCKED
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_scan_radar_integration.py:42: assert card.movement_phase == "ERKEN / GELİŞİYOR"
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint177_daily_operations_ui_contract.py:14: assert "daily_operations_tab," in text
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint177_daily_operations_ui_contract.py:22: assert "with daily_operations_tab:" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint177_daily_operations_ui_contract.py:59: assert "daily_operations_event_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint177_daily_operations_ui_contract.py:65: assert "daily_operations_source_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:1: from backend.app.workflow.task_engine_v1 import (
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:1: from backend.app.workflow.task_engine_v1 import (
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:2: QualityState,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:9: quality=QualityState(freshness_ok=False)
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:25: quality=QualityState(),
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:38: quality=QualityState(security_lock=True),
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:3: WorkflowPhase,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:11: phase=WorkflowPhase.IN_SESSION,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:24: phase=WorkflowPhase.WEEKLY_REVIEW,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:37: phase=WorkflowPhase.PRE_SESSION,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:24: phase=WorkflowPhase.WEEKLY_REVIEW,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:24: phase=WorkflowPhase.WEEKLY_REVIEW,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:35: def test_pre_session_quality_gate():
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:37: phase=WorkflowPhase.PRE_SESSION,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:11: phase=WorkflowPhase.IN_SESSION,
+
+=== FOUNDATION TEST INVENTORY ===
+D:\Projects\Hisse-Robotu\backend\tests\prebreakout_test_helpers.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_context.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_ai_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_shadow.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_prebreakout_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_dashboard_prebreakout_validation_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality.py
+D:\Projects\Hisse-Robotu\backend\tests\test_fundamental_quality_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_daily_operations.py
+D:\Projects\Hisse-Robotu\backend\tests\test_news_center_quality_core_fast_block_v11.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_alarm_journal.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_backtest.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_confidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_intervals.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_leader_stability.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_threshold_recommendations.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_calibration_threshold_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_lifecycle.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_candidate_quality.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_controlled_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_monitor.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_archive_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_diagnosis_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_followup_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_operation_recovery_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_daily_rank_history.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_alarm_journal.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_calibration_confidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_calibration_intervals.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_daily_operation_control.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_daily_operations_hub.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_leader_stability.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_lifecycle.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_live_performance.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_live_watch.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_operation_alerts.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_operation_archive.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_operational_health.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_paper_portfolio.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_performance_comparison.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_performance_label.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_real_result_evaluation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_threshold_recommendations.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_dashboard_threshold_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_early_radar_ui.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_engine.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_engine_threshold_policy.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_features.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_filters.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_historical_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_performance.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_watch.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_watch_cooldown.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_live_watch_session_state.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_missed_opportunity.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_models.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_momentum_gate.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_no_lookahead.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_action_summary.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_alerts.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_archive.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_closure.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_confidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_diagnosis.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_finalization.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_followup.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operation_recovery.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_operational_health.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_paper_portfolio.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_performance_comparison.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_performance_label.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_real_result_evaluation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_regime_performance.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_release_readiness.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_report.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_report_performance_label.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_scan_radar_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_score.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_score_threshold_calibration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_score_threshold_calibration_integration.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_stage.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_threshold_policy.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_universe.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_calibration_gate.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_calibration_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_closure.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_decision_history.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_decision_stability.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_first_live_evaluation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_live_closure.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_observation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_v2_sample_adequacy.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_dashboard.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_evidence.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_no_lookahead.py
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_validation_report.py
+D:\Projects\Hisse-Robotu\backend\tests\test_signal_quality_validation.py
+D:\Projects\Hisse-Robotu\backend\tests\test_sprint177_daily_operations_ui_contract.py
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py
+
+=== TARGETED FOUNDATION TEST NAMES ===
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:8: task_rows,
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:147: assert task_rows(result.tasks)
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel.py:148: assert "İlgili ekran" in task_rows(result.tasks)[0]
+D:\Projects\Hisse-Robotu\backend\tests\test_daily_operation_panel_dashboard.py:36: assert "task_rows" in text
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:33: r=analyze_movement_age(h,maturity_min_sessions=5)
+D:\Projects\Hisse-Robotu\backend\tests\test_prebreakout_movement_age.py:68: r=analyze_movement_age(h,maturity_min_sessions=3,peak_score_drop=3)
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:1: from backend.app.workflow.task_engine_v1 import (
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:11: phase=WorkflowPhase.IN_SESSION,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:24: phase=WorkflowPhase.WEEKLY_REVIEW,
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:35: def test_pre_session_quality_gate():
+D:\Projects\Hisse-Robotu\backend\tests\test_task_engine_v1.py:37: phase=WorkflowPhase.PRE_SESSION,
+
+=== RETRY CONTRACT CONTROL ===
+
+RETRY_CONTRACT_CONTROL=PASS
+
+=== DECISION ===
+DECISION=TASK_ENGINE_FOUNDATION_PHASE_EXACT_RCA_COMPLETE
+PRODUCTION_MUTATION=NO
+PRODUCTION_STATUS=UNCHANGED
+NEXT=Build Rev1 implementation only from exact foundation representation found in this report; do not require PRE_SESSION literals unless repository actually uses them.
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-TaskEngine-V1-Foundation-Phase-ExactRCA-20260818-103800.txt
+**********************
+Windows PowerShell transcript end
+End time: 20260818103823
+**********************

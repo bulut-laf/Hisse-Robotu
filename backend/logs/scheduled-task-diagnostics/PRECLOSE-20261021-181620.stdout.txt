@@ -1,0 +1,14 @@
+{
+  "phase": "PRECLOSE",
+  "run_date": "2026-10-21",
+  "observed_at": "2026-10-21T18:23:30.308702+03:00",
+  "status": "PRECLOSE_PREVIEW_READY",
+  "candidate_count": 0,
+  "detail_rows": [],
+  "delegated_legacy_phase": null,
+  "preview_only": true,
+  "canonical": false,
+  "ranking_write_allowed": false,
+  "profile_write_allowed": false,
+  "al_sat_decision_allowed": false
+}

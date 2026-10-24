@@ -1,0 +1,2136 @@
+=== HISSE ROBOTU тАФ EXISTING AUTOMATION REUSE PREFLIGHT V1 ===
+MODE=READ_ONLY
+SOURCE_MUTATION=NO
+SCHEDULER_MUTATION=NO
+MEMORY_MUTATION=NO
+NETWORK_CALL=NO
+
+SOURCE_FILES_SCANNED=1914
+
+=== 1. RANKED EXISTING AUTOMATION FILES ===
+AUTOMATION_FILE_SCORE=25|FILE=backend\dashboard.py
+AUTOMATION_FILE_SCORE=21|FILE=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py
+AUTOMATION_FILE_SCORE=21|FILE=scripts\install_daily_buy_decision_tasks.ps1
+AUTOMATION_FILE_SCORE=16|FILE=backend\app\analysis\daily_buy_decision_operational_closeout.py
+AUTOMATION_FILE_SCORE=12|FILE=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py
+AUTOMATION_FILE_SCORE=10|FILE=backend\app\operations\daily_buy_decision_scheduled_runner.py
+AUTOMATION_FILE_SCORE=10|FILE=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py
+AUTOMATION_FILE_SCORE=9|FILE=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py
+AUTOMATION_FILE_SCORE=8|FILE=backend\app\analysis\eod_morning_board_delta.py
+AUTOMATION_FILE_SCORE=8|FILE=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py
+AUTOMATION_FILE_SCORE=8|FILE=backend\tests\test_daily_buy_decision_operational_closeout_v1.py
+AUTOMATION_FILE_SCORE=8|FILE=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py
+AUTOMATION_FILE_SCORE=8|FILE=backend\tests\test_eod_morning_board_delta_v1.py
+AUTOMATION_FILE_SCORE=6|FILE=backend\tests\test_research_profile_memory_v1.py
+AUTOMATION_FILE_SCORE=5|FILE=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py
+AUTOMATION_FILE_SCORE=5|FILE=backend\tests\test_daily_operation_ai_context.py
+AUTOMATION_FILE_SCORE=5|FILE=backend\tests\test_scan_history.py
+AUTOMATION_FILE_SCORE=4|FILE=backend\app\analysis\daily_buy_decision_output_archive.py
+AUTOMATION_FILE_SCORE=2|FILE=backend\app\ui\news_center_dashboard.py
+AUTOMATION_FILE_SCORE=2|FILE=backend\dashboard.backup_before_navigation_fix.py
+AUTOMATION_FILE_SCORE=2|FILE=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py
+AUTOMATION_FILE_SCORE=1|FILE=_backup\Sprint140_20260803_225805\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_backup\Sprint140_20260803_225849\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_backup\Sprint141_20260803_230940\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_sprint145_backup_20260804_170940\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_sprint146_backup_20260804_193700\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_sprint146_rev2_backup_20260804_195333\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_sprint146_rev2_backup_20260804_195333\backend\tests\test_dashboard_vbts_backup_restore_panel.py
+AUTOMATION_FILE_SCORE=1|FILE=_sprint146_rev2_backup_20260804_195333\backend\tests\test_dashboard_vbts_integrity_health_panel.py
+AUTOMATION_FILE_SCORE=1|FILE=_sprint148c_backup_20260804_221041\backend\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=_v11_backup_outcome_health_20260817-152436\dashboard.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\daily_buy_decision_cycle.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\daily_buy_decision_outcomes.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\eod_final_action_board.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\morning_action_board.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\morning_candidate_feedback.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\morning_candidate_flow.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\morning_candidate_outcome.py
+AUTOMATION_FILE_SCORE=1|FILE=backend\app\analysis\morning_command_center.py
+AUTOMATION_FILES_FOUND=170
+
+=== 2. EXACT 18:20 / 09:00 SOURCE WINDOWS ===
+--- TIME_WINDOW backend\dashboard.py:8151 SCORE=25 ---
+08141:         shadow_positions = ()
+08142:         st.warning(f"G├╢lge portf├╢y okunamad─▒: {error}")
+08143: 
+08144:     summary = build_daily_operation_summary(
+08145:         pilot_records=pilot_store.list(),
+08146:         signal_outcomes=signal_store.list(),
+08147:         trade_records=trade_records,
+08148:         shadow_positions=shadow_positions,
+08149:     )
+08150: 
+08151:     # DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1
+08152:     st.markdown("#### Otomatik Karar Ko┼Яusu")
+08153:     st.caption(
+08154:         "Windows g├╢revleri kuruldu─Яunda sistem hafta i├зi 18:20'de seans sonu, "
+08155:         "09:00'da sabah yeniden de─Яerlendirme ko┼Яusunu panel a├з─▒k olmasa da ├зal─▒┼Яt─▒r─▒r."
+08156:     )
+08157:     try:
+08158:         _scheduler_store = ScheduledRunJsonStore()
+08159:         st.dataframe(
+08160:             pd.DataFrame(scheduler_health_rows(_scheduler_store)),
+08161:             width="stretch",
+--- TIME_WINDOW backend\dashboard.py:8175 SCORE=25 ---
+08165:         with _recovery_cols[0]:
+08166:             if st.button("18:20 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r", key="retry_evening_daily_buy_decision"):
+08167:                 with st.spinner("Seans sonu karar ko┼Яusu yeniden ├зal─▒┼Яt─▒r─▒l─▒yor..."):
+08168:                     _retry_evening = retry_failed_or_missing_run("EVENING", store=_scheduler_store)
+08169:                 if _retry_evening.status in {"SUCCESS", "SKIPPED"}:
+08170:                     st.success(_retry_evening.detail)
+08171:                 else:
+08172:                     st.error(_retry_evening.detail)
+08173:                 st.rerun()
+08174:         with _recovery_cols[1]:
+08175:             if st.button("09:00 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r", key="retry_morning_daily_buy_decision"):
+08176:                 with st.spinner("Sabah karar ko┼Яusu yeniden ├зal─▒┼Яt─▒r─▒l─▒yor..."):
+08177:                     _retry_morning = retry_failed_or_missing_run("MORNING", store=_scheduler_store)
+08178:                 if _retry_morning.status in {"SUCCESS", "SKIPPED"}:
+08179:                     st.success(_retry_morning.detail)
+08180:                 else:
+08181:                     st.error(_retry_morning.detail)
+08182:                 st.rerun()
+08183:         st.caption(
+08184:             "Yeniden ├зal─▒┼Яt─▒rma yaln─▒z ba┼Яar─▒s─▒z/eksik ko┼Яuyu kurtar─▒r; ayn─▒ g├╝n ba┼Яar─▒l─▒ faz varsa duplicate ├╝retmez."
+08185:         )
+--- TIME_WINDOW backend\dashboard.py:8200 SCORE=25 ---
+08190:             _audit_rows = scheduler_audit_rows(_audit_store, limit=50)
+08191:             if _audit_rows:
+08192:                 st.dataframe(
+08193:                     pd.DataFrame(_audit_rows),
+08194:                     width="stretch",
+08195:                     hide_index=True,
+08196:                 )
+08197:             else:
+08198:                 st.caption("Hen├╝z ar┼Яivlenmi┼Я otomasyon ko┼Яusu yok.")
+08199: 
+08200:             st.markdown("**EOD тЖТ 09:00 g├╝nl├╝k zincir denetimi**")
+08201:             _chain_rows = scheduler_daily_chain_rows(_scheduler_store, limit_days=14)
+08202:             if _chain_rows:
+08203:                 st.dataframe(
+08204:                     pd.DataFrame(_chain_rows),
+08205:                     width="stretch",
+08206:                     hide_index=True,
+08207:                 )
+08208:             else:
+08209:                 st.caption("Hen├╝z g├╝nl├╝k EOD / 09:00 zincir kayd─▒ yok.")
+08210:     except (OSError, ValueError, TypeError) as _scheduler_status_error:
+--- TIME_WINDOW backend\dashboard.py:8658 SCORE=25 ---
+08648:                     width="stretch",
+08649:                     hide_index=True,
+08650:                 )
+08651: 
+08652:             # EOD_MORNING_BOARD_DELTA_SUMMARY_V1
+08653:             _board_delta_summary = build_eod_morning_board_delta(
+08654:                 _evening_snapshot,
+08655:                 _morning_decision_snapshot,
+08656:             )
+08657:             if _board_delta_summary is not None:
+08658:                 st.markdown("##### Ak┼Яam тЖТ 09:00 Aksiyon Fark─▒ тАФ Tek Bak─▒┼Я")
+08659:                 st.caption(
+08660:                     "Seans sonu ├╢n aksiyon listesi ile 09:00 nihai karar yap─▒s─▒n─▒ read-only "
+08661:                     "├╢zetler; yeni skor, sinyal veya karar ├╝retmez."
+08662:                 )
+08663:                 metrik_izgarasi_goster(
+08664:                     (
+08665:                         ("Ak┼Яam AL", str(_board_delta_summary.evening_buy)),
+08666:                         ("09:00 AL", str(_board_delta_summary.morning_buy)),
+08667:                         ("G├╝├зlenen", str(_board_delta_summary.upgrades)),
+08668:                         ("Zay─▒flayan", str(_board_delta_summary.downgrades)),
+--- TIME_WINDOW backend\dashboard.py:8682 SCORE=25 ---
+08672:                 )
+08673:                 st.info(_board_delta_summary.headline)
+08674:                 _board_delta_rows = eod_morning_board_delta_rows(_board_delta_summary)
+08675:                 if _board_delta_rows:
+08676:                     st.dataframe(
+08677:                         pd.DataFrame(_board_delta_rows),
+08678:                         width="stretch",
+08679:                         hide_index=True,
+08680:                     )
+08681:                 else:
+08682:                     st.caption("Ak┼Яam ve 09:00 aras─▒nda karar veya Top-5 ├╝yeli─Яi de─Яi┼Яmedi.")
+08683:             # EOD_MORNING_BOARD_DELTA_SUMMARY_V1_END
+08684: 
+08685:             # DECISION_OUTPUT_ARCHIVE_DAILY_COMPARE_V1
+08686:             try:
+08687:                 _decision_archive_store = DecisionOutputArchiveJsonStore()
+08688:                 _decision_archive_records = _decision_archive_store.load()
+08689:                 with st.expander("Karar ├З─▒kt─▒ Ar┼Яivi / G├╝nler Aras─▒ Kar┼Я─▒la┼Яt─▒rma", expanded=False):
+08690:                     st.caption(
+08691:                         "EOD ve 09:00 Top-5 karar board'lar─▒ g├╝nl├╝k olarak saklan─▒r. "
+08692:                         "Bu g├╢r├╝n├╝m ge├зmi┼Я kararlar─▒ yeniden a├зar ve g├╝nler aras─▒ndaki "
+--- TIME_WINDOW backend\dashboard.py:8727 SCORE=25 ---
+08717:                         for _archive_record in _selected_date_records:
+08718:                             st.markdown(
+08719:                                 f"**{_archive_record.run_date} ┬╖ {_archive_record.phase}**"
+08720:                             )
+08721:                             st.dataframe(
+08722:                                 pd.DataFrame(decision_output_board_rows(_archive_record)),
+08723:                                 width="stretch",
+08724:                                 hide_index=True,
+08725:                             )
+08726: 
+08727:                         st.markdown("**Son iki 09:00 g├╝n├╝ kar┼Я─▒la┼Яt─▒rmas─▒**")
+08728:                         _daily_archive_delta = latest_daily_compare(
+08729:                             _decision_archive_records, phase="MORNING"
+08730:                         )
+08731:                         if _daily_archive_delta is not None:
+08732:                             st.dataframe(
+08733:                                 pd.DataFrame(
+08734:                                     daily_decision_archive_delta_rows(_daily_archive_delta)
+08735:                                 ),
+08736:                                 width="stretch",
+08737:                                 hide_index=True,
+--- TIME_WINDOW backend\dashboard.py:8778 SCORE=25 ---
+08768:             # EOD_FINAL_ACTION_BOARD_V1
+08769:             if _decision_phase == "EVENING":
+08770:                 _eod_final_actions = build_eod_final_actions(
+08771:                     _morning_snapshot.candidates,
+08772:                     _final_buy_decisions,
+08773:                 )
+08774:                 st.markdown("##### Seans Sonu тАФ Ertesi G├╝n ├Цn Aksiyon Listesi")
+08775:                 st.caption(
+08776:                     "Kapan─▒┼Я verisiyle ertesi g├╝n i├зin ilk aksiyon listesi haz─▒rlan─▒r. "
+08777:                     "AL adaylar─▒ ├╢nce g├╢sterilir; Top-5'in orijinal s─▒ras─▒, aday kayna─Я─▒, "
+08778:                     "giri┼Я haz─▒rl─▒─Я─▒ ve kalite kan─▒tlar─▒ de─Яi┼Яtirilmez. Sabah 09:00 "
+08779:                     "yeniden de─Яerlendirmesi bu listenin yerine ge├зebilir."
+08780:                 )
+08781:                 st.dataframe(
+08782:                     pd.DataFrame(eod_final_action_rows(_eod_final_actions)),
+08783:                     width="stretch",
+08784:                     hide_index=True,
+08785:                 )
+08786:                 _eod_buy_actions = [
+08787:                     item.symbol for item in _eod_final_actions
+08788:                     if item.decision == "AL"
+--- TIME_WINDOW backend\dashboard.py:8802 SCORE=25 ---
+08792:                 else:
+08793:                     st.info("Seans sonu listesinde ertesi g├╝n i├зin AL ko┼Яullar─▒n─▒ tamamlayan aday yok.")
+08794:             # EOD_FINAL_ACTION_BOARD_V1_END
+08795: 
+08796:             # MORNING_FINAL_ACTION_BOARD_V1
+08797:             if _decision_phase == "MORNING":
+08798:                 _morning_final_actions = build_morning_final_actions(
+08799:                     _morning_snapshot.candidates,
+08800:                     _final_buy_decisions,
+08801:                 )
+08802:                 st.markdown("##### 09:00 Nihai Aksiyon Listesi")
+08803:                 st.caption(
+08804:                     "Sabah yeniden de─Яerlendirmesinden sonra AL adaylar─▒ ├╢nce g├╢sterilir; "
+08805:                     "Top-5'in orijinal s─▒ras─▒, aday kayna─Я─▒, giri┼Я haz─▒rl─▒─Я─▒ ve kalite "
+08806:                     "kan─▒tlar─▒ de─Яi┼Яtirilmez. Bu g├╢r├╝n├╝m yeni skor veya yeni karar ├╝retmez."
+08807:                 )
+08808:                 st.dataframe(
+08809:                     pd.DataFrame(morning_final_action_rows(_morning_final_actions)),
+08810:                     width="stretch",
+08811:                     hide_index=True,
+08812:                 )
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:6 SCORE=21 ---
+00001: from pathlib import Path
+00002: 
+00003: 
+00004: def test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner():
+00005:     source = Path("backend/dashboard.py").read_text(encoding="utf-8")
+00006:     assert "DAILY_BUY_DECISION_AUTOMATION_BRIDGE_V1" in source
+00007:     assert "Otomatik Karar Ko┼Яusu" in source
+00008:     assert "scheduler_status_rows" in source
+00009:     assert "18:20" in source
+00010:     assert "09:00" in source
+00011: 
+00012: 
+00013: def test_windows_task_installer_registers_both_phases():
+00014:     source = Path("scripts/install_daily_buy_decision_tasks.ps1").read_text(encoding="utf-8")
+00015:     assert "--phase EVENING" in source
+00016:     assert "--phase MORNING" in source
+--- TIME_WINDOW scripts\install_daily_buy_decision_tasks.ps1:28 SCORE=21 ---
+00018: 
+00019: $module = "backend.app.operations.daily_buy_decision_scheduled_runner"
+00020: 
+00021: $eveningAction = New-ScheduledTaskAction `
+00022:     -Execute $Python `
+00023:     -Argument "-m $module --phase EVENING" `
+00024:     -WorkingDirectory $Repo
+00025: $eveningTrigger = New-ScheduledTaskTrigger `
+00026:     -Weekly `
+00027:     -DaysOfWeek Monday,Tuesday,Wednesday,Thursday,Friday `
+00028:     -At 18:20
+00029: 
+00030: $morningAction = New-ScheduledTaskAction `
+00031:     -Execute $Python `
+00032:     -Argument "-m $module --phase MORNING" `
+00033:     -WorkingDirectory $Repo
+00034: $morningTrigger = New-ScheduledTaskTrigger `
+00035:     -Weekly `
+00036:     -DaysOfWeek Monday,Tuesday,Wednesday,Thursday,Friday `
+00037:     -At 09:00
+00038: 
+--- TIME_WINDOW scripts\install_daily_buy_decision_tasks.ps1:50 SCORE=21 ---
+00040:     -TaskName "HisseRobotu-EOD-DailyDecision" `
+00041:     -Action $eveningAction `
+00042:     -Trigger $eveningTrigger `
+00043:     -Description "Hisse Robotu seans sonu ertesi g├╝n karar listesi" `
+00044:     -Force | Out-Null
+00045: 
+00046: Register-ScheduledTask `
+00047:     -TaskName "HisseRobotu-0900-DailyDecision" `
+00048:     -Action $morningAction `
+00049:     -Trigger $morningTrigger `
+00050:     -Description "Hisse Robotu 09:00 sabah yeniden de─Яerlendirme" `
+00051:     -Force | Out-Null
+00052: 
+00053: Write-Host "Kuruldu: HisseRobotu-EOD-DailyDecision (18:20 hafta i├зi)"
+00054: Write-Host "Kuruldu: HisseRobotu-0900-DailyDecision (09:00 hafta i├зi)"
+--- TIME_WINDOW backend\app\analysis\daily_buy_decision_operational_closeout.py:10 SCORE=16 ---
+00001: from __future__ import annotations
+00002: 
+00003: from dataclasses import dataclass
+00004: from datetime import datetime
+00005: from typing import Iterable
+00006: from zoneinfo import ZoneInfo
+00007: 
+00008: ISTANBUL = ZoneInfo("Europe/Istanbul")
+00009: PHASE_SCHEDULE = {"MORNING": (9, 0), "EVENING": (18, 20)}
+00010: PHASE_LABELS = {"MORNING": "09:00 Sabah", "EVENING": "18:20 Seans Sonu"}
+00011: 
+00012: 
+00013: @dataclass(frozen=True)
+00014: class OperationalCloseoutCheck:
+00015:     check: str
+00016:     status: str
+00017:     detail: str
+00018: 
+00019: 
+00020: @dataclass(frozen=True)
+--- TIME_WINDOW backend\app\analysis\daily_buy_decision_operational_closeout.py:176 SCORE=16 ---
+00166:             checks.append(OperationalCloseoutCheck(f"{label} Karar Ar┼Яivi", "EKS─░K", "G├╝nl├╝k karar ├з─▒kt─▒ ar┼Яivi bulunamad─▒."))
+00167: 
+00168:     if missing:
+00169:         status = "INCOMPLETE"
+00170:         headline = f"Operasyonel kapan─▒┼Я eksik: {len(missing)} halka do─Яrulanamad─▒."
+00171:     elif waiting:
+00172:         status = "WAITING"
+00173:         headline = "Bug├╝nk├╝ operasyon zinciri hen├╝z tamamlanma saatini bekliyor."
+00174:     else:
+00175:         status = "COMPLETE"
+00176:         headline = "EOD тЖТ 09:00 karar zinciri, audit ve karar ar┼Яivi birlikte do─Яruland─▒."
+00177: 
+00178:     return OperationalCloseoutResult(
+00179:         run_date=run_date,
+00180:         status=status,
+00181:         checks=tuple(checks),
+00182:         missing_links=tuple(missing),
+00183:         headline=headline,
+00184:     )
+00185: 
+00186: 
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:8 SCORE=12 ---
+00001: from pathlib import Path
+00002: 
+00003: 
+00004: def test_dashboard_exposes_automation_health_and_manual_recovery():
+00005:     source = Path("backend/dashboard.py").read_text(encoding="utf-8")
+00006:     assert "scheduler_health_rows" in source
+00007:     assert "retry_failed_or_missing_run" in source
+00008:     assert "18:20 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r" in source
+00009:     assert "09:00 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r" in source
+00010:     assert "duplicate ├╝retmez" in source
+--- TIME_WINDOW backend\app\operations\daily_buy_decision_scheduled_runner.py:305 SCORE=10 ---
+00295:             run_kind=run_kind,
+00296:         )
+00297:     state_store.save(record)
+00298:     history_store.append(record)
+00299:     return record
+00300: 
+00301: 
+00302: def scheduler_status_rows(store: ScheduledRunJsonStore | None = None) -> tuple[dict[str, object], ...]:
+00303:     state_store = store or ScheduledRunJsonStore()
+00304:     rows: list[dict[str, object]] = []
+00305:     for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+00306:         item = state_store.latest(phase)
+00307:         rows.append({
+00308:             "Ko┼Яu": label,
+00309:             "Durum": item.status if item else "HEN├ЬZ YOK",
+00310:             "Son ├зal─▒┼Яma": item.finished_at if item else "-",
+00311:             "Aday": item.candidate_count if item else 0,
+00312:             "AL": ", ".join(item.buy_symbols) if item and item.buy_symbols else "-",
+00313:             "Detay": item.detail if item else "-",
+00314:         })
+00315:     return tuple(rows)
+--- TIME_WINDOW backend\app\operations\daily_buy_decision_scheduled_runner.py:332 SCORE=10 ---
+00322: 
+00323: def scheduler_health_rows(
+00324:     store: ScheduledRunJsonStore | None = None,
+00325:     *,
+00326:     now: datetime | None = None,
+00327: ) -> tuple[dict[str, object], ...]:
+00328:     state_store = store or ScheduledRunJsonStore()
+00329:     timestamp = (now or datetime.now(ISTANBUL)).astimezone(ISTANBUL)
+00330:     today = timestamp.date().isoformat()
+00331:     rows: list[dict[str, object]] = []
+00332:     for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+00333:         latest = state_store.latest(phase)
+00334:         latest_success = state_store.latest_success(phase)
+00335:         today_record = state_store.load().get(f"{today}:{phase}")
+00336:         due = _phase_due(phase, timestamp)
+00337:         if today_record is not None and today_record.status == "SUCCESS":
+00338:             health = "SA─ЮLIKLI"
+00339:             recovery = "GEREK YOK"
+00340:         elif today_record is not None and today_record.status == "FAILED":
+00341:             health = "BA┼ЮARISIZ"
+00342:             recovery = "YEN─░DEN ├ЗALI┼ЮTIR"
+--- TIME_WINDOW backend\app\operations\daily_buy_decision_scheduled_runner.py:408 SCORE=10 ---
+00398:         run_kind="RECOVERY",
+00399:     )
+00400: 
+00401: 
+00402: def scheduler_audit_rows(
+00403:     audit_store: ScheduledRunAuditJsonStore | None = None,
+00404:     *,
+00405:     limit: int = 50,
+00406: ) -> tuple[dict[str, object], ...]:
+00407:     store = audit_store or ScheduledRunAuditJsonStore()
+00408:     phase_label = {"EVENING": "Seans sonu", "MORNING": "09:00"}
+00409:     kind_label = {"SCHEDULED": "Zamanlanm─▒┼Я", "RECOVERY": "Kurtarma"}
+00410:     return tuple(
+00411:         {
+00412:             "Tarih": item.run_date,
+00413:             "Ko┼Яu": phase_label.get(item.phase, item.phase),
+00414:             "T├╝r": kind_label.get(item.run_kind, item.run_kind),
+00415:             "Durum": item.status,
+00416:             "Ba┼Яlang─▒├з": item.started_at,
+00417:             "Biti┼Я": item.finished_at,
+00418:             "Aday": item.candidate_count,
+--- TIME_WINDOW backend\app\operations\daily_buy_decision_scheduled_runner.py:450 SCORE=10 ---
+00440:         if evening_ok and morning_ok:
+00441:             chain = "TAMAMLANDI"
+00442:         elif evening_ok or morning_ok:
+00443:             chain = "KISM─░"
+00444:         else:
+00445:             chain = "BA┼ЮARISIZ/EKS─░K"
+00446:         rows.append({
+00447:             "Tarih": run_date,
+00448:             "EOD": evening.status if evening else "YOK",
+00449:             "EOD aday": evening.candidate_count if evening else 0,
+00450:             "09:00": morning.status if morning else "YOK",
+00451:             "09:00 aday": morning.candidate_count if morning else 0,
+00452:             "G├╝nl├╝k zincir": chain,
+00453:         })
+00454:     return tuple(rows)
+00455: 
+00456: 
+00457: def main(argv: list[str] | None = None) -> int:
+00458:     parser = argparse.ArgumentParser(description="Hisse Robotu otomatik g├╝nl├╝k karar ko┼Яusu")
+00459:     parser.add_argument("--phase", required=True, choices=VALID_PHASES)
+00460:     parser.add_argument("--force", action="store_true")
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:8 SCORE=10 ---
+00001: from pathlib import Path
+00002: 
+00003: 
+00004: def test_dashboard_exposes_scheduler_audit_and_daily_chain():
+00005:     source = Path("backend/dashboard.py").read_text(encoding="utf-8")
+00006:     assert "Otomasyon Ko┼Яu Ge├зmi┼Яi / Audit" in source
+00007:     assert "scheduler_audit_rows" in source
+00008:     assert "EOD тЖТ 09:00 g├╝nl├╝k zincir denetimi" in source
+00009:     assert "scheduler_daily_chain_rows" in source
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:90 SCORE=9 ---
+00080:     audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+00081:     execute_scheduled_run(
+00082:         "MORNING",
+00083:         now=datetime(2026, 8, 24, 9, 0, tzinfo=IST),
+00084:         runtime=Broken(),
+00085:         store=state,
+00086:         audit_store=audit,
+00087:     )
+00088:     rows = scheduler_audit_rows(audit)
+00089:     assert rows[0]["Tarih"] == "2026-08-24"
+00090:     assert rows[0]["Ko┼Яu"] == "09:00"
+00091:     assert rows[0]["T├╝r"] == "Zamanlanm─▒┼Я"
+00092:     assert rows[0]["Durum"] == "FAILED"
+00093:     assert rows[0]["Aday"] == 0
+00094:     assert "network down" in rows[0]["Detay/Hata"]
+00095: 
+00096: 
+00097: def test_daily_chain_marks_complete_partial_and_failed_missing(tmp_path):
+00098:     state = ScheduledRunJsonStore(tmp_path / "state.json")
+00099:     audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+00100:     execute_scheduled_run(
+--- TIME_WINDOW backend\app\analysis\eod_morning_board_delta.py:158 SCORE=8 ---
+00148:         )
+00149: 
+00150:     evening_buy = sum(
+00151:         1 for item in evening_candidates if _decision(getattr(item, "decision", None)) == "AL"
+00152:     )
+00153:     morning_buy = sum(
+00154:         1 for item in morning_candidates if _decision(getattr(item, "decision", None)) == "AL"
+00155:     )
+00156: 
+00157:     if upgrades == downgrades == added == removed == 0:
+00158:         headline = "Ak┼Яam Top-5 ile 09:00 nihai liste ayn─▒ karar yap─▒s─▒n─▒ korudu."
+00159:     else:
+00160:         headline = (
+00161:             f"09:00 sonucu: {morning_buy} AL ┬╖ {upgrades} g├╝├зlenen ┬╖ "
+00162:             f"{downgrades} zay─▒flayan ┬╖ {added} yeni ┬╖ {removed} ├з─▒kan aday."
+00163:         )
+00164: 
+00165:     return EodMorningBoardDeltaSummary(
+00166:         evening_total=len(evening_candidates),
+00167:         morning_total=len(morning_candidates),
+00168:         evening_buy=evening_buy,
+--- TIME_WINDOW backend\app\analysis\eod_morning_board_delta.py:192 SCORE=8 ---
+00182:     *,
+00183:     changed_only: bool = True,
+00184: ) -> tuple[dict[str, object], ...]:
+00185:     items: Iterable[EodMorningBoardDeltaItem] = summary.items
+00186:     if changed_only:
+00187:         items = (item for item in items if item.delta_type != "AYNI")
+00188:     return tuple(
+00189:         {
+00190:             "Hisse": item.symbol,
+00191:             "Ak┼Яam": item.evening_decision,
+00192:             "09:00": item.morning_decision,
+00193:             "De─Яi┼Яim": item.delta_type,
+00194:             "Ak┼Яam s─▒ra": item.evening_rank if item.evening_rank is not None else "-",
+00195:             "Sabah s─▒ra": item.morning_rank if item.morning_rank is not None else "-",
+00196:             "K─▒sa neden": item.reason,
+00197:         }
+00198:         for item in items
+00199:     )
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:50 SCORE=8 ---
+00040: 
+00041: 
+00042: def test_health_marks_due_missing_run_and_offers_recovery(tmp_path):
+00043:     store = ScheduledRunJsonStore(tmp_path / "state.json")
+00044:     rows = scheduler_health_rows(
+00045:         store,
+00046:         now=datetime(2026, 8, 24, 19, 0, tzinfo=IST),
+00047:     )
+00048:     by_name = {row["Ko┼Яu"]: row for row in rows}
+00049:     assert by_name["Seans sonu"]["Sa─Яl─▒k"] == "EKS─░K KO┼ЮU"
+00050:     assert by_name["09:00"]["Sa─Яl─▒k"] == "EKS─░K KO┼ЮU"
+00051:     assert by_name["Seans sonu"]["Kurtarma"] == "YEN─░DEN ├ЗALI┼ЮTIR"
+00052: 
+00053: 
+00054: def test_failed_run_can_be_retried_and_becomes_healthy(tmp_path):
+00055:     class BrokenRuntime(Runtime):
+00056:         def scan(self):
+00057:             raise RuntimeError("boom")
+00058: 
+00059:     store = ScheduledRunJsonStore(tmp_path / "state.json")
+00060:     now = datetime(2026, 8, 24, 9, 5, tzinfo=IST)
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:104 SCORE=8 ---
+00094:     execute_scheduled_run(
+00095:         "MORNING",
+00096:         now=datetime(2026, 8, 24, 9, 0, tzinfo=IST),
+00097:         runtime=BrokenRuntime(),
+00098:         store=store,
+00099:     )
+00100:     rows = scheduler_health_rows(
+00101:         store,
+00102:         now=datetime(2026, 8, 24, 9, 10, tzinfo=IST),
+00103:     )
+00104:     morning = next(row for row in rows if row["Ko┼Яu"] == "09:00")
+00105:     assert morning["Sa─Яl─▒k"] == "BA┼ЮARISIZ"
+00106:     assert "2026-08-23" in morning["Son ba┼Яar─▒l─▒"]
+00107:     assert "network unavailable" in morning["Son hata/detay"]
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_operational_closeout_v1.py:88 SCORE=8 ---
+00078: 
+00079: def test_closeout_incomplete_when_due_evening_missing():
+00080:     morning = run_record("MORNING")
+00081:     result = build_operational_closeout(
+00082:         now=datetime(2026, 8, 24, 18, 40, tzinfo=ISTANBUL),
+00083:         scheduler_store=StateStore({"2026-08-24:MORNING": morning}),
+00084:         audit_store=ListStore([morning]),
+00085:         archive_store=ListStore([archive("MORNING")]),
+00086:     )
+00087:     assert result.status == "INCOMPLETE"
+00088:     assert any("18:20 Seans Sonu" in item for item in result.missing_links)
+00089: 
+00090: 
+00091: def test_closeout_incomplete_when_archive_count_mismatch():
+00092:     morning = run_record("MORNING")
+00093:     evening = run_record("EVENING")
+00094:     result = build_operational_closeout(
+00095:         now=datetime(2026, 8, 24, 18, 40, tzinfo=ISTANBUL),
+00096:         scheduler_store=StateStore({
+00097:             "2026-08-24:MORNING": morning,
+00098:             "2026-08-24:EVENING": evening,
+--- TIME_WINDOW backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:83 SCORE=8 ---
+00073: def test_scheduler_status_has_both_daily_phases(tmp_path):
+00074:     runtime = Runtime()
+00075:     store = ScheduledRunJsonStore(tmp_path / "state.json")
+00076:     execute_scheduled_run(
+00077:         "EVENING",
+00078:         now=datetime(2026, 8, 24, 18, 20, tzinfo=IST),
+00079:         runtime=runtime,
+00080:         store=store,
+00081:     )
+00082:     rows = scheduler_status_rows(store)
+00083:     assert [row["Ko┼Яu"] for row in rows] == ["Seans sonu", "09:00"]
+00084:     assert rows[0]["Durum"] == "SUCCESS"
+00085:     assert rows[1]["Durum"] == "HEN├ЬZ YOK"
+00086: 
+00087: 
+00088: def test_failed_run_is_recorded_without_hiding_error(tmp_path):
+00089:     class BrokenRuntime(Runtime):
+00090:         def scan(self):
+00091:             raise RuntimeError("scan failed")
+00092: 
+00093:     store = ScheduledRunJsonStore(tmp_path / "state.json")
+--- TIME_WINDOW backend\tests\test_eod_morning_board_delta_v1.py:70 SCORE=8 ---
+00060:     assert "SICRAMA" in new_row["K─▒sa neden"]
+00061: 
+00062: 
+00063: def test_delta_summary_returns_none_without_both_snapshots():
+00064:     assert build_eod_morning_board_delta(None, _snapshot()) is None
+00065:     assert build_eod_morning_board_delta(_snapshot(), None) is None
+00066: 
+00067: 
+00068: def test_dashboard_wires_single_look_delta_summary():
+00069:     text = open("backend/dashboard.py", encoding="utf-8").read()
+00070:     assert "Ak┼Яam тЖТ 09:00 Aksiyon Fark─▒ тАФ Tek Bak─▒┼Я" in text
+00071:     assert "build_eod_morning_board_delta" in text
+00072:     assert "eod_morning_board_delta_rows" in text
+00073:     assert "yeni skor, sinyal veya karar ├╝retmez" in text
+--- TIME_WINDOW backend\tests\test_research_profile_memory_v1.py:88 SCORE=6 ---
+00078: 
+00079: def test_identical_same_day_revision_is_idempotent(tmp_path):
+00080:     store = RankObservationJsonlStore(tmp_path / "rank_observations.jsonl")
+00081:     item = obs("2026-08-26", "MATCH")
+00082:     assert store.append_profile_snapshot((item,), activation_date=AS_OF) == 1
+00083:     assert store.append_profile_snapshot((item,), activation_date=AS_OF) == 0
+00084: 
+00085: 
+00086: def test_changed_same_day_state_is_append_only_revision(tmp_path):
+00087:     store = RankObservationJsonlStore(tmp_path / "rank_observations.jsonl")
+00088:     first = obs("2026-08-26", "INSUFFICIENT", "2026-08-26T09:00:00+00:00")
+00089:     second = obs("2026-08-26", "MATCH", "2026-08-26T12:00:00+00:00")
+00090:     assert store.append_profile_snapshot((first,), activation_date=AS_OF) == 1
+00091:     assert store.append_profile_snapshot((second,), activation_date=AS_OF) == 1
+00092:     assert [x.state for x in store.list_profile_observations()] == ["INSUFFICIENT", "MATCH"]
+00093: 
+00094: 
+00095: def test_lifecycle_entry_streak_and_exit():
+00096:     history = (
+00097:         obs("2026-08-26", "MATCH", "2026-08-26T12:00:00+00:00"),
+00098:         obs("2026-08-27", "MATCH", "2026-08-27T12:00:00+00:00"),
+--- TIME_WINDOW _backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:34 SCORE=5 ---
+00024:             "watch_items": watch or [],
+00025:         },
+00026:     }
+00027: 
+00028: 
+00029: def test_latest_review_and_previous_review_are_compared():
+00030:     context = build_daily_ai_operation_context(
+00031:         [
+00032:             record(record_date="2026-08-02", created_at="2026-08-02T18:00:00Z",
+00033:                    risks=["Faiz", "Petrol"], positives=["Asya"]),
+00034:             record(record_date="2026-08-03", created_at="2026-08-03T19:00:00Z",
+00035:                    risks=["Faiz", "Kur"], positives=["Asya", "ABD vadeli"],
+00036:                    conflicts=["Kurum g├╢r├╝┼Яleri ayr─▒┼Я─▒yor"], watch=["BIST100 destekleri"]),
+00037:         ],
+00038:         today="2026-08-03",
+00039:     )
+00040: 
+00041:     assert context.available
+00042:     assert context.current_day
+00043:     assert context.review_date == "2026-08-03"
+00044:     assert context.previous_date == "2026-08-02"
+--- TIME_WINDOW backend\tests\test_daily_operation_ai_context.py:34 SCORE=5 ---
+00024:             "watch_items": watch or [],
+00025:         },
+00026:     }
+00027: 
+00028: 
+00029: def test_latest_review_and_previous_review_are_compared():
+00030:     context = build_daily_ai_operation_context(
+00031:         [
+00032:             record(record_date="2026-08-02", created_at="2026-08-02T18:00:00Z",
+00033:                    risks=["Faiz", "Petrol"], positives=["Asya"]),
+00034:             record(record_date="2026-08-03", created_at="2026-08-03T19:00:00Z",
+00035:                    risks=["Faiz", "Kur"], positives=["Asya", "ABD vadeli"],
+00036:                    conflicts=["Kurum g├╢r├╝┼Яleri ayr─▒┼Я─▒yor"], watch=["BIST100 destekleri"]),
+00037:         ],
+00038:         today="2026-08-03",
+00039:     )
+00040: 
+00041:     assert context.available
+00042:     assert context.current_day
+00043:     assert context.review_date == "2026-08-03"
+00044:     assert context.previous_date == "2026-08-02"
+--- TIME_WINDOW backend\tests\test_scan_history.py:316 SCORE=5 ---
+00306: 
+00307:     repository = ScanHistoryRepository(
+00308:         veritabani
+00309:     )
+00310: 
+00311:     repository.taramayi_kaydet(
+00312:         sonuc=ornek_filtrelenmis_sonuc(),
+00313:         kriterler=ornek_kriterler(),
+00314:         profil_adi="Gev┼Яek",
+00315:         olusturma_zamani=(
+00316:             "2026-07-23T19:00:00+03:00"
+00317:         ),
+00318:     )
+00319: 
+00320:     repository.taramayi_kaydet(
+00321:         sonuc=ornek_filtrelenmis_sonuc(),
+00322:         kriterler=ornek_kriterler(),
+00323:         profil_adi="S─▒k─▒",
+00324:         olusturma_zamani=(
+00325:             "2026-07-23T20:00:00+03:00"
+00326:         ),
+
+=== 3. RUNNER / PHASE / IDEMPOTENCY / ARCHIVE CONTRACT ===
+CONTRACT_DEF=backend\dashboard.py:8000|FunctionDef|render_delayed_snapshot
+CONTRACT_REF=backend\dashboard.py:49|build_fundamental_snapshot,
+CONTRACT_REF=backend\dashboard.py:65|SignalSnapshot,
+CONTRACT_REF=backend\dashboard.py:100|WeeklyPerformanceArchive,
+CONTRACT_REF=backend\dashboard.py:141|fetch_delayed_snapshot,
+CONTRACT_REF=backend\dashboard.py:154|from backend.app.analysis.morning_operation_snapshot import (
+CONTRACT_REF=backend\dashboard.py:155|build_morning_operation_snapshot,
+CONTRACT_REF=backend\dashboard.py:157|from backend.app.analysis.morning_candidate_flow import (
+CONTRACT_REF=backend\dashboard.py:158|morning_candidate_rows,
+CONTRACT_REF=backend\dashboard.py:162|build_daily_buy_decision_snapshot,
+CONTRACT_REF=backend\dashboard.py:163|compare_evening_morning,
+CONTRACT_REF=backend\dashboard.py:164|compare_evening_morning_replacements,
+CONTRACT_REF=backend\dashboard.py:167|resolve_daily_buy_decision_phase,
+CONTRACT_REF=backend\dashboard.py:179|from backend.app.analysis.morning_final_action_board import (
+CONTRACT_REF=backend\dashboard.py:180|build_morning_final_actions,
+CONTRACT_REF=backend\dashboard.py:181|morning_final_action_rows,
+CONTRACT_REF=backend\dashboard.py:183|from backend.app.analysis.eod_final_action_board import (
+CONTRACT_REF=backend\dashboard.py:184|build_eod_final_actions,
+CONTRACT_REF=backend\dashboard.py:185|eod_final_action_rows,
+CONTRACT_REF=backend\dashboard.py:187|from backend.app.analysis.eod_morning_board_delta import (
+CONTRACT_REF=backend\dashboard.py:188|build_eod_morning_board_delta,
+CONTRACT_REF=backend\dashboard.py:189|eod_morning_board_delta_rows,
+CONTRACT_REF=backend\dashboard.py:191|from backend.app.analysis.daily_buy_decision_output_archive import (
+CONTRACT_REF=backend\dashboard.py:192|DecisionOutputArchiveJsonStore,
+CONTRACT_REF=backend\dashboard.py:193|daily_decision_archive_delta_rows,
+CONTRACT_REF=backend\dashboard.py:194|decision_output_archive_rows,
+CONTRACT_REF=backend\dashboard.py:195|decision_output_audit_rows,
+CONTRACT_REF=backend\dashboard.py:205|ScheduledRunAuditJsonStore,
+CONTRACT_REF=backend\dashboard.py:207|retry_failed_or_missing_run,
+CONTRACT_REF=backend\dashboard.py:208|scheduler_audit_rows,
+CONTRACT_REF=backend\dashboard.py:295|from backend.app.reporting.fundamental_report_archive import (
+CONTRACT_REF=backend\dashboard.py:296|FundamentalReportArchiveError,
+CONTRACT_REF=backend\dashboard.py:297|FundamentalReportArchiveFilter,
+CONTRACT_REF=backend\dashboard.py:298|FundamentalReportJsonArchive,
+CONTRACT_REF=backend\dashboard.py:299|archived_reports_csv_bytes,
+CONTRACT_REF=backend\dashboard.py:300|archived_reports_pdf_bytes,
+CONTRACT_REF=backend\dashboard.py:301|compare_archived_reports,
+CONTRACT_REF=backend\dashboard.py:302|report_archive_rows,
+CONTRACT_REF=backend\dashboard.py:304|search_archived_reports,
+CONTRACT_REF=backend\dashboard.py:394|from backend.app.ui.current_session_snapshot import (
+CONTRACT_REF=backend\dashboard.py:395|CurrentSessionSnapshotError,
+CONTRACT_REF=backend\dashboard.py:434|audit_events_csv_bytes,
+CONTRACT_REF=backend\dashboard.py:435|audit_display_rows,
+CONTRACT_REF=backend\dashboard.py:445|read_audit_events,
+CONTRACT_REF=backend\dashboard.py:1018|st.rerun()
+CONTRACT_REF=backend\dashboard.py:1137|st.rerun()
+CONTRACT_REF=backend\dashboard.py:2955|except (CurrentSessionSnapshotError, ValueError) as hata:
+CONTRACT_REF=backend\dashboard.py:3522|("Denetim g├╝nl├╝─Я├╝", health.audit_status),
+CONTRACT_REF=backend\dashboard.py:3547|st.caption(f"Denetim g├╝nl├╝─Я├╝: {operational.audit_log_path}")
+CONTRACT_REF=backend\dashboard.py:3585|st.rerun()
+CONTRACT_REF=backend\dashboard.py:3597|audit_events = read_audit_events(csv_path, limit=50)
+CONTRACT_REF=backend\dashboard.py:3606|audit_events = ()
+CONTRACT_REF=backend\dashboard.py:3695|st.rerun()
+CONTRACT_REF=backend\dashboard.py:3702|if audit_events:
+CONTRACT_REF=backend\dashboard.py:3704|pd.DataFrame(audit_display_rows(audit_events)),
+CONTRACT_REF=backend\dashboard.py:3711|if audit_events:
+CONTRACT_REF=backend\dashboard.py:3714|data=audit_events_csv_bytes(audit_events),
+CONTRACT_REF=backend\dashboard.py:3755|st.rerun()
+CONTRACT_REF=backend\dashboard.py:3815|st.rerun()
+CONTRACT_REF=backend\dashboard.py:3859|st.rerun()
+CONTRACT_REF=backend\dashboard.py:4144|RankObservationJsonlStore().append_snapshot(_rank_observations)
+CONTRACT_REF=backend\dashboard.py:4238|"Yeni seans snapshot'lar─▒ biriktik├зe bu alan otomatik dolacakt─▒r."
+CONTRACT_REF=backend\dashboard.py:4693|sembol_snapshot = build_fundamental_snapshot(
+CONTRACT_REF=backend\dashboard.py:4697|sembol_snapshot,
+CONTRACT_REF=backend\dashboard.py:4805|st.rerun()
+CONTRACT_REF=backend\dashboard.py:5318|st.rerun()
+CONTRACT_REF=backend\dashboard.py:5404|st.rerun()
+CONTRACT_REF=backend\dashboard.py:5447|st.rerun()
+CONTRACT_REF=backend\dashboard.py:5880|def _buyume_tablosu(snapshot) -> pd.DataFrame:
+CONTRACT_REF=backend\dashboard.py:5884|("├Цnceki ├зeyrek", snapshot.quarter_growth),
+CONTRACT_REF=backend\dashboard.py:5885|("Ge├зen y─▒l ayn─▒ d├╢nem", snapshot.annual_growth),
+CONTRACT_REF=backend\dashboard.py:6045|.report_archive_maximum_age_days
+CONTRACT_REF=backend\dashboard.py:6063|if value == temel_ayarlar.default_archive_sort
+CONTRACT_REF=backend\dashboard.py:6106|report_archive_maximum_age_days=int(
+CONTRACT_REF=backend\dashboard.py:6109|default_archive_sort=siralama_etiketleri[
+CONTRACT_REF=backend\dashboard.py:6266|snapshot = build_fundamental_snapshot(
+CONTRACT_REF=backend\dashboard.py:6277|latest = snapshot.latest
+CONTRACT_REF=backend\dashboard.py:6278|ratios = snapshot.ratios
+CONTRACT_REF=backend\dashboard.py:6279|kalite = calculate_fundamental_quality(snapshot, tazelik)
+CONTRACT_REF=backend\dashboard.py:6874|buyume = _buyume_tablosu(snapshot)
+CONTRACT_REF=backend\dashboard.py:6895|if snapshot.quality_flags:
+CONTRACT_REF=backend\dashboard.py:6896|for uyari in snapshot.quality_flags:
+CONTRACT_REF=backend\dashboard.py:6936|quality_flags=tuple(snapshot.quality_flags),
+CONTRACT_REF=backend\dashboard.py:6972|rapor_arsivi = FundamentalReportJsonArchive()
+CONTRACT_REF=backend\dashboard.py:6977|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.py:6993|.report_archive_maximum_age_days
+CONTRACT_REF=backend\dashboard.py:6996|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.py:7054|temel_ayarlar.default_archive_sort
+CONTRACT_REF=backend\dashboard.py:7118|search_archived_reports(
+CONTRACT_REF=backend\dashboard.py:7120|FundamentalReportArchiveFilter(
+CONTRACT_REF=backend\dashboard.py:7139|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.py:7151|report_archive_rows(
+CONTRACT_REF=backend\dashboard.py:7160|arsiv_csv = archived_reports_csv_bytes(
+CONTRACT_REF=backend\dashboard.py:7195|arsiv_pdf = archived_reports_pdf_bytes(
+CONTRACT_REF=backend\dashboard.py:7228|report_archive_rows(arsiv_raporlari)
+CONTRACT_REF=backend\dashboard.py:7265|compare_archived_reports(
+CONTRACT_REF=backend\dashboard.py:7270|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.py:7308|archive_tab,
+CONTRACT_REF=backend\dashboard.py:7643|snapshot = SignalSnapshot(
+CONTRACT_REF=backend\dashboard.py:7666|outcome = evaluate_signal(snapshot, price_frame)
+CONTRACT_REF=backend\dashboard.py:7685|with archive_tab:
+CONTRACT_REF=backend\dashboard.py:8000|def render_delayed_snapshot() -> None:
+CONTRACT_REF=backend\dashboard.py:8002|snapshot = fetch_delayed_snapshot(
+CONTRACT_REF=backend\dashboard.py:8006|store.append(snapshot)
+CONTRACT_REF=backend\dashboard.py:8013|("Durum", snapshot.status),
+CONTRACT_REF=backend\dashboard.py:8014|("Son fiyat", f"{snapshot.last_price:.2f}"),
+CONTRACT_REF=backend\dashboard.py:8017|f"{snapshot.measured_delay_minutes:.1f} dk",
+CONTRACT_REF=backend\dashboard.py:8021|f"{snapshot.expected_delay_minutes} dk",
+CONTRACT_REF=backend\dashboard.py:8025|str(snapshot.missing_bar_count),
+CONTRACT_REF=backend\dashboard.py:8029|"AKT─░F" if snapshot.locked else "Kapal─▒",
+CONTRACT_REF=backend\dashboard.py:8038|"Sembol": snapshot.symbol,
+CONTRACT_REF=backend\dashboard.py:8039|"Borsa zaman─▒": snapshot.exchange_time,
+CONTRACT_REF=backend\dashboard.py:8040|"Sisteme al─▒nma zaman─▒": snapshot.received_time,
+CONTRACT_REF=backend\dashboard.py:8041|"G├╝n i├зi a├з─▒l─▒┼Я": snapshot.day_open,
+CONTRACT_REF=backend\dashboard.py:8042|"G├╝n i├зi y├╝ksek": snapshot.day_high,
+CONTRACT_REF=backend\dashboard.py:8043|"G├╝n i├зi d├╝┼Я├╝k": snapshot.day_low,
+CONTRACT_REF=backend\dashboard.py:8044|"K├╝m├╝latif hacim": snapshot.cumulative_volume,
+CONTRACT_REF=backend\dashboard.py:8045|"Son bar hacmi": snapshot.latest_bar_volume,
+CONTRACT_REF=backend\dashboard.py:8047|snapshot.price_change_percent
+CONTRACT_REF=backend\dashboard.py:8056|if snapshot.locked:
+CONTRACT_REF=backend\dashboard.py:8061|elif snapshot.preview_only:
+CONTRACT_REF=backend\dashboard.py:8076|render_delayed_snapshot()
+CONTRACT_REF=backend\dashboard.py:8085|render_delayed_snapshot()
+CONTRACT_REF=backend\dashboard.py:8166|if st.button("18:20 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r", key="retry_evening_daily_buy_decision"):
+CONTRACT_REF=backend\dashboard.py:8168|_retry_evening = retry_failed_or_missing_run("EVENING", store=_scheduler_store)
+CONTRACT_REF=backend\dashboard.py:8169|if _retry_evening.status in {"SUCCESS", "SKIPPED"}:
+CONTRACT_REF=backend\dashboard.py:8170|st.success(_retry_evening.detail)
+CONTRACT_REF=backend\dashboard.py:8172|st.error(_retry_evening.detail)
+CONTRACT_REF=backend\dashboard.py:8173|st.rerun()
+CONTRACT_REF=backend\dashboard.py:8175|if st.button("09:00 ko┼Яusunu yeniden ├зal─▒┼Яt─▒r", key="retry_morning_daily_buy_decision"):
+CONTRACT_REF=backend\dashboard.py:8177|_retry_morning = retry_failed_or_missing_run("MORNING", store=_scheduler_store)
+CONTRACT_REF=backend\dashboard.py:8178|if _retry_morning.status in {"SUCCESS", "SKIPPED"}:
+CONTRACT_REF=backend\dashboard.py:8179|st.success(_retry_morning.detail)
+CONTRACT_REF=backend\dashboard.py:8181|st.error(_retry_morning.detail)
+CONTRACT_REF=backend\dashboard.py:8182|st.rerun()
+CONTRACT_REF=backend\dashboard.py:8184|"Yeniden ├зal─▒┼Яt─▒rma yaln─▒z ba┼Яar─▒s─▒z/eksik ko┼Яuyu kurtar─▒r; ayn─▒ g├╝n ba┼Яar─▒l─▒ faz varsa duplicate ├╝retmez."
+CONTRACT_REF=backend\dashboard.py:8187|# SCHEDULED_RUN_AUDIT_HISTORY_V1
+CONTRACT_REF=backend\dashboard.py:8188|with st.expander("Otomasyon Ko┼Яu Ge├зmi┼Яi / Audit", expanded=False):
+CONTRACT_REF=backend\dashboard.py:8189|_audit_store = ScheduledRunAuditJsonStore()
+CONTRACT_REF=backend\dashboard.py:8190|_audit_rows = scheduler_audit_rows(_audit_store, limit=50)
+CONTRACT_REF=backend\dashboard.py:8191|if _audit_rows:
+CONTRACT_REF=backend\dashboard.py:8193|pd.DataFrame(_audit_rows),
+CONTRACT_REF=backend\dashboard.py:8200|st.markdown("**EOD тЖТ 09:00 g├╝nl├╝k zincir denetimi**")
+CONTRACT_REF=backend\dashboard.py:8209|st.caption("Hen├╝z g├╝nl├╝k EOD / 09:00 zincir kayd─▒ yok.")
+CONTRACT_REF=backend\dashboard.py:8216|"18:20 EOD ve 09:00 Morning ko┼Яular─▒n─▒ scheduler durumu, audit kayd─▒ ve "
+CONTRACT_REF=backend\dashboard.py:8238|# V1_OPERATIONS_01C_MORNING_CANDIDATE_UI
+CONTRACT_REF=backend\dashboard.py:8254|_morning_scan_state = st.session_state.get("bist_toplu_tarama_son_sonuc")
+CONTRACT_REF=backend\dashboard.py:8256|if _morning_scan_state is None and resolve_daily_buy_decision_phase() is not None:
+CONTRACT_REF=backend\dashboard.py:8269|_morning_scan_state = {
+CONTRACT_REF=backend\dashboard.py:8275|st.session_state["bist_toplu_tarama_son_sonuc"] = _morning_scan_state
+CONTRACT_REF=backend\dashboard.py:8284|if _morning_scan_state is None:
+CONTRACT_REF=backend\dashboard.py:8287|"snapshot'─▒ varsa a┼Яa─Я─▒daki karar ge├зmi┼Яinde korunur; manuel tarama zorunlu de─Яildir."
+CONTRACT_REF=backend\dashboard.py:8293|_morning_visibility_contexts = build_current_visibility_context()
+CONTRACT_REF=backend\dashboard.py:8294|except Exception as _morning_visibility_error:
+CONTRACT_REF=backend\dashboard.py:8295|_morning_visibility_contexts = ()
+CONTRACT_REF=backend\dashboard.py:8299|f"Detay: {_morning_visibility_error}"
+CONTRACT_REF=backend\dashboard.py:8302|_morning_snapshot = build_morning_operation_snapshot(
+CONTRACT_REF=backend\dashboard.py:8304|scan_result=_morning_scan_state["sonuc"],
+CONTRACT_REF=backend\dashboard.py:8305|visibility_contexts=_morning_visibility_contexts,
+CONTRACT_REF=backend\dashboard.py:8309|if not _morning_snapshot.candidates:
+CONTRACT_REF=backend\dashboard.py:8315|f"{_morning_snapshot.candidate_count} ana operasyon aday─▒ haz─▒r."
+CONTRACT_REF=backend\dashboard.py:8320|morning_candidate_rows(_morning_snapshot.candidates)
+CONTRACT_REF=backend\dashboard.py:8349|item.symbol for item in _morning_snapshot.candidates
+CONTRACT_REF=backend\dashboard.py:8386|for _candidate_card in _morning_snapshot.candidates:
+CONTRACT_REF=backend\dashboard.py:8453|_morning_snapshot.candidates
+CONTRACT_REF=backend\dashboard.py:8487|_morning_snapshot.candidates,
+CONTRACT_REF=backend\dashboard.py:8539|"ranking snapshot'─▒ yok."
+CONTRACT_REF=backend\dashboard.py:8599|_decision_phase = resolve_daily_buy_decision_phase()
+CONTRACT_REF=backend\dashboard.py:8601|if _decision_phase is not None:
+CONTRACT_REF=backend\dashboard.py:8603|_decision_snapshot = build_daily_buy_decision_snapshot(
+CONTRACT_REF=backend\dashboard.py:8604|_morning_snapshot.candidates,
+CONTRACT_REF=backend\dashboard.py:8605|phase=_decision_phase,
+CONTRACT_REF=backend\dashboard.py:8608|_decision_store.save(_decision_snapshot)
+CONTRACT_REF=backend\dashboard.py:8609|DecisionOutputArchiveJsonStore().save_snapshot(_decision_snapshot)
+CONTRACT_REF=backend\dashboard.py:8612|"Ak┼Яam/sabah karar snapshot'─▒ kaydedilemedi: "
+CONTRACT_REF=backend\dashboard.py:8617|_decision_snapshots = _decision_store.load()
+CONTRACT_REF=backend\dashboard.py:8619|_decision_snapshots = {}
+CONTRACT_REF=backend\dashboard.py:8621|_evening_snapshot = _decision_snapshots.get("EVENING")
+CONTRACT_REF=backend\dashboard.py:8622|_morning_decision_snapshot = _decision_snapshots.get("MORNING")
+CONTRACT_REF=backend\dashboard.py:8623|_decision_changes = compare_evening_morning(
+CONTRACT_REF=backend\dashboard.py:8624|_evening_snapshot,
+CONTRACT_REF=backend\dashboard.py:8625|_morning_decision_snapshot,
+CONTRACT_REF=backend\dashboard.py:8627|if _evening_snapshot is not None:
+CONTRACT_REF=backend\dashboard.py:8630|f"{_evening_snapshot.created_at} ┬╖ "
+CONTRACT_REF=backend\dashboard.py:8631|f"{len(_evening_snapshot.candidates)} aday"
+CONTRACT_REF=backend\dashboard.py:8633|if _morning_decision_snapshot is not None:
+CONTRACT_REF=backend\dashboard.py:8636|f"{_morning_decision_snapshot.created_at} ┬╖ "
+CONTRACT_REF=backend\dashboard.py:8637|f"{len(_morning_decision_snapshot.candidates)} aday"
+CONTRACT_REF=backend\dashboard.py:8652|# EOD_MORNING_BOARD_DELTA_SUMMARY_V1
+CONTRACT_REF=backend\dashboard.py:8653|_board_delta_summary = build_eod_morning_board_delta(
+CONTRACT_REF=backend\dashboard.py:8654|_evening_snapshot,
+CONTRACT_REF=backend\dashboard.py:8655|_morning_decision_snapshot,
+CONTRACT_REF=backend\dashboard.py:8666|("09:00 AL", str(_board_delta_summary.morning_buy)),
+CONTRACT_REF=backend\dashboard.py:8674|_board_delta_rows = eod_morning_board_delta_rows(_board_delta_summary)
+CONTRACT_REF=backend\dashboard.py:8683|# EOD_MORNING_BOARD_DELTA_SUMMARY_V1_END
+CONTRACT_REF=backend\dashboard.py:8685|# DECISION_OUTPUT_ARCHIVE_DAILY_COMPARE_V1
+CONTRACT_REF=backend\dashboard.py:8687|_decision_archive_store = DecisionOutputArchiveJsonStore()
+CONTRACT_REF=backend\dashboard.py:8688|_decision_archive_records = _decision_archive_store.load()
+CONTRACT_REF=backend\dashboard.py:8691|"EOD ve 09:00 Top-5 karar board'lar─▒ g├╝nl├╝k olarak saklan─▒r. "
+CONTRACT_REF=backend\dashboard.py:8695|_archive_rows = decision_output_archive_rows(
+CONTRACT_REF=backend\dashboard.py:8696|_decision_archive_records, limit=30
+CONTRACT_REF=backend\dashboard.py:8698|if _archive_rows:
+CONTRACT_REF=backend\dashboard.py:8700|pd.DataFrame(_archive_rows),
+CONTRACT_REF=backend\dashboard.py:8705|_archive_dates = tuple(sorted(
+CONTRACT_REF=backend\dashboard.py:8706|{item.run_date for item in _decision_archive_records},
+CONTRACT_REF=backend\dashboard.py:8709|_selected_archive_date = st.selectbox(
+CONTRACT_REF=backend\dashboard.py:8711|options=_archive_dates,
+CONTRACT_REF=backend\dashboard.py:8712|key="daily_decision_archive_selected_date",
+CONTRACT_REF=backend\dashboard.py:8714|_selected_date_records = _decision_archive_store.by_date(
+CONTRACT_REF=backend\dashboard.py:8715|_selected_archive_date
+CONTRACT_REF=backend\dashboard.py:8717|for _archive_record in _selected_date_records:
+CONTRACT_REF=backend\dashboard.py:8719|f"**{_archive_record.run_date} ┬╖ {_archive_record.phase}**"
+CONTRACT_REF=backend\dashboard.py:8722|pd.DataFrame(decision_output_board_rows(_archive_record)),
+CONTRACT_REF=backend\dashboard.py:8728|_daily_archive_delta = latest_daily_compare(
+CONTRACT_REF=backend\dashboard.py:8729|_decision_archive_records, phase="MORNING"
+CONTRACT_REF=backend\dashboard.py:8731|if _daily_archive_delta is not None:
+CONTRACT_REF=backend\dashboard.py:8734|daily_decision_archive_delta_rows(_daily_archive_delta)
+CONTRACT_REF=backend\dashboard.py:8744|st.markdown("**Karar ├з─▒kt─▒s─▒ тЖФ otomasyon audit e┼Яle┼Яmesi**")
+CONTRACT_REF=backend\dashboard.py:8746|_decision_archive_audit = ScheduledRunAuditJsonStore().load()
+CONTRACT_REF=backend\dashboard.py:8749|decision_output_audit_rows(
+CONTRACT_REF=backend\dashboard.py:8750|_decision_archive_records,
+CONTRACT_REF=backend\dashboard.py:8751|_decision_archive_audit,
+CONTRACT_REF=backend\dashboard.py:8758|except (OSError, ValueError, TypeError) as _archive_audit_error:
+CONTRACT_REF=backend\dashboard.py:8760|f"Karar ar┼Яivi audit e┼Яle┼Яmesi okunamad─▒: {_archive_audit_error}"
+CONTRACT_REF=backend\dashboard.py:8764|except (OSError, ValueError, TypeError) as _decision_archive_error:
+CONTRACT_REF=backend\dashboard.py:8765|st.caption(f"Karar ├з─▒kt─▒ ar┼Яivi okunamad─▒: {_decision_archive_error}")
+CONTRACT_REF=backend\dashboard.py:8766|# DECISION_OUTPUT_ARCHIVE_DAILY_COMPARE_V1_END
+CONTRACT_REF=backend\dashboard.py:8768|# EOD_FINAL_ACTION_BOARD_V1
+CONTRACT_REF=backend\dashboard.py:8769|if _decision_phase == "EVENING":
+CONTRACT_REF=backend\dashboard.py:8770|_eod_final_actions = build_eod_final_actions(
+CONTRACT_REF=backend\dashboard.py:8771|_morning_snapshot.candidates,
+CONTRACT_REF=backend\dashboard.py:8782|pd.DataFrame(eod_final_action_rows(_eod_final_actions)),
+CONTRACT_REF=backend\dashboard.py:8786|_eod_buy_actions = [
+CONTRACT_REF=backend\dashboard.py:8787|item.symbol for item in _eod_final_actions
+CONTRACT_REF=backend\dashboard.py:8790|if _eod_buy_actions:
+CONTRACT_REF=backend\dashboard.py:8791|st.success("Seans sonu ertesi g├╝n AL adaylar─▒: " + ", ".join(_eod_buy_actions))
+CONTRACT_REF=backend\dashboard.py:8794|# EOD_FINAL_ACTION_BOARD_V1_END
+CONTRACT_REF=backend\dashboard.py:8796|# MORNING_FINAL_ACTION_BOARD_V1
+CONTRACT_REF=backend\dashboard.py:8797|if _decision_phase == "MORNING":
+CONTRACT_REF=backend\dashboard.py:8798|_morning_final_actions = build_morning_final_actions(
+CONTRACT_REF=backend\dashboard.py:8799|_morning_snapshot.candidates,
+CONTRACT_REF=backend\dashboard.py:8809|pd.DataFrame(morning_final_action_rows(_morning_final_actions)),
+CONTRACT_REF=backend\dashboard.py:8813|_morning_buy_actions = [
+CONTRACT_REF=backend\dashboard.py:8814|item.symbol for item in _morning_final_actions
+CONTRACT_REF=backend\dashboard.py:8817|if _morning_buy_actions:
+CONTRACT_REF=backend\dashboard.py:8818|st.success("09:00 AL adaylar─▒: " + ", ".join(_morning_buy_actions))
+CONTRACT_REF=backend\dashboard.py:8821|# MORNING_FINAL_ACTION_BOARD_V1_END
+CONTRACT_REF=backend\dashboard.py:8823|_decision_replacements = compare_evening_morning_replacements(
+CONTRACT_REF=backend\dashboard.py:8824|_evening_snapshot,
+CONTRACT_REF=backend\dashboard.py:8825|_morning_decision_snapshot,
+CONTRACT_REF=backend\dashboard.py:8846|if _decision_phase == "MORNING":
+CONTRACT_REF=backend\dashboard.py:8850|phase="MORNING",
+CONTRACT_REF=backend\dashboard.py:8854|for card in _morning_snapshot.candidates
+CONTRACT_REF=backend\dashboard.py:9001|"pencerelerinde liste snapshot'─▒ saklan─▒r ve de─Яi┼Яimler kar┼Я─▒la┼Яt─▒r─▒l─▒r."
+CONTRACT_REF=backend\dashboard.py:9094|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9378|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9479|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9571|trader_assessment.stop_phase,
+CONTRACT_REF=backend\dashboard.py:9624|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9678|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9689|f"{item.snapshot.signal_date} ┬╖ "
+CONTRACT_REF=backend\dashboard.py:9690|f"{item.snapshot.symbol.removesuffix('.IS')} ┬╖ "
+CONTRACT_REF=backend\dashboard.py:9691|f"{item.snapshot.decision_class} ┬╖ "
+CONTRACT_REF=backend\dashboard.py:9692|f"{item.snapshot.quality_score}"
+CONTRACT_REF=backend\dashboard.py:9744|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9840|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9904|st.rerun()
+CONTRACT_REF=backend\dashboard.py:9927|archive = WeeklyPerformanceArchive()
+CONTRACT_REF=backend\dashboard.py:9979|summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+CONTRACT_REF=backend\dashboard.py:10022|key="weekly_report_archive",
+CONTRACT_REF=backend\dashboard.py:10026|paths = archive.save(
+CONTRACT_REF=backend\dashboard.py:10075|with archive_tab:
+CONTRACT_REF=backend\dashboard.py:10076|archived = archive.list()
+CONTRACT_REF=backend\dashboard.py:10077|if not archived:
+CONTRACT_REF=backend\dashboard.py:10089|for path in archived
+CONTRACT_REF=backend\dashboard.py:10337|"Snapshot yaln─▒zca hedef testler, tam regresyon ve sistem kontrol├╝ "
+CONTRACT_REF=backend\dashboard.py:10339|"Olustur-V13-Snapshot.ps1 komutuyla olu┼Яturulmal─▒d─▒r."
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:4|FunctionDef|test_daily_operation_panel_exposes_scheduler_status_and_non_ui_runner
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:13|def test_windows_task_installer_registers_both_phases():
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:15|assert "--phase EVENING" in source
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_bridge_dashboard_v1.py:16|assert "--phase MORNING" in source
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:23|-Argument "-m $module --phase EVENING" `
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:30|$morningAction = New-ScheduledTaskAction `
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:32|-Argument "-m $module --phase MORNING" `
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:34|$morningTrigger = New-ScheduledTaskTrigger `
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:40|-TaskName "HisseRobotu-EOD-DailyDecision" `
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:48|-Action $morningAction `
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:49|-Trigger $morningTrigger `
+CONTRACT_REF=scripts\install_daily_buy_decision_tasks.ps1:53|Write-Host "Kuruldu: HisseRobotu-EOD-DailyDecision (18:20 hafta i├зi)"
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:42|FunctionDef|_audit_records
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_operational_closeout.py:50|FunctionDef|_archive_records
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:9|PHASE_SCHEDULE = {"MORNING": (9, 0), "EVENING": (18, 20)}
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:10|PHASE_LABELS = {"MORNING": "09:00 Sabah", "EVENING": "18:20 Seans Sonu"}
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:29|def _phase_due(phase: str, now: datetime) -> bool:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:30|hour, minute = PHASE_SCHEDULE[phase]
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:42|def _audit_records(store: object) -> tuple[object, ...]:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:50|def _archive_records(store: object) -> tuple[object, ...]:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:62|audit_store: object | None = None,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:63|archive_store: object | None = None,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:74|if audit_store is None:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:75|from backend.app.operations.daily_buy_decision_scheduled_runner import ScheduledRunAuditJsonStore
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:76|audit_store = ScheduledRunAuditJsonStore()
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:77|if archive_store is None:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:78|from backend.app.analysis.daily_buy_decision_output_archive import DecisionOutputArchiveJsonStore
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:79|archive_store = DecisionOutputArchiveJsonStore()
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:82|audits = _audit_records(audit_store)
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:83|archives = _archive_records(archive_store)
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:89|for phase in ("MORNING", "EVENING"):
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:90|label = PHASE_LABELS[phase]
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:91|due = _phase_due(phase, timestamp)
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:92|state = states.get(f"{run_date}:{phase}")
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:120|phase_audits = [
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:121|item for item in audits
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:123|and str(getattr(item, "phase", "")).upper() == phase
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:126|if phase_audits:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:127|latest_audit = max(phase_audits, key=lambda item: str(getattr(item, "finished_at", "")))
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:130|f"{label} Audit",
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:132|f"{getattr(latest_audit, 'run_kind', 'SCHEDULED')} ┬╖ {getattr(latest_audit, 'status', '-')}",
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:136|missing.append(f"{label}: audit e┼Яle┼Яmesi yok")
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:137|checks.append(OperationalCloseoutCheck(f"{label} Audit", "EKS─░K", "Ba┼Яar─▒l─▒ ko┼Яuyla e┼Яle┼Яen audit kayd─▒ bulunamad─▒."))
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:139|phase_archives = [
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:140|item for item in archives
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:142|and str(getattr(item, "phase", "")).upper() == phase
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:144|if phase_archives:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:145|latest_archive = max(phase_archives, key=lambda item: str(getattr(item, "created_at", "")))
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:146|archive_count = len(tuple(getattr(latest_archive, "candidates", ()) or ()))
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:147|if archive_count == candidate_count:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:152|f"Scheduler ile aday say─▒s─▒ e┼Яle┼Яiyor ({archive_count}).",
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:161|f"Scheduler {candidate_count} aday, ar┼Яiv {archive_count} aday.",
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_operational_closeout.py:176|headline = "EOD тЖТ 09:00 karar zinciri, audit ve karar ar┼Яivi birlikte do─Яruland─▒."
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:4|FunctionDef|test_dashboard_exposes_automation_health_and_manual_recovery
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:7|assert "retry_failed_or_missing_run" in source
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_dashboard_v1.py:10|assert "duplicate ├╝retmez" in source
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:19|ClassDef|ScheduledRunRecord
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:31|ClassDef|ScheduledRunRuntime
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:40|ClassDef|ScheduledRunJsonStore
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:92|ClassDef|ScheduledRunAuditJsonStore
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:225|FunctionDef|execute_scheduled_run
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:302|FunctionDef|scheduler_status_rows
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:323|FunctionDef|scheduler_health_rows
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:402|FunctionDef|scheduler_audit_rows
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:426|FunctionDef|scheduler_daily_chain_rows
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:35|FunctionDef|candidate_snapshot
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:37|FunctionDef|persist_decision_snapshot
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:198|FunctionDef|candidate_snapshot
+CONTRACT_DEF=backend\app\operations\daily_buy_decision_scheduled_runner.py:209|FunctionDef|persist_decision_snapshot
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:13|DEFAULT_AUDIT_PATH = Path("backend/data/daily_buy_decision_scheduler_audit.json")
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:14|VALID_PHASES = ("EVENING", "MORNING")
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:15|PHASE_SCHEDULE = {"MORNING": (9, 0), "EVENING": (18, 20)}
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:20|phase: str
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:35|def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object: ...
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:37|def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None: ...
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:63|key = f"{record.run_date}:{record.phase}"
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:72|def latest(self, phase: str | None = None) -> ScheduledRunRecord | None:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:74|if phase is not None:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:75|wanted = str(phase).strip().upper()
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:76|records = [item for item in records if item.phase == wanted]
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:82|def latest_success(self, phase: str | None = None) -> ScheduledRunRecord | None:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:84|if phase is not None:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:85|wanted = str(phase).strip().upper()
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:86|records = [item for item in records if item.phase == wanted]
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:92|class ScheduledRunAuditJsonStore:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:93|"""Append-only audit trail for every scheduled/recovery attempt."""
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:95|def __init__(self, path: Path | str = DEFAULT_AUDIT_PATH) -> None:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:130|key=lambda item: (item.run_date, item.finished_at, item.phase),
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:136|def _normalize_phase(phase: str) -> str:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:137|value = str(phase or "").strip().upper()
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:138|if value not in VALID_PHASES:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:139|raise ValueError("phase EVENING veya MORNING olmal─▒d─▒r.")
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:147|build_daily_buy_decision_snapshot,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:150|from backend.app.analysis.morning_operation_snapshot import build_morning_operation_snapshot
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:198|def candidate_snapshot(self, operation_summary: object, scan_result: object, visibility_contexts: tuple[object, ...]) -> object:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:199|return build_morning_operation_snapshot(
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:209|def persist_decision_snapshot(self, cards: tuple[object, ...], decisions: tuple[object, ...], phase: str, now: datetime) -> None:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:210|snapshot = build_daily_buy_decision_snapshot(
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:212|phase=phase,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:216|DailyBuyDecisionJsonStore().save(snapshot)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:217|from backend.app.analysis.daily_buy_decision_output_archive import (
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:218|DecisionOutputArchiveJsonStore,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:220|DecisionOutputArchiveJsonStore().save_snapshot(snapshot)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:226|phase: str,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:232|audit_store: ScheduledRunAuditJsonStore | None = None,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:235|phase_value = _normalize_phase(phase)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:239|history_store = audit_store or ScheduledRunAuditJsonStore()
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:240|key = f"{run_date}:{phase_value}"
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:244|phase=phase_value,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:263|candidate_snapshot = engine.candidate_snapshot(summary, scan_result, visibility)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:264|cards = tuple(getattr(candidate_snapshot, "candidates", ()) or ())
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:266|engine.persist_decision_snapshot(cards, decisions, phase_value, timestamp)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:274|phase=phase_value,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:287|phase=phase_value,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:305|for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:306|item = state_store.latest(phase)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:318|def _phase_due(phase: str, now: datetime) -> bool:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:319|hour, minute = PHASE_SCHEDULE[_normalize_phase(phase)]
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:332|for phase, label in (("EVENING", "Seans sonu"), ("MORNING", "09:00")):
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:333|latest = state_store.latest(phase)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:334|latest_success = state_store.latest_success(phase)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:335|today_record = state_store.load().get(f"{today}:{phase}")
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:336|due = _phase_due(phase, timestamp)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:363|def retry_failed_or_missing_run(
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:364|phase: str,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:369|audit_store: ScheduledRunAuditJsonStore | None = None,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:371|phase_value = _normalize_phase(phase)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:375|existing = state_store.load().get(f"{today}:{phase_value}")
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:376|history_store = audit_store or ScheduledRunAuditJsonStore()
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:379|phase=phase_value,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:392|phase_value,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:396|audit_store=history_store,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:402|def scheduler_audit_rows(
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:403|audit_store: ScheduledRunAuditJsonStore | None = None,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:407|store = audit_store or ScheduledRunAuditJsonStore()
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:408|phase_label = {"EVENING": "Seans sonu", "MORNING": "09:00"}
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:413|"Ko┼Яu": phase_label.get(item.phase, item.phase),
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:437|morning = records.get(f"{run_date}:MORNING")
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:439|morning_ok = morning is not None and morning.status == "SUCCESS"
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:440|if evening_ok and morning_ok:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:442|elif evening_ok or morning_ok:
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:448|"EOD": evening.status if evening else "YOK",
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:449|"EOD aday": evening.candidate_count if evening else 0,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:450|"09:00": morning.status if morning else "YOK",
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:451|"09:00 aday": morning.candidate_count if morning else 0,
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:459|parser.add_argument("--phase", required=True, choices=VALID_PHASES)
+CONTRACT_REF=backend\app\operations\daily_buy_decision_scheduled_runner.py:462|record = execute_scheduled_run(args.phase, force=args.force)
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:4|FunctionDef|test_dashboard_exposes_scheduler_audit_and_daily_chain
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:4|def test_dashboard_exposes_scheduler_audit_and_daily_chain():
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:6|assert "Otomasyon Ko┼Яu Ge├зmi┼Яi / Audit" in source
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:7|assert "scheduler_audit_rows" in source
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_dashboard_v1.py:8|assert "EOD тЖТ 09:00 g├╝nl├╝k zincir denetimi" in source
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:44|FunctionDef|test_every_attempt_is_appended_to_audit_history
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:57|FunctionDef|test_recovery_attempt_is_distinguished_from_scheduled_run
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:74|FunctionDef|test_audit_rows_expose_status_candidates_buy_and_error
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:34|FunctionDef|candidate_snapshot
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:40|FunctionDef|persist_decision_snapshot
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:7|ScheduledRunAuditJsonStore,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:10|retry_failed_or_missing_run,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:11|scheduler_audit_rows,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:34|def candidate_snapshot(self, operation_summary, scan_result, visibility_contexts):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:40|def persist_decision_snapshot(self, cards, decisions, phase, now):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:44|def test_every_attempt_is_appended_to_audit_history(tmp_path):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:46|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:48|first = execute_scheduled_run("EVENING", now=now, runtime=Runtime(), store=state, audit_store=audit)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:49|second = execute_scheduled_run("EVENING", now=now, runtime=Runtime(), store=state, audit_store=audit)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:52|history = audit.load()
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:63|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:65|execute_scheduled_run("MORNING", now=now, runtime=Broken(), store=state, audit_store=audit)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:66|retry_failed_or_missing_run("MORNING", now=now, runtime=Runtime(), store=state, audit_store=audit)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:67|history = audit.load()
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:74|def test_audit_rows_expose_status_candidates_buy_and_error(tmp_path):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:80|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:82|"MORNING",
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:86|audit_store=audit,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:88|rows = scheduler_audit_rows(audit)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:99|audit = ScheduledRunAuditJsonStore(tmp_path / "audit.json")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:103|runtime=Runtime(), store=state, audit_store=audit,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:106|"MORNING",
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:108|runtime=Runtime(), store=state, audit_store=audit,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduler_audit_history_v1.py:113|runtime=Runtime(), store=state, audit_store=audit,
+CONTRACT_DEF=backend\app\analysis\eod_morning_board_delta.py:8|ClassDef|EodMorningBoardDeltaItem
+CONTRACT_DEF=backend\app\analysis\eod_morning_board_delta.py:19|ClassDef|EodMorningBoardDeltaSummary
+CONTRACT_DEF=backend\app\analysis\eod_morning_board_delta.py:81|FunctionDef|build_eod_morning_board_delta
+CONTRACT_DEF=backend\app\analysis\eod_morning_board_delta.py:180|FunctionDef|eod_morning_board_delta_rows
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:8|class EodMorningBoardDeltaItem:
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:11|morning_decision: str
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:14|morning_rank: int | None
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:19|class EodMorningBoardDeltaSummary:
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:21|morning_total: int
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:23|morning_buy: int
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:30|items: tuple[EodMorningBoardDeltaItem, ...]
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:81|def build_eod_morning_board_delta(
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:83|morning: object | None,
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:84|) -> EodMorningBoardDeltaSummary | None:
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:85|"""Ak┼Яam ve sabah Top-5 snapshot'lar─▒n─▒n karar fark─▒n─▒ read-only ├╢zetler."""
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:86|if evening is None or morning is None:
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:90|morning_candidates = tuple(getattr(morning, "candidates", ()) or ())
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:96|morning_by_symbol = {
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:98|for item in morning_candidates
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:104|*(str(getattr(item, "symbol", "")).strip().upper() for item in morning_candidates),
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:107|items: list[EodMorningBoardDeltaItem] = []
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:112|new = morning_by_symbol.get(symbol)
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:135|EodMorningBoardDeltaItem(
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:140|morning_decision=(
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:145|morning_rank=(int(getattr(new, "rank")) if new is not None else None),
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:153|morning_buy = sum(
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:154|1 for item in morning_candidates if _decision(getattr(item, "decision", None)) == "AL"
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:161|f"09:00 sonucu: {morning_buy} AL ┬╖ {upgrades} g├╝├зlenen ┬╖ "
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:165|return EodMorningBoardDeltaSummary(
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:167|morning_total=len(morning_candidates),
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:169|morning_buy=morning_buy,
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:180|def eod_morning_board_delta_rows(
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:181|summary: EodMorningBoardDeltaSummary,
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:185|items: Iterable[EodMorningBoardDeltaItem] = summary.items
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:192|"09:00": item.morning_decision,
+CONTRACT_REF=backend\app\analysis\eod_morning_board_delta.py:195|"Sabah s─▒ra": item.morning_rank if item.morning_rank is not None else "-",
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:32|FunctionDef|candidate_snapshot
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:38|FunctionDef|persist_decision_snapshot
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:9|retry_failed_or_missing_run,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:32|def candidate_snapshot(self, operation_summary, scan_result, visibility_contexts):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:38|def persist_decision_snapshot(self, cards, decisions, phase, now):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:61|failed = execute_scheduled_run("MORNING", now=now, runtime=BrokenRuntime(), store=store)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:63|recovered = retry_failed_or_missing_run("MORNING", now=now, runtime=Runtime(), store=store)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:66|morning = next(row for row in rows if row["Ko┼Яu"] == "09:00")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:67|assert morning["Sa─Яl─▒k"] == "SA─ЮLIKLI"
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:68|assert morning["Aday"] == 1
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:69|assert morning["AL"] == "AAA"
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:72|def test_recovery_does_not_duplicate_successful_run(tmp_path):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:76|retry = retry_failed_or_missing_run("EVENING", now=now, runtime=Runtime(), store=store)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:78|assert retry.status == "SKIPPED"
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:79|assert "kurtarma" in retry.detail.lower()
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:89|"MORNING",
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:95|"MORNING",
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:104|morning = next(row for row in rows if row["Ko┼Яu"] == "09:00")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:105|assert morning["Sa─Яl─▒k"] == "BA┼ЮARISIZ"
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:106|assert "2026-08-23" in morning["Son ba┼Яar─▒l─▒"]
+CONTRACT_REF=backend\tests\test_daily_buy_decision_automation_health_recovery_v1.py:107|assert "network unavailable" in morning["Son hata/detay"]
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:40|FunctionDef|archive
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:49|FunctionDef|test_closeout_complete_when_both_phases_audit_and_archive_match
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:66|FunctionDef|test_closeout_waits_before_evening_schedule_if_morning_complete
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:91|FunctionDef|test_closeout_incomplete_when_archive_count_mismatch
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:27|def run_record(phase, status="SUCCESS", count=5):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:29|phase=phase,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:35|finished_at=f"2026-08-24T{'09:01:00' if phase == 'MORNING' else '18:21:00'}+03:00",
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:40|def archive(phase, count=5):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:42|phase=phase,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:44|created_at=f"2026-08-24T{'09:01:00' if phase == 'MORNING' else '18:21:00'}+03:00",
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:49|def test_closeout_complete_when_both_phases_audit_and_archive_match():
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:50|morning = run_record("MORNING")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:55|"2026-08-24:MORNING": morning,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:58|audit_store=ListStore([morning, evening]),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:59|archive_store=ListStore([archive("MORNING"), archive("EVENING")]),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:66|def test_closeout_waits_before_evening_schedule_if_morning_complete():
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:67|morning = run_record("MORNING")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:70|scheduler_store=StateStore({"2026-08-24:MORNING": morning}),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:71|audit_store=ListStore([morning]),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:72|archive_store=ListStore([archive("MORNING")]),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:80|morning = run_record("MORNING")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:83|scheduler_store=StateStore({"2026-08-24:MORNING": morning}),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:84|audit_store=ListStore([morning]),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:85|archive_store=ListStore([archive("MORNING")]),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:91|def test_closeout_incomplete_when_archive_count_mismatch():
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:92|morning = run_record("MORNING")
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:97|"2026-08-24:MORNING": morning,
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:100|audit_store=ListStore([morning, evening]),
+CONTRACT_REF=backend\tests\test_daily_buy_decision_operational_closeout_v1.py:101|archive_store=ListStore([archive("MORNING", 5), archive("EVENING", 4)]),
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:46|FunctionDef|test_scheduled_run_persists_evening_snapshot_and_state
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:73|FunctionDef|test_scheduler_status_has_both_daily_phases
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:36|FunctionDef|candidate_snapshot
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:42|FunctionDef|persist_decision_snapshot
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:36|def candidate_snapshot(self, operation_summary, scan_result, visibility_contexts):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:42|def persist_decision_snapshot(self, cards, decisions, phase, now):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:43|self.persisted.append((phase, len(cards), tuple(item.decision for item in decisions)))
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:46|def test_scheduled_run_persists_evening_snapshot_and_state(tmp_path):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:62|def test_same_phase_same_day_is_idempotent(tmp_path):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:66|first = execute_scheduled_run("MORNING", now=now, runtime=runtime, store=store)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:67|second = execute_scheduled_run("MORNING", now=now, runtime=runtime, store=store)
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:73|def test_scheduler_status_has_both_daily_phases(tmp_path):
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:95|"MORNING",
+CONTRACT_REF=backend\tests\test_daily_buy_decision_scheduled_runner_v1.py:102|assert store.latest("MORNING").status == "FAILED"
+CONTRACT_DEF=backend\tests\test_eod_morning_board_delta_v1.py:20|FunctionDef|_snapshot
+CONTRACT_DEF=backend\tests\test_eod_morning_board_delta_v1.py:63|FunctionDef|test_delta_summary_returns_none_without_both_snapshots
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:3|from backend.app.analysis.eod_morning_board_delta import (
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:4|build_eod_morning_board_delta,
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:5|eod_morning_board_delta_rows,
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:20|def _snapshot(*items):
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:25|evening = _snapshot(
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:30|morning = _snapshot(
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:35|summary = build_eod_morning_board_delta(evening, morning)
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:38|assert summary.morning_buy == 1
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:45|evening = _snapshot(
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:49|morning = _snapshot(
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:53|summary = build_eod_morning_board_delta(evening, morning)
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:57|rows = eod_morning_board_delta_rows(summary)
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:63|def test_delta_summary_returns_none_without_both_snapshots():
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:64|assert build_eod_morning_board_delta(None, _snapshot()) is None
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:65|assert build_eod_morning_board_delta(_snapshot(), None) is None
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:71|assert "build_eod_morning_board_delta" in text
+CONTRACT_REF=backend\tests\test_eod_morning_board_delta_v1.py:72|assert "eod_morning_board_delta_rows" in text
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:13|from backend.app.analysis.research_profiles import FundamentalSnapshot
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:15|build_daily_research_profiles_from_snapshots,
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:37|snap = FundamentalSnapshot(
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:50|return build_daily_research_profiles_from_snapshots({"AAA.IS": snap}, as_of=day)
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:56|assert store.append_snapshot((rank,)) == 1
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:57|assert store.append_profile_snapshot((obs("2026-08-26", "MATCH"),), activation_date=AS_OF) == 1
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:64|store.append_profile_snapshot((obs("2026-08-26", "MATCH"),), activation_date=AS_OF)
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:72|store.append_profile_snapshot((obs("2026-08-25", "MATCH"),), activation_date=AS_OF)
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:79|def test_identical_same_day_revision_is_idempotent(tmp_path):
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:82|assert store.append_profile_snapshot((item,), activation_date=AS_OF) == 1
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:83|assert store.append_profile_snapshot((item,), activation_date=AS_OF) == 0
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:90|assert store.append_profile_snapshot((first,), activation_date=AS_OF) == 1
+CONTRACT_REF=backend\tests\test_research_profile_memory_v1.py:91|assert store.append_profile_snapshot((second,), activation_date=AS_OF) == 1
+CONTRACT_DEF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+CONTRACT_DEF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:79|FunctionDef|test_loader_reads_sprint139c_archive_and_skips_broken_json
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\tests\test_daily_operation_ai_context.py:79|def test_loader_reads_sprint139c_archive_and_skips_broken_json(tmp_path):
+CONTRACT_DEF=backend\tests\test_daily_operation_ai_context.py:64|FunctionDef|test_no_archive_returns_safe_unavailable_context
+CONTRACT_DEF=backend\tests\test_daily_operation_ai_context.py:79|FunctionDef|test_loader_reads_sprint139c_archive_and_skips_broken_json
+CONTRACT_REF=backend\tests\test_daily_operation_ai_context.py:64|def test_no_archive_returns_safe_unavailable_context():
+CONTRACT_REF=backend\tests\test_daily_operation_ai_context.py:79|def test_loader_reads_sprint139c_archive_and_skips_broken_json(tmp_path):
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:22|ClassDef|DecisionOutputArchiveRecord
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:30|ClassDef|DailyDecisionArchiveDelta
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:42|ClassDef|DecisionOutputArchiveJsonStore
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:150|FunctionDef|compare_decision_archive_days
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:203|FunctionDef|decision_output_archive_rows
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:252|FunctionDef|daily_decision_archive_delta_rows
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:270|FunctionDef|decision_output_audit_rows
+CONTRACT_DEF=backend\app\analysis\daily_buy_decision_output_archive.py:110|FunctionDef|save_snapshot
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:12|DailyBuyDecisionSnapshot,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:16|DEFAULT_DECISION_OUTPUT_ARCHIVE_PATH = Path(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:17|"backend/data/daily_buy_decision_output_archive.json"
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:22|class DecisionOutputArchiveRecord:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:24|phase: str
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:30|class DailyDecisionArchiveDelta:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:33|phase: str
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:42|class DecisionOutputArchiveJsonStore:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:43|"""Daily EOD/Morning decision-board archive.
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:45|One record per calendar date + phase is kept. Re-running the same phase for the
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:46|same day replaces that phase's record while older days stay immutable.
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:49|def __init__(self, path: Path | str = DEFAULT_DECISION_OUTPUT_ARCHIVE_PATH) -> None:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:52|def load(self) -> tuple[DecisionOutputArchiveRecord, ...]:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:60|result: list[DecisionOutputArchiveRecord] = []
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:69|DecisionOutputArchiveRecord(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:71|phase=str(item["phase"]).upper(),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:79|sorted(result, key=lambda value: (value.run_date, value.phase, value.created_at))
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:82|def save(self, record: DecisionOutputArchiveRecord) -> None:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:84|(item.run_date, item.phase): item
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:87|records[(record.run_date, record.phase)] = record
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:90|key=lambda value: (value.run_date, value.phase, value.created_at),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:98|"phase": item.phase,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:110|def save_snapshot(self, snapshot: DailyBuyDecisionSnapshot) -> DecisionOutputArchiveRecord:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:111|created = datetime.fromisoformat(snapshot.created_at)
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:115|record = DecisionOutputArchiveRecord(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:117|phase=str(snapshot.phase).upper(),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:118|created_at=snapshot.created_at,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:119|candidates=tuple(snapshot.candidates),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:124|def latest(self, phase: str | None = None) -> DecisionOutputArchiveRecord | None:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:126|if phase is not None:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:127|wanted = str(phase).strip().upper()
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:128|records = tuple(item for item in records if item.phase == wanted)
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:133|def by_date(self, run_date: str) -> tuple[DecisionOutputArchiveRecord, ...]:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:138|def _symbols(record: DecisionOutputArchiveRecord) -> tuple[str, ...]:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:142|def _buy_symbols(record: DecisionOutputArchiveRecord) -> tuple[str, ...]:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:150|def compare_decision_archive_days(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:151|current: DecisionOutputArchiveRecord,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:152|previous: DecisionOutputArchiveRecord,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:153|) -> DailyDecisionArchiveDelta:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:154|if current.phase != previous.phase:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:174|return DailyDecisionArchiveDelta(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:177|phase=current.phase,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:188|records: Iterable[DecisionOutputArchiveRecord],
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:190|phase: str = "MORNING",
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:191|) -> DailyDecisionArchiveDelta | None:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:192|wanted = str(phase).strip().upper()
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:194|(item for item in records if item.phase == wanted),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:200|return compare_decision_archive_days(filtered[0], filtered[1])
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:203|def decision_output_archive_rows(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:204|records: Iterable[DecisionOutputArchiveRecord],
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:210|key=lambda item: (item.run_date, item.created_at, item.phase),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:223|"Faz": item.phase,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:235|record: DecisionOutputArchiveRecord,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:252|def daily_decision_archive_delta_rows(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:253|delta: DailyDecisionArchiveDelta,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:257|"Faz": delta.phase,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:270|def decision_output_audit_rows(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:271|records: Iterable[DecisionOutputArchiveRecord],
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:272|audit_records: Iterable[object],
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:276|"""Join archived decision outputs with the latest scheduler audit for date/phase."""
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:277|audit_by_key: dict[tuple[str, str], object] = {}
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:278|for audit in audit_records:
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:280|str(getattr(audit, "run_date", "")),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:281|str(getattr(audit, "phase", "")).upper(),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:285|existing = audit_by_key.get(key)
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:286|if existing is None or str(getattr(audit, "finished_at", "")) >= str(
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:289|audit_by_key[key] = audit
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:294|key=lambda item: (item.run_date, item.created_at, item.phase),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:298|audit = audit_by_key.get((item.run_date, item.phase))
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:302|"Faz": item.phase,
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:305|"Audit": str(getattr(audit, "status", "E┼ЮLE┼ЮME YOK")),
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:306|"Ko┼Яu t├╝r├╝": str(getattr(audit, "run_kind", "-")) if audit else "-",
+CONTRACT_REF=backend\app\analysis\daily_buy_decision_output_archive.py:307|"Audit biti┼Я": str(getattr(audit, "finished_at", "-")) if audit else "-",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:11|from backend.app.news_center.archive import (
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:12|DuplicateNewsError,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:13|NewsArchive,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:14|NewsArchiveError,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:31|from backend.app.news_center.archive_view import (
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:32|archive_available_sectors,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:33|archive_available_sources,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:34|archive_available_symbols,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:35|archive_news_rows,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:36|build_archive_news_view,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:50|DuplicateCalendarEntryError,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:217|archive = NewsArchive()
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:218|service = NewsCenterService(archive)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:219|events = archive.list_events()
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:220|all_news = archive.list_news()
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:221|except (NewsArchiveError, OSError, ValueError) as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:268|archive=archive,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:281|"Sprint-176 kullan─▒c─▒ taraf─▒ndan ba┼Яlat─▒lan kaynak ├╢nizleme ve ar┼Яiv i┼Яlemlerini yerel audit g├╝nl├╝─Я├╝nde izler; Sprint-175 ortak renderer─▒, Sprint-174 yap─▒sal sa─Яl─▒k tan─▒lamas─▒n─▒ ve Sprint-173 ortak HTTP/g├╝venlik ├зekirde─Яini korur; otomatik polling yapmaz, "
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:366|render_official_source_feed_blocks(st, archive, ISTANBUL)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:369|render_public_news_feed_panel(st, archive, ISTANBUL)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:507|st.caption("Ayn─▒ olaya ait birden fazla kayd─▒ duplicate/birle┼Яtirme kurallar─▒yla tek olay ba─Яlam─▒nda toplar; orijinal kaynak izi korunur.")
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:545|daily_news_by_event[item.event_id] = archive.list_news_for_event(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:548|except NewsArchiveError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:602|# EOD_SUMMARY_V11_ROLE_CLARITY
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:863|except DuplicateCalendarEntryError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:869|st.rerun()
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:926|st.rerun()
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1356|except DuplicateNewsError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1359|NewsArchiveError,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1410|current_events = archive.list_events()
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1411|except NewsArchiveError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1451|attached_news = archive.list_news_for_event(detail_event_id)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1452|except NewsArchiveError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1487|item_news = archive.list_news_for_event(item.event_id)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1488|except NewsArchiveError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1550|sector_news_by_event[item.event_id] = archive.list_news_for_event(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1553|except NewsArchiveError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1639|news_by_event[item.event_id] = archive.list_news_for_event(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1642|except NewsArchiveError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1704|current_news = archive.list_news(limit=10000)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1705|current_archive_events = archive.list_events(limit=5000)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1706|except NewsArchiveError as exc:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1719|archive_filter_1 = st.columns(4)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1720|with archive_filter_1[0]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1721|archive_start_date = st.date_input(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1726|key="news_center_archive_start_date",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1728|with archive_filter_1[1]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1729|archive_end_date = st.date_input(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1734|key="news_center_archive_end_date",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1736|with archive_filter_1[2]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1737|archive_min_importance = st.selectbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1741|key="news_center_archive_min_importance",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1743|with archive_filter_1[3]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1744|archive_trusted_only = st.checkbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1747|key="news_center_archive_trusted_only",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1750|archive_sources = ("T├╝m├╝",) + archive_available_sources(current_news)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1751|archive_symbols = ("T├╝m├╝",) + archive_available_symbols(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1752|current_archive_events
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1754|archive_sectors = ("T├╝m├╝",) + archive_available_sectors(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1755|current_archive_events
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1758|archive_filter_2 = st.columns(3)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1759|with archive_filter_2[0]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1760|archive_source = st.selectbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1762|options=archive_sources,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1763|key="news_center_archive_source",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1765|with archive_filter_2[1]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1766|archive_symbol = st.selectbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1768|options=archive_symbols,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1769|key="news_center_archive_symbol",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1771|with archive_filter_2[2]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1772|archive_sector = st.selectbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1774|options=archive_sectors,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1775|key="news_center_archive_sector",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1778|archive_event_types = ("T├╝m├╝",) + tuple(EVENT_TYPE_LABELS)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1779|archive_scopes = ("T├╝m├╝",) + tuple(SCOPE_LABELS)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1781|archive_filter_3 = st.columns(3)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1782|with archive_filter_3[0]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1783|archive_event_type_label = st.selectbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1785|options=archive_event_types,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1786|key="news_center_archive_event_type",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1788|with archive_filter_3[1]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1789|archive_scope_label = st.selectbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1791|options=archive_scopes,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1792|key="news_center_archive_scope",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1794|with archive_filter_3[2]:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1795|archive_limit = st.selectbox(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1799|key="news_center_archive_limit",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1802|archive_text_query = st.text_input(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1805|key="news_center_archive_text_query",
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1809|archive_view = build_archive_news_view(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1810|current_archive_events,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1812|start_date=archive_start_date,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1813|end_date=archive_end_date,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1815|"" if archive_source == "T├╝m├╝" else archive_source
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1818|"" if archive_symbol == "T├╝m├╝" else archive_symbol
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1821|"" if archive_sector == "T├╝m├╝" else archive_sector
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1825|if archive_event_type_label == "T├╝m├╝"
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1826|else EVENT_TYPE_LABELS[archive_event_type_label]
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1830|if archive_scope_label == "T├╝m├╝"
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1831|else SCOPE_LABELS[archive_scope_label]
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1833|min_importance=int(archive_min_importance),
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1834|text_query=archive_text_query,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1835|trusted_only=archive_trusted_only,
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1836|limit=int(archive_limit),
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1841|archive_metrics = st.columns(6)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1842|archive_metrics[0].metric("Haber", archive_view.news_count)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1843|archive_metrics[1].metric("Olay", archive_view.unique_event_count)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1844|archive_metrics[2].metric("Kaynak", archive_view.source_count)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1845|archive_metrics[3].metric("Birincil", archive_view.tier1_news_count)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1846|archive_metrics[4].metric("KAP", archive_view.kap_news_count)
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1847|archive_metrics[5].metric(
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1848|"Hisse ba─Яlant─▒l─▒", archive_view.symbol_linked_count
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1851|if archive_view.unlinked_event_count:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1853|f"{archive_view.unlinked_event_count} kayd─▒n ba─Яl─▒ olay─▒ "
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1857|if archive_view.items:
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1859|archive_news_rows(archive_view),
+CONTRACT_REF=backend\app\ui\news_center_dashboard.py:1866|st.caption(f"Ar┼Яiv: {archive.path}")
+CONTRACT_DEF=backend\dashboard.backup_before_navigation_fix.py:7820|FunctionDef|render_delayed_snapshot
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:35|build_fundamental_snapshot,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:51|SignalSnapshot,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:86|WeeklyPerformanceArchive,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:127|fetch_delayed_snapshot,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:140|from backend.app.analysis.morning_operation_snapshot import (
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:141|build_morning_operation_snapshot,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:143|from backend.app.analysis.morning_candidate_flow import (
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:144|morning_candidate_rows,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:200|from backend.app.reporting.fundamental_report_archive import (
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:201|FundamentalReportArchiveError,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:202|FundamentalReportArchiveFilter,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:203|FundamentalReportJsonArchive,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:204|archived_reports_csv_bytes,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:205|archived_reports_pdf_bytes,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:206|compare_archived_reports,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:207|report_archive_rows,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:209|search_archived_reports,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:299|from backend.app.ui.current_session_snapshot import (
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:300|CurrentSessionSnapshotError,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:339|audit_events_csv_bytes,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:340|audit_display_rows,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:350|read_audit_events,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:875|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:994|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:2812|except (CurrentSessionSnapshotError, ValueError) as hata:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3379|("Denetim g├╝nl├╝─Я├╝", health.audit_status),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3404|st.caption(f"Denetim g├╝nl├╝─Я├╝: {operational.audit_log_path}")
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3442|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3454|audit_events = read_audit_events(csv_path, limit=50)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3463|audit_events = ()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3552|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3559|if audit_events:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3561|pd.DataFrame(audit_display_rows(audit_events)),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3568|if audit_events:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3571|data=audit_events_csv_bytes(audit_events),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3612|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3672|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3716|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:3982|RankObservationJsonlStore().append_snapshot(_rank_observations)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:4546|sembol_snapshot = build_fundamental_snapshot(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:4550|sembol_snapshot,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:4626|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5138|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5224|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5267|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5700|def _buyume_tablosu(snapshot) -> pd.DataFrame:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5704|("├Цnceki ├зeyrek", snapshot.quarter_growth),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5705|("Ge├зen y─▒l ayn─▒ d├╢nem", snapshot.annual_growth),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5865|.report_archive_maximum_age_days
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5883|if value == temel_ayarlar.default_archive_sort
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5926|report_archive_maximum_age_days=int(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:5929|default_archive_sort=siralama_etiketleri[
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6086|snapshot = build_fundamental_snapshot(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6097|latest = snapshot.latest
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6098|ratios = snapshot.ratios
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6099|kalite = calculate_fundamental_quality(snapshot, tazelik)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6694|buyume = _buyume_tablosu(snapshot)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6715|if snapshot.quality_flags:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6716|for uyari in snapshot.quality_flags:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6756|quality_flags=tuple(snapshot.quality_flags),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6792|rapor_arsivi = FundamentalReportJsonArchive()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6797|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6813|.report_archive_maximum_age_days
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6816|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6874|temel_ayarlar.default_archive_sort
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6938|search_archived_reports(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6940|FundamentalReportArchiveFilter(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6959|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6971|report_archive_rows(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:6980|arsiv_csv = archived_reports_csv_bytes(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7015|arsiv_pdf = archived_reports_pdf_bytes(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7048|report_archive_rows(arsiv_raporlari)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7085|compare_archived_reports(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7090|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7128|archive_tab,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7463|snapshot = SignalSnapshot(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7486|outcome = evaluate_signal(snapshot, price_frame)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7505|with archive_tab:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7820|def render_delayed_snapshot() -> None:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7822|snapshot = fetch_delayed_snapshot(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7826|store.append(snapshot)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7833|("Durum", snapshot.status),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7834|("Son fiyat", f"{snapshot.last_price:.2f}"),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7837|f"{snapshot.measured_delay_minutes:.1f} dk",
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7841|f"{snapshot.expected_delay_minutes} dk",
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7845|str(snapshot.missing_bar_count),
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7849|"AKT─░F" if snapshot.locked else "Kapal─▒",
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7858|"Sembol": snapshot.symbol,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7859|"Borsa zaman─▒": snapshot.exchange_time,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7860|"Sisteme al─▒nma zaman─▒": snapshot.received_time,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7861|"G├╝n i├зi a├з─▒l─▒┼Я": snapshot.day_open,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7862|"G├╝n i├зi y├╝ksek": snapshot.day_high,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7863|"G├╝n i├зi d├╝┼Я├╝k": snapshot.day_low,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7864|"K├╝m├╝latif hacim": snapshot.cumulative_volume,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7865|"Son bar hacmi": snapshot.latest_bar_volume,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7867|snapshot.price_change_percent
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7876|if snapshot.locked:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7881|elif snapshot.preview_only:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7896|render_delayed_snapshot()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7905|render_delayed_snapshot()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7970|# V1_OPERATIONS_01C_MORNING_CANDIDATE_UI
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7978|_morning_scan_state = st.session_state.get("bist_toplu_tarama_son_sonuc")
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7979|if _morning_scan_state is None:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7986|_morning_visibility_contexts = build_current_visibility_context()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7987|except Exception as _morning_visibility_error:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7988|_morning_visibility_contexts = ()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7992|f"Detay: {_morning_visibility_error}"
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7995|_morning_snapshot = build_morning_operation_snapshot(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7997|scan_result=_morning_scan_state["sonuc"],
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:7998|visibility_contexts=_morning_visibility_contexts,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8002|if _morning_snapshot.operation_state == "BLOKE":
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8005|f"{_morning_snapshot.operation_reason}"
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8007|elif not _morning_snapshot.candidates:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8013|f"{_morning_snapshot.candidate_count} aday operasyona haz─▒r."
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8017|morning_candidate_rows(_morning_snapshot.candidates)
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8025|for _candidate_card in _morning_snapshot.candidates:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8174|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8458|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8559|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8651|trader_assessment.stop_phase,
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8704|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8758|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8769|f"{item.snapshot.signal_date} ┬╖ "
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8770|f"{item.snapshot.symbol.removesuffix('.IS')} ┬╖ "
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8771|f"{item.snapshot.decision_class} ┬╖ "
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8772|f"{item.snapshot.quality_score}"
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8824|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8920|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:8984|st.rerun()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9007|archive = WeeklyPerformanceArchive()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9059|summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9102|key="weekly_report_archive",
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9106|paths = archive.save(
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9155|with archive_tab:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9156|archived = archive.list()
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9157|if not archived:
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9169|for path in archived
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9417|"Snapshot yaln─▒zca hedef testler, tam regresyon ve sistem kontrol├╝ "
+CONTRACT_REF=backend\dashboard.backup_before_navigation_fix.py:9419|"Olustur-V13-Snapshot.ps1 komutuyla olu┼Яturulmal─▒d─▒r."
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:4|FunctionDef|test_dashboard_wires_daily_decision_output_archive_and_compare
+CONTRACT_DEF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:12|FunctionDef|test_scheduler_persists_decision_output_archive_without_dashboard
+CONTRACT_REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:4|def test_dashboard_wires_daily_decision_output_archive_and_compare():
+CONTRACT_REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:7|assert "DecisionOutputArchiveJsonStore().save_snapshot(_decision_snapshot)" in text
+CONTRACT_REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:9|assert "decision_output_audit_rows" in text
+CONTRACT_REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:12|def test_scheduler_persists_decision_output_archive_without_dashboard():
+CONTRACT_REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:16|assert "DecisionOutputArchiveJsonStore" in text
+CONTRACT_REF=backend\tests\test_daily_buy_decision_output_archive_dashboard_v1.py:17|assert "save_snapshot(snapshot)" in text
+CONTRACT_DEF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7264|FunctionDef|render_delayed_snapshot
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:16|build_fundamental_snapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:32|SignalSnapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:56|WeeklyPerformanceArchive,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:97|fetch_delayed_snapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:148|from backend.app.reporting.fundamental_report_archive import (
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:149|FundamentalReportArchiveError,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:150|FundamentalReportArchiveFilter,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:151|FundamentalReportJsonArchive,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:152|archived_reports_csv_bytes,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:153|archived_reports_pdf_bytes,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:154|compare_archived_reports,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:155|report_archive_rows,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:157|search_archived_reports,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:247|from backend.app.ui.current_session_snapshot import (
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:248|CurrentSessionSnapshotError,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:287|audit_events_csv_bytes,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:288|audit_display_rows,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:298|read_audit_events,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:820|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:939|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:2745|except (CurrentSessionSnapshotError, ValueError) as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3312|("Denetim g├╝nl├╝─Я├╝", health.audit_status),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3337|st.caption(f"Denetim g├╝nl├╝─Я├╝: {operational.audit_log_path}")
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3375|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3387|audit_events = read_audit_events(csv_path, limit=50)
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3396|audit_events = ()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3485|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3492|if audit_events:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3494|pd.DataFrame(audit_display_rows(audit_events)),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3501|if audit_events:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3504|data=audit_events_csv_bytes(audit_events),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3545|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3605|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:3649|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:4059|sembol_snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:4063|sembol_snapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:4635|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:4720|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:4763|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5174|def _buyume_tablosu(snapshot) -> pd.DataFrame:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5178|("├Цnceki ├зeyrek", snapshot.quarter_growth),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5179|("Ge├зen y─▒l ayn─▒ d├╢nem", snapshot.annual_growth),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5324|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5342|if value == temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5385|report_archive_maximum_age_days=int(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5388|default_archive_sort=siralama_etiketleri[
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5545|snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5556|latest = snapshot.latest
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5557|ratios = snapshot.ratios
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:5558|kalite = calculate_fundamental_quality(snapshot, tazelik)
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6153|buyume = _buyume_tablosu(snapshot)
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6174|if snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6175|for uyari in snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6215|quality_flags=tuple(snapshot.quality_flags),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6251|rapor_arsivi = FundamentalReportJsonArchive()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6256|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6272|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6275|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6333|temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6397|search_archived_reports(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6399|FundamentalReportArchiveFilter(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6418|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6430|report_archive_rows(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6439|arsiv_csv = archived_reports_csv_bytes(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6474|arsiv_pdf = archived_reports_pdf_bytes(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6507|report_archive_rows(arsiv_raporlari)
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6544|compare_archived_reports(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6549|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6583|archive_tab,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6916|snapshot = SignalSnapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6939|outcome = evaluate_signal(snapshot, price_frame)
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:6958|with archive_tab:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7264|def render_delayed_snapshot() -> None:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7266|snapshot = fetch_delayed_snapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7270|store.append(snapshot)
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7277|("Durum", snapshot.status),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7278|("Son fiyat", f"{snapshot.last_price:.2f}"),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7281|f"{snapshot.measured_delay_minutes:.1f} dk",
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7285|str(snapshot.missing_bar_count),
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7294|"Sembol": snapshot.symbol,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7295|"Borsa zaman─▒": snapshot.exchange_time,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7296|"Sisteme al─▒nma zaman─▒": snapshot.received_time,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7298|f"{snapshot.expected_delay_minutes} dk"
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7300|"G├╝n i├зi a├з─▒l─▒┼Я": snapshot.day_open,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7301|"G├╝n i├зi y├╝ksek": snapshot.day_high,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7302|"G├╝n i├зi d├╝┼Я├╝k": snapshot.day_low,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7303|"K├╝m├╝latif hacim": snapshot.cumulative_volume,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7304|"Son bar hacmi": snapshot.latest_bar_volume,
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7306|snapshot.price_change_percent
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7315|if snapshot.locked:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7320|elif snapshot.preview_only:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7335|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7344|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7470|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7552|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7572|f"{item.snapshot.signal_date} ┬╖ "
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7573|f"{item.snapshot.symbol.removesuffix('.IS')} ┬╖ "
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7574|f"{item.snapshot.decision_class} ┬╖ "
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7575|f"{item.snapshot.quality_score}"
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7627|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7723|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7787|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7800|archive = WeeklyPerformanceArchive()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7851|summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7894|key="weekly_report_archive",
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7898|paths = archive.save(
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7947|with archive_tab:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7948|archived = archive.list()
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7949|if not archived:
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:7961|for path in archived
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:8209|"Snapshot yaln─▒zca hedef testler, tam regresyon ve sistem kontrol├╝ "
+CONTRACT_REF=_backup\Sprint140_20260803_225805\backend\dashboard.py:8211|"Olustur-V13-Snapshot.ps1 komutuyla olu┼Яturulmal─▒d─▒r."
+CONTRACT_DEF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7267|FunctionDef|render_delayed_snapshot
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:16|build_fundamental_snapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:32|SignalSnapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:56|WeeklyPerformanceArchive,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:97|fetch_delayed_snapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:151|from backend.app.reporting.fundamental_report_archive import (
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:152|FundamentalReportArchiveError,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:153|FundamentalReportArchiveFilter,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:154|FundamentalReportJsonArchive,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:155|archived_reports_csv_bytes,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:156|archived_reports_pdf_bytes,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:157|compare_archived_reports,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:158|report_archive_rows,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:160|search_archived_reports,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:250|from backend.app.ui.current_session_snapshot import (
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:251|CurrentSessionSnapshotError,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:290|audit_events_csv_bytes,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:291|audit_display_rows,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:301|read_audit_events,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:823|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:942|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:2748|except (CurrentSessionSnapshotError, ValueError) as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3315|("Denetim g├╝nl├╝─Я├╝", health.audit_status),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3340|st.caption(f"Denetim g├╝nl├╝─Я├╝: {operational.audit_log_path}")
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3378|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3390|audit_events = read_audit_events(csv_path, limit=50)
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3399|audit_events = ()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3488|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3495|if audit_events:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3497|pd.DataFrame(audit_display_rows(audit_events)),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3504|if audit_events:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3507|data=audit_events_csv_bytes(audit_events),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3548|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3608|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:3652|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:4062|sembol_snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:4066|sembol_snapshot,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:4638|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:4723|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:4766|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5177|def _buyume_tablosu(snapshot) -> pd.DataFrame:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5181|("├Цnceki ├зeyrek", snapshot.quarter_growth),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5182|("Ge├зen y─▒l ayn─▒ d├╢nem", snapshot.annual_growth),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5327|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5345|if value == temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5388|report_archive_maximum_age_days=int(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5391|default_archive_sort=siralama_etiketleri[
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5548|snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5559|latest = snapshot.latest
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5560|ratios = snapshot.ratios
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:5561|kalite = calculate_fundamental_quality(snapshot, tazelik)
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6156|buyume = _buyume_tablosu(snapshot)
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6177|if snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6178|for uyari in snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6218|quality_flags=tuple(snapshot.quality_flags),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6254|rapor_arsivi = FundamentalReportJsonArchive()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6259|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6275|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6278|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6336|temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6400|search_archived_reports(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6402|FundamentalReportArchiveFilter(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6421|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6433|report_archive_rows(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6442|arsiv_csv = archived_reports_csv_bytes(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6477|arsiv_pdf = archived_reports_pdf_bytes(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6510|report_archive_rows(arsiv_raporlari)
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6547|compare_archived_reports(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6552|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6586|archive_tab,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6919|snapshot = SignalSnapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6942|outcome = evaluate_signal(snapshot, price_frame)
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:6961|with archive_tab:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7267|def render_delayed_snapshot() -> None:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7269|snapshot = fetch_delayed_snapshot(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7273|store.append(snapshot)
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7280|("Durum", snapshot.status),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7281|("Son fiyat", f"{snapshot.last_price:.2f}"),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7284|f"{snapshot.measured_delay_minutes:.1f} dk",
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7288|str(snapshot.missing_bar_count),
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7297|"Sembol": snapshot.symbol,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7298|"Borsa zaman─▒": snapshot.exchange_time,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7299|"Sisteme al─▒nma zaman─▒": snapshot.received_time,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7301|f"{snapshot.expected_delay_minutes} dk"
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7303|"G├╝n i├зi a├з─▒l─▒┼Я": snapshot.day_open,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7304|"G├╝n i├зi y├╝ksek": snapshot.day_high,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7305|"G├╝n i├зi d├╝┼Я├╝k": snapshot.day_low,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7306|"K├╝m├╝latif hacim": snapshot.cumulative_volume,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7307|"Son bar hacmi": snapshot.latest_bar_volume,
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7309|snapshot.price_change_percent
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7318|if snapshot.locked:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7323|elif snapshot.preview_only:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7338|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7347|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7475|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7664|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7684|f"{item.snapshot.signal_date} ┬╖ "
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7685|f"{item.snapshot.symbol.removesuffix('.IS')} ┬╖ "
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7686|f"{item.snapshot.decision_class} ┬╖ "
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7687|f"{item.snapshot.quality_score}"
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7739|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7835|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7899|st.rerun()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7912|archive = WeeklyPerformanceArchive()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:7963|summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8006|key="weekly_report_archive",
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8010|paths = archive.save(
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8059|with archive_tab:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8060|archived = archive.list()
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8061|if not archived:
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8073|for path in archived
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8321|"Snapshot yaln─▒zca hedef testler, tam regresyon ve sistem kontrol├╝ "
+CONTRACT_REF=_backup\Sprint140_20260803_225849\backend\dashboard.py:8323|"Olustur-V13-Snapshot.ps1 komutuyla olu┼Яturulmal─▒d─▒r."
+CONTRACT_DEF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7267|FunctionDef|render_delayed_snapshot
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:16|build_fundamental_snapshot,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:32|SignalSnapshot,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:56|WeeklyPerformanceArchive,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:97|fetch_delayed_snapshot,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:151|from backend.app.reporting.fundamental_report_archive import (
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:152|FundamentalReportArchiveError,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:153|FundamentalReportArchiveFilter,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:154|FundamentalReportJsonArchive,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:155|archived_reports_csv_bytes,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:156|archived_reports_pdf_bytes,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:157|compare_archived_reports,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:158|report_archive_rows,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:160|search_archived_reports,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:250|from backend.app.ui.current_session_snapshot import (
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:251|CurrentSessionSnapshotError,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:290|audit_events_csv_bytes,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:291|audit_display_rows,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:301|read_audit_events,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:823|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:942|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:2748|except (CurrentSessionSnapshotError, ValueError) as hata:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3315|("Denetim g├╝nl├╝─Я├╝", health.audit_status),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3340|st.caption(f"Denetim g├╝nl├╝─Я├╝: {operational.audit_log_path}")
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3378|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3390|audit_events = read_audit_events(csv_path, limit=50)
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3399|audit_events = ()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3488|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3495|if audit_events:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3497|pd.DataFrame(audit_display_rows(audit_events)),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3504|if audit_events:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3507|data=audit_events_csv_bytes(audit_events),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3548|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3608|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:3652|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:4062|sembol_snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:4066|sembol_snapshot,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:4638|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:4723|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:4766|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5177|def _buyume_tablosu(snapshot) -> pd.DataFrame:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5181|("├Цnceki ├зeyrek", snapshot.quarter_growth),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5182|("Ge├зen y─▒l ayn─▒ d├╢nem", snapshot.annual_growth),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5327|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5345|if value == temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5388|report_archive_maximum_age_days=int(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5391|default_archive_sort=siralama_etiketleri[
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5548|snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5559|latest = snapshot.latest
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5560|ratios = snapshot.ratios
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:5561|kalite = calculate_fundamental_quality(snapshot, tazelik)
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6156|buyume = _buyume_tablosu(snapshot)
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6177|if snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6178|for uyari in snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6218|quality_flags=tuple(snapshot.quality_flags),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6254|rapor_arsivi = FundamentalReportJsonArchive()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6259|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6275|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6278|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6336|temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6400|search_archived_reports(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6402|FundamentalReportArchiveFilter(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6421|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6433|report_archive_rows(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6442|arsiv_csv = archived_reports_csv_bytes(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6477|arsiv_pdf = archived_reports_pdf_bytes(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6510|report_archive_rows(arsiv_raporlari)
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6547|compare_archived_reports(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6552|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6586|archive_tab,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6919|snapshot = SignalSnapshot(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6942|outcome = evaluate_signal(snapshot, price_frame)
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:6961|with archive_tab:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7267|def render_delayed_snapshot() -> None:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7269|snapshot = fetch_delayed_snapshot(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7273|store.append(snapshot)
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7280|("Durum", snapshot.status),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7281|("Son fiyat", f"{snapshot.last_price:.2f}"),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7284|f"{snapshot.measured_delay_minutes:.1f} dk",
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7288|str(snapshot.missing_bar_count),
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7297|"Sembol": snapshot.symbol,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7298|"Borsa zaman─▒": snapshot.exchange_time,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7299|"Sisteme al─▒nma zaman─▒": snapshot.received_time,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7301|f"{snapshot.expected_delay_minutes} dk"
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7303|"G├╝n i├зi a├з─▒l─▒┼Я": snapshot.day_open,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7304|"G├╝n i├зi y├╝ksek": snapshot.day_high,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7305|"G├╝n i├зi d├╝┼Я├╝k": snapshot.day_low,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7306|"K├╝m├╝latif hacim": snapshot.cumulative_volume,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7307|"Son bar hacmi": snapshot.latest_bar_volume,
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7309|snapshot.price_change_percent
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7318|if snapshot.locked:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7323|elif snapshot.preview_only:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7338|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7347|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7475|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7664|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7684|f"{item.snapshot.signal_date} ┬╖ "
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7685|f"{item.snapshot.symbol.removesuffix('.IS')} ┬╖ "
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7686|f"{item.snapshot.decision_class} ┬╖ "
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7687|f"{item.snapshot.quality_score}"
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7739|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7835|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7899|st.rerun()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7912|archive = WeeklyPerformanceArchive()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:7963|summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8006|key="weekly_report_archive",
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8010|paths = archive.save(
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8059|with archive_tab:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8060|archived = archive.list()
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8061|if not archived:
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8073|for path in archived
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8321|"Snapshot yaln─▒zca hedef testler, tam regresyon ve sistem kontrol├╝ "
+CONTRACT_REF=_backup\Sprint141_20260803_230940\backend\dashboard.py:8323|"Olustur-V13-Snapshot.ps1 komutuyla olu┼Яturulmal─▒d─▒r."
+CONTRACT_DEF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7276|FunctionDef|render_delayed_snapshot
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:16|build_fundamental_snapshot,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:32|SignalSnapshot,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:56|WeeklyPerformanceArchive,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:97|fetch_delayed_snapshot,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:160|from backend.app.reporting.fundamental_report_archive import (
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:161|FundamentalReportArchiveError,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:162|FundamentalReportArchiveFilter,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:163|FundamentalReportJsonArchive,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:164|archived_reports_csv_bytes,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:165|archived_reports_pdf_bytes,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:166|compare_archived_reports,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:167|report_archive_rows,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:169|search_archived_reports,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:259|from backend.app.ui.current_session_snapshot import (
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:260|CurrentSessionSnapshotError,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:299|audit_events_csv_bytes,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:300|audit_display_rows,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:310|read_audit_events,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:832|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:951|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:2757|except (CurrentSessionSnapshotError, ValueError) as hata:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3324|("Denetim g├╝nl├╝─Я├╝", health.audit_status),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3349|st.caption(f"Denetim g├╝nl├╝─Я├╝: {operational.audit_log_path}")
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3387|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3399|audit_events = read_audit_events(csv_path, limit=50)
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3408|audit_events = ()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3497|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3504|if audit_events:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3506|pd.DataFrame(audit_display_rows(audit_events)),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3513|if audit_events:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3516|data=audit_events_csv_bytes(audit_events),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3557|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3617|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:3661|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:4071|sembol_snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:4075|sembol_snapshot,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:4647|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:4732|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:4775|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5186|def _buyume_tablosu(snapshot) -> pd.DataFrame:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5190|("├Цnceki ├зeyrek", snapshot.quarter_growth),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5191|("Ge├зen y─▒l ayn─▒ d├╢nem", snapshot.annual_growth),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5336|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5354|if value == temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5397|report_archive_maximum_age_days=int(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5400|default_archive_sort=siralama_etiketleri[
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5557|snapshot = build_fundamental_snapshot(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5568|latest = snapshot.latest
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5569|ratios = snapshot.ratios
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:5570|kalite = calculate_fundamental_quality(snapshot, tazelik)
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6165|buyume = _buyume_tablosu(snapshot)
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6186|if snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6187|for uyari in snapshot.quality_flags:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6227|quality_flags=tuple(snapshot.quality_flags),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6263|rapor_arsivi = FundamentalReportJsonArchive()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6268|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6284|.report_archive_maximum_age_days
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6287|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6345|temel_ayarlar.default_archive_sort
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6409|search_archived_reports(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6411|FundamentalReportArchiveFilter(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6430|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6442|report_archive_rows(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6451|arsiv_csv = archived_reports_csv_bytes(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6486|arsiv_pdf = archived_reports_pdf_bytes(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6519|report_archive_rows(arsiv_raporlari)
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6556|compare_archived_reports(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6561|except FundamentalReportArchiveError as hata:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6595|archive_tab,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6928|snapshot = SignalSnapshot(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6951|outcome = evaluate_signal(snapshot, price_frame)
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:6970|with archive_tab:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7276|def render_delayed_snapshot() -> None:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7278|snapshot = fetch_delayed_snapshot(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7282|store.append(snapshot)
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7289|("Durum", snapshot.status),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7290|("Son fiyat", f"{snapshot.last_price:.2f}"),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7293|f"{snapshot.measured_delay_minutes:.1f} dk",
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7297|str(snapshot.missing_bar_count),
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7306|"Sembol": snapshot.symbol,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7307|"Borsa zaman─▒": snapshot.exchange_time,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7308|"Sisteme al─▒nma zaman─▒": snapshot.received_time,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7310|f"{snapshot.expected_delay_minutes} dk"
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7312|"G├╝n i├зi a├з─▒l─▒┼Я": snapshot.day_open,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7313|"G├╝n i├зi y├╝ksek": snapshot.day_high,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7314|"G├╝n i├зi d├╝┼Я├╝k": snapshot.day_low,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7315|"K├╝m├╝latif hacim": snapshot.cumulative_volume,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7316|"Son bar hacmi": snapshot.latest_bar_volume,
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7318|snapshot.price_change_percent
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7327|if snapshot.locked:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7332|elif snapshot.preview_only:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7347|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7356|render_delayed_snapshot()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7485|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7755|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7775|f"{item.snapshot.signal_date} ┬╖ "
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7776|f"{item.snapshot.symbol.removesuffix('.IS')} ┬╖ "
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7777|f"{item.snapshot.decision_class} ┬╖ "
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7778|f"{item.snapshot.quality_score}"
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7830|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7926|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:7990|st.rerun()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8003|archive = WeeklyPerformanceArchive()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8054|summary_tab, comparison_tab, detail_tab, archive_tab = st.tabs(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8097|key="weekly_report_archive",
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8101|paths = archive.save(
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8150|with archive_tab:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8151|archived = archive.list()
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8152|if not archived:
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8164|for path in archived
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8412|"Snapshot yaln─▒zca hedef testler, tam regresyon ve sistem kontrol├╝ "
+CONTRACT_REF=_backup\Sprint141_Rev1_20260803_232226\backend\dashboard.py:8414|"Olustur-V13-Snapshot.ps1 komutuyla olu┼Яturulmal─▒d─▒r."
+
+=== 4. POWERSHELL SCHEDULER INSTALLER CONTRACT ===
+SCHEDULER_INSTALLER=scripts\install_daily_buy_decision_tasks.ps1
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:21|$eveningAction = New-ScheduledTaskAction `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:25|$eveningTrigger = New-ScheduledTaskTrigger `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:28|-At 18:20
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:30|$morningAction = New-ScheduledTaskAction `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:34|$morningTrigger = New-ScheduledTaskTrigger `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:37|-At 09:00
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:39|Register-ScheduledTask `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:40|-TaskName "HisseRobotu-EOD-DailyDecision" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:46|Register-ScheduledTask `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:47|-TaskName "HisseRobotu-0900-DailyDecision" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:50|-Description "Hisse Robotu 09:00 sabah yeniden de─Яerlendirme" `
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:53|Write-Host "Kuruldu: HisseRobotu-EOD-DailyDecision (18:20 hafta i├зi)"
+INSTALLER_REF=scripts\install_daily_buy_decision_tasks.ps1:54|Write-Host "Kuruldu: HisseRobotu-0900-DailyDecision (09:00 hafta i├зi)"
+SCHEDULER_INSTALLER_FILES=1
+
+=== 5. PRECLOSE SAFE REUSE CONTRACT ===
+PRECLOSE_RUN_OPPORTUNITY_RADAR=YES
+PRECLOSE_CURRENT_PARTIAL=YES
+PRECLOSE_LAST_CLOSED=YES
+
+=== 6. SOURCE DECISION ===
+EXISTING_18_20_09_00_FRAMEWORK=YES
+EXISTING_AUDIT_CONTRACT=YES
+EXISTING_ARCHIVE_CONTRACT=YES
+EXISTING_SCHEDULER_INSTALLER=YES
+PRECLOSE_REUSE_READY=YES
+SOURCE_DECISION=REUSE_EXISTING_AUTOMATION_FRAMEWORK
+SOURCE_NEXT=PATCH_EXISTING_FRAMEWORK_TO_17_20_18_20_08_45;NO_PARALLEL_SCHEDULER
+
+SAFETY:
+PARALLEL_AUTOMATION_FRAMEWORK=NO
+NEW_ENGINE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+NEW_STORE=NO
+17:20_CANONICAL_RANKING_WRITE=NO
+17:20_PROFILE_MEMORY_WRITE=NO
+17:20_AL_SAT_DECISION=NO
+18:20_CANONICAL_AUTHORITY=PRESERVED
+08:45_PRIOR_CLOSE_RANKING_REWRITE=NO
+
+=== SOURCE PREFLIGHT COMPLETE ===
+READ_ONLY=YES
+MUTATION=NO
+
+=== 7. WINDOWS TASK SCHEDULER CURRENT STATE ===
+WINDOWS_TASK_READ_ERROR=The property 'StartBoundary' cannot be found on this object. Verify that the property exists.
+
+=== FINAL ===
+READ_ONLY=YES
+MUTATION=NO
+REPORT=D:\Projects\Hisse-Robotu\_discovery\Hisse-Robotu-Existing-Automation-Reuse-Preflight-V1-20260827-164152.txt

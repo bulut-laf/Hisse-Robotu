@@ -1,0 +1,376 @@
+from __future__ import annotations
+
+import sqlite3
+from contextlib import closing
+from pathlib import Path
+from types import SimpleNamespace
+from typing import Any
+
+import pytest
+
+from backend.app.analysis.scan_filter import (
+    FilteredScanResult,
+    ScanFilterCriteria,
+    ScanRejection,
+)
+from backend.app.analysis.stock_scanner import (
+    ScanFailure,
+)
+from backend.app.history.scan_history import (
+    ScanHistoryError,
+    ScanHistoryRepository,
+)
+
+
+def ornek_hisse(
+    sembol: str,
+    skor: int,
+    gorunum: str,
+    kapanis: float,
+    rsi14: float,
+    hacim_orani: float,
+    risk_odul: float,
+    hedef: float,
+    risk_filtresi: bool,
+) -> Any:
+    return SimpleNamespace(
+        sembol=sembol,
+        analiz_tarihi="2026-07-22",
+        kapanis=kapanis,
+        rsi14=rsi14,
+        hacim_orani=hacim_orani,
+        sinyal=SimpleNamespace(
+            skor=skor,
+            karar=gorunum,
+        ),
+        risk_plani=SimpleNamespace(
+            risk_odul_orani=risk_odul,
+            hedef_fiyat=hedef,
+            filtreyi_gecti=risk_filtresi,
+        ),
+    )
+
+
+def ornek_filtrelenmis_sonuc() -> FilteredScanResult:
+    aday = ornek_hisse(
+        sembol="AAA.IS",
+        skor=72,
+        gorunum="Pozitif Teknik Görünüm",
+        kapanis=100.0,
+        rsi14=58.25,
+        hacim_orani=1.40,
+        risk_odul=2.25,
+        hedef=115.0,
+        risk_filtresi=True,
+    )
+
+    elenen = ornek_hisse(
+        sembol="BBB.IS",
+        skor=28,
+        gorunum="Negatif Teknik Görünüm",
+        kapanis=90.0,
+        rsi14=42.50,
+        hacim_orani=0.65,
+        risk_odul=0.75,
+        hedef=95.0,
+        risk_filtresi=False,
+    )
+
+    return FilteredScanResult(
+        adaylar=(
+            aday,
+        ),
+        elenenler=(
+            ScanRejection(
+                sembol="BBB.IS",
+                nedenler=(
+                    "Sinyal skoru yetersiz.",
+                    "Risk/ödül filtresini geçemedi.",
+                ),
+                sonuc=elenen,
+            ),
+        ),
+        hatalar=(
+            ScanFailure(
+                sembol="HATALI.IS",
+                hata="Veri bulunamadı.",
+            ),
+        ),
+    )
+
+
+def ornek_kriterler() -> ScanFilterCriteria:
+    return ScanFilterCriteria(
+        minimum_skor=50,
+        minimum_hacim_orani=1.00,
+        risk_odul_filtresi_gerekli=True,
+        izin_verilen_gorunumler=(
+            "Pozitif Teknik Görünüm",
+            "Nötr Teknik Görünüm",
+        ),
+    )
+
+
+def veritabani_baglantisi_ac(
+    yol: Path,
+) -> sqlite3.Connection:
+    baglanti = sqlite3.connect(yol)
+    baglanti.row_factory = sqlite3.Row
+
+    return baglanti
+
+
+def test_repository_veritabani_ve_tablolari_olusturur(
+    tmp_path: Path,
+) -> None:
+    veritabani = (
+        tmp_path
+        / "database"
+        / "scan_history.db"
+    )
+
+    repository = ScanHistoryRepository(
+        veritabani
+    )
+
+    assert veritabani.exists()
+    assert Path(
+        repository.veritabani_yolu
+    ).is_absolute()
+
+    with closing(veritabani_baglantisi_ac(
+        veritabani
+    )) as baglanti:
+        tablo_satirlari = baglanti.execute(
+            """
+            SELECT name
+            FROM sqlite_master
+            WHERE type = 'table'
+            """
+        ).fetchall()
+
+    tablo_adlari = {
+        satir["name"]
+        for satir in tablo_satirlari
+    }
+
+    assert "scan_runs" in tablo_adlari
+    assert "scan_items" in tablo_adlari
+
+
+def test_tarama_ozeti_veritabanina_kaydedilir(
+    tmp_path: Path,
+) -> None:
+    veritabani = tmp_path / "history.db"
+
+    repository = ScanHistoryRepository(
+        veritabani
+    )
+
+    kayit = repository.taramayi_kaydet(
+        sonuc=ornek_filtrelenmis_sonuc(),
+        kriterler=ornek_kriterler(),
+        profil_adi="Dengeli",
+        olusturma_zamani=(
+            "2026-07-23T19:30:00+03:00"
+        ),
+    )
+
+    assert kayit.tarama_id == 1
+    assert kayit.kaydedilen_kayit_sayisi == 3
+    assert kayit.veritabani_yolu == str(
+        veritabani.resolve()
+    )
+
+    with closing(veritabani_baglantisi_ac(
+        veritabani
+    )) as baglanti:
+        tarama = baglanti.execute(
+            """
+            SELECT *
+            FROM scan_runs
+            WHERE id = 1
+            """
+        ).fetchone()
+
+    assert tarama is not None
+    assert tarama["profile_name"] == "Dengeli"
+    assert tarama["minimum_score"] == 50
+    assert tarama["minimum_volume_ratio"] == pytest.approx(
+        1.00
+    )
+    assert tarama["risk_reward_required"] == 1
+    assert tarama["total_count"] == 3
+    assert tarama["candidate_count"] == 1
+    assert tarama["rejected_count"] == 1
+    assert tarama["error_count"] == 1
+
+
+def test_aday_ve_elenen_hisse_degerleri_korunur(
+    tmp_path: Path,
+) -> None:
+    veritabani = tmp_path / "history.db"
+
+    repository = ScanHistoryRepository(
+        veritabani
+    )
+
+    repository.taramayi_kaydet(
+        sonuc=ornek_filtrelenmis_sonuc(),
+        kriterler=ornek_kriterler(),
+        profil_adi="Dengeli",
+    )
+
+    with closing(veritabani_baglantisi_ac(
+        veritabani
+    )) as baglanti:
+        aday = baglanti.execute(
+            """
+            SELECT *
+            FROM scan_items
+            WHERE symbol = 'AAA.IS'
+            """
+        ).fetchone()
+
+        elenen = baglanti.execute(
+            """
+            SELECT *
+            FROM scan_items
+            WHERE symbol = 'BBB.IS'
+            """
+        ).fetchone()
+
+    assert aday is not None
+    assert aday["status"] == "Aday"
+    assert aday["rank_number"] == 1
+    assert aday["score"] == 72
+    assert aday["closing_price"] == pytest.approx(
+        100.0
+    )
+    assert aday["risk_reward_ratio"] == pytest.approx(
+        2.25
+    )
+    assert aday["risk_filter_passed"] == 1
+
+    assert elenen is not None
+    assert elenen["status"] == "Elendi"
+    assert elenen["rank_number"] is None
+    assert elenen["score"] == 28
+    assert elenen["rsi14"] == pytest.approx(
+        42.50
+    )
+    assert elenen["risk_filter_passed"] == 0
+    assert "Sinyal skoru yetersiz" in (
+        elenen["explanation"]
+    )
+
+
+def test_hata_kaydi_veritabaninda_saklanir(
+    tmp_path: Path,
+) -> None:
+    veritabani = tmp_path / "history.db"
+
+    repository = ScanHistoryRepository(
+        veritabani
+    )
+
+    repository.taramayi_kaydet(
+        sonuc=ornek_filtrelenmis_sonuc(),
+        kriterler=ornek_kriterler(),
+        profil_adi="Dengeli",
+    )
+
+    with closing(veritabani_baglantisi_ac(
+        veritabani
+    )) as baglanti:
+        hata = baglanti.execute(
+            """
+            SELECT *
+            FROM scan_items
+            WHERE symbol = 'HATALI.IS'
+            """
+        ).fetchone()
+
+    assert hata is not None
+    assert hata["status"] == "Hata"
+    assert hata["score"] is None
+    assert hata["closing_price"] is None
+    assert hata["explanation"] == (
+        "Veri bulunamadı."
+    )
+
+
+def test_son_taramalar_yeniden_eskiye_siralanir(
+    tmp_path: Path,
+) -> None:
+    veritabani = tmp_path / "history.db"
+
+    repository = ScanHistoryRepository(
+        veritabani
+    )
+
+    repository.taramayi_kaydet(
+        sonuc=ornek_filtrelenmis_sonuc(),
+        kriterler=ornek_kriterler(),
+        profil_adi="Gevşek",
+        olusturma_zamani=(
+            "2026-07-23T19:00:00+03:00"
+        ),
+    )
+
+    repository.taramayi_kaydet(
+        sonuc=ornek_filtrelenmis_sonuc(),
+        kriterler=ornek_kriterler(),
+        profil_adi="Sıkı",
+        olusturma_zamani=(
+            "2026-07-23T20:00:00+03:00"
+        ),
+    )
+
+    taramalar = repository.son_taramalari_getir(
+        limit=2
+    )
+
+    assert [
+        tarama.tarama_id
+        for tarama in taramalar
+    ] == [
+        2,
+        1,
+    ]
+
+    assert [
+        tarama.profil_adi
+        for tarama in taramalar
+    ] == [
+        "Sıkı",
+        "Gevşek",
+    ]
+
+
+def test_gecersiz_listeleme_limiti_hata_verir(
+    tmp_path: Path,
+) -> None:
+    repository = ScanHistoryRepository(
+        tmp_path / "history.db"
+    )
+
+    with pytest.raises(
+        ValueError,
+        match="pozitif",
+    ):
+        repository.son_taramalari_getir(
+            limit=0
+        )
+
+
+def test_klasor_veritabani_yolu_olarak_kullanilamaz(
+    tmp_path: Path,
+) -> None:
+    with pytest.raises(
+        ScanHistoryError,
+        match="klasör olamaz",
+    ):
+        ScanHistoryRepository(
+            tmp_path
+        )

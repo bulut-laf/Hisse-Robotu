@@ -1,0 +1,10 @@
+ACTIVE_PRODUCTION_FILES=493
+TEST_FILES=718
+EXPLICIT_DEBT_HITS=0
+TESTED_UNCONSUMED_CANDIDATES=164
+CANDIDATE=D:\Projects\Hisse-Robotu\backend\app\decision_support\decision_engine.py TEST_REFS=22
+CANDIDATE=D:\Projects\Hisse-Robotu\backend\app\analysis\ranking_visibility_explanation.py TEST_REFS=13
+CANDIDATE=D:\Projects\Hisse-Robotu\backend\app\funds\f3_production_population.py TEST_REFS=4
+DECISION=TESTED_UNCONSUMED_MODULE_CANDIDATES_FOUND
+NEXT=INSPECT_TOP_CANDIDATE
+PRODUCTION_MUTATION=YOK

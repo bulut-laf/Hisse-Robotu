@@ -1,0 +1,90 @@
+=== HISSE ROBOTU — FAST MOVER GOLDEN CASE EVIDENCE RECOVERY V1 ===
+MODE=READ_ONLY
+PURPOSE=RECOVER_EXISTING_CALIBRATION_EVIDENCE_WITHOUT_BACKFILL
+PRODUCTION_MUTATION=NO
+RANKING_MEMORY_WRITE=NO
+NEW_STORE=NO
+NEW_SCANNER=NO
+NEW_SCORE=NO
+SEARCH_CUTOFF=2026-07-14T16:49:10
+SEARCH_ROOTS=D:\Projects\Hisse-Robotu\data ; D:\Projects\Hisse-Robotu\_discovery ; C:\Users\user\Downloads
+
+=== 1. CANONICAL RANKING MEMORY RAW GOLDEN HISTORY ===
+MEMORY=TGSAS|AS_OF=18/08/2026|RANK=13|SIZE=15|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=TGSAS|AS_OF=24/08/2026|RANK=14|SIZE=15|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=TGSAS|AS_OF=2026-08-25|RANK=13|SIZE=96|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=BAHKM|AS_OF=2026-08-25|RANK=14|SIZE=96|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=BRKVY|AS_OF=2026-08-25|RANK=61|SIZE=96|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=MRGYO|AS_OF=2026-08-25|RANK=71|SIZE=96|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=TGSAS|AS_OF=26/08/2026|RANK=13|SIZE=97|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=BAHKM|AS_OF=26/08/2026|RANK=14|SIZE=97|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=BRKVY|AS_OF=26/08/2026|RANK=62|SIZE=97|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=MRGYO|AS_OF=26/08/2026|RANK=72|SIZE=97|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=BRKVY|AS_OF=27/08/2026|RANK=7|SIZE=111|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=TGSAS|AS_OF=27/08/2026|RANK=13|SIZE=111|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=MRGYO|AS_OF=27/08/2026|RANK=27|SIZE=111|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=BAHKM|AS_OF=27/08/2026|RANK=54|SIZE=111|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=TGSAS|AS_OF=28/08/2026|RANK=9|SIZE=76|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=MRGYO|AS_OF=28/08/2026|RANK=10|SIZE=76|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY=BAHKM|AS_OF=28/08/2026|RANK=20|SIZE=76|SOURCE=Borsa İstanbul güncel CSV|PROFILE=Dengeli
+MEMORY_COUNT_BAHKM=4
+MEMORY_COUNT_TGSAS=6
+MEMORY_COUNT_MRGYO=4
+MEMORY_COUNT_BRKVY=3
+
+=== 2. EXISTING TEXT ARTIFACT MATCHES ===
+--- FILE=data\ranking_memory\rank_observations.jsonl ---
+MATCH=20|{"as_of": "18/08/2026", "profile_name": "Dengeli", "rank": 13, "ranked_universe_size": 15, "symbol": "TGSAS", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=68|{"as_of": "24/08/2026", "profile_name": "Dengeli", "rank": 14, "ranked_universe_size": 15, "symbol": "TGSAS", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=101|{"as_of": "2026-08-25", "profile_name": "Dengeli", "rank": 13, "ranked_universe_size": 96, "symbol": "TGSAS", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=102|{"as_of": "2026-08-25", "profile_name": "Dengeli", "rank": 14, "ranked_universe_size": 96, "symbol": "BAHKM", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=149|{"as_of": "2026-08-25", "profile_name": "Dengeli", "rank": 61, "ranked_universe_size": 96, "symbol": "BRKVY", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=159|{"as_of": "2026-08-25", "profile_name": "Dengeli", "rank": 71, "ranked_universe_size": 96, "symbol": "MRGYO", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=197|{"as_of": "26/08/2026", "profile_name": "Dengeli", "rank": 13, "ranked_universe_size": 97, "symbol": "TGSAS", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=198|{"as_of": "26/08/2026", "profile_name": "Dengeli", "rank": 14, "ranked_universe_size": 97, "symbol": "BAHKM", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=246|{"as_of": "26/08/2026", "profile_name": "Dengeli", "rank": 62, "ranked_universe_size": 97, "symbol": "BRKVY", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=256|{"as_of": "26/08/2026", "profile_name": "Dengeli", "rank": 72, "ranked_universe_size": 97, "symbol": "MRGYO", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=1960|{"as_of": "27/08/2026", "profile_name": "Dengeli", "rank": 7, "ranked_universe_size": 111, "symbol": "BRKVY", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=1964|{"as_of": "27/08/2026", "profile_name": "Dengeli", "rank": 13, "ranked_universe_size": 111, "symbol": "TGSAS", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=1975|{"as_of": "27/08/2026", "profile_name": "Dengeli", "rank": 27, "ranked_universe_size": 111, "symbol": "MRGYO", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=1995|{"as_of": "27/08/2026", "profile_name": "Dengeli", "rank": 54, "ranked_universe_size": 111, "symbol": "BAHKM", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=3704|{"as_of": "28/08/2026", "profile_name": "Dengeli", "rank": 9, "ranked_universe_size": 76, "symbol": "TGSAS", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=3705|{"as_of": "28/08/2026", "profile_name": "Dengeli", "rank": 10, "ranked_universe_size": 76, "symbol": "MRGYO", "universe_source": "Borsa İstanbul güncel CSV"}
+MATCH=3714|{"as_of": "28/08/2026", "profile_name": "Dengeli", "rank": 20, "ranked_universe_size": 76, "symbol": "BAHKM", "universe_source": "Borsa İstanbul güncel CSV"}
+
+--- FILE=_discovery\Hisse-Robotu-Fast-Mover-Golden-Case-Replay-Calibration-V1-20260828-163911.txt ---
+MATCH=82|BAHKM|ROLE=POSITIVE_SUDDEN_MOVER|1S_PERCENTILE=INSUFFICIENT
+MATCH=83|TGSAS|ROLE=POSITIVE_TECHNICAL_STRENGTH|1S_PERCENTILE=INSUFFICIENT
+MATCH=84|MRGYO|ROLE=PERSISTENT_MIGRATION_OVERLAP|1S_PERCENTILE=INSUFFICIENT
+MATCH=85|BRKVY|ROLE=NEGATIVE_CONTROL|1S_PERCENTILE=INSUFFICIENT
+MATCH=89|BAHKM_GAIN_1S=None
+MATCH=90|BRKVY_GAIN_1S=None
+
+--- FILE=_discovery\Hisse-Robotu-Fast-Mover-Watch-Development-Preflight-V1-20260827-235441.txt ---
+
+--- FILE=C:\Users\user\Downloads\Haftalik-On-Yukselis-V1-Rev1-Sonuclar\07_guncel_W2_W3_validated_radar_rev4.csv ---
+
+--- FILE=C:\Users\user\Downloads\Haftalik-On-Yukselis-V1-Rev1-Sonuclar\08_guncel_validated_adaylar_rev4.csv ---
+
+TEXT_ARTIFACT_FILES_WITH_MATCHES=5
+TEXT_EVIDENCE_LINES_BAHKM=6
+TEXT_EVIDENCE_LINES_TGSAS=7
+TEXT_EVIDENCE_LINES_MRGYO=5
+TEXT_EVIDENCE_LINES_BRKVY=5
+
+=== 3. LIKELY BINARY ARTIFACTS (FILENAME ONLY) ===
+BINARY_HINT_COUNT=0
+
+=== 4. EVIDENCE READINESS DECISION ===
+DECISION=RANKING_MEMORY_HISTORY_SUFFICIENT_FOR_AT_LEAST_1S_REPLAY
+NEXT=REBUILD_REPLAY_FROM_EXACT_SNAPSHOT_DATES
+
+=== 5. SAFETY ===
+READ_ONLY=YES
+PRODUCTION_MUTATION=NO
+RANKING_MEMORY_WRITE=NO
+PROFILE_MEMORY_WRITE=NO
+EARLY_VISIBILITY_MUTATION=NO
+MAIN_TOP5_MUTATION=NO
+AL_SAT_MUTATION=NO
+REPORT_ONLY=YES

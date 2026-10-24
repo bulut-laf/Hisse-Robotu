@@ -1,0 +1,2370 @@
+﻿FIN_PROD_V6_LONG_TERM_PREFLIGHT
+
+===== EXISTING_LONG_TERM_ARTIFACTS =====
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V2_TUPRS_MANIFEST.json
+MATCHED=long_term
+status='PASS'
+mode='READ_ONLY_PRODUCTION_EXPANSION_V2'
+schema_version='fin-prod-v2-batch-v1'
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V3_LIVE_BATCH.json
+MATCHED=long_term
+status='PASS'
+mode='READ_ONLY_LIVE_MULTI_SYMBOL_PIPELINE_V3'
+schema_version='fin-prod-v3-live-batch-v1'
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\FIN_PROD_V4_CANONICAL_COVERAGE.json
+MATCHED=governance,long_term
+status='PASS'
+mode='READ_ONLY_CANONICAL_INVESTABILITY_COVERAGE_BRIDGE_V4'
+schema_version='fin-prod-v4-canonical-coverage-v1'
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_canonical_investability_evidence.json
+MATCHED=business_quality,governance,governance_score,long_term
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_acceptance.json
+MATCHED=long_term
+status='PASS'
+mode='READ_ONLY_PRODUCTION_ACCEPTANCE'
+symbol='TUPRS'
+as_of_date='2026-08-04'
+long_term={'symbol': 'TUPRS', 'as_of_date': '2026-08-04', 'score': None, 'label': 'DATA_INSUFFICIENT', 'locked': True, 'components': [{'code': 'FINANCIAL_HEALTH', 'score': '94', 'weight': '0.15', 'reason': 'Finansal sa─Яl─▒k'}, {'code': 'CASH_QUALITY', 'score': '100', 'weight': '0.12', 'reason': 'Nakit ├╝retim kalitesi'}], 'strengths': [], 'risks': ['Uzun d├╢nem i├зin temel kan─▒t eksik'], 'explanation': 'Skor fail-closed kilitlendi.', 'confidence': 'LOW', 'engine_version': 'fin014-v1'}
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_production_closure.json
+MATCHED=business_quality,governance,governance_score,long_term
+status='PASS_CLOSED_WITH_EXPLICIT_BLOCKERS'
+mode='READ_ONLY_INVESTABILITY_PRODUCTION_CLOSURE'
+symbol='TUPRS'
+as_of_date='2026-08-04'
+long_term={'symbol': 'TUPRS', 'as_of_date': '2026-08-04', 'score': None, 'label': 'DATA_INSUFFICIENT', 'locked': True, 'components': [{'code': 'FINANCIAL_HEALTH', 'score': '94', 'weight': '0.15', 'reason': 'Finansal sa─Яl─▒k'}, {'code': 'CASH_QUALITY', 'score': '100', 'weight': '0.12', 'reason': 'Nakit ├╝retim kalitesi'}, {'code': 'GROWTH_DURABILITY', 'score': '70', 'weight': '0.12', 'reason': 'B├╝y├╝me s├╝reklili─Яi'}, {'code': 'GOVERNANCE', 'score': '45', 'weight': '0.08', 'reason': 'Y├╢neti┼Яim'}, {'code': 'VALUATION', 'score': '0', 'weight': '0.12', 'reason': 'De─Яerleme'}, {'code': 'MARGIN_OF_SAFETY', 'score': '0', 'weight': '0.09', 'reason': 'G├╝venlik marj─▒'}], 'strengths': [], 'risks': ['Uzun d├╢nem i├зin temel kan─▒t eksik'], 'explanation': 'Skor fail-closed kilitlendi.', 'confidence': 'LOW', 'engine_version': 'fin014-v1'}
+long_term_coverage='0.68'
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_investability_runtime_wiring.json
+MATCHED=business_quality,governance,governance_score,long_term
+status='PASS'
+mode='READ_ONLY_PRODUCTION_ACCEPTANCE'
+symbol='TUPRS'
+as_of_date='2026-08-04'
+long_term={'symbol': 'TUPRS', 'as_of_date': '2026-08-04', 'score': None, 'label': 'DATA_INSUFFICIENT', 'locked': True, 'components': [{'code': 'GOVERNANCE', 'score': '45', 'weight': '0.08', 'reason': 'Y├╢neti┼Яim'}, {'code': 'VALUATION', 'score': '0', 'weight': '0.12', 'reason': 'De─Яerleme'}, {'code': 'MARGIN_OF_SAFETY', 'score': '0', 'weight': '0.09', 'reason': 'G├╝venlik marj─▒'}], 'strengths': [], 'risks': ['Uzun d├╢nem i├зin temel kan─▒t eksik'], 'explanation': 'Skor fail-closed kilitlendi.', 'confidence': 'LOW', 'engine_version': 'fin014-v1'}
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_long_term_evidence_completion.json
+MATCHED=business_quality,governance,governance_score,long_term
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_market_ownership_acceptance.json
+MATCHED=governance
+status='PASS'
+mode='READ_ONLY_PRODUCTION_ACCEPTANCE'
+symbol='TUPRS'
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence\TUPRS_short_term_canonical_context.json
+MATCHED=long_term
+status='PASS'
+mode='READ_ONLY_EXACT_FIRST_LEGACY_FALLBACK_V5_REV7A'
+symbol='TUPRS'
+as_of_date='2026-08-04'
+schema_version='fin-prod-v5-short-term-canonical-context-v7a'
+---
+ARTIFACT=D:\Projects\Hisse-Robotu\backend\data\financial_intelligence_acceptance_TUPRS_2026_2.json
+MATCHED=governance
+status='PASS'
+mode='READ_ONLY_PRODUCTION_ACCEPTANCE'
+---
+ARTIFACT_HITS=11
+
+===== EXACT_CODE_REFERENCES =====
+FILE=backend\app\analysis\automatic_signal_tracking.py
+TERMS=quality_score
+LINE=206
+FUNCTION=automatic_record_from_values
+ARGS=*, symbol: str, signal_date: date, reference_price: float, decision_class: str, quality_score: int, daily_direction: str, weekly_direction: str, store: SignalOutcomeJsonStore, divergence_type: str='', market_regime: str='', sector: str='', momentum_state: str='', volume_confirmation: bool | None=None, atr_percent: float | None=None, risk_reward_ratio: float | None=None, stop_loss: float | None=None, target_1: float | None=None, target_2: float | None=None, downloader: Callable[..., pd.DataFrame]=yf.download, today: date | None=None
+00202:         symbol=symbol,
+00203:         signal_date=signal_date,
+00204:         reference_price=reference_price,
+00205:         decision_class=decision_class,
+00206:         quality_score=quality_score,
+00207:         daily_direction=daily_direction,
+00208:         weekly_direction=weekly_direction,
+00209:         divergence_type=divergence_type,
+00210:         market_regime=market_regime,
+00211:         sector=sector,
+00212:         momentum_state=momentum_state,
+---
+FILE=backend\app\analysis\canonical_investability_evidence.py
+TERMS=governance,governance_score
+LINE=123
+FUNCTION=build_canonical_evidence
+ARGS=*, financial_acceptance: dict[str, Any], fair_value_acceptance: dict[str, Any], market_ownership_acceptance: dict[str, Any] | None=None
+00119:         ),
+00120:         "margin_of_safety_score": margin_of_safety_score_from_result(
+00121:             current_margin_of_safety=current_mos
+00122:         ),
+00123:         "governance_score": governance_score_from_ownership(ownership),
+00124:         "market_context": asdict(MarketContextInput()),
+00125:         "long_term_context": asdict(LongTermContextInput(
+00126:             governance=governance_score_from_ownership(ownership),
+00127:         )),
+00128:         "flags": [
+00129:             "TECHNICAL_MARKET_CONTEXT_NOT_SYNTHESIZED",
+---
+FILE=backend\app\analysis\canonical_investability_evidence.py
+TERMS=long_term
+LINE=125
+FUNCTION=build_canonical_evidence
+ARGS=*, financial_acceptance: dict[str, Any], fair_value_acceptance: dict[str, Any], market_ownership_acceptance: dict[str, Any] | None=None
+00121:             current_margin_of_safety=current_mos
+00122:         ),
+00123:         "governance_score": governance_score_from_ownership(ownership),
+00124:         "market_context": asdict(MarketContextInput()),
+00125:         "long_term_context": asdict(LongTermContextInput(
+00126:             governance=governance_score_from_ownership(ownership),
+00127:         )),
+00128:         "flags": [
+00129:             "TECHNICAL_MARKET_CONTEXT_NOT_SYNTHESIZED",
+00130:             "BUSINESS_QUALITY_NOT_SYNTHESIZED",
+00131:             "GROWTH_DURABILITY_NOT_SYNTHESIZED",
+---
+FILE=backend\app\analysis\canonical_investability_evidence.py
+TERMS=business_quality
+LINE=130
+FUNCTION=build_canonical_evidence
+ARGS=*, financial_acceptance: dict[str, Any], fair_value_acceptance: dict[str, Any], market_ownership_acceptance: dict[str, Any] | None=None
+00126:             governance=governance_score_from_ownership(ownership),
+00127:         )),
+00128:         "flags": [
+00129:             "TECHNICAL_MARKET_CONTEXT_NOT_SYNTHESIZED",
+00130:             "BUSINESS_QUALITY_NOT_SYNTHESIZED",
+00131:             "GROWTH_DURABILITY_NOT_SYNTHESIZED",
+00132:             "SECTOR_RISK_NOT_SYNTHESIZED",
+00133:             "CAPITAL_EFFICIENCY_NOT_SYNTHESIZED",
+00134:         ],
+00135:         "engine_version": "fin-prod-006-v1",
+00136:     }
+---
+FILE=backend\app\analysis\canonical_investability_evidence.py
+TERMS=governance
+LINE=77
+FUNCTION=governance_score_from_ownership
+ARGS=ownership: dict[str, Any]
+00073:     Conservative categorical mapping from canonical ownership assessment only.
+00074:     """
+00075:     if not ownership:
+00076:         return None
+00077:     concentration = str(ownership.get("governance_concentration") or "").upper()
+00078:     dilution = str(ownership.get("dilution_risk") or "").upper()
+00079: 
+00080:     base = {
+00081:         "LOW": Decimal("80"),
+00082:         "MODERATE": Decimal("65"),
+00083:         "ELEVATED": Decimal("45"),
+---
+FILE=backend\app\analysis\daily_buy_decision_recommendation_governance.py
+TERMS=governance
+LINE=17
+FUNCTION=<module/class-body>
+00013: APPROVED = "ONAYLANDI"
+00014: REJECTED = "REDDED─░LD─░"
+00015: VALID_STATUSES = (PENDING, APPROVED, REJECTED)
+00016: 
+00017: DEFAULT_GOVERNANCE_PATH = Path("data/daily_buy_decision_recommendation_governance.json")
+00018: 
+00019: 
+00020: @dataclass(frozen=True)
+00021: class RecommendationGovernanceRecord:
+00022:     recommendation_id: str
+00023:     dimension: str
+---
+FILE=backend\app\analysis\daily_buy_decision_recommendation_governance.py
+TERMS=governance
+LINE=89
+FUNCTION=review_governance_record
+ARGS=records: Iterable[RecommendationGovernanceRecord], recommendation_id_value: str, status: str, *, now: datetime | None=None
+00085:     *,
+00086:     now: datetime | None = None,
+00087: ) -> tuple[RecommendationGovernanceRecord, ...]:
+00088:     if status not in (APPROVED, REJECTED):
+00089:         raise ValueError("Governance review status ONAYLANDI veya REDDED─░LD─░ olmal─▒d─▒r.")
+00090: 
+00091:     timestamp = (now or datetime.now(timezone.utc)).isoformat()
+00092:     found = False
+00093:     updated: list[RecommendationGovernanceRecord] = []
+00094:     for item in records:
+00095:         if item.recommendation_id == recommendation_id_value:
+---
+FILE=backend\app\analysis\daily_buy_decision_recommendation_governance.py
+TERMS=governance
+LINE=102
+FUNCTION=review_governance_record
+ARGS=records: Iterable[RecommendationGovernanceRecord], recommendation_id_value: str, status: str, *, now: datetime | None=None
+00098:         else:
+00099:             updated.append(item)
+00100: 
+00101:     if not found:
+00102:         raise ValueError("Governance recommendation id bulunamad─▒.")
+00103:     return tuple(updated)
+00104: 
+00105: 
+00106: class RecommendationGovernanceJsonStore:
+00107:     def __init__(self, path: Path | str = DEFAULT_GOVERNANCE_PATH) -> None:
+00108:         self.path = Path(path)
+---
+FILE=backend\app\analysis\daily_buy_decision_recommendation_governance.py
+TERMS=governance
+LINE=115
+FUNCTION=load
+ARGS=self
+00111:         if not self.path.exists():
+00112:             return ()
+00113:         payload = json.loads(self.path.read_text(encoding="utf-8"))
+00114:         if not isinstance(payload, list):
+00115:             raise ValueError("Governance store list bi├зiminde olmal─▒d─▒r.")
+00116:         records: list[RecommendationGovernanceRecord] = []
+00117:         for item in payload:
+00118:             if not isinstance(item, dict):
+00119:                 raise ValueError("Governance store kayd─▒ object bi├зiminde olmal─▒d─▒r.")
+00120:             record = RecommendationGovernanceRecord(**item)
+00121:             if record.status not in VALID_STATUSES:
+---
+FILE=backend\app\analysis\daily_buy_decision_recommendation_governance.py
+TERMS=governance
+LINE=119
+FUNCTION=load
+ARGS=self
+00115:             raise ValueError("Governance store list bi├зiminde olmal─▒d─▒r.")
+00116:         records: list[RecommendationGovernanceRecord] = []
+00117:         for item in payload:
+00118:             if not isinstance(item, dict):
+00119:                 raise ValueError("Governance store kayd─▒ object bi├зiminde olmal─▒d─▒r.")
+00120:             record = RecommendationGovernanceRecord(**item)
+00121:             if record.status not in VALID_STATUSES:
+00122:                 raise ValueError("Governance store ge├зersiz durum i├зeriyor.")
+00123:             records.append(record)
+00124:         return tuple(records)
+00125: 
+---
+FILE=backend\app\analysis\daily_buy_decision_recommendation_governance.py
+TERMS=governance
+LINE=122
+FUNCTION=load
+ARGS=self
+00118:             if not isinstance(item, dict):
+00119:                 raise ValueError("Governance store kayd─▒ object bi├зiminde olmal─▒d─▒r.")
+00120:             record = RecommendationGovernanceRecord(**item)
+00121:             if record.status not in VALID_STATUSES:
+00122:                 raise ValueError("Governance store ge├зersiz durum i├зeriyor.")
+00123:             records.append(record)
+00124:         return tuple(records)
+00125: 
+00126:     def save(self, records: Iterable[RecommendationGovernanceRecord]) -> None:
+00127:         values = tuple(records)
+00128:         self.path.parent.mkdir(parents=True, exist_ok=True)
+---
+FILE=backend\app\analysis\financial_health.py
+TERMS=long_term
+LINE=198
+FUNCTION=calculate_financial_health
+ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+00194:     noncurrent_liabilities_p = _latest_current_instant(points, "NONCURRENT_LIABILITIES")
+00195:     equity_p = _latest_current_instant(points, "TOTAL_EQUITY")
+00196:     st_debt_p = _latest_current_instant(points, "SHORT_TERM_BORROWINGS")
+00197:     current_lt_debt_p = _latest_current_instant(points, "CURRENT_PORTION_LT_DEBT")
+00198:     lt_debt_p = _latest_current_instant(points, "LONG_TERM_BORROWINGS")
+00199: 
+00200:     revenue_p = _latest_current_ytd(points, "REVENUE")
+00201:     gross_profit_p = _latest_current_ytd(points, "GROSS_PROFIT")
+00202:     operating_profit_p = _latest_current_ytd(points, "OPERATING_PROFIT")
+00203:     net_income_p = _latest_current_ytd(points, "NET_INCOME")
+00204:     ocf_p = _latest_current_ytd(points, "OPERATING_CASH_FLOW")
+---
+FILE=backend\app\analysis\financial_intelligence_acceptance.py
+TERMS=governance
+LINE=127
+FUNCTION=run_financial_intelligence_acceptance
+ARGS=xls_path: str | Path, *, as_of: datetime | None=None, price: Decimal | None=None, total_shares: Decimal | None=None, diluted_shares: Decimal | None=None, free_float_ratio: Decimal | None=None, effective_free_float_ratio: Decimal | None=None, major_shareholder_ratio: Decimal | None=None
+00123:         "acceptance_checks": required,
+00124:         "limitations": [
+00125:             "Fair value / DCF is not generated without explicit forecast assumptions.",
+00126:             "Short-term investability is not generated without market/technical context.",
+00127:             "Long-term investability is not generated without business-quality/governance/growth context.",
+00128:             "Missing inputs are fail-closed; no values are invented.",
+00129:         ],
+00130:     })
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=9
+FUNCTION=<module/class-body>
+00005: from typing import Any
+00006: import json
+00007: 
+00008: SHORT_TERM_BLOCKER = "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"
+00009: LONG_TERM_BLOCKER = "LONG_TERM_CANONICAL_COVERAGE"
+00010: 
+00011: SHORT_TERM_FILE = "{symbol}_short_term_canonical_context.json"
+00012: LONG_TERM_FILE = "{symbol}_long_term_canonical_coverage.json"
+00013: 
+00014: PASS_STATUSES = {"PASS", "PRESENT", "VALID", "READY", "OK"}
+00015: 
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=12
+FUNCTION=<module/class-body>
+00008: SHORT_TERM_BLOCKER = "SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT"
+00009: LONG_TERM_BLOCKER = "LONG_TERM_CANONICAL_COVERAGE"
+00010: 
+00011: SHORT_TERM_FILE = "{symbol}_short_term_canonical_context.json"
+00012: LONG_TERM_FILE = "{symbol}_long_term_canonical_coverage.json"
+00013: 
+00014: PASS_STATUSES = {"PASS", "PRESENT", "VALID", "READY", "OK"}
+00015: 
+00016: 
+00017: @dataclass(frozen=True)
+00018: class CoverageArtifact:
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=31
+FUNCTION=<module/class-body>
+00027: @dataclass(frozen=True)
+00028: class SymbolCoverage:
+00029:     symbol: str
+00030:     short_term: CoverageArtifact
+00031:     long_term: CoverageArtifact
+00032:     unresolved_blockers: tuple[str, ...]
+00033:     coverage_status: str
+00034: 
+00035: 
+00036: def _load_json(path: Path) -> dict[str, Any] | None:
+00037:     try:
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=211
+FUNCTION=inspect_symbol_coverage
+ARGS=*, repo: str | Path, symbol: str
+00207: def inspect_symbol_coverage(*, repo: str | Path, symbol: str) -> SymbolCoverage:
+00208:     symbol = str(symbol).upper().strip()
+00209:     root = Path(repo) / "backend" / "data" / "financial_intelligence"
+00210:     short_term = _validate_short_term(root / SHORT_TERM_FILE.format(symbol=symbol), symbol)
+00211:     long_term = _validate_long_term(root / LONG_TERM_FILE.format(symbol=symbol), symbol)
+00212: 
+00213:     blockers: list[str] = []
+00214:     if short_term.status != "PASS":
+00215:         blockers.append(SHORT_TERM_BLOCKER)
+00216:     if long_term.status != "PASS":
+00217:         blockers.append(LONG_TERM_BLOCKER)
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=business_quality
+LINE=189
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00185:         missing.append("canonical")
+00186:     if not str(payload.get("as_of_date") or "").strip():
+00187:         missing.append("as_of_date")
+00188:     if not _status_pass(payload.get("business_quality")):
+00189:         missing.append("business_quality")
+00190:     if not _status_pass(payload.get("governance")):
+00191:         missing.append("governance")
+00192:     if not _status_pass(payload.get("growth_context")):
+00193:         missing.append("growth_context")
+00194:     if not _status_pass(payload.get("data_quality")):
+00195:         missing.append("data_quality")
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=governance
+LINE=191
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00187:         missing.append("as_of_date")
+00188:     if not _status_pass(payload.get("business_quality")):
+00189:         missing.append("business_quality")
+00190:     if not _status_pass(payload.get("governance")):
+00191:         missing.append("governance")
+00192:     if not _status_pass(payload.get("growth_context")):
+00193:         missing.append("growth_context")
+00194:     if not _status_pass(payload.get("data_quality")):
+00195:         missing.append("data_quality")
+00196: 
+00197:     return CoverageArtifact(
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=growth_context
+LINE=193
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00189:         missing.append("business_quality")
+00190:     if not _status_pass(payload.get("governance")):
+00191:         missing.append("governance")
+00192:     if not _status_pass(payload.get("growth_context")):
+00193:         missing.append("growth_context")
+00194:     if not _status_pass(payload.get("data_quality")):
+00195:         missing.append("data_quality")
+00196: 
+00197:     return CoverageArtifact(
+00198:         kind="LONG_TERM",
+00199:         path=str(path),
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=198
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00194:     if not _status_pass(payload.get("data_quality")):
+00195:         missing.append("data_quality")
+00196: 
+00197:     return CoverageArtifact(
+00198:         kind="LONG_TERM",
+00199:         path=str(path),
+00200:         status="PASS" if not missing else "BLOCKED",
+00201:         as_of_date=str(payload.get("as_of_date") or "") or None,
+00202:         warnings=tuple(str(x) for x in payload.get("warnings") or ()),
+00203:         missing_fields=tuple(missing),
+00204:     )
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=216
+FUNCTION=inspect_symbol_coverage
+ARGS=*, repo: str | Path, symbol: str
+00212: 
+00213:     blockers: list[str] = []
+00214:     if short_term.status != "PASS":
+00215:         blockers.append(SHORT_TERM_BLOCKER)
+00216:     if long_term.status != "PASS":
+00217:         blockers.append(LONG_TERM_BLOCKER)
+00218: 
+00219:     status = "READY_FULL_CANONICAL_COVERAGE" if not blockers else "BLOCKED_CANONICAL_COVERAGE"
+00220:     return SymbolCoverage(
+00221:         symbol=symbol,
+00222:         short_term=short_term,
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=223
+FUNCTION=inspect_symbol_coverage
+ARGS=*, repo: str | Path, symbol: str
+00219:     status = "READY_FULL_CANONICAL_COVERAGE" if not blockers else "BLOCKED_CANONICAL_COVERAGE"
+00220:     return SymbolCoverage(
+00221:         symbol=symbol,
+00222:         short_term=short_term,
+00223:         long_term=long_term,
+00224:         unresolved_blockers=tuple(blockers),
+00225:         coverage_status=status,
+00226:     )
+00227: 
+00228: 
+00229: def enrich_v3_batch(*, repo: str | Path, v3_batch: dict[str, Any]) -> dict[str, Any]:
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=governance
+LINE=274
+FUNCTION=enrich_v3_batch
+ARGS=*, repo: str | Path, v3_batch: dict[str, Any]
+00270:         "blocked_or_incomplete_symbols": coverage_blocked,
+00271:         "production_rules": [
+00272:             "V3 output is consumed read-only; V2/V3 code is not mutated.",
+00273:             "Short-term coverage requires explicit canonical technical and market context.",
+00274:             "Long-term coverage requires explicit canonical business quality, governance and growth context.",
+00275:             "Missing, invalid or partial evidence stays blocked; it never becomes zero or PASS.",
+00276:             "No score, forecast, AL/SAT, scanner, ranking or portfolio output is created or mutated.",
+00277:             "READY_FULL_DECISION_SUPPORT is a data-coverage state, not a trade recommendation.",
+00278:         ],
+00279:         "schema_version": "fin-prod-v4-canonical-coverage-v1",
+00280:     }
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=163
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00159: 
+00160: def _validate_long_term(path: Path, symbol: str) -> CoverageArtifact:
+00161:     if not path.exists():
+00162:         return CoverageArtifact(
+00163:             kind="LONG_TERM",
+00164:             path=str(path),
+00165:             status="MISSING",
+00166:             as_of_date=None,
+00167:             warnings=(),
+00168:             missing_fields=("artifact",),
+00169:         )
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=long_term
+LINE=173
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00169:         )
+00170:     payload = _load_json(path)
+00171:     if payload is None:
+00172:         return CoverageArtifact(
+00173:             kind="LONG_TERM",
+00174:             path=str(path),
+00175:             status="INVALID_JSON",
+00176:             as_of_date=None,
+00177:             warnings=("INVALID_JSON",),
+00178:             missing_fields=(),
+00179:         )
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=business_quality
+LINE=188
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00184:     if not _canonical_ok(payload):
+00185:         missing.append("canonical")
+00186:     if not str(payload.get("as_of_date") or "").strip():
+00187:         missing.append("as_of_date")
+00188:     if not _status_pass(payload.get("business_quality")):
+00189:         missing.append("business_quality")
+00190:     if not _status_pass(payload.get("governance")):
+00191:         missing.append("governance")
+00192:     if not _status_pass(payload.get("growth_context")):
+00193:         missing.append("growth_context")
+00194:     if not _status_pass(payload.get("data_quality")):
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=governance
+LINE=190
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00186:     if not str(payload.get("as_of_date") or "").strip():
+00187:         missing.append("as_of_date")
+00188:     if not _status_pass(payload.get("business_quality")):
+00189:         missing.append("business_quality")
+00190:     if not _status_pass(payload.get("governance")):
+00191:         missing.append("governance")
+00192:     if not _status_pass(payload.get("growth_context")):
+00193:         missing.append("growth_context")
+00194:     if not _status_pass(payload.get("data_quality")):
+00195:         missing.append("data_quality")
+00196: 
+---
+FILE=backend\app\analysis\financial_intelligence_canonical_coverage_v4.py
+TERMS=growth_context
+LINE=192
+FUNCTION=_validate_long_term
+ARGS=path: Path, symbol: str
+00188:     if not _status_pass(payload.get("business_quality")):
+00189:         missing.append("business_quality")
+00190:     if not _status_pass(payload.get("governance")):
+00191:         missing.append("governance")
+00192:     if not _status_pass(payload.get("growth_context")):
+00193:         missing.append("growth_context")
+00194:     if not _status_pass(payload.get("data_quality")):
+00195:         missing.append("data_quality")
+00196: 
+00197:     return CoverageArtifact(
+00198:         kind="LONG_TERM",
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=long_term
+LINE=50
+FUNCTION=run_investability_acceptance
+ARGS=config: dict[str, Any]
+00046:     if not symbol: raise InvestabilityAcceptanceError("symbol is required")
+00047:     as_of_date = date.fromisoformat(str(config["as_of_date"]))
+00048:     as_of = datetime.fromisoformat(str(config.get("as_of", as_of_date.isoformat()+"T23:59:59")))
+00049:     sraw = config.get("short_term") or {}
+00050:     lraw = config.get("long_term") or {}
+00051:     mctx = _market(sraw.get("market"))
+00052:     lctx = _long(lraw.get("context"))
+00053: 
+00054:     short = calculate_short_term_investability(
+00055:         symbol, as_of_date,
+00056:         financial_health_score=_i(config.get("financial_health_score")),
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=long_term
+LINE=96
+FUNCTION=run_investability_acceptance
+ARGS=config: dict[str, Any]
+00092:         "mode":"READ_ONLY_PRODUCTION_ACCEPTANCE",
+00093:         "symbol":symbol,
+00094:         "as_of_date":as_of_date,
+00095:         "short_term":short,
+00096:         "long_term":long,
+00097:         "panel":panel,
+00098:         "input_transparency":{
+00099:             "short_term_market_context_supplied": any(x is not None for x in (
+00100:                 mctx.technical_trend,mctx.relative_strength,mctx.volume_liquidity,
+00101:                 mctx.catalyst,mctx.entry_risk,mctx.earnings_surprise)),
+00102:             "long_term_context_supplied": any(x is not None for x in (
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=long_term
+LINE=102
+FUNCTION=run_investability_acceptance
+ARGS=config: dict[str, Any]
+00098:         "input_transparency":{
+00099:             "short_term_market_context_supplied": any(x is not None for x in (
+00100:                 mctx.technical_trend,mctx.relative_strength,mctx.volume_liquidity,
+00101:                 mctx.catalyst,mctx.entry_risk,mctx.earnings_surprise)),
+00102:             "long_term_context_supplied": any(x is not None for x in (
+00103:                 lctx.business_quality,lctx.growth_durability,lctx.governance,lctx.sector_risk)),
+00104:         },
+00105:         "production_rules":[
+00106:             "Short-term and long-term investability are separate outputs.",
+00107:             "Missing inputs remain missing; they are not converted to zero.",
+00108:             "LOCKED is valid when required context is insufficient.",
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=business_quality
+LINE=38
+FUNCTION=_long
+ARGS=raw
+00034: 
+00035: def _long(raw):
+00036:     raw = raw or {}
+00037:     return LongTermContextInput(
+00038:         business_quality=_d(raw.get("business_quality")),
+00039:         growth_durability=_d(raw.get("growth_durability")),
+00040:         governance=_d(raw.get("governance")),
+00041:         sector_risk=_d(raw.get("sector_risk")),
+00042:     )
+00043: 
+00044: def run_investability_acceptance(config: dict[str, Any]) -> dict[str, Any]:
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=governance
+LINE=40
+FUNCTION=_long
+ARGS=raw
+00036:     raw = raw or {}
+00037:     return LongTermContextInput(
+00038:         business_quality=_d(raw.get("business_quality")),
+00039:         growth_durability=_d(raw.get("growth_durability")),
+00040:         governance=_d(raw.get("governance")),
+00041:         sector_risk=_d(raw.get("sector_risk")),
+00042:     )
+00043: 
+00044: def run_investability_acceptance(config: dict[str, Any]) -> dict[str, Any]:
+00045:     symbol = str(config.get("symbol","")).strip().upper()
+00046:     if not symbol: raise InvestabilityAcceptanceError("symbol is required")
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=quality_score
+LINE=66
+FUNCTION=run_investability_acceptance
+ARGS=config: dict[str, Any]
+00062:     long = calculate_long_term_investability(
+00063:         symbol, as_of_date,
+00064:         financial_health_score=_i(config.get("financial_health_score")),
+00065:         financial_risk_score=_i(lraw.get("financial_risk_score")),
+00066:         cash_quality_score=_d(lraw.get("cash_quality_score")),
+00067:         capital_efficiency_score=_d(lraw.get("capital_efficiency_score")),
+00068:         valuation_score=_d(lraw.get("valuation_score")),
+00069:         margin_of_safety_score=_d(lraw.get("margin_of_safety_score")),
+00070:         context=lctx,
+00071:     )
+00072:     v = config.get("valuation") or {}
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=business_quality
+LINE=103
+FUNCTION=run_investability_acceptance
+ARGS=config: dict[str, Any]
+00099:             "short_term_market_context_supplied": any(x is not None for x in (
+00100:                 mctx.technical_trend,mctx.relative_strength,mctx.volume_liquidity,
+00101:                 mctx.catalyst,mctx.entry_risk,mctx.earnings_surprise)),
+00102:             "long_term_context_supplied": any(x is not None for x in (
+00103:                 lctx.business_quality,lctx.growth_durability,lctx.governance,lctx.sector_risk)),
+00104:         },
+00105:         "production_rules":[
+00106:             "Short-term and long-term investability are separate outputs.",
+00107:             "Missing inputs remain missing; they are not converted to zero.",
+00108:             "LOCKED is valid when required context is insufficient.",
+00109:             "Read-only: no AL/SAT, scanner, ranking, portfolio or score mutation."
+---
+FILE=backend\app\analysis\financial_intelligence_investability_acceptance.py
+TERMS=governance
+LINE=103
+FUNCTION=run_investability_acceptance
+ARGS=config: dict[str, Any]
+00099:             "short_term_market_context_supplied": any(x is not None for x in (
+00100:                 mctx.technical_trend,mctx.relative_strength,mctx.volume_liquidity,
+00101:                 mctx.catalyst,mctx.entry_risk,mctx.earnings_surprise)),
+00102:             "long_term_context_supplied": any(x is not None for x in (
+00103:                 lctx.business_quality,lctx.growth_durability,lctx.governance,lctx.sector_risk)),
+00104:         },
+00105:         "production_rules":[
+00106:             "Short-term and long-term investability are separate outputs.",
+00107:             "Missing inputs remain missing; they are not converted to zero.",
+00108:             "LOCKED is valid when required context is insufficient.",
+00109:             "Read-only: no AL/SAT, scanner, ranking, portfolio or score mutation."
+---
+FILE=backend\app\analysis\financial_intelligence_panel.py
+TERMS=long_term
+LINE=51
+FUNCTION=build_financial_intelligence_panel
+ARGS=*, symbol: str, as_of: datetime, financial_health_score: int | None, financial_health_grade: str, financial_risk: str, short_term: InvestabilityResult, long_term: InvestabilityResult, current_price: Decimal | None=None, bear_value: Decimal | None=None, base_value: Decimal | None=None, bull_value: Decimal | None=None, valuation_status: str | None=None, margin_of_safety_status: str | None=None, confidence: str='LOW', extra_strengths: tuple[str, ...]=(), extra_risks: tuple[str, ...]=(), what_to_watch_next: tuple[str, ...]=()
+00047:         upside_downside_to_base=upside,
+00048:         margin_of_safety_status=margin_of_safety_status,
+00049:         short_term_score=short_term.score,
+00050:         short_term_label=short_term.label,
+00051:         long_term_score=long_term.score,
+00052:         long_term_label=long_term.label,
+00053:         confidence=confidence,
+00054:         strengths=strengths,
+00055:         risks=risks,
+00056:         what_to_watch_next=what_to_watch_next,
+00057:         read_only=True,
+---
+FILE=backend\app\analysis\financial_intelligence_panel.py
+TERMS=long_term
+LINE=52
+FUNCTION=build_financial_intelligence_panel
+ARGS=*, symbol: str, as_of: datetime, financial_health_score: int | None, financial_health_grade: str, financial_risk: str, short_term: InvestabilityResult, long_term: InvestabilityResult, current_price: Decimal | None=None, bear_value: Decimal | None=None, base_value: Decimal | None=None, bull_value: Decimal | None=None, valuation_status: str | None=None, margin_of_safety_status: str | None=None, confidence: str='LOW', extra_strengths: tuple[str, ...]=(), extra_risks: tuple[str, ...]=(), what_to_watch_next: tuple[str, ...]=()
+00048:         margin_of_safety_status=margin_of_safety_status,
+00049:         short_term_score=short_term.score,
+00050:         short_term_label=short_term.label,
+00051:         long_term_score=long_term.score,
+00052:         long_term_label=long_term.label,
+00053:         confidence=confidence,
+00054:         strengths=strengths,
+00055:         risks=risks,
+00056:         what_to_watch_next=what_to_watch_next,
+00057:         read_only=True,
+00058:     )
+---
+FILE=backend\app\analysis\financial_intelligence_panel.py
+TERMS=long_term
+LINE=33
+FUNCTION=build_financial_intelligence_panel
+ARGS=*, symbol: str, as_of: datetime, financial_health_score: int | None, financial_health_grade: str, financial_risk: str, short_term: InvestabilityResult, long_term: InvestabilityResult, current_price: Decimal | None=None, bear_value: Decimal | None=None, base_value: Decimal | None=None, bull_value: Decimal | None=None, valuation_status: str | None=None, margin_of_safety_status: str | None=None, confidence: str='LOW', extra_strengths: tuple[str, ...]=(), extra_risks: tuple[str, ...]=(), what_to_watch_next: tuple[str, ...]=()
+00029:     upside = None
+00030:     if current_price is not None and base_value is not None and current_price > 0:
+00031:         upside = (base_value / current_price) - Decimal("1")
+00032: 
+00033:     strengths = tuple(dict.fromkeys((*short_term.strengths, *long_term.strengths, *extra_strengths)))
+00034:     risks = tuple(dict.fromkeys((*short_term.risks, *long_term.risks, *extra_risks)))
+00035: 
+00036:     return IntelligencePanelPayload(
+00037:         symbol=symbol,
+00038:         as_of=as_of,
+00039:         financial_health_score=financial_health_score,
+---
+FILE=backend\app\analysis\financial_intelligence_panel.py
+TERMS=long_term
+LINE=34
+FUNCTION=build_financial_intelligence_panel
+ARGS=*, symbol: str, as_of: datetime, financial_health_score: int | None, financial_health_grade: str, financial_risk: str, short_term: InvestabilityResult, long_term: InvestabilityResult, current_price: Decimal | None=None, bear_value: Decimal | None=None, base_value: Decimal | None=None, bull_value: Decimal | None=None, valuation_status: str | None=None, margin_of_safety_status: str | None=None, confidence: str='LOW', extra_strengths: tuple[str, ...]=(), extra_risks: tuple[str, ...]=(), what_to_watch_next: tuple[str, ...]=()
+00030:     if current_price is not None and base_value is not None and current_price > 0:
+00031:         upside = (base_value / current_price) - Decimal("1")
+00032: 
+00033:     strengths = tuple(dict.fromkeys((*short_term.strengths, *long_term.strengths, *extra_strengths)))
+00034:     risks = tuple(dict.fromkeys((*short_term.risks, *long_term.risks, *extra_risks)))
+00035: 
+00036:     return IntelligencePanelPayload(
+00037:         symbol=symbol,
+00038:         as_of=as_of,
+00039:         financial_health_score=financial_health_score,
+00040:         financial_health_grade=financial_health_grade,
+---
+FILE=backend\app\analysis\financial_intelligence_production_v2.py
+TERMS=governance
+LINE=33
+FUNCTION=<module/class-body>
+00029:         "cyclicality_default": "MEDIUM",
+00030:     },
+00031:     "HOLDING": {
+00032:         "valuation_models": ("SOTP", "NAV_DISCOUNT"),
+00033:         "required_focus": ("subsidiary_value", "holding_discount", "net_cash_debt", "governance"),
+00034:         "cyclicality_default": "MEDIUM",
+00035:     },
+00036:     "UTILITY_ENERGY": {
+00037:         "valuation_models": ("DCF_FCFF", "EV_EBITDA", "REGULATED_ASSET_BASE_WHERE_AVAILABLE"),
+00038:         "required_focus": ("regulated_returns", "capex", "debt", "cash_flow_visibility"),
+00039:         "cyclicality_default": "LOW",
+---
+FILE=backend\app\analysis\financial_risk_flags.py
+TERMS=long_term
+LINE=150
+FUNCTION=calculate_financial_risk_flags
+ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+00146: 
+00147:     # Current instant balance-sheet facts.
+00148:     instant_codes = (
+00149:         "CASH_EQUIVALENTS", "CURRENT_ASSETS", "TRADE_RECEIVABLES", "INVENTORIES",
+00150:         "SHORT_TERM_BORROWINGS", "CURRENT_PORTION_LONG_TERM_DEBT", "CURRENT_LIABILITIES",
+00151:         "LONG_TERM_BORROWINGS", "TOTAL_EQUITY",
+00152:     )
+00153:     cur_i = {c: _latest(pts, c, "INSTANT", "CURRENT_INSTANT") or _latest(pts, c, "INSTANT") for c in instant_codes}
+00154:     prev_i = {c: _prior_instant(pts, cur_i[c], c) for c in instant_codes}
+00155:     prev_y_i = {c: _prior_year_same_instant(pts, cur_i[c], c) for c in instant_codes}
+00156: 
+---
+FILE=backend\app\analysis\financial_risk_flags.py
+TERMS=long_term
+LINE=151
+FUNCTION=calculate_financial_risk_flags
+ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+00147:     # Current instant balance-sheet facts.
+00148:     instant_codes = (
+00149:         "CASH_EQUIVALENTS", "CURRENT_ASSETS", "TRADE_RECEIVABLES", "INVENTORIES",
+00150:         "SHORT_TERM_BORROWINGS", "CURRENT_PORTION_LONG_TERM_DEBT", "CURRENT_LIABILITIES",
+00151:         "LONG_TERM_BORROWINGS", "TOTAL_EQUITY",
+00152:     )
+00153:     cur_i = {c: _latest(pts, c, "INSTANT", "CURRENT_INSTANT") or _latest(pts, c, "INSTANT") for c in instant_codes}
+00154:     prev_i = {c: _prior_instant(pts, cur_i[c], c) for c in instant_codes}
+00155:     prev_y_i = {c: _prior_year_same_instant(pts, cur_i[c], c) for c in instant_codes}
+00156: 
+00157:     # Current YTD and comparable prior-year durations.
+---
+FILE=backend\app\analysis\financial_risk_flags.py
+TERMS=long_term
+LINE=167
+FUNCTION=calculate_financial_risk_flags
+ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+00163:     current_assets = _v(cur_i["CURRENT_ASSETS"])
+00164:     current_liabilities = _v(cur_i["CURRENT_LIABILITIES"])
+00165:     equity = _v(cur_i["TOTAL_EQUITY"])
+00166:     st_debt_parts = (_v(cur_i["SHORT_TERM_BORROWINGS"]), _v(cur_i["CURRENT_PORTION_LONG_TERM_DEBT"]))
+00167:     lt_debt = _v(cur_i["LONG_TERM_BORROWINGS"])
+00168:     st_debt = sum((x for x in st_debt_parts if x is not None), ZERO) if any(x is not None for x in st_debt_parts) else None
+00169:     financial_debt = (st_debt + lt_debt) if st_debt is not None and lt_debt is not None else None
+00170:     net_debt = financial_debt - cash if financial_debt is not None and cash is not None else None
+00171: 
+00172:     prev_cash = _v(prev_i["CASH_EQUIVALENTS"])
+00173:     prev_st_parts = (_v(prev_i["SHORT_TERM_BORROWINGS"]), _v(prev_i["CURRENT_PORTION_LONG_TERM_DEBT"]))
+---
+FILE=backend\app\analysis\financial_risk_flags.py
+TERMS=long_term
+LINE=174
+FUNCTION=calculate_financial_risk_flags
+ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+00170:     net_debt = financial_debt - cash if financial_debt is not None and cash is not None else None
+00171: 
+00172:     prev_cash = _v(prev_i["CASH_EQUIVALENTS"])
+00173:     prev_st_parts = (_v(prev_i["SHORT_TERM_BORROWINGS"]), _v(prev_i["CURRENT_PORTION_LONG_TERM_DEBT"]))
+00174:     prev_lt_debt = _v(prev_i["LONG_TERM_BORROWINGS"])
+00175:     prev_st_debt = sum((x for x in prev_st_parts if x is not None), ZERO) if any(x is not None for x in prev_st_parts) else None
+00176:     prev_financial_debt = (prev_st_debt + prev_lt_debt) if prev_st_debt is not None and prev_lt_debt is not None else None
+00177:     prev_net_debt = prev_financial_debt - prev_cash if prev_financial_debt is not None and prev_cash is not None else None
+00178: 
+00179:     revenue = _v(cur_d["REVENUE"])
+00180:     prev_revenue = _v(prev_d["REVENUE"])
+---
+FILE=backend\app\analysis\financial_risk_flags.py
+TERMS=long_term
+LINE=166
+FUNCTION=calculate_financial_risk_flags
+ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+00162:     cash = _v(cur_i["CASH_EQUIVALENTS"])
+00163:     current_assets = _v(cur_i["CURRENT_ASSETS"])
+00164:     current_liabilities = _v(cur_i["CURRENT_LIABILITIES"])
+00165:     equity = _v(cur_i["TOTAL_EQUITY"])
+00166:     st_debt_parts = (_v(cur_i["SHORT_TERM_BORROWINGS"]), _v(cur_i["CURRENT_PORTION_LONG_TERM_DEBT"]))
+00167:     lt_debt = _v(cur_i["LONG_TERM_BORROWINGS"])
+00168:     st_debt = sum((x for x in st_debt_parts if x is not None), ZERO) if any(x is not None for x in st_debt_parts) else None
+00169:     financial_debt = (st_debt + lt_debt) if st_debt is not None and lt_debt is not None else None
+00170:     net_debt = financial_debt - cash if financial_debt is not None and cash is not None else None
+00171: 
+00172:     prev_cash = _v(prev_i["CASH_EQUIVALENTS"])
+---
+FILE=backend\app\analysis\financial_risk_flags.py
+TERMS=long_term
+LINE=173
+FUNCTION=calculate_financial_risk_flags
+ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+00169:     financial_debt = (st_debt + lt_debt) if st_debt is not None and lt_debt is not None else None
+00170:     net_debt = financial_debt - cash if financial_debt is not None and cash is not None else None
+00171: 
+00172:     prev_cash = _v(prev_i["CASH_EQUIVALENTS"])
+00173:     prev_st_parts = (_v(prev_i["SHORT_TERM_BORROWINGS"]), _v(prev_i["CURRENT_PORTION_LONG_TERM_DEBT"]))
+00174:     prev_lt_debt = _v(prev_i["LONG_TERM_BORROWINGS"])
+00175:     prev_st_debt = sum((x for x in prev_st_parts if x is not None), ZERO) if any(x is not None for x in prev_st_parts) else None
+00176:     prev_financial_debt = (prev_st_debt + prev_lt_debt) if prev_st_debt is not None and prev_lt_debt is not None else None
+00177:     prev_net_debt = prev_financial_debt - prev_cash if prev_financial_debt is not None and prev_cash is not None else None
+00178: 
+00179:     revenue = _v(cur_d["REVENUE"])
+---
+FILE=backend\app\analysis\indicator_contribution.py
+TERMS=quality_score
+LINE=108
+FUNCTION=default_indicator_definitions
+ARGS=
+00104:             ),
+00105:         ),
+00106:         IndicatorDefinition(
+00107:             "Kalite skoru en az 70",
+00108:             lambda outcome: outcome.snapshot.quality_score >= 70,
+00109:         ),
+00110:     )
+00111: 
+00112: 
+00113: def _horizon_item(outcome: SignalOutcome, horizon: int):
+00114:     return next(
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=business_quality
+LINE=23
+FUNCTION=<module/class-body>
+00019:     "volume_liquidity",
+00020:     "catalyst",
+00021:     "entry_risk",
+00022:     "earnings_surprise",
+00023:     "business_quality",
+00024:     "growth_durability",
+00025:     "governance",
+00026:     "sector_risk",
+00027:     "capital_efficiency",
+00028: }
+00029: 
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=governance
+LINE=25
+FUNCTION=<module/class-body>
+00021:     "entry_risk",
+00022:     "earnings_surprise",
+00023:     "business_quality",
+00024:     "growth_durability",
+00025:     "governance",
+00026:     "sector_risk",
+00027:     "capital_efficiency",
+00028: }
+00029: 
+00030: PROTECTED_OUTPUT_NAMES = {
+00031:     "TUPRS_investability_acceptance.json",
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=33
+FUNCTION=<module/class-body>
+00029: 
+00030: PROTECTED_OUTPUT_NAMES = {
+00031:     "TUPRS_investability_acceptance.json",
+00032:     "TUPRS_canonical_investability_evidence.json",
+00033:     "TUPRS_long_term_evidence_completion.json",
+00034:     "TUPRS_investability_runtime_wiring.json",
+00035:     "TUPRS_investability_production_closure.json",
+00036: }
+00037: 
+00038: 
+00039: def _D(v: Any) -> Decimal | None:
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=business_quality
+LINE=129
+FUNCTION=_merge
+ARGS=base: dict[str, Any], candidates: list[dict[str, Any]]
+00125:     market_keys = {
+00126:         "technical_trend", "relative_strength", "volume_liquidity",
+00127:         "catalyst", "entry_risk", "earnings_surprise"
+00128:     }
+00129:     long_keys = {"business_quality", "growth_durability", "governance", "sector_risk"}
+00130: 
+00131:     accepted: list[dict[str, Any]] = []
+00132:     for c in candidates:
+00133:         key = c["key"]
+00134:         val = str(c["value"])
+00135:         if key in market_keys and market.get(key) is None:
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=governance
+LINE=129
+FUNCTION=_merge
+ARGS=base: dict[str, Any], candidates: list[dict[str, Any]]
+00125:     market_keys = {
+00126:         "technical_trend", "relative_strength", "volume_liquidity",
+00127:         "catalyst", "entry_risk", "earnings_surprise"
+00128:     }
+00129:     long_keys = {"business_quality", "growth_durability", "governance", "sector_risk"}
+00130: 
+00131:     accepted: list[dict[str, Any]] = []
+00132:     for c in candidates:
+00133:         key = c["key"]
+00134:         val = str(c["value"])
+00135:         if key in market_keys and market.get(key) is None:
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=146
+FUNCTION=_merge
+ARGS=base: dict[str, Any], candidates: list[dict[str, Any]]
+00142:             result["capital_efficiency_score"] = val
+00143:             accepted.append(c)
+00144: 
+00145:     result["market_context"] = market
+00146:     result["long_term_context"] = longc
+00147:     return result, accepted
+00148: 
+00149: 
+00150: def _coverage_long(
+00151:     health: int | None,
+00152:     cash: Decimal | None,
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=business_quality
+LINE=159
+FUNCTION=_coverage_long
+ARGS=health: int | None, cash: Decimal | None, capeff: Decimal | None, valuation: Decimal | None, mos: Decimal | None, ctx: LongTermContextInput
+00155:     mos: Decimal | None,
+00156:     ctx: LongTermContextInput,
+00157: ) -> Decimal:
+00158:     weights = [
+00159:         ("business_quality", ctx.business_quality, Decimal("0.15")),
+00160:         ("financial_health", health, Decimal("0.15")),
+00161:         ("cash_quality", cash, Decimal("0.12")),
+00162:         ("capital_efficiency", capeff, Decimal("0.12")),
+00163:         ("growth_durability", ctx.growth_durability, Decimal("0.12")),
+00164:         ("governance", ctx.governance, Decimal("0.08")),
+00165:         ("valuation", valuation, Decimal("0.12")),
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=business_quality
+LINE=159
+FUNCTION=_coverage_long
+ARGS=health: int | None, cash: Decimal | None, capeff: Decimal | None, valuation: Decimal | None, mos: Decimal | None, ctx: LongTermContextInput
+00155:     mos: Decimal | None,
+00156:     ctx: LongTermContextInput,
+00157: ) -> Decimal:
+00158:     weights = [
+00159:         ("business_quality", ctx.business_quality, Decimal("0.15")),
+00160:         ("financial_health", health, Decimal("0.15")),
+00161:         ("cash_quality", cash, Decimal("0.12")),
+00162:         ("capital_efficiency", capeff, Decimal("0.12")),
+00163:         ("growth_durability", ctx.growth_durability, Decimal("0.12")),
+00164:         ("governance", ctx.governance, Decimal("0.08")),
+00165:         ("valuation", valuation, Decimal("0.12")),
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=governance
+LINE=164
+FUNCTION=_coverage_long
+ARGS=health: int | None, cash: Decimal | None, capeff: Decimal | None, valuation: Decimal | None, mos: Decimal | None, ctx: LongTermContextInput
+00160:         ("financial_health", health, Decimal("0.15")),
+00161:         ("cash_quality", cash, Decimal("0.12")),
+00162:         ("capital_efficiency", capeff, Decimal("0.12")),
+00163:         ("growth_durability", ctx.growth_durability, Decimal("0.12")),
+00164:         ("governance", ctx.governance, Decimal("0.08")),
+00165:         ("valuation", valuation, Decimal("0.12")),
+00166:         ("margin_of_safety", mos, Decimal("0.09")),
+00167:         ("sector_risk", ctx.sector_risk, Decimal("0.05")),
+00168:     ]
+00169:     return sum((w for _, v, w in weights if v is not None), Decimal("0"))
+00170: 
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=governance
+LINE=164
+FUNCTION=_coverage_long
+ARGS=health: int | None, cash: Decimal | None, capeff: Decimal | None, valuation: Decimal | None, mos: Decimal | None, ctx: LongTermContextInput
+00160:         ("financial_health", health, Decimal("0.15")),
+00161:         ("cash_quality", cash, Decimal("0.12")),
+00162:         ("capital_efficiency", capeff, Decimal("0.12")),
+00163:         ("growth_durability", ctx.growth_durability, Decimal("0.12")),
+00164:         ("governance", ctx.governance, Decimal("0.08")),
+00165:         ("valuation", valuation, Decimal("0.12")),
+00166:         ("margin_of_safety", mos, Decimal("0.09")),
+00167:         ("sector_risk", ctx.sector_risk, Decimal("0.05")),
+00168:     ]
+00169:     return sum((w for _, v, w in weights if v is not None), Decimal("0"))
+00170: 
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=190
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00186:     discovered = discover_exact_canonical_candidates(data_root, symbol)
+00187:     evidence, accepted = _merge(completed_evidence, discovered)
+00188: 
+00189:     short_base = base_acceptance.get("short_term") or {}
+00190:     long_base = base_acceptance.get("long_term") or {}
+00191:     panel_base = base_acceptance.get("panel") or {}
+00192: 
+00193:     market_raw = evidence.get("market_context") or {}
+00194:     market = MarketContextInput(
+00195:         technical_trend=_D(market_raw.get("technical_trend")),
+00196:         relative_strength=_D(market_raw.get("relative_strength")),
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=203
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00199:         entry_risk=_D(market_raw.get("entry_risk")),
+00200:         earnings_surprise=_D(market_raw.get("earnings_surprise")),
+00201:     )
+00202: 
+00203:     long_raw = evidence.get("long_term_context") or {}
+00204:     context = LongTermContextInput(
+00205:         business_quality=_D(long_raw.get("business_quality")),
+00206:         growth_durability=_D(long_raw.get("growth_durability")),
+00207:         governance=_D(long_raw.get("governance")),
+00208:         sector_risk=_D(long_raw.get("sector_risk")),
+00209:     )
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=281
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00277:     unresolved = []
+00278:     if short.locked:
+00279:         unresolved.append("SHORT_TERM_CANONICAL_TECHNICAL_MARKET_CONTEXT")
+00280:     if long.locked:
+00281:         unresolved.append("LONG_TERM_CANONICAL_COVERAGE")
+00282: 
+00283:     status = "PASS_UNLOCKED" if not unresolved else "PASS_CLOSED_WITH_EXPLICIT_BLOCKERS"
+00284: 
+00285:     return _ser({
+00286:         "status": status,
+00287:         "mode": "READ_ONLY_INVESTABILITY_PRODUCTION_CLOSURE",
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=297
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00293:             "accepted_count": len(accepted),
+00294:             "accepted": accepted,
+00295:         },
+00296:         "canonical_evidence": evidence,
+00297:         "long_term_coverage": coverage,
+00298:         "long_term_unlock_threshold": Decimal("0.70"),
+00299:         "short_term": short,
+00300:         "long_term": long,
+00301:         "panel": panel,
+00302:         "unresolved_blockers": unresolved,
+00303:         "closure_rules": [
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=298
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00294:             "accepted": accepted,
+00295:         },
+00296:         "canonical_evidence": evidence,
+00297:         "long_term_coverage": coverage,
+00298:         "long_term_unlock_threshold": Decimal("0.70"),
+00299:         "short_term": short,
+00300:         "long_term": long,
+00301:         "panel": panel,
+00302:         "unresolved_blockers": unresolved,
+00303:         "closure_rules": [
+00304:             "No new investability scoring engine.",
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=300
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00296:         "canonical_evidence": evidence,
+00297:         "long_term_coverage": coverage,
+00298:         "long_term_unlock_threshold": Decimal("0.70"),
+00299:         "short_term": short,
+00300:         "long_term": long,
+00301:         "panel": panel,
+00302:         "unresolved_blockers": unresolved,
+00303:         "closure_rules": [
+00304:             "No new investability scoring engine.",
+00305:             "No fuzzy field mapping.",
+00306:             "No text/category-to-score conversion.",
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=long_term
+LINE=123
+FUNCTION=_merge
+ARGS=base: dict[str, Any], candidates: list[dict[str, Any]]
+00119: 
+00120: def _merge(base: dict[str, Any], candidates: list[dict[str, Any]]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+00121:     result = json.loads(json.dumps(base))
+00122:     market = dict(result.get("market_context") or {})
+00123:     longc = dict(result.get("long_term_context") or {})
+00124: 
+00125:     market_keys = {
+00126:         "technical_trend", "relative_strength", "volume_liquidity",
+00127:         "catalyst", "entry_risk", "earnings_surprise"
+00128:     }
+00129:     long_keys = {"business_quality", "growth_durability", "governance", "sector_risk"}
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=business_quality
+LINE=205
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00201:     )
+00202: 
+00203:     long_raw = evidence.get("long_term_context") or {}
+00204:     context = LongTermContextInput(
+00205:         business_quality=_D(long_raw.get("business_quality")),
+00206:         growth_durability=_D(long_raw.get("growth_durability")),
+00207:         governance=_D(long_raw.get("governance")),
+00208:         sector_risk=_D(long_raw.get("sector_risk")),
+00209:     )
+00210: 
+00211:     health = base_acceptance.get("panel", {}).get("financial_health_score")
+---
+FILE=backend\app\analysis\investability_production_closure.py
+TERMS=governance
+LINE=207
+FUNCTION=run_closure
+ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+00203:     long_raw = evidence.get("long_term_context") or {}
+00204:     context = LongTermContextInput(
+00205:         business_quality=_D(long_raw.get("business_quality")),
+00206:         growth_durability=_D(long_raw.get("growth_durability")),
+00207:         governance=_D(long_raw.get("governance")),
+00208:         sector_risk=_D(long_raw.get("sector_risk")),
+00209:     )
+00210: 
+00211:     health = base_acceptance.get("panel", {}).get("financial_health_score")
+00212:     if health is None:
+00213:         health = 94 if symbol == "TUPRS" else None
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=long_term
+LINE=65
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00061:         str(base_input.get("as_of", as_of_date.isoformat() + "T23:59:59"))
+00062:     )
+00063: 
+00064:     short_raw = base_input.get("short_term") or {}
+00065:     long_raw = base_input.get("long_term") or {}
+00066:     valuation = base_input.get("valuation") or {}
+00067: 
+00068:     e_market = canonical_evidence.get("market_context") or {}
+00069:     market = MarketContextInput(
+00070:         technical_trend=_d(e_market.get("technical_trend")),
+00071:         relative_strength=_d(e_market.get("relative_strength")),
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=long_term
+LINE=78
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00074:         entry_risk=_d(e_market.get("entry_risk")),
+00075:         earnings_surprise=_d(e_market.get("earnings_surprise")),
+00076:     )
+00077: 
+00078:     e_long = canonical_evidence.get("long_term_context") or {}
+00079:     long_context = LongTermContextInput(
+00080:         business_quality=_d(e_long.get("business_quality")),
+00081:         growth_durability=_d(e_long.get("growth_durability")),
+00082:         governance=_d(e_long.get("governance")),
+00083:         sector_risk=_d(e_long.get("sector_risk")),
+00084:     )
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=long_term
+LINE=143
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00139:             "market_context": e_market,
+00140:             "long_term_context": e_long,
+00141:         },
+00142:         "short_term": short,
+00143:         "long_term": long,
+00144:         "panel": panel,
+00145:         "coverage_note": (
+00146:             "FIN-014 requires >=0.70 component weight coverage. "
+00147:             "With current canonical TUPRS evidence, available long-term weights are "
+00148:             "FINANCIAL_HEALTH 0.15 + CASH_QUALITY 0.12 + GOVERNANCE 0.08 + "
+00149:             "VALUATION 0.12 + MARGIN_OF_SAFETY 0.09 = 0.56, so LOCKED is expected "
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=governance
+LINE=146
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00142:         "short_term": short,
+00143:         "long_term": long,
+00144:         "panel": panel,
+00145:         "coverage_note": (
+00146:             "FIN-014 requires >=0.70 component weight coverage. "
+00147:             "With current canonical TUPRS evidence, available long-term weights are "
+00148:             "FINANCIAL_HEALTH 0.15 + CASH_QUALITY 0.12 + GOVERNANCE 0.08 + "
+00149:             "VALUATION 0.12 + MARGIN_OF_SAFETY 0.09 = 0.56, so LOCKED is expected "
+00150:             "until additional canonical long-term evidence exists."
+00151:         ),
+00152:         "production_rules": [
+00153:             "No missing score is synthesized merely to unlock a horizon.",
+00154:             "valuation_score and margin_of_safety_score are wired only into FIN-014.",
+00155:             "valuation_stretch is not inferred from valuation_score because the semantics are not proven equivalent.",
+00156:             "Short-term remains fail-closed until canonical technical/market evidence exists.",
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=governance,governance_score
+LINE=138
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00134:         "wired_evidence": {
+00135:             "financial_momentum": canonical_evidence.get("financial_momentum"),
+00136:             "valuation_score": canonical_evidence.get("valuation_score"),
+00137:             "margin_of_safety_score": canonical_evidence.get("margin_of_safety_score"),
+00138:             "governance_score": canonical_evidence.get("governance_score"),
+00139:             "market_context": e_market,
+00140:             "long_term_context": e_long,
+00141:         },
+00142:         "short_term": short,
+00143:         "long_term": long,
+00144:         "panel": panel,
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=long_term
+LINE=140
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00136:             "valuation_score": canonical_evidence.get("valuation_score"),
+00137:             "margin_of_safety_score": canonical_evidence.get("margin_of_safety_score"),
+00138:             "governance_score": canonical_evidence.get("governance_score"),
+00139:             "market_context": e_market,
+00140:             "long_term_context": e_long,
+00141:         },
+00142:         "short_term": short,
+00143:         "long_term": long,
+00144:         "panel": panel,
+00145:         "coverage_note": (
+00146:             "FIN-014 requires >=0.70 component weight coverage. "
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=business_quality
+LINE=80
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00076:     )
+00077: 
+00078:     e_long = canonical_evidence.get("long_term_context") or {}
+00079:     long_context = LongTermContextInput(
+00080:         business_quality=_d(e_long.get("business_quality")),
+00081:         growth_durability=_d(e_long.get("growth_durability")),
+00082:         governance=_d(e_long.get("governance")),
+00083:         sector_risk=_d(e_long.get("sector_risk")),
+00084:     )
+00085: 
+00086:     short = calculate_short_term_investability(
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=governance
+LINE=82
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00078:     e_long = canonical_evidence.get("long_term_context") or {}
+00079:     long_context = LongTermContextInput(
+00080:         business_quality=_d(e_long.get("business_quality")),
+00081:         growth_durability=_d(e_long.get("growth_durability")),
+00082:         governance=_d(e_long.get("governance")),
+00083:         sector_risk=_d(e_long.get("sector_risk")),
+00084:     )
+00085: 
+00086:     short = calculate_short_term_investability(
+00087:         symbol,
+00088:         as_of_date,
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=quality_score
+LINE=102
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00098:         symbol,
+00099:         as_of_date,
+00100:         financial_health_score=_i(base_input.get("financial_health_score")),
+00101:         financial_risk_score=_i(long_raw.get("financial_risk_score")),
+00102:         cash_quality_score=_d(long_raw.get("cash_quality_score")),
+00103:         capital_efficiency_score=_d(long_raw.get("capital_efficiency_score")),
+00104:         valuation_score=_d(canonical_evidence.get("valuation_score")),
+00105:         margin_of_safety_score=_d(canonical_evidence.get("margin_of_safety_score")),
+00106:         context=long_context,
+00107:     )
+00108: 
+---
+FILE=backend\app\analysis\investability_runtime_wiring.py
+TERMS=governance,governance_score
+LINE=138
+FUNCTION=run_runtime_wiring
+ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+00134:         "wired_evidence": {
+00135:             "financial_momentum": canonical_evidence.get("financial_momentum"),
+00136:             "valuation_score": canonical_evidence.get("valuation_score"),
+00137:             "margin_of_safety_score": canonical_evidence.get("margin_of_safety_score"),
+00138:             "governance_score": canonical_evidence.get("governance_score"),
+00139:             "market_context": e_market,
+00140:             "long_term_context": e_long,
+00141:         },
+00142:         "short_term": short,
+00143:         "long_term": long,
+00144:         "panel": panel,
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=growth_score
+LINE=124
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00120:     *,
+00121:     financial_acceptance: dict[str, Any],
+00122:     existing_evidence: dict[str, Any],
+00123: ) -> dict[str, Any]:
+00124:     growth_score, growth_flags = growth_evidence_score(financial_acceptance)
+00125:     fin_momentum = financial_momentum_score(financial_acceptance)
+00126: 
+00127:     out = dict(existing_evidence)
+00128:     lt = dict(out.get("long_term_context") or {})
+00129:     lt["growth_durability"] = str(growth_score) if growth_score is not None else None
+00130:     out["long_term_context"] = lt
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=long_term
+LINE=130
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00126: 
+00127:     out = dict(existing_evidence)
+00128:     lt = dict(out.get("long_term_context") or {})
+00129:     lt["growth_durability"] = str(growth_score) if growth_score is not None else None
+00130:     out["long_term_context"] = lt
+00131:     out["financial_momentum"] = str(fin_momentum) if fin_momentum is not None else out.get("financial_momentum")
+00132: 
+00133:     flags = list(out.get("flags") or [])
+00134:     flags = [x for x in flags if x != "GROWTH_DURABILITY_NOT_SYNTHESIZED"]
+00135:     flags.extend(growth_flags)
+00136: 
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=growth_score
+LINE=138
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00134:     flags = [x for x in flags if x != "GROWTH_DURABILITY_NOT_SYNTHESIZED"]
+00135:     flags.extend(growth_flags)
+00136: 
+00137:     # Explicitly preserve unresolved evidence instead of manufacturing unlock.
+00138:     if growth_score is not None:
+00139:         flags.append("LONG_TERM_CANONICAL_COVERAGE_EXPECTED_0_68")
+00140:         flags.append("LONG_TERM_STILL_BELOW_0_70_THRESHOLD")
+00141:     flags.append("BUSINESS_QUALITY_REMAINS_UNWIRED")
+00142:     flags.append("CAPITAL_EFFICIENCY_REMAINS_UNWIRED")
+00143:     flags.append("SECTOR_RISK_REMAINS_UNWIRED")
+00144: 
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=business_quality
+LINE=141
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00137:     # Explicitly preserve unresolved evidence instead of manufacturing unlock.
+00138:     if growth_score is not None:
+00139:         flags.append("LONG_TERM_CANONICAL_COVERAGE_EXPECTED_0_68")
+00140:         flags.append("LONG_TERM_STILL_BELOW_0_70_THRESHOLD")
+00141:     flags.append("BUSINESS_QUALITY_REMAINS_UNWIRED")
+00142:     flags.append("CAPITAL_EFFICIENCY_REMAINS_UNWIRED")
+00143:     flags.append("SECTOR_RISK_REMAINS_UNWIRED")
+00144: 
+00145:     out["flags"] = list(dict.fromkeys(flags))
+00146:     out["engine_version"] = "fin-prod-008-v1"
+00147:     out["coverage_assessment"] = {
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=growth_score
+LINE=129
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00125:     fin_momentum = financial_momentum_score(financial_acceptance)
+00126: 
+00127:     out = dict(existing_evidence)
+00128:     lt = dict(out.get("long_term_context") or {})
+00129:     lt["growth_durability"] = str(growth_score) if growth_score is not None else None
+00130:     out["long_term_context"] = lt
+00131:     out["financial_momentum"] = str(fin_momentum) if fin_momentum is not None else out.get("financial_momentum")
+00132: 
+00133:     flags = list(out.get("flags") or [])
+00134:     flags = [x for x in flags if x != "GROWTH_DURABILITY_NOT_SYNTHESIZED"]
+00135:     flags.extend(growth_flags)
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=growth_score
+LINE=129
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00125:     fin_momentum = financial_momentum_score(financial_acceptance)
+00126: 
+00127:     out = dict(existing_evidence)
+00128:     lt = dict(out.get("long_term_context") or {})
+00129:     lt["growth_durability"] = str(growth_score) if growth_score is not None else None
+00130:     out["long_term_context"] = lt
+00131:     out["financial_momentum"] = str(fin_momentum) if fin_momentum is not None else out.get("financial_momentum")
+00132: 
+00133:     flags = list(out.get("flags") or [])
+00134:     flags = [x for x in flags if x != "GROWTH_DURABILITY_NOT_SYNTHESIZED"]
+00135:     flags.extend(growth_flags)
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=long_term
+LINE=139
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00135:     flags.extend(growth_flags)
+00136: 
+00137:     # Explicitly preserve unresolved evidence instead of manufacturing unlock.
+00138:     if growth_score is not None:
+00139:         flags.append("LONG_TERM_CANONICAL_COVERAGE_EXPECTED_0_68")
+00140:         flags.append("LONG_TERM_STILL_BELOW_0_70_THRESHOLD")
+00141:     flags.append("BUSINESS_QUALITY_REMAINS_UNWIRED")
+00142:     flags.append("CAPITAL_EFFICIENCY_REMAINS_UNWIRED")
+00143:     flags.append("SECTOR_RISK_REMAINS_UNWIRED")
+00144: 
+00145:     out["flags"] = list(dict.fromkeys(flags))
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=long_term
+LINE=140
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00136: 
+00137:     # Explicitly preserve unresolved evidence instead of manufacturing unlock.
+00138:     if growth_score is not None:
+00139:         flags.append("LONG_TERM_CANONICAL_COVERAGE_EXPECTED_0_68")
+00140:         flags.append("LONG_TERM_STILL_BELOW_0_70_THRESHOLD")
+00141:     flags.append("BUSINESS_QUALITY_REMAINS_UNWIRED")
+00142:     flags.append("CAPITAL_EFFICIENCY_REMAINS_UNWIRED")
+00143:     flags.append("SECTOR_RISK_REMAINS_UNWIRED")
+00144: 
+00145:     out["flags"] = list(dict.fromkeys(flags))
+00146:     out["engine_version"] = "fin-prod-008-v1"
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=long_term
+LINE=128
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00124:     growth_score, growth_flags = growth_evidence_score(financial_acceptance)
+00125:     fin_momentum = financial_momentum_score(financial_acceptance)
+00126: 
+00127:     out = dict(existing_evidence)
+00128:     lt = dict(out.get("long_term_context") or {})
+00129:     lt["growth_durability"] = str(growth_score) if growth_score is not None else None
+00130:     out["long_term_context"] = lt
+00131:     out["financial_momentum"] = str(fin_momentum) if fin_momentum is not None else out.get("financial_momentum")
+00132: 
+00133:     flags = list(out.get("flags") or [])
+00134:     flags = [x for x in flags if x != "GROWTH_DURABILITY_NOT_SYNTHESIZED"]
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=growth_score
+LINE=149
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00145:     out["flags"] = list(dict.fromkeys(flags))
+00146:     out["engine_version"] = "fin-prod-008-v1"
+00147:     out["coverage_assessment"] = {
+00148:         "before": "0.56",
+00149:         "growth_durability_weight": "0.12" if growth_score is not None else "0.00",
+00150:         "after_expected": "0.68" if growth_score is not None else "0.56",
+00151:         "unlock_threshold": "0.70",
+00152:         "expected_locked": True,
+00153:         "reason": (
+00154:             "Canonical single-period growth evidence adds 0.12, but no proven "
+00155:             "business-quality/capital-efficiency/sector-risk adapter is available yet."
+---
+FILE=backend\app\analysis\long_term_evidence_completion.py
+TERMS=growth_score
+LINE=150
+FUNCTION=complete_evidence
+ARGS=*, financial_acceptance: dict[str, Any], existing_evidence: dict[str, Any]
+00146:     out["engine_version"] = "fin-prod-008-v1"
+00147:     out["coverage_assessment"] = {
+00148:         "before": "0.56",
+00149:         "growth_durability_weight": "0.12" if growth_score is not None else "0.00",
+00150:         "after_expected": "0.68" if growth_score is not None else "0.56",
+00151:         "unlock_threshold": "0.70",
+00152:         "expected_locked": True,
+00153:         "reason": (
+00154:             "Canonical single-period growth evidence adds 0.12, but no proven "
+00155:             "business-quality/capital-efficiency/sector-risk adapter is available yet."
+00156:         ),
+---
+FILE=backend\app\analysis\long_term_investability.py
+TERMS=long_term
+LINE=57
+FUNCTION=calculate_long_term_investability
+ARGS=symbol: str, as_of_date: date, *, financial_health_score: int | None, financial_risk_score: int | None, cash_quality_score: Decimal | None, capital_efficiency_score: Decimal | None, valuation_score: Decimal | None, margin_of_safety_score: Decimal | None, context: LongTermContextInput
+00053:         raw -= Decimal(financial_risk_score) * Decimal("0.10")
+00054:     score = int(_clamp(raw).quantize(Decimal("1"), rounding=ROUND_HALF_UP))
+00055: 
+00056:     if score >= 80:
+00057:         label = "STRONG_LONG_TERM_CANDIDATE"
+00058:     elif score >= 70:
+00059:         label = "ATTRACTIVE"
+00060:     elif score >= 60:
+00061:         label = "WATCH_PRICE_WAIT"
+00062:     elif score >= 50:
+00063:         label = "NEUTRAL"
+---
+FILE=backend\app\analysis\long_term_investability.py
+TERMS=business_quality
+LINE=35
+FUNCTION=calculate_long_term_investability
+ARGS=symbol: str, as_of_date: date, *, financial_health_score: int | None, financial_risk_score: int | None, cash_quality_score: Decimal | None, capital_efficiency_score: Decimal | None, valuation_score: Decimal | None, margin_of_safety_score: Decimal | None, context: LongTermContextInput
+00031:     margin_of_safety_score: Decimal | None,
+00032:     context: LongTermContextInput,
+00033: ) -> InvestabilityResult:
+00034:     components = tuple(c for c in (
+00035:         _component("BUSINESS_QUALITY", context.business_quality, "0.15", "─░┼Я modeli / kalite s├╝reklili─Яi"),
+00036:         _component("FINANCIAL_HEALTH", Decimal(financial_health_score) if financial_health_score is not None else None, "0.15", "Finansal sa─Яl─▒k"),
+00037:         _component("CASH_QUALITY", cash_quality_score, "0.12", "Nakit ├╝retim kalitesi"),
+00038:         _component("CAPITAL_EFFICIENCY", capital_efficiency_score, "0.12", "ROIC/sermaye verimlili─Яi"),
+00039:         _component("GROWTH_DURABILITY", context.growth_durability, "0.12", "B├╝y├╝me s├╝reklili─Яi"),
+00040:         _component("GOVERNANCE", context.governance, "0.08", "Y├╢neti┼Яim"),
+00041:         _component("VALUATION", valuation_score, "0.12", "De─Яerleme"),
+---
+FILE=backend\app\analysis\long_term_investability.py
+TERMS=business_quality
+LINE=35
+FUNCTION=calculate_long_term_investability
+ARGS=symbol: str, as_of_date: date, *, financial_health_score: int | None, financial_risk_score: int | None, cash_quality_score: Decimal | None, capital_efficiency_score: Decimal | None, valuation_score: Decimal | None, margin_of_safety_score: Decimal | None, context: LongTermContextInput
+00031:     margin_of_safety_score: Decimal | None,
+00032:     context: LongTermContextInput,
+00033: ) -> InvestabilityResult:
+00034:     components = tuple(c for c in (
+00035:         _component("BUSINESS_QUALITY", context.business_quality, "0.15", "─░┼Я modeli / kalite s├╝reklili─Яi"),
+00036:         _component("FINANCIAL_HEALTH", Decimal(financial_health_score) if financial_health_score is not None else None, "0.15", "Finansal sa─Яl─▒k"),
+00037:         _component("CASH_QUALITY", cash_quality_score, "0.12", "Nakit ├╝retim kalitesi"),
+00038:         _component("CAPITAL_EFFICIENCY", capital_efficiency_score, "0.12", "ROIC/sermaye verimlili─Яi"),
+00039:         _component("GROWTH_DURABILITY", context.growth_durability, "0.12", "B├╝y├╝me s├╝reklili─Яi"),
+00040:         _component("GOVERNANCE", context.governance, "0.08", "Y├╢neti┼Яim"),
+00041:         _component("VALUATION", valuation_score, "0.12", "De─Яerleme"),
+---
+FILE=backend\app\analysis\long_term_investability.py
+TERMS=governance
+LINE=40
+FUNCTION=calculate_long_term_investability
+ARGS=symbol: str, as_of_date: date, *, financial_health_score: int | None, financial_risk_score: int | None, cash_quality_score: Decimal | None, capital_efficiency_score: Decimal | None, valuation_score: Decimal | None, margin_of_safety_score: Decimal | None, context: LongTermContextInput
+00036:         _component("FINANCIAL_HEALTH", Decimal(financial_health_score) if financial_health_score is not None else None, "0.15", "Finansal sa─Яl─▒k"),
+00037:         _component("CASH_QUALITY", cash_quality_score, "0.12", "Nakit ├╝retim kalitesi"),
+00038:         _component("CAPITAL_EFFICIENCY", capital_efficiency_score, "0.12", "ROIC/sermaye verimlili─Яi"),
+00039:         _component("GROWTH_DURABILITY", context.growth_durability, "0.12", "B├╝y├╝me s├╝reklili─Яi"),
+00040:         _component("GOVERNANCE", context.governance, "0.08", "Y├╢neti┼Яim"),
+00041:         _component("VALUATION", valuation_score, "0.12", "De─Яerleme"),
+00042:         _component("MARGIN_OF_SAFETY", margin_of_safety_score, "0.09", "G├╝venlik marj─▒"),
+00043:         _component("SECTOR_RESILIENCE", None if context.sector_risk is None else HUNDRED - _clamp(context.sector_risk), "0.05", "Sekt├╢r riski"),
+00044:     ) if c is not None)
+00045: 
+00046:     coverage = sum(c.weight for c in components)
+---
+FILE=backend\app\analysis\long_term_investability.py
+TERMS=governance
+LINE=40
+FUNCTION=calculate_long_term_investability
+ARGS=symbol: str, as_of_date: date, *, financial_health_score: int | None, financial_risk_score: int | None, cash_quality_score: Decimal | None, capital_efficiency_score: Decimal | None, valuation_score: Decimal | None, margin_of_safety_score: Decimal | None, context: LongTermContextInput
+00036:         _component("FINANCIAL_HEALTH", Decimal(financial_health_score) if financial_health_score is not None else None, "0.15", "Finansal sa─Яl─▒k"),
+00037:         _component("CASH_QUALITY", cash_quality_score, "0.12", "Nakit ├╝retim kalitesi"),
+00038:         _component("CAPITAL_EFFICIENCY", capital_efficiency_score, "0.12", "ROIC/sermaye verimlili─Яi"),
+00039:         _component("GROWTH_DURABILITY", context.growth_durability, "0.12", "B├╝y├╝me s├╝reklili─Яi"),
+00040:         _component("GOVERNANCE", context.governance, "0.08", "Y├╢neti┼Яim"),
+00041:         _component("VALUATION", valuation_score, "0.12", "De─Яerleme"),
+00042:         _component("MARGIN_OF_SAFETY", margin_of_safety_score, "0.09", "G├╝venlik marj─▒"),
+00043:         _component("SECTOR_RESILIENCE", None if context.sector_risk is None else HUNDRED - _clamp(context.sector_risk), "0.05", "Sekt├╢r riski"),
+00044:     ) if c is not None)
+00045: 
+00046:     coverage = sum(c.weight for c in components)
+---
+FILE=backend\app\analysis\market_multiples.py
+TERMS=long_term
+LINE=91
+FUNCTION=calculate_market_multiples
+ARGS=series: HistoricalFinancialSeries, ownership: OwnershipSnapshot, market: MarketSnapshot, *, as_of: datetime | None=None, ebitda_ttm: Decimal | None=None, fcf_ttm: Decimal | None=None, dividends_ttm: Decimal | None=None
+00087: 
+00088:     cash = _latest(series, "CASH_EQUIVALENTS", "INSTANT", as_of) or Decimal("0")
+00089:     st = _latest(series, "SHORT_TERM_BORROWINGS", "INSTANT", as_of) or Decimal("0")
+00090:     cur_lt = _latest(series, "CURRENT_PORTION_LT_DEBT", "INSTANT", as_of) or Decimal("0")
+00091:     lt = _latest(series, "LONG_TERM_BORROWINGS", "INSTANT", as_of) or Decimal("0")
+00092:     total_financial_debt = st + cur_lt + lt
+00093:     enterprise_value = market_cap + total_financial_debt - cash
+00094: 
+00095:     flags: list[str] = []
+00096:     pe = _safe_div(market_cap, earnings)
+00097:     pb = _safe_div(market_cap, parent_equity)
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=73
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00069: 
+00070:     major = snapshot.major_shareholder_ratio
+00071:     if major is None:
+00072:         concentration = "NOT_EVALUATED"
+00073:         governance = "NOT_EVALUATED"
+00074:     elif major >= Decimal("0.75"):
+00075:         concentration = "VERY_HIGH"
+00076:         governance = "HIGH"
+00077:         evidence.append("DOMINANT_SHAREHOLDER")
+00078:     elif major >= Decimal("0.50"):
+00079:         concentration = "HIGH"
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=95
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00091:         dilution = "ELEVATED"
+00092:         evidence.append("DILUTED_SHARE_COUNT_ABOVE_BASIC")
+00093: 
+00094:     if snapshot.privileged_share_flag is True:
+00095:         governance = "ELEVATED" if governance in {"LOW", "MODERATE"} else governance
+00096:         evidence.append("PRIVILEGED_SHARES_PRESENT")
+00097: 
+00098:     return OwnershipFloatAssessment(
+00099:         symbol=snapshot.symbol,
+00100:         free_float_ratio=snapshot.free_float_ratio,
+00101:         effective_free_float_ratio=snapshot.effective_free_float_ratio,
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=76
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00072:         concentration = "NOT_EVALUATED"
+00073:         governance = "NOT_EVALUATED"
+00074:     elif major >= Decimal("0.75"):
+00075:         concentration = "VERY_HIGH"
+00076:         governance = "HIGH"
+00077:         evidence.append("DOMINANT_SHAREHOLDER")
+00078:     elif major >= Decimal("0.50"):
+00079:         concentration = "HIGH"
+00080:         governance = "ELEVATED"
+00081:         evidence.append("CONTROLLING_SHAREHOLDER")
+00082:     elif major >= Decimal("0.25"):
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=95
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00091:         dilution = "ELEVATED"
+00092:         evidence.append("DILUTED_SHARE_COUNT_ABOVE_BASIC")
+00093: 
+00094:     if snapshot.privileged_share_flag is True:
+00095:         governance = "ELEVATED" if governance in {"LOW", "MODERATE"} else governance
+00096:         evidence.append("PRIVILEGED_SHARES_PRESENT")
+00097: 
+00098:     return OwnershipFloatAssessment(
+00099:         symbol=snapshot.symbol,
+00100:         free_float_ratio=snapshot.free_float_ratio,
+00101:         effective_free_float_ratio=snapshot.effective_free_float_ratio,
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=106
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00102:         free_float_shares=snapshot.free_float_shares,
+00103:         float_liquidity_risk=float_risk,
+00104:         ownership_concentration=concentration,
+00105:         dilution_risk=dilution,
+00106:         governance_concentration=governance,
+00107:         evidence=tuple(evidence),
+00108:         warnings=tuple(warnings),
+00109:     )
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=80
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00076:         governance = "HIGH"
+00077:         evidence.append("DOMINANT_SHAREHOLDER")
+00078:     elif major >= Decimal("0.50"):
+00079:         concentration = "HIGH"
+00080:         governance = "ELEVATED"
+00081:         evidence.append("CONTROLLING_SHAREHOLDER")
+00082:     elif major >= Decimal("0.25"):
+00083:         concentration = "MODERATE"
+00084:         governance = "MODERATE"
+00085:     else:
+00086:         concentration = "LOW"
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=95
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00091:         dilution = "ELEVATED"
+00092:         evidence.append("DILUTED_SHARE_COUNT_ABOVE_BASIC")
+00093: 
+00094:     if snapshot.privileged_share_flag is True:
+00095:         governance = "ELEVATED" if governance in {"LOW", "MODERATE"} else governance
+00096:         evidence.append("PRIVILEGED_SHARES_PRESENT")
+00097: 
+00098:     return OwnershipFloatAssessment(
+00099:         symbol=snapshot.symbol,
+00100:         free_float_ratio=snapshot.free_float_ratio,
+00101:         effective_free_float_ratio=snapshot.effective_free_float_ratio,
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=84
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00080:         governance = "ELEVATED"
+00081:         evidence.append("CONTROLLING_SHAREHOLDER")
+00082:     elif major >= Decimal("0.25"):
+00083:         concentration = "MODERATE"
+00084:         governance = "MODERATE"
+00085:     else:
+00086:         concentration = "LOW"
+00087:         governance = "LOW"
+00088: 
+00089:     dilution = "LOW"
+00090:     if snapshot.diluted_shares is not None and snapshot.diluted_shares > snapshot.total_shares * Decimal("1.05"):
+---
+FILE=backend\app\analysis\ownership_float.py
+TERMS=governance
+LINE=87
+FUNCTION=assess_ownership_float
+ARGS=snapshot: OwnershipSnapshot, *, as_of: datetime | None=None
+00083:         concentration = "MODERATE"
+00084:         governance = "MODERATE"
+00085:     else:
+00086:         concentration = "LOW"
+00087:         governance = "LOW"
+00088: 
+00089:     dilution = "LOW"
+00090:     if snapshot.diluted_shares is not None and snapshot.diluted_shares > snapshot.total_shares * Decimal("1.05"):
+00091:         dilution = "ELEVATED"
+00092:         evidence.append("DILUTED_SHARE_COUNT_ABOVE_BASIC")
+00093: 
+---
+FILE=backend\app\analysis\sector_score_ranking.py
+TERMS=growth_score
+LINE=27
+FUNCTION=<module/class-body>
+00023:     median_difference: float
+00024:     quality_class: str
+00025:     relative_position: str
+00026:     profitability_score: int
+00027:     growth_score: int
+00028:     leverage_score: int
+00029:     liquidity_score: int
+00030:     cash_flow_score: int
+00031: 
+00032: 
+00033: @dataclass(frozen=True)
+---
+FILE=backend\app\analysis\sector_score_ranking.py
+TERMS=growth_score
+LINE=209
+FUNCTION=sector_score_ranking_rows
+ARGS=ranking: SectorScoreRanking
+00205:             "Sekt├╢r medyan─▒": item.sector_median,
+00206:             "Medyan fark─▒": item.median_difference,
+00207:             "G├╢reli konum": item.relative_position,
+00208:             "K├вrl─▒l─▒k": item.profitability_score,
+00209:             "B├╝y├╝me": item.growth_score,
+00210:             "Bor├зluluk": item.leverage_score,
+00211:             "Likidite": item.liquidity_score,
+00212:             "Nakit ak─▒┼Я─▒": item.cash_flow_score,
+00213:         }
+00214:         for item in ranking.items
+00215:     ]
+---
+FILE=backend\app\analysis\shadow_portfolio.py
+TERMS=quality_score
+LINE=38
+FUNCTION=<module/class-body>
+00034:     target_1: float | None = None
+00035:     target_2: float | None = None
+00036:     signal_record_id: str = ""
+00037:     signal_class: str = ""
+00038:     quality_score: int | None = None
+00039:     market_regime: str = ""
+00040:     sector: str = ""
+00041:     rationale: str = ""
+00042:     status: str = OPEN_STATUS
+00043:     last_price: float | None = None
+00044:     last_price_date: date | None = None
+---
+FILE=backend\app\analysis\shadow_portfolio.py
+TERMS=quality_score
+LINE=313
+FUNCTION=open_shadow_position
+ARGS=*, store: ShadowPortfolioStore, symbol: str, entry_date: date, entry_price: float, quantity: int, capital_at_entry: float, stop_loss: float | None=None, target_1: float | None=None, target_2: float | None=None, signal_record_id: str='', signal_class: str='', quality_score: int | None=None, market_regime: str='', sector: str='', rationale: str=''
+00309:         target_1=target_1,
+00310:         target_2=target_2,
+00311:         signal_record_id=signal_record_id,
+00312:         signal_class=signal_class,
+00313:         quality_score=quality_score,
+00314:         market_regime=market_regime,
+00315:         sector=sector,
+00316:         rationale=rationale,
+00317:         last_price=entry_price,
+00318:         last_price_date=entry_date,
+00319:     )
+---
+FILE=backend\app\analysis\shadow_portfolio.py
+TERMS=quality_score
+LINE=344
+FUNCTION=open_from_signal
+ARGS=outcome: SignalOutcome, *, store: ShadowPortfolioStore, quantity: int, capital_at_entry: float, rationale: str=''
+00340:         target_1=snapshot.target_1,
+00341:         target_2=snapshot.target_2,
+00342:         signal_record_id=snapshot.record_id,
+00343:         signal_class=snapshot.decision_class,
+00344:         quality_score=snapshot.quality_score,
+00345:         market_regime=snapshot.market_regime,
+00346:         sector=snapshot.sector,
+00347:         rationale=rationale,
+00348:     )
+00349: 
+00350: 
+---
+FILE=backend\app\analysis\shadow_portfolio.py
+TERMS=quality_score
+LINE=519
+FUNCTION=position_rows
+ARGS=positions: Iterable[ShadowPosition]
+00515:             "Hedef 1": item.target_1_hit,
+00516:             "Hedef 2": item.target_2_hit,
+00517:             "Stop": item.stop_hit,
+00518:             "Sinyal s─▒n─▒f─▒": item.signal_class,
+00519:             "Kalite": item.quality_score,
+00520:             "Rejim": item.market_regime,
+00521:             "Sekt├╢r": item.sector,
+00522:             "Kapan─▒┼Я nedeni": item.close_reason,
+00523:             "Kay─▒t": item.record_id,
+00524:         }
+00525:         for item in positions
+---
+FILE=backend\app\analysis\shadow_portfolio.py
+TERMS=quality_score
+LINE=76
+FUNCTION=__post_init__
+ARGS=self
+00072:         if not math.isfinite(self.capital_at_entry) or self.capital_at_entry <= 0:
+00073:             raise ShadowPortfolioError("Sermaye s─▒f─▒rdan b├╝y├╝k olmal─▒d─▒r.")
+00074:         if not math.isfinite(self.fees) or self.fees < 0:
+00075:             raise ShadowPortfolioError("Masraf negatif olamaz.")
+00076:         if self.quality_score is not None and not 0 <= self.quality_score <= 100:
+00077:             raise ShadowPortfolioError("Kalite skoru 0тАУ100 aras─▒nda olmal─▒d─▒r.")
+00078: 
+00079:         for name, value in (
+00080:             ("Stop", self.stop_loss),
+00081:             ("Hedef 1", self.target_1),
+00082:             ("Hedef 2", self.target_2),
+---
+FILE=backend\app\analysis\shadow_portfolio.py
+TERMS=quality_score
+LINE=76
+FUNCTION=__post_init__
+ARGS=self
+00072:         if not math.isfinite(self.capital_at_entry) or self.capital_at_entry <= 0:
+00073:             raise ShadowPortfolioError("Sermaye s─▒f─▒rdan b├╝y├╝k olmal─▒d─▒r.")
+00074:         if not math.isfinite(self.fees) or self.fees < 0:
+00075:             raise ShadowPortfolioError("Masraf negatif olamaz.")
+00076:         if self.quality_score is not None and not 0 <= self.quality_score <= 100:
+00077:             raise ShadowPortfolioError("Kalite skoru 0тАУ100 aras─▒nda olmal─▒d─▒r.")
+00078: 
+00079:         for name, value in (
+00080:             ("Stop", self.stop_loss),
+00081:             ("Hedef 1", self.target_1),
+00082:             ("Hedef 2", self.target_2),
+---
+FILE=backend\app\analysis\signal_outcome_tracking.py
+TERMS=quality_score
+LINE=28
+FUNCTION=<module/class-body>
+00024:     symbol: str
+00025:     signal_date: date
+00026:     reference_price: float
+00027:     decision_class: str
+00028:     quality_score: int
+00029:     daily_direction: str
+00030:     weekly_direction: str
+00031:     divergence_type: str = ""
+00032:     market_regime: str = ""
+00033:     sector: str = ""
+00034:     momentum_state: str = ""
+---
+FILE=backend\app\analysis\signal_outcome_tracking.py
+TERMS=quality_score
+LINE=306
+FUNCTION=outcome_rows
+ARGS=outcomes: Iterable[SignalOutcome]
+00302:             "Sembol": outcome.snapshot.symbol,
+00303:             "Sinyal tarihi": outcome.snapshot.signal_date,
+00304:             "Referans fiyat": outcome.snapshot.reference_price,
+00305:             "Karar s─▒n─▒f─▒": outcome.snapshot.decision_class,
+00306:             "Kalite skoru": outcome.snapshot.quality_score,
+00307:             "G├╝nl├╝k y├╢n": outcome.snapshot.daily_direction,
+00308:             "Haftal─▒k y├╢n": outcome.snapshot.weekly_direction,
+00309:             "Uyumsuzluk": outcome.snapshot.divergence_type or "тАФ",
+00310:             "Piyasa rejimi": outcome.snapshot.market_regime or "тАФ",
+00311:             "Sekt├╢r": outcome.snapshot.sector or "тАФ",
+00312:             "Momentum": outcome.snapshot.momentum_state or "тАФ",
+---
+FILE=backend\app\analysis\signal_outcome_tracking.py
+TERMS=quality_score
+LINE=56
+FUNCTION=__post_init__
+ARGS=self
+00052:         if not math.isfinite(self.reference_price) or self.reference_price <= 0:
+00053:             raise SignalOutcomeError(
+00054:                 "Referans fiyat s─▒f─▒rdan b├╝y├╝k olmal─▒d─▒r."
+00055:             )
+00056:         if not 0 <= self.quality_score <= 100:
+00057:             raise SignalOutcomeError("Kalite skoru 0тАУ100 aras─▒nda olmal─▒d─▒r.")
+00058: 
+00059:         for name, value in (
+00060:             ("ATR y├╝zdesi", self.atr_percent),
+00061:             ("Risk/getiri oran─▒", self.risk_reward_ratio),
+00062:             ("Stop", self.stop_loss),
+---
+FILE=backend\app\analysis\signal_outcome_tracking.py
+TERMS=quality_score
+LINE=80
+FUNCTION=__post_init__
+ARGS=self
+00076:                     symbol,
+00077:                     self.signal_date.isoformat(),
+00078:                     f"{self.reference_price:.8f}",
+00079:                     self.decision_class.strip(),
+00080:                     str(self.quality_score),
+00081:                     self.daily_direction.strip(),
+00082:                     self.weekly_direction.strip(),
+00083:                 )
+00084:             )
+00085:             import hashlib
+00086:             object.__setattr__(
+---
+FILE=backend\app\analysis\success_comparison_report.py
+TERMS=quality_score
+LINE=119
+FUNCTION=_dimension_getters
+ARGS=
+00115:         ),
+00116:         (
+00117:             "Kalite band─▒",
+00118:             lambda item: _quality_band(
+00119:                 item.snapshot.quality_score
+00120:             ),
+00121:         ),
+00122:     )
+00123: 
+00124: 
+00125: def _build_row(
+---
+FILE=backend\app\analysis\technical_decision_matrix.py
+TERMS=quality_score
+LINE=55
+FUNCTION=<module/class-body>
+00051: @dataclass(frozen=True)
+00052: class TechnicalDecisionMatrix:
+00053:     symbol: str
+00054:     classification: DecisionClass
+00055:     quality_score: int
+00056:     positive_reasons: tuple[str, ...]
+00057:     negative_reasons: tuple[str, ...]
+00058:     rows: tuple[DecisionMatrixRow, ...]
+00059:     disclaimer: str = (
+00060:         "Karar matrisi al─▒m veya sat─▒m tavsiyesi ├╝retmez. "
+00061:         "G├╢stergeleri g├╝nl├╝k ve haftal─▒k ├╢l├зekte a├з─▒klanabilir bi├зimde "
+---
+FILE=backend\app\analysis\walk_forward_calibration.py
+TERMS=quality_score
+LINE=118
+FUNCTION=_matches
+ARGS=outcome: SignalOutcome, parameters: CalibrationParameters
+00114:     parameters: CalibrationParameters,
+00115: ) -> bool:
+00116:     snapshot = outcome.snapshot
+00117: 
+00118:     if snapshot.quality_score < parameters.minimum_quality_score:
+00119:         return False
+00120: 
+00121:     if (
+00122:         snapshot.risk_reward_ratio is None
+00123:         or snapshot.risk_reward_ratio < parameters.minimum_risk_reward
+00124:     ):
+---
+FILE=backend\app\analysis\weekly_performance_report.py
+TERMS=quality_score
+LINE=202
+FUNCTION=build_weekly_performance_report
+ARGS=positions: Iterable[ShadowPosition], *, period_end: date | None=None, days: int=7, generated_at: datetime | None=None
+00198:             round(item.return_percent, 4),
+00199:             item.mfe_percent,
+00200:             item.mae_percent,
+00201:             item.signal_class or "Bilinmiyor",
+00202:             item.quality_score if item.quality_score is not None else "",
+00203:             item.market_regime or "Bilinmiyor",
+00204:             item.sector or "Bilinmiyor",
+00205:             item.close_reason,
+00206:         )
+00207:         for item in sorted(
+00208:             evaluated,
+---
+FILE=backend\app\analysis\weekly_performance_report.py
+TERMS=quality_score
+LINE=202
+FUNCTION=build_weekly_performance_report
+ARGS=positions: Iterable[ShadowPosition], *, period_end: date | None=None, days: int=7, generated_at: datetime | None=None
+00198:             round(item.return_percent, 4),
+00199:             item.mfe_percent,
+00200:             item.mae_percent,
+00201:             item.signal_class or "Bilinmiyor",
+00202:             item.quality_score if item.quality_score is not None else "",
+00203:             item.market_regime or "Bilinmiyor",
+00204:             item.sector or "Bilinmiyor",
+00205:             item.close_reason,
+00206:         )
+00207:         for item in sorted(
+00208:             evaluated,
+---
+FILE=backend\app\analysis\weekly_performance_report.py
+TERMS=quality_score
+LINE=260
+FUNCTION=build_weekly_performance_report
+ARGS=positions: Iterable[ShadowPosition], *, period_end: date | None=None, days: int=7, generated_at: datetime | None=None
+00256:         signal_class_rows=_group_rows(
+00257:             evaluated, lambda item: item.signal_class
+00258:         ),
+00259:         quality_band_rows=_group_rows(
+00260:             evaluated, lambda item: _quality_band(item.quality_score)
+00261:         ),
+00262:         direction_rows=_group_rows(evaluated, _direction_label),
+00263:         regime_rows=_group_rows(
+00264:             evaluated, lambda item: item.market_regime
+00265:         ),
+00266:         sector_rows=_group_rows(evaluated, lambda item: item.sector),
+---
+FILE=backend\app\data\kap_financial_xls.py
+TERMS=long_term
+LINE=47
+FUNCTION=<module/class-body>
+00043:     "TRADE_RECEIVABLES": ("Ticari Alacaklar",),
+00044:     "INVENTORIES": ("Stoklar",),
+00045:     "TRADE_PAYABLES": ("Ticari Bor├зlar",),
+00046:     "CURRENT_LIABILITIES": ("KISA VADEL─░ Y├ЬK├ЬML├ЬL├ЬKLER", "TOPLAM KISA VADEL─░ Y├ЬK├ЬML├ЬL├ЬKLER"),
+00047:     "LONG_TERM_BORROWINGS": ("Uzun Vadeli Bor├зlanmalar",),
+00048:     "NONCURRENT_LIABILITIES": ("UZUN VADEL─░ Y├ЬK├ЬML├ЬL├ЬKLER", "TOPLAM UZUN VADEL─░ Y├ЬK├ЬML├ЬL├ЬKLER"),
+00049:     "PARENT_EQUITY": ("Ana Ortakl─▒─Яa Ait ├Цzkaynaklar",),
+00050:     "TOTAL_LIABILITIES": ("TOPLAM Y├ЬK├ЬML├ЬL├ЬKLER",),
+00051:     "TOTAL_EQUITY": ("TOPLAM ├ЦZKAYNAKLAR",),
+00052:     "REVENUE": ("Has─▒lat",),
+00053:     "COGS": ("Sat─▒┼Яlar─▒n Maliyeti",),
+---
+FILE=backend\app\models\investability_models.py
+TERMS=business_quality
+LINE=43
+FUNCTION=<module/class-body>
+00039: 
+00040: 
+00041: @dataclass(frozen=True)
+00042: class LongTermContextInput:
+00043:     business_quality: Decimal | None = None
+00044:     growth_durability: Decimal | None = None
+00045:     governance: Decimal | None = None
+00046:     sector_risk: Decimal | None = None
+00047: 
+00048: 
+00049: @dataclass(frozen=True)
+---
+FILE=backend\app\models\investability_models.py
+TERMS=governance
+LINE=45
+FUNCTION=<module/class-body>
+00041: @dataclass(frozen=True)
+00042: class LongTermContextInput:
+00043:     business_quality: Decimal | None = None
+00044:     growth_durability: Decimal | None = None
+00045:     governance: Decimal | None = None
+00046:     sector_risk: Decimal | None = None
+00047: 
+00048: 
+00049: @dataclass(frozen=True)
+00050: class IntelligencePanelPayload:
+00051:     symbol: str
+---
+FILE=backend\app\opportunity_radar.py
+TERMS=quality_score
+LINE=168
+FUNCTION=_load_validated_profiles
+ARGS=
+00164:     required_edges = {"factor", "bin", "lower_exclusive_or_equal", "upper_inclusive"}
+00165:     required_profiles = {
+00166:         "stage", "factor_1", "bin_1", "factor_2", "bin_2",
+00167:         "valid_n", "valid_median_excess_4w_pct", "valid_median_excess_8w_pct",
+00168:         "validation_quality_score",
+00169:     }
+00170:     if not required_edges.issubset(edges.columns):
+00171:         raise RuntimeError("Validated quantile dosyasi beklenen kolonlari tasimiyor.")
+00172:     if not required_profiles.issubset(profiles.columns):
+00173:         raise RuntimeError("Validated profil dosyasi beklenen kolonlari tasimiyor.")
+00174:     return edges, profiles
+---
+FILE=backend\app\opportunity_radar.py
+TERMS=quality_score
+LINE=187
+FUNCTION=_load_monthly_validated_profiles
+ARGS=
+00183:     required_edges = {"monthly_class", "factor", "bin", "lower", "upper"}
+00184:     required_profiles = {
+00185:         "monthly_class", "factor_1", "bin_1", "factor_2", "bin_2",
+00186:         "valid_n", "valid_median_excess_3m_pct", "valid_median_excess_6m_pct",
+00187:         "validation_quality_score",
+00188:     }
+00189:     if not required_edges.issubset(edges.columns):
+00190:         raise RuntimeError("Aylik quantile dosyasi beklenen kolonlari tasimiyor.")
+00191:     if not required_profiles.issubset(profiles.columns):
+00192:         raise RuntimeError("Aylik profil dosyasi beklenen kolonlari tasimiyor.")
+00193:     return edges, profiles
+---
+FILE=backend\app\opportunity_radar.py
+TERMS=quality_score
+LINE=421
+FUNCTION=_weekly_row
+ARGS=symbol: str, daily: pd.DataFrame, edges: pd.DataFrame, profiles: pd.DataFrame
+00417:         ):
+00418:             matched.append(p)
+00419: 
+00420:     if matched:
+00421:         qualities = [float(p["validation_quality_score"]) for p in matched]
+00422:         base.update(
+00423:             {
+00424:                 "Validated Profile Count": len(matched),
+00425:                 "Validated Quality": round(sum(qualities), 2),
+00426:                 "Validated Quality Max": round(max(qualities), 2),
+00427:                 "Ge├зmi┼Я 4H Excess %": round(max(float(p["valid_median_excess_4w_pct"]) for p in matched), 2),
+---
+FILE=backend\app\opportunity_radar.py
+TERMS=quality_score
+LINE=272
+FUNCTION=_monthly_profile_matches
+ARGS=row: pd.Series, edges: pd.DataFrame, profiles: pd.DataFrame
+00268:                 ok = False
+00269:                 break
+00270:         if ok:
+00271:             matches.append({
+00272:                 "quality": float(p["validation_quality_score"]),
+00273:                 "profile": f'{cls}: {p["factor_1"]}={p["bin_1"]} + {p["factor_2"]}={p["bin_2"]}',
+00274:                 "excess3": float(p["valid_median_excess_3m_pct"]),
+00275:                 "excess6": float(p["valid_median_excess_6m_pct"]),
+00276:             })
+00277:     return matches
+00278: 
+---
+FILE=backend\app\prebreakout\prebreakout_score_threshold_calibration.py
+TERMS=quality_score
+LINE=74
+FUNCTION=_empty_comparison
+ARGS=
+00070:             "false_positive",
+00071:             "success_rate_pct",
+00072:             "false_positive_rate_pct",
+00073:             "coverage_vs_current_pct",
+00074:             "quality_score",
+00075:             "sample_sufficient",
+00076:         ]
+00077:     )
+00078: 
+00079: 
+00080: def compare_thresholds(
+---
+FILE=backend\app\prebreakout\prebreakout_score_threshold_calibration.py
+TERMS=quality_score
+LINE=134
+FUNCTION=compare_thresholds
+ARGS=records_table: pd.DataFrame, config: ThresholdCalibrationConfig
+00130:                 "false_positive": false_positive,
+00131:                 "success_rate_pct": round(success_rate, 2),
+00132:                 "false_positive_rate_pct": round(false_positive_rate, 2),
+00133:                 "coverage_vs_current_pct": round(coverage, 2),
+00134:                 "quality_score": round(
+00135:                     success_rate - false_positive_rate,
+00136:                     2,
+00137:                 ),
+00138:                 "sample_sufficient": (
+00139:                     evaluated_count >= config.minimum_sample_size
+00140:                 ),
+---
+FILE=backend\app\prebreakout\prebreakout_score_threshold_calibration.py
+TERMS=quality_score
+LINE=190
+FUNCTION=recommend_threshold
+ARGS=comparison: pd.DataFrame, config: ThresholdCalibrationConfig
+00186:             comparison["false_positive_rate_pct"]
+00187:             <= current["false_positive_rate_pct"]
+00188:         )
+00189:         & (
+00190:             comparison["quality_score"]
+00191:             >= current["quality_score"] + config.minimum_quality_gain
+00192:         )
+00193:     ]
+00194:     if candidates.empty:
+00195:         return keep
+00196: 
+---
+FILE=backend\app\prebreakout\prebreakout_score_threshold_calibration.py
+TERMS=quality_score
+LINE=191
+FUNCTION=recommend_threshold
+ARGS=comparison: pd.DataFrame, config: ThresholdCalibrationConfig
+00187:             <= current["false_positive_rate_pct"]
+00188:         )
+00189:         & (
+00190:             comparison["quality_score"]
+00191:             >= current["quality_score"] + config.minimum_quality_gain
+00192:         )
+00193:     ]
+00194:     if candidates.empty:
+00195:         return keep
+00196: 
+00197:     best = candidates.sort_values(
+---
+FILE=backend\app\prebreakout\prebreakout_score_threshold_calibration.py
+TERMS=quality_score
+LINE=199
+FUNCTION=recommend_threshold
+ARGS=comparison: pd.DataFrame, config: ThresholdCalibrationConfig
+00195:         return keep
+00196: 
+00197:     best = candidates.sort_values(
+00198:         by=[
+00199:             "quality_score",
+00200:             "coverage_vs_current_pct",
+00201:             "sample_count",
+00202:             "threshold",
+00203:         ],
+00204:         ascending=[False, False, False, False],
+00205:     ).iloc[0]
+---
+CODE_HITS=134
+
+===== LONG_TERM_MODULE_ENTRYPOINTS =====
+FUNC=backend\app\analysis\canonical_investability_evidence.py::governance_score_from_ownership|ARGS=ownership: dict[str, Any]
+FUNC=backend\app\analysis\canonical_investability_evidence.py::build_canonical_evidence|ARGS=*, financial_acceptance: dict[str, Any], fair_value_acceptance: dict[str, Any], market_ownership_acceptance: dict[str, Any] | None=None
+FUNC=backend\app\analysis\earnings_cash_quality.py::_growth|ARGS=cur: Decimal | None, prev: Decimal | None
+FUNC=backend\app\analysis\earnings_cash_quality.py::calculate_earnings_cash_quality|ARGS=series: HistoricalFinancialSeries, *, as_of: datetime | None=None
+FUNC=backend\app\analysis\financial_intelligence_investability_acceptance.py::run_investability_acceptance|ARGS=config: dict[str, Any]
+FUNC=backend\app\analysis\fundamental_quality.py::calculate_fundamental_quality|ARGS=snapshot: FundamentalSnapshot, freshness: FundamentalFreshnessResult
+FUNC=backend\app\analysis\investability_production_closure.py::_coverage_long|ARGS=health: int | None, cash: Decimal | None, capeff: Decimal | None, valuation: Decimal | None, mos: Decimal | None, ctx: LongTermContextInput
+FUNC=backend\app\analysis\investability_production_closure.py::run_closure|ARGS=*, base_acceptance: dict[str, Any], completed_evidence: dict[str, Any], data_root: str | Path
+FUNC=backend\app\analysis\investability_runtime_wiring.py::run_runtime_wiring|ARGS=*, base_input: dict[str, Any], canonical_evidence: dict[str, Any]
+FUNC=backend\app\analysis\jump_candidate_quality.py::evaluate_jump_candidate_quality|ARGS=candidate: object, *, policy: JumpCandidateQualityPolicy | None=None
+FUNC=backend\app\analysis\long_term_evidence_completion.py::growth_evidence_score|ARGS=financial_acceptance: dict[str, Any]
+FUNC=backend\app\analysis\long_term_investability.py::calculate_long_term_investability|ARGS=symbol: str, as_of_date: date, *, financial_health_score: int | None, financial_risk_score: int | None, cash_quality_score: Decimal | None, capital_efficiency_score: Decimal | None, valuation_score: Decimal | None, margin_of_safety_score: Decimal | None, context: LongTermContextInput
+FUNC=backend\app\analysis\ranking_quality_context.py::_quality_status|ARGS=evidence: tuple[QualityEvidence, ...], *, data_blocked: bool
+FUNC=backend\app\analysis\ranking_quality_context.py::build_quality_context|ARGS=*, symbol: str, evidence: Iterable[QualityEvidence], data_blocked: bool=False
+FUNC=backend\app\analysis\short_term_investability.py::calculate_short_term_investability|ARGS=symbol: str, as_of_date: date, *, financial_health_score: int | None, risk_score: int | None, financial_momentum: Decimal | None, valuation_stretch: Decimal | None, market: MarketContextInput
+FUNC=backend\app\system\signal_quality_validation.py::validate_signal_quality|ARGS=signal: dict[str, Any]
+FUNC=backend\app\workflow\intelligence_quality_layer.py::build_intelligence_quality_observation|ARGS=symbol: str
+FUNC=backend\app\workflow\long_term_intelligence_layer.py::build_long_term_intelligence_state|ARGS=symbol: str
+FUNC=backend\app\workflow\long_term_intelligence_optimization.py::build_long_term_intelligence_optimization_state|ARGS=symbol: str
+FUNC=backend\app\workflow\long_term_pattern_intelligence.py::build_long_term_pattern_intelligence_state|ARGS=symbol: str
+FUNC=backend\app\workflow\production_quality_analytics.py::build_production_quality_analytics_state|ARGS=symbol: str
+
+===== V4_EXPECTED_CONTRACT =====
+FILE=TUPRS_long_term_canonical_coverage.json
+REQUIRED=canonical
+REQUIRED=as_of_date
+REQUIRED=business_quality.status
+REQUIRED=governance.status
+REQUIRED=growth_context.status
+REQUIRED=data_quality.status
+
+FIN_PROD_V6_LONG_TERM_PREFLIGHT=PASS

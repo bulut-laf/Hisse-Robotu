@@ -1,0 +1,12 @@
+﻿FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py CALLABLE=recover_daily_market_data LINE=13 TEXT=from ..data.data_source_recovery import recover_daily_market_data
+FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py CALLABLE=recover_daily_market_data LINE=220 TEXT=recovered = recover_daily_market_data(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py CALLABLE=recover_daily_market_data LINE=296 TEXT=from .data_source_recovery import recover_daily_market_data
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py CALLABLE=recover_daily_market_data LINE=315 TEXT=recovered = recover_daily_market_data(
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py CALLABLE=recover_daily_market_data LINE=261 TEXT=from .data_source_recovery import recover_daily_market_data
+FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py CALLABLE=recover_daily_market_data LINE=263 TEXT=recovered = recover_daily_market_data(
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\analysis\market_regime.py CALLABLES=recover_daily_market_data FRESHNESS=True RECOVERY_ERROR=False FALLBACK_HINT=True
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\data\batch_market_data.py CALLABLES=recover_daily_market_data FRESHNESS=False RECOVERY_ERROR=False FALLBACK_HINT=True
+SUMMARY FILE=D:\Projects\Hisse-Robotu\backend\app\data\market_data.py CALLABLES=recover_daily_market_data FRESHNESS=False RECOVERY_ERROR=False FALLBACK_HINT=True
+DECISION=EXISTING_RECOVERY_CHAIN_PROVEN
+NEXT=Closure-only. No new wiring or recovery module required.
+PRODUCTION_MUTATION=YOK

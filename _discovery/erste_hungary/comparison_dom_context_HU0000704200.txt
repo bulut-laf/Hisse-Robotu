@@ -1,0 +1,646 @@
+URL=https://www.erstemarket.hu/befektetesi_alapok/osszehasonlitas?funds=HU0000704200
+HTML_LENGTH=118369
+TOKEN_COUNT=370
+ISIN_TOKEN_OCCURRENCES=1
+
+=== ISIN TOKEN CONTEXT #1 INDEX=287 ===
+  00262: Keresés 1246 befektetési alap között
+  00263: Részvények, devizák stb.
+  00264: Indexek hozzáadása:
+  00265: BUX
+  00266: DAX
+  00267: 1 hó
+  00268: 3 hó
+  00269: 6 hó
+  00270: YTD
+  00271: 1 év
+  00272: 2 év
+  00273: 3 év
+  00274: 5 év
+  00275: Max közös
+  00276: Az árfolyamokat közös bázisra hoztuk az árfolyamalakulás összehasonlíthatósága érdekében.
+  00277: A fenti grafikonon
+  00278: az elmúlt 365 nap (~12 hónap) árfolyamalakulása
+  00279: szerepel.
+  00280: Oldal nyomtatása
+  00281: Kiválasztott befektetési alapok
+  00282: Grafikon
+  00283: Megnevezés
+  00284: ERSTE STOCK HUNGARY INDEXKÖVETŐ BEFEKTETÉSI ALAP
+  00285: Törlés
+  00286: ISIN
+>>00287: HU0000704200
+  00288: Alapkezelő
+  00289: ERSTE
+  00290: Indulás
+  00291: 2006.04.28.
+  00292: Deviza
+  00293: HUF
+  00294: Akt. évi hozam (%)
+  00295: 39.11%
+  00296: 1 éves hozam (%)
+  00297: 53.95%
+  00298: 5 éves hozam (%)
+  00299: 24.16%
+  00300: 10 éves hozam (%)
+  00301: 18.66%
+  00302: 1 éves volatilitás (%)
+  00303: 16.94%
+  00304: 3 éves volatilitás (%)
+  00305: 15.36%
+  00306: 5 éves volatilitás (%)
+  00307: 19.75%
+  00308: 1 éves max drawdown (%)
+  00309: -8.23%
+  00310: 5 éves max drawdown (%)
+  00311: -35.86%
+  00312: Árfolyam
+  00313: 8.78
+  00314: 2026.09.23.
+  00315: Nettó eszközérték
+  00316: 49 649 187 741 HUF
+  00317: Kategória
+  00318: Részvény
+  00319: Kockázat
+  00320: Magas
+  00321: Dokumentumok
+  00322: Díjjegyzékek
+  00323: Hirdetmények
+  00324: Közzétételek
+  00325: Üzletszabályzat
+  00326: Termék és költségtájékoztatók
+
+ISIN_HTML_OCCURRENCES=18
+
+=== RAW HTML CONTEXT #1 POS=11410 ===
+
+*/
+// <- portfolio-egeszseg
+  
+// süti kategóriák onload-ra ->
+/*
+tC_ready = function() {
+  if ( typeof tcCategoriesConsent == 'string' ) {
+    if ( tcCategoriesConsent != 'no_consent' ) {
+      // console.log( tcCategoriesConsent );
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        tcVendorsConsent: "",
+        tcCategoriesConsent: tcCategoriesConsent,
+        event: "tcConsentChanged"
+      });
+    }
+  }
+}
+if (window.addEventListener) {
+  window.addEventListener('load', tC_ready, false);
+} else if (window.attachEvent) {
+  window.attachEvent('onload', tC_ready);
+}
+*/
+// <- süti kategóriák onload-ra
+</script>
+<script>
+// document.addEventListener("DOMContentLoaded", function() {
+//   var hideableItems = document.getElementsByClassName('hideable-item');
+//   if ( hideableItems.length > 0 ) {
+//     for (var i = 0; i < hideableItems.length; i ++) {
+//       hideableItems[i].style.display = 'none';
+//     }
+//   }
+// });
+</script><style>#website-alert-1781266306 {
+  padding-top: 64px !important;
+  padding-bottom: 64px !important;
+  font-weight: bold;
+  font-size: 1rem !important;
+}
+
+/* body.profilesView .new_header_cover { background-color: #02a3a4 !important; } */
+
+/* future video -> */
+/* section.future-section#erste-future #editable_bottom.future-shadow .align-items-start.col-lg-6 { align-items: initial !important; } */
+/* <- future video */
+
+@media only screen and (min-width: 768px) {
+  .header-banner .swiper-container {
+    border-radius: .45rem;
+  }
+}
+.SwiperInit.swiper-container {
+  min-height: 348px;
+  height: 100%;
+}</style>
+  
+  <script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "WebSite",
+  "url": "https://www.erstemarket.hu",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.erstemarket.hu/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>  <script type="application/ld+json">
+  { 
+    "@context": "http://schema.org", 
+    "@type": "BreadcrumbList", 
+    "itemListElement": [
+      { 
+        "@type": "ListItem", 
+        "position": 1, 
+        "item": { 
+          "@id": "https://www.erstemarket.hu", 
+          "name": "Kezdőlap" 
+        }
+      },
+            { 
+        "@type": "ListItem", 
+        "position": 2, 
+        "item": { 
+          "@id": "https://www.erstemarket.hu/befektetesi_alapok/osszehasonlitas?funds=HU0000704200",
+          "name": "Befektetési Alapok összehasonlítása" 
+        }
+      }
+    ]
+  }
+</script>
+
+  <script type="text/javascript" src="https://cdn.tagcommander.com/6565/tc_ErsteBefektetYosiZrt_20.js"></script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https:/\/www.googletagmanager.com/gtag/js?id=G-0CZXZ1QRNJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-0CZXZ1QRNJ");
+  </script>
+  <!-- /Google Analytics -->
+
+  <script>
+  var recaptcha_last_id = 0;
+  var onloadCallback = function () {
+    $(".g-recaptcha").each(function (i) {
+      var el = $(this);
+
+      if ( ! $(el).hasClass('g-recaptcha-loaded') ) {
+        $(el).addClass('g-recaptcha-loaded');
+
+        if (typeof $(el).attr('id') == 'undefined') {
+          var eId = 'g-recaptcha-' + recaptcha_last_id;
+          $(el).attr('id', eId);
+        } else {
+          var eId = $(el).attr('id');
+        }
+
+        if (typeof $(el).form().attr('id') == 'undefined') {
+          var formId = 'g-recaptcha-form-' + recaptcha_last_id;
+          $(el).form().attr('id', formId);
+        } else {
+          var formId = $(el).form().attr('id');
+        }
+
+        if (typeof $(el).data('sitekey') == 'undefined') {
+          var siteKey = '6LeIrOopAAAAALdnY26F7G9pPEBxscNrPk0kTwIB';
+          $(el).data('sitekey', siteKey);
+        } else {
+          var siteKey = $(el).data('sitekey');
+        }
+
+        if (typeof $(el).data('size') == 'undefined') {
+          $(el).data('size', 'invisible');
+        }
+
+        var widgetId = grecaptcha.render(eId, {
+          'sitekey': siteKey,
+          'size': 'invisible',
+
+          /*
+          'callback': function (token) {
+            $(el).parent().find(".g-recaptcha-response").val(token);
+
+            formId = $(el).form().attr('id');
+            // ha nincs formid akkor adni!
+            // console.log(formId);
+
+            //console.log( typeof document.getElementById(formId).checkValidity );
+            if (typeof document.getElementById(formId).checkValidity == 'function' && !document.getElementById(formId).checkValidity()) {
+              if (typeof document.getElementById(formId).reportValidity == 'function') {
+                document.getElementById(formId).reportValidity();
+              }
+              grecaptcha.reset(); // ez kell-e ide?
+            } else {
+              if (!$(el).hasClass('g-recaptcha-popup')) {
+                $(el).form().submit();
+              } else {
+                if ($(el).hasClass('processForm')) {
+                  Layout.popupProcess();
+                }
+              }
+            }
+          }
+          */
+
+          /*
+          'callback': function (token) {
+            $(el).parent().find(".g-recaptcha-response").val(token);
+            $(el).form().submit();
+          },
+          */
+
+          'callback': typeof $(el).attr('recaptcha-callback') == 'undefined' ? function(token) {
+            if ( $(el).hasClass('sendfeedback') ) {
+              if (typeof Faq != "undefined") {
+                Faq.feedbackSend(el, token);
+              }
+            } else if ( $(el).hasClass('reg-submit') ) {
+              /*
+                object.parents('form').find(".g-recaptcha-response").val(token);
+                Regform.submitAndValidate(object.parents('form'));
+                var c = $('.g-recaptcha').length;
+                for (var i = 0; i < c; i++) {
+                  grecaptcha.reset(i);
+                }
+              */
+              $(el).parent().find(".g-recaptcha-response").val(token);
+              Regform.submitAndValidate($(el).form());
+              var c = $('.g-recaptcha').length;
+              for (var i = 0; i < c; i++) {
+                grecaptcha.reset(i);
+              }
+            } else if ( $(el).hasClass('account-query-submit') ) {
+              $(el).parent().find(".g-recaptcha-response").val(token);
+              App.submitAndValidate($(el).form(), false);
+              var c = $('.g-recaptcha').length;
+              for (var i = 0; i < c; i++) {
+                grecaptcha.reset(i);
+              }
+            } else {
+              $(el).parent().find(".g-recaptcha-response").val(token);
+              if (typeof document.getElementById(formId).checkValidity == 'function' && !document.getElementById(formId).checkValidity()) {
+                if (typeof document.getElementById(formId).reportValidity == 'function') {
+                  document.getElementById(formId).reportValidity();
+                }
+                grecaptcha.reset(widgetId);
+              } else {
+                if (!$(el).hasClass('processForm')) {
+                  $(el).form().submit();
+                } else {
+                  if ($(el).hasClass('processForm')) {
+                    if (typeof Layout.popupProcess == 'funct
+
+=== RAW HTML CONTEXT #2 POS=20151 ===
+ecaptcha.reset(widgetId);
+            grecaptcha.execute(widgetId);
+          });
+        }
+      }
+    });
+  }
+</script>
+  <script type="text/javascript" src="/min-js?f=js/head.js&amp;v=1.104"></script></head><body id="website" class="preload white-header-bg fundsCompare"><div class="d-print-none">
+<div id="search_overlay" class="overlay_window" role="dialog" aria-modal="true" aria-labelledby="header-search">
+  <div class="overlay_content container">
+    <div class="row">
+      <div class="overlay_header d-flex justify-content-between flex-nowrap">
+        <h3 id="header-search" class="icon_search m-0">Gyorskeresés</h3>
+        <span class="close" tabindex="0" role="button" aria-label="Bezárás"></span>
+        <div id="search-status" class="visually-hidden" aria-live="polite">
+          Az eredmények a gépelés közben frissülnek.
+        </div>
+      </div>
+    </div>
+    <div class="overlay_form row websiteInstantSearch">
+      <input name="data[keyword]" id="instant_keyword" class="keyword search-overlay-input-loading" autocomplete="off" tabindex="0" placeholder="Kereső betöltése..." data-placeholder="Keresés cikkekben és termékekben" disabled="disabled" value="" aria-label="Gyorskeresés. Enter billentyűvel a találatokra, Tab billentyűvel a részletes keresőkre léphet." aria-describedby="search-status" type="text"/>    </div>
+
+
+    <div class="overlay_form my-0 d-none d-md-block mb-3">
+        <a href="/befektetesi_alapok/kereses" class="arrow mr-5 me-lg-5">Részletes befektetési alapok kereső</a><a href="/termekek/certifikat-kereso" class="arrow mr-5 me-lg-5">Részletes certifikát és warrant kereső</a><a href="/termekek/etf-kereso" class="arrow">ETF kereső</a>    </div>
+
+    <div id="quicksearch-results" class="overlay_search_results websiteInstantSearchResults table-responsive" role="status" aria-live="assertive" aria-atomic="true"></div>
+  </div>
+</div>
+<div id="login_overlay" class="overlay_window" role="dialog" aria-modal="true" aria-label="Belépés">
+  <div class="overlay_content container">
+    <div class="px-4 start-0 overlay_header row py-3">
+      <h3 class="icon_login mb-0"></h3>
+      <span class="close" tabindex="0" aria-label="Bezárás" role="button"></span>
+    </div>
+    <div class="px-4 pb-3 row">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+  <!--
+    -->
+  <div class="bg-light p-4 rounded">
+    <h4 class="mb-3">Erste Market belépés</h4>
+    <form action="/funds/befektetesi_alapok/osszehasonlitas?funds=HU0000704200" class="loginForm form" id="ClientLoginForm_6ab55216692db" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div><div class="success alert alert-success hidden" role="alert"></div><div class="error alert alert-danger hidden" role="alert"></div><div class="info alert alert-info hidden" role="alert"></div><div class="warning alert alert-warning hidden" role="alert"></div><input type="hidden" name="data[Client][redirect_url]" value="" id="redirect_url_6ab55216692db"/><div class="field required"><label for="email_6ab55216692db">Email cím</label><input name="data[Client][email]" class="form-control bg-light" required="required" placeholder="Email cím" id="email_6ab55216692db" maxlength="255" type="email" required="required"/></div><div class="field required"><label for="password_6ab55216692db">Jelszó</label><input name="data[Client][password]" class="form-control bg-light" required="required" placeholder="Jelszó" id="password_6ab55216692db" type="password" required="required"/></div><div class="d-flex flex-column flex-sm-row justify-content-between align-items-start align-items-sm-center gap-2 mb-3"><div class="form-check bg-light ps-0"><input type="hidden" name="data[Client][remember_me]" id="remember_me_6ab55216692db_" value="0"/><input type="checkbox" name="data[Client][remember_me]" class="form-checkbox bg-light" value="1" id="remember_me_6ab55216692db"/><label for="remember_me_6ab55216692db">Tartson belépve</label></div><a href="/felhasznalok/elfelejtett_jelszo" class="link fw-bold">Elfelejtetted a jelszavadat? <i class="bi bi-chevron-right"></i></a></div><button type="submit" class="btn btn-primary w-100 no-g-recaptcha">Belépés</button><div class="mt-3"><a href="/felhasznalok/regisztracio" class="link fw-bold">Nincs még hozzáférésed? <i class="bi bi-chevron-right"></i></a></div></form>  </div>
+</div>
+<div class="col-lg-6">
+  <div class="p-4">
+  <!--
+  <div class="info_box">
+    <div class="links">
+          </div>
+    <p>aaItt jelentkezhet be korábban regisztrált Erste Market hozzáférésével.<br />Amennyiben korábban csak hírleveleinket kapta, és nem regisztrált, akkor hozzáférését <a href="/felhasznalok/belepesi_segitseg">ezen az oldalon tudja aktiválni</a>.</p>
+  </div>
+  -->
+    <h4 class="mb-3">Online befektetés belépés</h4>
+    <div class="row row-cols-1 row-cols-sm-2 g-4 mt-0 pt-0 px-0 pb-4">
+      <!-- NetBroker belépés -->
+      <div class="col mt-0 mb-3 mb-sm-0">
+        <div class="dropdown w-100">
+          <button class="btn btn-primary w-100 dropdown-toggle" type="button" id="netbrokerDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            NetBroker belépés
+          </button>
+          <ul class="dropdown-menu w-100" aria-labelledby="netbrokerDropdown">
+            <li><a href="https://netbroker.erstebroker.hu/netbroker/Logon.aspx" class="dropdown-item" target="_blank">NetBroker Classic</a></li><li><a href="https://netbroker.erstemarket.hu/" class="dropdown-item" target="_blank">Erste Market Pro</a></li><li><a href="https://netbroker.erstebroker.hu/netbrokerpro/logon.aspx" class="dropdown-item" target="_blank">NetBroker Pro</a></li><li><a href="https://george.erstebank.hu/ " class="dropdown-item" target="_blank">George</a></li><li><a href="https://go.erstetrader.hu/login/?lang=hu" class="dropdown-item" target="_blank">Erste TraderGO</a></li>            <!--
+            <li><a class="dropdown-item" href="#">1</a></li>
+            <li><a class="dropdown-item" href="#">2</a></li>
+            <li><a class="dropdown-item" href="#">3</a></li>
+            -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- George belépés -->
+      <div class="col mt-0">
+        <!--
+        <a href="#" class="btn btn-secondary w-100 d-flex align-items-center justify-content-center">
+          <svg aria-hidden="true" viewBox="0 0 512 512" width="20" height="20" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" class="me-2" focusable="false"><path d="m351 341l44 0c0 77-62 139-139 139l0-44c52 0 95-42 95-95z m44-170c0 76-63 139-139 139-77 0-139-63-139-139 0-77 62-139 139-139 76 0 139 62 139 139z m-139 95c52 0 95-43 95-95 0-53-43-95-95-95-52 0-95 42-95 95 0 52 43 95 95 95z"></path></svg>
+          George belépés
+        </a>
+        -->
+        <a href="https://george.erstebank.hu/ " class="btn btn-secondary w-100 d-flex align-items-center justify-content-center" target="_blank"><svg aria-hidden="true" viewBox="0 0 512 512" width="20" height="20" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg" class="me-2" focusable="false"><path d="m351 341l44 0c0 77-62 139-139 139l0-44c52 0 95-42 95-95z m44-170c0 76-63 139-139 139-77 0-139-63-139-139 0-77 62-139 139-139 76 0 139 62 139 139z m-139 95c52 0 95-43 95-95 0-53-43-95-95-95-52 0-95 42-95 95 0 52 43 95 95 95z"></path></svg> George belépés</a>      </div>
+    </div>
+
+    <p class="small mt-0">Ha elfelejtetted NetBroker jelszavadat, hívd<b
+
+=== RAW HTML CONTEXT #3 POS=87772 ===
+"new_header_cover swiper-slide d-flex justify-content-end position-relative " style="background-color:  #721c7a; height: 400px;">
+                  <div class="position-relative w-100">
+            <div class="container cover-wrapper px-0 w-100 ">
+              <div style="color: #FFFFFF;" class="cover-text pr-0 pr-lg-3 pe-0 pe-lg-3 text-start">
+                <h1 id="header-banner-title" class="banner-title mb-0">Befektetési alapok</h1>                <p id="header-banner-text" class="mt-1 mb-0">Nem kell mindent tudnod a piacról – csak tudd, hová tartasz</p>                              </div>
+                          </div>
+          </div>
+                        </div> <!-- end of 'new_header_cover' -->
+          </div> <!-- end of 'swiper-wrapper' -->
+  </div> <!-- end of 'swiper' -->
+<style>body#website .content-container main::before { background: unset }</style></div><div class="content-container"><main class="header-has-banner"><div class="container page-content">
+  <div class="row page_heading">
+    <div class="col-12">
+        <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="d-none d-md-block"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Kezdőlap</a></li><li class="breadcrumb-item"><a href="/termekek/befektetesi-termekek">Befektetési termékek</a></li><li class="breadcrumb-item"><a href="/befektetesi_alapok">Befektetési alapok</a></li><li class="breadcrumb-item active" aria-current="page"><span>Befektetési alapok összehasonlítása</span></li></ol></nav>  <!-- Breadcrumb // -->
+      <h1 class="heading">Befektetési alapok összehasonlítása árfolyamalakulás
+        alapján</h1>
+    </div>
+  </div>
+
+  
+  <div class="page_row">
+
+    <div class="form d-print-none bg-light p-2 p-md-4 mb-3">
+
+      <p class="mb-2">Az alábbi mezők segítségével adhat hozzá új termékeket az összehasonlításhoz.</p>
+      <div class="row">
+        <div class="col-md-7 mb-3 mb-md-0">
+          <input type="text" class="form-control instantSearchReload mb-0"
+                 data-model="Fund" data-field="isin"
+                 placeholder="Befektetési alap hozzáadása név, ISIN alapján"
+                 id="fundAdd"
+                 autocomplete="off" />
+          <small class="text-muted">Keresés 1246            befektetési alap között</small>
+
+          <input type="hidden" id="instantSearchReloadUrl-fundAdd"
+                 style="width: 500px;"
+                 value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|"/>
+
+          <input type="hidden" id="instantSearchReloadUrl-instAdd"
+                 style="width: 500px;"
+                 value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|"/>
+        </div>
+
+                  <div class="col-md-5">
+            <input type="text"
+                   class="form-control instantSearchReload"
+                   data-model="Instrument" data-field="id"
+                   data-prefix="i:"
+                   placeholder="Egyéb termék hozzáadása" id="instAdd" data-excluded="4"
+                   autocomplete="off" />
+            <small class="text-muted">Részvények, devizák stb.</small>
+          </div>
+              </div>
+
+
+    </div>
+
+
+    <div class="search-result">
+      <input type="hidden" id="currentCompareUrl" value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200" /><div class="row"><div class="col-md-5"><strong>Indexek hozzáadása:</strong><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|i:17" title="Index hozzáadása" class="d-inline-block mx-2 bg-erste-lightblue p-1 rounded"><i class="icon-add mr-0 pr-0"></i>BUX</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|i:379" title="Index hozzáadása" class="d-inline-block mx-2 bg-erste-lightblue p-1 rounded"><i class="icon-add mr-0 pr-0"></i>DAX</a></div></div><div class="text-center mt-4 mb-2"><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=30" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">1 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=90" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">3 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=180" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">6 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=266" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">YTD</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=365" class="btn btn-sm mx-2 border-1 btn-secondary" title="" data-toggle="">1 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=730" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">2 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=1095" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">3 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=1825" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">5 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=7454" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="A leghosszabb, minden terméket tartalmazó időszak; itt most 7454 nap, vagyis kb. 248 hónap." data-toggle="tooltip">Max közös</a></div><div class="border mb-2"><div 
+    class="simpleChartContainer fund " 
+    data-id="6ab5521666523" 
+    instrument-id="222" 
+    multi-instruments="%5B%7B%22id%22%3A%22222%22%2C%22name%22%3A%22ERSTE+STOCK+HUNGARY+INDEXK%5Cu00d6VET%5Cu0150+BEFEKTET%5Cu00c9SI+ALAP%22%2C%22color%22%3A%22%2300497B%22%2C%22decimals%22%3A6%7D%5D" 
+    multi-decimals="2" 
+    decimals-y="0" 
+    value-suffix="%" 
+    chart-type="spline" 
+    chart-rangeselector="0" 
+    chart-scrollbar="0" 
+    instrument-info="0" 
+    yields="0" 
+    refresh="0"  
+    same-base="365" 
+    ><div 
+    class="simpleChart mb-5 loading-bg" 
+    id="simpleChart-6ab5521666523"
+  ></div></div></div><div class="text-center small">Az árfolyamokat közös bázisra hoztuk az árfolyamalakulás összehasonlíthatósága érdekében.<br />A fenti grafikonon <strong>az elmúlt 365 nap (~12 hónap) árfolyamalakulása</strong> szerepel.</div><div class="text-right d-none d-md-block"><a href="#" class="btn btn-outline-erste-gray btn-sm printPage"><i class="icon-menu-book"></i> Oldal nyomtatása</a></div><div class="mt-4"><h3 class="subtitle_line">Kiválasztott befektetési alapok</h3></div><div class="table-responsive"><table class="table table-2 table-striped table-search-result break-out-table"><tbody><tr></tr><th width="12%">Grafikon</th><td class="text-center"><div style="margin: 10px; padding: 3px; background-color: #00497B; border: 3px solid #00497B; border-radius: 2px;"></div></td></tr><tr><th>Megnevezés</th><td class="wrap font-weight-bold text-center align-middle" width="86%"><a href="/befektetesi_alapok/alap/HU0000704200">ERSTE STOCK HUNGARY INDEXKÖVETŐ BEFEKTETÉSI ALAP</a></td></tr><tr><th class="valign-middle">Törlés</th><td class="text-center align-middle p-2"><a href="/befektetesi_alapok/osszehasonlitas?funds=|" class="btn btn-outline-erste-gray btn-sm"><span class="icon-delete icon-lg"></span></a></td></tr><tr><th>ISIN</th><td class="wrap text-center align-middle" width="8
+
+=== RAW HTML CONTEXT #4 POS=87966 ===
+      <div class="container cover-wrapper px-0 w-100 ">
+              <div style="color: #FFFFFF;" class="cover-text pr-0 pr-lg-3 pe-0 pe-lg-3 text-start">
+                <h1 id="header-banner-title" class="banner-title mb-0">Befektetési alapok</h1>                <p id="header-banner-text" class="mt-1 mb-0">Nem kell mindent tudnod a piacról – csak tudd, hová tartasz</p>                              </div>
+                          </div>
+          </div>
+                        </div> <!-- end of 'new_header_cover' -->
+          </div> <!-- end of 'swiper-wrapper' -->
+  </div> <!-- end of 'swiper' -->
+<style>body#website .content-container main::before { background: unset }</style></div><div class="content-container"><main class="header-has-banner"><div class="container page-content">
+  <div class="row page_heading">
+    <div class="col-12">
+        <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="d-none d-md-block"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Kezdőlap</a></li><li class="breadcrumb-item"><a href="/termekek/befektetesi-termekek">Befektetési termékek</a></li><li class="breadcrumb-item"><a href="/befektetesi_alapok">Befektetési alapok</a></li><li class="breadcrumb-item active" aria-current="page"><span>Befektetési alapok összehasonlítása</span></li></ol></nav>  <!-- Breadcrumb // -->
+      <h1 class="heading">Befektetési alapok összehasonlítása árfolyamalakulás
+        alapján</h1>
+    </div>
+  </div>
+
+  
+  <div class="page_row">
+
+    <div class="form d-print-none bg-light p-2 p-md-4 mb-3">
+
+      <p class="mb-2">Az alábbi mezők segítségével adhat hozzá új termékeket az összehasonlításhoz.</p>
+      <div class="row">
+        <div class="col-md-7 mb-3 mb-md-0">
+          <input type="text" class="form-control instantSearchReload mb-0"
+                 data-model="Fund" data-field="isin"
+                 placeholder="Befektetési alap hozzáadása név, ISIN alapján"
+                 id="fundAdd"
+                 autocomplete="off" />
+          <small class="text-muted">Keresés 1246            befektetési alap között</small>
+
+          <input type="hidden" id="instantSearchReloadUrl-fundAdd"
+                 style="width: 500px;"
+                 value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|"/>
+
+          <input type="hidden" id="instantSearchReloadUrl-instAdd"
+                 style="width: 500px;"
+                 value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|"/>
+        </div>
+
+                  <div class="col-md-5">
+            <input type="text"
+                   class="form-control instantSearchReload"
+                   data-model="Instrument" data-field="id"
+                   data-prefix="i:"
+                   placeholder="Egyéb termék hozzáadása" id="instAdd" data-excluded="4"
+                   autocomplete="off" />
+            <small class="text-muted">Részvények, devizák stb.</small>
+          </div>
+              </div>
+
+
+    </div>
+
+
+    <div class="search-result">
+      <input type="hidden" id="currentCompareUrl" value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200" /><div class="row"><div class="col-md-5"><strong>Indexek hozzáadása:</strong><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|i:17" title="Index hozzáadása" class="d-inline-block mx-2 bg-erste-lightblue p-1 rounded"><i class="icon-add mr-0 pr-0"></i>BUX</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|i:379" title="Index hozzáadása" class="d-inline-block mx-2 bg-erste-lightblue p-1 rounded"><i class="icon-add mr-0 pr-0"></i>DAX</a></div></div><div class="text-center mt-4 mb-2"><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=30" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">1 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=90" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">3 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=180" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">6 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=266" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">YTD</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=365" class="btn btn-sm mx-2 border-1 btn-secondary" title="" data-toggle="">1 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=730" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">2 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=1095" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">3 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=1825" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">5 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=7454" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="A leghosszabb, minden terméket tartalmazó időszak; itt most 7454 nap, vagyis kb. 248 hónap." data-toggle="tooltip">Max közös</a></div><div class="border mb-2"><div 
+    class="simpleChartContainer fund " 
+    data-id="6ab5521666523" 
+    instrument-id="222" 
+    multi-instruments="%5B%7B%22id%22%3A%22222%22%2C%22name%22%3A%22ERSTE+STOCK+HUNGARY+INDEXK%5Cu00d6VET%5Cu0150+BEFEKTET%5Cu00c9SI+ALAP%22%2C%22color%22%3A%22%2300497B%22%2C%22decimals%22%3A6%7D%5D" 
+    multi-decimals="2" 
+    decimals-y="0" 
+    value-suffix="%" 
+    chart-type="spline" 
+    chart-rangeselector="0" 
+    chart-scrollbar="0" 
+    instrument-info="0" 
+    yields="0" 
+    refresh="0"  
+    same-base="365" 
+    ><div 
+    class="simpleChart mb-5 loading-bg" 
+    id="simpleChart-6ab5521666523"
+  ></div></div></div><div class="text-center small">Az árfolyamokat közös bázisra hoztuk az árfolyamalakulás összehasonlíthatósága érdekében.<br />A fenti grafikonon <strong>az elmúlt 365 nap (~12 hónap) árfolyamalakulása</strong> szerepel.</div><div class="text-right d-none d-md-block"><a href="#" class="btn btn-outline-erste-gray btn-sm printPage"><i class="icon-menu-book"></i> Oldal nyomtatása</a></div><div class="mt-4"><h3 class="subtitle_line">Kiválasztott befektetési alapok</h3></div><div class="table-responsive"><table class="table table-2 table-striped table-search-result break-out-table"><tbody><tr></tr><th width="12%">Grafikon</th><td class="text-center"><div style="margin: 10px; padding: 3px; background-color: #00497B; border: 3px solid #00497B; border-radius: 2px;"></div></td></tr><tr><th>Megnevezés</th><td class="wrap font-weight-bold text-center align-middle" width="86%"><a href="/befektetesi_alapok/alap/HU0000704200">ERSTE STOCK HUNGARY INDEXKÖVETŐ BEFEKTETÉSI ALAP</a></td></tr><tr><th class="valign-middle">Törlés</th><td class="text-center align-middle p-2"><a href="/befektetesi_alapok/osszehasonlitas?funds=|" class="btn btn-outline-erste-gray btn-sm"><span class="icon-delete icon-lg"></span></a></td></tr><tr><th>ISIN</th><td class="wrap text-center align-middle" width="86%">HU0000704200</td></tr><tr><th>Alapkezelő</th><td class="text-center align-middle">ERSTE</td></tr><tr><th>Indulás</th><td class="text-center align-middle"><span class="inline-block i_222_star
+
+=== RAW HTML CONTEXT #5 POS=88629 ===
+:before { background: unset }</style></div><div class="content-container"><main class="header-has-banner"><div class="container page-content">
+  <div class="row page_heading">
+    <div class="col-12">
+        <!-- Breadcrumb -->
+  <nav aria-label="breadcrumb" class="d-none d-md-block"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="/">Kezdőlap</a></li><li class="breadcrumb-item"><a href="/termekek/befektetesi-termekek">Befektetési termékek</a></li><li class="breadcrumb-item"><a href="/befektetesi_alapok">Befektetési alapok</a></li><li class="breadcrumb-item active" aria-current="page"><span>Befektetési alapok összehasonlítása</span></li></ol></nav>  <!-- Breadcrumb // -->
+      <h1 class="heading">Befektetési alapok összehasonlítása árfolyamalakulás
+        alapján</h1>
+    </div>
+  </div>
+
+  
+  <div class="page_row">
+
+    <div class="form d-print-none bg-light p-2 p-md-4 mb-3">
+
+      <p class="mb-2">Az alábbi mezők segítségével adhat hozzá új termékeket az összehasonlításhoz.</p>
+      <div class="row">
+        <div class="col-md-7 mb-3 mb-md-0">
+          <input type="text" class="form-control instantSearchReload mb-0"
+                 data-model="Fund" data-field="isin"
+                 placeholder="Befektetési alap hozzáadása név, ISIN alapján"
+                 id="fundAdd"
+                 autocomplete="off" />
+          <small class="text-muted">Keresés 1246            befektetési alap között</small>
+
+          <input type="hidden" id="instantSearchReloadUrl-fundAdd"
+                 style="width: 500px;"
+                 value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|"/>
+
+          <input type="hidden" id="instantSearchReloadUrl-instAdd"
+                 style="width: 500px;"
+                 value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|"/>
+        </div>
+
+                  <div class="col-md-5">
+            <input type="text"
+                   class="form-control instantSearchReload"
+                   data-model="Instrument" data-field="id"
+                   data-prefix="i:"
+                   placeholder="Egyéb termék hozzáadása" id="instAdd" data-excluded="4"
+                   autocomplete="off" />
+            <small class="text-muted">Részvények, devizák stb.</small>
+          </div>
+              </div>
+
+
+    </div>
+
+
+    <div class="search-result">
+      <input type="hidden" id="currentCompareUrl" value="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200" /><div class="row"><div class="col-md-5"><strong>Indexek hozzáadása:</strong><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|i:17" title="Index hozzáadása" class="d-inline-block mx-2 bg-erste-lightblue p-1 rounded"><i class="icon-add mr-0 pr-0"></i>BUX</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200|i:379" title="Index hozzáadása" class="d-inline-block mx-2 bg-erste-lightblue p-1 rounded"><i class="icon-add mr-0 pr-0"></i>DAX</a></div></div><div class="text-center mt-4 mb-2"><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=30" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">1 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=90" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">3 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=180" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">6 hó</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=266" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">YTD</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=365" class="btn btn-sm mx-2 border-1 btn-secondary" title="" data-toggle="">1 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=730" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">2 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=1095" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">3 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=1825" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="" data-toggle="">5 év</a><a href="/befektetesi_alapok/osszehasonlitas?funds=HU0000704200&amp;intervallum=7454" class="btn btn-sm mx-2 border-1 btn-outline-secondary" title="A leghosszabb, minden terméket tartalmazó időszak; itt most 7454 nap, vagyis kb. 248 hónap." data-toggle="tooltip">Max közös</a></div><div class="border mb-2"><div 
+    class="simpleChartContainer fund " 
+    data-id="6ab5521666523" 
+    instrument-id="222" 
+    multi-instruments="%5B%7B%22id%22%3A%22222%22%2C%22name%22%3A%22ERSTE+STOCK+HUNGARY+INDEXK%5Cu00d6VET%5Cu0150+BEFEKTET%5Cu00c9SI+ALAP%22%2C%22color%22%3A%22%2300497B%22%2C%22decimals%22%3A6%7D%5D" 
+    multi-decimals="2" 
+    decimals-y="0" 
+    value-suffix="%" 
+    chart-type="spline" 
+    chart-rangeselector="0" 
+    chart-scrollbar="0" 
+    instrument-info="0" 
+    yields="0" 
+    refresh="0"  
+    same-base="365" 
+    ><div 
+    class="simpleChart mb-5 loading-bg" 
+    id="simpleChart-6ab5521666523"
+  ></div></div></div><div class="text-center small">Az árfolyamokat közös bázisra hoztuk az árfolyamalakulás összehasonlíthatósága érdekében.<br />A fenti grafikonon <strong>az elmúlt 365 nap (~12 hónap) árfolyamalakulása</strong> szerepel.</div><div class="text-right d-none d-md-block"><a href="#" class="btn btn-outline-erste-gray btn-sm printPage"><i class="icon-menu-book"></i> Oldal nyomtatása</a></div><div class="mt-4"><h3 class="subtitle_line">Kiválasztott befektetési alapok</h3></div><div class="table-responsive"><table class="table table-2 table-striped table-search-result break-out-table"><tbody><tr></tr><th width="12%">Grafikon</th><td class="text-center"><div style="margin: 10px; padding: 3px; background-color: #00497B; border: 3px solid #00497B; border-radius: 2px;"></div></td></tr><tr><th>Megnevezés</th><td class="wrap font-weight-bold text-center align-middle" width="86%"><a href="/befektetesi_alapok/alap/HU0000704200">ERSTE STOCK HUNGARY INDEXKÖVETŐ BEFEKTETÉSI ALAP</a></td></tr><tr><th class="valign-middle">Törlés</th><td class="text-center align-middle p-2"><a href="/befektetesi_alapok/osszehasonlitas?funds=|" class="btn btn-outline-erste-gray btn-sm"><span class="icon-delete icon-lg"></span></a></td></tr><tr><th>ISIN</th><td class="wrap text-center align-middle" width="86%">HU0000704200</td></tr><tr><th>Alapkezelő</th><td class="text-center align-middle">ERSTE</td></tr><tr><th>Indulás</th><td class="text-center align-middle"><span class="inline-block i_222_start_time nowrap text-nowrap number" stream="1146175200" title="" instrument-id="222">2006.04.28.</span></td></tr><tr><th>Deviza</th><td class="text-center align-middle">HUF</td></tr><tr><th>Akt. évi hozam (%)</th><td class="text-center align-middle"><span class="inline-block i_222_r_ytd nowrap text-nowrap number" stream="0.3911335000" title="" instrument-id="222">39.11%</span></td></tr><tr><th>1 éves hozam (%)</th><td class="text-center align-middle"><span class="inline-block i_222_r_1y nowrap text-nowrap number" stream="0.5394866000" title="" instrument-id="222">53.95%</span></td></tr><tr><th>5 éves hozam (%)</th><td class="text-center align-middle"><span 
+
+=== KEYWORD HITS ===
+ISIN=1
+  00286: ISIN
+Alapkezel=3
+  00055: AlapHang | Erste Alapkezelő
+  00159: AlapHang | Erste Alapkezelő
+  00288: Alapkezelő
+Indul=1
+  00290: Indulás
+Deviza=6
+  00080: Devizapárok
+  00092: Deviza
+  00184: Devizapárok
+  00196: Deviza
+  00292: Deviza
+  00333: Devizapiac
+hozam=4
+  00294: Akt. évi hozam (%)
+  00296: 1 éves hozam (%)
+  00298: 5 éves hozam (%)
+  00300: 10 éves hozam (%)
+volatilit=3
+  00302: 1 éves volatilitás (%)
+  00304: 3 éves volatilitás (%)
+  00306: 5 éves volatilitás (%)
+drawdown=2
+  00308: 1 éves max drawdown (%)
+  00310: 5 éves max drawdown (%)
+ГЃrfolyam=0
+Arfolyam=0
+eszkГ¶zГ©rtГ©k=0
+eszkozertek=0
+Kateg=2
+  00009: // portfolio-egeszseg -> // console.log( window.history.state ); /* var xhr = new XMLHttpRequest(); xhr.onload = function() { if (this.status < 400 && this.status >= 300) { console.log('this redirects to ' + this.getResponseHeader("Location")); } else { console.log('doesn\'t redirect '); } } xhr.open('HEAD', '/portfolio-egeszseg', true); xhr.send(); if(document.referrer == 'https://www.erstemarket.hu/portfolio-egeszseg'){ window.location.href = 'https://www.erstemarket.hu/oldalak/erste-portfolio-egeszseg'; } */ // <- portfolio-egeszseg // süti kategóriák onload-ra -> /* tC_ready = function() { if ( typeof tcCategoriesConsent == 'string' ) { if ( tcCategoriesConsent != 'no_consent' ) { // console.log( tcCategoriesConsent ); window.dataLayer = window.dataLayer || []; window.dataLayer.push({ tcVendorsConsent: "", tcCategoriesConsent: tcCategoriesConsent, event: "tcConsentChanged" }); } } } if (window.addEventListener) { window.addEventListener('load', tC_ready, false); } else if (window.attachEvent) { window.attachEvent('onload', tC_ready); } */ // <- süti kategóriák onload-ra
+  00317: Kategória
+KockГЎz=0
+Kockaz=0

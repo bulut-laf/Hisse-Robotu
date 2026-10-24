@@ -1,0 +1,6 @@
+﻿SYMBOLS=evaluate_decision_context
+TEST SYMBOL=evaluate_decision_context FILE=D:\Projects\Hisse-Robotu\backend\tests\test_decision_engine.py COUNT=3
+INTENT_HITS=8
+DECISION=TESTED_BUT_NO_ACTIVE_SYMBOL_CONSUMER
+NEXT=Do not wire automatically; inspect whether this is an isolated/test-support engine or an intentional unused capability.
+PRODUCTION_MUTATION=YOK

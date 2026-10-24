@@ -1,0 +1,16 @@
+{
+  "sprint": "182 Rev3",
+  "title": "Seans Öncesi Bağlam / Görüntü Tabanlı PDF Fallback / Legacy Wiring Uyumluluğu",
+  "base_checkpoint": "Sprint-181 / 2949 passed / 0 failed",
+  "expected_checkpoint": "2965 passed / 0 failed",
+  "files": {
+    "SPRINT_182_NOTES.md": "B0EEB7492E252CF439AB013F2794DCE9A3F2C138B0F2FC60D07577C8B8C329D9",
+    "backend/app/market_context/pdf_image_fallback.py": "B0969659516BBF974594ABC6F5E702156FDD427E0DB2A7FB76CFE9630E6618BD",
+    "backend/app/ui/market_context_pdf_fallback.py": "4EA404D2614425A5B6789F3ECD83FE5AEA461EBCC1014FACFC7C8B9A859DA822",
+    "backend/app/ui/market_context_dashboard_s182.py": "96735D9AFB04F95E444A889FEDFEAC888A7990C391F784740C369C1529C4954D",
+    "tools/patch_sprint182_pdf_fallback.py": "6A2D9FFC46496535CAF67755013A68C69EE7AC436DA48383C5F99C20B77F3BA5",
+    "backend/tests/test_sprint182_pdf_image_fallback.py": "752D76D35836E47E158E4D133A463615893D35B2CF90F8CED1EA92E7FAB93C0D",
+    "backend/tests/test_sprint182_pdf_fallback_ui.py": "55E679BAA94DBE631B4DECC1AC2D2424B1827C422DB9473830F6527211733386",
+    "backend/tests/test_sprint182_pdf_fallback_wrapper_contract.py": "2D4BC2B60A4AAECBB5AE903736842152FE698253E0AA21027EEE96260295BEB5"
+  }
+}

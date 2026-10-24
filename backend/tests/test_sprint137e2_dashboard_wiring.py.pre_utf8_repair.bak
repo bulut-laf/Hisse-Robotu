@@ -1,0 +1,83 @@
+from pathlib import Path
+import re
+
+
+DASHBOARD = Path("backend/dashboard.py")
+
+
+def _source() -> str:
+    return DASHBOARD.read_text(encoding="utf-8")
+
+
+def test_market_context_dashboard_is_imported():
+    source = _source()
+    assert (
+        "from backend.app.ui.market_context_dashboard import "
+        "render_market_context_dashboard"
+    ) in source
+
+
+def test_market_context_is_in_analysis_menu():
+    source = _source()
+    match = re.search(
+        r"ANALIZ_MODLARI\s*=\s*\(\n(?P<body>.*?\n)\)",
+        source,
+        flags=re.DOTALL,
+    )
+    assert match is not None
+    assert '"Seans Öncesi Bağlam"' in match.group("body")
+
+
+def test_analysis_menu_remains_alphabetical():
+    source = _source()
+    match = re.search(
+        r"ANALIZ_MODLARI\s*=\s*\(\n(?P<body>.*?\n)\)",
+        source,
+        flags=re.DOTALL,
+    )
+    assert match is not None
+
+    items = re.findall(
+        r'^\s*"([^"]+)",\s*$',
+        match.group("body"),
+        flags=re.MULTILINE,
+    )
+
+    turkish_alphabet = "abcçdefgğhıijklmnoöprsştuüvyz"
+    order = {char: index for index, char in enumerate(turkish_alphabet)}
+
+    def turkish_sort_key(value: str):
+        normalized = value.casefold().replace("i̇", "i")
+        return tuple(order.get(char, 1000 + ord(char)) for char in normalized)
+
+    assert items == sorted(items, key=turkish_sort_key)
+
+
+def test_market_context_has_dedicated_route():
+    source = _source()
+
+    assert 'elif analiz_modu == "Seans Öncesi Bağlam":' in source
+    assert "render_market_context_dashboard(" in source
+
+
+def test_market_context_route_does_not_call_trading_engines():
+    source = _source()
+
+    route_match = re.search(
+        r'elif analiz_modu == "Seans Öncesi Bağlam":(?P<body>.*?)(?=^    elif analiz_modu == |^    else:)',
+        source,
+        flags=re.DOTALL | re.MULTILINE,
+    )
+    assert route_match is not None
+
+    body = route_match.group("body").casefold()
+    forbidden = (
+        "technical_score",
+        "candidate_rank",
+        "buy_signal",
+        "sell_signal",
+        "prebreakout",
+        "market_regime",
+    )
+    for token in forbidden:
+        assert token not in body

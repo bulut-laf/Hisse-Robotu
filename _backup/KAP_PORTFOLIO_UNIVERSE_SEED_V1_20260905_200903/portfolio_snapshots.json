@@ -1,0 +1,70 @@
+{
+  "fund:tefas:AP5|2026-05-31|KAP": {
+    "_digest": "783833b15d546067eba45810bd13be28f459ae855b19410a259137e8527f3bc0",
+    "canonical_fund_id": "fund:tefas:AP5",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-04T10:47:52.007936+00:00",
+    "portfolio_date": "2026-05-31",
+    "positions": [
+      {
+        "asset_name": "SABANCI HOLDING A.Ş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "441600.00",
+        "portfolio_date": "2026-05-31",
+        "portfolio_weight": "0.4566",
+        "shares_held": "4800.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "525525.00",
+        "portfolio_date": "2026-05-31",
+        "portfolio_weight": "0.5434",
+        "shares_held": "8580.00",
+        "symbol": "TTKOM"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-06-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "575504f4075852d4fef3e7f5d29a130e6aa508da6cffb4f16bb86bb469fd5cce",
+    "source_reference": "https://www.kap.org.tr/tr/Bildirim/1614366"
+  },
+  "fund:tefas:AP5|2026-06-30|KAP": {
+    "_digest": "9a636157f45f34c0dfd0b093e83b45130295828cd3b8b5f7a2962b5ba52b04cd",
+    "canonical_fund_id": "fund:tefas:AP5",
+    "data_quality_state": "VALID",
+    "ingested_at": "2026-09-04T11:35:27.308218+00:00",
+    "portfolio_date": "2026-06-30",
+    "positions": [
+      {
+        "asset_name": "SABANCI HOLDING A.Ş",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "468000.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.4757",
+        "shares_held": "4800.00",
+        "symbol": "SAHOL"
+      },
+      {
+        "asset_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
+        "asset_type": "EQUITY",
+        "canonical_fund_id": "fund:tefas:AP5",
+        "market_value": "515760.00",
+        "portfolio_date": "2026-06-30",
+        "portfolio_weight": "0.5243",
+        "shares_held": "8400.00",
+        "symbol": "TTKOM"
+      }
+    ],
+    "provider": "KAP",
+    "publication_date": "2026-07-08",
+    "record_type": "FundPortfolioSnapshot",
+    "snapshot_id": "741291e5607c1d09c50f7cc98f0e0c6d0f4356bd72e9b6325747f5dc6cb3fd05",
+    "source_reference": "manual-upload:AP5_FON_HAZIRAN_2026_PORTFOY_DAGILIM_RAPORU_CLEAN.pdf"
+  }
+}

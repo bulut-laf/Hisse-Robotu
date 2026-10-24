@@ -1,0 +1,678 @@
+{
+  "schema_version": "financial-intelligence-v1-3-bank-official-kap-financial-acquisition-preflight-v1",
+  "status": "PASS",
+  "candidate_source_file_count": 278,
+  "candidate_definition_count": 607,
+  "likely_acquisition_seam_count": 19,
+  "selected_seam": {
+    "kind": "function",
+    "name": "import_kap_financial_xls_bytes",
+    "line": 237,
+    "score": 18,
+    "snippet": "def import_kap_financial_xls_bytes(payload: bytes, *, source_name: str = \"report.xls\") -> KapFinancialImportResult:\n    try:\n        text = payload.decode(\"utf-8-sig\")\n    except UnicodeDecodeError as exc:\n        raise KapFinancialXlsError(\"KAP XLS UTF-8 HTML olarak okunamadı.\") from exc\n\n    identity = _extract_meta(text, source_name)\n    parser = _FinancialHtmlParser()\n    parser.feed(text)\n    if not parser.tables:\n        raise KapFinancialXlsError(\"KAP finansal tablo blokları bulunamadı.\")\n\n    facts: list[CanonicalFinancialFact] = []\n    unmapped: set[str] = set()\n\n    for table_index, table in enumerate(parser.tables):\n        rows = table[\"rows\"]\n        if not rows:\n            continue\n        header_cells = [c for c in rows[0] if \"context-header\" in c.get(\"class\", \"\")]\n        period_labels = [_clean_text(c.get(\"text\", [])) for c in header_cells]\n        first_label = \"\"\n        for row in rows[1:]:\n            if len(row) > 1:\n                candidate = _clean_text(row[1].get(\"text\", []))\n                if candidate:\n                    first_label = candidate\n                    break\n        statement = _statement_name(table_index, first_label)\n\n        for row in rows[1:]:\n            if len(row) < 2:\n                continue\n            label = _clean_text(row[1].get(\"text\", []))\n            if not label:",
+    "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py"
+  },
+  "top_source_files": [
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_official_kap_financial_acquisition_preflight.py",
+      "score": 44,
+      "has_kap_domain": true,
+      "has_read_excel": true,
+      "has_urlopen": true,
+      "has_requests": true
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py",
+      "score": 24,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\news_center_dashboard.py",
+      "score": 24,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py",
+      "score": 24,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py",
+      "score": 21,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": true,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\historical_financial_series.py",
+      "score": 18,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\models\\financial_intelligence_models.py",
+      "score": 18,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_flow.py",
+      "score": 18,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter.py",
+      "score": 18,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter_rev2.py",
+      "score": 18,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter_rev4.py",
+      "score": 18,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_ingestion.py",
+      "score": 17,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": true,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\ttm_financial_bridge.py",
+      "score": 16,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\source_registry.py",
+      "score": 16,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_acceptance.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_market_acceptance.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_fundamental_source.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_adapter.py",
+      "score": 14,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\official_source_health.py",
+      "score": 14,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\fund_analysis_center.py",
+      "score": 14,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\official_source_feed_renderer.py",
+      "score": 14,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_002_market_ownership.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter_rev3.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_1_new_symbol_intake_gate.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_raw_source_schema_characterization.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_real_source_discovery_evidence_intake.py",
+      "score": 14,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\research_profiles_daily.py",
+      "score": 12,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_free_float_auto_population.py",
+      "score": 12,
+      "has_kap_domain": true,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\financial_intelligence_dashboard.py",
+      "score": 12,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    },
+    {
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\diagnostics\\system_check.py",
+      "score": 11,
+      "has_kap_domain": false,
+      "has_read_excel": false,
+      "has_urlopen": false,
+      "has_requests": false
+    }
+  ],
+  "top_definitions": [
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 136,
+      "score": 32,
+      "snippet": "def main():\n    root = Path(\n        r\"D:\\Projects\\Hisse-Robotu\"\n    )\n\n    code_roots = [\n        root / \"backend\" / \"app\",\n        root / \"backend\" / \"scripts\",\n    ]\n\n    files = []\n    definitions = []\n    endpoints = set()\n\n    for base in code_roots:\n        if not base.exists():\n            continue\n\n        for path in base.rglob(\"*.py\"):\n            try:\n                text = path.read_text(\n                    encoding=\"utf-8-sig\",\n                    errors=\"ignore\",\n                )\n            except Exception:\n                continue\n\n            score = _score_text(\n                path.name\n                + \"\\n\"\n                + text\n            )\n\n            if score < 4:\n                continue",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_official_kap_financial_acquisition_preflight.py"
+    },
+    {
+      "kind": "function",
+      "name": "_extract_meta",
+      "line": 179,
+      "score": 18,
+      "snippet": "def _extract_meta(text: str, source_name: str) -> FinancialReportIdentity:\n    company_match = re.search(r\"<h1[^>]*>(.*?)</h1>\", text, re.I | re.S)\n    company_name = re.sub(r\"<[^>]+>\", \"\", company_match.group(1)).strip() if company_match else \"\"\n\n    def field(name: str) -> str | None:\n        match = re.search(rf\"{re.escape(name)}\\s*:\\s*([^<\\r\\n]+)\", text, re.I)\n        return match.group(1).strip() if match else None\n\n    sent = field(\"Gönderim Tarihi\")\n    year = field(\"Yıl\")\n    period = field(\"Periyot\")\n    currency_match = re.search(r\"Sunum Para Birimi\\s*</td>\\s*<td[^>]*>\\s*([^<]+)\", text, re.I | re.S)\n    scope_match = re.search(r\"Finansal Tablo Niteliği\\s*</td>\\s*<td[^>]*>\\s*([^<]+)\", text, re.I | re.S)\n    date_match = re.search(r\"Cari Dönem\\s*<br>\\s*(\\d{2}\\.\\d{2}\\.\\d{4})\", text, re.I | re.S)\n\n    filename = Path(source_name).name\n    fn = re.match(r\"(?P<symbol>[A-Z0-9]+)_(?P<disc>\\d+)_(?P<year>\\d{4})_(?P<period>\\d+)\\.xls$\", filename, re.I)\n    symbol = fn.group(\"symbol\").upper() if fn else \"UNKNOWN\"\n    disclosure_id = fn.group(\"disc\") if fn else None\n    fiscal_year = int(year or (fn.group(\"year\") if fn else 0))\n    fiscal_period = int(period or (fn.group(\"period\") if fn else 0))\n    if not fiscal_year or not fiscal_period:\n        raise KapFinancialXlsError(\"KAP rapor yıl/periyot kimliği bulunamadı.\")\n\n    if date_match:\n        report_date = datetime.strptime(date_match.group(1), \"%d.%m.%Y\").date()\n    else:\n        month = {1: 3, 2: 6, 3: 9, 4: 12}.get(fiscal_period)\n        if month is None:\n            raise KapFinancialXlsError(\"KAP rapor tarihi çıkarılamadı.\")\n        report_date = date(fiscal_year, month, 30 if month in (6, 9) else 31)\n\n    published_at = None\n    if sent:\n        try:",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py"
+    },
+    {
+      "kind": "function",
+      "name": "import_kap_financial_xls_bytes",
+      "line": 237,
+      "score": 18,
+      "snippet": "def import_kap_financial_xls_bytes(payload: bytes, *, source_name: str = \"report.xls\") -> KapFinancialImportResult:\n    try:\n        text = payload.decode(\"utf-8-sig\")\n    except UnicodeDecodeError as exc:\n        raise KapFinancialXlsError(\"KAP XLS UTF-8 HTML olarak okunamadı.\") from exc\n\n    identity = _extract_meta(text, source_name)\n    parser = _FinancialHtmlParser()\n    parser.feed(text)\n    if not parser.tables:\n        raise KapFinancialXlsError(\"KAP finansal tablo blokları bulunamadı.\")\n\n    facts: list[CanonicalFinancialFact] = []\n    unmapped: set[str] = set()\n\n    for table_index, table in enumerate(parser.tables):\n        rows = table[\"rows\"]\n        if not rows:\n            continue\n        header_cells = [c for c in rows[0] if \"context-header\" in c.get(\"class\", \"\")]\n        period_labels = [_clean_text(c.get(\"text\", [])) for c in header_cells]\n        first_label = \"\"\n        for row in rows[1:]:\n            if len(row) > 1:\n                candidate = _clean_text(row[1].get(\"text\", []))\n                if candidate:\n                    first_label = candidate\n                    break\n        statement = _statement_name(table_index, first_label)\n\n        for row in rows[1:]:\n            if len(row) < 2:\n                continue\n            label = _clean_text(row[1].get(\"text\", []))\n            if not label:",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py"
+    },
+    {
+      "kind": "function",
+      "name": "parse_kap_disclosures_for_portfolio_reports",
+      "line": 140,
+      "score": 18,
+      "snippet": "def parse_kap_disclosures_for_portfolio_reports(\n    payload: object,\n    *,\n    fund_codes: Iterable[str] = (),\n    max_candidates: int = MAX_DISCOVERY_CANDIDATES,\n) -> tuple[KapPortfolioDiscoveryCandidate, ...]:\n    if max_candidates <= 0 or max_candidates > MAX_DISCOVERY_CANDIDATES:\n        raise ValueError(\n            f\"max_candidates 1-{MAX_DISCOVERY_CANDIDATES} aralığında olmalıdır.\"\n        )\n    normalized_codes = frozenset(\n        normalize_fund_code(code)\n        for code in fund_codes\n        if str(code or \"\").strip()\n    )\n\n    by_id: dict[str, KapPortfolioDiscoveryCandidate] = {}\n    for mapping in _iter_dicts(payload):\n        raw_id = _first_scalar(\n            mapping,\n            (\n                \"disclosureIndex\",\n                \"disclosure_index\",\n                \"notificationId\",\n                \"notification_id\",\n                \"bildirimId\",\n                \"bildirim_id\",\n                \"id\",\n            ),\n        )\n        if raw_id is None:\n            continue\n        notification_id = str(raw_id).strip()\n        if not notification_id.isdigit():\n            continue",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py"
+    },
+    {
+      "kind": "function",
+      "name": "_fetch_targeted_fund_disclosures",
+      "line": 271,
+      "score": 18,
+      "snippet": "def _fetch_targeted_fund_disclosures(\n    fund_codes: Iterable[str],\n    timeout_seconds: int,\n) -> object:\n    from datetime import date, timedelta\n    import json\n    from urllib.request import Request\n\n    resolved = _resolve_kap_fund_oids(\n        fund_codes,\n        timeout_seconds,\n    )\n    if not resolved:\n        return []\n\n    today = date.today()\n    start = today - timedelta(days=365)\n\n    payload = {\n        \"fromDate\": start.isoformat(),\n        \"toDate\": today.isoformat(),\n        \"fundTypeList\": sorted({\n            fund_type for fund_type, _oid in resolved\n        }),\n        \"mkkMemberOidList\": [],\n        \"fundOidList\": [\n            oid for _fund_type, oid in resolved\n        ],\n        \"passiveFundOidList\": [],\n        \"disclosureClass\": \"\",\n        \"isLate\": \"\",\n        \"subjectList\": [],\n        \"discIndex\": [],\n        \"fromSrc\": False,\n        \"srcCategory\": \"\",",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py"
+    },
+    {
+      "kind": "function",
+      "name": "kap_flow_rows",
+      "line": 204,
+      "score": 18,
+      "snippet": "def kap_flow_rows(brief: KAPFlowBrief) -> list[dict[str, object]]:\n    return [\n        {\n            \"Yayın zamanı\": item.published_at.astimezone(ISTANBUL).strftime(\n                \"%Y-%m-%d %H:%M\"\n            ),\n            \"Önem\": item.importance_score,\n            \"Hisse\": \", \".join(item.symbols) or \"—\",\n            \"Portföy teması\": \", \".join(item.portfolio_symbols) or \"—\",\n            \"Tür\": item.event_type,\n            \"Bildirim\": item.headline,\n            \"Olay\": item.event_title,\n            \"KAP doğrulaması\": (\n                \"Kaynak adı\" if item.source_match == \"source_name\" else \"kap.org.tr\"\n            ),\n            \"Referans\": item.source_reference or \"—\",\n            \"Olay kimliği\": item.event_id,\n            \"Haber kimliği\": item.news_id,\n        }\n        for item in brief.disclosures\n    ]",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_flow.py"
+    },
+    {
+      "kind": "function",
+      "name": "render_news_center_dashboard",
+      "line": 185,
+      "score": 18,
+      "snippet": "def render_news_center_dashboard(st) -> None:\n    st.header(\"Piyasa Haber, Olay ve Etki Merkezi\")\n    st.caption(\n        f\"Haber Merkezi V{NEWS_CENTER_V1_VERSION} kararlı çekirdek — Sprint-178 Kararlı Sürüm ve Tam Sistem Doğrulaması. \"\n        \"Sprint-180 Haber Merkezi V1.1 Halka Açık Haber Akışı temeli aktiftir; AA Ekonomi, TRT Haber Ekonomi ve TRT Haber Son Dakika RSS kanalları kullanıcı başlatmalı önizleme + açık arşiv onayıyla eklenir. \"\n        \"Sprint-177 Günlük Haber Merkezi Operasyon Ekranı korunur. \"\n        \"Sprint-176 kaynak operasyon geçmişi ve son başarılı kullanım tanılaması korunur. \"\n        \"Sprint-175 ortak Kaynak Besleme rendererı korunur. \"\n        \"Sprint-174 yapısal sağlık tanılaması ve Sprint-173 ortak güvenlik çekirdeği korunur. \"\n        \"Sprint-173 ortak güvenlik çekirdeği ve yedi kontrollü resmî adapter korunur. \"\n        \"Yedi kontrollü resmî adapterin dış davranışı korunur. \"\n        \"Sprint-169 KAP, TCMB, TÜİK ve SPK adapterleri korunur. \"\n        \"Sprint-167 KAP ve TCMB adapterleri korunur. \"\n        \"Sprint-166 KAP adapteri korunur. \"\n        \"Sprint-165 Güvenilir Kaynak Besleme Hazırlık Katmanı korunur. \"\n        \"Sprint-164 Haber Arşivi Gelişmiş Filtreleme ve Geçmişe Erişim korunur. \"\n        \"Sprint-163 Son Dakika Haber Akışı korunur. \"\n        \"Sprint-162 Gün Sonu Haber ve Olay Özeti korunur. \"\n        \"Sprint-161 Hisse Haberleri ve Sembol Bazlı Haber Görünümü korunur. \"\n        \"Sprint-160 KAP Akışı, Sprint-159 Ekonomik Takvim ve Sprint-158 Bugünün Önemli \"\n        \"Gelişmeleri karar ekranı korunur. \"\n        \"Sprint-156 deterministik Sektör Etki Haritası, Sprint-154 Portföy \"\n        \"Etki Radarı ve Sprint-153 etki bağlantıları korunur. \"\n        \"Sprint-152 güvenli olay eşleştirme kuralları korunur. \"\n        \"Bu ekran otomatik polling veya toplu scraping yapmaz. KAP ağına yalnız açık kullanıcı \"\n        \"onayıyla tek bildirim URL'si için bağlanabilir. Otomatik AI değerlendirmesi yapmaz; \"\n        \"Sprint-181 yalnız kullanıcı başlatmalı halka açık RSS toplu özetini arşiv öncesinde üretir. \"\n        \"AI özeti haber önceliklendirmesi içindir; teknik analiz skorlarını ve işlem karar motorunu \"\n        \"doğrudan değiştirmez.\"\n    )\n\n    try:\n        archive = NewsArchive()\n        service = NewsCenterService(archive)\n        events = archive.list_events()",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\news_center_dashboard.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 16,
+      "score": 18,
+      "snippet": "def main():\n    ap=argparse.ArgumentParser()\n    ap.add_argument(\"--project-root\", required=True)\n    ap.add_argument(\"--kap-xls\", required=True)\n    args=ap.parse_args()\n\n    root=Path(args.project_root)\n    backend=root/\"backend\"\n    sys.path.insert(0,str(backend))\n\n    from app.data.kap_financial_xls import import_kap_financial_xls_bytes\n    from app.data.historical_financial_series import build_historical_financial_series\n    from app.models.fundamental_models import FinancialPeriod\n    from app.analysis.fundamental_analysis import build_fundamental_snapshot\n    from app.analysis.fundamental_quality import calculate_fundamental_quality\n    from app.data.fundamental_data import evaluate_fundamental_freshness\n\n    xls=Path(args.kap_xls)\n    outdir=backend/\"data\"/\"financial_intelligence\"\n    outdir.mkdir(parents=True, exist_ok=True)\n    out=outdir/\"TUPRS_business_quality_canonical_adapter.json\"\n\n    if not xls.exists():\n        raise SystemExit(f\"KAP_XLS_MISSING:{xls}\")\n\n    report=import_kap_financial_xls_bytes(xls.read_bytes(), source_name=xls.name)\n    series=build_historical_financial_series((report,))\n    as_of=datetime(2026,8,4,23,59,59)\n    pit=series.available_as_of(as_of)\n\n    if report.identity.symbol != \"TUPRS\":\n        raise SystemExit(\"SYMBOL_MISMATCH\")\n\n    # Exact canonical code inventory from FIN-001/002.\n    code_inventory=sorted({p.metric_code for p in pit.points})",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 45,
+      "score": 18,
+      "snippet": "def main():\n    ap=argparse.ArgumentParser()\n    ap.add_argument(\"--project-root\",required=True)\n    ap.add_argument(\"--kap-xls\",required=True)\n    a=ap.parse_args()\n\n    root=Path(a.project_root)\n    backend=root/\"backend\"\n    sys.path.insert(0,str(backend))\n\n    from app.data.kap_financial_xls import import_kap_financial_xls_bytes\n    from app.data.historical_financial_series import build_historical_financial_series\n    from app.models.fundamental_models import FinancialPeriod\n    from app.analysis.fundamental_analysis import build_fundamental_snapshot\n    from app.analysis.fundamental_quality import calculate_fundamental_quality\n    from app.data.fundamental_data import evaluate_fundamental_freshness\n\n    xls=Path(a.kap_xls)\n    fi=backend/\"data\"/\"financial_intelligence\"\n    acceptance=backend/\"data\"/\"financial_intelligence_acceptance_TUPRS_2026_2.json\"\n    ownership=fi/\"TUPRS_market_ownership_acceptance.json\"\n    out=fi/\"TUPRS_business_quality_canonical_adapter_rev2.json\"\n\n    report=import_kap_financial_xls_bytes(xls.read_bytes(),source_name=xls.name)\n    series=build_historical_financial_series((report,))\n    as_of=datetime(2026,8,4,23,59,59)\n    pit=series.available_as_of(as_of)\n\n    def latest(code):\n        return pit.latest_value(code,as_of=as_of)\n\n    mapcodes={\n        \"revenue\":[\"REVENUE\"],\n        \"gross_profit\":[\"GROSS_PROFIT\"],\n        \"operating_profit\":[\"OPERATING_PROFIT\"],",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter_rev2.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 15,
+      "score": 18,
+      "snippet": "def main():\n    ap=argparse.ArgumentParser()\n    ap.add_argument(\"--project-root\",required=True)\n    ap.add_argument(\"--kap-xls\",required=True)\n    a=ap.parse_args()\n\n    root=Path(a.project_root)\n    backend=root/\"backend\"\n    sys.path.insert(0,str(backend))\n\n    from app.data.kap_financial_xls import import_kap_financial_xls_bytes\n    from app.data.historical_financial_series import build_historical_financial_series\n    from app.models.fundamental_models import FinancialPeriod\n    from app.analysis.fundamental_analysis import build_fundamental_snapshot\n    from app.analysis.fundamental_quality import calculate_fundamental_quality\n    from app.data.fundamental_data import evaluate_fundamental_freshness\n\n    xls=Path(a.kap_xls)\n    fi=backend/\"data\"/\"financial_intelligence\"\n    acceptance=backend/\"data\"/\"financial_intelligence_acceptance_TUPRS_2026_2.json\"\n    ownership=fi/\"TUPRS_market_ownership_acceptance.json\"\n    out=fi/\"TUPRS_business_quality_canonical_adapter_rev4.json\"\n\n    report=import_kap_financial_xls_bytes(xls.read_bytes(),source_name=xls.name)\n    series=build_historical_financial_series((report,))\n    pit=series.available_as_of(AS_OF)\n\n    if report.identity.symbol!=\"TUPRS\":\n        raise SystemExit(\"SYMBOL_MISMATCH\")\n\n    def points(code):\n        return [p for p in pit.points if p.metric_code==code and p.period_end==TARGET_END]\n\n    def ytd(code):\n        c=[p for p in points(code)",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter_rev4.py"
+    },
+    {
+      "kind": "function",
+      "name": "_score_text",
+      "line": 30,
+      "score": 18,
+      "snippet": "def _score_text(text: str) -> int:\n    folded = text.casefold()\n    score = 0\n\n    for term in KAP_TERMS:\n        if term in folded:\n            score += 2\n\n    for term in STRONG_TERMS:\n        if term in folded:\n            score += 2\n\n    if \"kap.org.tr\" in folded:\n        score += 8\n\n    if \"urlopen\" in folded or \"requests.\" in folded:\n        score += 3\n\n    if \"pandas\" in folded or \"read_excel\" in folded:\n        score += 3\n\n    return score\n\n\ndef _definitions(path: Path, text: str):\n    out = []\n\n    try:\n        tree = ast.parse(text)\n    except SyntaxError:\n        return out\n\n    lines = text.splitlines()\n\n    for node in ast.walk(tree):",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_official_kap_financial_acquisition_preflight.py"
+    },
+    {
+      "kind": "function",
+      "name": "build_historical_financial_series",
+      "line": 196,
+      "score": 16,
+      "snippet": "def build_historical_financial_series(\n    imports: Iterable[KapFinancialImportResult],\n) -> HistoricalFinancialSeries:\n    imported = tuple(imports)\n    symbol, scope, currency, scale = _validate_import_group(imported)\n\n    warnings: set[str] = set()\n    points_all: list[HistoricalFinancialPoint] = []\n    latest_by_key: dict[tuple, HistoricalFinancialPoint] = {}\n\n    for report in imported:\n        for fact in report.facts:\n            if not fact.metric_code:\n                continue\n            # FIN-001 label mapping is intentionally broad. FIN-002 must not\n            # reinterpret OCI/equity-change labels as core P&L/balance/cash metrics.\n            if fact.statement not in {\"BALANCE_SHEET\", \"INCOME_STATEMENT\", \"CASH_FLOW\"}:\n                continue\n            try:\n                period = parse_period_label(fact.period_label)\n            except HistoricalFinancialSeriesError:\n                warnings.add(f\"UNPARSED_PERIOD_LABEL:{fact.period_label}\")\n                continue\n\n            point = HistoricalFinancialPoint(\n                symbol=symbol,\n                metric_code=fact.metric_code,\n                statement=fact.statement,\n                source_label=fact.source_label,\n                value=fact.value,\n                period_kind=period.kind,\n                period_start=period.start_date,\n                period_end=period.end_date,\n                comparison_role=period.comparison_role,\n                published_at=report.identity.published_at,",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\historical_financial_series.py"
+    },
+    {
+      "kind": "function",
+      "name": "_validate_disclosures_url",
+      "line": 59,
+      "score": 16,
+      "snippet": "def _validate_disclosures_url(url: str) -> str:\n    value = str(url or \"\").strip()\n    parsed = urlparse(value)\n    if parsed.scheme.lower() != \"https\":\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_HTTPS_REQUIRED\")\n    if (parsed.hostname or \"\").lower() not in {\"kap.org.tr\", \"www.kap.org.tr\"}:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_HOST_NOT_ALLOWED\")\n    if parsed.username or parsed.password or parsed.port not in (None, 443):\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_AUTH_OR_PORT_NOT_ALLOWED\")\n    if parsed.path.rstrip(\"/\").lower() != \"/tr/api/disclosures\":\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_PATH_INVALID\")\n    if parsed.query or parsed.fragment:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_PATH_INVALID\")\n    return value\n\n\ndef _decode_disclosures_json(raw: bytes, content_type: str) -> object:\n    if len(raw) > MAX_DISCOVERY_BYTES:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_RESPONSE_TOO_LARGE\")\n    lowered = str(content_type or \"\").casefold()\n    stripped = raw.lstrip()\n    if \"json\" not in lowered and not stripped.startswith((b\"[\", b\"{\")):\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_NOT_JSON\")\n    try:\n        return json.loads(raw.decode(\"utf-8-sig\"))\n    except (UnicodeDecodeError, json.JSONDecodeError) as exc:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_JSON_INVALID\") from exc\n\n\ndef _iter_dicts(value: object) -> Iterable[dict[str, object]]:\n    if isinstance(value, dict):\n        yield value\n        for child in value.values():\n            yield from _iter_dicts(child)\n    elif isinstance(value, list):",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py"
+    },
+    {
+      "kind": "function",
+      "name": "run_financial_intelligence_acceptance",
+      "line": 46,
+      "score": 14,
+      "snippet": "def run_financial_intelligence_acceptance(\n    xls_path: str | Path,\n    *,\n    as_of: datetime | None = None,\n    price: Decimal | None = None,\n    total_shares: Decimal | None = None,\n    diluted_shares: Decimal | None = None,\n    free_float_ratio: Decimal | None = None,\n    effective_free_float_ratio: Decimal | None = None,\n    major_shareholder_ratio: Decimal | None = None,\n) -> dict[str, Any]:\n    path = Path(xls_path)\n    report = import_kap_financial_xls_bytes(path.read_bytes(), source_name=path.name)\n    series = build_historical_financial_series((report,))\n    effective_as_of = as_of or report.identity.published_at\n\n    health = calculate_financial_health(series, as_of=effective_as_of)\n    cash_quality = calculate_earnings_cash_quality(series, as_of=effective_as_of)\n    risk = calculate_financial_risk_flags(series, as_of=effective_as_of)\n\n    ownership = None\n    multiples = None\n    valuation_status = \"DATA_INSUFFICIENT\"\n\n    if total_shares is not None:\n        ownership_snapshot = OwnershipSnapshot(\n            symbol=report.identity.symbol,\n            as_of_date=report.identity.report_date,\n            published_at=effective_as_of,\n            total_shares=total_shares,\n            diluted_shares=diluted_shares,\n            free_float_ratio=free_float_ratio,\n            effective_free_float_ratio=effective_free_float_ratio,\n            major_shareholder_ratio=major_shareholder_ratio,\n            source=\"PRODUCTION_ACCEPTANCE_INPUT\",",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_acceptance.py"
+    },
+    {
+      "kind": "class",
+      "name": "KapFinancialXlsError",
+      "line": 18,
+      "score": 14,
+      "snippet": "class KapFinancialXlsError(ValueError):\n    \"\"\"KAP HTML-XLS finansal raporu güvenle ayrıştırılamadığında oluşur.\"\"\"\n\n\ndef _clean_text(parts: list[str] | tuple[str, ...]) -> str:\n    return re.sub(r\"\\s+\", \" \", \" \".join(parts)).strip()\n\n\ndef _norm_label(value: str) -> str:\n    value = value.replace(\"İ\", \"I\").replace(\"ı\", \"i\")\n    value = unicodedata.normalize(\"NFKD\", value)\n    value = \"\".join(ch for ch in value if not unicodedata.combining(ch))\n    value = value.casefold()\n    value = re.sub(r\"[^a-z0-9]+\", \" \", value)\n    return re.sub(r\"\\s+\", \" \", value).strip()\n\n\n_METRIC_LABELS: dict[str, tuple[str, ...]] = {\n    \"CASH_EQUIVALENTS\": (\"Nakit ve Nakit Benzerleri\",),\n    \"CURRENT_ASSETS\": (\"DÖNEN VARLIKLAR\", \"TOPLAM DÖNEN VARLIKLAR\"),\n    \"TOTAL_ASSETS\": (\"TOPLAM VARLIKLAR\",),\n    \"SHORT_TERM_BORROWINGS\": (\"Kısa Vadeli Borçlanmalar\",),\n    \"CURRENT_PORTION_LT_DEBT\": (\n        \"Uzun Vadeli Borçlanmaların Kısa Vadeli Kısımları\",\n    ),\n    \"TRADE_RECEIVABLES\": (\"Ticari Alacaklar\",),\n    \"INVENTORIES\": (\"Stoklar\",),\n    \"TRADE_PAYABLES\": (\"Ticari Borçlar\",),\n    \"CURRENT_LIABILITIES\": (\"KISA VADELİ YÜKÜMLÜLÜKLER\", \"TOPLAM KISA VADELİ YÜKÜMLÜLÜKLER\"),\n    \"LONG_TERM_BORROWINGS\": (\"Uzun Vadeli Borçlanmalar\",),\n    \"NONCURRENT_LIABILITIES\": (\"UZUN VADELİ YÜKÜMLÜLÜKLER\", \"TOPLAM UZUN VADELİ YÜKÜMLÜLÜKLER\"),\n    \"PARENT_EQUITY\": (\"Ana Ortaklığa Ait Özkaynaklar\",),\n    \"TOTAL_LIABILITIES\": (\"TOPLAM YÜKÜMLÜLÜKLER\",),\n    \"TOTAL_EQUITY\": (\"TOPLAM ÖZKAYNAKLAR\",),\n    \"REVENUE\": (\"Hasılat\",),",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py"
+    },
+    {
+      "kind": "function",
+      "name": "_resolve_kap_fund_oids",
+      "line": 227,
+      "score": 14,
+      "snippet": "def _resolve_kap_fund_oids(\n    fund_codes: Iterable[str],\n    timeout_seconds: int,\n) -> tuple[tuple[str, str], ...]:\n    from urllib.request import Request\n\n    wanted = {\n        normalize_fund_code(code)\n        for code in fund_codes\n        if str(code or \"\").strip()\n    }\n    if not wanted:\n        return ()\n\n    resolved: dict[str, tuple[str, str]] = {}\n    for fund_type in _KAP_FUND_CRITERIA_TYPES:\n        request = Request(\n            f\"https://www.kap.org.tr/tr/api/fund/criteria/{fund_type}/Y\",\n            headers={\n                \"User-Agent\": \"Mozilla/5.0\",\n                \"Accept\": \"application/json, text/plain, */*\",\n                \"Referer\": \"https://www.kap.org.tr/tr/bildirim-sorgu\",\n            },\n            method=\"GET\",\n        )\n        payload = _json_request(request, timeout_seconds)\n\n        for mapping in _iter_dicts(payload):\n            code = str(mapping.get(\"fundCode\") or \"\").strip().upper()\n            if code not in wanted or code in resolved:\n                continue\n\n            oid = str(mapping.get(\"fundOid\") or \"\").strip()\n            if not oid:\n                continue",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py"
+    },
+    {
+      "kind": "function",
+      "name": "ingest_kap_portfolio_pdf_upload",
+      "line": 607,
+      "score": 14,
+      "snippet": "def ingest_kap_portfolio_pdf_upload(\n    raw_pdf: bytes,\n    *,\n    filename: str,\n    report_year: int,\n    report_month: int,\n    publication_date: date,\n    store: FundPortfolioSnapshotJsonStore,\n    notification_id: str | None = None,\n    source_reference: str | None = None,\n    ingested_at: datetime | None = None,\n    pdf_text_extractor: PdfTextExtractor | None = None,\n) -> KapPortfolioIngestionResult:\n    \"\"\"Ingest an explicitly uploaded KAP portfolio-allocation PDF without network access.\n\n    The user must provide the report period and publication date because those\n    facts are not reliably encoded inside every attachment PDF. The canonical\n    holdings parser and append-only snapshot store are reused unchanged.\n    \"\"\"\n    if not isinstance(raw_pdf, (bytes, bytearray)) or not raw_pdf:\n        raise KapFundPortfolioError(\"KAP_MANUAL_UPLOAD_EMPTY\")\n    raw = bytes(raw_pdf)\n    if len(raw) > MAX_KAP_PORTFOLIO_PDF_BYTES:\n        raise KapFundPortfolioError(\"KAP_PORTFOLIO_PDF_TOO_LARGE\")\n\n    safe_name = Path(str(filename or \"\")).name.strip()\n    if not safe_name or not safe_name.casefold().endswith(\".pdf\"):\n        raise KapFundPortfolioError(\"KAP_MANUAL_UPLOAD_FILENAME_INVALID\")\n    if not 2000 <= int(report_year) <= 2100:\n        raise ValueError(\"report_year 2000-2100 aralığında olmalıdır.\")\n    if not 1 <= int(report_month) <= 12:\n        raise ValueError(\"report_month 1-12 aralığında olmalıdır.\")\n\n    report_year = int(report_year)\n    report_month = int(report_month)",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_ingestion.py"
+    },
+    {
+      "kind": "function",
+      "name": "validate_kap_detail_url",
+      "line": 66,
+      "score": 14,
+      "snippet": "def validate_kap_detail_url(url: str) -> tuple[str, str]:\n    value = str(url or \"\").strip()\n    parsed = urlparse(value)\n\n    if parsed.scheme.lower() != \"https\":\n        raise KapAdapterError(\"KAP URL'si HTTPS olmalıdır.\")\n    host = (parsed.hostname or \"\").lower()\n    if host not in _ALLOWED_HOSTS:\n        raise KapAdapterError(\"Yalnız resmî kap.org.tr alan adı kabul edilir.\")\n    if parsed.username or parsed.password or parsed.port not in (None, 443):\n        raise KapAdapterError(\"KAP URL'sinde kullanıcı bilgisi veya özel port kullanılamaz.\")\n\n    match = _DETAIL_PATH.fullmatch(parsed.path or \"\")\n    if not match:\n        raise KapAdapterError(\n            \"Yalnız KAP bildirim detay URL'si kabul edilir: /tr/Bildirim/<numara>\"\n        )\n    if parsed.query or parsed.fragment:\n        raise KapAdapterError(\"KAP bildirim URL'sinde sorgu veya fragment kabul edilmez.\")\n\n    return value, match.group(1)\n\n\ndef _default_fetch(url: str, timeout_seconds: int) -> tuple[bytes, str, str]:\n    response = fetch_official_source_bytes(\n        url,\n        timeout_seconds,\n        user_agent='Hisse-Robotu/1.0 (+local decision-support; KAP detail preview)',\n        error_type=KapAdapterError,\n        source_label='KAP',\n    )\n    return response.body, response.final_url, response.content_type\n\n\ndef _visible_text(raw_html: str) -> str:",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_adapter.py"
+    },
+    {
+      "kind": "function",
+      "name": "_render_portfolio_tracking",
+      "line": 438,
+      "score": 14,
+      "snippet": "def _render_portfolio_tracking(\n    st: Any,\n    store: FundPortfolioSnapshotJsonStore,\n    pressure_profiles: Mapping[str, StockFundPressureProfile],\n    pressure_inputs: Mapping[str, StockFundPressureInput],\n    *,\n    fund_codes: Iterable[str] = (),\n) -> None:\n    known_codes = {\n        str(code or \"\").strip().upper()\n        for code in fund_codes\n        if str(code or \"\").strip()\n    }\n    try:\n        for snapshot in store.list_snapshots():\n            if snapshot.canonical_fund_id.startswith(\"fund:tefas:\"):\n                known_codes.add(snapshot.canonical_fund_id.rsplit(\":\", 1)[-1].strip().upper())\n    except PortfolioSnapshotStoreError:\n        pass\n\n    if hasattr(st, \"button\"):\n        st.markdown(\"#### Otomatik KAP Portföy Güncelleme\")\n        st.caption(\n            \"Fon Analiz Merkezi açılışta ağ çağrısı yapmaz. Bu düğme, bilinen fon kodları için \"\n            \"resmî KAP bildirim listesini tarar; Portföy Dağılım Raporu bildirimini, ekini ve \"\n            \"snapshot içe aktarımını otomatik yürütür. Manuel PDF yalnız fallback olarak kalır.\"\n        )\n        if known_codes:\n            st.caption(f\"Otomatik tarama evreni: {len(known_codes)} fon kodu.\")\n        else:\n            st.caption(\"Otomatik tarama için önce TEFAS fon evreni veya kayıtlı bir fon snapshot'ı gerekir.\")\n\n        if st.button(\n            \"Yeni KAP Portföy Raporlarını Otomatik Tara\",\n            key=\"fund_portfolio_kap_auto_ingest_button\",",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\fund_analysis_center.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 11,
+      "score": 14,
+      "snippet": "def main():\n    ap=argparse.ArgumentParser()\n    ap.add_argument(\"--project-root\",required=True)\n    ap.add_argument(\"--kap-xls\",required=True)\n    a=ap.parse_args()\n\n    root=Path(a.project_root)\n    backend=root/\"backend\"\n    sys.path.insert(0,str(backend))\n\n    from app.data.kap_financial_xls import import_kap_financial_xls_bytes\n    from app.data.historical_financial_series import build_historical_financial_series\n    from app.models.fundamental_models import FinancialPeriod\n    from app.analysis.fundamental_analysis import build_fundamental_snapshot\n    from app.analysis.fundamental_quality import calculate_fundamental_quality\n    from app.data.fundamental_data import evaluate_fundamental_freshness\n\n    xls=Path(a.kap_xls)\n    fi=backend/\"data\"/\"financial_intelligence\"\n    acceptance=backend/\"data\"/\"financial_intelligence_acceptance_TUPRS_2026_2.json\"\n    ownership=fi/\"TUPRS_market_ownership_acceptance.json\"\n    out=fi/\"TUPRS_business_quality_canonical_adapter_rev3.json\"\n\n    report=import_kap_financial_xls_bytes(xls.read_bytes(),source_name=xls.name)\n    series=build_historical_financial_series((report,))\n    as_of=datetime(2026,8,4,23,59,59)\n    pit=series.available_as_of(as_of)\n\n    if report.identity.symbol != \"TUPRS\":\n        raise SystemExit(\"SYMBOL_MISMATCH\")\n\n    def latest(code):\n        return pit.latest_value(code,as_of=as_of)\n\n    exact_map={",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v6_business_quality_adapter_rev3.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 164,
+      "score": 14,
+      "snippet": "def main():\n    project = Path(\n        r\"D:\\Projects\\Hisse-Robotu\"\n    )\n\n    roots = [\n        project,\n        Path(r\"C:\\Users\\user\\Downloads\"),\n    ]\n\n    allowed_suffixes = {\n        \".xls\",\n        \".xlsx\",\n        \".json\",\n        \".jsonl\",\n        \".csv\",\n        \".txt\",\n    }\n\n    rows = []\n\n    for root in roots:\n        if not root.exists():\n            continue\n\n        for path in root.rglob(\"*\"):\n            if not path.is_file():\n                continue\n\n            if path.suffix.lower() not in allowed_suffixes:\n                continue\n\n            if _excluded(path):\n                continue\n",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_financial_source_disambiguation_v2.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 143,
+      "score": 14,
+      "snippet": "def main():\n    root = Path(r\"D:\\Projects\\Hisse-Robotu\")\n\n    search_roots = [\n        root / \"backend\" / \"data\",\n        root / \"data\",\n    ]\n\n    rows = []\n    key_counter = Counter()\n    path_counter = Counter()\n\n    for base in search_roots:\n        if not base.exists():\n            continue\n\n        for path in base.rglob(\"*.json\"):\n            lower = path.name.lower()\n\n            if any(\n                token in lower\n                for token in CONTROL_TOKENS\n            ):\n                continue\n\n            try:\n                data = json.loads(\n                    path.read_text(\n                        encoding=\"utf-8-sig\"\n                    )\n                )\n            except Exception:\n                continue\n\n            for index, record in enumerate(",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_raw_source_schema_characterization.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 82,
+      "score": 14,
+      "snippet": "def main():\n    root = Path(r\"D:\\Projects\\Hisse-Robotu\")\n\n    search_roots = [\n        root / \"backend\" / \"data\",\n        root / \"data\",\n    ]\n\n    candidates = []\n    canonical_candidates = []\n    evidence_files = []\n\n    for base in search_roots:\n        if not base.exists():\n            continue\n\n        for path in base.rglob(\"*\"):\n            if not path.is_file():\n                continue\n\n            lower_name = path.name.lower()\n\n            if any(\n                token in lower_name\n                for token in CONTROL_TOKENS\n            ):\n                continue\n\n            if path.suffix.lower() not in {\n                \".json\",\n                \".jsonl\",\n                \".csv\",\n                \".txt\",\n                \".xls\",\n                \".xlsx\",",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_real_source_discovery_evidence_intake.py"
+    },
+    {
+      "kind": "function",
+      "name": "run_market_ownership_acceptance",
+      "line": 34,
+      "score": 12,
+      "snippet": "def run_market_ownership_acceptance(\n    xls_paths: list[str | Path],\n    canonical: CanonicalMarketOwnershipInput,\n    *,\n    as_of: datetime | None = None,\n    ebitda_ttm: Decimal | None = None,\n    fcf_ttm: Decimal | None = None,\n) -> dict[str, Any]:\n    canonical.validate()\n    reports = []\n    for path in xls_paths:\n        p = Path(path)\n        reports.append(import_kap_financial_xls_bytes(p.read_bytes(), source_name=p.name))\n    if not reports:\n        raise ValueError(\"at least one KAP XLS is required\")\n\n    symbol = reports[0].identity.symbol\n    if any(r.identity.symbol != symbol for r in reports):\n        raise ValueError(\"all financial reports must belong to same symbol\")\n    if canonical.symbol != symbol:\n        raise ValueError(\"canonical market/ownership symbol mismatch\")\n\n    series = build_historical_financial_series(tuple(reports))\n    effective_as_of = as_of or max(\n        (r.identity.published_at for r in reports if r.identity.published_at is not None),\n        default=datetime.combine(canonical.as_of_date, datetime.min.time()),\n    )\n\n    if canonical.published_at is not None and canonical.published_at > effective_as_of:\n        raise ValueError(\"ownership snapshot was not public at requested as_of\")\n    if canonical.price_published_at is not None and canonical.price_published_at > effective_as_of:\n        raise ValueError(\"market snapshot was not public at requested as_of\")\n\n    own = OwnershipSnapshot(\n        symbol=symbol,",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_market_acceptance.py"
+    },
+    {
+      "kind": "function",
+      "name": "import_reports",
+      "line": 154,
+      "score": 12,
+      "snippet": "def import_reports(paths: Iterable[str | Path]):\n    reports = []\n    for p in paths:\n        path = Path(p)\n        reports.append(import_kap_financial_xls_bytes(path.read_bytes(), source_name=path.name))\n    return tuple(reports)\n\n\ndef serialize(value: Any) -> Any:\n    if isinstance(value, Decimal):\n        return str(value)\n    if hasattr(value, \"isoformat\") and callable(value.isoformat):\n        try:\n            return value.isoformat()\n        except TypeError:\n            pass\n    if hasattr(value, \"__dataclass_fields__\"):\n        return serialize(asdict(value))\n    if isinstance(value, dict):\n        return {str(k): serialize(v) for k, v in value.items()}\n    if isinstance(value, (list, tuple)):\n        return [serialize(v) for v in value]\n    return value",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\ttm_financial_bridge.py"
+    },
+    {
+      "kind": "class",
+      "name": "HistoricalFinancialPoint",
+      "line": 29,
+      "score": 12,
+      "snippet": "class HistoricalFinancialPoint:\n    symbol: str\n    metric_code: str\n    statement: str\n    source_label: str\n    value: Decimal\n    period_kind: str\n    period_start: date | None\n    period_end: date\n    comparison_role: str\n    published_at: datetime | None\n    consolidation_scope: str\n    currency: str\n    currency_scale: Decimal\n    disclosure_id: str | None\n    source_sha256: str\n    note_ref: str | None = None\n\n    @property\n    def canonical_key(self) -> tuple:\n        return (\n            self.symbol,\n            self.metric_code,\n            self.period_kind,\n            self.period_start,\n            self.period_end,\n            self.consolidation_scope,\n            self.currency,\n            self.currency_scale,\n        )\n\n\n@dataclass(frozen=True)\nclass HistoricalFinancialSeries:\n    symbol: str",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\historical_financial_series.py"
+    },
+    {
+      "kind": "function",
+      "name": "import_kap_financial_xls",
+      "line": 307,
+      "score": 12,
+      "snippet": "def import_kap_financial_xls(path: str | Path) -> KapFinancialImportResult:\n    file_path = Path(path)\n    if not file_path.is_file():\n        raise KapFinancialXlsError(f\"KAP XLS bulunamadı: {file_path}\")\n    return import_kap_financial_xls_bytes(file_path.read_bytes(), source_name=file_path.name)",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py"
+    },
+    {
+      "kind": "class",
+      "name": "FinancialReportIdentity",
+      "line": 9,
+      "score": 12,
+      "snippet": "class FinancialReportIdentity:\n    symbol: str\n    company_name: str\n    disclosure_id: str | None\n    fiscal_year: int\n    fiscal_period: int\n    report_date: date\n    published_at: datetime | None\n    consolidation_scope: str\n    currency: str\n    currency_scale: Decimal\n    source: str = \"KAP\"\n\n\n@dataclass(frozen=True)\nclass CanonicalFinancialFact:\n    statement: str\n    metric_code: str | None\n    source_label: str\n    period_label: str\n    value: Decimal\n    note_ref: str | None = None\n\n\n@dataclass(frozen=True)\nclass KapFinancialImportResult:\n    identity: FinancialReportIdentity\n    facts: tuple[CanonicalFinancialFact, ...]\n    unmapped_labels: tuple[str, ...]\n    source_sha256: str\n    parser_version: str = \"fin001-v1\"\n\n    def current_values(self) -> dict[str, Decimal]:\n        result: dict[str, Decimal] = {}\n        for fact in self.facts:",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\models\\financial_intelligence_models.py"
+    },
+    {
+      "kind": "function",
+      "name": "render_financial_intelligence_dashboard",
+      "line": 37,
+      "score": 12,
+      "snippet": "def render_financial_intelligence_dashboard(\n    st: Any,\n    *,\n    project_root: Path,\n    default_symbol: str = \"TUPRS\",\n) -> None:\n    \"\"\"Read-only FIN-015 Financial Intelligence Panel.\"\"\"\n    st.markdown(\"## Finansal Zekâ Paneli\")\n    st.caption(\n        \"Finansal sağlık, değerleme, kısa/uzun vadeli kanıt ve veri kapsamını \"\n        \"tek read-only karar destek ekranında birleştirir.\"\n    )\n    st.info(\n        \"Bu ekran AL/SAT, tarayıcı, sıralama veya portföy kararı üretmez ya da değiştirmez. \"\n        \"Hazırlık ve kapsam durumları veri yeterliliğini gösterir.\"\n    )\n\n    symbol = st.text_input(\n        \"Hisse sembolü\",\n        value=default_symbol,\n        key=\"financial_intelligence_panel_symbol\",\n    ).strip().upper()\n\n    if not symbol:\n        st.warning(\"Hisse sembolü girin.\")\n        return\n\n    panel, path = _load_panel(project_root, symbol)\n    if panel is None:\n        st.warning(\n            f\"{symbol} için Financial Intelligence panel artifact'i bulunamadı veya okunamadı.\"\n        )\n        st.caption(str(path))\n        return\n",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\ui\\financial_intelligence_dashboard.py"
+    },
+    {
+      "kind": "function",
+      "name": "_score",
+      "line": 102,
+      "score": 12,
+      "snippet": "def _score(record: dict[str, Any]) -> int:\n    keys = set(record.keys())\n    score = 0\n\n    score += 4 if _symbol_of(record) else 0\n    score += 4 if str(record.get(\"sector_model\") or \"\").upper() == \"BANK\" else 0\n\n    for key in (\n        \"as_of\",\n        \"publication_date\",\n        \"publishDate\",\n        \"disclosureIndex\",\n        \"period\",\n    ):\n        if key in record:\n            score += 2\n\n    for key in (\n        \"canonical_facts\",\n        \"facts\",\n        \"metrics\",\n        \"financials\",\n        \"balance_sheet\",\n        \"income_statement\",\n        \"cash_flow\",\n    ):\n        if key in record:\n            score += 3\n\n    score += min(\n        5,\n        len(\n            keys.intersection(\n                FINANCIAL_HINT_KEYS\n            )",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_v1_3_bank_raw_source_schema_characterization.py"
+    },
+    {
+      "kind": "function",
+      "name": "calculate_financial_health",
+      "line": 183,
+      "score": 10,
+      "snippet": "def calculate_financial_health(\n    series: HistoricalFinancialSeries,\n    *,\n    as_of: datetime | None = None,\n) -> FinancialHealthAssessment:\n    points = _resolved(series, as_of)\n\n    cash_p = _latest_current_instant(points, \"CASH_EQUIVALENTS\")\n    current_assets_p = _latest_current_instant(points, \"CURRENT_ASSETS\")\n    total_assets_p = _latest_current_instant(points, \"TOTAL_ASSETS\")\n    current_liabilities_p = _latest_current_instant(points, \"CURRENT_LIABILITIES\")\n    noncurrent_liabilities_p = _latest_current_instant(points, \"NONCURRENT_LIABILITIES\")\n    equity_p = _latest_current_instant(points, \"TOTAL_EQUITY\")\n    st_debt_p = _latest_current_instant(points, \"SHORT_TERM_BORROWINGS\")\n    current_lt_debt_p = _latest_current_instant(points, \"CURRENT_PORTION_LT_DEBT\")\n    lt_debt_p = _latest_current_instant(points, \"LONG_TERM_BORROWINGS\")\n\n    revenue_p = _latest_current_ytd(points, \"REVENUE\")\n    gross_profit_p = _latest_current_ytd(points, \"GROSS_PROFIT\")\n    operating_profit_p = _latest_current_ytd(points, \"OPERATING_PROFIT\")\n    net_income_p = _latest_current_ytd(points, \"NET_INCOME\")\n    ocf_p = _latest_current_ytd(points, \"OPERATING_CASH_FLOW\")\n\n    revenue_prior_p = _matching_prior_same_period(points, revenue_p, \"REVENUE\")\n    operating_profit_prior_p = _matching_prior_same_period(points, operating_profit_p, \"OPERATING_PROFIT\")\n    net_income_prior_p = _matching_prior_same_period(points, net_income_p, \"NET_INCOME\")\n    ocf_prior_p = _matching_prior_same_period(points, ocf_p, \"OPERATING_CASH_FLOW\")\n\n    cash = _point_value(cash_p)\n    current_assets = _point_value(current_assets_p)\n    total_assets = _point_value(total_assets_p)\n    current_liabilities = _point_value(current_liabilities_p)\n    noncurrent_liabilities = _point_value(noncurrent_liabilities_p)\n    equity = _point_value(equity_p)\n    revenue = _point_value(revenue_p)",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_health.py"
+    },
+    {
+      "kind": "function",
+      "name": "calculate_financial_risk_flags",
+      "line": 140,
+      "score": 10,
+      "snippet": "def calculate_financial_risk_flags(\n    series: HistoricalFinancialSeries,\n    *,\n    as_of: datetime | None = None,\n) -> FinancialRiskAssessment:\n    pts = _resolved(series, as_of)\n\n    # Current instant balance-sheet facts.\n    instant_codes = (\n        \"CASH_EQUIVALENTS\", \"CURRENT_ASSETS\", \"TRADE_RECEIVABLES\", \"INVENTORIES\",\n        \"SHORT_TERM_BORROWINGS\", \"CURRENT_PORTION_LONG_TERM_DEBT\", \"CURRENT_LIABILITIES\",\n        \"LONG_TERM_BORROWINGS\", \"TOTAL_EQUITY\",\n    )\n    cur_i = {c: _latest(pts, c, \"INSTANT\", \"CURRENT_INSTANT\") or _latest(pts, c, \"INSTANT\") for c in instant_codes}\n    prev_i = {c: _prior_instant(pts, cur_i[c], c) for c in instant_codes}\n    prev_y_i = {c: _prior_year_same_instant(pts, cur_i[c], c) for c in instant_codes}\n\n    # Current YTD and comparable prior-year durations.\n    duration_codes = (\"REVENUE\", \"OPERATING_PROFIT\", \"NET_INCOME\", \"OPERATING_CASH_FLOW\", \"CAPEX\", \"INTEREST_EXPENSE\")\n    cur_d = {c: _latest(pts, c, \"DURATION\", \"CURRENT_YTD\") for c in duration_codes}\n    prev_d = {c: _prior_same_duration(pts, cur_d[c], c) for c in duration_codes}\n\n    cash = _v(cur_i[\"CASH_EQUIVALENTS\"])\n    current_assets = _v(cur_i[\"CURRENT_ASSETS\"])\n    current_liabilities = _v(cur_i[\"CURRENT_LIABILITIES\"])\n    equity = _v(cur_i[\"TOTAL_EQUITY\"])\n    st_debt_parts = (_v(cur_i[\"SHORT_TERM_BORROWINGS\"]), _v(cur_i[\"CURRENT_PORTION_LONG_TERM_DEBT\"]))\n    lt_debt = _v(cur_i[\"LONG_TERM_BORROWINGS\"])\n    st_debt = sum((x for x in st_debt_parts if x is not None), ZERO) if any(x is not None for x in st_debt_parts) else None\n    financial_debt = (st_debt + lt_debt) if st_debt is not None and lt_debt is not None else None\n    net_debt = financial_debt - cash if financial_debt is not None and cash is not None else None\n\n    prev_cash = _v(prev_i[\"CASH_EQUIVALENTS\"])\n    prev_st_parts = (_v(prev_i[\"SHORT_TERM_BORROWINGS\"]), _v(prev_i[\"CURRENT_PORTION_LONG_TERM_DEBT\"]))\n    prev_lt_debt = _v(prev_i[\"LONG_TERM_BORROWINGS\"])",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_risk_flags.py"
+    },
+    {
+      "kind": "function",
+      "name": "calculate_short_term_investability",
+      "line": 22,
+      "score": 10,
+      "snippet": "def calculate_short_term_investability(\n    symbol: str,\n    as_of_date: date,\n    *,\n    financial_health_score: int | None,\n    risk_score: int | None,\n    financial_momentum: Decimal | None,\n    valuation_stretch: Decimal | None,\n    market: MarketContextInput,\n) -> InvestabilityResult:\n    # FIN-013 is read-only evidence. It must not invent missing market context.\n    components = tuple(c for c in (\n        _component(\"FINANCIAL_HEALTH\", Decimal(financial_health_score) if financial_health_score is not None else None, \"0.10\", \"Finansal sağlık tabanı\"),\n        _component(\"FINANCIAL_MOMENTUM\", financial_momentum, \"0.20\", \"Son finansal momentum\"),\n        _component(\"EARNINGS_SURPRISE\", market.earnings_surprise, \"0.10\", \"Sonuç sürprizi / beklenti farkı\"),\n        _component(\"TECHNICAL_TREND\", market.technical_trend, \"0.15\", \"Teknik trend\"),\n        _component(\"RELATIVE_STRENGTH\", market.relative_strength, \"0.10\", \"Göreceli güç\"),\n        _component(\"VOLUME_LIQUIDITY\", market.volume_liquidity, \"0.10\", \"Hacim ve likidite\"),\n        _component(\"CATALYST\", market.catalyst, \"0.10\", \"KAP / haber katalizörü\"),\n        _component(\"VALUATION_STRETCH\", valuation_stretch, \"0.10\", \"Değerleme gerilimi\"),\n        _component(\"ENTRY_RISK\", market.entry_risk, \"0.05\", \"Giriş riski\"),\n    ) if c is not None)\n\n    if not components:\n        return InvestabilityResult(symbol, as_of_date, None, \"DATA_INSUFFICIENT\", True, (), (), (\"Yeterli kanıt yok\",), \"Kısa dönem skoru üretilemedi.\", \"LOW\", \"fin013-v1\")\n\n    coverage = sum(c.weight for c in components)\n    # Require at least 70% of designed evidence and at least one market/technical component.\n    has_market = any(c.code in {\"TECHNICAL_TREND\", \"RELATIVE_STRENGTH\", \"VOLUME_LIQUIDITY\", \"CATALYST\", \"ENTRY_RISK\"} for c in components)\n    if coverage < Decimal(\"0.70\") or not has_market:\n        return InvestabilityResult(symbol, as_of_date, None, \"DATA_INSUFFICIENT\", True, components, (), (\"Kısa dönem için piyasa/teknik kanıt eksik\",), \"Skor fail-closed kilitlendi.\", \"LOW\", \"fin013-v1\")\n\n    total_weight = sum(c.weight for c in components)\n    raw = sum(c.score * c.weight for c in components) / total_weight\n    # Risk score is a penalty rather than another positive metric.",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\short_term_investability.py"
+    },
+    {
+      "kind": "function",
+      "name": "_statement_name",
+      "line": 164,
+      "score": 10,
+      "snippet": "def _statement_name(table_index: int, first_label: str) -> str:\n    n = _norm_label(first_label)\n    if \"finansal durum tablosu\" in n:\n        return \"BALANCE_SHEET\"\n    if \"kar veya zarar tablosu\" in n:\n        return \"INCOME_STATEMENT\"\n    if \"nakit akis tablosu\" in n:\n        return \"CASH_FLOW\"\n    if \"diger kapsamli gelir\" in n:\n        return \"OCI\"\n    if \"ozkaynaklar degisim\" in n:\n        return \"EQUITY_CHANGES\"\n    return f\"TABLE_{table_index}\"\n\n\ndef _extract_meta(text: str, source_name: str) -> FinancialReportIdentity:\n    company_match = re.search(r\"<h1[^>]*>(.*?)</h1>\", text, re.I | re.S)\n    company_name = re.sub(r\"<[^>]+>\", \"\", company_match.group(1)).strip() if company_match else \"\"\n\n    def field(name: str) -> str | None:\n        match = re.search(rf\"{re.escape(name)}\\s*:\\s*([^<\\r\\n]+)\", text, re.I)\n        return match.group(1).strip() if match else None\n\n    sent = field(\"Gönderim Tarihi\")\n    year = field(\"Yıl\")\n    period = field(\"Periyot\")\n    currency_match = re.search(r\"Sunum Para Birimi\\s*</td>\\s*<td[^>]*>\\s*([^<]+)\", text, re.I | re.S)\n    scope_match = re.search(r\"Finansal Tablo Niteliği\\s*</td>\\s*<td[^>]*>\\s*([^<]+)\", text, re.I | re.S)\n    date_match = re.search(r\"Cari Dönem\\s*<br>\\s*(\\d{2}\\.\\d{2}\\.\\d{4})\", text, re.I | re.S)\n\n    filename = Path(source_name).name\n    fn = re.match(r\"(?P<symbol>[A-Z0-9]+)_(?P<disc>\\d+)_(?P<year>\\d{4})_(?P<period>\\d+)\\.xls$\", filename, re.I)\n    symbol = fn.group(\"symbol\").upper() if fn else \"UNKNOWN\"\n    disclosure_id = fn.group(\"disc\") if fn else None\n    fiscal_year = int(year or (fn.group(\"year\") if fn else 0))",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_financial_xls.py"
+    },
+    {
+      "kind": "function",
+      "name": "day_end_metric_rows",
+      "line": 253,
+      "score": 10,
+      "snippet": "def day_end_metric_rows(\n    summary: DayEndSummary,\n) -> list[dict[str, object]]:\n    return [\n        {\"Başlık\": \"Piyasa olayı\", \"Değer\": summary.total_event_count},\n        {\"Başlık\": \"Önem ≥80\", \"Değer\": summary.high_importance_event_count},\n        {\"Başlık\": \"Gün içi haber\", \"Değer\": summary.news_published_count},\n        {\"Başlık\": \"KAP bildirimi\", \"Değer\": summary.kap_disclosure_count},\n        {\"Başlık\": \"Hisse olayları\", \"Değer\": summary.symbol_event_count},\n        {\"Başlık\": \"Etkilenen sektör\", \"Değer\": summary.sector_count},\n        {\n            \"Başlık\": \"Portföye temas eden hisse\",\n            \"Değer\": summary.affected_portfolio_symbol_count,\n        },\n        {\"Başlık\": \"Takvim olayı\", \"Değer\": summary.calendar_event_count},\n    ]",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\day_end_summary.py"
+    },
+    {
+      "kind": "function",
+      "name": "build_kap_flow",
+      "line": 95,
+      "score": 10,
+      "snippet": "def build_kap_flow(\n    events: tuple[MarketEvent, ...],\n    news: tuple[NewsRecord, ...],\n    *,\n    now: datetime,\n    lookback_hours: int | None = 24,\n    min_importance: int = 0,\n    symbol_filter: str = \"\",\n    portfolio_symbols: tuple[str, ...] = (),\n    portfolio_only: bool = False,\n) -> KAPFlowBrief:\n    \"\"\"Arşivde doğrulanmış KAP bildirimlerini deterministik olarak listeler.\n\n    Kaynak yalnız güvenilir kaynak sözlüğünde KAP olarak çözümlenirse akışa\n    alınır. Yeni bir skor, fiyat yönü, AL/SAT kararı veya AI yorumu üretilmez.\n    Portföy teması yalnız olayın açık sembolleri ile verilen portföy sembollerinin\n    doğrudan kesişimidir.\n    \"\"\"\n\n    now = _require_aware(now, \"now\")\n    if lookback_hours is not None:\n        if not isinstance(lookback_hours, int) or lookback_hours <= 0:\n            raise ValueError(\"lookback_hours pozitif tam sayı veya None olmalıdır.\")\n        cutoff = now - timedelta(hours=lookback_hours)\n    else:\n        cutoff = None\n\n    if not isinstance(min_importance, int) or not 0 <= min_importance <= 100:\n        raise ValueError(\"min_importance 0-100 aralığında tam sayı olmalıdır.\")\n\n    normalized_filter = _normalize_symbol(symbol_filter)\n    normalized_portfolio = tuple(\n        dict.fromkeys(\n            symbol\n            for symbol in (_normalize_symbol(item) for item in portfolio_symbols)",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_flow.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 16,
+      "score": 10,
+      "snippet": "def main() -> None:\n    root = Path(__file__).resolve().parents[2]\n    fi = root / \"backend\" / \"data\" / \"financial_intelligence\"\n\n    contract_path = fi / \"FIN_PROD_V8_FIN016_CONTRACT_ACCEPTANCE.json\"\n    resolver_path = fi / \"FIN_PROD_V8_FIN016_HISTORICAL_PIT_PRODUCER_RESOLUTION_V2.json\"\n    out = fi / \"FIN_PROD_V8_FIN016_PRODUCTION_CLOSURE.json\"\n\n    contract = _load(contract_path)\n    resolver = _load(resolver_path)\n\n    contract_ok = (\n        contract.get(\"status\") == \"PASS\"\n        and contract.get(\"read_only\") is True\n        and contract.get(\"pit_leakage_count\") == 0\n        and contract.get(\"weight_optimization\") is False\n        and contract.get(\"threshold_optimization\") is False\n    )\n\n    producer_status = resolver.get(\"status\")\n    blocker = resolver.get(\"blocker\")\n\n    unresolved = []\n    if not contract_ok:\n        unresolved.append(\"FIN016_CORE_CONTRACT_NOT_READY\")\n    if producer_status != \"EXACT_PRODUCTION_OBSERVATION_PRODUCER_FOUND\":\n        unresolved.append(blocker or \"HISTORICAL_PIT_OBSERVATION_PRODUCER_MISSING\")\n\n    payload = {\n        \"schema_version\": SCHEMA_VERSION,\n        \"status\": \"PASS_CLOSED_WITH_EXPLICIT_BLOCKERS\" if contract_ok else \"BLOCKED\",\n        \"mode\": \"READ_ONLY_FIN016_PRODUCTION_CLOSURE\",\n        \"read_only\": True,\n        \"core_contract\": {\n            \"status\": contract.get(\"status\"),",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_fin_prod_v8_fin016_production_closure.py"
+    },
+    {
+      "kind": "function",
+      "name": "main",
+      "line": 21,
+      "score": 10,
+      "snippet": "def main() -> int:\n    p = argparse.ArgumentParser(description=\"Financial Intelligence V1 production acceptance runner\")\n    p.add_argument(\"--xls\", required=True)\n    p.add_argument(\"--as-of\")\n    p.add_argument(\"--price\")\n    p.add_argument(\"--total-shares\")\n    p.add_argument(\"--diluted-shares\")\n    p.add_argument(\"--free-float-ratio\")\n    p.add_argument(\"--effective-free-float-ratio\")\n    p.add_argument(\"--major-shareholder-ratio\")\n    p.add_argument(\"--json-out\")\n    args = p.parse_args()\n\n    as_of = datetime.fromisoformat(args.as_of) if args.as_of else None\n    result = run_financial_intelligence_acceptance(\n        args.xls,\n        as_of=as_of,\n        price=dec(args.price),\n        total_shares=dec(args.total_shares),\n        diluted_shares=dec(args.diluted_shares),\n        free_float_ratio=dec(args.free_float_ratio),\n        effective_free_float_ratio=dec(args.effective_free_float_ratio),\n        major_shareholder_ratio=dec(args.major_shareholder_ratio),\n    )\n\n    text = json.dumps(result, ensure_ascii=False, indent=2)\n    print(text)\n    if args.json_out:\n        Path(args.json_out).write_text(text, encoding=\"utf-8\")\n    return 0 if result[\"status\"] == \"PASS\" else 2\n\n\nif __name__ == \"__main__\":\n    raise SystemExit(main())",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\scripts\\run_financial_intelligence_acceptance.py"
+    },
+    {
+      "kind": "function",
+      "name": "run_ttm_market_acceptance",
+      "line": 19,
+      "score": 8,
+      "snippet": "def run_ttm_market_acceptance(\n    xls_paths: list[str | Path],\n    market_ownership_json: str | Path,\n    *,\n    price: Decimal | None = None,\n    price_date=None,\n    as_of: datetime | None = None,\n    ebitda_ttm_override: Decimal | None = None,\n) -> dict[str, Any]:\n    reports = import_reports(xls_paths)\n    ttm = build_ttm_basis_from_reports(\n        reports,\n        as_of=as_of,\n        ebitda_ttm_override=ebitda_ttm_override,\n    )\n    canonical = load_market_ownership_input(market_ownership_json)\n    if canonical.symbol != ttm.symbol:\n        raise ValueError(\"market/ownership symbol mismatch\")\n\n    series = build_historical_financial_series(reports)\n    effective_as_of = ttm.as_of\n\n    own = OwnershipSnapshot(\n        symbol=canonical.symbol,\n        as_of_date=canonical.as_of_date,\n        published_at=canonical.published_at,\n        total_shares=canonical.valuation_units,\n        free_float_ratio=canonical.free_float_ratio,\n        effective_free_float_ratio=canonical.effective_free_float_ratio,\n        treasury_shares=canonical.treasury_valuation_units,\n        diluted_shares=canonical.diluted_valuation_units,\n        major_shareholder_ratio=canonical.controlling_group_ratio,\n        privileged_share_flag=canonical.privileged_share_flag,\n        source=canonical.ownership_source,\n        source_ref=canonical.ownership_source_ref,",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\financial_intelligence_ttm_acceptance.py"
+    },
+    {
+      "kind": "function",
+      "name": "_quality_flags",
+      "line": 146,
+      "score": 8,
+      "snippet": "def _quality_flags(\n    latest: FinancialPeriod,\n    ratios: FundamentalRatios,\n) -> tuple[str, ...]:\n    flags: list[str] = []\n\n    if latest.net_income < 0:\n        flags.append(\"Dönem net zararla kapandı.\")\n    if latest.operating_cash_flow < 0:\n        flags.append(\"İşletme faaliyetlerinden nakit akışı negatif.\")\n    if ratios.free_cash_flow < 0:\n        flags.append(\"Serbest nakit akışı negatif.\")\n    if (\n        ratios.current_ratio is not None\n        and ratios.current_ratio < Decimal(\"1\")\n    ):\n        flags.append(\"Cari oran 1 seviyesinin altında.\")\n    if (\n        ratios.debt_to_equity is not None\n        and ratios.debt_to_equity > Decimal(\"2\")\n    ):\n        flags.append(\"Borç/özsermaye oranı 2 seviyesinin üzerinde.\")\n    if latest.total_equity <= 0:\n        flags.append(\"Özsermaye pozitif değil.\")\n    if latest.revenue == 0:\n        flags.append(\"Hasılat sıfır; marjlar hesaplanamadı.\")\n\n    return tuple(flags)\n\n\ndef build_fundamental_snapshot(\n    periods: list[FinancialPeriod],\n    *,\n    source_metadata: dict[str, str] | None = None,\n) -> FundamentalSnapshot:",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\analysis\\fundamental_analysis.py"
+    },
+    {
+      "kind": "function",
+      "name": "_validate_import_group",
+      "line": 175,
+      "score": 8,
+      "snippet": "def _validate_import_group(imports: tuple[KapFinancialImportResult, ...]) -> tuple[str, str, str, Decimal]:\n    if not imports:\n        raise HistoricalFinancialSeriesError(\"At least one KAP financial import is required.\")\n\n    symbols = {x.identity.symbol for x in imports}\n    scopes = {x.identity.consolidation_scope for x in imports}\n    currencies = {x.identity.currency for x in imports}\n    scales = {x.identity.currency_scale for x in imports}\n\n    if len(symbols) != 1:\n        raise HistoricalFinancialSeriesError(f\"Mixed symbols are not allowed: {sorted(symbols)}\")\n    if len(scopes) != 1:\n        raise HistoricalFinancialSeriesError(f\"Mixed consolidation scopes are not allowed: {sorted(scopes)}\")\n    if len(currencies) != 1:\n        raise HistoricalFinancialSeriesError(f\"Mixed currencies are not allowed: {sorted(currencies)}\")\n    if len(scales) != 1:\n        raise HistoricalFinancialSeriesError(f\"Mixed currency scales are not allowed: {sorted(str(x) for x in scales)}\")\n\n    return next(iter(symbols)), next(iter(scopes)), next(iter(currencies)), next(iter(scales))\n\n\ndef build_historical_financial_series(\n    imports: Iterable[KapFinancialImportResult],\n) -> HistoricalFinancialSeries:\n    imported = tuple(imports)\n    symbol, scope, currency, scale = _validate_import_group(imported)\n\n    warnings: set[str] = set()\n    points_all: list[HistoricalFinancialPoint] = []\n    latest_by_key: dict[tuple, HistoricalFinancialPoint] = {}\n\n    for report in imported:\n        for fact in report.facts:\n            if not fact.metric_code:\n                continue",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\historical_financial_series.py"
+    },
+    {
+      "kind": "class",
+      "name": "KapFundamentalPackage",
+      "line": 49,
+      "score": 8,
+      "snippet": "class KapFundamentalPackage:\n    periods: tuple[FinancialPeriod, ...]\n    status: KapFundamentalSourceStatus\n    rejected_records: tuple[str, ...]\n\n\n_FIELD_ALIASES: dict[str, tuple[str, ...]] = {\n    \"symbol\": (\"symbol\", \"ticker\", \"stockCode\", \"companyCode\"),\n    \"period_end\": (\n        \"period_end\",\n        \"periodEnd\",\n        \"reportDate\",\n        \"accountingPeriodEnd\",\n    ),\n    \"fiscal_year\": (\"fiscal_year\", \"fiscalYear\", \"year\"),\n    \"fiscal_quarter\": (\n        \"fiscal_quarter\",\n        \"fiscalQuarter\",\n        \"quarter\",\n    ),\n    \"currency\": (\"currency\", \"currencyCode\"),\n    \"revenue\": (\"revenue\", \"sales\", \"netSales\"),\n    \"gross_profit\": (\"gross_profit\", \"grossProfit\"),\n    \"operating_profit\": (\n        \"operating_profit\",\n        \"operatingProfit\",\n        \"operatingIncome\",\n    ),\n    \"ebitda\": (\"ebitda\", \"favok\", \"EBITDA\"),\n    \"net_income\": (\"net_income\", \"netIncome\", \"netProfit\"),\n    \"total_assets\": (\"total_assets\", \"totalAssets\"),\n    \"total_equity\": (\"total_equity\", \"totalEquity\", \"equity\"),\n    \"total_debt\": (\"total_debt\", \"totalDebt\"),\n    \"cash_and_equivalents\": (\n        \"cash_and_equivalents\",",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\data\\kap_fundamental_source.py"
+    },
+    {
+      "kind": "function",
+      "name": "_kap_vbts_guvenlik_kontrolu",
+      "line": 263,
+      "score": 8,
+      "snippet": "def _kap_vbts_guvenlik_kontrolu() -> SystemCheckItem:\n    basla = perf_counter()\n\n    import os\n\n    from backend.app.compliance.kap_settings import KapSettings\n\n    degiskenler = (\n        \"HISSE_ROBOTU_KAP_BASE_URL\",\n        \"HISSE_ROBOTU_KAP_API_KEY\",\n        \"HISSE_ROBOTU_KAP_TIMEOUT_SECONDS\",\n        \"HISSE_ROBOTU_KAP_ENDPOINT_PATH\",\n        \"HISSE_ROBOTU_KAP_API_KEY_HEADER\",\n        \"HISSE_ROBOTU_KAP_COLLECTION_KEY\",\n        \"HISSE_ROBOTU_KAP_API_KEY_PREFIX\",\n    )\n    onceki = {ad: os.environ.get(ad) for ad in degiskenler}\n\n    try:\n        for ad in degiskenler:\n            os.environ.pop(ad, None)\n\n        guvenli_durdu = False\n        try:\n            KapSettings.from_environment()\n        except ValueError as exc:\n            guvenli_durdu = \"KAP temel adresi\" in str(exc)\n\n        os.environ[\"HISSE_ROBOTU_KAP_BASE_URL\"] = \"https://kap.test/api\"\n        os.environ[\"HISSE_ROBOTU_KAP_API_KEY\"] = \"test-anahtari\"\n        os.environ[\"HISSE_ROBOTU_KAP_ENDPOINT_PATH\"] = \"disclosures\"\n        os.environ[\"HISSE_ROBOTU_KAP_API_KEY_HEADER\"] = \"X-API-KEY\"\n        os.environ[\"HISSE_ROBOTU_KAP_COLLECTION_KEY\"] = \"disclosures\"\n\n        ayarlar = KapSettings.from_environment()",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\diagnostics\\system_check.py"
+    },
+    {
+      "kind": "function",
+      "name": "_decode_disclosures_json",
+      "line": 75,
+      "score": 8,
+      "snippet": "def _decode_disclosures_json(raw: bytes, content_type: str) -> object:\n    if len(raw) > MAX_DISCOVERY_BYTES:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_RESPONSE_TOO_LARGE\")\n    lowered = str(content_type or \"\").casefold()\n    stripped = raw.lstrip()\n    if \"json\" not in lowered and not stripped.startswith((b\"[\", b\"{\")):\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_NOT_JSON\")\n    try:\n        return json.loads(raw.decode(\"utf-8-sig\"))\n    except (UnicodeDecodeError, json.JSONDecodeError) as exc:\n        raise KapFundPortfolioError(\"KAP_DISCOVERY_JSON_INVALID\") from exc\n\n\ndef _iter_dicts(value: object) -> Iterable[dict[str, object]]:\n    if isinstance(value, dict):\n        yield value\n        for child in value.values():\n            yield from _iter_dicts(child)\n    elif isinstance(value, list):\n        for child in value:\n            yield from _iter_dicts(child)\n\n\ndef _first_scalar(mapping: dict[str, object], keys: tuple[str, ...]) -> object | None:\n    lowered = {str(key).casefold(): value for key, value in mapping.items()}\n    for key in keys:\n        value = lowered.get(key.casefold())\n        if isinstance(value, (str, int, float)) and str(value).strip():\n            return value\n    return None\n\n\ndef _mapping_text(mapping: dict[str, object]) -> str:\n    values: list[str] = []\n    for value in mapping.values():",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py"
+    },
+    {
+      "kind": "function",
+      "name": "discover_kap_portfolio_reports",
+      "line": 332,
+      "score": 8,
+      "snippet": "def discover_kap_portfolio_reports(\n    *,\n    fund_codes: Iterable[str] = (),\n    network_enabled: bool = False,\n    timeout_seconds: int = DEFAULT_TIMEOUT_SECONDS,\n    max_candidates: int = MAX_DISCOVERY_CANDIDATES,\n    fetcher: FetchBytes | None = None,\n    disclosures_url: str = KAP_DISCLOSURES_URL,\n) -> tuple[KapPortfolioDiscoveryCandidate, ...]:\n    if not network_enabled:\n        raise KapFundPortfolioError(\"KAP_PORTFOLIO_DISCOVERY_NETWORK_DISABLED\")\n    if timeout_seconds <= 0 or timeout_seconds > 30:\n        raise ValueError(\"timeout_seconds 1-30 aralığında olmalıdır.\")\n\n    normalized_fund_codes = tuple(\n        normalize_fund_code(code)\n        for code in fund_codes\n        if str(code or \"\").strip()\n    )\n\n    if (\n        fetcher is None\n        and disclosures_url == KAP_DISCLOSURES_URL\n        and normalized_fund_codes\n    ):\n        payload = _fetch_targeted_fund_disclosures(\n            normalized_fund_codes,\n            timeout_seconds,\n        )\n    else:\n        validated_url = _validate_disclosures_url(\n            disclosures_url\n        )\n        fetch = fetcher or _default_fetch\n        raw, final_url, content_type = fetch(",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\funds\\kap_portfolio_auto_ingestion.py"
+    },
+    {
+      "kind": "class",
+      "name": "CanonicalFinancialFact",
+      "line": 24,
+      "score": 8,
+      "snippet": "class CanonicalFinancialFact:\n    statement: str\n    metric_code: str | None\n    source_label: str\n    period_label: str\n    value: Decimal\n    note_ref: str | None = None\n\n\n@dataclass(frozen=True)\nclass KapFinancialImportResult:\n    identity: FinancialReportIdentity\n    facts: tuple[CanonicalFinancialFact, ...]\n    unmapped_labels: tuple[str, ...]\n    source_sha256: str\n    parser_version: str = \"fin001-v1\"\n\n    def current_values(self) -> dict[str, Decimal]:\n        result: dict[str, Decimal] = {}\n        for fact in self.facts:\n            if fact.metric_code and fact.period_label.startswith(\"Cari Dönem\"):\n                result.setdefault(fact.metric_code, fact.value)\n        return result",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\models\\financial_intelligence_models.py"
+    },
+    {
+      "kind": "class",
+      "name": "KapFinancialImportResult",
+      "line": 34,
+      "score": 8,
+      "snippet": "class KapFinancialImportResult:\n    identity: FinancialReportIdentity\n    facts: tuple[CanonicalFinancialFact, ...]\n    unmapped_labels: tuple[str, ...]\n    source_sha256: str\n    parser_version: str = \"fin001-v1\"\n\n    def current_values(self) -> dict[str, Decimal]:\n        result: dict[str, Decimal] = {}\n        for fact in self.facts:\n            if fact.metric_code and fact.period_label.startswith(\"Cari Dönem\"):\n                result.setdefault(fact.metric_code, fact.value)\n        return result",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\models\\financial_intelligence_models.py"
+    },
+    {
+      "kind": "class",
+      "name": "DayEndSummary",
+      "line": 28,
+      "score": 8,
+      "snippet": "class DayEndSummary:\n    selected_date: date\n    top_developments: tuple[DailyDevelopment, ...]\n    total_event_count: int\n    high_importance_event_count: int\n    tier1_event_count: int\n    multi_source_event_count: int\n    news_published_count: int\n    kap_disclosure_count: int\n    symbol_event_count: int\n    unique_symbol_count: int\n    sector_count: int\n    affected_portfolio_symbol_count: int\n    direct_portfolio_hit_count: int\n    calendar_event_count: int\n    calendar_high_critical_count: int\n    calendar_announced_count: int\n    calendar_waiting_count: int\n    top_sectors: tuple[str, ...]\n    affected_portfolio_symbols: tuple[str, ...]\n\n\ndef _require_date(value: date) -> date:\n    if not isinstance(value, date):\n        raise ValueError(\"selected_date geçerli bir tarih olmalıdır.\")\n    return value\n\n\ndef _require_aware(value: datetime, field_name: str) -> datetime:\n    if not isinstance(value, datetime):\n        raise ValueError(f\"{field_name} datetime olmalıdır.\")\n    if value.tzinfo is None or value.utcoffset() is None:\n        raise ValueError(f\"{field_name} saat dilimi içermelidir.\")\n    return value\n",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\day_end_summary.py"
+    },
+    {
+      "kind": "function",
+      "name": "build_day_end_summary",
+      "line": 73,
+      "score": 8,
+      "snippet": "def build_day_end_summary(\n    events: tuple[MarketEvent, ...],\n    news: tuple[NewsRecord, ...],\n    calendar_entries: tuple[EconomicCalendarEntry, ...],\n    *,\n    selected_date: date,\n    portfolio_members: tuple[PortfolioMember, ...] = (),\n    top_limit: int = 10,\n) -> DayEndSummary:\n    \"\"\"\n    Seçilen gün için deterministik kapanış özeti üretir.\n\n    Yeni bir skor üretmez. Olay öneminde mevcut 0-100 skoru kullanılır.\n    Haber/KAP/hisse/sektör/portföy/takvim metrikleri ayrı tutulur.\n    Fiyat yönü, AL/SAT, teknik skor veya AI yorumu üretilmez.\n    \"\"\"\n\n    selected_date = _require_date(selected_date)\n    if not isinstance(top_limit, int) or not 1 <= top_limit <= 25:\n        raise ValueError(\"top_limit 1-25 aralığında tam sayı olmalıdır.\")\n\n    end_of_day = datetime.combine(\n        selected_date,\n        time.max,\n        tzinfo=ISTANBUL,\n    )\n\n    day_events = tuple(\n        event\n        for event in events\n        if _local_date(event.occurred_at, \"Olay zamanı\") == selected_date\n    )\n    day_event_ids = {event.event_id for event in day_events}\n\n    as_of_news: list[NewsRecord] = []",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\day_end_summary.py"
+    },
+    {
+      "kind": "class",
+      "name": "KAPDisclosure",
+      "line": 16,
+      "score": 8,
+      "snippet": "class KAPDisclosure:\n    news_id: str\n    event_id: str\n    event_title: str\n    published_at: datetime\n    importance_score: int\n    event_type: str\n    symbols: tuple[str, ...]\n    headline: str\n    source_reference: str\n    source_match: str\n    portfolio_symbols: tuple[str, ...]\n\n    @property\n    def is_high_importance(self) -> bool:\n        return self.importance_score >= 80\n\n    @property\n    def has_symbol(self) -> bool:\n        return bool(self.symbols)\n\n    @property\n    def has_portfolio_touch(self) -> bool:\n        return bool(self.portfolio_symbols)\n\n\n@dataclass(frozen=True, slots=True)\nclass KAPFlowBrief:\n    disclosures: tuple[KAPDisclosure, ...]\n    total_disclosure_count: int\n    unique_company_count: int\n    high_importance_count: int\n    portfolio_touch_count: int\n    missing_symbol_count: int\n",
+      "path": "D:\\Projects\\Hisse-Robotu\\backend\\app\\news_center\\kap_flow.py"
+    }
+  ],
+  "kap_endpoint_lines": [
+    "\"Origin\": \"https://www.kap.org.tr\",",
+    "\"Referer\": \"https://www.kap.org.tr/tr/bildirim-sorgu\",",
+    "\"https://www.kap.org.tr/tr/api/disclosure/funds/byCriteria\",",
+    "\"https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay\"",
+    "KAP_BIST_COMPANIES_URL = \"https://www.kap.org.tr/tr/bist-sirketler\"",
+    "KAP_DISCLOSURES_URL = \"https://www.kap.org.tr/tr/api/disclosures\"",
+    "detail_url = f\"https://www.kap.org.tr/tr/Bildirim/{clean_notification}\"",
+    "detail_url=f\"https://www.kap.org.tr/tr/Bildirim/{notification_id}\",",
+    "f\"https://www.kap.org.tr/tr/api/fund/criteria/{fund_type}/Y\",",
+    "placeholder=\"https://www.kap.org.tr/tr/Bildirim/1234567\",",
+    "placeholder=\"https://www.kap.org.tr/tr/Bildirim/1636759\",",
+    "sample_url=\"https://www.kap.org.tr/tr/Bildirim/1\","
+  ],
+  "production_mutation": "NO",
+  "store_mutation": "NO",
+  "al_sat_mutation": "NO",
+  "bank_activation_ready": false,
+  "blockers": []
+}

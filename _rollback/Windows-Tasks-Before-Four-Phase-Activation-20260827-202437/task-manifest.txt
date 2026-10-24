@@ -1,0 +1,6 @@
+ABSENT|HisseRobotu-EOD-DailyDecision
+ABSENT|HisseRobotu-0900-DailyDecision
+ABSENT|HisseRobotu-0845-PreOpen
+ABSENT|HisseRobotu-1020-PostOpen
+ABSENT|HisseRobotu-1720-PreClose
+ABSENT|HisseRobotu-1830-CanonicalClose

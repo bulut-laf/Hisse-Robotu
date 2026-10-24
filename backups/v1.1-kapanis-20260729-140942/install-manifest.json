@@ -1,0 +1,46 @@
+﻿[
+    {
+        "relative_path":  "KULLANIM.md",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "KULLANIM_KILAVUZU.md",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "PROJECT_NOTES.md",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "VERSION",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\dashboard.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\app\\compliance\\dashboard_vbts_manager.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\tests\\test_dashboard_vbts_management_panel.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\tests\\test_sprint42_vbts_ui_repair.py",
+        "existed_before":  true
+    },
+    {
+        "relative_path":  "backend\\tests\\test_v11_closeout_dashboard_lock.py",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\tests\\test_v11_closeout_documentation.py",
+        "existed_before":  false
+    },
+    {
+        "relative_path":  "backend\\tests\\test_v11_closeout_vbts_manager.py",
+        "existed_before":  false
+    }
+]

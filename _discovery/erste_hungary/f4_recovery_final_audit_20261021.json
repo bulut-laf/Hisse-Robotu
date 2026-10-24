@@ -1,0 +1,977 @@
+{
+  "generated_at": "2026-10-21T23:27:25",
+  "reference_date": "2026-10-21",
+  "total_records": 96,
+  "final_status_counts": {
+    "STALE_DATA_REJECTED": 81,
+    "IDENTITY_OR_NO_DATA_UNRESOLVED": 15
+  },
+  "verified_fresh_records": 0,
+  "f4_surface_updated": false,
+  "production_mutation": false,
+  "rank_history_mutation": false,
+  "automatic_trade_authority": "NONE",
+  "forced_fill": false,
+  "results": [
+    {
+      "isin": "AT0000627476",
+      "requested_name": "Erste Responsible Stock America",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000605324",
+      "requested_name": "ERSTE BOND DOLLAR USD R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000605332",
+      "requested_name": "ERSTE BOND DOLLAR-CORPORATE",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000639067",
+      "requested_name": "ERSTE RESPONSIBLE STOCK JAPAN EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000658968",
+      "requested_name": "ERSTE BOND EURO-CORPORATE EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000673199",
+      "requested_name": "ERSTE Bond Danubia EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000673181",
+      "requested_name": "ERSTE STOCK EUROPE EMERGING EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000673249",
+      "requested_name": "ERSTE RESERVE DOLLAR USD R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000673306",
+      "requested_name": "ERSTE BOND EM GOVERNMENT EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000673322",
+      "requested_name": "ERSTE BOND INTERNATIONAL EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000673355",
+      "requested_name": "ERSTE RESERVE EURO PLUS EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000673371",
+      "requested_name": "ERSTE RESPONSIBLE STOCK AMERICA USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00G88",
+      "requested_name": "ERSTE STOCK EUROPE EMERGING HUF R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00GA2",
+      "requested_name": "ERSTE BOND INTERNATIONAL HUF R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00G96",
+      "requested_name": "ERSTE RESERVE CORPORATE HUF R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00GC8",
+      "requested_name": "ERSTE BOND EM GOVERNMENT HUF R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00GE4",
+      "requested_name": "ERSTE STOCK EM GLOBAL HUF R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00GK1",
+      "requested_name": "ERSTE STOCK EM GLOBAL EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00GF1",
+      "requested_name": "ERSTE RESPONSIBLE STOCK JAPAN HUF R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "AT0000A00GL9",
+      "requested_name": "ERSTE RESERVE CORPORATE EUR R01",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-01-22",
+      "days_old": 4290,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0012181748",
+      "requested_name": "BNP PARIBAS FUNDS JAPAN EQUITY JPY",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0012182399",
+      "requested_name": "BNP PARIBAS FUNDS US SHORT DURATION BOND USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0051128774",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - P CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0069970746",
+      "requested_name": "BNP PARIBAS FUNDS JAPAN SMALL CAP JPY",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0075938133",
+      "requested_name": "BNP PARIBAS FUNDS EURO BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0086913042",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE CONVERTIBLE EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0086914362",
+      "requested_name": "BNP PARIBAS FUNDS EURO MEDIUM TERM BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0089276934",
+      "requested_name": "BNP PARIBAS FUNDS EMERGING BOND USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0089291651",
+      "requested_name": "BNP PARIBAS FUNDS TARGET RISK BALANCED EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0099625146",
+      "requested_name": "BNP PARIBAS FUNDS EURO SHORT TERM CORPORATE BOND OPP. EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0111491469",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE DIVIDEND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0111549480",
+      "requested_name": "BNP PARIBAS FUNDS US HIGH YIELD BOND USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0111548326",
+      "requested_name": "BNP PARIBAS FUNDS EURO GOVERNMENT BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0113304017",
+      "requested_name": "GOLDMAN SACHS EUROPE EQUITY - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0113303043",
+      "requested_name": "GOLDMAN SACHS ASIA EQUITY INCOME - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0113305253",
+      "requested_name": "GOLDMAN SACHS US ENHANCED EQUITY - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0113302664",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0113311731",
+      "requested_name": "GOLDMAN SACHS EMERGING EUROPE EQUITY X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0119216801",
+      "requested_name": "GOLDMAN SACHS GREATER CHINA EQUITY - P CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0121174428",
+      "requested_name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0121175821",
+      "requested_name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0121204431",
+      "requested_name": "GOLDMAN SACHS GLOBAL SUSTAINABLE EQUITY - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0121204944",
+      "requested_name": "GOLDMAN SACHS GREATER CHINA EQUITY - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0127786860",
+      "requested_name": "GOLDMAN SACHS EUROZONE EQUITY INCOME - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0131210360",
+      "requested_name": "BNP PARIBAS FUNDS EURO CORPORATE BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0146259923",
+      "requested_name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0154245756",
+      "requested_name": "BNP PARIBAS FUNDS US MID CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0177332227",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE VALUE EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0190304583",
+      "requested_name": "BNP PARIBAS FUNDS EURO INFLATION-LINKED BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0205352882",
+      "requested_name": "GOLDMAN SACHS EUROPE EQUITY INCOME - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0205423220",
+      "requested_name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0212178916",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE SMALL CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0214495557",
+      "requested_name": "GOLDMAN SACHS US EQUITY INCOME - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0250170304",
+      "requested_name": "GOLDMAN SACHS GLOBAL EQUITY IMPACT OPPORTUNITIES - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0249332619",
+      "requested_name": "BNP PARIBAS FUNDS GLOBAL INFLATION-LINKED BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0250183208",
+      "requested_name": "GOLDMAN SACHS GLOBAL REAL ESTATE EQUITY- X CAP EUR (Former NN)",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0265288877",
+      "requested_name": "BNP PARIBAS FUNDS SUSTAINABLE EURO CORPORATE BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0265266980",
+      "requested_name": "BNP PARIBAS FUNDS BRAZIL EQUITY USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0265291665",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE SMALL CAP CONVERTIBLE EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0265293521",
+      "requested_name": "BNP PARIBAS FUNDS TURKEY EQUITY EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0282388437",
+      "requested_name": "BNP PARIBAS FUNDS SUSTAINABLE GLOBAL CORPORATE BOND USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0325598166",
+      "requested_name": "BNP PARIBAS FUNDS ENHANCED BOND 6M EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0332192888",
+      "requested_name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0332193340",
+      "requested_name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0347711466",
+      "requested_name": "BNP PARIBAS FUNDS GLOBAL ENVIRONMENT EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0370038597",
+      "requested_name": "GOLDMAN SACHS ALTERNATIVE BETA - X CAP EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0370038670",
+      "requested_name": "GOLDMAN SACHS ALTERNATIVE BETA - X CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2012-06-27",
+      "days_old": 5229,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0509951272",
+      "requested_name": "GOLDMAN SACHS ENVIRONMENTAL TRANSITION EQUITY - X CAP HUF",
+      "returned_name": "ING Energia Részvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0509951199",
+      "requested_name": "GOLDMAN SACHS GLOBAL SOCIAL IMPACT EQUITY - X CAP HUF",
+      "returned_name": "ING IT Részvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0509951355",
+      "requested_name": "GOLDMAN SACHS GLOBAL EQUITY INCOME - X CAP HUF",
+      "returned_name": "ING Globális Magas Osztalékhozamú Részvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0509951603",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS ENHANCED INDEX SUSTAINABLE EQUITY - X CAP HUF",
+      "returned_name": "ING Latin-Amerikai Részvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0509951439",
+      "requested_name": "GOLDMAN SACHS GLOBAL EQUITY IMPACT OPPORTUNITIES - X CAP HUF",
+      "returned_name": "ING Globális Lehetőségek Részvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0509951512",
+      "requested_name": "GOLDMAN SACHS GREATER CHINA EQUITY - X CAP HUF",
+      "returned_name": "ING Kínai Részvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546915215",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP EUR (HEDGED I)",
+      "returned_name": "ING Fejlődő Piaci Kötvény (keménydeviza)",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546914242",
+      "requested_name": "GOLDMAN SACHS ASIAN DEBT (HARD CURRENCY) - X CAP USD",
+      "returned_name": "ING Ázsiai Kötvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546915488",
+      "requested_name": "GOLDMAN SACHS EMERGING MARKETS DEBT (HARD CURRENCY) - X CAP HUF",
+      "returned_name": "ING Fejlődő Piaci Kötvény (keménydeviza)",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546916882",
+      "requested_name": "GOLDMAN SACHS EUROMIX BOND - X CAP EUR",
+      "returned_name": "ING Euromix Kötvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546918151",
+      "requested_name": "GOLDMAN SACHS EURO BOND - X CAP EUR",
+      "returned_name": "ING Euro Kötvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546918409",
+      "requested_name": "GOLDMAN SACHS EURO CREDIT - X CAP EUR",
+      "returned_name": "ING Euro Vállalati Kötvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546920561",
+      "requested_name": "GOLDMAN SACHS US DOLLAR CREDIT - X CAP USD",
+      "returned_name": "ING USD Vállalati Kötvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0548664886",
+      "requested_name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP EUR (HEDGED III) (Former NN)",
+      "returned_name": "ING Globális Magashozamú Kötvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0546919555",
+      "requested_name": "GOLDMAN SACHS GLOBAL HIGH YIELD - X CAP HUF (Former NN)",
+      "returned_name": "ING Globális Magashozamú Kötvény",
+      "source_status": "CSV_HEADER_NOT_FOUND",
+      "latest_date": null,
+      "days_old": null,
+      "f4_eligible": false,
+      "final_status": "IDENTITY_OR_NO_DATA_UNRESOLVED"
+    },
+    {
+      "isin": "LU0823380802",
+      "requested_name": "BNP PARIBAS FUNDS EURO HIGH YIELD BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823386163",
+      "requested_name": "BNP PARIBAS FUNDS LOCAL EMERGING BOND USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823388615",
+      "requested_name": "BNP PARIBAS FUNDS GLOBAL HIGH YIELD BOND EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823397368",
+      "requested_name": "BNP PARIBAS FUNDS ASIA EX-JAPAN EQUITY H EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823399810",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE EQUITY EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823401574",
+      "requested_name": "BNP PARIBAS FUNDS EURO EQUITY EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823403356",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE EMERGING EQUITY EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823410997",
+      "requested_name": "BNP PARIBAS FUNDS US SMALL CAP USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823404248",
+      "requested_name": "BNP PARIBAS FUNDS EUROPE GROWTH EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823413587",
+      "requested_name": "BNP PARIBAS FUNDS EMERGING EQUITY USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823416762",
+      "requested_name": "BNP PARIBAS FUNDS HEALTH CARE INNOVATORS EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823428932",
+      "requested_name": "BNP PARIBAS FUNDS INDIA EQUITY USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823426308",
+      "requested_name": "BNP PARIBAS FUNDS CHINA EQUITY USD",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    },
+    {
+      "isin": "LU0823414635",
+      "requested_name": "BNP PARIBAS FUNDS CLEAN ENERGY SOLUTIONS EUR",
+      "returned_name": null,
+      "source_status": "CSV_OK_STALE",
+      "latest_date": "2015-04-10",
+      "days_old": 4212,
+      "f4_eligible": false,
+      "final_status": "STALE_DATA_REJECTED"
+    }
+  ]
+}

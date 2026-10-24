@@ -1,0 +1,192 @@
+﻿FIN_PROD_V6_BUSINESS_QUALITY_EXACT_SOURCE
+
+===== FINANCIAL_PERIOD_CONTRACT =====
+00028: class FinancialPeriod:
+00029:     """Tek bir finansal raporlama d├╢nemini temsil eder."""
+00030: 
+00031:     symbol: str
+00032:     period_end: date
+00033:     fiscal_year: int
+00034:     fiscal_quarter: int
+00035:     currency: str
+00036:     revenue: Decimal
+00037:     gross_profit: Decimal
+00038:     operating_profit: Decimal
+00039:     ebitda: Decimal
+00040:     net_income: Decimal
+00041:     total_assets: Decimal
+00042:     total_equity: Decimal
+00043:     total_debt: Decimal
+00044:     cash_and_equivalents: Decimal
+00045:     current_assets: Decimal
+00046:     current_liabilities: Decimal
+00047:     operating_cash_flow: Decimal
+00048:     capital_expenditure: Decimal
+00049:     shares_outstanding: Decimal
+00050:     source: str = "manual"
+00051:     published_at: date | None = None
+00052: 
+00053:     def __post_init__(self) -> None:
+00054:         normalized_symbol = self.symbol.strip().upper()
+00055:         if not normalized_symbol:
+00056:             raise FundamentalModelError("┼Юirket sembol├╝ bo┼Я olamaz.")
+00057:         if self.fiscal_quarter not in (1, 2, 3, 4):
+00058:             raise FundamentalModelError(
+00059:                 "Mali ├зeyrek 1 ile 4 aras─▒nda olmal─▒d─▒r."
+00060:             )
+00061:         if self.fiscal_year < 1900:
+00062:             raise FundamentalModelError("Mali y─▒l ge├зersiz.")
+00063:         if self.period_end.year not in (
+00064:             self.fiscal_year,
+00065:             self.fiscal_year + 1,
+00066:         ):
+00067:             raise FundamentalModelError(
+00068:                 "D├╢nem sonu tarihi mali y─▒lla uyumsuz."
+00069:             )
+00070:         if not self.currency.strip():
+00071:             raise FundamentalModelError("Para birimi bo┼Я olamaz.")
+00072: 
+00073:         decimal_fields = (
+00074:             "revenue",
+00075:             "gross_profit",
+00076:             "operating_profit",
+00077:             "ebitda",
+00078:             "net_income",
+00079:             "total_assets",
+00080:             "total_equity",
+00081:             "total_debt",
+00082:             "cash_and_equivalents",
+00083:             "current_assets",
+00084:             "current_liabilities",
+00085:             "operating_cash_flow",
+00086:             "capital_expenditure",
+00087:             "shares_outstanding",
+00088:         )
+00089:         for field_name in decimal_fields:
+00090:             object.__setattr__(
+00091:                 self,
+00092:                 field_name,
+00093:                 _decimal(getattr(self, field_name), field_name),
+00094:             )
+00095: 
+00096:         if self.total_assets < 0:
+00097:             raise FundamentalModelError(
+00098:                 "Toplam varl─▒k negatif olamaz."
+00099:             )
+00100:         if self.total_debt < 0:
+00101:             raise FundamentalModelError(
+00102:                 "Toplam bor├з negatif olamaz."
+00103:             )
+00104:         if self.cash_and_equivalents < 0:
+00105:             raise FundamentalModelError(
+00106:                 "Nakit ve benzerleri negatif olamaz."
+00107:             )
+00108:         if self.shares_outstanding <= 0:
+00109:             raise FundamentalModelError(
+00110:                 "Dola┼Я─▒mdaki pay say─▒s─▒ s─▒f─▒rdan b├╝y├╝k olmal─▒d─▒r."
+00111:             )
+00112: 
+00113:         object.__setattr__(self, "symbol", normalized_symbol)
+00114:         object.__setattr__(self, "currency", self.currency.strip().upper())
+00115:         object.__setattr__(self, "source", self.source.strip() or "manual")
+00116: 
+00117:     @property
+00118:     def period_key(self) -> str:
+00119:         return f"{self.fiscal_year}Q{self.fiscal_quarter}"
+
+===== LOCAL_TUPRS_FUNDAMENTAL_PERIOD_SOURCES =====
+PERIOD_SOURCE_HITS=0
+
+===== STORE_AND_LOADER_ENTRYPOINTS =====
+FILE=backend\app\analysis\fundamental_analysis.py
+00176: def build_fundamental_snapshot(
+---
+FILE=backend\app\analysis\kap_fundamental_service.py
+00082:         snapshot = build_fundamental_snapshot(
+---
+FILE=backend\app\data\fundamental_data.py
+00202: def load_fundamental_file(
+00145: def periods_from_records(
+00179:     return periods_from_records(reader)
+00199:     return periods_from_records(raw)
+00182: def periods_from_json_bytes(
+00215:         return periods_from_json_bytes(payload)
+---
+FILE=backend\app\data\kap_fundamental_source.py
+00262:             periods = periods_from_records(accepted_records)
+---
+
+===== TUPRS_ACCEPTANCE_SOURCE_METADATA =====
+META|$.identity.fiscal_period|2
+META|$.identity.source|'KAP'
+META|$.financial_health.metrics[0].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[0].comparison_period_end|None
+META|$.financial_health.metrics[1].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[1].comparison_period_end|None
+META|$.financial_health.metrics[2].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[2].comparison_period_end|None
+META|$.financial_health.metrics[3].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[3].comparison_period_end|None
+META|$.financial_health.metrics[4].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[4].comparison_period_end|None
+META|$.financial_health.metrics[5].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[5].comparison_period_end|None
+META|$.financial_health.metrics[6].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[6].comparison_period_end|None
+META|$.financial_health.metrics[7].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[7].comparison_period_end|None
+META|$.financial_health.metrics[8].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[8].comparison_period_end|None
+META|$.financial_health.metrics[9].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[9].comparison_period_end|'2025-06-30'
+META|$.financial_health.metrics[10].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[10].comparison_period_end|None
+META|$.financial_health.metrics[11].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[11].comparison_period_end|None
+META|$.financial_health.metrics[12].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[12].comparison_period_end|None
+META|$.financial_health.metrics[13].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[13].comparison_period_end|None
+META|$.financial_health.metrics[14].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[14].comparison_period_end|None
+META|$.financial_health.metrics[15].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[15].comparison_period_end|'2025-06-30'
+META|$.financial_health.metrics[16].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[16].comparison_period_end|'2025-06-30'
+META|$.financial_health.metrics[17].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[17].comparison_period_end|'2025-06-30'
+META|$.financial_health.metrics[18].source_period_end|'2026-06-30'
+META|$.financial_health.metrics[18].comparison_period_end|'2025-06-30'
+META|$.financial_health.as_of|'2026-08-04T18:24:32'
+META|$.earnings_cash_quality.metrics[0].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[0].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[1].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[1].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[2].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[2].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[3].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[3].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[4].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[4].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[5].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[5].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[6].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[6].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[7].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[7].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[8].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[8].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[9].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[9].comparison_period_end|None
+META|$.earnings_cash_quality.metrics[10].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[10].comparison_period_end|'2025-06-30'
+META|$.earnings_cash_quality.metrics[11].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[11].comparison_period_end|'2025-06-30'
+META|$.earnings_cash_quality.metrics[12].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[12].comparison_period_end|'2025-06-30'
+META|$.earnings_cash_quality.metrics[13].current_period_end|'2026-06-30'
+META|$.earnings_cash_quality.metrics[13].comparison_period_end|'2025-06-30'
+META|$.earnings_cash_quality.as_of|'2026-08-04T18:24:32'
+META|$.financial_risk.as_of|'2026-08-04T18:24:32'
+
+FIN_PROD_V6_BUSINESS_QUALITY_EXACT_SOURCE=PASS

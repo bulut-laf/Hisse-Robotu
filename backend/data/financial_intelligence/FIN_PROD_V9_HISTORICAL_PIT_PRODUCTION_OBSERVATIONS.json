@@ -1,0 +1,27 @@
+{
+  "schema_version": "fin-prod-v9-historical-pit-production-observations-v6",
+  "status": "NO_PRODUCTION_OBSERVATIONS",
+  "mode": "READ_ONLY_PRODUCTION_PIT_OBSERVATION_PRODUCER",
+  "production_evidence": false,
+  "observation_count": 0,
+  "observations": [],
+  "evidence": [],
+  "calibration": {
+    "status": "INSUFFICIENT_SAMPLE",
+    "separation": null
+  },
+  "blockers": [
+    "OBSERVATION_DATE_MARKET_PRICE_MISSING:TUPRS"
+  ],
+  "rules": [
+    "EXACT_FINANCIAL_HEALTH_FIELD_ONLY",
+    "EXACT_BIST_MARKET_ALIAS_SYMBOL_OR_SYMBOL_DOT_IS_ONLY",
+    "EXACT_PUBLICATION_TIMESTAMP_REQUIRED",
+    "PUBLICATION_MUST_NOT_EXCEED_OBSERVATION_DATE",
+    "FORWARD_OUTCOME_USES_20_POST_OBSERVATION_SESSIONS",
+    "NO_SYNTHETIC_PRODUCTION_CALIBRATION",
+    "NO_WEIGHT_OPTIMIZATION",
+    "NO_THRESHOLD_OPTIMIZATION",
+    "NO_AL_SAT_SCANNER_RANKING_PORTFOLIO_MUTATION"
+  ]
+}
