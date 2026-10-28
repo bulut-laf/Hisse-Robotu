@@ -1,0 +1,264 @@
+﻿{
+    "generated_at":  "2026-10-27T11:28:26",
+    "candidate_records":  21,
+    "existing_records":  7,
+    "unique_isin_count":  28,
+    "checksum_valid_count":  27,
+    "checksum_invalid_count":  1,
+    "official_verification_completed_by_this_script":  false,
+    "production_eligible_count":  0,
+    "records":  [
+                    {
+                        "ISIN":  "HU0000708656",
+                        "Name":  "ERSTE Multi Asset Growth",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A0F5N4",
+                        "Name":  "ERSTE Responsible Stock - OCR candidate",
+                        "ChecksumValid":  false,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "HU0000703830",
+                        "Name":  "ERSTE Duett Alapok",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000673389",
+                        "Name":  "ERSTE Stock Techno EUR",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A09GU1",
+                        "Name":  "ERSTE Stock Techno HUF",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A2BYF3",
+                        "Name":  "ERSTE Stock Environment",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A09GW7",
+                        "Name":  "ERSTE Stock Commodities",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A3PA11",
+                        "Name":  "ERSTE Stock World HUF - candidate",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "HU0000732011",
+                        "Name":  "ERSTE Emerging Markets",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "HU0000740691",
+                        "Name":  "ERSTE Gold Cost Averaging",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "HU0000705306",
+                        "Name":  "ERSTE Local Strategy",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000673165",
+                        "Name":  "ERSTE Stock Biotec EUR",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "HU0000714191",
+                        "Name":  "ERSTE Real Assets EUR",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "LU1387832436",
+                        "Name":  "FF Global Dividend Fund",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "HU0000712492",
+                        "Name":  "ERSTE Stock World HUF",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "LU0565135745",
+                        "Name":  "First Eagle Amundi International",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "LU2614689482",
+                        "Name":  "Schroder ISF Global - truncated name",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "LU0293313671",
+                        "Name":  "Allianz GEM Equity - truncated name",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "LU0161304786",
+                        "Name":  "Schroder ISF European - truncated name",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "LU2334866550",
+                        "Name":  "JPM Global Value A",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "HU0000723572",
+                        "Name":  "ERSTE Arany Alapok",
+                        "ChecksumValid":  true,
+                        "Sources":  "NEW_CANDIDATE",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  false,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000627476",
+                        "Name":  "ERSTE Responsible Stock America",
+                        "ChecksumValid":  true,
+                        "Sources":  "EXISTING_INVENTORY",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  true,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A00G88",
+                        "Name":  "ERSTE Stock Europe Emerging HUF R01",
+                        "ChecksumValid":  true,
+                        "Sources":  "EXISTING_INVENTORY",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  true,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A00GA2",
+                        "Name":  "ERSTE Bond International HUF R01",
+                        "ChecksumValid":  true,
+                        "Sources":  "EXISTING_INVENTORY",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  true,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A00G96",
+                        "Name":  "ERSTE Reserve Corporate HUF R01",
+                        "ChecksumValid":  true,
+                        "Sources":  "EXISTING_INVENTORY",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  true,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A00GC8",
+                        "Name":  "ERSTE Bond EM Government HUF R01",
+                        "ChecksumValid":  true,
+                        "Sources":  "EXISTING_INVENTORY",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  true,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A00GE4",
+                        "Name":  "ERSTE Stock EM Global HUF R01",
+                        "ChecksumValid":  true,
+                        "Sources":  "EXISTING_INVENTORY",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  true,
+                        "ProductionEligible":  false
+                    },
+                    {
+                        "ISIN":  "AT0000A00GF1",
+                        "Name":  "ERSTE Responsible Stock Japan HUF R01",
+                        "ChecksumValid":  true,
+                        "Sources":  "EXISTING_INVENTORY",
+                        "IsDuplicateAcrossLists":  false,
+                        "OfficiallyVerified":  true,
+                        "ProductionEligible":  false
+                    }
+                ]
+}

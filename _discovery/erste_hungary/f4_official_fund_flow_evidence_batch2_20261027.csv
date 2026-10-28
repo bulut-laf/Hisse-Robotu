@@ -1,0 +1,3 @@
+﻿"FundName","RelatedISIN","Period","ReportedNetIssueRedemptionEUR","EvidenceScope","EvidenceStatus","NetFlowEvidenceVerified","ProductionEligible","SourceURL"
+"ERSTE RESERVE CORPORATE","AT0000A00G96","2024/2025","15368154.04","FUND_LEVEL_ALL_UNIT_CLASSES","OFFICIAL_ANNUAL_REPORT_VERIFIED","True","False","https://data.erste-am.com/gem/erste-am/getDocumentContent/f526cd54-aad4-4417-9a2e-a28f5bcf5fbb?openDocument=true"
+"ERSTE BOND EM GOVERNMENT LOCAL","AT0000A00GC8","2024/2025","72450324.14","FUND_LEVEL_ALL_UNIT_CLASSES","OFFICIAL_REPORT_REQUIRES_PERIOD_RECHECK","False","False","https://data.erste-am.com/gem/erste-am/getDocumentContent/ba67c7e8-8cc5-445d-b881-d92b652ef920"

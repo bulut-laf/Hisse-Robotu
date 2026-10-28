@@ -18,6 +18,7 @@ from backend.app.analysis.daily_buy_decision_output_archive import (
     DecisionOutputArchiveJsonStore,
 )
 from backend.app.analysis.eod_candidate_performance_runtime import settle_eod_candidate_performance_history
+from backend.app.analysis.scan_top10_next_session import settle_scan_top10_next_session
 from backend.app.data.batch_market_data import toplu_fiyat_verisi_getir
 from backend.app.operations.daily_buy_decision_scheduled_runner import (
     execute_scheduled_run,
@@ -118,7 +119,7 @@ def _normalize_phase(value: str) -> str:
     phase = str(value or "").strip().upper()
     if phase not in VALID_PHASES:
         raise ScheduledOperationPhaseError(
-            f"GeГ§ersiz scheduled operation phase: {value!r}"
+            f"GeР вЂњР’В§ersiz scheduled operation phase: {value!r}"
         )
     return phase
 
@@ -129,27 +130,27 @@ def _schedule_guard(phase: str, now: datetime) -> None:
     if phase == PREOPEN:
         if clock < time(8, 45) or clock >= time(10, 0):
             raise ScheduledOperationPhaseError(
-                "PREOPEN yalnД±z 08:45вЂ“09:59 aralД±ДџД±nda Г§alД±ЕџД±r."
+                "PREOPEN yalnР вЂќР’В±z 08:45Р Р†Р вЂљРІР‚Сљ09:59 aralР вЂќР’В±Р вЂќРЎСџР вЂќР’В±nda Р вЂњР’В§alР вЂќР’В±Р вЂўРЎСџР вЂќР’В±r."
             )
         return
 
     if phase == POSTOPEN:
         if clock < time(10, 20) or clock >= time(17, 20):
             raise ScheduledOperationPhaseError(
-                "POSTOPEN yalnД±z 10:20вЂ“17:19 aralД±ДџД±nda Г§alД±ЕџД±r."
+                "POSTOPEN yalnР вЂќР’В±z 10:20Р Р†Р вЂљРІР‚Сљ17:19 aralР вЂќР’В±Р вЂќРЎСџР вЂќР’В±nda Р вЂњР’В§alР вЂќР’В±Р вЂўРЎСџР вЂќР’В±r."
             )
         return
 
     if phase == PRECLOSE:
         if clock < time(17, 20) or clock >= time(18, 30):
             raise ScheduledOperationPhaseError(
-                "PRECLOSE yalnД±z 17:20вЂ“18:29 aralД±ДџД±nda Г§alД±ЕџД±r."
+                "PRECLOSE yalnР вЂќР’В±z 17:20Р Р†Р вЂљРІР‚Сљ18:29 aralР вЂќР’В±Р вЂќРЎСџР вЂќР’В±nda Р вЂњР’В§alР вЂќР’В±Р вЂўРЎСџР вЂќР’В±r."
             )
         return
 
     if phase == CANONICAL_CLOSE and clock < time(18, 30):
         raise ScheduledOperationPhaseError(
-            "CANONICAL_CLOSE 18:30 Г¶ncesinde Г§alД±ЕџtД±rД±lamaz."
+            "CANONICAL_CLOSE 18:30 Р вЂњР’В¶ncesinde Р вЂњР’В§alР вЂќР’В±Р вЂўРЎСџtР вЂќР’В±rР вЂќР’В±lamaz."
         )
 
 
@@ -322,13 +323,13 @@ class ProductionScheduledOperationRuntime:
             rows.append(
                 {
                     "Hisse": symbol.removesuffix(".IS"),
-                    "Г–nceki kapanД±Еџ": round(prior_close, 4),
-                    "AГ§Д±lД±Еџ": round(float(snapshot.day_open), 4),
-                    "GГјncel gecikmeli fiyat": round(float(snapshot.last_price), 4),
+                    "Р вЂњРІР‚вЂњnceki kapanР вЂќР’В±Р вЂўРЎСџ": round(prior_close, 4),
+                    "AР вЂњР’В§Р вЂќР’В±lР вЂќР’В±Р вЂўРЎСџ": round(float(snapshot.day_open), 4),
+                    "GР вЂњРЎВncel gecikmeli fiyat": round(float(snapshot.last_price), 4),
                     "Gap %": gap,
-                    "AГ§Д±lД±Еџtan hareket %": move_from_open,
+                    "AР вЂњР’В§Р вЂќР’В±lР вЂќР’В±Р вЂўРЎСџtan hareket %": move_from_open,
                     "Gecikme dk": round(float(snapshot.measured_delay_minutes), 2),
-                    "Durum": "POSTOPEN GAP / ENTRY EVIDENCE В· NOT AL/SAT",
+                    "Durum": "POSTOPEN GAP / ENTRY EVIDENCE Р вЂ™Р’В· NOT AL/SAT",
                 }
             )
 
@@ -381,7 +382,8 @@ class ProductionScheduledOperationRuntime:
 
         # Momentum gecmisi: best-effort; AL-SAT sonucunu degistirmez.
         try:
-            MomentumDiscoveryService().calistir(
+            from backend.app.analysis.scan_top10_next_session_v2 import record_scan_top10_snapshot
+            momentum_result = MomentumDiscoveryService().calistir(
                 MomentumDiscoveryRequest(
                     evren=TARAMA_EVRENLERI[4],
                     maksimum_aday=25,
@@ -389,10 +391,14 @@ class ProductionScheduledOperationRuntime:
                     internetten_evren_guncelle=False,
                 )
             )
+            record_scan_top10_snapshot(
+                run_date=now.date().isoformat(),
+                candidates=momentum_result.adaylar,
+            )
         except Exception:
             pass
 
-        # EOD arЕџivi best-effort'tur; hata eski sonucu veya yetkileri degistirmez.
+        # EOD arР вЂўРЎСџivi best-effort'tur; hata eski sonucu veya yetkileri degistirmez.
         symbols: tuple[str, ...] = ()
         try:
             legacy_record = DecisionOutputArchiveJsonStore().latest("EVENING")
@@ -423,6 +429,18 @@ class ProductionScheduledOperationRuntime:
                 settle_eod_candidate_performance_history(
                     current_date=now.date().isoformat(),
                 )
+            except Exception:
+                pass
+            # TOP10_NEXT_SESSION_PERFORMANCE_HOOK
+            try:
+                settle_scan_top10_next_session(current_date=now.date().isoformat())
+            except Exception:
+                pass
+
+            # TOP10_NEXT_SESSION_PERFORMANCE_V2_HOOK
+            try:
+                from backend.app.analysis.scan_top10_next_session_v2 import settle_scan_top10_next_session as settle_scan_top10_next_session_v2
+                settle_scan_top10_next_session_v2(current_date=now.date().isoformat())
             except Exception:
                 pass
 
@@ -477,7 +495,7 @@ def execute_operation_phase(
 
     if result.phase != normalized:
         raise ScheduledOperationPhaseError(
-            f"Runtime yanlД±Еџ phase dГ¶ndГјrdГј: {result.phase!r}"
+            f"Runtime yanlР вЂќР’В±Р вЂўРЎСџ phase dР вЂњР’В¶ndР вЂњРЎВrdР вЂњРЎВ: {result.phase!r}"
         )
 
     # Hard safety guard: only canonical close may expose write authority.
@@ -488,7 +506,7 @@ def execute_operation_phase(
         or result.al_sat_decision_allowed
     ):
         raise ScheduledOperationPhaseError(
-            f"{normalized} preview phase yazma/karar yetkisi taЕџД±yamaz."
+            f"{normalized} preview phase yazma/karar yetkisi taР вЂўРЎСџР вЂќР’В±yamaz."
         )
 
     return result
@@ -536,4 +554,8 @@ def main(argv: Iterable[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
+
+
 

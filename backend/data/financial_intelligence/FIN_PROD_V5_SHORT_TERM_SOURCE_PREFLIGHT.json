@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "mode": "READ_ONLY_SHORT_TERM_SOURCE_PREFLIGHT_V5",
-  "candidate_count": 394,
+  "candidate_count": 406,
   "likely_sources": [
     {
       "path": "backend\\app\\analysis\\technical_decision_matrix.py",
@@ -765,6 +765,29 @@
       ]
     },
     {
+      "path": "backend\\app\\analysis\\scan_top10_next_session_v2.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "canonical_close",
+        "market",
+        "momentum",
+        "price"
+      ],
+      "evidence_score": 23,
+      "functions": [
+        "__init__",
+        "_clean_symbol",
+        "_frame_rows",
+        "load",
+        "record_scan_top10_snapshot",
+        "save_record",
+        "settle_scan_top10_next_session"
+      ],
+      "classes": [
+        "ScanTop10NextSessionV2JsonStore"
+      ]
+    },
+    {
       "path": "backend\\app\\analysis\\technical_confirmation.py",
       "parse_status": "PASS",
       "matched_keywords": [
@@ -1004,6 +1027,27 @@
         "skoru_hesapla"
       ],
       "classes": []
+    },
+    {
+      "path": "backend\\app\\analysis\\scan_top10_next_session.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "canonical_close",
+        "market",
+        "price"
+      ],
+      "evidence_score": 19,
+      "functions": [
+        "__init__",
+        "_clean_symbol",
+        "_frame_rows",
+        "load",
+        "save_record",
+        "settle_scan_top10_next_session"
+      ],
+      "classes": [
+        "ScanTop10NextSessionJsonStore"
+      ]
     },
     {
       "path": "backend\\app\\analysis\\weekly_opportunity.py",
@@ -1447,6 +1491,21 @@
       "evidence_score": 16,
       "functions": [
         "calculate_weighted_score"
+      ],
+      "classes": []
+    },
+    {
+      "path": "backend\\app\\funds\\hedef24_analysis.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "momentum",
+        "rsi",
+        "technical",
+        "trend"
+      ],
+      "evidence_score": 15,
+      "functions": [
+        "technical_signal"
       ],
       "classes": []
     },
@@ -2664,6 +2723,21 @@
       ]
     },
     {
+      "path": "backend\\app\\ui\\hedef24_terminal.py",
+      "parse_status": "PASS",
+      "matched_keywords": [
+        "momentum",
+        "rsi",
+        "technical"
+      ],
+      "evidence_score": 11,
+      "functions": [
+        "_fmt",
+        "render_hedef24_terminal"
+      ],
+      "classes": []
+    },
+    {
       "path": "backend\\app\\analysis\\financial_intelligence_insurance_model_contract.py",
       "parse_status": "PASS",
       "matched_keywords": [
@@ -2953,97 +3027,6 @@
         "ObservationDecision",
         "ObservationPolicy",
         "V2ObservationStatus"
-      ]
-    },
-    {
-      "path": "backend\\app\\analysis\\__init__.py",
-      "parse_status": "PASS",
-      "matched_keywords": [
-        "market",
-        "regime"
-      ],
-      "evidence_score": 9,
-      "functions": [],
-      "classes": []
-    },
-    {
-      "path": "backend\\app\\funds\\international\\erste_hungary_comparison.py",
-      "parse_status": "PASS",
-      "matched_keywords": [
-        "market",
-        "volatility"
-      ],
-      "evidence_score": 9,
-      "functions": [
-        "__init__",
-        "_clean_value",
-        "_extract_nav_date_from_block",
-        "_find_after",
-        "_find_optional_value_after_label",
-        "_fund_block_for_isin",
-        "_normalize_risk_value",
-        "_parse_net_asset_value",
-        "comparison_to_snapshot",
-        "comparison_url_for_isin",
-        "fetch_single_fund_comparison",
-        "handle_data",
-        "html_text_tokens",
-        "normalized_text_lines",
-        "parse_single_fund_comparison_html"
-      ],
-      "classes": [
-        "ErsteComparisonFund",
-        "_LineCollector"
-      ]
-    },
-    {
-      "path": "backend\\app\\market_context\\ai_daily_review_service.py",
-      "parse_status": "PASS",
-      "matched_keywords": [
-        "market",
-        "resistance",
-        "rsi",
-        "support"
-      ],
-      "evidence_score": 9,
-      "functions": [
-        "__init__",
-        "_manifest_path",
-        "_record_path",
-        "_save_record",
-        "_utc_now_iso",
-        "build_daily_package",
-        "load_latest_review",
-        "run_daily_review"
-      ],
-      "classes": [
-        "DailyAIReviewError",
-        "DailyAIReviewService"
-      ]
-    },
-    {
-      "path": "backend\\app\\market_context\\service.py",
-      "parse_status": "PASS",
-      "matched_keywords": [
-        "market",
-        "resistance",
-        "rsi",
-        "support"
-      ],
-      "evidence_score": 9,
-      "functions": [
-        "__init__",
-        "_build_document",
-        "_new_document_id",
-        "_persist_extracted",
-        "_utc_now_iso",
-        "import_pdf",
-        "import_text",
-        "import_txt"
-      ],
-      "classes": [
-        "MarketContextDateMismatchError",
-        "MarketContextService"
       ]
     }
   ],

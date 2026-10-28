@@ -1,0 +1,115 @@
+﻿{
+    "generated_at":  "2026-10-27",
+    "purpose":  "Erste fund F4 ISIN discovery; OCR candidates only",
+    "source_zip":  "WhatsApp Unknown 2026-10-27 at 10.42.19.zip",
+    "unique_candidates":  21,
+    "official_verification_required":  true,
+    "production_eligible":  false,
+    "candidates":  [
+                       {
+                           "isin":  "HU0000708656",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Multi Asset Growth"
+                       },
+                       {
+                           "isin":  "AT0000A0F5N4",
+                           "status":  "OCR_NEEDS_OFFICIAL_CHECK",
+                           "name":  "ERSTE Responsible Stock - OCR candidate"
+                       },
+                       {
+                           "isin":  "HU0000703830",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Duett Alapok"
+                       },
+                       {
+                           "isin":  "AT0000673389",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Stock Techno EUR"
+                       },
+                       {
+                           "isin":  "AT0000A09GU1",
+                           "status":  "OCR_NEEDS_OFFICIAL_CHECK",
+                           "name":  "ERSTE Stock Techno HUF"
+                       },
+                       {
+                           "isin":  "AT0000A2BYF3",
+                           "status":  "OCR_NEEDS_OFFICIAL_CHECK",
+                           "name":  "ERSTE Stock Environment"
+                       },
+                       {
+                           "isin":  "AT0000A09GW7",
+                           "status":  "OCR_NEEDS_OFFICIAL_CHECK",
+                           "name":  "ERSTE Stock Commodities"
+                       },
+                       {
+                           "isin":  "AT0000A3PA11",
+                           "status":  "OCR_NEEDS_OFFICIAL_CHECK",
+                           "name":  "ERSTE Stock World HUF - candidate"
+                       },
+                       {
+                           "isin":  "HU0000732011",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Emerging Markets"
+                       },
+                       {
+                           "isin":  "HU0000740691",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Gold Cost Averaging"
+                       },
+                       {
+                           "isin":  "HU0000705306",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Local Strategy"
+                       },
+                       {
+                           "isin":  "AT0000673165",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Stock Biotec EUR"
+                       },
+                       {
+                           "isin":  "HU0000714191",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Real Assets EUR"
+                       },
+                       {
+                           "isin":  "LU1387832436",
+                           "status":  "OCR_READ",
+                           "name":  "FF Global Dividend Fund"
+                       },
+                       {
+                           "isin":  "HU0000712492",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Stock World HUF"
+                       },
+                       {
+                           "isin":  "LU0565135745",
+                           "status":  "OCR_READ",
+                           "name":  "First Eagle Amundi International"
+                       },
+                       {
+                           "isin":  "LU2614689482",
+                           "status":  "OCR_READ",
+                           "name":  "Schroder ISF Global - truncated name"
+                       },
+                       {
+                           "isin":  "LU0293313671",
+                           "status":  "OCR_READ",
+                           "name":  "Allianz GEM Equity - truncated name"
+                       },
+                       {
+                           "isin":  "LU0161304786",
+                           "status":  "OCR_READ",
+                           "name":  "Schroder ISF European - truncated name"
+                       },
+                       {
+                           "isin":  "LU2334866550",
+                           "status":  "OCR_READ",
+                           "name":  "JPM Global Value A"
+                       },
+                       {
+                           "isin":  "HU0000723572",
+                           "status":  "OCR_READ",
+                           "name":  "ERSTE Arany Alapok"
+                       }
+                   ]
+}

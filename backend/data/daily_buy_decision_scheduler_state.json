@@ -633,5 +633,71 @@
     "buy_symbols": [],
     "detail": "Seans sonu/sabah günlük karar koşusu tamamlandı.",
     "run_kind": "RECOVERY"
+  },
+  "2026-10-26:EVENING": {
+    "phase": "EVENING",
+    "run_date": "2026-10-26",
+    "started_at": "2026-10-26T20:09:38+03:00",
+    "finished_at": "2026-10-26T20:10:35+03:00",
+    "status": "SUCCESS",
+    "candidate_count": 0,
+    "buy_symbols": [],
+    "detail": "Seans sonu/sabah günlük karar koşusu tamamlandı.",
+    "run_kind": "RECOVERY"
+  },
+  "2026-10-26:MORNING": {
+    "phase": "MORNING",
+    "run_date": "2026-10-26",
+    "started_at": "2026-10-26T19:06:04+03:00",
+    "finished_at": "2026-10-26T19:06:24+03:00",
+    "status": "SUCCESS",
+    "candidate_count": 0,
+    "buy_symbols": [],
+    "detail": "Seans sonu/sabah günlük karar koşusu tamamlandı.",
+    "run_kind": "RECOVERY"
+  },
+  "2026-10-27:EVENING": {
+    "phase": "EVENING",
+    "run_date": "2026-10-27",
+    "started_at": "2026-10-27T18:55:37+03:00",
+    "finished_at": "2026-10-27T18:57:38+03:00",
+    "status": "SUCCESS",
+    "candidate_count": 1,
+    "buy_symbols": [],
+    "detail": "Seans sonu/sabah günlük karar koşusu tamamlandı.",
+    "run_kind": "SCHEDULED"
+  },
+  "2026-10-27:MORNING": {
+    "phase": "MORNING",
+    "run_date": "2026-10-27",
+    "started_at": "2026-10-27T09:09:00+03:00",
+    "finished_at": "2026-10-27T09:09:22+03:00",
+    "status": "SUCCESS",
+    "candidate_count": 0,
+    "buy_symbols": [],
+    "detail": "Seans sonu/sabah günlük karar koşusu tamamlandı.",
+    "run_kind": "RECOVERY"
+  },
+  "2026-10-28:EVENING": {
+    "phase": "EVENING",
+    "run_date": "2026-10-28",
+    "started_at": "2026-10-28T19:36:27+03:00",
+    "finished_at": "2026-10-28T19:38:12+03:00",
+    "status": "SUCCESS",
+    "candidate_count": 0,
+    "buy_symbols": [],
+    "detail": "Seans sonu/sabah günlük karar koşusu tamamlandı.",
+    "run_kind": "RECOVERY"
+  },
+  "2026-10-28:MORNING": {
+    "phase": "MORNING",
+    "run_date": "2026-10-28",
+    "started_at": "2026-10-28T10:16:35+03:00",
+    "finished_at": "2026-10-28T10:17:45+03:00",
+    "status": "SUCCESS",
+    "candidate_count": 1,
+    "buy_symbols": [],
+    "detail": "Seans sonu/sabah günlük karar koşusu tamamlandı.",
+    "run_kind": "RECOVERY"
   }
 }

@@ -1,0 +1,16 @@
+﻿{
+  "version": "1.0",
+  "categories": {
+    "yerli_hisse": [
+      {"code": "MAC", "name": "Marmara Capital Hisse Senedi Yoğun Fon"},
+      {"code": "TCD", "name": "Tacirler Portföy Değişken Fon"},
+      {"code": "GMR", "name": "Gedik Portföy Birinci Hisse Senedi Yoğun Fon"},
+      {"code": "TI2", "name": "ş Portföy BIST 100 Dışı Şirketler Hisse Senedi Yoğun Fon"}
+    ],
+    "para_piyasasi": [
+      {"code": "ZPL", "name": "Ziraat Portföy Para Piyasası TL Fonu"},
+      {"code": "APL", "name": "Ak Portföy Para Piyasası Fonu"},
+      {"code": "IPB", "name": "stanbul Portföy Birinci Para Piyasası Fonu"}
+    ]
+  }
+}

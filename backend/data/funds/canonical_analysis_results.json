@@ -27,23 +27,22 @@
     {
       "canonical_fund_id": "fund:tefas:AAS",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "neutral_families": [
-        "F2",
         "F3"
       ],
-      "caution_families": [
-        "F4"
-      ],
+      "caution_families": [],
       "unavailable_families": [
+        "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=F1 · nötr=F2,F3 · dikkat=F4 · eksik=F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F1,F2 · nötr=F3 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -74,22 +73,22 @@
     {
       "canonical_fund_id": "fund:tefas:ABG",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "D",
+      "class_label": "ZAYIFLAYAN",
       "positive_families": [],
       "neutral_families": [
-        "F1",
-        "F2"
+        "F1"
       ],
       "caution_families": [
+        "F2",
         "F3"
       ],
       "unavailable_families": [
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=- · nötr=F1,F2 · dikkat=F3 · eksik=F4,F5",
+      "eligibility_reason": "MULTI_FAMILY_WEAKENING",
+      "explanation": "ZAYIFLAYAN · pozitif=- · nötr=F1 · dikkat=F2,F3 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -533,10 +532,11 @@
       "category_id": "Hisse Senedi Şemsiye Fonu",
       "classification": "C",
       "class_label": "ZLE",
-      "positive_families": [],
+      "positive_families": [
+        "F2"
+      ],
       "neutral_families": [
         "F1",
-        "F2",
         "F3"
       ],
       "caution_families": [],
@@ -545,7 +545,7 @@
         "F5"
       ],
       "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=- · nötr=F1,F2,F3 · dikkat=- · eksik=F4,F5",
+      "explanation": "ZLE · pozitif=F2 · nötr=F1,F3 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -599,22 +599,23 @@
     {
       "canonical_fund_id": "fund:tefas:AFT",
       "category_id": "Hisse Senedi Şemsiye Fonu",
-      "classification": "D",
-      "class_label": "ZAYIFLAYAN",
+      "classification": "C",
+      "class_label": "ZLE",
       "positive_families": [
         "F1"
       ],
-      "neutral_families": [],
+      "neutral_families": [
+        "F2"
+      ],
       "caution_families": [
-        "F2",
         "F3"
       ],
       "unavailable_families": [
         "F4",
         "F5"
       ],
-      "eligibility_reason": "MULTI_FAMILY_WEAKENING",
-      "explanation": "ZAYIFLAYAN · pozitif=F1 · nötr=- · dikkat=F2,F3 · eksik=F4,F5",
+      "eligibility_reason": "OBSERVATION_REQUIRED",
+      "explanation": "ZLE · pozitif=F1 · nötr=F2 · dikkat=F3 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -713,22 +714,22 @@
     {
       "canonical_fund_id": "fund:tefas:AHN",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
+        "F2",
         "F3"
       ],
       "neutral_families": [
-        "F1",
-        "F2"
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=F3 · nötr=F1,F2 · dikkat=- · eksik=F4,F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=F1 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -1553,22 +1554,22 @@
     {
       "canonical_fund_id": "fund:tefas:APP",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F2",
         "F3"
       ],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=- · nötr=F2,F3 · dikkat=F1 · eksik=F4,F5",
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F3 · dikkat=F1 · eksik=F2,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -1849,14 +1850,13 @@
     {
       "canonical_fund_id": "fund:tefas:AUV",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
+        "F2",
         "F3"
       ],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -1864,8 +1864,8 @@
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=F3 · nötr=F2 · dikkat=F1 · eksik=F4,F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=- · dikkat=F1 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -1942,22 +1942,22 @@
     {
       "canonical_fund_id": "fund:tefas:AY6",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "D",
-      "class_label": "ZAYIFLAYAN",
+      "classification": "C",
+      "class_label": "ZLE",
       "positive_families": [],
       "neutral_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "caution_families": [
-        "F2",
         "F3"
       ],
       "unavailable_families": [
         "F4",
         "F5"
       ],
-      "eligibility_reason": "MULTI_FAMILY_WEAKENING",
-      "explanation": "ZAYIFLAYAN · pozitif=- · nötr=F1 · dikkat=F2,F3 · eksik=F4,F5",
+      "eligibility_reason": "OBSERVATION_REQUIRED",
+      "explanation": "ZLE · pozitif=- · nötr=F1,F2 · dikkat=F3 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -2686,14 +2686,13 @@
     {
       "canonical_fund_id": "fund:tefas:BFO",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
+        "F2",
         "F3"
       ],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -2701,8 +2700,8 @@
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=F3 · nötr=F2 · dikkat=F1 · eksik=F4,F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=- · dikkat=F1 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -3839,9 +3838,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
+      "positive_families": [
+        "F2"
+      ],
       "neutral_families": [
-        "F2",
         "F3"
       ],
       "caution_families": [],
@@ -3851,7 +3851,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2,F3 · dikkat=- · eksik=F1,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F3 · dikkat=- · eksik=F1,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -3859,22 +3859,23 @@
     {
       "canonical_fund_id": "fund:tefas:BSA",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "D",
-      "class_label": "ZAYIFLAYAN",
+      "classification": "C",
+      "class_label": "ZLE",
       "positive_families": [
         "F3"
       ],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F4",
         "F5"
       ],
-      "eligibility_reason": "MULTI_FAMILY_WEAKENING",
-      "explanation": "ZAYIFLAYAN · pozitif=F3 · nötr=- · dikkat=F1,F2 · eksik=F4,F5",
+      "eligibility_reason": "OBSERVATION_REQUIRED",
+      "explanation": "ZLE · pozitif=F3 · nötr=F2 · dikkat=F1 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -4447,17 +4448,17 @@
       "positive_families": [
         "F3"
       ],
-      "neutral_families": [
+      "neutral_families": [],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F1",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F3 · nötr=F2 · dikkat=- · eksik=F1,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F3 · nötr=- · dikkat=F2 · eksik=F1,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -4465,13 +4466,14 @@
     {
       "canonical_fund_id": "fund:tefas:BVF",
       "category_id": "Para Piyasası Şemsiye Fonu",
-      "classification": "B",
-      "class_label": "GELŞEN",
+      "classification": "C",
+      "class_label": "ZLE",
       "positive_families": [
-        "F2",
         "F3"
       ],
-      "neutral_families": [],
+      "neutral_families": [
+        "F2"
+      ],
       "caution_families": [
         "F1"
       ],
@@ -4479,8 +4481,8 @@
         "F4",
         "F5"
       ],
-      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
-      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=- · dikkat=F1 · eksik=F4,F5",
+      "eligibility_reason": "OBSERVATION_REQUIRED",
+      "explanation": "ZLE · pozitif=F3 · nötr=F2 · dikkat=F1 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -4627,17 +4629,16 @@
       "positive_families": [],
       "neutral_families": [
         "F1",
+        "F2",
         "F3"
       ],
-      "caution_families": [
-        "F2"
-      ],
+      "caution_families": [],
       "unavailable_families": [
         "F4",
         "F5"
       ],
       "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=- · nötr=F1,F3 · dikkat=F2 · eksik=F4,F5",
+      "explanation": "ZLE · pozitif=- · nötr=F1,F2,F3 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -4894,22 +4895,22 @@
     {
       "canonical_fund_id": "fund:tefas:CJD",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
+        "F2",
         "F3"
       ],
       "neutral_families": [
-        "F1",
-        "F2"
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=F3 · nötr=F1,F2 · dikkat=- · eksik=F4,F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=F1 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -4991,17 +4992,16 @@
       "positive_families": [],
       "neutral_families": [
         "F1",
+        "F2",
         "F3"
       ],
-      "caution_families": [
-        "F2"
-      ],
+      "caution_families": [],
       "unavailable_families": [
         "F4",
         "F5"
       ],
       "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=- · nötr=F1,F3 · dikkat=F2 · eksik=F4,F5",
+      "explanation": "ZLE · pozitif=- · nötr=F1,F2,F3 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -5055,14 +5055,13 @@
     {
       "canonical_fund_id": "fund:tefas:COT",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
+        "F2",
         "F3"
       ],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -5070,8 +5069,8 @@
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=F3 · nötr=F2 · dikkat=F1 · eksik=F4,F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=- · dikkat=F1 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -5628,14 +5627,13 @@
     {
       "canonical_fund_id": "fund:tefas:DAL",
       "category_id": "Serbest Şemsiye Fonu",
-      "classification": "C",
-      "class_label": "ZLE",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
+        "F2",
         "F3"
       ],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -5643,8 +5641,8 @@
         "F4",
         "F5"
       ],
-      "eligibility_reason": "OBSERVATION_REQUIRED",
-      "explanation": "ZLE · pozitif=F3 · nötr=F2 · dikkat=F1 · eksik=F4,F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=- · dikkat=F1 · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -6042,10 +6040,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -6054,7 +6053,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -6130,10 +6129,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -6143,7 +6142,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -6313,19 +6312,18 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -6339,16 +6337,16 @@
         "F1",
         "F3"
       ],
-      "neutral_families": [],
-      "caution_families": [
+      "neutral_families": [
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F4",
         "F5"
       ],
       "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
-      "explanation": "GELŞEN · pozitif=F1,F3 · nötr=- · dikkat=F2 · eksik=F4,F5",
+      "explanation": "GELŞEN · pozitif=F1,F3 · nötr=F2 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -6964,11 +6962,12 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
+      "positive_families": [
+        "F2"
+      ],
       "neutral_families": [],
       "caution_families": [
-        "F1",
-        "F2"
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -6976,7 +6975,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -7368,19 +7367,18 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -8269,11 +8267,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [
-        "F2"
-      ],
+      "positive_families": [],
       "neutral_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -8282,7 +8279,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -8359,10 +8356,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -8372,7 +8369,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -8496,10 +8493,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -8508,7 +8506,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -8901,10 +8899,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F1",
@@ -8913,7 +8911,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=- · eksik=F1,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=- · eksik=F1,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -9147,10 +9145,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -9158,7 +9157,28 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "automatic_trade_authority": "NONE",
+      "forced_fill": false,
+      "engine_version": "fund-analysis-v1"
+    },
+    {
+      "canonical_fund_id": "fund:tefas:EFK",
+      "category_id": "Katılım Şemsiye Fonu",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
+      "positive_families": [],
+      "neutral_families": [],
+      "caution_families": [],
+      "unavailable_families": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=- · eksik=F1,F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -9358,6 +9378,27 @@
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
       "explanation": "UYGUN DEL · pozitif=F1 · nötr=- · dikkat=F2 · eksik=F3,F4,F5",
+      "automatic_trade_authority": "NONE",
+      "forced_fill": false,
+      "engine_version": "fund-analysis-v1"
+    },
+    {
+      "canonical_fund_id": "fund:tefas:EKH",
+      "category_id": "Hisse Senedi Şemsiye Fonu",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
+      "positive_families": [],
+      "neutral_families": [],
+      "caution_families": [],
+      "unavailable_families": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=- · eksik=F1,F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -9606,6 +9647,27 @@
       "engine_version": "fund-analysis-v1"
     },
     {
+      "canonical_fund_id": "fund:tefas:EPC",
+      "category_id": "Katılım Şemsiye Fonu",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
+      "positive_families": [],
+      "neutral_families": [],
+      "caution_families": [],
+      "unavailable_families": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=- · eksik=F1,F2,F3,F4,F5",
+      "automatic_trade_authority": "NONE",
+      "forced_fill": false,
+      "engine_version": "fund-analysis-v1"
+    },
+    {
       "canonical_fund_id": "fund:tefas:EPI",
       "category_id": "Katılım Şemsiye Fonu",
       "classification": "X",
@@ -9623,6 +9685,27 @@
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
       "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F2 · eksik=F1,F3,F4,F5",
+      "automatic_trade_authority": "NONE",
+      "forced_fill": false,
+      "engine_version": "fund-analysis-v1"
+    },
+    {
+      "canonical_fund_id": "fund:tefas:EPJ",
+      "category_id": "Katılım Şemsiye Fonu",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
+      "positive_families": [],
+      "neutral_families": [],
+      "caution_families": [],
+      "unavailable_families": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=- · eksik=F1,F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -9810,10 +9893,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -9822,7 +9906,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -10440,19 +10524,18 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -10736,10 +10819,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -10749,7 +10832,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -10848,10 +10931,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -10860,7 +10944,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -11899,11 +11983,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -11911,7 +11994,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -12012,10 +12095,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1",
+        "F1"
+      ],
+      "neutral_families": [
         "F2"
       ],
-      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -12023,7 +12107,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -12577,10 +12661,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -12590,7 +12674,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -14247,18 +14331,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -14492,10 +14575,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F1",
@@ -14504,7 +14587,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=- · eksik=F1,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=- · eksik=F1,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -14605,11 +14688,12 @@
       "category_id": "Değişken Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
+      "positive_families": [
+        "F2"
+      ],
       "neutral_families": [],
       "caution_families": [
-        "F1",
-        "F2"
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -14617,7 +14701,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -14807,10 +14891,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -14819,7 +14904,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -15646,10 +15731,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -15658,7 +15744,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -15875,18 +15961,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -15964,10 +16049,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -15976,7 +16062,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -17395,17 +17481,18 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1",
+        "F1"
+      ],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -17459,12 +17546,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [
-        "F2"
-      ],
+      "positive_families": [],
       "neutral_families": [],
       "caution_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "unavailable_families": [
         "F3",
@@ -17472,7 +17558,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -18089,20 +18175,20 @@
       "category_id": "Katılım Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [
-        "F2"
-      ],
+      "positive_families": [],
       "neutral_families": [
         "F1"
       ],
-      "caution_families": [],
+      "caution_families": [
+        "F2"
+      ],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -18281,6 +18367,27 @@
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
       "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "automatic_trade_authority": "NONE",
+      "forced_fill": false,
+      "engine_version": "fund-analysis-v1"
+    },
+    {
+      "canonical_fund_id": "fund:tefas:HRR",
+      "category_id": "Serbest Şemsiye Fonu",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
+      "positive_families": [],
+      "neutral_families": [],
+      "caution_families": [],
+      "unavailable_families": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=- · eksik=F1,F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -18801,11 +18908,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "unavailable_families": [
         "F3",
@@ -18813,7 +18919,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -20358,10 +20464,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -20371,7 +20477,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -20990,11 +21096,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -21002,7 +21107,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -21305,10 +21410,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -21318,7 +21423,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -21980,10 +22085,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -21993,7 +22098,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -22116,10 +22221,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -22128,7 +22234,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -22209,17 +22315,17 @@
       "positive_families": [
         "F1"
       ],
-      "neutral_families": [],
-      "caution_families": [
+      "neutral_families": [
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=- · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -22411,11 +22517,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -22423,7 +22528,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -22614,6 +22719,29 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
+      "positive_families": [
+        "F2"
+      ],
+      "neutral_families": [
+        "F1"
+      ],
+      "caution_families": [],
+      "unavailable_families": [
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "automatic_trade_authority": "NONE",
+      "forced_fill": false,
+      "engine_version": "fund-analysis-v1"
+    },
+    {
+      "canonical_fund_id": "fund:tefas:IUH",
+      "category_id": "Fon Sepeti Şemsiye Fonu",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
         "F1",
@@ -22627,29 +22755,6 @@
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
       "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
-      "automatic_trade_authority": "NONE",
-      "forced_fill": false,
-      "engine_version": "fund-analysis-v1"
-    },
-    {
-      "canonical_fund_id": "fund:tefas:IUH",
-      "category_id": "Fon Sepeti Şemsiye Fonu",
-      "classification": "X",
-      "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
-        "F2"
-      ],
-      "unavailable_families": [
-        "F3",
-        "F4",
-        "F5"
-      ],
-      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -22705,10 +22810,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -22718,7 +22823,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -22886,11 +22991,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "unavailable_families": [
         "F3",
@@ -22898,7 +23002,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -23156,19 +23260,18 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -24682,10 +24785,11 @@
       "category_id": "Katılım Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -24694,7 +24798,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -25470,20 +25574,20 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [
-        "F2"
-      ],
+      "positive_families": [],
       "neutral_families": [
         "F1"
       ],
-      "caution_families": [],
+      "caution_families": [
+        "F2"
+      ],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -25987,10 +26091,11 @@
       "category_id": "Değişken Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -25999,7 +26104,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -27387,10 +27492,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -27399,7 +27505,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -27702,10 +27808,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -27714,7 +27821,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -28864,18 +28971,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -29138,18 +29244,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -29161,18 +29266,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -29783,17 +29887,18 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1",
+        "F1"
+      ],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -30050,17 +30155,17 @@
       "positive_families": [
         "F1"
       ],
-      "neutral_families": [],
-      "caution_families": [
+      "neutral_families": [
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=- · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -30315,10 +30420,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -30327,7 +30433,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -31243,17 +31349,18 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1",
+        "F1"
+      ],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -31874,17 +31981,18 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1",
+        "F1"
+      ],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -33067,19 +33175,18 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -33204,16 +33311,16 @@
       "positive_families": [],
       "neutral_families": [],
       "caution_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "unavailable_families": [
-        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -34094,10 +34201,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -34107,7 +34214,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -34184,10 +34291,10 @@
       "category_id": "Para Piyasası Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [
+      "positive_families": [],
+      "neutral_families": [
         "F2"
       ],
-      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F1",
@@ -34196,7 +34303,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=- · eksik=F1,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=- · eksik=F1,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -34744,28 +34851,6 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
-        "F2"
-      ],
-      "caution_families": [],
-      "unavailable_families": [
-        "F3",
-        "F4",
-        "F5"
-      ],
-      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
-      "automatic_trade_authority": "NONE",
-      "forced_fill": false,
-      "engine_version": "fund-analysis-v1"
-    },
-    {
-      "canonical_fund_id": "fund:tefas:PPT",
-      "category_id": "Para Piyasası Şemsiye Fonu",
-      "classification": "X",
-      "class_label": "UYGUN DEL",
       "positive_families": [
         "F2"
       ],
@@ -34780,6 +34865,28 @@
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
       "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "automatic_trade_authority": "NONE",
+      "forced_fill": false,
+      "engine_version": "fund-analysis-v1"
+    },
+    {
+      "canonical_fund_id": "fund:tefas:PPT",
+      "category_id": "Para Piyasası Şemsiye Fonu",
+      "classification": "X",
+      "class_label": "UYGUN DEL",
+      "positive_families": [],
+      "neutral_families": [
+        "F1",
+        "F2"
+      ],
+      "caution_families": [],
+      "unavailable_families": [
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -34991,11 +35098,10 @@
       "category_id": "Para Piyasası Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [
-        "F2"
-      ],
+      "positive_families": [],
       "neutral_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -35004,7 +35110,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -35060,18 +35166,19 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1",
-        "F2"
+        "F1"
       ],
       "neutral_families": [],
-      "caution_families": [],
+      "caution_families": [
+        "F2"
+      ],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1 · nötr=- · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -35150,18 +35257,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -36087,10 +36193,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -36098,7 +36205,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -36533,10 +36640,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
+      "neutral_families": [],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F1",
         "F3",
@@ -36544,7 +36651,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=- · eksik=F1,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F2 · eksik=F1,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -36981,18 +37088,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -37520,18 +37626,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -37653,10 +37758,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -37664,7 +37770,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -37697,11 +37803,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -37709,7 +37814,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -38297,11 +38402,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -38309,7 +38413,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -38566,10 +38670,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
+      "neutral_families": [],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F1",
         "F3",
@@ -38577,7 +38681,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=- · eksik=F1,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F2 · eksik=F1,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -39325,11 +39429,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -39337,7 +39440,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -39594,19 +39697,18 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -40385,19 +40487,18 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
       "unavailable_families": [
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1 · eksik=F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -40476,10 +40577,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -40488,7 +40590,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -41108,18 +41210,17 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [
-        "F2"
-      ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F1",
+        "F2",
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=- · eksik=F1,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=- · eksik=F1,F2,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -41241,10 +41342,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -41252,7 +41354,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -42390,22 +42492,22 @@
     {
       "canonical_fund_id": "fund:tefas:TZL",
       "category_id": "Para Piyasası Şemsiye Fonu",
-      "classification": "X",
-      "class_label": "UYGUN DEL",
+      "classification": "B",
+      "class_label": "GELŞEN",
       "positive_families": [
-        "F2"
+        "F2",
+        "F3"
       ],
       "neutral_families": [
         "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
-        "F3",
         "F4",
         "F5"
       ],
-      "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "eligibility_reason": "DEVELOPING_MULTI_FAMILY_SUPPORT",
+      "explanation": "GELŞEN · pozitif=F2,F3 · nötr=F1 · dikkat=- · eksik=F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -42484,11 +42586,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -42496,7 +42597,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -42708,10 +42809,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -42721,7 +42822,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -43117,11 +43218,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1"
-      ],
-      "neutral_families": [
+        "F1",
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [],
       "unavailable_families": [
         "F3",
@@ -43129,7 +43229,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1 · nötr=F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -43251,10 +43351,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -43262,7 +43363,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -43705,10 +43806,10 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
+      "neutral_families": [
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F1",
         "F3",
@@ -43716,7 +43817,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F2 · eksik=F1,F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=- · eksik=F1,F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -43728,17 +43829,18 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1",
+        "F1"
+      ],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -43928,18 +44030,17 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1"
-      ],
-      "caution_families": [
+        "F1",
         "F2"
       ],
+      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -43972,10 +44073,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -43985,7 +44086,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -44040,10 +44141,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -44052,7 +44154,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -44130,10 +44232,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -44141,7 +44244,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -44308,11 +44411,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [
-        "F2"
-      ],
+      "positive_families": [],
       "neutral_families": [
-        "F1"
+        "F1",
+        "F2"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -44321,7 +44423,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -45122,10 +45224,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -45134,7 +45237,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -45350,17 +45453,18 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1",
+        "F1"
+      ],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -45486,10 +45590,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -45497,7 +45602,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -45776,10 +45881,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -45787,7 +45893,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -45933,10 +46039,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -45946,7 +46052,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -47215,10 +47321,11 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
-        "F1",
+      "positive_families": [
         "F2"
+      ],
+      "neutral_families": [
+        "F1"
       ],
       "caution_families": [],
       "unavailable_families": [
@@ -47227,7 +47334,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=F1 · dikkat=- · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -47416,10 +47523,10 @@
       "category_id": "Serbest Şemsiye Fonu",
       "classification": "X",
       "class_label": "UYGUN DEL",
-      "positive_families": [],
-      "neutral_families": [
+      "positive_families": [
         "F2"
       ],
+      "neutral_families": [],
       "caution_families": [
         "F1"
       ],
@@ -47429,7 +47536,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F2 · nötr=- · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -47731,10 +47838,11 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [],
-      "neutral_families": [],
-      "caution_families": [
-        "F1",
+      "neutral_families": [
         "F2"
+      ],
+      "caution_families": [
+        "F1"
       ],
       "unavailable_families": [
         "F3",
@@ -47742,7 +47850,7 @@
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=- · dikkat=F1,F2 · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F2 · dikkat=F1 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -48020,17 +48128,18 @@
       "class_label": "UYGUN DEL",
       "positive_families": [],
       "neutral_families": [
-        "F1",
+        "F1"
+      ],
+      "caution_families": [
         "F2"
       ],
-      "caution_families": [],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=- · nötr=F1,F2 · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=- · nötr=F1 · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"
@@ -48063,18 +48172,19 @@
       "classification": "X",
       "class_label": "UYGUN DEL",
       "positive_families": [
-        "F1",
-        "F2"
+        "F1"
       ],
       "neutral_families": [],
-      "caution_families": [],
+      "caution_families": [
+        "F2"
+      ],
       "unavailable_families": [
         "F3",
         "F4",
         "F5"
       ],
       "eligibility_reason": "INSUFFICIENT_INDEPENDENT_EVIDENCE",
-      "explanation": "UYGUN DEL · pozitif=F1,F2 · nötr=- · dikkat=- · eksik=F3,F4,F5",
+      "explanation": "UYGUN DEL · pozitif=F1 · nötr=- · dikkat=F2 · eksik=F3,F4,F5",
       "automatic_trade_authority": "NONE",
       "forced_fill": false,
       "engine_version": "fund-analysis-v1"

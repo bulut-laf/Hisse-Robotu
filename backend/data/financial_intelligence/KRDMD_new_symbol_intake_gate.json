@@ -5,7 +5,7 @@
   "symbol": "KRDMD",
   "sector_model": "INDUSTRIAL",
   "period": "2026_2",
-  "source_file": "C:\\Users\\user\\AppData\\Local\\Temp\\pytest-of-user\\pytest-421\\test_intake_gate_allows_real_i0\\KRDMD_2026_2.xls",
+  "source_file": "C:\\Users\\user\\AppData\\Local\\Temp\\pytest-of-user\\pytest-544\\test_intake_gate_allows_real_i0\\KRDMD_2026_2.xls",
   "source_exists": true,
   "source_extension": ".xls",
   "dedicated_model_ready": true,

@@ -1,11 +1,10 @@
 from __future__ import annotations
-
+from urllib.error import HTTPError, URLError
 import json
 import re
 from dataclasses import dataclass
 from typing import Callable, Iterable
 from urllib.parse import urlparse
-
 from .kap_portfolio_ingestion import (
     DEFAULT_TIMEOUT_SECONDS,
     KapFundPortfolioError,
@@ -17,30 +16,20 @@ from .portfolio_tracking import (
     FundPortfolioSnapshotJsonStore,
     PortfolioSnapshotStoreError,
 )
-
-
 KAP_DISCLOSURES_URL = "https://www.kap.org.tr/tr/api/disclosures"
 MAX_DISCOVERY_BYTES = 8 * 1024 * 1024
 MAX_DISCOVERY_CANDIDATES = 50
-
-
 FetchBytes = Callable[[str, int], tuple[bytes, str, str]]
-
-
 @dataclass(frozen=True, slots=True)
 class KapPortfolioDiscoveryCandidate:
     notification_id: str
     detail_url: str
     evidence_text: str
-
-
 @dataclass(frozen=True, slots=True)
 class KapPortfolioAutoIngestionFailure:
     notification_id: str
     detail_url: str
     error: str
-
-
 @dataclass(frozen=True, slots=True)
 class KapPortfolioAutoIngestionSummary:
     discovered: int
@@ -49,16 +38,11 @@ class KapPortfolioAutoIngestionSummary:
     unchanged: int
     failures: tuple[KapPortfolioAutoIngestionFailure, ...]
     ingestions: tuple[KapPortfolioIngestionResult, ...]
-
-
 def _default_fetch(url: str, timeout_seconds: int) -> tuple[bytes, str, str]:
     # Reuse the hardened KAP transport contract without exposing a second
     # general-purpose HTTP client.
     from .kap_portfolio_ingestion import _default_fetch as kap_fetch
-
     return kap_fetch(url, timeout_seconds)
-
-
 def _validate_disclosures_url(url: str) -> str:
     value = str(url or "").strip()
     parsed = urlparse(value)
@@ -73,8 +57,6 @@ def _validate_disclosures_url(url: str) -> str:
     if parsed.query or parsed.fragment:
         raise KapFundPortfolioError("KAP_DISCOVERY_PATH_INVALID")
     return value
-
-
 def _decode_disclosures_json(raw: bytes, content_type: str) -> object:
     if len(raw) > MAX_DISCOVERY_BYTES:
         raise KapFundPortfolioError("KAP_DISCOVERY_RESPONSE_TOO_LARGE")
@@ -86,8 +68,6 @@ def _decode_disclosures_json(raw: bytes, content_type: str) -> object:
         return json.loads(raw.decode("utf-8-sig"))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise KapFundPortfolioError("KAP_DISCOVERY_JSON_INVALID") from exc
-
-
 def _iter_dicts(value: object) -> Iterable[dict[str, object]]:
     if isinstance(value, dict):
         yield value
@@ -96,8 +76,6 @@ def _iter_dicts(value: object) -> Iterable[dict[str, object]]:
     elif isinstance(value, list):
         for child in value:
             yield from _iter_dicts(child)
-
-
 def _first_scalar(mapping: dict[str, object], keys: tuple[str, ...]) -> object | None:
     lowered = {str(key).casefold(): value for key, value in mapping.items()}
     for key in keys:
@@ -105,8 +83,6 @@ def _first_scalar(mapping: dict[str, object], keys: tuple[str, ...]) -> object |
         if isinstance(value, (str, int, float)) and str(value).strip():
             return value
     return None
-
-
 def _mapping_text(mapping: dict[str, object]) -> str:
     values: list[str] = []
     for value in mapping.values():
@@ -115,8 +91,6 @@ def _mapping_text(mapping: dict[str, object]) -> str:
             if clean:
                 values.append(clean)
     return " ".join(values)
-
-
 def _looks_like_portfolio_report(text: str) -> bool:
     folded = text.casefold()
     return (
@@ -128,8 +102,6 @@ def _looks_like_portfolio_report(text: str) -> bool:
             and "rapor" in folded
         )
     )
-
-
 def _contains_fund_code(text: str, fund_codes: frozenset[str]) -> bool:
     if not fund_codes:
         return True
@@ -138,8 +110,6 @@ def _contains_fund_code(text: str, fund_codes: frozenset[str]) -> bool:
         re.search(rf"(?<![A-Z0-9]){re.escape(code)}(?![A-Z0-9])", upper)
         for code in fund_codes
     )
-
-
 def parse_kap_disclosures_for_portfolio_reports(
     payload: object,
     *,
@@ -155,7 +125,6 @@ def parse_kap_disclosures_for_portfolio_reports(
         for code in fund_codes
         if str(code or "").strip()
     )
-
     by_id: dict[str, KapPortfolioDiscoveryCandidate] = {}
     for mapping in _iter_dicts(payload):
         raw_id = _first_scalar(
@@ -175,38 +144,29 @@ def parse_kap_disclosures_for_portfolio_reports(
         notification_id = str(raw_id).strip()
         if not notification_id.isdigit():
             continue
-
         evidence = _mapping_text(mapping)
         if not _looks_like_portfolio_report(evidence):
             continue
         if not _contains_fund_code(evidence, normalized_codes):
             continue
-
         by_id[notification_id] = KapPortfolioDiscoveryCandidate(
             notification_id=notification_id,
             detail_url=f"https://www.kap.org.tr/tr/Bildirim/{notification_id}",
             evidence_text=evidence[:1000],
         )
-
     ordered = sorted(
         by_id.values(),
         key=lambda item: int(item.notification_id),
         reverse=True,
     )
     return tuple(ordered[:max_candidates])
-
-
-
 _KAP_FUND_CRITERIA_TYPES = (
     "YF", "BYF", "EYF", "OKS", "YYF",
     "VFF", "KFF", "GMF", "GSF", "PFF",
 )
-
-
 def _json_request(request: object, timeout_seconds: int) -> object:
     import json
     from urllib.request import urlopen
-
     try:
         with urlopen(request, timeout=timeout_seconds) as response:
             raw = response.read()
@@ -218,21 +178,17 @@ def _json_request(request: object, timeout_seconds: int) -> object:
         ) from exc
     except TimeoutError as exc:
         raise KapFundPortfolioError("KAP_TIMEOUT") from exc
-
     try:
         return json.loads(raw.decode("utf-8-sig"))
     except (UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise KapFundPortfolioError(
             "KAP_DISCOVERY_JSON_INVALID"
         ) from exc
-
-
 def _resolve_kap_fund_oids(
     fund_codes: Iterable[str],
     timeout_seconds: int,
 ) -> tuple[tuple[str, str], ...]:
     from urllib.request import Request
-
     wanted = {
         normalize_fund_code(code)
         for code in fund_codes
@@ -240,7 +196,6 @@ def _resolve_kap_fund_oids(
     }
     if not wanted:
         return ()
-
     resolved: dict[str, tuple[str, str]] = {}
     for fund_type in _KAP_FUND_CRITERIA_TYPES:
         request = Request(
@@ -253,24 +208,17 @@ def _resolve_kap_fund_oids(
             method="GET",
         )
         payload = _json_request(request, timeout_seconds)
-
         for mapping in _iter_dicts(payload):
             code = str(mapping.get("fundCode") or "").strip().upper()
             if code not in wanted or code in resolved:
                 continue
-
             oid = str(mapping.get("fundOid") or "").strip()
             if not oid:
                 continue
-
             resolved[code] = (fund_type, oid)
-
         if wanted.issubset(resolved):
             break
-
     return tuple(resolved[code] for code in sorted(resolved))
-
-
 def _fetch_targeted_fund_disclosures(
     fund_codes: Iterable[str],
     timeout_seconds: int,
@@ -278,17 +226,14 @@ def _fetch_targeted_fund_disclosures(
     from datetime import date, timedelta
     import json
     from urllib.request import Request
-
     resolved = _resolve_kap_fund_oids(
         fund_codes,
         timeout_seconds,
     )
     if not resolved:
         return []
-
     today = date.today()
     start = today - timedelta(days=365)
-
     payload = {
         "fromDate": start.isoformat(),
         "toDate": today.isoformat(),
@@ -307,7 +252,6 @@ def _fetch_targeted_fund_disclosures(
         "fromSrc": False,
         "srcCategory": "",
     }
-
     request = Request(
         "https://www.kap.org.tr/tr/api/disclosure/funds/byCriteria",
         data=json.dumps(
@@ -330,8 +274,6 @@ def _fetch_targeted_fund_disclosures(
             "KAP_DISCOVERY_JSON_NOT_LIST"
         )
     return decoded
-
-
 def discover_kap_portfolio_reports(
     *,
     fund_codes: Iterable[str] = (),
@@ -345,13 +287,11 @@ def discover_kap_portfolio_reports(
         raise KapFundPortfolioError("KAP_PORTFOLIO_DISCOVERY_NETWORK_DISABLED")
     if timeout_seconds <= 0 or timeout_seconds > 30:
         raise ValueError("timeout_seconds 1-30 aralığında olmalıdır.")
-
     normalized_fund_codes = tuple(
         normalize_fund_code(code)
         for code in fund_codes
         if str(code or "").strip()
     )
-
     if (
         fetcher is None
         and disclosures_url == KAP_DISCLOSURES_URL
@@ -378,14 +318,11 @@ def discover_kap_portfolio_reports(
             raw,
             content_type,
         )
-
     return parse_kap_disclosures_for_portfolio_reports(
         payload,
         fund_codes=normalized_fund_codes,
         max_candidates=max_candidates,
     )
-
-
 def auto_ingest_kap_portfolio_reports(
     *,
     store: FundPortfolioSnapshotJsonStore,
@@ -404,12 +341,10 @@ def auto_ingest_kap_portfolio_reports(
         max_candidates=max_candidates,
         fetcher=discovery_fetcher,
     )
-
     ingestions: list[KapPortfolioIngestionResult] = []
     failures: list[KapPortfolioAutoIngestionFailure] = []
     inserted = 0
     unchanged = 0
-
     for candidate in candidates:
         try:
             result = ingest_kap_portfolio_report_url(
@@ -433,11 +368,9 @@ def auto_ingest_kap_portfolio_reports(
                 )
             )
             continue
-
         ingestions.append(result)
         inserted += int(result.store_result.inserted)
         unchanged += int(result.store_result.unchanged)
-
     return KapPortfolioAutoIngestionSummary(
         discovered=len(candidates),
         attempted=len(candidates),

@@ -1,0 +1,29 @@
+﻿from backend.app.funds.hedef24_analysis import technical_signal
+
+
+def test_insufficient_history_never_invents_signal():
+    result = technical_signal([1, 1.1, 1.2])
+    assert result["signal"] == "VERİ YETERSİZ"
+    assert result["momentum_20_pct"] is None
+
+
+def test_overbought_uptrend_is_watch_not_buy():
+    values = [100 + i for i in range(25)]
+    result = technical_signal(values)
+    assert result["signal"] == "TUT / ZLE"
+    assert result["momentum_20_pct"] > 0
+    assert result["rsi_14"] == 100
+
+def test_downtrend_is_sell_review():
+    values = [125 - i for i in range(25)]
+    result = technical_signal(values)
+    assert result["signal"] == "SAT İNCELEMESİ"
+    assert result["momentum_20_pct"] < 0
+
+
+def test_invalid_nav_values_are_ignored():
+    result = technical_signal([None, "bad", 0, -1, 1, 2])
+    assert result["observations"] == 2
+    assert result["signal"] == "VERİ YETERSİZ"
+
+

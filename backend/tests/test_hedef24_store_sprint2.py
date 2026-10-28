@@ -1,0 +1,68 @@
+import json
+from pathlib import Path
+import pytest
+
+from backend.app.funds.hedef24_store import Hedef24Store, PortfolioValidationError
+
+
+def seed_file(tmp_path):
+    records = []
+    for i in range(1, 25):
+        records.append({"slot": i, "fund_name": f"Fund {i}", "isin": None,
+                        "pnl_percent_reference": None, "data_status": "IDENTITY_UNVERIFIED"})
+    path = tmp_path / "seed.json"
+    path.write_text(json.dumps({"records": records}, ensure_ascii=False), encoding="utf-8")
+    return path
+
+
+def test_import_seed_has_24_records_and_rejects_overwrite(tmp_path):
+    store = Hedef24Store(tmp_path / "portfolio.json")
+    seed = seed_file(tmp_path)
+    assert store.import_seed(seed) == 24
+    assert len(store.list_records()) == 24
+    with pytest.raises(PortfolioValidationError):
+        store.import_seed(seed)
+
+
+def test_add_and_update_persist(tmp_path):
+    store = Hedef24Store(tmp_path / "portfolio.json")
+    store.add_fund("Test fund", "LU1234567890")
+    reopened = Hedef24Store(tmp_path / "portfolio.json")
+    assert reopened.list_records()[0]["fund_name"] == "Test fund"
+    reopened.update_fund(1, purchase_date="2026-10-26", purchase_nav="10.25", units="3")
+    assert reopened.list_records()[0]["purchase_nav"] == "10.25"
+
+
+def test_duplicate_isin_rejected(tmp_path):
+    store = Hedef24Store(tmp_path / "portfolio.json")
+    store.add_fund("A", "LU1234567890")
+    with pytest.raises(PortfolioValidationError):
+        store.add_fund("B", "LU1234567890")
+
+
+def test_invalid_isin_rejected(tmp_path):
+    store = Hedef24Store(tmp_path / "portfolio.json")
+    with pytest.raises(PortfolioValidationError):
+        store.add_fund("Bad", "NOT-AN-ISIN")
+
+
+def test_remove_requires_confirmation(tmp_path):
+    store = Hedef24Store(tmp_path / "portfolio.json")
+    store.add_fund("A", "LU1234567890")
+    with pytest.raises(PortfolioValidationError):
+        store.remove_fund(1)
+    store.remove_fund(1, confirm=True)
+    assert store.list_records() == []
+
+
+def test_nav_history_upsert_and_performance(tmp_path):
+    store = Hedef24Store(tmp_path / "portfolio.json")
+    store.add_fund("A", "LU1234567890", currency="EUR")
+    store.update_fund(1, purchase_date="2026-10-01", purchase_nav="100", units="2")
+    store.record_nav(1, "2026-10-26", "110", source="test source")
+    store.record_nav(1, "2026-10-26", "111", source="updated test source")
+    assert len(store.load()["nav_history"]) == 1
+    perf = store.performance(1)
+    assert perf["available"] is True
+    assert perf["pnl_percent"] == "11.00"
+

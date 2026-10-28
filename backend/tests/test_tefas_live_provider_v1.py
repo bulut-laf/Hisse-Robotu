@@ -94,26 +94,18 @@ def test_old_endpoint_is_rejected_before_network(monkeypatch):
         )
 
 
-def test_unverified_period_is_rejected_before_network(monkeypatch):
+@pytest.mark.parametrize("period", [0, 3, 12, 60])
+def test_unverified_period_is_rejected_before_network(monkeypatch, period):
     def forbidden(*args, **kwargs):
-        raise AssertionError(
-            "network must not be reached"
-        )
+        raise AssertionError("network must not be reached")
 
-    monkeypatch.setattr(
-        tefas,
-        "urlopen",
-        forbidden,
-    )
+    monkeypatch.setattr(tefas, "urlopen", forbidden)
 
-    with pytest.raises(
-        ValueError,
-        match="period=1",
-    ):
-        tefas.fetch_tefas_fund_history_rows(
-            "TST",
-            period=3,
-        )
+    if period == 12:
+        pytest.skip("12 aylık dönem desteklenen dönemdir; geçerli dönem testi ayrı eklenmeli")
+
+    with pytest.raises(ValueError, match="period"):
+        tefas.fetch_tefas_fund_history_rows("TST", period=period)
 
 
 def test_result_list_is_required(monkeypatch):
@@ -140,3 +132,37 @@ def test_result_list_is_required(monkeypatch):
         match="RESULT_LIST_MISSING",
     ):
         tefas.fetch_tefas_fund_detail_rows("TST")
+
+@pytest.mark.parametrize("period", [1, 6, 12])
+def test_supported_history_period_is_sent_to_tefas(monkeypatch, period):
+    captured = {}
+
+    response = {
+        "resultList": [
+            {
+                "fonKodu": "TST",
+                "tarih": "2026-10-28",
+                "fiyat": 1.25,
+            }
+        ]
+    }
+
+    def fake_urlopen(request, timeout):
+        import json
+        captured["body"] = json.loads(request.data.decode("utf-8"))
+        captured["timeout"] = timeout
+        return FakeResponse(
+            json.dumps(response).encode("utf-8"),
+            request.full_url,
+        )
+
+    monkeypatch.setattr(tefas, "urlopen", fake_urlopen)
+
+    rows = tefas.fetch_tefas_fund_history_rows(
+        "TST",
+        period=period,
+    )
+
+    assert captured["body"]["periyod"] == period
+    assert captured["body"]["fonKodu"] == "TST"
+    assert len(rows) == 1

@@ -1,0 +1,59 @@
+{
+  "records": [
+    {
+      "contract_id": "SCAN_TOP10_NEXT_SESSION_V2",
+      "run_date": "2026-10-20",
+      "phase": "CANONICAL_CLOSE",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "candidates": [],
+      "evaluated_as_of": "2026-08-28",
+      "recorded_at": "2026-10-28T21:15:07.709015+03:00"
+    },
+    {
+      "contract_id": "SCAN_TOP10_NEXT_SESSION_V2",
+      "run_date": "2026-10-21",
+      "phase": "CANONICAL_CLOSE",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "candidates": [],
+      "evaluated_as_of": "2026-08-28",
+      "recorded_at": "2026-10-28T21:15:07.722075+03:00"
+    },
+    {
+      "contract_id": "SCAN_TOP10_NEXT_SESSION_V2",
+      "run_date": "2026-10-23",
+      "phase": "CANONICAL_CLOSE",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "candidates": [],
+      "evaluated_as_of": "2026-08-28",
+      "recorded_at": "2026-10-28T21:15:07.735916+03:00"
+    },
+    {
+      "contract_id": "SCAN_TOP10_NEXT_SESSION_V2",
+      "run_date": "2026-10-27",
+      "phase": "CANONICAL_CLOSE",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "candidates": [],
+      "evaluated_as_of": "2026-08-28",
+      "recorded_at": "2026-10-28T21:15:07.749459+03:00"
+    },
+    {
+      "contract_id": "SCAN_TOP10_NEXT_SESSION_V2",
+      "run_date": "2026-08-28",
+      "phase": "CANONICAL_CLOSE",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "candidates": [],
+      "evaluated_as_of": "2026-08-28",
+      "recorded_at": "2026-10-28T21:15:07.770574+03:00"
+    }
+  ]
+}

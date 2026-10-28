@@ -1,0 +1,57 @@
+﻿from datetime import date
+from types import SimpleNamespace
+
+import pandas as pd
+
+from backend.app.analysis.eod_candidate_output_archive import EodCandidateOutputJsonStore
+from backend.app.analysis.scan_top10_next_session import (
+    CONTRACT_ID, ScanTop10NextSessionJsonStore, settle_scan_top10_next_session,
+)
+
+
+def test_freezes_top_ten_and_measures_next_session(tmp_path):
+    source = EodCandidateOutputJsonStore(tmp_path / "source.json")
+    source.save_record({
+        "run_date": "2026-10-26", "phase": "CANONICAL_CLOSE",
+        "candidate_symbols": [f"S{i}" for i in range(12)],
+        "buy_candidate_symbols": ["S0"],
+    })
+    dates = pd.to_datetime(["2026-10-26", "2026-10-27"])
+    frames = {}
+    for i in range(10):
+        frames[f"S{i}"] = pd.DataFrame(
+            {"High": [11, 12], "Low": [8, 8], "Close": [10, 11 if i % 2 == 0 else 9]},
+            index=dates,
+        )
+    market_fetcher = lambda *args, **kwargs: SimpleNamespace(veriler=frames)
+    target = ScanTop10NextSessionJsonStore(tmp_path / "out.json")
+    result = settle_scan_top10_next_session(
+        current_date="2026-10-27", source_store=source, outcome_store=target,
+        market_data_fetcher=market_fetcher,
+    )
+    assert result["processed_count"] == 1
+    record = target.load()["records"][0]
+    assert record["contract_id"] == CONTRACT_ID
+    assert record["candidate_count"] == 10
+    assert record["summary"]["evaluated_count"] == 10
+    assert record["summary"]["rising_count"] == 5
+    assert record["summary"]["falling_count"] == 5
+    assert record["summary"]["hit_rate_pct"] == 50.0
+
+
+def test_missing_reference_or_next_close_remains_pending(tmp_path):
+    source = EodCandidateOutputJsonStore(tmp_path / "source.json")
+    source.save_record({"run_date": "2026-10-26", "phase": "CANONICAL_CLOSE",
+                        "candidate_symbols": ["AAA", "BBB"]})
+    dates = pd.to_datetime(["2026-10-26"])
+    frames = {"AAA": pd.DataFrame({"High": [11], "Low": [9], "Close": [10]}, index=dates)}
+    target = ScanTop10NextSessionJsonStore(tmp_path / "out.json")
+    settle_scan_top10_next_session(
+        current_date="2026-10-27", source_store=source, outcome_store=target,
+        market_data_fetcher=lambda *args, **kwargs: SimpleNamespace(veriler=frames),
+    )
+    record = target.load()["records"][0]
+    assert record["status"] == "PENDING_DATA"
+    assert record["summary"]["pending_count"] == 2
+    assert all(item["return_pct"] is None for item in record["candidates"])
+

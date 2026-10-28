@@ -1,0 +1,105 @@
+from __future__ import annotations
+
+from datetime import datetime
+import re
+from typing import Any, Mapping
+
+SCHEMA_VERSION = "FUND_NORMALIZED_V1"
+
+ALIASES = {
+    "isin": ("isin", "ISIN", "isin_code", "fund_isin"),
+    "name": ("name", "fund_name", "fundName", "title", "megnevezes"),
+    "currency": ("currency", "ccy", "deviza"),
+    "ongoing_charges_pct": ("ongoing_charges_pct", "ongoing_charges", "expense_ratio", "ter", "management_fee_pct"),
+    "risk_sri": ("risk_sri", "sri", "risk_indicator", "risk_level"),
+    "max_drawdown_pct": ("max_drawdown_pct", "max_drawdown", "maximum_drawdown"),
+    "return_1m_pct": ("return_1m_pct", "return_1m", "performance_1m"),
+    "return_3m_pct": ("return_3m_pct", "return_3m", "performance_3m"),
+    "return_6m_pct": ("return_6m_pct", "return_6m", "performance_6m"),
+    "return_1y_pct": ("return_1y_pct", "return_1y", "performance_1y"),
+    "return_3y_pct": ("return_3y_pct", "return_3y", "performance_3y"),
+    "return_5y_pct": ("return_5y_pct", "return_5y", "performance_5y"),
+}
+
+def _number(value: Any) -> float | None:
+    if isinstance(value, bool) or value is None:
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    token = str(value).strip().replace(" ", "").replace("\u00a0", "")
+    match = re.fullmatch(r"([+-]?(?:\d+(?:[.,]\d+)?|[.,]\d+))%?", token)
+    if not match:
+        return None
+    token = match.group(1)
+    if "," in token and "." in token:
+        return None
+    try:
+        return float(token.replace(",", "."))
+    except ValueError:
+        return None
+
+def normalize_fund_payload(
+    payload: Mapping[str, Any],
+    *,
+    provider: str,
+    source_url: str,
+    retrieved_at: str | None = None,
+    source_date: str | None = None,
+) -> dict[str, Any]:
+    if not isinstance(payload, Mapping):
+        raise TypeError("payload must be a mapping")
+
+    retrieved = retrieved_at or datetime.now().astimezone().isoformat(timespec="seconds")
+    fields = {}
+    evidence = {}
+
+    for field, aliases in ALIASES.items():
+        raw = next(
+            (payload[k] for k in aliases
+             if k in payload and payload[k] is not None and str(payload[k]).strip()),
+            None,
+        )
+        present = raw is not None
+        value = None
+
+        if present:
+            if field == "isin":
+                candidate = re.sub(r"\s+", "", str(raw)).upper()
+                value = candidate if re.fullmatch(r"[A-Z]{2}[A-Z0-9]{10}", candidate) else None
+            elif field == "name":
+                value = str(raw).strip() or None
+            elif field == "currency":
+                candidate = str(raw).strip().upper()
+                value = candidate if re.fullmatch(r"[A-Z]{3}", candidate) else None
+            elif field == "risk_sri":
+                match = re.search(r"(?<!\d)([1-7])(?!\d)", str(raw))
+                value = int(match.group(1)) if match else None
+            else:
+                value = _number(raw)
+
+        fields[field] = value
+        evidence[field] = {
+            "status": "normalized" if value is not None else ("invalid" if present else "missing"),
+            "raw_value": str(raw) if present else None,
+            "source_url": source_url or None,
+            "source_date": source_date,
+            "retrieved_at": retrieved,
+        }
+
+    return {
+        "schema_version": SCHEMA_VERSION,
+        "provider": str(provider).strip() or "unknown",
+        **fields,
+        "source": {
+            "url": source_url or None,
+            "source_date": source_date,
+            "retrieved_at": retrieved,
+        },
+        "field_evidence": evidence,
+        "quality": {
+            "normalized_field_count": sum(v is not None for v in fields.values()),
+            "missing_field_count": sum(v["status"] == "missing" for v in evidence.values()),
+            "invalid_field_count": sum(v["status"] == "invalid" for v in evidence.values()),
+            "is_current_verified": False,
+        },
+    }

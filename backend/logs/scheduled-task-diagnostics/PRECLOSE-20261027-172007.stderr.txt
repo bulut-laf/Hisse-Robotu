@@ -1,0 +1,25 @@
+$ISATR.IS: possibly delisted; no price data found  (period=1d)
+$ISBTR.IS: possibly delisted; no price data found  (period=1d)
+
+2 Failed downloads:
+['ISATR.IS', 'ISBTR.IS']: possibly delisted; no price data found  (period=1d)
+Traceback (most recent call last):
+  File "<frozen runpy>", line 203, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_operation_phase_runner.py", line 538, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "D:\Projects\Hisse-Robotu\backend\app\operations\scheduled_operation_phase_runner.py", line 526, in main
+    print(
+    ~~~~~^
+        json.dumps(
+        ^^^^^^^^^^^
+    ...<4 lines>...
+        )
+        ^
+    )
+    ^
+  File "C:\Users\user\AppData\Local\Python\pythoncore-3.14-64\Lib\encodings\cp1251.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u0131' in position 209: character maps to <undefined>

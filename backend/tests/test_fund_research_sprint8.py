@@ -1,0 +1,40 @@
+from backend.app.funds.normalizer import normalize_fund_payload
+
+def test_normalizes_fund_fields():
+    r = normalize_fund_payload(
+        {"ISIN": "at0000a00ga2", "fund_name": "Example Fund",
+         "deviza": "HUF", "expense_ratio": "1,25%",
+         "risk_indicator": "4 of 7", "return_1y": "+8,4%"},
+        provider="Erste",
+        source_url="https://example.invalid",
+        retrieved_at="2026-10-28T10:00:00+03:00",
+    )
+    assert r["isin"] == "AT0000A00GA2"
+    assert r["currency"] == "HUF"
+    assert r["ongoing_charges_pct"] == 1.25
+    assert r["risk_sri"] == 4
+    assert r["return_1y_pct"] == 8.4
+    assert r["quality"]["is_current_verified"] is False
+
+def test_invalid_and_missing_values_are_not_invented():
+    r = normalize_fund_payload(
+        {"ISIN": "bad", "currency": "HU", "return_1y": "n/a"},
+        provider="test", source_url="",
+    )
+    assert r["isin"] is None
+    assert r["currency"] is None
+    assert r["return_1y_pct"] is None
+    assert r["field_evidence"]["isin"]["status"] == "invalid"
+    assert r["field_evidence"]["name"]["status"] == "missing"
+
+def test_ambiguous_number_is_rejected():
+    r = normalize_fund_payload(
+        {"ter": "1,234.56%"}, provider="test", source_url="",
+    )
+    assert r["ongoing_charges_pct"] is None
+    assert r["field_evidence"]["ongoing_charges_pct"]["status"] == "invalid"
+
+def test_empty_payload_is_safe():
+    r = normalize_fund_payload({}, provider="test", source_url="")
+    assert r["isin"] is None
+    assert r["quality"]["missing_field_count"] == 12

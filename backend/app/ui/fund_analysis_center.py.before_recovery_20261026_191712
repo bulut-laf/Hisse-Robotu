@@ -1,0 +1,59 @@
+import streamlit as st
+import pandas as pd
+
+def render_hedef24_portfolio_manager(df_portfolio):
+    st.header("🎯 Hedef 24 Portföy Yönetimi ve Karar Terminali")
+    
+    # --- 1. PORTFÖY TABLOSU (Güvenli Render) ---
+    st.subheader("📊 Güncel Portföy Listesi")
+    if not df_portfolio.empty:
+        # KeyError önlemi: Sütun adlarını küçük harfe çevir
+        df_safe = df_portfolio.copy()
+        df_safe.columns = [str(c).lower() for c in df_safe.columns]
+        st.dataframe(df_safe)
+    else:
+        st.info("Hedef 24 portföyünde henüz fon bulunmuyor.")
+
+    st.divider()
+
+    # --- 2. OPERASYON: FON EKLE / ÇIKAR ---
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("➖ Fon Çıkar (Satış)")
+        with st.form("remove_fund_form"):
+            # Çıkarılacak 3 fon için seçici
+            fund_to_remove = st.selectbox(
+                "Portföyden Çıkarılacak Fon (ISIN)", 
+                ["HU0000723572", "LU2614689482", "LU0161304786", "Diğer..."]
+            )
+            submit_remove = st.form_submit_button("Satışı Onayla ve Portföyden Çıkar")
+            if submit_remove:
+                st.success(f"{fund_to_remove} başarıyla sistemden düşüldü.")
+
+    with col2:
+        st.subheader("➕ Yeni Fon Ekle")
+        with st.form("add_fund_form"):
+            new_fund_isin = st.text_input("Yeni Fon ISIN Kodu")
+            new_fund_name = st.text_input("Fon Adı (Opsiyonel)")
+            submit_add = st.form_submit_button("Portföye Ekle")
+            if submit_add and new_fund_isin:
+                st.success(f"{new_fund_isin} Hedef 24'e eklendi.")
+
+    st.divider()
+
+    # --- 3. GÜNLÜK FİYAT GÜNCELLEME ---
+    st.subheader("💰 Günlük Fiyat ve Veri Girişi")
+    with st.form("daily_price_form"):
+        price_date = st.date_input("Tarih")
+        price_isin = st.text_input("ISIN Kodu (Fiyatı girilecek fon)")
+        new_price = st.number_input("Güncel Fiyat (NAV)", format="%.4f")
+        submit_price = st.form_submit_button("Fiyatı Kaydet")
+        if submit_price:
+            st.success("Fiyat veritabanına başarıyla işlendi.")
+
+    st.divider()
+
+    # --- 4. KARAR TERMİNALİ VE ANALİZ ---
+    st.subheader("🧠 Karar Terminali & Momentum Analizi")
+    st.write("Sistemdeki tüm fonların trend ve momentum skorları burada listelenecek.")

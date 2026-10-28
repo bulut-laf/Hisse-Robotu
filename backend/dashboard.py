@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from backend.app.integration.three_system_exchange import write_scan_row_opinion
+from app.integration.three_system_exchange import write_scan_row_opinion
 
 import os
 import json
@@ -10387,8 +10387,13 @@ def main() -> None:
     if analiz_modu == "Tek Hisse":
         tek_hisse_formu()
     elif analiz_modu == "Erste Hungary":
-        from backend.app.ui.fund_analysis_center import _render_erste_hungary_evidence_surface
-        _render_erste_hungary_evidence_surface(st)
+        from backend.app.ui.hedef24_terminal import render_hedef24_terminal
+        try:
+            from backend.app.ui.fund_analysis_center import _render_erste_hungary_evidence_surface
+            _render_erste_hungary_evidence_surface(st)
+        except ImportError:
+            st.info("Erste Hungary kanıt paneli bu kurulumda bulunamadı; Hedef 24 paneli bağımsız çalışıyor.")
+        render_hedef24_terminal()
     elif analiz_modu == "Fon Analiz Merkezi":
         from backend.app.funds.portfolio_tracking import fund_portfolio_snapshot_store
         from backend.app.funds.ui_live_refresh import refresh_fund_analysis_if_requested
@@ -10579,3 +10584,6 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+
+
+

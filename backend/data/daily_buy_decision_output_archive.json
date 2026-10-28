@@ -6813,5 +6813,97 @@
         ]
       }
     ]
+  },
+  {
+    "run_date": "2026-10-26",
+    "phase": "EVENING",
+    "created_at": "2026-10-26T20:09:38+03:00",
+    "candidates": []
+  },
+  {
+    "run_date": "2026-10-26",
+    "phase": "MORNING",
+    "created_at": "2026-10-26T19:06:04+03:00",
+    "candidates": []
+  },
+  {
+    "run_date": "2026-10-27",
+    "phase": "EVENING",
+    "created_at": "2026-10-27T23:08:27+03:00",
+    "candidates": [
+      {
+        "rank": 1,
+        "symbol": "AKSA",
+        "technical_score": 61,
+        "technical_view": "Nötr Teknik Görünüm",
+        "research_priority": "MEDIUM",
+        "visibility_state": "IMPROVING",
+        "rank_change": 17,
+        "operational_status": "TEYİT BEKLİYOR",
+        "data_blocked": false,
+        "decision": "İŞLEM YOK",
+        "volume_ratio": 2.258693479360001,
+        "risk_reward": 0.2721085682221113,
+        "selection_source": "TARAMA",
+        "jump_quality": "FİLTRE DIŞI",
+        "entry_readiness": "ERKEN",
+        "decision_reasons": [
+          "Hacim teyidi mevcut (2.26)",
+          "Sıralama iyileşiyor (+17)",
+          "Erken görünürlük IMPROVING"
+        ],
+        "decision_cautions": [
+          "EMA9, EMA21 altında; kısa vadeli trend zayıf.",
+          "Risk/ödül oranı minimum koşulu karşılamıyor.",
+          "Risk/getiri hedefin altında (0.27)"
+        ]
+      }
+    ]
+  },
+  {
+    "run_date": "2026-10-27",
+    "phase": "MORNING",
+    "created_at": "2026-10-27T09:09:00+03:00",
+    "candidates": []
+  },
+  {
+    "run_date": "2026-10-28",
+    "phase": "EVENING",
+    "created_at": "2026-10-28T19:36:27+03:00",
+    "candidates": []
+  },
+  {
+    "run_date": "2026-10-28",
+    "phase": "MORNING",
+    "created_at": "2026-10-28T10:34:23+03:00",
+    "candidates": [
+      {
+        "rank": 1,
+        "symbol": "AKSA",
+        "technical_score": 61,
+        "technical_view": "Nötr Teknik Görünüm",
+        "research_priority": "MEDIUM",
+        "visibility_state": "IMPROVING",
+        "rank_change": 17,
+        "operational_status": "TEYİT BEKLİYOR",
+        "data_blocked": false,
+        "decision": "İŞLEM YOK",
+        "volume_ratio": 2.258693479360001,
+        "risk_reward": 0.2721085682221113,
+        "selection_source": "TARAMA",
+        "jump_quality": "FİLTRE DIŞI",
+        "entry_readiness": "ERKEN",
+        "decision_reasons": [
+          "Hacim teyidi mevcut (2.26)",
+          "Sıralama iyileşiyor (+17)",
+          "Erken görünürlük IMPROVING"
+        ],
+        "decision_cautions": [
+          "EMA9, EMA21 altında; kısa vadeli trend zayıf.",
+          "Risk/ödül oranı minimum koşulu karşılamıyor.",
+          "Risk/getiri hedefin altında (0.27)"
+        ]
+      }
+    ]
   }
 ]

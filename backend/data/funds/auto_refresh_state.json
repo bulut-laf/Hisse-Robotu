@@ -8,16 +8,14 @@
     ]
   },
   "AAL": {
-    "last_attempt_utc": "2026-10-23T22:07:07.830446+00:00",
-    "last_success_utc": "2026-10-23T22:07:07.830446+00:00",
+    "last_attempt_utc": "2026-10-28T18:07:34.985682+00:00",
+    "last_success_utc": "2026-10-28T18:07:34.985682+00:00",
     "warnings": []
   },
   "AAS": {
-    "last_attempt_utc": "2026-09-24T18:27:39.766006+00:00",
-    "last_success_utc": "2026-09-24T18:27:39.766006+00:00",
-    "warnings": [
-      "TEFAS_HISTORY:TEFAS history verified contract requires period=1."
-    ]
+    "last_attempt_utc": "2026-10-28T18:08:23.005438+00:00",
+    "last_success_utc": "2026-10-28T18:08:23.005438+00:00",
+    "warnings": []
   },
   "AP5": {
     "last_attempt_utc": "2026-09-05T15:20:19.137323+00:00",
@@ -46,6 +44,11 @@
     "warnings": [
       "TEFAS_DETAIL:F4_DETAIL_INVALID_sonFiyat:0"
     ]
+  },
+  "TZL": {
+    "last_attempt_utc": "2026-10-28T19:07:38.837469+00:00",
+    "last_success_utc": "2026-10-28T19:07:38.837469+00:00",
+    "warnings": []
   },
   "YHY": {
     "last_attempt_utc": "2026-09-28T11:22:02.480224+00:00",

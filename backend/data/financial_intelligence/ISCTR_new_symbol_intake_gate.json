@@ -5,7 +5,7 @@
   "symbol": "ISCTR",
   "sector_model": "BANK",
   "period": "2026_2",
-  "source_file": "C:\\Users\\user\\AppData\\Local\\Temp\\pytest-of-user\\pytest-421\\test_intake_gate_blocks_missin0\\missing.xls",
+  "source_file": "C:\\Users\\user\\AppData\\Local\\Temp\\pytest-of-user\\pytest-544\\test_intake_gate_blocks_missin0\\missing.xls",
   "source_exists": false,
   "source_extension": ".xls",
   "dedicated_model_ready": false,

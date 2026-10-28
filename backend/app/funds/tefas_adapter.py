@@ -303,13 +303,15 @@ def fetch_tefas_fund_history_rows(
     if not code:
         raise ValueError("fund_code boЕџ olamaz.")
 
-    if period != 1:
-        raise ValueError("TEFAS history verified contract requires period=1.")
+    if period not in (1, 6, 12):
+        raise ValueError(
+            "TEFAS history period must be one of (1, 6, 12)." 
+        )
 
     validate_official_source_timeout(timeout_seconds)
 
     request_body = json.dumps(
-        {"fonKodu": code, "dil": "TR", "periyod": 1},
+        {"fonKodu": code, "dil": "TR", "periyod": period},
         ensure_ascii=False,
         separators=(",", ":"),
     ).encode("utf-8")

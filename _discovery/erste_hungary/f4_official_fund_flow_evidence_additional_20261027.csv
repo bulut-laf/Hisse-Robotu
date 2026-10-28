@@ -1,0 +1,4 @@
+﻿"FundName","RelatedISIN","Period","ReportedNetIssueRedemptionEUR","EvidenceScope","EvidenceStatus","NetFlowEvidenceVerified","ProductionEligible","SourceURL"
+"ERSTE STOCK ENVIRONMENT","AT0000A2BYF3","2023/2024","-3179373.58","FUND_LEVEL_ALL_UNIT_CLASSES","OFFICIAL_ANNUAL_REPORT_VERIFIED","True","False","https://data.erste-am.com/gem/erste-am/getDocumentContent/a6aba6f8-de6a-465d-b99f-680580afd95d?openDocument=true"
+"ERSTE STOCK COMMODITIES","AT0000A09GW7","2023/2024","-17124404.18","FUND_LEVEL_ALL_UNIT_CLASSES","OFFICIAL_ANNUAL_REPORT_VERIFIED","True","False","https://data.erste-am.com/gem/erste-am/getDocumentContent/9eddeb9f-68e6-4720-a90d-db728bca4587"
+"ERSTE STOCK COMMODITIES","AT0000A09GW7","2024/2025","1002632.41","FUND_LEVEL_ALL_UNIT_CLASSES","OFFICIAL_ANNUAL_REPORT_VERIFIED","True","False","https://data.erste-am.com/gem/erste-am/getDocumentContent/17ad9e14-3689-4c81-b011-4b9c96cde7f5?openDocument=true"

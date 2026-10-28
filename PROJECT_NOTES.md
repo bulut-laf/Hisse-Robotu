@@ -433,3 +433,25 @@ The current EOD archive contained one historical NO_CANDIDATES record dated 2026
 - Production evidence data and AL-SAT decision chain were not intentionally changed in this closure.
 - Safety invariants: automatic_trade_authority = NONE; forced_fill = False.
 - Note: a separate regression report file was not located; the test result is recorded from the verified console output.
+## 2026-10-26 ? Regresyon Onar?m?
+
+- Durum: TAMAMLANDI
+- Tam regresyon: 4223 passed, 0 failed.
+- S?re: 238.64 saniye.
+- Do?rulama komutu: `.venv\Scripts\python.exe -m pytest backend\tests -q`
+- `backend/app/ui/fund_analysis_center.py`: Fon/FDO ba?l?klar?ndaki bozuk T?rk?e metinler d?zeltildi.
+- `backend/app/ui/hedef24_terminal.py`: `st.dataframe` ?a?r?s?nda `use_container_width=True`, `width="stretch"` olarak de?i?tirildi.
+- Hedef testler: 2 passed.
+- Tam regresyon sonucu, yukar?daki d?zeltmelerden sonra do?ruland?.
+- Koruma kural?: Hedef24 ve AL-SAT i?levlerinde kapsam d??? de?i?iklik yap?lmamal?.
+
+
+## Fund UI Regression Verification ? 2026-10-26
+<!-- FUND_UI_ENCODING_REPAIR_20261026 -->
+- Full regression: 4223 passed, 0 failed.
+- Runtime: 242.29 seconds.
+- Fund/FDO UI target tests: 2 passed.
+- Corrected the portfolio heading text in `backend/app/ui/fund_analysis_center.py`.
+- Streamlit compatibility change `width="stretch"` remains validated.
+- Remaining Turkish text encoding issues require a separate, controlled repair.
+- No full-file encoding conversion or broad rollback performed.

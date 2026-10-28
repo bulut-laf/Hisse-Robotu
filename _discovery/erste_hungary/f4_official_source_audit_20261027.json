@@ -1,0 +1,114 @@
+﻿{
+    "generated_at":  "2026-10-27",
+    "purpose":  "Source audit for Erste-related F4 candidates",
+    "warning":  "Identity, unit-price or fund-size evidence does not establish official net investor flow.",
+    "verified_candidates":  [
+                                {
+                                    "isin":  "AT0000673165",
+                                    "fund_name":  "ERSTE Stock Biotec EUR",
+                                    "identity_status":  "INDUSTRY_REGISTER_MATCH",
+                                    "financial_data_status":  "REPORT_REFERENCES_FOUND",
+                                    "data_date":  null,
+                                    "currency":  "EUR",
+                                    "source_url":  "https://www.voeig.at/voeig/internet_4.nsf/sysPages/x899734DF6C54E4ACC1258283006A0EC9",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "AT0000673389",
+                                    "fund_name":  "ERSTE Stock Techno EUR R01",
+                                    "identity_status":  "ISSUER_PAGE_FOUND",
+                                    "financial_data_status":  "DATED_NAV_AND_TOTAL_ASSETS_FOUND",
+                                    "data_date":  "2026-10-13",
+                                    "currency":  "EUR",
+                                    "source_url":  "https://www.erste-am.ro/en/investors-information/funds/erste-stock-techno/AT0000673389",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "AT0000A09GU1",
+                                    "fund_name":  "ERSTE Stock Techno HUF R01",
+                                    "identity_status":  "ISSUER_PAGE_FOUND",
+                                    "financial_data_status":  "HISTORICAL_PRICES_AND_REPORTS_FOUND",
+                                    "data_date":  "2026-10-22",
+                                    "currency":  "HUF",
+                                    "source_url":  "https://www.erste-am.hu/en/private-investors/historicalprices/erste-stock-techno/AT0000A09GU1",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "AT0000A09GW7",
+                                    "fund_name":  "ERSTE Stock Commodities HUF R01",
+                                    "identity_status":  "ISSUER_FUND_RULES_MATCH",
+                                    "financial_data_status":  "HISTORICAL_ANNUAL_REPORT_FOUND",
+                                    "data_date":  "2025-09-30",
+                                    "currency":  "HUF",
+                                    "source_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/6f010598-2f82-4830-beea-d2595798c2c3?openDocument=true",
+                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/17ad9e14-3689-4c81-b011-4b9c96cde7f5?openDocument=true",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "AT0000A2BYF3",
+                                    "fund_name":  "ERSTE Stock Environment",
+                                    "identity_status":  "ISSUER_FUND_DOCUMENT_MATCH",
+                                    "financial_data_status":  "UNIT_CLASS_DATA_FOUND",
+                                    "data_date":  null,
+                                    "currency":  "HUF",
+                                    "source_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContentByIsin/P/HU/EN/AT0000A2BYF3",
+                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/c4a9cc58-2059-40bb-9a92-960b06b1dfdc?openDocument=true",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "HU0000703830",
+                                    "fund_name":  "Erste Duett Fund of Funds",
+                                    "identity_status":  "BAMOSZ_FUND_PAGE_MATCH",
+                                    "financial_data_status":  "DATED_NAV_FOUND",
+                                    "data_date":  "2026-10-06",
+                                    "currency":  "HUF",
+                                    "net_asset_value":  "415355653533",
+                                    "unit_price":  "2.8216",
+                                    "source_url":  "https://www.bamosz.hu/en/alapoldal?isin=HU0000703830",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "HU0000705306",
+                                    "fund_name":  "Erste Local Strategy Absolute Return Fund",
+                                    "identity_status":  "BAMOSZ_FUND_PAGE_MATCH",
+                                    "financial_data_status":  "DATED_NAV_FOUND",
+                                    "data_date":  "2026-10-22",
+                                    "currency":  "HUF",
+                                    "net_asset_value":  "27158995168",
+                                    "unit_price":  "4.968",
+                                    "source_url":  "https://www.bamosz.hu/en/alapoldal?isin=HU0000705306",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "HU0000723572",
+                                    "fund_name":  "Erste Gold Fund of Funds HUF",
+                                    "identity_status":  "BAMOSZ_FUND_PAGE_MATCH",
+                                    "financial_data_status":  "DATED_NAV_FOUND",
+                                    "data_date":  "2026-10-22",
+                                    "currency":  "HUF",
+                                    "net_asset_value":  "96671764652",
+                                    "unit_price":  "2.4322",
+                                    "source_url":  "https://www.bamosz.hu/en/alapoldal?isin=HU0000723572",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                },
+                                {
+                                    "isin":  "HU0000732011",
+                                    "fund_name":  "Erste Emerging Markets Stock Cost Averaging Fund of Funds",
+                                    "identity_status":  "BAMOSZ_FUND_PAGE_FOUND",
+                                    "financial_data_status":  "DATED_NAV_AND_UNIT_PRICE_FOUND",
+                                    "data_date":  "2026-10-22",
+                                    "currency":  "HUF",
+                                    "source_url":  "https://www.bamosz.hu/en/alapoldal?isin=HU0000732011",
+                                    "net_flow_status":  "NOT_VERIFIED",
+                                    "production_eligible":  false
+                                }
+                            ]
+}

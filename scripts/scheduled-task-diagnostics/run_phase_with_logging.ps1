@@ -1,4 +1,4 @@
-param(
+﻿param(
     [Parameter(Mandatory = $true)]
     [ValidateSet("PRECLOSE", "CANONICAL_CLOSE")]
     [string]$Phase,
@@ -33,6 +33,8 @@ $header = @(
 
 $exitCode = 9009
 try {
+    $env:PYTHONIOENCODING = "utf-8"
+    $env:PYTHONUTF8 = "1"
     $proc = Start-Process `
         -FilePath $PythonPath `
         -ArgumentList @("-m", "backend.app.operations.scheduled_operation_phase_runner", "--phase", $Phase) `
@@ -63,3 +65,4 @@ finally {
 }
 
 exit $exitCode
+

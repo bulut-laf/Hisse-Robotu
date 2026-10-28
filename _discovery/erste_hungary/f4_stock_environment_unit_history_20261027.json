@@ -1,0 +1,25 @@
+﻿{
+    "generated_at":  "2026-10-27",
+    "purpose":  "Historical official outstanding-unit evidence",
+    "isin":  "AT0000A2BYF3",
+    "fund_name":  "ERSTE Stock Environment HUF R01",
+    "observations":  [
+                         {
+                             "report_date":  "2024-04-30",
+                             "units_outstanding":  "166976.703",
+                             "unit_value":  "37586.56",
+                             "currency":  "HUF",
+                             "source_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/a6aba6f8-de6a-465d-b99f-680580afd95d?openDocument=true",
+                             "net_cash_flow_verified":  false
+                         },
+                         {
+                             "report_date":  "2025-04-30",
+                             "units_outstanding":  "124044.355",
+                             "unit_value":  "30017.52",
+                             "currency":  "HUF",
+                             "source_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/58fb1dba-e285-4267-8636-e854fc091227?openDocument=true",
+                             "net_cash_flow_verified":  false
+                         }
+                     ],
+    "warning":  "Two report-date unit counts do not independently establish net investor cash flow."
+}

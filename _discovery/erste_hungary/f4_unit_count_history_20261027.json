@@ -1,0 +1,29 @@
+﻿{
+    "generated_at":  "2026-10-27",
+    "purpose":  "Official historical outstanding-unit evidence",
+    "isin":  "AT0000A09GU1",
+    "fund_name":  "ERSTE Stock Techno HUF R01",
+    "source_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/857cb823-bb69-44c6-ad36-1b5ebf3acc39?openDocument=true",
+    "observations":  [
+                         {
+                             "report_period":  "2022/2023",
+                             "beginning_units":  "584998.013",
+                             "ending_units":  "537800.367",
+                             "unit_currency":  "HUF",
+                             "unit_value_beginning":  "50356.98",
+                             "unit_value_ending":  "50498.65",
+                             "unit_count_change":  "-47197.646",
+                             "net_cash_flow_verified":  false
+                         },
+                         {
+                             "report_period":  "2024/2025",
+                             "beginning_units":  null,
+                             "ending_units":  "471498.863",
+                             "unit_currency":  "HUF",
+                             "unit_value_ending":  "93938.98",
+                             "unit_count_change":  null,
+                             "net_cash_flow_verified":  false
+                         }
+                     ],
+    "warning":  "Unit-count changes are not equivalent to net cash flow without transaction or cash-flow evidence."
+}

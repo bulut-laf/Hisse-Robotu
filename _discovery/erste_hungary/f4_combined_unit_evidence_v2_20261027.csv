@@ -1,0 +1,4 @@
+﻿"ISIN","Fund","Period","BeginningUnits","EndingUnits","UnitCountChange","EvidenceStatus","NetCashFlowVerified","MissingEvidence"
+"AT0000A09GU1","ERSTE Stock Techno HUF R01","2022/2023","584998.013","537800.367","-47197.646","HISTORICAL_UNIT_CHANGE_CALCULATED","False","Official subscriptions/redemptions or net cash flow"
+"AT0000A09GU1","ERSTE Stock Techno HUF R01","2024/2025",,"471498.863",,"INCOMPLETE_PERIOD_BEGINNING_UNITS_MISSING","False","Beginning units for the same reporting period"
+"AT0000A2BYF3","ERSTE Stock Environment HUF R01","2024-04-30 to 2025-04-30","166976.703","124044.355","-42932.348","HISTORICAL_UNIT_CHANGE_CALCULATED","False","Official subscriptions/redemptions or net cash flow"

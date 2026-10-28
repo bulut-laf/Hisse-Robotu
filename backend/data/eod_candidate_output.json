@@ -41,6 +41,19 @@
     },
     {
       "phase": "CANONICAL_CLOSE",
+      "run_date": "2026-10-27",
+      "created_at": "2026-10-27T18:55:37.054514+03:00",
+      "status": "NO_CANDIDATES",
+      "candidate_symbols": [],
+      "candidate_count": 0,
+      "decisions": {},
+      "buy_candidate_symbols": [],
+      "buy_candidate_count": 0,
+      "failures": [],
+      "error": null
+    },
+    {
+      "phase": "CANONICAL_CLOSE",
       "run_date": "2026-08-28",
       "created_at": "2026-08-28T18:30:00+03:00",
       "status": "NO_CANDIDATES",

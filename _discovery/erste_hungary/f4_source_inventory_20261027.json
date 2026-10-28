@@ -1,0 +1,217 @@
+{
+    "generated_at":  "2026-10-27",
+    "purpose":  "Erste Hungary F4 source discovery",
+    "warning":  "Secondary research only; official fund-manager/OeKB verification required.",
+    "funds":  [
+                  {
+                      "currency":  "HUF",
+                      "observation_date":  "2026-09-10",
+                      "official_net_flow_verified":  false,
+                      "source_class":  "SECONDARY_RESEARCH_ONLY",
+                      "name":  "ERSTE Responsible Stock America",
+                      "isin":  "AT0000627476",
+                      "source_url":  "https://www.erstemarket.hu/befektetesi_alapok/alap/AT0000627476",
+                      "fund_size_huf":  "161632222933",
+                      "production_eligible":  false,
+                      "official_price_evidence":  {
+                                                      "unit_value":  "402330.41",
+                                                      "currency":  "HUF",
+                                                      "observation_date":  "2026-10-02",
+                                                      "source":  "OeKB via Wiener BР В РІР‚СљР вЂ™Р’В¶rse",
+                                                      "source_url":  "https://www.wienerborse.at/en/funds-data-oekb/?ID_NOTATION=246573888\u0026c13206-page=44\u0026c13206-sort=-isin\u0026per-page=50",
+                                                      "status":  "SOURCE_FOUND_REQUIRES_PER_ISIN_RECHECK"
+                                                  },
+                      "official_unit_price_verified":  true,
+                      "official_source_audit":  {
+                                                    "issuer_report_checked":  true,
+                                                    "per_isin_report_match":  true,
+                                                    "total_fund_size_verified":  false,
+                                                    "official_net_flow_verified":  false,
+                                                    "status":  "ISIN_FOUND_IN_ISSUER_DOCUMENT",
+                                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/fb1ee822-5b5f-4cb5-b4fa-cecfea843152?openDocument=true"
+                                                }
+                  },
+                  {
+                      "currency":  "HUF",
+                      "observation_date":  "2026-09-10",
+                      "official_net_flow_verified":  false,
+                      "source_class":  "SECONDARY_RESEARCH_ONLY",
+                      "name":  "ERSTE Stock Europe Emerging HUF R01",
+                      "isin":  "AT0000A00G88",
+                      "source_url":  "https://www.erstemarket.hu/befektetesi_alapok/alap/AT0000A00G88",
+                      "fund_size_huf":  "37890366475",
+                      "production_eligible":  false,
+                      "official_price_evidence":  {
+                                                      "unit_value":  "41795.21",
+                                                      "currency":  "HUF",
+                                                      "observation_date":  "2026-10-23",
+                                                      "source":  "OeKB via Wiener BР В РІР‚СљР вЂ™Р’В¶rse",
+                                                      "source_url":  "https://www.wienerborse.at/en/funds-data-oekb/?ID_NOTATION=185698482\u0026c13206-page=33\u0026c13206-sort=-isin\u0026per-page=50",
+                                                      "status":  "SOURCE_FOUND_REQUIRES_PER_ISIN_RECHECK"
+                                                  },
+                      "official_unit_price_verified":  true,
+                      "official_source_audit":  {
+                                                    "issuer_report_checked":  true,
+                                                    "per_isin_report_match":  true,
+                                                    "total_fund_size_verified":  false,
+                                                    "official_net_flow_verified":  false,
+                                                    "status":  "ISIN_FOUND_IN_ISSUER_DOCUMENT",
+                                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/81e840b2-a19f-48e8-a939-50d48ffa987c?openDocument=true"
+                                                }
+                  },
+                  {
+                      "currency":  "HUF",
+                      "observation_date":  "2026-09-04",
+                      "official_net_flow_verified":  false,
+                      "source_class":  "SECONDARY_RESEARCH_ONLY",
+                      "name":  "ERSTE Bond International HUF R01",
+                      "isin":  "AT0000A00GA2",
+                      "source_url":  "https://www.erstemarket.hu/befektetesi_alapok/alap/AT0000A00GA2",
+                      "fund_size_huf":  "5096351221",
+                      "production_eligible":  false,
+                      "official_price_evidence":  {
+                                                      "unit_value":  "7777.55",
+                                                      "currency":  "HUF",
+                                                      "observation_date":  "2026-10-23",
+                                                      "source":  "OeKB via Wiener BР В РІР‚СљР вЂ™Р’В¶rse",
+                                                      "source_url":  "https://www.wienerborse.at/en/funds-data-oekb/?ID_NOTATION=185698482\u0026c13206-page=33\u0026c13206-sort=-isin\u0026per-page=50",
+                                                      "status":  "SOURCE_FOUND_REQUIRES_PER_ISIN_RECHECK"
+                                                  },
+                      "official_unit_price_verified":  true,
+                      "official_source_audit":  {
+                                                    "issuer_report_checked":  true,
+                                                    "per_isin_report_match":  true,
+                                                    "total_fund_size_verified":  false,
+                                                    "official_net_flow_verified":  false,
+                                                    "status":  "ISIN_CONFIRMED_IN_OFFICIAL_FUND_RULES",
+                                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContentByIsin/P/AT/EN/AT0000A1YRS4",
+                                                    "document_type":  "FUND_RULES",
+                                                    "publication_date":  "2026-04-13",
+                                                    "effective_date":  "2026-04-16"
+                                                }
+                  },
+                  {
+                      "currency":  "HUF",
+                      "observation_date":  "2026-09-11",
+                      "official_net_flow_verified":  false,
+                      "source_class":  "SECONDARY_RESEARCH_ONLY",
+                      "name":  "ERSTE Reserve Corporate HUF R01",
+                      "isin":  "AT0000A00G96",
+                      "source_url":  "https://www.erstemarket.hu/befektetesi_alapok/alap/AT0000A00G96",
+                      "fund_size_huf":  "100427110528",
+                      "production_eligible":  false,
+                      "official_price_evidence":  {
+                                                      "unit_value":  "56310.39",
+                                                      "currency":  "HUF",
+                                                      "observation_date":  "2026-10-23",
+                                                      "source":  "OeKB via Wiener BР В РІР‚СљР вЂ™Р’В¶rse",
+                                                      "source_url":  "https://www.wienerborse.at/en/funds-data-oekb/?ID_NOTATION=185698482\u0026c13206-page=33\u0026c13206-sort=-isin\u0026per-page=50",
+                                                      "status":  "SOURCE_FOUND_REQUIRES_PER_ISIN_RECHECK"
+                                                  },
+                      "official_unit_price_verified":  true,
+                      "official_source_audit":  {
+                                                    "issuer_report_checked":  true,
+                                                    "per_isin_report_match":  true,
+                                                    "total_fund_size_verified":  false,
+                                                    "official_net_flow_verified":  false,
+                                                    "status":  "ISIN_FOUND_IN_ISSUER_DOCUMENT",
+                                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/f526cd54-aad4-4417-9a2e-a28f5bcf5fbb?openDocument=true"
+                                                }
+                  },
+                  {
+                      "currency":  "HUF",
+                      "observation_date":  "2026-09-02",
+                      "official_net_flow_verified":  false,
+                      "source_class":  "SECONDARY_RESEARCH_ONLY",
+                      "name":  "ERSTE Bond EM Government HUF R01",
+                      "isin":  "AT0000A00GC8",
+                      "source_url":  "https://www.erstemarket.hu/befektetesi_alapok/alap/AT0000A00GC8",
+                      "fund_size_huf":  "93808089200",
+                      "production_eligible":  false,
+                      "official_price_evidence":  {
+                                                      "unit_value":  "73187.39",
+                                                      "currency":  "HUF",
+                                                      "observation_date":  "2026-10-23",
+                                                      "source":  "OeKB via Wiener BР В РІР‚СљР вЂ™Р’В¶rse",
+                                                      "source_url":  "https://www.wienerborse.at/en/funds-data-oekb/?ID_NOTATION=185698482\u0026c13206-page=33\u0026c13206-sort=-isin\u0026per-page=50",
+                                                      "status":  "SOURCE_FOUND_REQUIRES_PER_ISIN_RECHECK"
+                                                  },
+                      "official_unit_price_verified":  true,
+                      "official_source_audit":  {
+                                                    "issuer_report_checked":  true,
+                                                    "per_isin_report_match":  true,
+                                                    "total_fund_size_verified":  false,
+                                                    "official_net_flow_verified":  false,
+                                                    "status":  "ISIN_FOUND_IN_ISSUER_DOCUMENT",
+                                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/f2087d14-498b-4dd5-b85f-238d8283fb18?openDocument=true"
+                                                }
+                  },
+                  {
+                      "currency":  "HUF",
+                      "observation_date":  "2026-10-23",
+                      "official_net_flow_verified":  false,
+                      "source_class":  "SECONDARY_RESEARCH_ONLY",
+                      "name":  "ERSTE Stock EM Global HUF R01",
+                      "isin":  "AT0000A00GE4",
+                      "source_url":  "https://www.erstemarket.hu/befektetesi_alapok/osszehasonlitas?funds=AT0000A00GE4\u0026intervallum=265",
+                      "fund_size_huf":  "130395626473",
+                      "production_eligible":  false,
+                      "official_price_evidence":  {
+                                                      "unit_value":  "131870.60",
+                                                      "currency":  "HUF",
+                                                      "observation_date":  "2026-10-23",
+                                                      "source":  "OeKB via Wiener BР В РІР‚СљР вЂ™Р’В¶rse",
+                                                      "source_url":  "https://www.wienerborse.at/en/funds-data-oekb/?ID_NOTATION=185698482\u0026c13206-page=33\u0026c13206-sort=-isin\u0026per-page=50",
+                                                      "status":  "SOURCE_FOUND_REQUIRES_PER_ISIN_RECHECK"
+                                                  },
+                      "official_unit_price_verified":  true,
+                      "official_source_audit":  {
+                                                    "issuer_report_checked":  true,
+                                                    "per_isin_report_match":  true,
+                                                    "total_fund_size_verified":  false,
+                                                    "official_net_flow_verified":  false,
+                                                    "status":  "ISIN_FOUND_IN_ISSUER_DOCUMENT",
+                                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/ad7fcda2-11b9-4b74-a806-27946f87cb3a?openDocument=true"
+                                                }
+                  },
+                  {
+                      "currency":  "HUF",
+                      "observation_date":  "2026-09-04",
+                      "official_net_flow_verified":  false,
+                      "source_class":  "SECONDARY_RESEARCH_ONLY",
+                      "name":  "ERSTE Responsible Stock Japan HUF R01",
+                      "isin":  "AT0000A00GF1",
+                      "source_url":  "https://www.erstemarket.hu/befektetesi_alapok/alap/AT0000A00GF1",
+                      "fund_size_huf":  "27728920976",
+                      "production_eligible":  false,
+                      "official_price_evidence":  {
+                                                      "unit_value":  "74538.58",
+                                                      "currency":  "HUF",
+                                                      "observation_date":  "2026-10-23",
+                                                      "source":  "OeKB via Wiener BР В РІР‚СљР вЂ™Р’В¶rse",
+                                                      "source_url":  "https://www.wienerborse.at/en/funds-data-oekb/?ID_NOTATION=185698482\u0026c13206-page=33\u0026c13206-sort=-isin\u0026per-page=50",
+                                                      "status":  "SOURCE_FOUND_REQUIRES_PER_ISIN_RECHECK"
+                                                  },
+                      "official_unit_price_verified":  true,
+                      "official_source_audit":  {
+                                                    "issuer_report_checked":  true,
+                                                    "per_isin_report_match":  true,
+                                                    "total_fund_size_verified":  true,
+                                                    "official_net_flow_verified":  false,
+                                                    "status":  "ISIN_FOUND_IN_ISSUER_DOCUMENT",
+                                                    "report_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/02574728-6595-45e9-9927-9f32110e9aac?openDocument=true"
+                                                },
+                      "official_fund_size_evidence":  {
+                                                          "amount":  "59529530.47",
+                                                          "currency":  "EUR",
+                                                          "observation_date":  "2026-02-28",
+                                                          "report_period_start":  "2025-09-01",
+                                                          "report_period_end":  "2026-02-28",
+                                                          "report_type":  "SEMI_ANNUAL_REPORT_2025_26",
+                                                          "source_url":  "https://data.erste-am.com/gem/erste-am/getDocumentContent/c8b7af12-7e77-40b1-8799-69b6c6f9f0e4?openDocument=true",
+                                                          "status":  "VERIFIED_HISTORICAL_FUND_ASSETS"
+                                                      }
+                  }
+              ],
+    "official_report_reference":  "https://www.erste-am.hr/en/private-investors/financial-reports-and-other-publications/financial-reports"
+}

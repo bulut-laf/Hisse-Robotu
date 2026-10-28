@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "source": "Borsa Istanbul Official Daily Bulletin",
+  "trade_date": "2026-10-26",
+  "source_url": "https://www.borsaistanbul.com/data/thb/2026/10/thb202610261.zip",
+  "symbol_count": 628,
+  "missing_requested_symbols": [],
+  "invalid_excluded_symbols": [
+    "ISATR.IS",
+    "ISKUR.IS",
+    "UMPAS.IS"
+  ],
+  "canonical_sha256": "8f6f92bfa7b061cf5b112e636f4b802124bfdf15b64a775d6e5d32f868081c27",
+  "raw_zip": "data\\bist_official_daily\\raw\\2026\\10\\thb202610261.zip",
+  "canonical_csv": "data\\bist_official_daily\\canonical\\2026\\10\\2026-10-26.csv",
+  "archived_at_utc": "2026-10-26T16:04:24.925984+00:00"
+}

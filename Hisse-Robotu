@@ -1,0 +1,10 @@
+[33m4590b82[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{Mon Oct 26 13:11:58 2026}: reset: moving to 4590b82
+[33me505bba[m HEAD@{Mon Oct 26 12:57:10 2026}: reset: moving to HEAD
+[33me505bba[m HEAD@{Mon Oct 26 12:53:10 2026}: reset: moving to HEAD
+[33me505bba[m HEAD@{Mon Oct 26 12:47:29 2026}: reset: moving to HEAD
+[33me505bba[m HEAD@{Mon Oct 26 12:25:18 2026}: reset: moving to HEAD
+[33me505bba[m HEAD@{Sat Oct 24 19:16:05 2026}: commit: feat(funds): clean rank history v1 and summary to match 925 funds universe (1850 rows)
+[33m155482d[m HEAD@{Sat Oct 24 19:10:27 2026}: commit: feat(funds): update rank trend evidence and summary for 925 clean funds universe
+[33mcc23e22[m HEAD@{Sat Oct 24 18:51:56 2026}: commit: feat(funds): regenerate erste hungary rank seed v3 excluding ineligible funds (925 funds)
+[33m033331e[m HEAD@{Sat Oct 24 18:19:05 2026}: commit: docs: document erste hungary official fund status eligibility integration in project notes
+[33m4590b82[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m HEAD@{Sat Oct 24 18:09:39 2026}: commit (initial): feat(funds): integrate official fund status eligibility into erste hungary rank seed

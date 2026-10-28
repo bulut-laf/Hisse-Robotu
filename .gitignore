@@ -1,0 +1,15 @@
+# Python ve Sanal Ortam
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Veri ve Loglar
+*.log
+backend/data/cache/
+backend/data/temp_pdfs/
+
+# şletim Sistemi Kalıntıları
+.DS_Store
+Thumbs.db
