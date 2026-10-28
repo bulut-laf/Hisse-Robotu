@@ -2,10 +2,10 @@ import pandas as pd
 from backend.app.funds.fund_pressure_analysis import calculate_liquidation_stress_metrics
 
 def build_pressure_dataframe(portfolio_holdings: list[dict]) -> pd.DataFrame:
-    "`"`"
+    """
     KAP'tan çekilen hisse verilerini alır, FDO/Baskı Riski metriklerini hesaplar 
     ve Streamlit arayüzü için hazır bir Pandas DataFrame'e dönüştürür.
-    "`"`"
+    """
     table_rows = []
     
     for holding in portfolio_holdings:

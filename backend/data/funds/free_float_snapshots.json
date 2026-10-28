@@ -88,6 +88,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "A1YEN",
+    "free_float_shares": "448609605.66",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ADESE",
     "free_float_shares": "4677551963.09",
     "as_of": "2026-09-25",
@@ -126,6 +134,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ADESE",
+    "free_float_shares": "4676611074.28",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "AEFES",
@@ -174,6 +190,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "AEFES",
+    "free_float_shares": "1910285119.09",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "AGHOL",
@@ -248,6 +272,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "AGHOL",
+    "free_float_shares": "717558417.86",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "AHSGY",
     "free_float_shares": "109976307.04",
     "as_of": "2026-09-25",
@@ -286,6 +318,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "AHSGY",
+    "free_float_shares": "87394857.29",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "AKBNK",
@@ -360,6 +400,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "AKBNK",
+    "free_float_shares": "2751933211.98",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "AKGRT",
     "free_float_shares": "451270448.43",
     "as_of": "2026-09-05",
@@ -424,6 +472,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "AKGRT",
+    "free_float_shares": "451174474.74",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "AKSA",
     "free_float_shares": "1176343892.96",
     "as_of": "2026-09-25",
@@ -462,6 +518,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "AKSA",
+    "free_float_shares": "1131669169.29",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "AKSEN",
@@ -528,6 +592,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "AKSEN",
+    "free_float_shares": "236576684.46",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "AKSGY",
     "free_float_shares": "1288646126.21",
     "as_of": "2026-09-05",
@@ -590,6 +662,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "AKSGY",
+    "free_float_shares": "1236736103.13",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ALARK",
@@ -664,6 +744,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ALARK",
+    "free_float_shares": "137388441.80",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ALBRK",
     "free_float_shares": "1007189230.74",
     "as_of": "2026-09-05",
@@ -726,6 +814,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ALBRK",
+    "free_float_shares": "973047802.41",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ALCTL",
@@ -792,6 +888,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ALCTL",
+    "free_float_shares": "13532703.61",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ALGYO",
     "free_float_shares": "886616818.17",
     "as_of": "2026-09-25",
@@ -830,6 +934,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ALGYO",
+    "free_float_shares": "886566038.46",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ALKLC",
@@ -896,6 +1008,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ALKLC",
+    "free_float_shares": "41783825.17",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ALTNY",
     "free_float_shares": "371307799.94",
     "as_of": "2026-09-05",
@@ -960,6 +1080,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ALTNY",
+    "free_float_shares": "365668361.28",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ALVES",
     "free_float_shares": "1359306400.75",
     "as_of": "2026-09-07",
@@ -1016,6 +1144,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ALVES",
+    "free_float_shares": "1358722011.89",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ANELE",
     "free_float_shares": "72036188.1",
     "as_of": "2026-09-08",
@@ -1070,6 +1206,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ANELE",
+    "free_float_shares": "53197547.97",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ANHYT",
@@ -1136,6 +1280,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ANHYT",
+    "free_float_shares": "64555285.63",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ANSGR",
     "free_float_shares": "694786215.45",
     "as_of": "2026-09-05",
@@ -1200,6 +1352,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ANSGR",
+    "free_float_shares": "694500389.70",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ARCLK",
     "free_float_shares": "117706113.81",
     "as_of": "2026-09-08",
@@ -1254,6 +1414,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ARCLK",
+    "free_float_shares": "118158675.62",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ARDYZ",
@@ -1320,6 +1488,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ARDYZ",
+    "free_float_shares": "126333886.62",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ARENA",
     "free_float_shares": "50589022.49",
     "as_of": "2026-09-05",
@@ -1384,6 +1560,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ARENA",
+    "free_float_shares": "50588371.60",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ARFYE",
     "free_float_shares": "46996213.18",
     "as_of": "2026-09-08",
@@ -1430,6 +1614,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ARFYE",
+    "free_float_shares": "46978523.08",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ASELS",
@@ -1504,6 +1696,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ASELS",
+    "free_float_shares": "1175413587.82",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ASTOR",
     "free_float_shares": "426470851.43",
     "as_of": "2026-09-05",
@@ -1568,6 +1768,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ASTOR",
+    "free_float_shares": "425034828.58",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ATATP",
     "free_float_shares": "18300791.95",
     "as_of": "2026-09-05",
@@ -1630,6 +1838,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ATATP",
+    "free_float_shares": "18008300.52",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ATATR",
@@ -1720,6 +1936,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "AVPGY",
+    "free_float_shares": "79780871.32",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "AZTEK",
     "free_float_shares": "255459728.68",
     "as_of": "2026-09-05",
@@ -1784,6 +2008,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "AZTEK",
+    "free_float_shares": "243436795.46",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "BALSU",
     "free_float_shares": "635928794.55",
     "as_of": "2026-09-07",
@@ -1840,6 +2072,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "BALSU",
+    "free_float_shares": "542582775.32",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "BERA",
     "free_float_shares": "463194151.76",
     "as_of": "2026-09-25",
@@ -1878,6 +2118,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "BERA",
+    "free_float_shares": "458854265.30",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "BETAE",
@@ -1944,6 +2192,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "BETAE",
+    "free_float_shares": "54886017.10",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "BIGEN",
     "free_float_shares": "146485295.15",
     "as_of": "2026-09-25",
@@ -1990,6 +2246,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "BIGEN",
+    "free_float_shares": "133949197.06",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "BIMAS",
@@ -2064,6 +2328,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "BIMAS",
+    "free_float_shares": "810133681.51",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "BIOEN",
     "free_float_shares": "260557461.59",
     "as_of": "2026-09-25",
@@ -2110,6 +2382,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "BIOEN",
+    "free_float_shares": "251900550.51",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "BIZIM",
@@ -2160,6 +2440,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "BIZIM",
+    "free_float_shares": "24818061.38",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "BMSTL",
     "free_float_shares": "151471140.11",
     "as_of": "2026-09-25",
@@ -2198,6 +2486,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "BMSTL",
+    "free_float_shares": "151467445.94",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "BOBET",
@@ -2264,6 +2560,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "BOBET",
+    "free_float_shares": "99463063.51",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "BRKO",
     "free_float_shares": "118106791.19",
     "as_of": "2026-09-25",
@@ -2310,6 +2614,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "BRKO",
+    "free_float_shares": "119621233.86",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "BRSAN",
@@ -2376,6 +2688,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "BRSAN",
+    "free_float_shares": "29632611.28",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "BULGS",
     "free_float_shares": "70449436.73",
     "as_of": "2026-09-25",
@@ -2416,6 +2736,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "BULGS",
+    "free_float_shares": "68681611.93",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "CANTE",
     "free_float_shares": "7061781778.63",
     "as_of": "2026-09-25",
@@ -2454,6 +2782,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "CANTE",
+    "free_float_shares": "6989348593.63",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "CCOLA",
@@ -2528,6 +2864,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "CCOLA",
+    "free_float_shares": "820157083.98",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "CIMSA",
     "free_float_shares": "426280501.28",
     "as_of": "2026-09-08",
@@ -2576,6 +2920,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "CIMSA",
+    "free_float_shares": "341283982.32",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "CONSE",
     "free_float_shares": "377191106.87",
     "as_of": "2026-09-25",
@@ -2614,6 +2966,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "CONSE",
+    "free_float_shares": "375590930.10",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "CWENE",
@@ -2662,6 +3022,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "CWENE",
+    "free_float_shares": "463390996.86",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "DAPGM",
@@ -2718,6 +3086,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "DAPGM",
+    "free_float_shares": "896645554.43",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "DESPC",
@@ -2784,6 +3160,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "DESPC",
+    "free_float_shares": "11471862.49",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "DEVA",
     "free_float_shares": "35450025.58",
     "as_of": "2026-09-05",
@@ -2846,6 +3230,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "DEVA",
+    "free_float_shares": "34832724.16",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "DGATE",
@@ -2912,6 +3304,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "DGATE",
+    "free_float_shares": "11902740.24",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "DMRGD",
     "free_float_shares": "949776094.08",
     "as_of": "2026-09-25",
@@ -2950,6 +3350,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "DMRGD",
+    "free_float_shares": "890160987.27",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "DOFRB",
@@ -3014,6 +3422,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "DOFRB",
+    "free_float_shares": "44357462.76",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "DOHOL",
@@ -3088,6 +3504,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "DOHOL",
+    "free_float_shares": "889807758.79",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "DSTKF",
     "free_float_shares": "84531893.01",
     "as_of": "2026-09-08",
@@ -3144,6 +3568,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "DSTKF",
+    "free_float_shares": "47204502.12",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ECILC",
     "free_float_shares": "150880038.32",
     "as_of": "2026-09-25",
@@ -3184,6 +3616,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ECILC",
+    "free_float_shares": "149928588.39",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ECOGR",
     "free_float_shares": "109979830.91",
     "as_of": "2026-09-25",
@@ -3222,6 +3662,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ECOGR",
+    "free_float_shares": "88023966.28",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "EDATA",
@@ -3288,6 +3736,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "EDATA",
+    "free_float_shares": "127422671.43",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "EGEPO",
     "free_float_shares": "109808512.21",
     "as_of": "2026-09-25",
@@ -3326,6 +3782,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "EGEPO",
+    "free_float_shares": "109266374.43",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "EKGYO",
@@ -3400,6 +3864,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "EKGYO",
+    "free_float_shares": "1829530368.72",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "EMKEL",
     "free_float_shares": "114607186.73",
     "as_of": "2026-09-25",
@@ -3438,6 +3910,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "EMKEL",
+    "free_float_shares": "150000000.00",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "EMPAE",
@@ -3504,6 +3984,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "EMPAE",
+    "free_float_shares": "37990401.75",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ENJSA",
     "free_float_shares": "236017912.04",
     "as_of": "2026-09-25",
@@ -3550,6 +4038,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ENJSA",
+    "free_float_shares": "235935771.01",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ENKAI",
@@ -3624,6 +4120,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ENKAI",
+    "free_float_shares": "487245167.18",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "EREGL",
     "free_float_shares": "3261526841.8",
     "as_of": "2026-09-05",
@@ -3696,6 +4200,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "EREGL",
+    "free_float_shares": "3199760741.45",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ESCOM",
     "free_float_shares": "465529115.22",
     "as_of": "2026-09-05",
@@ -3760,6 +4272,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ESCOM",
+    "free_float_shares": "463109212.99",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ESEN",
     "free_float_shares": "816802216.09",
     "as_of": "2026-09-25",
@@ -3798,6 +4318,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "ESEN",
+    "free_float_shares": "816683859.40",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "EUPWR",
@@ -3872,6 +4400,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "EUPWR",
+    "free_float_shares": "250645923.08",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "EYGYO",
     "free_float_shares": "248339671.86",
     "as_of": "2026-09-25",
@@ -3910,6 +4446,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "EYGYO",
+    "free_float_shares": "248320813.54",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "FONET",
@@ -3976,6 +4520,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "FONET",
+    "free_float_shares": "565920518.72",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "FORTE",
     "free_float_shares": "25406671.89",
     "as_of": "2026-09-05",
@@ -4040,6 +4592,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "FORTE",
+    "free_float_shares": "24983281.27",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "FRIGO",
     "free_float_shares": "712040482.72",
     "as_of": "2026-09-25",
@@ -4078,6 +4638,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "FRIGO",
+    "free_float_shares": "703369048.45",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "FROTO",
@@ -4152,6 +4720,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "FROTO",
+    "free_float_shares": "613481245.38",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "GARAN",
     "free_float_shares": "587389603.6",
     "as_of": "2026-09-05",
@@ -4222,6 +4798,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "GARAN",
+    "free_float_shares": "586469574.67",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "GESAN",
@@ -4296,6 +4880,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "GESAN",
+    "free_float_shares": "170359262.36",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "GLRMK",
     "free_float_shares": "85146751.89",
     "as_of": "2026-09-05",
@@ -4360,6 +4952,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "GLRMK",
+    "free_float_shares": "80525689.48",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "GLRYH",
     "free_float_shares": "476528457.59",
     "as_of": "2026-09-25",
@@ -4406,6 +5006,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "GLRYH",
+    "free_float_shares": "423923673.58",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "GLYHO",
@@ -4472,6 +5080,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "GLYHO",
+    "free_float_shares": "1145837159.78",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "GRSEL",
     "free_float_shares": "22803577.30",
     "as_of": "2026-09-25",
@@ -4510,6 +5126,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "GRSEL",
+    "free_float_shares": "22671614.63",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "GUBRF",
@@ -4584,6 +5208,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "GUBRF",
+    "free_float_shares": "67699211.49",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "GUNDG",
     "free_float_shares": "6246225.18",
     "as_of": "2026-09-07",
@@ -4648,6 +5280,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "GUNDG",
+    "free_float_shares": "5910584.26",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "HALKB",
     "free_float_shares": "429628669.57",
     "as_of": "2026-09-25",
@@ -4694,6 +5334,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "HALKB",
+    "free_float_shares": "420777014.37",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "HEDEF",
@@ -4760,6 +5408,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "HEDEF",
+    "free_float_shares": "207803896.34",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "HEKTS",
     "free_float_shares": "4453754789.8",
     "as_of": "2026-09-05",
@@ -4822,6 +5478,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "HEKTS",
+    "free_float_shares": "4450362259.64",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "HTTBT",
@@ -4888,6 +5552,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "HTTBT",
+    "free_float_shares": "82655395.17",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "IEYHO",
     "free_float_shares": "179365246.09",
     "as_of": "2026-09-25",
@@ -4926,6 +5598,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "IEYHO",
+    "free_float_shares": "173320969.04",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "INDES",
@@ -4992,6 +5672,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "INDES",
+    "free_float_shares": "427176662.79",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "INGRM",
     "free_float_shares": "2016714.65",
     "as_of": "2026-09-05",
@@ -5054,6 +5742,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "INGRM",
+    "free_float_shares": "2015893.70",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "ISCTR",
@@ -5128,6 +5824,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ISCTR",
+    "free_float_shares": "7329384879.60",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ISGYO",
     "free_float_shares": "373199141.95",
     "as_of": "2026-09-05",
@@ -5192,6 +5896,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ISGYO",
+    "free_float_shares": "361052224.90",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "ISMEN",
     "free_float_shares": "438166443.76",
     "as_of": "2026-09-25",
@@ -5240,6 +5952,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "ISMEN",
+    "free_float_shares": "438168248.20",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "IZENR",
     "free_float_shares": "638621735.27",
     "as_of": "2026-09-08",
@@ -5286,6 +6006,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "IZENR",
+    "free_float_shares": "588098116.39",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "IZFAS",
@@ -5344,6 +6072,14 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "IZFAS",
+    "free_float_shares": "102925856.14",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "KARCL",
     "free_float_shares": "115293596.82",
     "as_of": "2026-09-25",
@@ -5382,6 +6118,14 @@
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "KARCL",
+    "free_float_shares": "110932347.39",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "KAREL",
@@ -5448,12 +6192,28 @@
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
   },
   {
+    "symbol": "KAREL",
+    "free_float_shares": "310371789.99",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
+  },
+  {
     "symbol": "KCAER",
     "free_float_shares": "493705038.54",
     "as_of": "2026-10-24",
     "source": "KAP",
     "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
     "ingested_at": "2026-10-23T22:05:53.297663+00:00"
+  },
+  {
+    "symbol": "KCAER",
+    "free_float_shares": "493689545.46",
+    "as_of": "2026-10-29",
+    "source": "KAP",
+    "source_ref": "https://www.kap.org.tr/tr/tumKalemler/kpy41_acc5_fiili_dolasimdaki_pay",
+    "ingested_at": "2026-10-28T21:18:16.880609+00:00"
   },
   {
     "symbol": "KCHOL",

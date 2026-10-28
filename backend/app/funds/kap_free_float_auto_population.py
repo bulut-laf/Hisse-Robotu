@@ -254,7 +254,7 @@ def parse_kap_free_float_general_page(
         raise KapFreeFloatError("KAP_FDO_SECTION_MISSING")
     section = visible[start:]
     end_match = re.search(
-        r"Sermayeyi\s+Temsil\s+Eden\s+Paylara\s+İlişkin\s+Bilgi",
+        r"Sermayeyi\s+Temsil\s+Eden\s+Paylara\s+lişkin\s+Bilgi",
         section,
         re.IGNORECASE,
     )
@@ -291,9 +291,6 @@ def parse_kap_free_float_general_page(
     if now.tzinfo is None or now.utcoffset() is None:
         raise ValueError("ingested_at timezone-aware olmalıdır.")
 
-    # KAP's "Fiili Dolaşımdaki Pay Tutarı (TL)" is the matching nominal unit
-    # for the KAP fund report's equity "Nominal Değeri". The legacy field name
-    # free_float_shares is retained to preserve the existing read-model contract.
     return FreeFloatRecord(
         symbol=symbol,
         free_float_shares=free_float_amount,
@@ -336,10 +333,6 @@ def parse_kap_free_float_table(
 
     records: list[FreeFloatRecord] = []
     for symbol in targets:
-        # Current KAP aggregate table has additional numeric columns
-        # between the symbol and the canonical free-float amount/ratio.
-        # Prefer that observed wide format. Fall back to the older compact
-        # official format used by earlier KAP responses.
         wide_matches = list(
             re.finditer(
                 rf"(?<![A-Z0-9]){re.escape(symbol)}(?![A-Z0-9])\s+"
@@ -375,28 +368,29 @@ def parse_kap_free_float_table(
             ratios = [Decimal(_parse_decimal_tr(item.group(2))) for item in matches]
             free_float_amount = sum(amounts, Decimal("0"))
             free_float_ratio_pct = sum(ratios, Decimal("0"))
-        except InvalidOperation as exc:
-            raise KapFreeFloatError(f"KAP_FDO_NUMERIC_INVALID:{symbol}") from exc
 
-        if (
-            not free_float_amount.is_finite()
-            or free_float_amount <= 0
-            or not free_float_ratio_pct.is_finite()
-            or free_float_ratio_pct <= 0
-            or free_float_ratio_pct > 100
-        ):
-            raise KapFreeFloatError(f"KAP_FDO_NUMERIC_RANGE_INVALID:{symbol}")
+            if (
+                not free_float_amount.is_finite()
+                or free_float_amount <= 0
+                or not free_float_ratio_pct.is_finite()
+                or free_float_ratio_pct <= 0
+                or free_float_ratio_pct > 100
+            ):
+                continue
 
-        records.append(
-            FreeFloatRecord(
-                symbol=symbol,
-                free_float_shares=free_float_amount,
-                as_of=observed_on,
-                source="KAP",
-                source_ref=validated_url,
-                ingested_at=now,
+            records.append(
+                FreeFloatRecord(
+                    symbol=symbol,
+                    free_float_shares=free_float_amount,
+                    as_of=observed_on,
+                    source="KAP",
+                    source_ref=validated_url,
+                    ingested_at=now,
+                )
             )
-        )
+        except (InvalidOperation, Exception):
+            continue
+
     return tuple(records)
 
 
@@ -453,9 +447,6 @@ def populate_kap_free_float_for_symbols(
     if timeout_seconds <= 0 or timeout_seconds > 30:
         raise ValueError("timeout_seconds 1-30 aralığında olmalıdır.")
 
-    # KAP publishes the canonical free-float dataset as one server-rendered table.
-    # Fetching this single official table is both more reliable and far less bursty
-    # than resolving and requesting one company page per held symbol.
     validated = validate_kap_free_float_table_url(KAP_FREE_FLOAT_TABLE_URL)
     fetch = table_fetcher or _default_fetch
     raw, final_url, content_type = fetch(validated, timeout_seconds)

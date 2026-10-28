@@ -1,5 +1,6 @@
-from backend.app.ui.fund_pressure_ui_adapter import build_pressure_dataframe
 from __future__ import annotations
+from backend.app.ui.fund_pressure_ui_adapter import build_pressure_dataframe
+
 
 from dataclasses import dataclass
 from datetime import date
@@ -1198,7 +1199,7 @@ class _EmptyPortfolioStore(FundPortfolioSnapshotJsonStore):
 
 
 def render_pressure_table(st, portfolio_holdings: list[dict]):
-    "`"`"FDO ve Baskı Riski tablosunu Streamlit arayüzüne basar."`"`"
+    """FDO ve Baskı Riski tablosunu Streamlit arayüzüne basar."""
     if not portfolio_holdings:
         st.warning("Bu fon için henüz KAP portföy snapshot'ı yok.")
         return
